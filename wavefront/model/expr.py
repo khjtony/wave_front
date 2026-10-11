@@ -145,6 +145,11 @@ class Expr:
         """Dispatch to ``visitor.visit_<ClassName>(self)``."""
         return getattr(visitor, "visit_" + type(self).__name__)(self)
 
+    def to_python(self, compiled: Any) -> Any:
+        """A callable on state tuples, compiled through generated source by
+        :meth:`wavefront.model.compile.CompiledModel.compile_expr`."""
+        return compiled.compile_expr(self)
+
     def free_vars(self) -> frozenset[str]:
         """Names of variables referenced directly (named invariants and endings are not
         expanded; the compiler expands them)."""

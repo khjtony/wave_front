@@ -145,6 +145,7 @@ class ActorSpec:
     is_nature: bool = False
     last: int | None = None
     avail_fn: Callable[[Sequence[int]], list[int]] | None = None
+    observed_indices: tuple[int, ...] = ()
     fairness: list[tuple[int, int, frozenset[int], str]] = field(default_factory=list)
 
     def action_index(self, name: str) -> int:
@@ -169,6 +170,8 @@ class _CodeGen:
         try:
             return self.index[name]
         except KeyError:
+            if name == "tick":
+                raise ModelError(f"{where}: an untimed model has no variable 'tick'") from None
             raise ModelError(f"{where}: unknown variable {name!r}") from None
 
     def resolve(self, value: object, ctx: int | None, where: str) -> int:
@@ -314,15 +317,27 @@ def is_condition(node: Expr) -> bool:
 class CompiledModel:
     """A model compiled to a state layout and Python callables (spec section 4)."""
 
-    def __init__(self, model: Model, profile: str | Iterable[str] | None = None) -> None:
+    def __init__(
+        self,
+        model: Model,
+        profile: str | Iterable[str] | None = None,
+        relax: Iterable[str] = frozenset(),
+    ) -> None:
         self.model = model
         self.name = model.name
         self.horizon = model.horizon
-        self.profiles = _select_profiles(model, profile)
+        self.timed = model.horizon is not None
+        self.relax = _check_relax(model, relax)
+        self.selected_profiles = _select_profiles(model, profile)
+        self.profiles = self.selected_profiles - self.relax
+        self.fairness_constraints = [
+            f for f in model.fairness_constraints if f.name not in self.relax
+        ]
         self.variables: list[VarSpec] = []
         self.index: dict[str, int] = {}
         self.actors: list[ActorSpec] = []
         self._build_variables()
+        self._tick = self.index.get("tick")
         self._gen = _CodeGen(model, self.variables, self.index)
         self._hi = [v.size - 1 for v in self.variables]
         self._monotone = [i for i, v in enumerate(self.variables) if v.monotone]
@@ -345,8 +360,9 @@ class CompiledModel:
 
     def _build_variables(self) -> None:
         m = self.model
-        ticks = tuple(str(i) for i in range(m.horizon + 1))
-        self._add(VarSpec("tick", "builtin", ticks, len(ticks), "tick", (0,)))
+        if m.horizon is not None:
+            ticks = tuple(str(i) for i in range(m.horizon + 1))
+            self._add(VarSpec("tick", "builtin", ticks, len(ticks), "tick", (0,)))
         decls = {d.name: d for d in m.variables if isinstance(d, VarDecl)}
         for decl in m.variables:
             if isinstance(decl, VarDecl):
@@ -370,12 +386,12 @@ class CompiledModel:
                 self._add(
                     VarSpec(f"last_{actor.name}", "builtin", levels, len(levels), "last", (0,))
                 )
-        for f in m.fairness_constraints:
+        for f in self.fairness_constraints:
             levels = tuple(str(i) for i in range(f.within + 1))
             self._add(VarSpec(f"fair_{f.name}", "builtin", levels, len(levels), "fair", (0,)))
 
     def _latch_source_levels(self, decl: LatchDecl, decls: dict[str, VarDecl]) -> tuple[str, ...]:
-        if decl.of == "tick":
+        if decl.of == "tick" and self.horizon is not None:
             return tuple(str(i) for i in range(self.horizon + 1))
         if decl.of not in decls:
             raise ModelError(f"latch {decl.name!r}: unknown variable {decl.of!r}")
@@ -401,15 +417,18 @@ class CompiledModel:
             actions = [self._action_spec(decl, j, n, a) for j, (n, a) in enumerate(names)]
             last = self.index.get(f"last_{decl.name}") if decl.remember_last else None
             observes = self._observation_set(decl)
-            self.actors.append(
-                ActorSpec(decl.name, i, actions, observes, bool(decl.is_nature), last)
+            spec = ActorSpec(decl.name, i, actions, observes, bool(decl.is_nature), last)
+            spec.observed_indices = tuple(
+                j for j, v in enumerate(self.variables) if v.name in observes
             )
+            self.actors.append(spec)
 
     def _action_spec(self, actor: Any, j: int, name: str, decl: ActionDecl | None) -> ActionSpec:
         if decl is None:
             return ActionSpec(name, actor.name, j, _make_fn("True"), (), 0, "", False, True, TRUE)
         where = f"guard of {actor.name}.{name}"
-        guard_fn = _make_fn(self._gen.boolean(decl.guard, where))
+        guard = TRUE if f"{actor.name}.{name}" in self.relax else decl.guard
+        guard_fn = _make_fn(self._gen.boolean(guard, where))
         pending = self.index.get(f"pending_{actor.name}_{name}") if decl.delay else None
         return ActionSpec(
             name,
@@ -421,7 +440,7 @@ class CompiledModel:
             decl.source,
             decl.speculative,
             False,
-            decl.guard,
+            guard,
             pending,
         )
 
@@ -440,9 +459,7 @@ class CompiledModel:
                 own = {"tick", f"last_{actor.name}"}
                 own |= {n for n in self.index if n.startswith(f"pending_{actor.name}_")}
                 own |= {
-                    f"fair_{f.name}"
-                    for f in self.model.fairness_constraints
-                    if f.actor == actor.name
+                    f"fair_{f.name}" for f in self.fairness_constraints if f.actor == actor.name
                 }
                 base = (frozenset(obs.names) | own) & everything
         hidden = {
@@ -464,22 +481,37 @@ class CompiledModel:
                         )
 
     def observation_check(self) -> None:
-        """Raise :class:`ModelError` if a guard references a variable its actor does not
-        observe (Nature observes everything)."""
+        """Raise :class:`ModelError` if an actor's action guard, fairness trigger or profile
+        ``unless`` condition references a variable the actor does not observe (these decide
+        the actor's availability; Nature observes everything)."""
         for actor in self.actors:
-            if actor.is_nature:
-                continue
             for action in actor.actions:
-                if action.is_idle:
-                    continue
-                where = f"guard of {actor.name}.{action.name}"
-                for name in sorted(self._gen.expand_free_vars(action.guard_expr, where)):
-                    if name not in actor.observes:
-                        raise ModelError(
-                            f"observation violation: the guard of action {actor.name}."
-                            f"{action.name} references variable {name!r}, which actor "
-                            f"{actor.name} does not observe"
-                        )
+                if not action.is_idle:
+                    self._check_observed(
+                        actor.name,
+                        action.guard_expr,
+                        f"the guard of action {actor.name}.{action.name}",
+                    )
+        for f in self.fairness_constraints:
+            self._check_observed(
+                f.actor, f.trigger, f"the trigger of fairness constraint {f.name!r}"
+            )
+        for p in self.model.profiles:
+            if p.name not in self.relax:
+                self._check_observed(
+                    p.actor, p.unless, f"the unless condition of profile {p.name!r}"
+                )
+
+    def _check_observed(self, actor_name: str, expr: Expr, construct: str) -> None:
+        actor = self._actor(actor_name, construct)
+        if actor.is_nature:
+            return
+        for name in sorted(self._gen.expand_free_vars(expr, construct)):
+            if name not in actor.observes:
+                raise ModelError(
+                    f"observation violation: {construct} references variable {name!r}, "
+                    f"which actor {actor.name} does not observe"
+                )
 
     # -- effects -----------------------------------------------------------------------
     def _compile_effects(self) -> None:
@@ -565,7 +597,7 @@ class CompiledModel:
             when = _make_fn(self._gen.boolean(decl.when, where))
             self._latches.append((self.index[decl.name], src, when))
         self._fair: list[tuple[int, int, frozenset[int], int, Callable[[Sequence[int]], Any]]] = []
-        for f in self.model.fairness_constraints:
+        for f in self.fairness_constraints:
             where = f"fairness {f.name}"
             actor = self._actor(f.actor, where)
             responses = frozenset(self._action_of(actor, r, where) for r in f.responses)
@@ -621,6 +653,11 @@ class CompiledModel:
         self.ending_fns = {
             n: _make_fn(self._gen.boolean(e, f"ending {n}")) for n, e in m.endings.items()
         }
+        self.assume_fns = {
+            n: _make_fn(self._gen.boolean(e, f"assumption {n}"))
+            for n, e in m.assumes.items()
+            if n not in self.relax
+        }
         names = tuple(m.endings)
         if names:
             terms = ", ".join(self._gen.boolean(e, f"ending {n}") for n, e in m.endings.items())
@@ -635,15 +672,17 @@ class CompiledModel:
         return [a.name for a in self.actors]
 
     def initial_states(self) -> list[State]:
-        """The product of declared initial values (``init=None`` contributes every level).
-        Latches whose condition already holds in an initial state are set there."""
+        """The product of declared initial values (``init=None`` contributes every level),
+        filtered by the model's (unrelaxed) ``assume`` restrictions. Latches whose condition
+        already holds in an initial state are set there."""
         out: dict[State, None] = {}
         for combo in itertools.product(*(v.init for v in self.variables)):
             state = list(combo)
             for idx, src, when in self._latches:
                 if state[idx] == 0 and when(state):
                     state[idx] = state[src] + 1
-            out[tuple(state)] = None
+            if all(fn(state) for fn in self.assume_fns.values()):
+                out[tuple(state)] = None
         return list(out)
 
     def available(self, state: Sequence[int]) -> list[list[int]]:
@@ -708,7 +747,8 @@ class CompiledModel:
         new = list(s)
         if any(contribs):
             self._compose(new, s, jm, contribs, delayed=False)
-        new[0] = s[0] + 1
+        if self._tick is not None:
+            new[self._tick] = s[self._tick] + 1
         if self._delays:
             self._update_delays(new, s, jm)
         for actor_i, idx in self._lasts:
@@ -805,8 +845,10 @@ class CompiledModel:
 
     # -- predicates and rendering ------------------------------------------------------
     def is_terminal(self, state: Sequence[int]) -> bool:
-        """True when ``tick == horizon`` or some ending holds."""
-        return state[0] >= self.horizon or bool(self._endings_fn(state))
+        """True when ``tick == horizon`` (timed models) or some ending holds."""
+        if self._tick is not None and state[self._tick] >= self.horizon:  # type: ignore[operator]
+            return True
+        return bool(self._endings_fn(state))
 
     def ending_of(self, state: Sequence[int]) -> str | None:
         """The ending that holds, ``"HORIZON"`` if terminal by tick only, else ``None``.
@@ -819,7 +861,32 @@ class CompiledModel:
                 f"endings {', '.join(hits)} hold together in state {self.format_state(state)}; "
                 "endings must be mutually exclusive"
             )
-        return "HORIZON" if state[0] >= self.horizon else None
+        if self._tick is not None and state[self._tick] >= self.horizon:  # type: ignore[operator]
+            return "HORIZON"
+        return None
+
+    def observe(self, actor_name: str, state: Sequence[int]) -> tuple[int, ...]:
+        """The projection of ``state`` onto the variables ``actor_name`` observes, in state
+        order."""
+        actor = self._actor(actor_name, "observe")
+        return tuple(state[i] for i in actor.observed_indices)
+
+    def assumptions(self) -> list[str]:
+        """Named assumptions that can be relaxed: non-trivial action guards
+        (``"<actor>.<action>"``), fairness constraints, selected profiles and ``assume``
+        restrictions, in that order. Relaxing a declared action whose guard is ``TRUE`` is
+        accepted as a no-op but such guards are not listed. The list is the same whatever
+        is relaxed."""
+        m = self.model
+        guards = [
+            f"{actor.name}.{a.name}"
+            for actor in [*m.actors, m.nature()]
+            for a in actor.actions
+            if not (isinstance(a.guard, Const) and a.guard.value)
+        ]
+        fair = [f.name for f in m.fairness_constraints]
+        profiles = [p.name for p in m.profiles if p.name in self.selected_profiles]
+        return [*guards, *fair, *profiles, *m.assumes]
 
     def compile_expr(self, expr: Expr) -> Callable[[Sequence[int]], Any]:
         """Compile an ad-hoc expression (cached by identity)."""
@@ -907,6 +974,27 @@ def _select_profiles(model: Model, profile: str | Iterable[str] | None) -> froze
     return frozenset(names)
 
 
-def compile(model: Model, profile: str | Iterable[str] | None = None) -> CompiledModel:
-    """Compile ``model``, optionally selecting one or more behavioral profiles."""
-    return CompiledModel(model, profile)
+def _check_relax(model: Model, relax: Iterable[str]) -> frozenset[str]:
+    names = frozenset((relax,) if isinstance(relax, str) else relax)
+    known = {f"{a.name}.{x.name}" for a in [*model.actors, model.nature()] for x in a.actions}
+    known |= {f.name for f in model.fairness_constraints}
+    known |= {p.name for p in model.profiles}
+    known |= set(model.assumes)
+    unknown = sorted(names - known)
+    if unknown:
+        raise ModelError(
+            f"model {model.name!r}: cannot relax unknown assumption(s) {', '.join(unknown)}"
+        )
+    return names
+
+
+def compile(
+    model: Model,
+    profile: str | Iterable[str] | None = None,
+    relax: Iterable[str] = frozenset(),
+) -> CompiledModel:
+    """Compile ``model``, optionally selecting behavioral profiles and relaxing named
+    assumptions (see :meth:`CompiledModel.assumptions`): a relaxed guard becomes ``TRUE``,
+    a relaxed fairness constraint is removed (with its counter), a relaxed profile is not
+    applied and a relaxed ``assume`` no longer filters the initial states."""
+    return CompiledModel(model, profile, relax)

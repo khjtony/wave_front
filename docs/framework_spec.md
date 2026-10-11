@@ -100,6 +100,23 @@ Rules:
 - `assume(name, expr)` restricts the initial state set to states satisfying `expr`. It is a named assumption like the others below.
 - **Named assumptions.** Every action guard (named `<actor>.<action>`), fairness constraint, profile and `assume` is a named assumption. `compile(model, profile=None, relax=frozenset())` takes assumption names to relax: a relaxed guard becomes `TRUE`, a relaxed fairness constraint is removed, a relaxed `assume` no longer filters initial states, a relaxed profile is not applied. Relaxation only ever loosens. `CompiledModel.assumptions()` lists the names.
 
+### 3.1a Settled details (from the phase 0 implementation review)
+
+- `var(..., init=...)` defaults to the first level; `init=None` still means every level. `counter` and `flag` accept `init=None` the same way.
+- `Set(var, value)` also accepts an integer expression (for example `Set("a", V.b)` or `Set("stock", V.cap + 2)`), evaluated on the pre-state and clamped to the variable's range. A literal out of range is a compile-time `ModelError`. A flag may be used directly as a condition; a level or counter may not.
+- Reserved names, in addition to the built-ins: `Nature`; `all`, `all_except`, `only`, `invariant`, `ending`, `ref` (they would collide with the `V` namespace methods; use `V["name"]` for awkward names); Python keywords. `idle` and `none` are reserved action names for every actor.
+- `m.nature()` takes no arguments. Nature cannot use `remember_last` and cannot appear in `hidden_from`.
+- State layout: `tick` first in timed models; then declared variables and latches in declaration order; then `pending_<actor>_<action>` (actor order, then action order), `last_<actor>` (actor order) and `fair_<name>` (declaration order). Each actor's built-in action (`idle`, or `none` for Nature) is at action index 0; declared actions follow in declaration order, so shortest witnesses prefer doing nothing among equal-length traces.
+- `assumptions()` lists declared actions whose guard is not the constant `TRUE` (as `<actor>.<action>`), then fairness constraints, then the selected profiles, then `assume` names. Relaxing a trivial guard or an unselected profile is a no-op, not an error.
+- A latch whose `when` already holds in an initial state is set there, to the initial value of `of`.
+- Delayed effect lists are evaluated on the pre-state of the transition in which they fire and composed as a second phase after the immediate effects: delayed `Set`s override, delayed `Bump`s add, then clamping. Two delayed `Set`s with different values in one transition are a `ModelError`; a delayed `Set` overriding an immediate `Set` is not.
+- Latch conditions and fairness triggers read the state after the tick, delay and last-action updates (latches before fairness counters).
+- `V.only(...)` also includes the actor's own built-ins (`tick`, its `last_*`, its `pending_*` and `fair_*` counters). `hidden_from` removes variables after any `observes` choice.
+- `explore(cm, initial=[...])` takes explicit initial states as given and does not apply `assume` filters; only `cm.initial_states()` is filtered.
+- `AttractorResult.strategy` has entries only for states that joined through a move; `SafeResult.strategy` only for non-terminal kernel states.
+- `Graph.moves[i]` and `Graph.avail[i]` are shared between states with identical availability and must be treated as read-only.
+- `ruff format` is configured to exclude Markdown files, because the installed ruff also reformats Python snippets inside documentation.
+
 ### 3.2 Expressions (`wavefront.model.expr`)
 
 `V` is a namespace: `V.name` is a `VarRef`. `V.tick` is the built-in tick. Expression nodes are immutable dataclasses:

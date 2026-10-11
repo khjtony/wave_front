@@ -30,5 +30,9 @@ markers = [
 line-length = 100
 target-version = "py311"
 
+[tool.ruff.format]
+# Python snippets in the Markdown docs are illustrations, not code to reformat.
+exclude = ["*.md"]
+
 [tool.ruff.lint]
 select = ["E", "F", "W", "I"]

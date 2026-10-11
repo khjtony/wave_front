@@ -175,9 +175,11 @@ def _effect_tuple(effect: object, where: str) -> tuple[Set | Bump | SetIf, ...]:
 class Model:
     """A finite concurrent game under construction. See spec section 3.1."""
 
-    def __init__(self, name: str, horizon: int, description: str = "") -> None:
-        if isinstance(horizon, bool) or not isinstance(horizon, int) or horizon < 1:
-            raise ModelError(f"model {name!r}: horizon must be an int >= 1")
+    def __init__(self, name: str, horizon: int | None, description: str = "") -> None:
+        if horizon is not None and (
+            isinstance(horizon, bool) or not isinstance(horizon, int) or horizon < 1
+        ):
+            raise ModelError(f"model {name!r}: horizon must be an int >= 1 or None (untimed)")
         self.name = name
         self.horizon = horizon
         self.description = description
@@ -188,6 +190,7 @@ class Model:
         self.profiles: list[ProfileDecl] = []
         self.invariants: dict[str, Expr] = {}
         self.endings: dict[str, Expr] = {}
+        self.assumes: dict[str, Expr] = {}
         self._nature: Actor | None = None
         self._names: dict[str, str] = {}
 
@@ -362,12 +365,26 @@ class Model:
         self.endings[name] = lift_bool(expr)
         return self.endings[name]
 
+    def assume(self, name: str, expr: Expr | bool) -> Expr:
+        """Restrict the initial states to those satisfying ``expr`` (a named assumption
+        that can be relaxed at compile time)."""
+        self._claim(name, "assumption")
+        self.assumes[name] = lift_bool(expr)
+        return self.assumes[name]
+
+    @property
+    def timed(self) -> bool:
+        """False for an untimed model (``horizon=None``: no ``tick`` variable)."""
+        return self.horizon is not None
+
     # -- compile -----------------------------------------------------------------------
-    def compile(self, profile: str | Iterable[str] | None = None) -> CompiledModel:
+    def compile(
+        self, profile: str | Iterable[str] | None = None, relax: Iterable[str] = frozenset()
+    ) -> CompiledModel:
         """Shorthand for :func:`wavefront.model.compile.compile`."""
         from .compile import compile as compile_model
 
-        return compile_model(self, profile=profile)
+        return compile_model(self, profile=profile, relax=relax)
 
     def __repr__(self) -> str:
         return f"Model({self.name!r}, horizon={self.horizon})"
