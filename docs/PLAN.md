@@ -25,6 +25,7 @@ Gate: engine correct on known games; DSL covers the requirement list; both histo
 | 0.11 | Snapshot schema and loader | spec section 9, DESIGN.md section 5.1 | `snapshots/schema.json`, `wavefront/evidence/*`, `tests/evidence/*` | schema validates the DESIGN.md example; loader refuses missing provenance; unknown level is an error | A, then R |
 | 0.12 | Integration review | everything above | fixes; `docs/spec_deviations.md` resolved into the spec or rejected | full suite green; lint clean; spec and code agree; reviewer has read every public module | R |
 | 0.13 | Gate record | 0.12 | `docs/validity.md` status rows updated; tag `phase0` | gate criteria listed in PHASES.md all checked | R, U |
+| 0.14 | Visualizer | [visualizer.md](visualizer.md) | `wavefront/viz/*`, `wf viz`, `tests/viz/*` | the acceptance list in visualizer.md section 9 holds on the toy model, checked on rendered screenshots | A, then R |
 
 Wave plan for agents: 0.2 and 0.3 as one agent (the engine depends on the compiled model's API); 0.4 and 0.5 as one agent in parallel; after review of 0.2 and 0.3, run 0.6, 0.7 plus 0.8, and 0.9 plus 0.10 plus 0.11 as three parallel agents; then 0.12 and 0.13.
 

@@ -255,7 +255,11 @@ Every subcommand accepts `--profile` and `--max-states`; `mine` accepts `--coali
 
 Run with `pytest -q`; lint with `ruff check .` and `ruff format --check .`; both clean is part of every gate.
 
-## 12. Reserved for later phases
+## 12. Visualizer (`wavefront.viz`)
+
+A static, self-contained HTML page generated from engine output: initial state, trajectory board (status band, decision lanes with alternatives classified safe/risky/losing, variable heatmap), decision tree with hand-built counterfactuals and fork markers, compare view, landscape of the reachable space with forward and backward wavefronts, and the report tables. Design, data bundle and acceptance criteria are in [visualizer.md](visualizer.md). CLI: `wf viz MODEL --out FILE`.
+
+## 13. Reserved for later phases
 
 - **Multi-resolution time.** A coarse-level action may later be defined by a nested sub-game: a second compiled model whose initial state is a function of the coarse state and whose terminal states map back to coarse states. The macro-transition's successor set is then the set of coarse states the sub-game can reach, and coalition questions are lifted by computing the sub-game's attractor and safety sets. Phase 0 must not preclude this: `step`, `explore` and the solvers take a `CompiledModel` and never assume a single global model. See theory.md section 7.
 - **Uniform strategy synthesis** for coalitions with hidden variables (SAT encoding of one move per observation class).
