@@ -38,14 +38,14 @@ A alone gives correctness relative to the model. B, C and D together give reliab
 | A5 | BMC `reach` agrees with explicit reachability within depth `k` | random small models, `tests/bmc/` (spec §6) |
 | A6 | BMC `relax` returns minimum-cardinality relaxation sets, loosening only | size agreement with `relax_explicit` on models with at most 6 guards (spec §6) |
 | A7 | Analysis functions match their definitions | hand-built games with known answers, `tests/analysis/` (PLAN.md 0.7) |
-| A8 | Results agree with an independent checker | PRISM-games or MCMAS on small instances (PHASES.md phase 0) |
+| A8 | Results agree with an independent checker | PRISM-games on the toy models once the exporter exists (PLAN.md step 6.3) |
 | A9 | The engine scales to the phase 1 target | about 10^5 states explored in under 120 s (spec §11, `slow`) |
 
 **Argument.** Theorems 1 to 4 in theory.md show that the fixpoints decide the logic fragment, that memoryless strategies suffice, and that a state excluded by a fixpoint has no winning strategy of any kind. A2 to A6 check that the code computes those fixpoints. A8 guards against an error shared by the code and the brute-force oracle, both written in this project.
 
 **Gaps.**
 - The brute-force oracle must enumerate state-based memoryless strategies. The fixpoints are perfect-information results; if the oracle enumerates observation-uniform strategies, it will disagree on models with hidden variables (theory.md §2).
-- No PLAN.md step owns A8, and the spec does not mention it.
+- A8 waits for the PRISM-games exporter (phase 6); until then the only independent oracle is the brute-force enumeration written in this project.
 - Random models are tiny. Bugs that need many actors, long horizons or many fairness constraints may survive. Hand-built games with those features are needed.
 - The proofs in theory.md are sketches. They are not mechanized.
 - Z3 is trusted. A5 and A6 cross-check it against the explicit engine, not against an independent solver.
