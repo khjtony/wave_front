@@ -2,7 +2,7 @@
 
 **A reachability-based simulator of the power relationship between AGI/SI and humanity.**
 
-Status: proposal, v0. Nothing here is implemented yet. Section 1 evaluates the idea; sections 2 to 10 are the design.
+Status: proposal, v0. Nothing here is implemented yet. Section 1 evaluates the idea; sections 2 to 10 are the design. The framework is developed and validated on a Second World War model first (see [ww2_testbed.md](ww2_testbed.md)); the AGI model in sections 2 and 3 is the second instance of the same framework.
 
 ---
 
@@ -18,6 +18,8 @@ The proposal is to replace "forecast what happens" with "compute what *can* happ
 The one thing the brief gets wrong, if taken literally, is "as long as a case is within the decision space, no matter how unlikely, it can happen". Under unrestricted nondeterminism almost every ending is reachable, so plain reachability answers are uninformative. The design therefore makes the primary outputs (a) the *minimal set of assumptions* that must hold for an ending to be reachable or unavoidable, (b) the viability boundary and the current distance to it, and (c) the pivotal coalition for each ending. Real-world news and policy do not change the model; they update the *current state estimate* and the *rates*, and the drift of that estimate relative to the viability boundary is what "where the world inclines" means here.
 
 The name fits the method: the forward reachable set from today and the backward attractor from each ending are both computed as expanding wavefronts; the analysis object is where they meet.
+
+Because the AGI case has no outcomes to check against, the framework (engine, analysis questions, snapshot pipeline, evidence extraction) is built and validated first on a case that does: the Second World War, with Germany, the USSR, Japan, the United States and the United Kingdom as principals. That case has a known outcome, dated decision points, documented decision spaces, annual resource data and dated primary documents, and its historiography already contains the counterfactual debates that the tool's non-trivial outputs (point of no return, minimal assumptions, pivotal coalitions) can be checked against. The testbed model, its pre-registered tests and the anti-hindsight protocol are in [ww2_testbed.md](ww2_testbed.md).
 
 ---
 
@@ -35,7 +37,7 @@ The name fits the method: the forward reachable set from today and the backward 
 
 1. **Everything is reachable.** With no restriction beyond the decision space, the counterexample for any ending is "then every actor made the worst possible choice for 40 consecutive quarters". Mitigations, all standard: resource and capability *guards* (energy caps compute; covert acquisition needs autonomy and weak oversight), *delays* (legislation lag, construction lag), and *fairness constraints* ("a visible threat is eventually responded to"). Then the question flips from "is E reachable" to "what is the cheapest set of guard or fairness relaxations that makes E reachable", which is informative.
 2. **State explosion.** Six actors with five variables each at four levels plus a dozen global variables is ~10^27 states. Explicit-state model checking handles ~10^7. The design therefore starts with a deliberately small v0 (three actors, ~12 variables, ~10^6 states), uses SMT-based bounded model checking for larger models, and treats abstraction refinement as part of the method rather than a later optimization.
-3. **The model is the result.** In ordinary verification the system is given and the spec is checked. Here the "system" (how the world works) is the unknown. The tool cannot be an oracle; its value is forcing every assumption to be explicit, versioned, and attackable. This has to be said on the front page of every report.
+3. **The model is the result.** In ordinary verification the system is given and the spec is checked. Here the "system" (how the world works) is the unknown. The tool cannot be an oracle; its value is forcing every assumption to be explicit, versioned, and attackable. This has to be said on the front page of every report. It is also why the framework is validated on a historical case before it is trusted on this one (1.4).
 4. **Information is the whole game.** The "silent takeover" scenario is an epistemic one: it works only if humans cannot observe what the AI controls or intends. A model without explicit observability cannot distinguish silent from overt takeover, and cannot tell you that *monitoring capacity* rather than *legislation* is the lever. Observability must be a first-class variable.
 5. **Unmodeled capabilities.** A superintelligence may have actions we did not enumerate. No model fixes this, but the model can carry an explicit "unknown capability" event gated on capability level, so every result is tagged with whether it depends on the assumption that no such capability exists.
 6. **"Where the world inclines" needs an ordering, and probabilities are the wrong one.** The brief rejects likelihoods, correctly. The replacement ordering is: distance to the viability boundary in adversarial steps, the number of assumptions an ending needs, and the drift of the current state across dated snapshots.
@@ -48,11 +50,17 @@ The name fits the method: the forward reachable set from today and the backward 
 - Carlsmith's power-seeking argument and Omohundro's instrumental drives supply the AGI action set (self-preservation, resource acquisition, goal preservation, capability gain). World3 / *Limits to Growth* is the cautionary precedent for "high-level world simulators": its lasting value was scenario exploration, and its reputation was damaged by being read as prediction.
 - Tools: PRISM-games (stochastic multi-player games, rPATL), MCMAS (ATL with epistemic operators), UPPAAL Stratego (timed games), the recent ATL*AS symbolic ATL* checker (Garcia de Blas and Belardinelli, AAMAS 2026), TLA+/TLC and Alloy for nondeterministic reachability, Z3 for bounded model checking. A search found no published application of strategy-logic model checking to AGI/human power dynamics, so the combination is new even though every component exists.
 
+### 1.4 Validation strategy: a historical testbed first
+
+The framework's outputs can be checked only where outcomes are known and the counterfactuals are argued about. The Second World War has both, plus annual material-capability data for every state, dated crisis records, and large corpora of dated primary documents. It also has the structural features the AGI model relies on: hidden objectives and lagging beliefs about them (appeasement), resource-bound action (oil, steel), preventive attack under an expected squeeze (Japan 1941, Germany 1939 and 1941), institutional lag in the democracies, and concessions as an objective-conditional lever. The plan is therefore to build the engine, the analysis questions and the evidence pipeline against a WW2 model with pre-registered tests, under an anti-hindsight protocol, and only then instantiate the AGI model in the same DSL. What WW2 cannot validate (recursive capability growth, a copyable actor, dependence lock-in with no adversary, non-state principals) is listed and carried as `untested` into the AGI model.
+
 **Verdict.** Worth building. The design below keeps the strong parts (contracts, nondeterminism, strategy synthesis) and replaces plain reachability with assumption mining and viability analysis as the headline outputs.
 
 ---
 
 ## 2. Conceptual model
+
+Sections 2 and 3 specify the **AGI domain model**. The DSL, engine, analysis and evidence pipeline in sections 4 to 6 are domain-independent; the WW2 model in [ww2_testbed.md](ww2_testbed.md) is a second instance of the same framework and is built first. The variable-by-variable correspondence between the two models is tabulated there.
 
 ### 2.1 The game
 
@@ -327,27 +335,38 @@ The report for a snapshot states, without probabilities:
 wave_front/
   README.md
   docs/
-    DESIGN.md          this document
-    ontology.md        every variable, level boundary, action, guard, effect, with rationale
-    properties.md      balance definitions, endings, fairness, question catalogue
-    indicators.md      indicator list and mapping rules per variable
+    DESIGN.md          this document: evaluation, framework, AGI domain model
+    ww2_testbed.md     WW2 model, pre-registered tests, data sources, anti-hindsight protocol
+    ontology_agi.md    every AGI variable, level boundary, action, guard, effect, with rationale
+    ontology_ww2.md    the same for the WW2 model, with a source per action
+    properties.md      balance definitions, endings, fairness, question catalogue (both models)
+    indicators.md      indicator list and mapping rules per variable (both models)
   wavefront/
     model/             DSL: Var, Actor, Action, Event, Fairness, Property, Profile
     engine/            explicit-state: enumeration, attractor, safety fixpoint, witness traces
     bmc/               Z3 unrolling, soft assumptions, unsat core, MaxSAT relaxation
     export/            PRISM-games writer (later: TLA+, MCMAS ISPL)
-    evidence/          snapshot schema, indicator registry, extraction, review CLI
+    evidence/          snapshot schema, indicator registry, extraction, review CLI, replay
     analysis/          viability, distance, pivotal coalitions, clustering, sensitivity, drift
     report/            markdown/HTML reports, trace rendering, 2-D phase diagrams
     cli.py             `wf` entry point
   models/
-    v0_toy.py          3 actors, ~15 variables
-    v1_baseline.py     split actors, two AIs
+    ww2/
+      v0.py            four principals, Europe 1936 to 1940
+      v1.py            five principals plus scripted others, both theatres 1933 to 1945
+    agi/
+      v0.py            three actors, ~15 variables
+      v1.py            split actors, two AIs
+  data/
+    ww2/               NMC, ICB, MID, Harrison tables; document corpora indices (not the corpora)
   snapshots/
-    2026-10-11.json
+    ww2/               hindsight snapshots per quarter; replay snapshots per quarter
+    agi/
+      2026-10-11.json
   tests/
-    scenarios/         the brief's three scenarios and COEXIST as reachability tests
     engine/            attractor and fixpoint unit tests on tiny hand-built games
+    ww2/scenarios/     T1 to T13 from ww2_testbed.md, plus negative controls
+    agi/scenarios/     the brief's three scenarios and COEXIST as reachability tests
 ```
 
 ### 6.3 DSL sketch
@@ -435,9 +454,13 @@ Removing any one of these blocks the whole cluster. Note what is *not* on the li
 
 ## 8. Validation
 
+Validation is organized around the WW2 testbed in [ww2_testbed.md](ww2_testbed.md): thirteen pre-registered tests covering reachability of the realized trajectory, documented counterfactuals that must be reachable, debates that must come out `contested`, point-of-no-return windows, pivotal coalitions, negative controls that must require several relaxations, a replay harness for the evidence pipeline on dated documents, and an anti-hindsight protocol (tests before guards, decision spaces from contemporaneous alternatives, a hold-out period, a parameter budget, blind replay).
+
+What remains AGI-specific:
+
 - **Scenario tests.** The three scenarios in the brief plus COEXIST are pytest cases: each must be reachable under its stated assumptions and blocked when the named assumption is removed.
-- **Engine tests.** Attractor and fixpoint solvers checked on tiny hand-built games with known answers.
-- **Historical re-parameterization.** Re-instantiate the model for nuclear weapons 1945 to 1970 (does a treaty equilibrium become reachable only after a near-miss?), for the attention economy 2008 to 2020 (DISEMPOWERMENT-shaped lock-in with no adversarial actor), and for industrial labor displacement. These are sanity checks on the structure, not proof.
+- **Engine tests.** Attractor and fixpoint solvers checked on tiny hand-built games with known answers, independent of either domain model.
+- **Mechanisms WW2 cannot test.** Recursive capability growth, a copyable or exfiltrating actor, dependence lock-in with no adversary, and non-state principals are tagged `untested` in the AGI model and listed in every AGI report. The lock-in mechanism gets its own small testbed later (the attention economy, 2008 to 2020). The atomic bomb in 1945 is the only capability-discontinuity test and it is a single step, not a ramp.
 - **Narrative reproduction.** The storylines of AI 2027 and typical *Intelligence Rising* games should exist as traces. If they do not, an action or guard is missing.
 - **Abstraction robustness.** Refine level counts (3 to 5) and check that which endings are forced, blockable, or contested does not flip. Where it flips, that threshold is a finding.
 - **Red-teaming the rules.** Periodic adversarial review, including LLM-generated proposals of the form "what action would let A or H do X that the model currently forbids?". Missing actions are missing paths.
@@ -459,16 +482,19 @@ Removing any one of these blocks the whole cluster. Note what is *not* on the li
 
 | Milestone | Scope | Exit criterion |
 |---|---|---|
-| M0 | ontology.md and properties.md; v0 model in the DSL; explicit engine with forward reach, attractor, safety fixpoint, witness traces | the four scenario tests run and the worked example in section 7 either confirms or refutes its hypotheses |
-| M1 | Z3 bounded model checking; assumption mining; pivotal coalitions; markdown report | `wf mine` returns minimal assumption sets for every ending |
-| M2 | snapshot schema; first hand-built snapshot with sources; sensitivity (Q7) and drift (Q8) | first inclination report for the current date |
-| M3 | evidence pipeline with LLM extraction and review CLI | second snapshot produced from feeds plus review, not by hand |
-| M4 | v1 model (split actors, two AIs); uniform-strategy synthesis; PRISM-games export | quantitative questions answered as intervals |
-| M5 | historical re-parameterizations; abstraction refinement study | robustness section in the report |
+| M0 | DSL; explicit engine (forward reach, attractor, safety fixpoint, witness traces); engine unit tests; `models/ww2/v0.py` with sourced actions; the T1 to T13 tests committed as files before guards are written | T1, T2, T4, T5 and T8 run; the parameter budget is reported |
+| M1 | Z3 bounded model checking; assumption mining; pivotal coalitions; markdown report | T7, T9, T10 and T13 run; the informativeness metric is computed |
+| M2 | dataset loaders (NMC, ICB, MID, Harrison); hindsight snapshots per quarter 1936 to 1940; sensitivity and drift | the full v0 suite runs from hindsight snapshots |
+| M3 | replay harness: dated-document corpora (FRUS, Hansard, Chronicling America), LLM extraction to schema, review CLI, blind replay | replay agreement and belief-flip lag metrics reported for 1936 to 1940 |
+| M4 | `models/ww2/v1.py`: five principals plus scripted others, both theatres, 1933 to 1945; symbolic or BMC engine path | hold-out tests T6, T7, T11, T12 run without guard edits after first sight |
+| M5 | `models/agi/v0.py` in the same DSL; mechanisms tagged `validated:ww2` or `untested`; first AGI snapshot with sources; the brief's three scenarios as tests | first AGI inclination report with its untested-mechanism list |
+| M6 | second historical episode (July 1914 or Cuba 1962); lock-in testbed; PRISM-games export; AGI v1 | robustness section in both reports |
 
 ---
 
 ## References
+
+WW2 datasets, document corpora and historiography are listed in [ww2_testbed.md](ww2_testbed.md).
 
 - Kulveit, Douglas, Ammann, Turan, Krueger, Duvenaud. *Gradual Disempowerment: Systemic Existential Risks from Incremental AI Development.* ICML 2025. https://arxiv.org/abs/2501.16946
 - Han, Pereira, Santos, Lenaerts. *To regulate or not: a social dynamics analysis of an idealised AI race.* https://arxiv.org/abs/1907.12393 and follow-ups (Cimpeanu et al. 2022; Han et al. 2021).
