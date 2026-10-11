@@ -454,7 +454,7 @@ Removing any one of these blocks the whole cluster. Note what is *not* on the li
 
 ## 8. Validation
 
-Validation is organized around the WW2 testbed in [ww2_testbed.md](ww2_testbed.md): thirteen pre-registered tests covering reachability of the realized trajectory, documented counterfactuals that must be reachable, debates that must come out `contested`, point-of-no-return windows, pivotal coalitions, negative controls that must require several relaxations, a replay harness for the evidence pipeline on dated documents, and an anti-hindsight protocol (tests before guards, decision spaces from contemporaneous alternatives, a hold-out period, a parameter budget, blind replay).
+Validation is organized around two historical episodes: the WW2 testbed in [ww2_testbed.md](ww2_testbed.md) for development and the Cold War in [coldwar_testbed.md](coldwar_testbed.md) as the validation set. The WW2 testbed provides thirteen pre-registered tests covering reachability of the realized trajectory, documented counterfactuals that must be reachable, debates that must come out `contested`, point-of-no-return windows, pivotal coalitions, negative controls that must require several relaxations, a replay harness for the evidence pipeline on dated documents, and an anti-hindsight protocol (tests before guards, decision spaces from contemporaneous alternatives, a hold-out period, a parameter budget, blind replay).
 
 What remains AGI-specific:
 
@@ -480,15 +480,15 @@ What remains AGI-specific:
 
 ## 10. Roadmap
 
-| Milestone | Scope | Exit criterion |
-|---|---|---|
-| M0 | DSL; explicit engine (forward reach, attractor, safety fixpoint, witness traces); engine unit tests; `models/ww2/v0.py` with sourced actions; the T1 to T13 tests committed as files before guards are written | T1, T2, T4, T5 and T8 run; the parameter budget is reported |
-| M1 | Z3 bounded model checking; assumption mining; pivotal coalitions; markdown report | T7, T9, T10 and T13 run; the informativeness metric is computed |
-| M2 | dataset loaders (NMC, ICB, MID, Harrison); hindsight snapshots per quarter 1936 to 1940; sensitivity and drift | the full v0 suite runs from hindsight snapshots |
-| M3 | replay harness: dated-document corpora (FRUS, Hansard, Chronicling America), LLM extraction to schema, review CLI, blind replay | replay agreement and belief-flip lag metrics reported for 1936 to 1940 |
-| M4 | `models/ww2/v1.py`: five principals plus scripted others, both theatres, 1933 to 1945; symbolic or BMC engine path | hold-out tests T6, T7, T11, T12 run without guard edits after first sight |
-| M5 | `models/agi/v0.py` in the same DSL; mechanisms tagged `validated:ww2` or `untested`; first AGI snapshot with sources; the brief's three scenarios as tests | first AGI inclination report with its untested-mechanism list |
-| M6 | second historical episode (July 1914 or Cuba 1962); lock-in testbed; PRISM-games export; AGI v1 | robustness section in both reports |
+The program plan with gates is in [PHASES.md](PHASES.md). In one line each:
+
+0. Theory and framework core, domain-free; both historical test lists committed.
+1. WW2 v0 (Europe 1936 to 1940) under the anti-hindsight protocol.
+2. WW2 v1 (both theatres, 1933 to 1945) with hold-out tests and the replay harness.
+3. The Cold War (1947 to 1991) as the validation episode, under a logged framework-change budget ([coldwar_testbed.md](coldwar_testbed.md)).
+4. Generalization audit, ablations, optional one-shot July 1914 episode, framework 1.0 freeze.
+5. The AGI model v0 in the frozen framework; first inclination report with its untested-mechanism list.
+6. Live operation: quarterly snapshots, AGI v1, the quantitative layer, a lock-in testbed.
 
 ---
 
