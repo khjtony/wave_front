@@ -225,7 +225,7 @@ The risk with a known outcome is building a model that reproduces it because we 
 4. **Parameter budget.** Every report states the number of guards, thresholds and speculative actions. Adding parameters must not lower the informativeness metric (section 9).
 5. **Blind replay.** The document pipeline filters strictly by document date.
 6. **Negative controls in CI.** T10 runs on every change.
-7. **One trajectory is one sample.** After WW2, run the same protocol on at least one more episode before trusting AGI-model results. Candidates with dated decision records: the July 1914 crisis; the Cuban missile crisis of 1962.
+7. **One trajectory is one sample.** WW2 is the development set. The Cold War ([coldwar_testbed.md](coldwar_testbed.md)) is the validation set, with its claims registered now and a logged budget on framework changes. The July 1914 crisis is held in reserve as a one-shot final test.
 
 ## 8. Replay harness for the evidence pipeline
 
@@ -252,6 +252,7 @@ The AGI model is a second instance of the same DSL, engine, analysis and snapsho
 ## 11. Changelog of pre-registered tests
 
 - 2026-10-11: T1 to T13 registered. No guards written yet.
+- 2026-10-11: clarification, no change of claim: "assumption sets" in T7 and "relaxations" in T10 range over named assumptions (guards, fairness constraints, profiles, and named initial-state restrictions declared with `assume`), per framework_spec.md section 3.1; "embargo maintained" in T7 is a profile forbidding `lift_embargo`.
 
 ---
 

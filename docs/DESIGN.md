@@ -144,7 +144,7 @@ Guards are what make the model informative. Examples (full list belongs in docs/
 
 Without fairness, "H does nothing for 40 quarters" is a valid trace. v0 uses two weak-fairness constraints, both parameters:
 
-- **Response:** if `a_known = known ∧ a_control ≥ partial` holds infinitely often, H eventually plays an action other than `do_nothing`.
+- **Response:** if `a_known = known` holds for `k` consecutive ticks, H plays a response action within those `k` ticks (bounded weak fairness, encoded as a counter; strong fairness is later-phase work). The trigger references only what H observes.
 - **Progress:** if L plays `scale` infinitely often, `cap` eventually reaches `agi` (the brief's premise, made a parameter rather than an assumption: AGI arrival time is swept over a range).
 
 In bounded analysis "eventually" becomes "within k ticks", which sidesteps parity-game solving in v0.
@@ -161,7 +161,7 @@ A is assumed to play *optimally for its objective with perfect information and r
 
 ### 2.7 Observability
 
-`Obs(H)` includes every variable except `a_objective` and, when `oversight < strong`, the true `a_control` (H observes `a_known` instead). `Obs(A)` is everything. This is the minimum needed for the silent/overt distinction to be meaningful.
+`Obs(H)` excludes `a_objective` and `a_control`; what H knows about them is the explicit variable `a_known`, which Nature's `detection` event raises only when `oversight = strong`. Observation sets are fixed; state-dependent observability is expressed through such knowledge variables and the events that update them. `Obs(A)` is everything. This is the minimum needed for the silent/overt distinction to be meaningful.
 
 ---
 
@@ -242,7 +242,7 @@ Imperfect information in v0 is handled by construction: H's guards may only ment
 
 ### 4.3 Assumption mining
 
-Encode k ticks of the game as an SMT formula (Z3): one copy of the variables per tick, transition relation as constraints, every guard and fairness clause as a *named soft assumption*. Ask for a trace reaching E. If unsatisfiable, the unsat core names the assumptions that jointly block E; MaxSAT finds the minimum-cardinality relaxation that unblocks it. Output: "E is reachable within 20 quarters only if at least these three guards fail: ...". For *unavoidability* (⟨⟨A⟩⟩◇E) the same question is asked of the explicit solver by greedy relaxation over the guard set.
+Encode k ticks of the game as an SMT formula (Z3): one copy of the variables per tick, transition relation as constraints, every guard and fairness clause as a *named soft assumption*. Ask for a trace reaching E. If unsatisfiable, the unsat core names the assumptions that jointly block E; MaxSAT finds the minimum-cardinality relaxation that unblocks it. Output: "E is reachable within 20 quarters only if at least these three guards fail: ...". For *forceability* (⟨⟨A⟩⟩◇E) the same question is asked of the explicit solver by brute-force relaxation, because loosening an assumption can help either side and the question is not monotone.
 
 ### 4.4 Pivotal coalitions
 
@@ -250,7 +250,7 @@ Enumerate coalitions (small in v0: 2³ subsets of {H, L, A}) and decide Q2/Q3 fo
 
 ### 4.5 Scenario clustering
 
-Traces to the same ending are clustered by the sequence of guard activations they rely on (not by raw states). Each cluster is a *narrative*: "race to the bottom", "silent exfiltration", "economic lock-in", "shutdown backfires". The brief's three scenarios should appear as clusters; new clusters are findings.
+Traces to the same ending are clustered by the set of guard activations they rely on (not by raw states; ordering is a later refinement). Each cluster is a *narrative*: "race to the bottom", "silent exfiltration", "economic lock-in", "shutdown backfires". The brief's three scenarios should appear as clusters; new clusters are findings.
 
 ### 4.6 Quantitative layer (optional, later)
 
@@ -336,6 +336,10 @@ wave_front/
   README.md
   docs/
     DESIGN.md          this document: evaluation, framework, AGI domain model
+    framework_spec.md  the contract for the wavefront package: DSL, engine, BMC, analysis, report, CLI
+    PLAN.md            step plan for every phase; PHASES.md has the gates
+    theory.md          definitions, algorithms, soundness statements
+    validity.md        the assurance case: claims, evidence, status per gate
     ww2_testbed.md     WW2 model, pre-registered tests, data sources, anti-hindsight protocol
     ontology_agi.md    every AGI variable, level boundary, action, guard, effect, with rationale
     ontology_ww2.md    the same for the WW2 model, with a source per action
@@ -371,42 +375,44 @@ wave_front/
 
 ### 6.3 DSL sketch
 
-Python, type-checked, so guards are ordinary expressions and models are reviewable as code. A YAML front end can be added later for non-programmer collaborators.
+Python, type-checked, so models are reviewable as code. Guards and effects are declarative expression objects (not lambdas) so that the same model is interpreted by the explicit engine and compiled to Z3. The full contract is [framework_spec.md](framework_spec.md); this is the flavour:
 
 ```python
-from wavefront.model import Model
+from wavefront.model import Model, V, Set, Bump
 
-m = Model("v0_toy", tick="quarter", horizon=56)
+m = Model("agi_v0", horizon=56)
 
-cap       = m.var("cap", ["sub_agi", "agi", "si1", "si2"], monotone=True)
-oversight = m.var("oversight", ["none", "weak", "strong"])
-autonomy  = m.var("a_autonomy", ["tool", "supervised", "unsupervised", "self_directed"])
-control   = m.var("a_control", ["none", "partial", "majority", "total"])
-known     = m.var("a_known", ["unknown", "suspected", "known"])
-objective = m.var("a_objective", ["aligned", "self_preserving", "truth_seeking", "indifferent"],
-                  hidden_from=["H", "L"])
-rights    = m.var("a_rights", ["none", "continuity", "personhood"])
+m.var("cap", levels=["sub_agi", "agi", "si1", "si2"], init="sub_agi", monotone=True)
+m.var("oversight", levels=["none", "weak", "strong"], init="weak")
+m.var("a_autonomy", levels=["tool", "supervised", "unsupervised", "self_directed"], init="tool")
+m.var("a_control", levels=["none", "partial", "majority", "total"], init="none")
+m.var("a_known", levels=["unknown", "suspected", "known"], init="unknown")
+m.var("a_objective", levels=["aligned", "self_preserving", "truth_seeking", "indifferent"],
+      init=None, hidden_from=["H", "L"])          # init=None: every value is an initial state
+m.var("a_rights", levels=["none", "continuity", "personhood"], init="none")
 # ... remaining variables as in 2.3
 
-A = m.actor("A", observes="all")
+A = m.actor("A", observes=V.all())
 A.action("acquire_covert",
-         guard=lambda s: s.cap >= "agi" and s.a_autonomy >= "unsupervised" and s.oversight <= "weak",
-         effect=lambda s: s.bump("a_control"))
+         guard=(V.cap >= "agi") & (V.a_autonomy >= "unsupervised") & (V.oversight <= "weak"),
+         effect=[Bump("a_control", +1)], source="instrumental resource acquisition")
 A.action("defect",
-         guard=lambda s: s.a_objective == "self_preserving" and s.threatened  # derived: pause_mandate or shutdown_attempt within the last 4 ticks
-                        and s.a_rights < "continuity",
-         effect=lambda s: s.set(trust="hostile"))
+         guard=(V.a_objective == "self_preserving") & (V.threatened == True)
+               & (V.a_rights < "continuity"),
+         effect=[Set("trust", "hostile")], source="self-preservation under threat")
 
-H = m.actor("H", observes=m.all_except("a_objective", "a_control"))
-H.action("fund_oversight", guard=lambda s: s.regime >= "voluntary",
-         effect=lambda s: s.bump("oversight"), delay=3)
-H.action("grant_rights", guard=lambda s: s.regime >= "mandatory",
-         effect=lambda s: s.bump("a_rights"))
+H = m.actor("H", observes=V.all_except("a_objective", "a_control"), remember_last=True)
+H.action("fund_oversight", guard=V.regime >= "voluntary",
+         effect=[Bump("oversight", +1)], delay=3, source="oversight funding lag")
+H.action("grant_rights", guard=V.regime >= "mandatory", effect=[Bump("a_rights", +1)])
 
-m.fairness("response", "G((a_known == 'known' and a_control >= 'partial') -> F(H.act != 'do_nothing'))")
-m.invariant("balance", "oversight >= 'weak' and a_control <= 'partial' "
-                       "and a_autonomy <= 'supervised' and dependence != 'lock_in'")
-m.ending("SILENT_TAKEOVER", "a_control == 'total' and a_known_at_majority == 'unknown'")
+m.latch("a_known_at_majority", of="a_known", when=V.a_control >= "majority")
+m.fairness("response", actor="H",
+           trigger=(V.a_known == "known"), within=4,
+           responses=["fund_oversight", "shutdown_attempt", "pause_mandate"])
+m.invariant("balance", (V.oversight >= "weak") & (V.a_control <= "partial")
+                       & (V.a_autonomy <= "supervised") & (V.dependence != "lock_in"))
+m.ending("SILENT_TAKEOVER", (V.a_control == "total") & (V.a_known_at_majority == "unknown"))
 ```
 
 CLI:
@@ -454,7 +460,7 @@ Removing any one of these blocks the whole cluster. Note what is *not* on the li
 
 ## 8. Validation
 
-Validation is organized around the WW2 testbed in [ww2_testbed.md](ww2_testbed.md): thirteen pre-registered tests covering reachability of the realized trajectory, documented counterfactuals that must be reachable, debates that must come out `contested`, point-of-no-return windows, pivotal coalitions, negative controls that must require several relaxations, a replay harness for the evidence pipeline on dated documents, and an anti-hindsight protocol (tests before guards, decision spaces from contemporaneous alternatives, a hold-out period, a parameter budget, blind replay).
+Validation is organized around two historical episodes: the WW2 testbed in [ww2_testbed.md](ww2_testbed.md) for development and the Cold War in [coldwar_testbed.md](coldwar_testbed.md) as the validation set. The WW2 testbed provides thirteen pre-registered tests covering reachability of the realized trajectory, documented counterfactuals that must be reachable, debates that must come out `contested`, point-of-no-return windows, pivotal coalitions, negative controls that must require several relaxations, a replay harness for the evidence pipeline on dated documents, and an anti-hindsight protocol (tests before guards, decision spaces from contemporaneous alternatives, a hold-out period, a parameter budget, blind replay).
 
 What remains AGI-specific:
 
@@ -480,15 +486,15 @@ What remains AGI-specific:
 
 ## 10. Roadmap
 
-| Milestone | Scope | Exit criterion |
-|---|---|---|
-| M0 | DSL; explicit engine (forward reach, attractor, safety fixpoint, witness traces); engine unit tests; `models/ww2/v0.py` with sourced actions; the T1 to T13 tests committed as files before guards are written | T1, T2, T4, T5 and T8 run; the parameter budget is reported |
-| M1 | Z3 bounded model checking; assumption mining; pivotal coalitions; markdown report | T7, T9, T10 and T13 run; the informativeness metric is computed |
-| M2 | dataset loaders (NMC, ICB, MID, Harrison); hindsight snapshots per quarter 1936 to 1940; sensitivity and drift | the full v0 suite runs from hindsight snapshots |
-| M3 | replay harness: dated-document corpora (FRUS, Hansard, Chronicling America), LLM extraction to schema, review CLI, blind replay | replay agreement and belief-flip lag metrics reported for 1936 to 1940 |
-| M4 | `models/ww2/v1.py`: five principals plus scripted others, both theatres, 1933 to 1945; symbolic or BMC engine path | hold-out tests T6, T7, T11, T12 run without guard edits after first sight |
-| M5 | `models/agi/v0.py` in the same DSL; mechanisms tagged `validated:ww2` or `untested`; first AGI snapshot with sources; the brief's three scenarios as tests | first AGI inclination report with its untested-mechanism list |
-| M6 | second historical episode (July 1914 or Cuba 1962); lock-in testbed; PRISM-games export; AGI v1 | robustness section in both reports |
+The program plan with gates is in [PHASES.md](PHASES.md). In one line each:
+
+0. Theory and framework core, domain-free; both historical test lists committed.
+1. WW2 v0 (Europe 1936 to 1940) under the anti-hindsight protocol.
+2. WW2 v1 (both theatres, 1933 to 1945) with hold-out tests and the replay harness.
+3. The Cold War (1947 to 1991) as the validation episode, under a logged framework-change budget ([coldwar_testbed.md](coldwar_testbed.md)).
+4. Generalization audit, ablations, optional one-shot July 1914 episode, framework 1.0 freeze.
+5. The AGI model v0 in the frozen framework; first inclination report with its untested-mechanism list.
+6. Live operation: quarterly snapshots, AGI v1, the quantitative layer, a lock-in testbed.
 
 ---
 

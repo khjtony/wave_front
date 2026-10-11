@@ -1,0 +1,90 @@
+{
+  "date": "2026-10-11",
+  "model": "two_power",
+  "variables": {
+    "aims": {
+      "level": "hegemonic",
+      "confidence": "assumed",
+      "indicators": [
+        {
+          "id": "aims_hypothesis",
+          "value": "hegemonic",
+          "source": "EXAMPLE ONLY: modeller's hypothesis, not an observation (https://example.org/toy/hypotheses)",
+          "observed": "2026-10-11",
+          "rule": "the hidden variable is pinned to one hypothesis; the other level is its own snapshot"
+        }
+      ]
+    },
+    "control": {
+      "level": 0,
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "positions_held",
+          "value": 0,
+          "source": "EXAMPLE ONLY: https://example.org/toy/domain-survey",
+          "observed": "2026-09-30",
+          "rule": "contested positions held by the challenger: none -> 0, one -> 1, two -> 2, all three -> 3"
+        }
+      ]
+    },
+    "tension": {
+      "level": "calm",
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "open_incidents",
+          "value": false,
+          "source": "EXAMPLE ONLY: https://example.org/toy/incident-log",
+          "observed": "2026-10-09",
+          "rule": "no open confrontation in the period -> calm; any open confrontation -> crisis"
+        }
+      ]
+    },
+    "oversight": {
+      "level": "weak",
+      "confidence": "medium",
+      "indicators": [
+        {
+          "id": "verification_regime",
+          "value": "self-reported compliance without independent checks",
+          "source": "EXAMPLE ONLY: https://example.org/toy/verification-review",
+          "observed": "2026-09-30",
+          "rule": "no review -> none; reports without independent checks -> weak; independent checks -> strong"
+        }
+      ]
+    },
+    "belief": {
+      "level": "uncertain",
+      "confidence": "low",
+      "indicators": [
+        {
+          "id": "assessment_range",
+          "value": 0.4,
+          "source": "EXAMPLE ONLY: https://example.org/toy/assessments",
+          "observed": "2026-09-15",
+          "rule": "share of assessments judging the challenger's aims hegemonic: below 0.2 -> limited, 0.2 to 0.8 -> uncertain, above 0.8 -> hegemonic"
+        }
+      ]
+    },
+    "guarantee": {
+      "level": false,
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "standing_guarantee",
+          "value": "none in force",
+          "source": "EXAMPLE ONLY: https://example.org/toy/instruments",
+          "observed": "2026-10-01",
+          "rule": "a standing guarantee of continuity in force -> true; otherwise false"
+        }
+      ]
+    }
+  },
+  "rates": {
+    "fund_oversight": {
+      "ticks": 2,
+      "basis": "EXAMPLE ONLY: staffing and procurement lag assumed for the toy model"
+    }
+  }
+}
