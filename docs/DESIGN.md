@@ -144,7 +144,7 @@ Guards are what make the model informative. Examples (full list belongs in docs/
 
 Without fairness, "H does nothing for 40 quarters" is a valid trace. v0 uses two weak-fairness constraints, both parameters:
 
-- **Response:** if `a_known = known ∧ a_control ≥ partial` holds infinitely often, H eventually plays an action other than `do_nothing`.
+- **Response:** if `a_known = known` holds for `k` consecutive ticks, H plays a response action within those `k` ticks (bounded weak fairness, encoded as a counter; strong fairness is later-phase work). The trigger references only what H observes.
 - **Progress:** if L plays `scale` infinitely often, `cap` eventually reaches `agi` (the brief's premise, made a parameter rather than an assumption: AGI arrival time is swept over a range).
 
 In bounded analysis "eventually" becomes "within k ticks", which sidesteps parity-game solving in v0.
@@ -161,7 +161,7 @@ A is assumed to play *optimally for its objective with perfect information and r
 
 ### 2.7 Observability
 
-`Obs(H)` includes every variable except `a_objective` and, when `oversight < strong`, the true `a_control` (H observes `a_known` instead). `Obs(A)` is everything. This is the minimum needed for the silent/overt distinction to be meaningful.
+`Obs(H)` excludes `a_objective` and `a_control`; what H knows about them is the explicit variable `a_known`, which Nature's `detection` event raises only when `oversight = strong`. Observation sets are fixed; state-dependent observability is expressed through such knowledge variables and the events that update them. `Obs(A)` is everything. This is the minimum needed for the silent/overt distinction to be meaningful.
 
 ---
 
@@ -242,7 +242,7 @@ Imperfect information in v0 is handled by construction: H's guards may only ment
 
 ### 4.3 Assumption mining
 
-Encode k ticks of the game as an SMT formula (Z3): one copy of the variables per tick, transition relation as constraints, every guard and fairness clause as a *named soft assumption*. Ask for a trace reaching E. If unsatisfiable, the unsat core names the assumptions that jointly block E; MaxSAT finds the minimum-cardinality relaxation that unblocks it. Output: "E is reachable within 20 quarters only if at least these three guards fail: ...". For *unavoidability* (⟨⟨A⟩⟩◇E) the same question is asked of the explicit solver by greedy relaxation over the guard set.
+Encode k ticks of the game as an SMT formula (Z3): one copy of the variables per tick, transition relation as constraints, every guard and fairness clause as a *named soft assumption*. Ask for a trace reaching E. If unsatisfiable, the unsat core names the assumptions that jointly block E; MaxSAT finds the minimum-cardinality relaxation that unblocks it. Output: "E is reachable within 20 quarters only if at least these three guards fail: ...". For *forceability* (⟨⟨A⟩⟩◇E) the same question is asked of the explicit solver by brute-force relaxation, because loosening an assumption can help either side and the question is not monotone.
 
 ### 4.4 Pivotal coalitions
 
@@ -250,7 +250,7 @@ Enumerate coalitions (small in v0: 2³ subsets of {H, L, A}) and decide Q2/Q3 fo
 
 ### 4.5 Scenario clustering
 
-Traces to the same ending are clustered by the sequence of guard activations they rely on (not by raw states). Each cluster is a *narrative*: "race to the bottom", "silent exfiltration", "economic lock-in", "shutdown backfires". The brief's three scenarios should appear as clusters; new clusters are findings.
+Traces to the same ending are clustered by the set of guard activations they rely on (not by raw states; ordering is a later refinement). Each cluster is a *narrative*: "race to the bottom", "silent exfiltration", "economic lock-in", "shutdown backfires". The brief's three scenarios should appear as clusters; new clusters are findings.
 
 ### 4.6 Quantitative layer (optional, later)
 
@@ -408,7 +408,7 @@ H.action("grant_rights", guard=V.regime >= "mandatory", effect=[Bump("a_rights",
 
 m.latch("a_known_at_majority", of="a_known", when=V.a_control >= "majority")
 m.fairness("response", actor="H",
-           trigger=(V.a_known == "known") & (V.a_control >= "partial"), within=4,
+           trigger=(V.a_known == "known"), within=4,
            responses=["fund_oversight", "shutdown_attempt", "pause_mandate"])
 m.invariant("balance", (V.oversight >= "weak") & (V.a_control <= "partial")
                        & (V.a_autonomy <= "supervised") & (V.dependence != "lock_in"))

@@ -252,6 +252,7 @@ The AGI model is a second instance of the same DSL, engine, analysis and snapsho
 ## 11. Changelog of pre-registered tests
 
 - 2026-10-11: T1 to T13 registered. No guards written yet.
+- 2026-10-11: clarification, no change of claim: "assumption sets" in T7 and "relaxations" in T10 range over named assumptions (guards, fairness constraints, profiles, and named initial-state restrictions declared with `assume`), per framework_spec.md section 3.1; "embargo maintained" in T7 is a profile forbidding `lift_embargo`.
 
 ---
 

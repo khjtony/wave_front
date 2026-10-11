@@ -17,7 +17,7 @@ Rough sizes assume one full-time engineer and a part-time historian reviewer. Th
 - A validity argument: what historical validation can establish about the method (reliability on cases with the same structural features) and what it cannot (the content of any particular model). This document is updated at every gate and is the honest front page of every AGI report.
 - Requirements gathered from all three domains before the DSL is designed, so the Cold War and AGI needs are not retrofits: hidden variables with beliefs, observability, delays, fairness, behavioral profiles, multi-resolution time with nested crisis sub-games, joint and unilateral kernels, escalation ladders, exhaustion endings, capability events, treaty and verification variables, latched history variables.
 - The DSL, the explicit-state engine, the bounded-model-checking skeleton on Z3, the report format, the parameter-budget and informativeness instrumentation.
-- Engine tests on hand-built games with known answers, cross-checked against an existing checker (PRISM-games or MCMAS) on small instances.
+- Engine tests on hand-built games with known answers, cross-checked against brute-force enumeration of memoryless strategies on random tiny models. The external cross-check against PRISM-games waits for the exporter in phase 6.
 - Both historical test lists committed: WW2 T1 to T13 and Cold War C1 to C13.
 
 **Gate.** Engine suite and cross-check pass; the DSL covers the requirement list; both test lists are committed; instrumentation exists.

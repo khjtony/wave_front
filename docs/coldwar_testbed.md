@@ -127,3 +127,4 @@ Gaddis, *Strategies of Containment* (1982, revised 2005) and *The Cold War: A Ne
 ## 8. Changelog
 
 - 2026-10-11: C1 to C13 registered. No guards written for either episode.
+- 2026-10-11: clarification, no change of claim: in C12 "forceable by no coalition" means coalitions of declared actors excluding Nature; "relaxations" in C9 and C12 range over named assumptions (guards, fairness constraints, profiles, and named initial-state restrictions declared with `assume`), per framework_spec.md section 3.1.
