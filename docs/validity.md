@@ -198,15 +198,15 @@ The point of no return is the first state of a trace outside the kernel. The sil
 
 | Id | Claim | Evidence | Status | Assessed at |
 |---|---|---|---|---|
-| A1 | Compiler implements the semantics | `tests/model/` | planned | phase 0 |
-| A2 | Fixpoints and strategies correct | brute force on random tiny models; hand-built games | planned | phase 0 |
-| A3 | Contested region correct | non-determined game | planned | phase 0 |
-| A4 | Witnesses shortest | `tests/engine/` | planned | phase 0 |
+| A1 | Compiler implements the semantics | `tests/model/` (74 tests: errors, composition, delays, latches, fairness, profiles, monotone, observation); reviewer's hand-checked model | met | phase 0 |
+| A2 | Fixpoints and strategies correct | brute-force enumeration of all memoryless strategies on 246 random models (67,125 strategies) plus 300 hypothesis examples per check; layered-definition check; mutation check caught five planted solver bugs; hand-built chain for ranks | met | phase 0 |
+| A3 | Contested region correct | matching pennies comes out contested for reach and keep; random cases confirm forced and blocked never overlap | met | phase 0 |
+| A4 | Witnesses shortest | witness length equals the all-actor reachability rank on random models | met | phase 0 |
 | A5 | BMC reach agrees with explicit | `tests/bmc/` | planned | phase 0 |
 | A6 | BMC relax minimum sizes correct | agreement with `relax_explicit`, at most 6 guards | planned | phase 0 |
 | A7 | Analysis functions correct | `tests/analysis/` | planned | phase 0 |
 | A8 | Independent checker agrees | PRISM-games cross-check once the exporter exists (PLAN step 6.3) | planned | phase 6 |
-| A9 | Scale | 10^5 states under 120 s | planned | phase 0 |
+| A9 | Scale | 110,670 states with 8.5e6 joint moves explored in about 25 s; attractor 3.7 s, safe 2.7 s | met | phase 0 |
 | B1 | Realized trajectories reachable | T1, C1 | planned | phases 1, 3 |
 | B2 | Documented alternatives behave as registered | T2, T5, C4, C5 | planned | phases 1, 3 |
 | B3 | Split questions come out contested | T3, T6, T9, C3, C4, C9 | planned | phases 2, 3 |
@@ -233,5 +233,7 @@ The point of no return is the first state of a trace outside the kernel. The sil
 | D4 | Extraction reviewed | extractor and review CLI | planned | phase 2 |
 
 ## 9. Change log
+
+- 2026-10-11: A1 to A4 and A9 assessed as met after the phase 0 engine review (commit 5d60ccc). Remaining phase 0 rows wait for the bounded model checker, the analysis layer and the snapshot loader.
 
 - 2026-10-11: created in phase 0. All sub-claims planned except C1 (partial). Gaps recorded in sections 2 and 3.
