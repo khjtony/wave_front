@@ -100,7 +100,10 @@ def base_model(name):
 
 
 def all_states(cm):
-    return itertools.product(*(range(v.size) for v in cm.variables))
+    """Every valuation, except ``out`` and ``marker`` (no expression reads them) at 0."""
+    unread = {"out", "marker"}
+    ranges = [range(1) if v.name in unread else range(v.size) for v in cm.variables]
+    return itertools.product(*ranges)
 
 
 def test_translation_equals_evaluation_on_every_state():
@@ -126,7 +129,7 @@ def test_translation_equals_evaluation_on_every_state():
             cond = z3.simplify(z3.substitute(conditions[key], *sub))
             assert z3.is_true(cond) == bool(expected), (key, state)
             checked += 1
-    assert checked == len(exprs) * 4 * 2 * 2 * 3 * 4 * 3 * 4 * 2
+    assert checked == len(exprs) * 4 * 2 * 2 * 3 * 4 * 3
 
 
 # -- 2. the same expressions inside a model -------------------------------------------------

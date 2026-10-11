@@ -192,6 +192,9 @@ def relax(
 
     relaxed_count = [z3.Not(b) for b in bools.values()]
     opt = z3.Optimize()
+    # Turning 0-1 integers into Booleans costs more than it saves on these encodings
+    # (about 3.5x slower on the 17-variable, k = 30 performance model).
+    opt.set("elim_01", False)
     opt.add(*enc.constraints, *q.goal, goal)
     if relaxed_count:
         opt.add(z3.AtMost(*relaxed_count, max_relax))

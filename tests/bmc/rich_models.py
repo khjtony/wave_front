@@ -3,6 +3,7 @@
 :func:`build_rich_model` starts from the shared tiny-model generator
 (:func:`helpers.random_games.build_random_model`) and adds, at random, the constructs that
 generator leaves out: delayed actions, strict Bumps, ``SetIf`` and expression ``Set``s,
+a flag used directly as a condition (guards, an ending, assumes, the invariant, targets),
 latches, ``remember_last``, fairness constraints, a profile (returned so the caller
 selects it), ``assume`` restrictions and an invariant. Some of these can make the explicit
 engine raise ``ModelError`` (conflicting Sets, a strict Bump out of range, a fairness
@@ -32,6 +33,22 @@ def build_rich_model(seed, max_vars=4, max_horizon=4):
         i = rnd.randrange(len(sizes))
         return i, f"v{i}"
 
+    flag = rnd.random() < 0.4
+    if flag:
+        # A flag used directly as a condition: in guards, an ending (with EndingRef to
+        # keep endings exclusive), and possibly an assume or the invariant below.
+        m.flag("fl", init=rnd.choice((False, None)))
+        rnd.choice(everyone).action("fl_on", guard=_predicate(rnd, sizes), effect=Set("fl", True))
+        rnd.choice(everyone).action(
+            "fl_use",
+            guard=rnd.choice((V.fl, ~V.fl, V.fl | _atom(rnd, sizes))),
+            effect=Bump("v0", 1),
+        )
+        if rnd.random() < 0.5:
+            ending = V.fl & _atom(rnd, sizes)
+            for name in list(m.endings):
+                ending = ending & ~V.ending(name)
+            m.ending("EF", ending)
     if rnd.random() < 0.4:
         actor = rnd.choice(everyone)
         i, name = var()
@@ -76,10 +93,15 @@ def build_rich_model(seed, max_vars=4, max_horizon=4):
         unless = FALSE if rnd.random() < 0.3 else _predicate(rnd, sizes, allow_true=False)
         m.profile("P0", actor=actor.name, forbid=forbid, unless=unless)
         profile = "P0"
+
+    def condition():
+        pred = _predicate(rnd, sizes, allow_true=False)
+        return rnd.choice((pred, pred | V.fl, pred & ~V.fl)) if flag else pred
+
     for n in range(rnd.choice((0, 0, 1, 2))):
-        m.assume(f"H{n}", _predicate(rnd, sizes, allow_true=False))
+        m.assume(f"H{n}", condition())
     if rnd.random() < 0.3:
-        m.invariant("I0", _predicate(rnd, sizes, allow_true=False))
+        m.invariant("I0", condition())
     return m, profile
 
 
@@ -97,13 +119,16 @@ def try_explore(cm, max_states=20_000):
 
 
 def targets(cm, rnd):
-    """Targets to check: every ending, ``HORIZON``, the invariant and a random condition."""
-    sizes = [v.size for v in cm.variables if v.origin == "var"]
+    """Targets to check: every ending, ``HORIZON``, the invariant, a random condition, and
+    the flag ``fl`` used directly when the model has it."""
+    sizes = [v.size for v in cm.variables if v.origin == "var" and v.name.startswith("v")]
     out = list(cm.model.endings)
     if cm.timed:
         out.append("HORIZON")
     out.extend(cm.model.invariants)
     out.append(_predicate(rnd, sizes, allow_true=False))
+    if "fl" in cm.index:
+        out.append(V.fl)
     return out
 
 

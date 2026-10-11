@@ -383,3 +383,18 @@ def test_targets_by_name_and_errors():
         reach(cm, 2, V.attacked == True, relax=["nope"])  # noqa: E712
     with pytest.raises(ValueError):
         encode(cm, -1)
+
+
+def test_monotone_decrease_is_excluded():
+    m = Model("monotone", horizon=3)
+    m.var("g", levels=["g0", "g1", "g2"], init="g2", monotone=True)
+    m.flag("moved")
+    a = m.actor("A")
+    a.action("drop", effect=[Set("g", "g1"), Set("moved", True)])
+    a.action("mark", effect=Set("moved", True))
+    cm = m.compile()
+    with pytest.raises(ModelError, match="monotone"):
+        explore(cm)
+    assert reach(cm, 3, V.g == "g1") is None
+    trace = reach(cm, 3, V.moved == True)  # noqa: E712
+    assert [cm.actors[0].actions[mv[0]].name for mv in trace.moves] == ["mark"]
