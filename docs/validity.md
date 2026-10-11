@@ -205,7 +205,7 @@ The point of no return is the first state of a trace outside the kernel. The sil
 | A5 | BMC reach agrees with explicit | `tests/bmc/` | planned | phase 0 |
 | A6 | BMC relax minimum sizes correct | agreement with `relax_explicit`, at most 6 guards | planned | phase 0 |
 | A7 | Analysis functions correct | `tests/analysis/` | planned | phase 0 |
-| A8 | Independent checker agrees | PRISM-games or MCMAS cross-check | planned (no step owns it) | phase 0 |
+| A8 | Independent checker agrees | PRISM-games cross-check once the exporter exists (PLAN step 6.3) | planned | phase 6 |
 | A9 | Scale | 10^5 states under 120 s | planned | phase 0 |
 | B1 | Realized trajectories reachable | T1, C1 | planned | phases 1, 3 |
 | B2 | Documented alternatives behave as registered | T2, T5, C4, C5 | planned | phases 1, 3 |
@@ -220,7 +220,7 @@ The point of no return is the first state of a trace outside the kernel. The sil
 | B11 | Oversight and capability thresholds | C8, C10, T12 | planned | phases 2, 3 |
 | B12 | Exhaustion with no adversarial act | C9, C13 | planned | phase 3 |
 | B13 | Transfer hypotheses hold | `docs/transfer_hypotheses.md`; Cold War suite | planned | phases 2 (written), 3 (tested) |
-| C1 | Tests before guards | testbed changelogs; test files | partial | phase 0 |
+| C1 | Tests before guards | testbed changelogs; the 26 skipping test files under `tests/ww2/scenarios` and `tests/coldwar/scenarios` | met for registration; re-assessed when guards are written | phase 0 |
 | C2 | Contemporaneous decision spaces | `source=`, speculative tags | planned | phases 1, 3 |
 | C3 | Hold-out respected | guard changelog around T6, T7, T11, T12 | planned | phase 2 |
 | C4 | Guard edits logged | guard changelogs | planned | phases 1 to 3 |

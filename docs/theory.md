@@ -230,12 +230,12 @@ Both families are upward closed in the subset lattice, by the monotonicity of `C
 
 ### 5.1 Assumptions and relaxations
 
-The **assumption set** `𝒜` of a model has one element per action guard that is not the constant `TRUE`, and one per fairness constraint. A **relaxation** `R ⊆ 𝒜` produces the model `G[R]`: every guard in `R` is replaced by `TRUE`; every fairness constraint in `R` is removed, together with its counter and its restriction on `avail`. Relaxation is loosening only. No guard is tightened, no action is removed, and no initial value, delay, effect or profile changes.
+The **assumption set** `𝒜` of a model has one element per action guard that is not the constant `TRUE`, one per fairness constraint, one per profile, and one per named initial-state restriction declared with `assume` (spec §3.1). A **relaxation** `R ⊆ 𝒜` produces the model `G[R]`: every guard in `R` is replaced by `TRUE`; every fairness constraint in `R` is removed, together with its counter and its restriction on `avail`; every profile in `R` is not applied; every `assume` in `R` no longer filters the initial states. Relaxation is loosening only. No guard is tightened, no action is removed, and no delay or effect changes. The registered claims that speak of "assumptions" such as an embargo maintained or an actor's aims (T7, C9) are expressed through profiles and `assume` restrictions, so they fall inside `𝒜`.
 
 **Lemma 6 (monotonicity).** If `R ⊆ R'`, every play of `G[R]`, with removed fairness counters projected out, is a play of `G[R']`. Hence `EF T` in `G[R]` implies `EF T` in `G[R']`.
-*Sketch:* `avail` only grows, and `δ` on a given joint move does not depend on guards; fairness counters influence nothing but `avail`. A relaxed model can still fail to compile or explore (conflicting `Set`s or non-exclusive endings on newly reachable states). Such a relaxation is reported as ill-formed, not as a result.
+*Sketch:* `avail` only grows, the initial set only grows, and `δ` on a given joint move does not depend on guards; fairness counters influence nothing but `avail`. A relaxed model can still fail to compile or explore (conflicting `Set`s or non-exclusive endings on newly reachable states). Such a relaxation is reported as ill-formed, not as a result.
 
-For forcing objectives monotonicity is partial. Relaxing an assumption owned by a member of `C` can only help `C`. Relaxing one owned by the rest, Nature included, can only help the rest. A minimal relaxation for `⟨⟨C⟩⟩◇E` must therefore be found by search over inclusion, or the search restricted to `C`'s own assumptions. The spec defines relaxation for reachability only. DESIGN.md §4.3 mentions the unavoidability case without specifying it.
+For forcing objectives monotonicity is partial. Relaxing an assumption owned by a member of `C` can only help `C`. Relaxing one owned by the rest, Nature included, can only help the rest. A minimal relaxation for `⟨⟨C⟩⟩◇E` must therefore be found by search over inclusion, or the search restricted to `C`'s own assumptions. The spec's `relax_explicit` takes an optional coalition for this case and answers it by brute force only; the bounded encoding answers reachability only.
 
 Define `ρ_k(E) = min { |R| : E reachable within k ticks in G[R] }`. A relaxation set is **minimal** if no proper subset works and **minimum** if its size is `ρ_k(E)`. `ρ_k(E)` is non-increasing in `k` and constant once `k` covers the horizon. Every report states the `k` used.
 
@@ -266,13 +266,13 @@ Reach_k(E) = ⋁_{t≤k} E(x^t)
 
 ### 5.4 Informativeness and the parameter budget
 
-A negative control is a pair `(E_j, r_j)`: ending `E_j` should need at least `r_j` relaxations. For a list `N` of controls (spec §7):
+A negative control is a triple `(E_j, op_j, r_j)` with `op_j ∈ {≥, =, ≤}`: ending `E_j` should need a number of relaxations that stands in relation `op_j` to `r_j`. For a list `N` of controls (spec §7):
 
 ```
-Inf(G, N) = |{ j : ρ(E_j) ≥ r_j }| / |N|
+Inf(G, N) = |{ j : ρ(E_j) op_j r_j }| / |N|
 ```
 
-Checking `ρ(E_j) ≥ r_j` needs a search up to size `r_j − 1` only. Controls with an upper bound or an exact value (T10's "at most one relaxation of `aims[USSR]`", C12's "exactly one" and "zero") are separate test assertions; `Inf` does not cover them.
+Checking `ρ(E_j) ≥ r_j` needs a search up to size `r_j − 1` only; `=` and `≤` need the search up to `r_j`. This covers T10's "at most one relaxation of `aims[USSR]`" and C12's "exactly one" and "zero" as well as the "at least three" controls.
 
 The **parameter budget** `β(G)` is the vector of counts returned by `budget()`: variables, levels, actions, guards, speculative actions, fairness constraints, delays, latches. The anti-hindsight rule (ww2_testbed.md §7.4) is that a change raising `β` must not lower `Inf`. Each parameter is a degree of freedom that could fit the known outcome, and `Inf` measures whether the model still rules things out.
 
