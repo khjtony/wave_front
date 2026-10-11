@@ -17,3 +17,5 @@ Status: design stage.
 - [docs/ww2_testbed.md](docs/ww2_testbed.md): the WW2 model, pre-registered tests, data sources, anti-hindsight protocol.
 - [docs/coldwar_testbed.md](docs/coldwar_testbed.md): the Cold War as the validation episode, with its own pre-registered claims.
 - [docs/PHASES.md](docs/PHASES.md): the seven phases, each with a gate.
+- [docs/PLAN.md](docs/PLAN.md): the steps inside each phase, with acceptance checks and owners.
+- [docs/framework_spec.md](docs/framework_spec.md): the contract the `wavefront` package implements.

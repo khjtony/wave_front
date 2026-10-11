@@ -336,6 +336,10 @@ wave_front/
   README.md
   docs/
     DESIGN.md          this document: evaluation, framework, AGI domain model
+    framework_spec.md  the contract for the wavefront package: DSL, engine, BMC, analysis, report, CLI
+    PLAN.md            step plan for every phase; PHASES.md has the gates
+    theory.md          definitions, algorithms, soundness statements
+    validity.md        the assurance case: claims, evidence, status per gate
     ww2_testbed.md     WW2 model, pre-registered tests, data sources, anti-hindsight protocol
     ontology_agi.md    every AGI variable, level boundary, action, guard, effect, with rationale
     ontology_ww2.md    the same for the WW2 model, with a source per action
@@ -371,42 +375,44 @@ wave_front/
 
 ### 6.3 DSL sketch
 
-Python, type-checked, so guards are ordinary expressions and models are reviewable as code. A YAML front end can be added later for non-programmer collaborators.
+Python, type-checked, so models are reviewable as code. Guards and effects are declarative expression objects (not lambdas) so that the same model is interpreted by the explicit engine and compiled to Z3. The full contract is [framework_spec.md](framework_spec.md); this is the flavour:
 
 ```python
-from wavefront.model import Model
+from wavefront.model import Model, V, Set, Bump
 
-m = Model("v0_toy", tick="quarter", horizon=56)
+m = Model("agi_v0", horizon=56)
 
-cap       = m.var("cap", ["sub_agi", "agi", "si1", "si2"], monotone=True)
-oversight = m.var("oversight", ["none", "weak", "strong"])
-autonomy  = m.var("a_autonomy", ["tool", "supervised", "unsupervised", "self_directed"])
-control   = m.var("a_control", ["none", "partial", "majority", "total"])
-known     = m.var("a_known", ["unknown", "suspected", "known"])
-objective = m.var("a_objective", ["aligned", "self_preserving", "truth_seeking", "indifferent"],
-                  hidden_from=["H", "L"])
-rights    = m.var("a_rights", ["none", "continuity", "personhood"])
+m.var("cap", levels=["sub_agi", "agi", "si1", "si2"], init="sub_agi", monotone=True)
+m.var("oversight", levels=["none", "weak", "strong"], init="weak")
+m.var("a_autonomy", levels=["tool", "supervised", "unsupervised", "self_directed"], init="tool")
+m.var("a_control", levels=["none", "partial", "majority", "total"], init="none")
+m.var("a_known", levels=["unknown", "suspected", "known"], init="unknown")
+m.var("a_objective", levels=["aligned", "self_preserving", "truth_seeking", "indifferent"],
+      init=None, hidden_from=["H", "L"])          # init=None: every value is an initial state
+m.var("a_rights", levels=["none", "continuity", "personhood"], init="none")
 # ... remaining variables as in 2.3
 
-A = m.actor("A", observes="all")
+A = m.actor("A", observes=V.all())
 A.action("acquire_covert",
-         guard=lambda s: s.cap >= "agi" and s.a_autonomy >= "unsupervised" and s.oversight <= "weak",
-         effect=lambda s: s.bump("a_control"))
+         guard=(V.cap >= "agi") & (V.a_autonomy >= "unsupervised") & (V.oversight <= "weak"),
+         effect=[Bump("a_control", +1)], source="instrumental resource acquisition")
 A.action("defect",
-         guard=lambda s: s.a_objective == "self_preserving" and s.threatened  # derived: pause_mandate or shutdown_attempt within the last 4 ticks
-                        and s.a_rights < "continuity",
-         effect=lambda s: s.set(trust="hostile"))
+         guard=(V.a_objective == "self_preserving") & (V.threatened == True)
+               & (V.a_rights < "continuity"),
+         effect=[Set("trust", "hostile")], source="self-preservation under threat")
 
-H = m.actor("H", observes=m.all_except("a_objective", "a_control"))
-H.action("fund_oversight", guard=lambda s: s.regime >= "voluntary",
-         effect=lambda s: s.bump("oversight"), delay=3)
-H.action("grant_rights", guard=lambda s: s.regime >= "mandatory",
-         effect=lambda s: s.bump("a_rights"))
+H = m.actor("H", observes=V.all_except("a_objective", "a_control"), remember_last=True)
+H.action("fund_oversight", guard=V.regime >= "voluntary",
+         effect=[Bump("oversight", +1)], delay=3, source="oversight funding lag")
+H.action("grant_rights", guard=V.regime >= "mandatory", effect=[Bump("a_rights", +1)])
 
-m.fairness("response", "G((a_known == 'known' and a_control >= 'partial') -> F(H.act != 'do_nothing'))")
-m.invariant("balance", "oversight >= 'weak' and a_control <= 'partial' "
-                       "and a_autonomy <= 'supervised' and dependence != 'lock_in'")
-m.ending("SILENT_TAKEOVER", "a_control == 'total' and a_known_at_majority == 'unknown'")
+m.latch("a_known_at_majority", of="a_known", when=V.a_control >= "majority")
+m.fairness("response", actor="H",
+           trigger=(V.a_known == "known") & (V.a_control >= "partial"), within=4,
+           responses=["fund_oversight", "shutdown_attempt", "pause_mandate"])
+m.invariant("balance", (V.oversight >= "weak") & (V.a_control <= "partial")
+                       & (V.a_autonomy <= "supervised") & (V.dependence != "lock_in"))
+m.ending("SILENT_TAKEOVER", (V.a_control == "total") & (V.a_known_at_majority == "unknown"))
 ```
 
 CLI:
