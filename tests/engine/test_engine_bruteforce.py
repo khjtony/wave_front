@@ -14,9 +14,7 @@ seeds, because hypothesis favours very small seeds and therefore very small game
 
 import random
 
-from hypothesis import HealthCheck, assume, given, settings
-from hypothesis import strategies as st
-from wf_random_games import (
+from helpers.random_games import (
     build_random_model,
     enumerate_strategies,
     kleene_attractor,
@@ -27,6 +25,8 @@ from wf_random_games import (
     strategy_reaches,
     sub_successors,
 )
+from hypothesis import HealthCheck, assume, given, settings
+from hypothesis import strategies as st
 
 from wavefront.engine import attractor, contested, explore, safe, witness
 
