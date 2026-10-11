@@ -22,7 +22,7 @@ Rough sizes assume one full-time engineer and a part-time historian reviewer. Th
 
 **Gate.** Engine suite and cross-check pass; the DSL covers the requirement list; both test lists are committed; instrumentation exists.
 
-**Gate record.** Passed 2026-10-11 at tag `phase0`; evidence per sub-claim in validity.md section 8.
+**Gate record.** Passed 2026-10-11 at commit 5128836 (local tag `phase0`); evidence per sub-claim in validity.md section 8.
 
 **Risk.** Over-designing the DSL. Mitigation: every construct must be demanded by a named test in one of the two lists.
 
