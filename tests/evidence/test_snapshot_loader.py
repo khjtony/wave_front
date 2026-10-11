@@ -8,6 +8,7 @@ from pathlib import Path
 import pytest
 
 from models.toy.two_power import model as toy
+from wavefront.cli import main
 from wavefront.engine import attractor, explore, safe
 from wavefront.evidence import (
     SnapshotError,
@@ -16,7 +17,7 @@ from wavefront.evidence import (
     snapshot_to_state,
     validate_snapshot,
 )
-from wavefront.model import Model, V
+from wavefront.model import Model, ModelError, V
 
 EXAMPLE_PATH = Path(__file__).resolve().parents[2] / "snapshots" / "toy" / "example.json"
 
@@ -243,8 +244,10 @@ def test_all_problems_are_reported_together_and_kept_on_the_error():
     assert str(error) == "; ".join(error.problems)
 
 
-def test_a_snapshot_error_is_a_value_error():
+def test_a_snapshot_error_is_a_value_error_and_a_model_error():
+    """A ValueError as specified; also a ModelError, so ``wf`` reports it with exit code 2."""
     assert issubclass(SnapshotError, ValueError)
+    assert issubclass(SnapshotError, ModelError)
     with pytest.raises(ValueError):
         snapshot_to_state({}, mini())
 
@@ -261,6 +264,15 @@ def test_files_that_are_not_snapshots_are_refused(tmp_path):
         SnapshotError, match=r"list\.json: invalid snapshot: snapshot: must be an obj"
     ):
         read_snapshot(not_an_object)
+    duplicated = tmp_path / "twice.json"
+    duplicated.write_text(
+        '{"date": "2026-10-11", "model": "mini", "variables": {'
+        '"cap": {"level": "low", "confidence": "assumed", "indicators": []}, '
+        '"cap": {"level": "high", "confidence": "assumed", "indicators": []}}}',
+        encoding="utf-8",
+    )
+    with pytest.raises(SnapshotError, match=r"twice\.json: duplicate key 'cap'"):
+        load_snapshot(duplicated, cm)
     wrong_level = tmp_path / "level.json"
     wrong_level.write_text(json.dumps(snapshot(cap="medium", pick="a")), encoding="utf-8")
     with pytest.raises(SnapshotError, match=r"level\.json: variable 'cap' has no level 'medium'"):
@@ -356,3 +368,19 @@ def test_snapshots_move_the_verdict_through_the_engine():
         "blocks takeover": True,
         "ch forces takeover": False,
     }
+
+
+def test_wf_viable_takes_a_snapshot_and_reports_a_bad_one_as_a_user_error(capsys, tmp_path):
+    """The command line path: a good snapshot is analysed, a bad one is refused with exit
+    code 2 and a message naming the file, the variable and the level (no traceback)."""
+    model_ref = str(EXAMPLE_PATH.parents[2] / "models" / "toy" / "two_power.py")
+    args = ["viable", model_ref, "--coalition", "INC", "--invariant", "balance"]
+    assert main([*args, "--snapshot", str(EXAMPLE_PATH)]) == 0
+    out = capsys.readouterr().out
+    assert "balance" in out
+
+    bad = tmp_path / "bad.json"
+    bad.write_text(json.dumps(toy_data(oversight="medium")), encoding="utf-8")
+    assert main([*args, "--snapshot", str(bad)]) == 2
+    err = capsys.readouterr().err
+    assert "bad.json" in err and "variable 'oversight' has no level 'medium'" in err

@@ -219,11 +219,15 @@ Correctness is tested against brute force on tiny games: enumerate all memoryles
 
 `wavefront.analysis.run_all(model, coalitions=None, profile=None, initial=None, max_relax=2, max_states=...) -> Analysis` bundles the graph, per-coalition kernel membership of the initial states (and, for joint coalitions, the forced distance out of the joint kernel when one member defects), per-ending contested status per coalition with shortest witnesses (`HORIZON` counts as an ending in timed models), minimal relaxation sets, pivotal coalitions, sensitivity rows, uniformity notes on the used part of each strategy, the budget, the fingerprint and the speculative actions used by any reported trace. Default coalitions: each actor alone and all non-Nature actors together.
 
+When a model sweeps a hidden variable (`init=None`), every ending tends to be reachable from *some* initial state and the relaxation table is uninformative; reports for such models are produced per hypothesis by passing `initial=` the initial states of one hidden value (the CLI's `--snapshot` fixes them the same way).
+
 `render(analysis) -> str` produces Markdown with, in order: the front-page caveat ("every result is conditional on the model version and the initial state; no bare reachability result is a finding"); the parameter budget; initial states and kernel membership per coalition; endings with forced/blocked/contested status per coalition and the shortest witness trace; minimal relaxation sets; pivotal coalitions; sensitivity table; the list of speculative actions used by any reported trace.
 
 ## 9. Evidence (`wavefront.evidence`)
 
 `snapshots/schema.json` (JSON Schema draft 2020-12) for the snapshot format in DESIGN.md section 5.1: `date`, `model`, `variables: {name: {level, confidence, indicators: [{id, value, source, observed, rule}]}}`, `rates`. `load_snapshot(path, cm) -> tuple` maps a snapshot to an initial state (variables not in the snapshot take their declared init; a snapshot level not in the variable's levels is an error). Provenance fields are required; the loader refuses a variable with no indicator unless `confidence == "assumed"`.
+
+Settled loader details: level variables take level names, counters integers, flags booleans; a swept variable (`init=None`) must be fixed by the snapshot; built-in variables cannot be set; a latch whose condition already holds in the loaded state is set, as for the model's own initial states; the returned state is not filtered by `assume`; the `model` string and `rates` are shape-checked only (the name is not compared with the model's, and rates are not applied in phase 0); duplicate JSON keys are rejected; all problems are reported together. `SnapshotError` subclasses `ModelError` so the CLI reports a bad snapshot as a user error (exit 2). `validate_snapshot(data) -> list[str]`, `snapshot_to_state(data, cm)` and `read_snapshot(path)` are also public.
 
 ## 10. CLI (`wavefront.cli`, entry point `wf`)
 

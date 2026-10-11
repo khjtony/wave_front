@@ -11,6 +11,7 @@ docstring says what the model intends; its assertions say what the engine answer
 import pytest
 
 from models.toy.two_power import model
+from wavefront.analysis import pivotal, relax_explicit
 from wavefront.engine import attractor, contested, explore, safe, witness
 from wavefront.model import V
 
@@ -132,7 +133,7 @@ def test_compiles_with_the_declared_layout_and_budget(default):
         "actors": 3,
         "actions": 8,
         "guards": 7,
-        "speculative_actions": 1,
+        "speculative_actions": 2,
         "fairness_constraints": 1,
         "delays": 1,
         "latches": 1,
@@ -154,10 +155,15 @@ def test_compiles_with_the_declared_layout_and_budget(default):
     assert model.compile(profile="appeaser").assumptions()[-2:] == ["appeaser", "calm_start"]
 
 
-def test_every_action_carries_a_rationale_and_only_defect_is_speculative(default):
+def test_every_action_has_a_rationale_and_deceive_and_defect_are_speculative(default):
+    """The actions that exist only if CH's hidden objective is hegemonic are the speculative
+    ones; the other actions are mechanisms of the game."""
     declared = [a for actor in default.cm.actors for a in actor.actions if not a.is_idle]
     assert all(a.source.strip() for a in declared)
-    assert [f"{a.actor}.{a.name}" for a in declared if a.speculative] == ["CH.defect"]
+    assert [f"{a.actor}.{a.name}" for a in declared if a.speculative] == [
+        "CH.deceive",
+        "CH.defect",
+    ]
 
 
 def test_the_objective_is_hidden_from_inc_and_so_is_chs_last_action(default):
@@ -262,11 +268,22 @@ def test_an_appeaser_lets_ch_force_takeover_otherwise_inc_blocks_it(default, app
 
 def test_incs_only_block_is_to_resist_at_tick_zero(default):
     """INC's block against a hegemonic CH is unique: resist immediately, while its belief is
-    still 'uncertain'. That freezes quiet expansion for good and, since INC concedes next, CH
-    gets one overt step (control 2) and no more. Any other first move loses the block."""
+    still 'uncertain'. That freezes quiet expansion for good; INC then concedes at tick 1 so
+    that CH's one overt step is the last, and control never passes 2. Any other first move
+    loses the block."""
+    g = default.g
     heg = default.start("hegemonic")
     kernel = default.keep({"INC"}, default.everything_but(default.ending("TAKEOVER")))
     assert safe_first_moves(default, kernel, heg, "INC") == {"resist"}
+    inc = default.cm.actors[1]
+    after_resist = {
+        t
+        for move, t in zip(g.moves[heg], g.succ[heg], strict=True)
+        if move[inc.index] == inc.action_index("resist")
+    }
+    assert after_resist
+    for t in after_resist:
+        assert "concede" in safe_first_moves(default, kernel, t, "INC")
 
 
 def test_inc_viability_kernel_for_balance(default):
@@ -380,6 +397,49 @@ def test_relaxing_calm_start_widens_the_initial_set_and_the_forcing_result():
     }
 
 
+# -- pivotal coalitions and assumption mining -----------------------------------------------------
+
+
+def test_pivotal_coalitions_per_hypothesis_about_the_objective(default, appeaser):
+    """Who can force or stop a takeover depends on the hypothesis about CH's aims and on INC's
+    profile. If aims are hegemonic and INC resists, only CH and INC together can force it and
+    either alone can stop it; against an appeaser CH alone forces it and INC cannot stop it.
+    If aims are limited nobody can force a takeover at all (the empty coalition blocks it)."""
+
+    def groups(world, ending, aims):
+        starts = [i for i in world.g.initial if world.level(i, "aims") == aims]
+        result = pivotal(world.g, ending, initial=starts)
+        return (
+            sorted(sorted(c) for c in result.forcing),
+            sorted(sorted(c) for c in result.blocking),
+        )
+
+    assert groups(default, "TAKEOVER", "hegemonic") == ([["CH", "INC"]], [["CH"], ["INC"]])
+    assert groups(appeaser, "TAKEOVER", "hegemonic") == ([["CH"]], [["CH"]])
+    assert groups(default, "TAKEOVER", "limited") == ([], [[]])
+    assert groups(default, "SETTLED", "limited") == ([["CH", "INC"]], [["CH"], ["INC"]])
+    assert groups(default, "SETTLED", "hegemonic") == ([], [[]])
+
+
+def test_containment_against_an_appeaser_needs_exactly_one_assumption_relaxed():
+    """Reachability alone says CONTAINED is possible (an unconditional answer, not a finding).
+    Against an appeaser it is not: containment needs a crisis, and an appeaser never opens one.
+    The minimal relaxation sets say what would have to change: drop the profile, let CH strike
+    without provocation (the guard of ``CH.defect``), or let the game start in crisis
+    (``calm_start``). Each is a single named assumption."""
+    expected = {frozenset({"appeaser"}), frozenset({"CH.defect"}), frozenset({"calm_start"})}
+    assert relax_explicit(model, "CONTAINED", max_size=0) == [[]]
+    sets = relax_explicit(model, "CONTAINED", max_size=1, profile="appeaser")
+    assert {frozenset(s) for s in sets} == expected and not sets.ill_formed
+
+    pytest.importorskip("z3")
+    from wavefront.bmc import relax
+
+    bounded = relax(model.compile(profile="appeaser"), model.horizon, "CONTAINED")
+    assert not bounded.reachable_as_is and bounded.minimum_size == 1
+    assert {frozenset(s) for s in bounded.minimal_sets} == expected
+
+
 # -- bounded fairness --------------------------------------------------------------------------
 
 
@@ -475,8 +535,11 @@ def test_detect_needs_strong_oversight_and_a_deception_on_the_previous_tick(defa
     cm = default.cm
     watched = state_from(cm, "hegemonic", oversight="strong", last_CH="deceive")
     assert "detect" in available(cm, watched, "Nature")
-    after = cm.step(watched, joint(cm, Nature="detect"))
-    assert cm.level_name("belief", after[cm.index["belief"]]) == "hegemonic"
+    # Detection raises the belief one level at a time.
+    for before, after_level in (("limited", "uncertain"), ("uncertain", "hegemonic")):
+        s = state_from(cm, "hegemonic", oversight="strong", last_CH="deceive", belief=before)
+        after = cm.step(s, joint(cm, Nature="detect"))
+        assert cm.level_name("belief", after[cm.index["belief"]]) == after_level, before
     for quiet in (
         state_from(cm, "hegemonic", oversight="weak", last_CH="deceive"),
         state_from(cm, "hegemonic", oversight="strong", last_CH="expand"),
@@ -537,11 +600,17 @@ def test_fund_oversight_shows_three_ticks_after_it_is_chosen_and_shock_erodes_it
 
 
 def test_the_appeaser_profile_removes_resist_and_nothing_else(default, appeaser):
+    """In every state the appeaser can reach, each actor's available actions are exactly the
+    default ones, except that INC loses ``resist``."""
     inc = default.cm.actors[1]
     resist = inc.action_index("resist")
     assert any(resist in av[inc.index] for av in default.g.avail)
     assert not any(resist in av[inc.index] for av in appeaser.g.avail)
-    assert {a.name for a in appeaser.cm.actors[1].actions} == {a.name for a in inc.actions}
+    for state in appeaser.g.states:
+        plain, restricted = default.cm.available(state), appeaser.cm.available(state)
+        for actor in default.cm.actors:
+            expected = set(plain[actor.index]) - ({resist} if actor is inc else set())
+            assert set(restricted[actor.index]) == expected
     assert "appeaser" not in default.cm.assumptions()
 
 

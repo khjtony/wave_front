@@ -202,9 +202,9 @@ The point of no return is the first state of a trace outside the kernel. The sil
 | A2 | Fixpoints and strategies correct | brute-force enumeration of all memoryless strategies on 246 random models (67,125 strategies) plus 300 hypothesis examples per check; layered-definition check; mutation check caught five planted solver bugs; hand-built chain for ranks | met | phase 0 |
 | A3 | Contested region correct | matching pennies comes out contested for reach and keep; random cases confirm forced and blocked never overlap | met | phase 0 |
 | A4 | Witnesses shortest | witness length equals the all-actor reachability rank on random models | met | phase 0 |
-| A5 | BMC reach agrees with explicit | `tests/bmc/` | planned | phase 0 |
-| A6 | BMC relax minimum sizes correct | agreement with `relax_explicit`, at most 6 guards | planned | phase 0 |
-| A7 | Analysis functions correct | `tests/analysis/` | planned | phase 0 |
+| A5 | BMC reach agrees with explicit | random models from two generators (200 hypothesis examples plus 200-seed sweeps each): trace length equals the explicit rank and every trace replays; 77 expression-node tests against `cm.evaluate`; 9 planted encoder bugs caught; reviewer's hand-checked queries | met | phase 0 |
+| A6 | BMC relax minimum sizes correct | brute force over all assumption subsets on 120 hypothesis models plus a 120-seed sweep (at most 6 assumptions): exact minimum sets match; explicit and bounded agree on the toy model | met | phase 0 |
+| A7 | Analysis functions correct | 53 tests on hand-built games with known answers (kernels, silent phase indices, margin against the literal iteration, pivotal antichains, relaxations including forceability and ill-formed sets, per-member uniformity); 33 toy demonstrations | met | phase 0 |
 | A8 | Independent checker agrees | PRISM-games cross-check once the exporter exists (PLAN step 6.3) | planned | phase 6 |
 | A9 | Scale | 110,670 states with 8.5e6 joint moves explored in about 25 s; attractor 3.7 s, safe 2.7 s | met | phase 0 |
 | B1 | Realized trajectories reachable | T1, C1 | planned | phases 1, 3 |
@@ -227,13 +227,14 @@ The point of no return is the first state of a trace outside the kernel. The sil
 | C5 | Framework-change budget kept | `docs/framework_changes.md` | planned | phases 3, 4 |
 | C6 | Budget does not buy fit | budget and informativeness per report | planned | phases 1 to 3 |
 | C7 | Negative controls in CI | T10, C12 | planned | phases 1, 3 |
-| D1 | Snapshot provenance | schema and loader | planned | phase 0 |
+| D1 | Snapshot provenance | strict JSON Schema plus hand-written validator cross-checked against `jsonschema` on a 1,715-document mutation corpus; loader refuses missing provenance, unknown levels and unfixed swept variables; 93 tests | met | phase 0 |
 | D2 | Blind replay | date-filtered corpora | planned | phase 2 |
 | D3 | Replay agreement | replay metrics, WW2 and Cold War | planned | phases 2, 3 |
 | D4 | Extraction reviewed | extractor and review CLI | planned | phase 2 |
 
 ## 9. Change log
 
-- 2026-10-11: A1 to A4 and A9 assessed as met after the phase 0 engine review (commit 5d60ccc). Remaining phase 0 rows wait for the bounded model checker, the analysis layer and the snapshot loader.
+- 2026-10-11: A1 to A4 and A9 assessed as met after the phase 0 engine review (commit 5d60ccc).
+- 2026-10-11: A5, A6, A7 and D1 assessed as met after the wave 2 review. Phase 0 gate passed: engine correct on known games, the DSL covers the requirement list, both historical test lists are committed as test files, the budget and informativeness instrumentation exists, and `pytest`, `ruff check` and `ruff format --check` are clean (373 passed, 26 skipped). Tagged `phase0`.
 
 - 2026-10-11: created in phase 0. All sub-claims planned except C1 (partial). Gaps recorded in sections 2 and 3.

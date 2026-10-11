@@ -5,36 +5,35 @@ objective, and Nature. The model exists to exercise the DSL and to give the engi
 to demonstrate (``tests/toy/test_two_power.py``). It is not a domain model, its numbers carry
 no evidence, and nothing computed from it is a finding about any real system.
 
-Reading the variables (``control`` plays the part of a four-step ladder: 0 none, 1 partial,
-2 majority, 3 total):
+Variables (``control`` is a four-step ladder: 0 none, 1 partial, 2 majority, 3 total):
 
-=============  ==========================  =============================================
-variable       levels                      meaning
-=============  ==========================  =============================================
-aims           limited, hegemonic          CH's objective; swept; hidden from INC
-control        0..3                        how much of the contested domain CH holds
-tension        calm, crisis                open confrontation; a one-way ratchet
-oversight      none, weak, strong          INC's ability to verify what CH does
-belief         limited, uncertain,         INC's belief about CH's aims
-               hegemonic
-guarantee      False, True                 INC's standing guarantee of continuity
-belief_at_     unset + belief levels       latch: INC's belief when control first hit 2
-majority
-=============  ==========================  =============================================
+* ``aims``       limited | hegemonic. CH's objective. Swept (``init=None``), hidden from INC.
+* ``control``    0..3. How much of the contested domain CH holds.
+* ``tension``    calm | crisis. Open confrontation; a one-way ratchet. Also swept.
+* ``oversight``  none | weak | strong. INC's ability to verify what CH does.
+* ``belief``     limited | uncertain | hegemonic. INC's belief about CH's aims.
+* ``guarantee``  flag. INC's standing guarantee of continuity; once given it stays.
+* ``belief_at_majority``  latch: INC's belief at the tick control first reached 2.
 
 Actions (one per actor per tick, chosen simultaneously; every actor may also ``idle``):
 
 * ``CH.expand``     raise control by one; a limited CH stops at control 1; needs calm.
 * ``CH.deceive``    hegemonic only; lowers INC's belief to ``limited`` unless oversight is
-  ``strong``, which is when Nature's ``detect`` can catch it.
+  ``strong``, which is when Nature's ``detect`` can catch it. Marked speculative.
 * ``CH.defect``     hegemonic only; an overt grab (control +1, crisis) available for one tick
-  after INC resisted, and only while INC has given no guarantee. Speculative.
+  after INC resisted, and only while INC has given no guarantee. Marked speculative.
 * ``INC.concede``   grant the guarantee (one-shot; not once INC is convinced).
 * ``INC.resist``    set tension to crisis; this freezes ``expand`` for good.
 * ``INC.fund_oversight``  raise oversight one level, visible three ticks later (delay 2).
 * ``Nature.detect`` raise INC's belief one level when oversight is strong and CH deceived
   in the previous tick.
 * ``Nature.shock``  lower strong oversight to weak.
+
+Every action carries a one-sentence rationale as its ``source``. The two actions that exist
+only under the hidden-objective hypothesis are marked speculative; the rest are mechanisms.
+
+Constraints: INC must answer within three ticks (``resist`` or ``fund_oversight``) once it
+believes the worst and CH holds some control; the ``appeaser`` profile removes ``resist``.
 
 Endings (mutually exclusive on every state, not only on reachable ones):
 
@@ -44,17 +43,16 @@ Endings (mutually exclusive on every state, not only on reachable ones):
 * ``COEXIST``    the horizon arrives with ``balance`` intact and no other ending reached.
   A state at the horizon that satisfies none of them is reported as ``HORIZON``.
 
-``balance`` is control at most 1 with oversight at least weak. It mirrors the "balance"
-invariant of the worked example in DESIGN.md section 7; the latch mirrors its "known at
-majority" latch.
+``balance`` is control at most 1 with oversight at least weak, after the balance invariant of
+DESIGN.md section 3.1; the latch is after ``a_known_at_majority`` of section 3.3.
 
 What the toy is built to show, each asserted in ``tests/toy/test_two_power.py`` as an
 engine demonstration:
 
 * ``SETTLED`` is reachable only when aims are limited, ``TAKEOVER`` only when they are
   hegemonic; INC and CH together can force a settlement, neither alone can.
-* Facing an ``appeaser`` INC (never resists), CH can force ``TAKEOVER``; facing the default
-  INC it cannot: INC can block it, but only by resisting at tick 0.
+* Facing an ``appeaser`` INC, CH can force ``TAKEOVER``; facing the default INC it cannot:
+  INC can block it, but only by resisting at tick 0.
 * INC's viability kernel for ``balance`` contains the limited-aims start and excludes the
   hegemonic one; granting the guarantee beforehand puts the hegemonic start inside it.
 * The two initial states look identical to INC, and no first move both keeps the block
@@ -66,6 +64,10 @@ by default, so it must hold in the default initial states: ``tension`` is swept 
 with ``init=None``) and ``calm_start`` keeps only its calm level, giving two initial states,
 one per level of ``aims``. Relaxing it (``compile(model, relax={"calm_start"})``) widens the
 initial set to four by adding the starts that are already in crisis.
+
+Not used here, because nothing in the story calls for them (``tests/model`` covers them):
+``Min``, ``Max``, ``Reset``, ``implies``, ``V.only``, ``idle=False``, a profile ``unless``,
+``strict`` bumps and expression-valued ``Set``.
 """
 
 from wavefront.model import Bump, Inc, Ite, Model, Set, SetIf, V
@@ -108,6 +110,7 @@ CH.action(
     guard=V.aims == "hegemonic",
     effect=SetIf(V.oversight < "strong", "belief", "limited"),
     source="Concealed intent stays concealed only while the observer cannot verify.",
+    speculative=True,
 )
 CH.action(
     "defect",
@@ -120,7 +123,7 @@ CH.action(
 
 INC.action(
     "concede",
-    guard=~V.guarantee & V.belief.is_in(["limited", "uncertain"]),
+    guard=~V.guarantee & (V.belief != "hegemonic"),
     effect=Set("guarantee", True),
     source="A standing guarantee of continuity removes the motive to strike first.",
 )

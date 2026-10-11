@@ -12,7 +12,7 @@ dependencies = []
 
 [project.optional-dependencies]
 bmc = ["z3-solver"]
-dev = ["pytest", "hypothesis", "ruff"]
+dev = ["pytest", "hypothesis", "ruff", "jsonschema"]
 
 [project.scripts]
 wf = "wavefront.cli:main"
@@ -21,6 +21,7 @@ wf = "wavefront.cli:main"
 include = ["wavefront*"]
 
 [tool.pytest.ini_options]
+pythonpath = ["."]
 testpaths = ["tests"]
 markers = [
     "slow: long-running tests such as the exploration performance smoke test",

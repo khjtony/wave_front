@@ -57,6 +57,7 @@ from pathlib import Path
 from typing import Any
 
 from ..model.compile import CompiledModel, VarSpec
+from ..model.model import ModelError
 
 __all__ = [
     "SnapshotError",
@@ -80,10 +81,13 @@ _INDICATOR_FIELDS = ("id", "value", "source", "observed", "rule")
 _RATE_FIELDS = ("ticks", "basis")
 
 
-class SnapshotError(ValueError):
+class SnapshotError(ModelError):
     """A snapshot that is malformed, lacks provenance or does not fit the model.
 
-    ``problems`` lists every individual problem found; ``str(error)`` joins them."""
+    It is a :class:`~wavefront.model.ModelError` (and so a ``ValueError``): a snapshot the
+    model cannot take is a user error of the same kind as a bad model, and the ``wf`` command
+    reports it with the same exit code. ``problems`` lists every individual problem found;
+    ``str(error)`` joins them."""
 
     def __init__(self, message: str, problems: list[str] | None = None) -> None:
         super().__init__(message)
@@ -265,7 +269,7 @@ def _level_value(spec: VarSpec, level: object) -> tuple[int, None] | tuple[None,
     return None, f"variable {spec.name!r} is a flag, so level {level!r} is not true or false"
 
 
-def snapshot_to_state(data: Mapping[str, Any], cm: CompiledModel) -> tuple[int, ...]:
+def snapshot_to_state(data: dict[str, Any], cm: CompiledModel) -> tuple[int, ...]:
     """Map a snapshot onto a state of ``cm``: one value per variable, in state order.
 
     ``data`` is validated first (:func:`validate_snapshot`). Then every variable in the
@@ -321,14 +325,30 @@ def snapshot_to_state(data: Mapping[str, Any], cm: CompiledModel) -> tuple[int, 
 # -- files ----------------------------------------------------------------------------------
 
 
+def _reject_duplicate_keys(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+    """``json`` keeps the last of two equal keys; in a file of evidence that would silently
+    drop a variable or an indicator, so a duplicate is an error."""
+    out: dict[str, Any] = {}
+    for key, value in pairs:
+        if key in out:
+            raise SnapshotError(f"duplicate key {key!r} in a JSON object")
+        out[key] = value
+    return out
+
+
 def read_snapshot(path: str | Path) -> dict[str, Any]:
-    """Parse and validate a snapshot file. Raises :class:`SnapshotError` for invalid JSON or
-    an invalid snapshot; an unreadable file raises :class:`OSError` as usual."""
+    """Parse and validate a snapshot file. Raises :class:`SnapshotError` for invalid JSON, a
+    duplicated key or an invalid snapshot; an unreadable file raises :class:`OSError` as
+    usual."""
     path = Path(path)
     try:
-        data = json.loads(path.read_text(encoding="utf-8"))
+        data = json.loads(
+            path.read_text(encoding="utf-8"), object_pairs_hook=_reject_duplicate_keys
+        )
     except (json.JSONDecodeError, UnicodeDecodeError) as exc:
         raise SnapshotError(f"{path}: not valid JSON: {exc}") from exc
+    except SnapshotError as exc:
+        raise SnapshotError(f"{path}: {exc}") from None
     problems = validate_snapshot(data)
     if problems:
         raise SnapshotError(f"{path}: invalid snapshot: " + "; ".join(problems), problems)
