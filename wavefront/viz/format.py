@@ -14,6 +14,12 @@ compiler resolves them. ``and``/``or``/``not`` replace the DSL's ``&``/``|``/``~
 and ``ending("name")``. Parentheses follow precedence, plus clarifying parentheses around an
 ``and`` inside an ``or`` and around anything but an atom under ``not``.
 
+:func:`guard_text` prints an action's guard; a guard declared as named parts prints each
+part with its name, joined by ``and`` (a part that is itself an ``and`` or ``or`` is
+parenthesized)::
+
+    china_quiet: not V.china_war and ussr_weak: V.arms_USSR == "weak" and pact: V.anticomintern
+
 The formatter lives in :mod:`wavefront.viz`, not in the core: it is presentation only.
 """
 
@@ -40,7 +46,7 @@ from ..model.expr import (
     VarRef,
 )
 
-__all__ = ["expr_text"]
+__all__ = ["expr_text", "guard_text"]
 
 # Precedence: higher binds tighter.
 _OR, _AND, _NOT, _CMP, _ARITH, _ATOM = 1, 2, 3, 4, 5, 6
@@ -194,3 +200,14 @@ def expr_text(expr: Expr, cm: CompiledModel | None = None) -> str:
     names for levels, integers for counters, ``True``/``False`` for flags). Without a
     compiled model literals are printed as written."""
     return _Formatter(cm).fmt(expr)[0]
+
+
+def guard_text(action: Any, cm: CompiledModel | None = None) -> str:
+    """The guard of a compiled action (an :class:`~wavefront.model.compile.ActionSpec`) as
+    readable text: :func:`expr_text` of ``guard_expr``, or for a guard declared as named
+    parts ``part: expr and part: expr ...`` in declaration order."""
+    parts = getattr(action, "guard_parts", ())
+    if not parts:
+        return expr_text(action.guard_expr, cm)
+    f = _Formatter(cm)
+    return " and ".join(f"{name}: {f.wrap(expr, _AND + 1)}" for name, expr in parts)

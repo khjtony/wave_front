@@ -91,7 +91,7 @@ from ..model.compile import CompiledModel
 from ..model.compile import compile as compile_model
 from ..model.model import Model, ModelError
 from ..report.markdown import CAVEAT
-from .format import expr_text
+from .format import expr_text, guard_text
 
 __all__ = [
     "bundle",
@@ -328,7 +328,7 @@ def _actors(cm: CompiledModel) -> list[dict]:
                 "actions": [
                     {
                         "name": x.name,
-                        "guard_text": expr_text(x.guard_expr, cm),
+                        "guard_text": guard_text(x, cm),
                         "source": x.source,
                         "speculative": bool(x.speculative),
                         "delay": int(x.delay),

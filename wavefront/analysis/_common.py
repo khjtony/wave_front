@@ -80,7 +80,9 @@ def nearest_source(g: Graph, sources: Iterable[int], targets: Collection[int]) -
 
 
 def is_trivial_guard(action: object) -> bool:
-    """True for an action whose (compiled, possibly relaxed) guard is the constant TRUE."""
+    """True for an action whose (compiled, possibly relaxed) guard is the constant TRUE (for
+    a parted guard: every part is ``TRUE`` or relaxed, since ``guard_expr`` is the
+    conjunction of the non-trivial parts)."""
     expr = getattr(action, "guard_expr", None)
     return isinstance(expr, Const) and bool(expr.value)
 

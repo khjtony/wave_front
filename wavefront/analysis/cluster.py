@@ -31,7 +31,8 @@ class Cluster:
 
 def signature(trace: Trace, g: Graph) -> Signature:
     """The ``(actor, action)`` pairs with a non-trivial guard used along ``trace``. Guards
-    relaxed in the compiled model count as trivial."""
+    relaxed in the compiled model count as trivial; a guard declared as named parts is
+    non-trivial when any of its unrelaxed parts is."""
     out = set()
     actors = g.model.actors
     for move in trace.joint_moves:

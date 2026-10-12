@@ -37,8 +37,8 @@ def budget(cm: CompiledModel) -> dict:
 
 
 def fingerprint(model: Model) -> str:
-    """A short hash of the model's declarations (variables, actions with guards, effects,
-    delays and sources, latches, fairness, profiles, invariants, endings, assumptions and
+    """A short hash of the model's declarations (variables, actions with guards and guard
+    parts, effects, delays and sources, latches, fairness, profiles, invariants, endings, assumptions and
     horizon), so a report names the model version it is conditional on."""
     parts = [
         model.name,
@@ -52,6 +52,14 @@ def fingerprint(model: Model) -> str:
         repr(sorted(model.endings.items())),
         repr(sorted(model.assumes.items())),
     ]
+    parted = [
+        (a.actor, a.name, a.guard_parts)
+        for actor in [*model.actors, model.nature()]
+        for a in actor.actions
+        if a.guard_parts
+    ]
+    if parted:  # only when used, so fingerprints of models without parts are unchanged
+        parts.append(repr(parted))
     return hashlib.sha256("\n".join(parts).encode()).hexdigest()[:12]
 
 
