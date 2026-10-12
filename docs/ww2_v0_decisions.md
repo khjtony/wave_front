@@ -31,7 +31,7 @@ The draft's `arms_at_war` latch on `campaign_west` was chosen after a counterexa
 
 ## D4. The Czech treaty obligation (T8)
 
-Adopted as an institutional constraint, not a behaviour: fairness `czech_obligation` on WEST, trigger `last_GER == attack_czechoslovakia ∧ sudeten == german ∧ war_west_ger == peace`, within 1, responses `declare_war`, `concede`. Source: the Franco-Czechoslovak treaty of 25 January 1925; the French statements of September 1938 and the British statement of 26 September 1938. It is a named assumption and relaxable, so the mining layer shows whether it carries T8.
+Adopted as an institutional constraint, not a behaviour: fairness `czech_obligation` on WEST, trigger `last_GER == attack_czechoslovakia ∧ sudeten == german ∧ war_west_ger == peace`, within 1, responses `declare_war`, `concede`. Source: the Franco-Czechoslovak treaty of alliance of 25 January 1924 and the treaty of mutual guarantee signed at Locarno on 16 October 1925; the French statements of September 1938 and the British statement of 26 September 1938. (An earlier version of this decision gave a wrong date, 25 January 1925.) It is a named assumption and relaxable, so the mining layer shows whether it carries T8.
 
 ## D5. Hypothesis gates
 

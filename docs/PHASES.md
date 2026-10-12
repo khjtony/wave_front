@@ -41,6 +41,8 @@ Rough sizes assume one full-time engineer and a part-time historian reviewer. Th
 
 **Gate.** T1, T2, T4, T5 and T8 pass; negative controls need 3 or more relaxations where registered; informativeness at or above 80 percent; the reachable set at or under 10^6 states.
 
+**Gate record.** Not passed as of 2026-10-12. T1, T4 and T5 pass; T2 and T8 pass under revisionist aims only; the Japan and Britain-alone negative controls need 1 and 2 relaxations; informativeness 0 of 2; the reachable set from tick 0 exceeds 3 million states, so the bounded checker and fixed-strategy sufficiency checks answered the trace and kernel questions (reports/ww2_v0.md). Owner decisions pending on the proposed claim amendments, the semantics of the China incident, and the German readiness calibration.
+
 **Risk.** Tuning guards to the known outcome. Mitigation: the protocol in ww2_testbed.md section 7; every guard edit after a failing test is logged with its rationale.
 
 **What it teaches for the AGI model.** Whether the appeasement lever (concessions working only under limited aims) and the belief-then-response lag come out of the engine rather than being put in.

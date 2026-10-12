@@ -155,6 +155,54 @@ def _uniformity_line(g: Graph, coalition: list[str], strategy, sources, what: st
         )
 
 
+def _parse_fix(text: str) -> tuple[str, str]:
+    """``VAR=LEVEL`` for ``--fix``."""
+    name, sep, level = text.partition("=")
+    name, level = name.strip(), level.strip()
+    if not sep or not name or not level:
+        raise argparse.ArgumentTypeError(f"expected VAR=LEVEL, not {text!r}")
+    return name, level
+
+
+def _no_fix_without_snapshot(args: argparse.Namespace) -> None:
+    if getattr(args, "fix", None):
+        raise ModelError("--fix needs --snapshot: it fixes swept variables the snapshot omits")
+
+
+def _snapshot_with_fixes(args: argparse.Namespace, model: Model) -> str | dict:
+    """The ``--snapshot`` argument, or, with ``--fix VAR=LEVEL``, the parsed snapshot with
+    each fixed variable added as an ``assumed`` entry. Only a swept variable (declared with
+    ``init=None``) that the snapshot omits may be fixed; the level is checked when the
+    snapshot is mapped onto the model."""
+    fixes = getattr(args, "fix", None) or []
+    if not fixes:
+        return args.snapshot
+    from .evidence import read_snapshot
+
+    data = read_snapshot(args.snapshot)
+    declared = {getattr(v, "name", None): v for v in model.variables}
+    seen: set[str] = set()
+    for name, level in fixes:
+        decl = declared.get(name)
+        if decl is None or not hasattr(decl, "kind"):
+            raise ModelError(f"--fix {name}={level}: {name!r} is not a variable of the model")
+        if decl.init is not None:
+            raise ModelError(
+                f"--fix {name}={level}: {name!r} is not swept (it has a declared initial value)"
+            )
+        if name in data["variables"] or name in seen:
+            raise ModelError(f"--fix {name}={level}: the snapshot already fixes {name!r}")
+        seen.add(name)
+        if decl.kind == "flag":
+            value: object = {"true": True, "false": False}.get(level.lower(), level)
+        elif decl.kind == "counter":
+            value = int(level) if level.isdigit() else level
+        else:
+            value = level
+        data["variables"][name] = {"level": value, "confidence": "assumed", "indicators": []}
+    return data
+
+
 # -- subcommands -----------------------------------------------------------------------
 
 
@@ -223,9 +271,16 @@ def cmd_viable(args: argparse.Namespace) -> int:
             )
             return 1
         model, cm = _compile(args)
-        initial = [tuple(load_snapshot(args.snapshot, cm))]
+        snapshot = _snapshot_with_fixes(args, model)
+        if isinstance(snapshot, dict):
+            from .evidence import snapshot_to_state
+
+            initial = [tuple(snapshot_to_state(snapshot, cm))]
+        else:
+            initial = [tuple(load_snapshot(snapshot, cm))]
         g = explore(cm, initial=initial, max_states=args.max_states)
     else:
+        _no_fix_without_snapshot(args)
         model, g = _graph(args)
     coalition = _names(args.coalition)
     k = viability(g, coalition, args.invariant)
@@ -326,13 +381,16 @@ def cmd_viz(args: argparse.Namespace) -> int:
     model = load_model(args.model)
     coalitions = [_names(c) for c in args.coalition] if args.coalition else None
     endings = [e for text in args.ending for e in _names(text)] if args.ending else None
+    snapshot = _snapshot_with_fixes(args, model) if args.snapshot else None
+    if not args.snapshot:
+        _no_fix_without_snapshot(args)
     try:
         data = bundle(
             model,
             coalitions=coalitions,
             endings=endings,
             profile=_profile(args),
-            snapshot=args.snapshot,
+            snapshot=snapshot,
             max_states=args.max_states,
             max_moves=args.max_moves,
             max_relax=args.max_relax,
@@ -404,6 +462,13 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--coalition", required=True, help="actor names, comma-separated")
     p.add_argument("--invariant", required=True)
     p.add_argument("--snapshot", help="start from a snapshot file (wavefront.evidence)")
+    p.add_argument(
+        "--fix",
+        action="append",
+        type=_parse_fix,
+        metavar="VAR=LEVEL",
+        help="fix a swept variable the snapshot omits (repeatable; needs --snapshot)",
+    )
 
     p = command("mine", cmd_mine, "Minimal relaxation sets for an ending.")
     p.add_argument("--ending", required=True)
@@ -427,6 +492,13 @@ def build_parser() -> argparse.ArgumentParser:
     p = command("viz", cmd_viz, "Self-contained HTML visualizer page.")
     p.add_argument("--out", required=True, help="the HTML file to write")
     p.add_argument("--snapshot", help="start from a snapshot file (wavefront.evidence)")
+    p.add_argument(
+        "--fix",
+        action="append",
+        type=_parse_fix,
+        metavar="VAR=LEVEL",
+        help="fix a swept variable the snapshot omits (repeatable; needs --snapshot)",
+    )
     p.add_argument(
         "--coalition",
         action="append",

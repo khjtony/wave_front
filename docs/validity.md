@@ -207,26 +207,26 @@ The point of no return is the first state of a trace outside the kernel. The sil
 | A7 | Analysis functions correct | 53 tests on hand-built games with known answers (kernels, silent phase indices, margin against the literal iteration, pivotal antichains, relaxations including forceability and ill-formed sets, per-member uniformity); 33 toy demonstrations | met | phase 0 |
 | A8 | Independent checker agrees | PRISM-games cross-check once the exporter exists (PLAN step 6.3) | planned | phase 6 |
 | A9 | Scale | 110,670 states with 8.5e6 joint moves explored in about 25 s; attractor 3.7 s, safe 2.7 s | met | phase 0 |
-| B1 | Realized trajectories reachable | T1, C1 | planned | phases 1, 3 |
-| B2 | Documented alternatives behave as registered | T2, T5, C4, C5 | planned | phases 1, 3 |
+| B1 | Realized trajectories reachable | T1 met (the 1936 to 1940 decision sequence replays with every action available, zero relaxations); C1 | partial (WW2 met) | phases 1, 3 |
+| B2 | Documented alternatives behave as registered | T5 met; T2 met under revisionist aims and after the realized entry, not from the tick-0 state under hegemonic aims (reports/ww2_v0.md section 4); C4, C5 | partial | phases 1, 3 |
 | B3 | Split questions come out contested | T3, T6, T9, C3, C4, C9 | planned | phases 2, 3 |
-| B4 | Hidden objectives and beliefs | T4, T8, C6, C7 | planned | phases 1, 3 |
+| B4 | Hidden objectives and beliefs | T4 met; T8 met under revisionist aims, its hegemonic half not computable from snapshot states (the comparison measured the rearmament clock; report section 7); C6, C7 | partial | phases 1, 3 |
 | B5 | Resource bounds and preventive defection | T6, T7 | planned | phase 2 |
 | B6 | Institutional lag | T4, T11 | planned | phases 1, 2 |
 | B7 | Joint balances and near misses | C2, C3, C5, C10, C11 | planned | phase 3 |
 | B8 | Point-of-no-return windows, stable under refinement | T6, T13, C13 | planned | phases 2, 3 |
-| B9 | Assumption mining discriminates | T7, T10, C9, C12; informativeness at least 80 percent | planned | phases 1 to 3 |
+| B9 | Assumption mining discriminates | T10: the USSR control met exactly; the Japan and Britain-alone controls need 1 and 2 relaxations, not 3; informativeness 0 of 2 non-vacuous controls (report section 8); T7, C9, C12 | not met in phase 1 | phases 1 to 3 |
 | B10 | Pivotal coalitions | T5, T9, C11 | planned | phases 1 to 3 |
 | B11 | Oversight and capability thresholds | C8, C10, T12 | planned | phases 2, 3 |
 | B12 | Exhaustion with no adversarial act | C9, C13 | planned | phase 3 |
 | B13 | Transfer hypotheses hold | `docs/transfer_hypotheses.md`; Cold War suite | planned | phases 2 (written), 3 (tested) |
 | C1 | Tests before guards | testbed changelogs; the 26 skipping test files under `tests/ww2/scenarios` and `tests/coldwar/scenarios` | met for registration; re-assessed when guards are written | phase 0 |
-| C2 | Contemporaneous decision spaces | `source=`, speculative tags | planned | phases 1, 3 |
+| C2 | Contemporaneous decision spaces | every WW2 action carries a dated record as `source=`; one speculative action; historian review pending | partial | phases 1, 3 |
 | C3 | Hold-out respected | guard changelog around T6, T7, T11, T12 | planned | phase 2 |
-| C4 | Guard edits logged | guard changelogs | planned | phases 1 to 3 |
+| C4 | Guard edits logged | docs/guard_changelog_ww2.md: decisions after the scratch replay, the model as coded, two well-formedness edits after the model step; no edit changed a registered outcome | met for phase 1 | phases 1 to 3 |
 | C5 | Framework-change budget kept | `docs/framework_changes.md` | planned | phases 3, 4 |
 | C6 | Budget does not buy fit | budget and informativeness per report | planned | phases 1 to 3 |
-| C7 | Negative controls in CI | T10, C12 | planned | phases 1, 3 |
+| C7 | Negative controls in CI | T10 runs in the suite (two expectations as strict xfail, one vacuous skip) | met for phase 1 | phases 1, 3 |
 | D1 | Snapshot provenance | strict JSON Schema plus hand-written validator cross-checked against `jsonschema` on a 1,715-document mutation corpus; loader refuses missing provenance, unknown levels and unfixed swept variables; 93 tests | met | phase 0 |
 | D2 | Blind replay | date-filtered corpora | planned | phase 2 |
 | D3 | Replay agreement | replay metrics, WW2 and Cold War | planned | phases 2, 3 |
@@ -234,6 +234,7 @@ The point of no return is the first state of a trace outside the kernel. The sil
 
 ## 9. Change log
 
+- 2026-10-12: phase 1 (WW2 v0, Europe 1936 to 1940) assessed: B1, C4 and C7 met for WW2; B2, B4 and C2 partial; B9 not met. The gate is not passed: T2 and T8 fail under hegemonic aims as registered and informativeness is below 80 percent; the proposed claim amendments and the open modeling questions are in reports/ww2_v0.md sections 10 and 12 for the owner's decision.
 - 2026-10-11: A1 to A4 and A9 assessed as met after the phase 0 engine review (commit 5d60ccc).
 - 2026-10-11: A5, A6, A7 and D1 assessed as met after the wave 2 review. Phase 0 gate passed: engine correct on known games, the DSL covers the requirement list, both historical test lists are committed as test files, the budget and informativeness instrumentation exists, and `pytest`, `ruff check` and `ruff format --check` are clean (373 passed, 26 skipped). Gate commit: 5128836 (a local tag `phase0` points at it; the remote refused the tag push, so tag it on the main repository when merging).
 
