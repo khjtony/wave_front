@@ -3,9 +3,9 @@
 import pytest
 
 from models.toy.two_power import model as toy
-from wavefront.model import V
+from wavefront.model import Model, Set, V
 from wavefront.model.expr import FALSE, TRUE, Ite, Max, Min
-from wavefront.viz import expr_text
+from wavefront.viz import bundle, expr_text, guard_text
 
 
 @pytest.fixture(scope="module")
@@ -79,6 +79,49 @@ def test_the_toy_guards_read_as_written(cm):
     )
     assert guards["INC.resist"] == 'V.belief in ["uncertain", "hegemonic"]'
     assert guards["INC.idle"] == "True"
+
+
+def strike_model():
+    m = Model("strike", horizon=2)
+    m.flag("china_war")
+    m.var("arms_USSR", levels=["weak", "strong"], init="strong")
+    m.flag("anticomintern")
+    m.flag("struck")
+    ger = m.actor("GER")
+    ger.action(
+        "strike_north",
+        guard={
+            "china_quiet": ~V.china_war,
+            "ussr_weak": V.arms_USSR == "weak",
+            "pact": V.anticomintern | V.struck,
+        },
+        effect=Set("struck", True),
+        source="test",
+    )
+    ger.action("wait", guard=~V.china_war & ~V.struck, source="test")
+    m.ending("STRUCK", V.struck)
+    return m
+
+
+def test_parted_guards_print_each_part_with_its_name():
+    cm = strike_model().compile()
+    strike, wait = cm.actors[0].actions[1:]
+    text = (
+        'china_quiet: not V.china_war and ussr_weak: V.arms_USSR == "weak" and '
+        "pact: (V.anticomintern or V.struck)"
+    )
+    assert guard_text(strike, cm) == text
+    assert (
+        guard_text(wait, cm) == expr_text(wait.guard_expr, cm) == "not V.china_war and not V.struck"
+    )
+    relaxed = strike_model().compile(relax={"GER.strike_north:ussr_weak"})
+    assert guard_text(relaxed.actors[0].actions[1], relaxed) == (
+        "china_quiet: not V.china_war and ussr_weak: True and pact: (V.anticomintern or V.struck)"
+    )
+    b = bundle(strike_model())
+    actions = {x["name"]: x["guard_text"] for x in b["actors"][0]["actions"]}
+    assert actions["strike_north"] == text
+    assert actions["wait"] == "not V.china_war and not V.struck"
 
 
 def test_without_a_model_literals_print_as_written():

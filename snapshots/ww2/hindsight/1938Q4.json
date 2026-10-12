@@ -293,6 +293,19 @@
         }
       ]
     },
+    "china_war": {
+      "level": true,
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "event_1937-07-07_china_war",
+          "value": "Marco Polo Bridge incident; the Konoe cabinet sends reinforcements (11 Jul) and the fighting spreads to Shanghai (13 Aug 1937)",
+          "source": "Japanese cabinet decision of 11 Jul 1937 and the Imperial Headquarters orders of Aug 1937; Iriye, The Origins of the Second World War in Asia and the Pacific (1987), ch. 2 (chapter not verified)",
+          "observed": "1937-07-07",
+          "rule": "china_war takes the level of the latest dated event at or before 1938-12-31 (end of quarter) (china_war := True). Note: Sets the main feasibility constraint on a northern strike (decisions D7). From here the army is engaged in China."
+        }
+      ]
+    },
     "rhineland": {
       "level": "remilitarized",
       "confidence": "high",

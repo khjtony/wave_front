@@ -6,6 +6,7 @@ from wavefront.analysis import (
     RelaxSets,
     budget,
     cluster,
+    fingerprint,
     informativeness,
     minimal_relaxation_size,
     relax_explicit,
@@ -13,7 +14,7 @@ from wavefront.analysis import (
     signature,
 )
 from wavefront.engine import Trace, explore, witness
-from wavefront.model import ModelError
+from wavefront.model import Model, ModelError, Set, V
 
 from .games import crisis, door, ladder, locks
 
@@ -150,3 +151,60 @@ def test_budget_delegates():
     cm = crisis().compile()
     assert budget(cm) == cm.budget()
     assert budget(cm)["speculative_actions"] == 1
+
+
+# -- guards declared as named parts ------------------------------------------------------------
+
+
+def three_locks(parted=True, turner=True, names=("k1", "k2", "k3")):
+    """``A.open`` needs three keys; declared as three named parts it is three assumptions,
+    as a plain guard one. With ``turner``, ``B.turn`` turns ``k1``; nothing turns the
+    others."""
+    m = Model("three_locks", horizon=2)
+    for k in ("k1", "k2", "k3"):
+        m.flag(k)
+    m.flag("open")
+    keys = dict(zip(names, (V.k1, V.k2, V.k3), strict=True))
+    guard = keys if parted else V.k1 & V.k2 & V.k3
+    m.actor("A").action("open", guard=guard, effect=Set("open", True), source="test")
+    b = m.actor("B")
+    if turner:
+        b.action("turn", guard={"first": ~V.k1}, effect=Set("k1", True), source="test")
+    m.ending("OPEN", V.open)
+    return m
+
+
+def test_relax_explicit_returns_part_names():
+    r = relax_explicit(three_locks(), "OPEN", max_size=3)
+    assert r.assumptions == ["A.open:k1", "A.open:k2", "A.open:k3", "B.turn:first"]
+    assert r == [["A.open:k2", "A.open:k3"]]  # B can turn k1
+    assert relax_explicit(three_locks(parted=False), "OPEN", max_size=3) == [["A.open"]]
+
+
+def test_informativeness_counts_parts():
+    controls = [("OPEN", ">=", 2)]
+    assert informativeness(three_locks(), controls) == 1.0
+    assert informativeness(three_locks(parted=False), controls) == 0.0
+    m = three_locks(turner=False)  # nobody turns k1: all three parts must be relaxed
+    assert minimal_relaxation_size(m, "OPEN", 3) == 3
+    assert informativeness(m, [("OPEN", ">=", 3), ("OPEN", "==", 3)]) == 1.0
+
+
+def test_cluster_signature_with_parted_guards():
+    """A parted guard is non-trivial while any of its parts is unrelaxed."""
+    m = three_locks()
+    cases = [
+        ({"A.open:k2", "A.open:k3"}, {("A", "open"), ("B", "turn")}),  # k1 still needed
+        ({"A.open:k1", "A.open:k2", "A.open:k3"}, set()),
+        ({"A.open"}, set()),
+    ]
+    for relax, expected in cases:
+        g = explore(m.compile(relax=relax))
+        t = witness(g, g.initial[0], g.ending_states("OPEN"))
+        assert isinstance(t, Trace)
+        assert signature(t, g) == frozenset(expected), relax
+
+
+def test_fingerprint_sees_part_names():
+    assert fingerprint(three_locks()) == fingerprint(three_locks())
+    assert fingerprint(three_locks()) != fingerprint(three_locks(names=("x1", "x2", "x3")))

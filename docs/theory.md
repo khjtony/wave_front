@@ -232,6 +232,8 @@ Both families are upward closed in the subset lattice, by the monotonicity of `C
 
 The **assumption set** `𝒜` of a model has one element per action guard that is not the constant `TRUE`, one per fairness constraint, one per profile, and one per named initial-state restriction declared with `assume` (spec §3.1). A **relaxation** `R ⊆ 𝒜` produces the model `G[R]`: every guard in `R` is replaced by `TRUE`; every fairness constraint in `R` is removed, together with its counter and its restriction on `avail`; every profile in `R` is not applied; every `assume` in `R` no longer filters the initial states. Relaxation is loosening only. No guard is tightened, no action is removed, and no delay or effect changes. The registered claims that speak of "assumptions" such as an embargo maintained or an actor's aims (T7, C9) are expressed through profiles and `assume` restrictions, so they fall inside `𝒜`.
 
+A guard may be declared as named conjuncts (spec §3.1, parted guards). Each conjunct is then its own element of `𝒜`, named `<actor>.<action>:<part>`, and relaxing it replaces only that conjunct by `TRUE`. The granularity of `𝒜` is therefore the modeler's choice: one guard with three independent conditions is one assumption when declared as an expression and three when declared as parts. The registered negative controls count parts, so a control such as "needs at least three relaxations" can be met by three conditions of one action's guard.
+
 **Lemma 6 (monotonicity).** If `R ⊆ R'`, every play of `G[R]`, with removed fairness counters projected out, is a play of `G[R']`. Hence `EF T` in `G[R]` implies `EF T` in `G[R']`.
 *Sketch:* `avail` only grows, the initial set only grows, and `δ` on a given joint move does not depend on guards; fairness counters influence nothing but `avail`. A relaxed model can still fail to compile or explore (conflicting `Set`s or non-exclusive endings on newly reachable states). Such a relaxation is reported as ill-formed, not as a result.
 
@@ -262,7 +264,7 @@ Reach_k(E) = ⋁_{t≤k} E(x^t)
 - **All minimum sets.** After finding `R`, add the clause `⋁_{i∈R} assume_i` and re-solve. Stop when the cost exceeds `ρ_k(E)` or the enumeration limit is hit. Each clause removes `R` and its supersets, so the loop returns every minimum set once.
 - **Explicit variant** (spec §7 `relax_explicit`). Enumerate `R` by increasing size up to `max_size`, re-explore `G[R]`, test `EF E`, and skip supersets of sets that worked (Lemma 6). This returns every minimal set up to `max_size`, at a cost of `Σ_{j≤max_size} C(|𝒜|, j)` explorations. On models with at most six guards it must agree with the BMC sizes (spec §6).
 
-**Granularity.** A guard counts as one assumption, however many conjuncts it has. Splitting a guard into named conjuncts changes `ρ`. Guard granularity is a modeling decision, reported with the parameter budget.
+**Granularity.** A plain guard counts as one assumption, however many conjuncts it has; a guard declared as named parts contributes one assumption per part, so `ρ` depends on how constraints are packaged. Guard granularity is a modeling decision, and the parameter budget reports the number of guard parts so that splitting cannot raise informativeness unseen.
 
 ### 5.4 Informativeness and the parameter budget
 
@@ -345,7 +347,7 @@ Traces with equal signatures form a cluster, represented by its shortest trace. 
 **Limitations.**
 - **Order and timing are ignored.** DESIGN.md §4.5 describes a *sequence* of guard activations; the spec uses a set. Two plots that differ only in order collapse together.
 - **Unguarded actions are invisible.** A decisive unguarded `attack` or `idle` leaves no mark, so moving a condition from a guard into an effect changes the clusters.
-- **Granularity.** One guard is one element, whatever it tests.
+- **Granularity.** One plain guard is one element, whatever it tests; a parted guard is non-trivial while any part is.
 - **Relaxation.** A relaxed guard is `TRUE` and drops out, so signatures from `G[R]` are not comparable with those from `G`.
 - **Input.** The partition covers only the traces supplied (witnesses or samples). Enumerating every trace is exponential. A cluster that does not appear is not shown to be impossible.
 - **Purpose.** Signatures are descriptive. They do not separate traces that use the same options for different reasons.

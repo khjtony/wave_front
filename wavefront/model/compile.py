@@ -106,6 +106,11 @@ _GLOBALS: dict[str, Any] = {
 _BOOL_NODES = (Const, Cmp, And, Or, Not, InSet, InvariantRef, EndingRef)
 
 
+
+def _trivial(expr: object) -> bool:
+    """True for the constant ``TRUE`` guard (or part)."""
+    return isinstance(expr, Const) and bool(expr.value)
+
 def _make_fn(src: str) -> Callable[[Sequence[int]], Any]:
     """Turn ``src`` (an expression over ``s``) into ``lambda s: src``."""
     return eval("lambda s: " + src, dict(_GLOBALS))
@@ -990,6 +995,12 @@ class CompiledModel:
             "actions": len(declared),
             "guards": sum(
                 1 for a in declared if not (isinstance(a.guard_expr, Const) and a.guard_expr.value)
+            ),
+            "guard_parts": sum(
+                sum(1 for _, e in a.guard_parts if not _trivial(e))
+                if a.guard_parts
+                else (0 if a.is_idle or _trivial(a.guard_expr) else 1)
+                for a in declared
             ),
             "speculative_actions": sum(1 for a in declared if a.speculative),
             "fairness_constraints": len(self.model.fairness_constraints),

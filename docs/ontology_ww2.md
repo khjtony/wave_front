@@ -34,7 +34,7 @@ Note on the hypothesis gate. In the action catalogue the hidden objectives enter
 | `arms_GER` | low, rising, high, total | rising | **low**: forces within the limits of Versailles Part V (an army of 100,000 long-service men, no conscription, no military aircraft); Germany's condition before 16 Mar 1935. **rising**: conscription in force (Law for the Reconstruction of the Wehrmacht, 16 Mar 1935; Defence Law, 21 May 1935), the air force acknowledged (Mar 1935), and military expenditure rising year on year. **high**: the force of late 1938 and 1939, which German planning treated as able to conduct a campaign against one eastern neighbour while holding the West defensively (the directive of 21 Oct 1938 on the remainder of Czechoslovakia, Nuremberg document C-136; the Case White directive of 3 Apr 1939, C-120); the August 1939 mobilization is the confirming indicator. The level is *not* the ability to defeat France: in May to July 1938 the Chief of the General Staff, Beck, argued in a series of memoranda that a war with Czechoslovakia that brought in France and Britain would be lost, and the action catalogue keeps a French collapse behind a separate condition (`arms_at_war`). **total**: armaments as the dominant claim on output and labour, the reorganization under the armaments ministry from 1940 to 1942; not reached before 1941 in v0. | NMC `milex`, `milper` for ccode 255 by year; Tooze, *The Wages of Destruction* (2006), the chapters on 1936 and the Four-Year Plan and on 1938 to 1939; Deist, "The Rearmament of the Wehrmacht", in *Germany and the Second World War*, vol. I (MGFA, English ed. 1990); the Beck memoranda of 1938 (in K.-J. Müller, *General Ludwig Beck*, 1980) |
 | `arms_WEST` | low, rising, high | low | **low**: no funded multi-year programme in force in Britain or France and expenditure flat (Britain before the Statement Relating to Defence, 3 Mar 1936; France before the programme of 7 Sep 1936). **rising**: a funded multi-year programme in force and expenditure rising year on year in both countries (the British deficiency programme from Mar 1936, financed under the Defence Loans Act 1937; the French four-year programme of 7 Sep 1936). **high**: the mobilized forces of 1939 to 1940: France at general mobilization (from 2 Sep 1939), the British Expeditionary Force on the continent, and the post-Munich British air programmes delivering aircraft. | NMC `milex`, `milper` for ccodes 200 and 220; Harrison (ed.), *The Economics of World War II* (1998), for 1938 on; Cmd. 5107 (3 Mar 1936) |
 | `arms_USSR` | weak, strong | strong | **strong**: the Red Army's command intact, the condition before the arrests of May 1937. **weak**: the officer corps purged: the Tukhachevsky trial and executions (11 to 12 Jun 1937) and the arrests of 1937 to 1938; the Red Army's performance in Finland (Dec 1939 to Mar 1940) is the confirming indicator. Return to **strong** requires the post-Finland reforms (from Apr to May 1940) to take effect, which the record does not show before June 1941. This is a quality level, not a resource level: NMC `milper` rises through the purge. | the dated Soviet announcements of the trials (11 to 12 Jun 1937); Erickson, *The Soviet High Command* (1962); NMC `milper` for ccode 365 only as a check that size is not the indicator |
-| `arms_JPN` | high | high | fixed in v0 (engaged in China from 1937). The DSL requires at least two levels (framework_spec.md section 3.1), so this is a constant of the model, not a state variable; no v0 guard reads it. | NMC |
+| `arms_JPN` | high, total | high | fixed in v0 (engaged in China from 1937). The DSL requires at least two levels (framework_spec.md section 3.1), so this is a constant of the model, not a state variable; no v0 guard reads it. | NMC |
 | `ind_GER` | 3, 4, 5 | 3 | Ordinal, not a share. **3**: the industrial and resource base of the Reich in its 1935 borders (with the Saar, returned 1 Mar 1935). **4**: plus Austria, whose value to the armament economy was its gold and foreign-exchange reserves, the Erzberg iron ore, and labour rather than its steel output. **5**: plus Bohemia and Moravia, whose value was the Škoda works at Plzeň, the Brno arms works and the equipment of the Czechoslovak army taken in March 1939. The Sudetenland adds no level (lignite and chemicals; the step is left to the historian). Austria's steel output was a few percent of Germany's, so NMC `irst` shares would not justify a full step; the step rests on Tooze's account of the reserves and the arms industry. | NMC `irst`, `pec` for ccodes 255, 305 (to 1938) and 315 (to 1939); Tooze 2006 on the Austrian reserves and the Czech acquisitions |
 | `oil_GER` | dependent, secured | dependent | **dependent**: most of the mineral oil supply imported by sea and exposed to blockade. **secured**: an overland supply agreement in force with a producer outside the blockade: the German-Soviet commercial agreements of 19 Aug 1939 and 11 Feb 1940, or Romania under German alignment (the German-Romanian economic treaty of 23 Mar 1939; the oil agreement of May 1940; the alignment of autumn 1940). The level records the supply route, not adequacy: Germany's oil position stayed tight through the period. | US Bureau of Mines, *Minerals Yearbook* (annual, contemporaneous), petroleum chapters; Tooze 2006; US Strategic Bombing Survey, oil division reports (postwar, hindsight only) |
 
@@ -78,6 +78,7 @@ Note on the hypothesis gate. In the action catalogue the hidden objectives enter
 | `polish_guarantee` | flag | False | Prime Minister's statement in the Commons, 31 Mar 1939 (French concurrence the same day); the Anglo-Polish Agreement of Mutual Assistance, 25 Aug 1939, does not change the flag. |
 | `anglo_soviet_alliance` | flag | False | The 1939 talks failed; True only in 1941 (out of v0). Indicator for the failure: the suspension of the military talks, 21 Aug 1939. |
 | `ussr_axis` | flag | False | The negative-control outcome of the Nov 1940 talks; never True in the record. |
+| `china_war` | flag | False | Japan's army engaged in a general war in China from July 1937 (the Marco Polo Bridge incident, 7 Jul 1937; the cabinet decision of 11 Jul; Shanghai from 13 Aug). The main feasibility constraint on `strike_north` (decisions D7). |
 | `italy_estranged` | flag | True | Italy estranged from the West after Ethiopia (1935 to 1936); a Nature precondition for `axis`. Init defended by the League sanctions against Italy in force from 18 Nov 1935 and the collapse of the Hoare-Laval proposals (Dec 1935). |
 
 ## 5. Regions (monotone unless noted)
@@ -96,7 +97,7 @@ Note on the hypothesis gate. In the action catalogue the hidden objectives enter
 | `channel_air` | contested, german, british | contested | resolved by Nature during an air offensive; `invade_britain` needs `german`. contested also covers "no air battle yet". british: the German invasion postponed for lack of air superiority (Sea Lion postponed 17 Sep, and to spring 1941 on 12 Oct 1940). |
 | `war_west_ger` | peace, war | peace | war: a British and French declaration of war in force (3 Sep 1939). |
 
-Latches: `belief_at_munich` (`belief_WEST` when `sudeten` first becomes german); `arms_at_war` (`arms_GER` when `war_west_ger` first becomes war). `GER` and `WEST` are declared with `remember_last=True`; so is `JPN` (section 9), because `campaign_siberia` reads `last_JPN`.
+Latches: `belief_at_munich` (`belief_WEST` when `sudeten` first becomes german). The draft's `arms_at_war` latch is withdrawn (decisions D3). `GER` and `WEST` are declared with `remember_last=True`; so is `JPN` (section 9), because `campaign_siberia` reads `last_JPN`.
 
 `arms_at_war` is read by the guard of Nature's `campaign_west` (actions_ww2.md): a French collapse requires a German force at `high` when the war began. In the record that is the 1939 force; a war begun earlier would have been fought with the force of its year.
 
@@ -106,11 +107,13 @@ Latches: `belief_at_munich` (`belief_WEST` when `sudeten` first becomes german);
 balance_europe := german_regions < 5
                ∧ france != fallen
                ∧ britain in {at_peace, at_war}
-               ∧ (treaty != dead ∨ polish_guarantee ∨ anglo_soviet_alliance ∨ war_west_ger == war)
 german_regions := [rhineland == remilitarized] + [austria == annexed] + [sudeten == german]
                + [bohemia == german] + [poland != independent] + [france == fallen]
                + [britain in {negotiated, invaded}] + [balkans == german_aligned]
+commitment_alive := treaty != dead ∨ polish_guarantee ∨ anglo_soviet_alliance ∨ war_west_ger == war
 ```
+
+`commitment_alive` is a separate invariant for analysis only; no registered test uses it (decisions D2: the earlier treaty clause inside `balance_europe` made the balance false by definition from the lapse of Locarno to the Polish guarantee).
 
 The last clause reads "the treaty regime is alive, or an anti-hegemonic commitment has replaced it".
 
@@ -118,6 +121,7 @@ Endings (mutually exclusive on every state; the horizon cases are decided in thi
 
 | Ending | Definition |
 |---|---|
+| `GERMAN_DEFEAT` | Nature `campaign_rhineland` resolves a French offensive against an unready German army (decisions D3) |
 | `NEGOTIATED_PEACE` | `britain == negotiated` |
 | `AXIS_HEGEMONY_EUROPE` | `britain == invaded` |
 | `JPN_CONQUERS_USSR` | `siberia == japanese` (negative control) |

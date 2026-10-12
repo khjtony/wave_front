@@ -110,7 +110,7 @@ VARIABLES: tuple[Variable, ...] = (
     _lv("arms_GER", "low rising high total", "rising", "2"),
     _lv("arms_WEST", "low rising high", "low", "2"),
     _lv("arms_USSR", "weak strong", "strong", "2"),
-    _lv("arms_JPN", "high", "high", "2"),
+    _lv("arms_JPN", "high total", "high", "2"),
     Variable("ind_GER", "integer", (3, 4, 5), 3, "2"),
     _lv("oil_GER", "dependent secured", "dependent", "2"),
     _lv("belief_WEST", "limited uncertain hegemonic", "limited", "3"),
@@ -125,11 +125,13 @@ VARIABLES: tuple[Variable, ...] = (
     _flag("anglo_soviet_alliance", False),
     _flag("ussr_axis", False),
     _flag("italy_estranged", True),
+
+    _flag("china_war", False),
     _lv("rhineland", "demilitarized remilitarized", "demilitarized", "5"),
     _lv("austria", "independent annexed", "independent", "5"),
     _lv("sudeten", "czech german", "czech", "5"),
     _lv("bohemia", "czech german", "czech", "5"),
-    _lv("poland", "independent partitioned german", "independent", "5"),
+    _lv("poland", "independent german partitioned", "independent", "5"),
     _lv("france", "independent at_war fallen", "independent", "5"),
     _lv("britain", "at_peace at_war negotiated invaded", "at_peace", "5"),
     _lv("balkans", "neutral german_aligned", "neutral", "5"),
@@ -647,6 +649,7 @@ def parse_ontology(path: str | Path = DEFAULT_ONTOLOGY) -> dict[str, dict[str, A
     section = ""
     init_col: int | None = None
     in_table = is_variables = False
+    levels_col: int | None = None
     for line in Path(path).read_text(encoding="utf-8").splitlines():
         m = re.match(r"## (\d+)\.", line)
         if m:
@@ -657,14 +660,15 @@ def parse_ontology(path: str | Path = DEFAULT_ONTOLOGY) -> dict[str, dict[str, A
         cells = [c.strip() for c in line.strip().strip("|").split("|")]
         if not in_table:  # a header row: only tables headed "Variable" declare variables
             in_table = True
-            is_variables = cells[0] == "Variable"
+            levels_col = next((i for i, c in enumerate(cells) if c == "Levels"), None)
+            is_variables = cells[0] == "Variable" and levels_col is not None
             init_col = next((i for i, c in enumerate(cells) if c.startswith("Init")), None)
             continue
         name = re.fullmatch(r"`([A-Za-z_][A-Za-z0-9_]*)`", cells[0])
         if not is_variables or not name or len(cells) < 2:
             continue
         out[name.group(1)] = {
-            "levels": _parse_cell_levels(cells[1]),
+            "levels": _parse_cell_levels(cells[levels_col]),
             "init": _parse_cell_init(cells[init_col]) if init_col is not None else None,
             "section": section,
         }

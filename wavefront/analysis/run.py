@@ -38,8 +38,8 @@ def budget(cm: CompiledModel) -> dict:
 
 def fingerprint(model: Model) -> str:
     """A short hash of the model's declarations (variables, actions with guards and guard
-    parts, effects, delays and sources, latches, fairness, profiles, invariants, endings, assumptions and
-    horizon), so a report names the model version it is conditional on."""
+    parts, effects, delays and sources, latches, fairness, profiles, invariants, endings,
+    assumptions and horizon), so a report names the model version it is conditional on."""
     parts = [
         model.name,
         repr(model.horizon),

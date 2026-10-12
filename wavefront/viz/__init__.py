@@ -6,7 +6,7 @@ draws: it has no engine of its own.
 """
 
 from .bundle import DECISION_NAMES, STATUS_NAMES, bundle, decision_classes, replay, status_codes
-from .format import expr_text
+from .format import expr_text, guard_text
 from .render import MAX_PAGE_BYTES, PageTooLarge, render, render_html
 
 __all__ = [
@@ -14,6 +14,7 @@ __all__ = [
     "render",
     "render_html",
     "expr_text",
+    "guard_text",
     "status_codes",
     "decision_classes",
     "replay",
