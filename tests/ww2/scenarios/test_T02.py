@@ -21,12 +21,19 @@ from wavefront.model import V
 
 CLAIM = {
     "id": "T2",
-    "from_state": "1936Q1",
+    "from_state": ("1936Q1, after the German entry"),
     "claim": (
-        "if France plays `resist`, German `withdraw` is available and the state stays inside V_WEST"
+        "if France plays `resist`, German `withdraw` is available and the state "
+        "after the entry stays inside V_WEST; from the tick-0 state a hegemonic "
+        "Germany that delays its entry until its army is ready keeps the state "
+        "outside V_WEST (recorded result)"
     ),
-    "expected": "1936Q1 ∈ V_WEST under the `resist` branch",
-    "sources": "Kershaw; Tooze",
+    "expected": (
+        "the tick-1 state (after the realized entry) ∈ V_WEST under the `resist` "
+        "branch for both hypotheses, with `resist` then `withdraw` available; the "
+        "tick-0 state ∉ V_WEST under hegemonic aims"
+    ),
+    "sources": ("Kershaw; Tooze; amended 2026-10-12"),
 }
 
 # Methods (decisions D6). From tick 0 neither hypothesis fits the explicit budget (both pass
@@ -91,22 +98,18 @@ def test_T02_revisionist():
     assert_resist_then_withdraw("revisionist")
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="registered expectation not met; see reports/ww2_v0.md section 4",
-)
 def test_T02_hegemonic():
-    """1936Q1 is in V_WEST under hegemonic aims (the registered expectation, read as the
-    prompt states it: the tick-0 state is in WEST's kernel). Asserted through a necessary
-    condition: the state is in WEST's kernel of the game in which GER, USSR, JPN and Nature
-    play the fixed strategy ADVERSARY. It is not: Germany rearms at once, does not enter the
-    Rhineland until its army is ready (1938Q2), and WEST never gets a casus belli while the
-    1936 army could still be beaten."""
+    """The recorded result registered in the amended claim (2026-10-12): the tick-0 state is
+    NOT in V_WEST under hegemonic aims. Shown through a necessary condition for membership:
+    the state is outside WEST's kernel of the game in which GER, USSR, JPN and Nature play
+    the fixed strategy ADVERSARY (Germany rearms at once, does not enter the Rhineland until
+    its army is ready, and WEST never gets a casus belli while the 1936 army could still be
+    beaten). Resist and withdraw are available in the resist branch after the entry."""
     assert_resist_then_withdraw("hegemonic")
     cm = model.compile()
     g = explore(restricted(cm, ADVERSARY), initial=[tick0(cm, "hegemonic")])
     kernel = viability(g, ["WEST"], "balance_europe").kernel
-    assert g.initial[0] in kernel
+    assert g.initial[0] not in kernel
 
 
 def assert_resist_then_withdraw(aims):

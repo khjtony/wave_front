@@ -250,7 +250,7 @@ def test_arms_thresholds_follow_the_rules(nmc_rows, events):
     assert [level(f"{y}Q4", "arms_GER") for y in range(1936, 1941)] == [
         "rising",
         "rising",
-        "rising",
+        "high",  # the planning-record definition, from the Oct 1938 directives (D12)
         "high",
         "high",
     ]

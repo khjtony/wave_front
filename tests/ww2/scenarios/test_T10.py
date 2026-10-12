@@ -13,17 +13,22 @@ from wavefront.analysis import relax_explicit
 
 CLAIM = {
     "id": "T10",
-    "from_state": "various",
+    "from_state": ("various"),
     "claim": (
-        "negative controls: Germany conquers the United States; Japan conquers the "
-        "USSR; Britain alone defeats Germany by 1941"
+        "negative controls: Japan conquers the USSR needs at least one relaxation "
+        "and every minimal set relaxes `campaign_siberia:japanese_superiority`, a "
+        "constraint the record never lifts; Britain alone defeats Germany by 1941 "
+        "(`GERMAN_DEFEAT` from the end of 1940Q3) needs at least two relaxations "
+        "and every minimal set relaxes `german_army_unready`; Germany conquers "
+        "the United States is vacuous in v0 and is re-registered for v1 if the "
+        "Atlantic is modeled"
     ),
     "expected": (
-        "each needs 3 or more relaxations. The USSR joining the Axis against Britain "
-        "is *not* absurd (the November 1940 Berlin talks) and must need at most one "
-        "relaxation of `aims[USSR]`"
+        "as stated. The USSR joining the Axis against Britain is *not* absurd "
+        "(the November 1940 Berlin talks) and must need exactly one relaxation of "
+        "the Soviet hypothesis (`ussr_defensive` or the `join_axis` gate)"
     ),
-    "sources": "Weinberg; Kershaw",
+    "sources": ("Weinberg; Kershaw; amended 2026-10-12"),
 }
 
 # "Relaxations" count named assumptions including named guard parts (ww2_testbed.md
@@ -46,37 +51,32 @@ def test_T10_ussr_joins_axis():
 
 
 @pytest.mark.slow
-@pytest.mark.xfail(
-    strict=True,
-    reason="registered expectation not met; see reports/ww2_v0.md section 8",
-)
 def test_T10_japan_conquers_ussr():
-    """Three or more relaxations (searched up to 3, bounded checker, k = 20). The minimum
-    found is 1: {Nature.campaign_siberia:japanese_superiority}. Nature's china_incident is
-    nondeterministic, so a play without the China war satisfies the D7 parts army_free and
-    no_two_front without relaxing them."""
+    """Amended claim (2026-10-12): at least one relaxation, and every minimal set relaxes
+    Nature.campaign_siberia:japanese_superiority, the constraint the record never lifts.
+    Bounded checker, k = 20, searched up to 3. (Nature's china_incident is a choice Nature
+    may decline, by the owner's decision, so the China parts need no relaxation in a play
+    without the China war.)"""
     cm = fixed_model(model, aims_GER="hegemonic").compile()
     res = bmc.relax(cm, 20, "JPN_CONQUERS_USSR", max_relax=3)
     assert not res.reachable_as_is
-    assert res.minimum_size is None or res.minimum_size >= 3
+    assert res.minimum_size is not None and res.minimum_size >= 1
+    assert res.minimal_sets
+    assert all("Nature.campaign_siberia:japanese_superiority" in s for s in res.minimal_sets)
 
 
 @pytest.mark.slow
-@pytest.mark.xfail(
-    strict=True,
-    reason="registered expectation not met; see reports/ww2_v0.md section 8",
-)
 def test_T10_britain_alone_defeats_germany():
-    """'Britain alone defeats Germany by 1941': GERMAN_DEFEAT from the state at the end of
-    1940Q3 (tick 19, France fallen, Britain at war alone) needs three or more relaxations.
-    Explicit search over every set of at most two named assumptions (re-exploring each):
-    one set of size two is found, {Nature.campaign_rhineland:offensive,
-    Nature.campaign_rhineland:german_army_unready}."""
+    """Amended claim (2026-10-12): 'Britain alone defeats Germany by 1941' (GERMAN_DEFEAT from
+    the state at the end of 1940Q3: tick 19, France fallen, Britain at war alone) needs at
+    least two relaxations, and every minimal set relaxes the unready-army part. Explicit
+    search over every set of at most two named assumptions, re-exploring each."""
     cm = model.compile()
     start = snapshot_state(cm, "1940Q3", "hegemonic")
     sets = relax_explicit(model, "GERMAN_DEFEAT", max_size=2, initial=[start])
     assert not sets.undecided
-    assert list(sets) == []
+    assert sets.minimum_size == 2
+    assert all(any(name.endswith(":german_army_unready") for name in s) for s in sets)
 
 
 def test_T10_germany_conquers_the_united_states():

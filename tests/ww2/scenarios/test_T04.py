@@ -23,7 +23,7 @@ CLAIM = {
 
 def test_T04():
     """From the state at the start of 1939Q1 (file 1938Q4.json, tick 12; hegemonic aims),
-    explored exhaustively to the horizon (146,504 states): the shortest trace to a state in
+    explored exhaustively to the horizon (648,006 states): the shortest trace to a state in
     which WEST's guarantee_poland is available passes through occupy_bohemia and the flip of
     belief_WEST to hegemonic, and no reachable state offers the guarantee with another
     belief. With the guard part ``belief`` relaxed the guarantee is available at once, so
@@ -32,7 +32,7 @@ def test_T04():
     cm = model.compile()
     start = snapshot_state(cm, "1938Q4", "hegemonic")
     g = explore(cm, initial=[start], max_states=3_000_000)
-    assert g.size() == 146_504
+    assert g.size() == 648_006  # the start state carries arms_GER = high (decisions D12)
     gi = cm.actors[1].action_index("guarantee_poland")
     offers = {i for i in range(g.size()) if not g.terminal[i] and gi in g.avail[i][1]}
     assert offers and gi not in g.avail[g.initial[0]][1]

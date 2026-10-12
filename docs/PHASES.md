@@ -41,7 +41,7 @@ Rough sizes assume one full-time engineer and a part-time historian reviewer. Th
 
 **Gate.** T1, T2, T4, T5 and T8 pass; negative controls need 3 or more relaxations where registered; informativeness at or above 80 percent; the reachable set at or under 10^6 states.
 
-**Gate record.** Not passed as of 2026-10-12. T1, T4 and T5 pass; T2 and T8 pass under revisionist aims only; the Japan and Britain-alone negative controls need 1 and 2 relaxations; informativeness 0 of 2; the reachable set from tick 0 exceeds 3 million states, so the bounded checker and fixed-strategy sufficiency checks answered the trace and kernel questions (reports/ww2_v0.md). Owner decisions pending on the proposed claim amendments, the semantics of the China incident, and the German readiness calibration.
+**Gate record.** Passed 2026-10-12 under the claims as amended by the owner (ww2_testbed.md section 11), with T8(b) deferred to phase 2: T1, T2, T4, T5, T8(a) and the three non-vacuous T10 controls pass; informativeness 3 of 3. Under the original wording, T2 and T8 failed under hegemonic aims and the Japan and Britain-alone controls needed 1 and 2 relaxations (reports/ww2_v0.md sections 4 to 10). The reachable set from tick 0 exceeds 3 million states, so the bounded checker and fixed-strategy sufficiency checks answered the trace and kernel questions; phase 2 owes snapshots carrying pending decisions and either crisis sub-games or a symbolic engine.
 
 **Risk.** Tuning guards to the known outcome. Mitigation: the protocol in ww2_testbed.md section 7; every guard edit after a failing test is logged with its rationale.
 

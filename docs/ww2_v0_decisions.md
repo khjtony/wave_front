@@ -59,6 +59,8 @@ Guards may be declared as named parts, each a separate relaxable assumption (fra
 
 The registered expectation "three or more relaxations" is then tested as registered. If the count is lower, the test fails and the report proposes an amendment of the claim for the owner's decision; the model is not tuned to the number. The two controls with no variable in v0 (Germany conquers the United States; Britain alone defeats Germany by 1941 before D3) are reported as vacuous where they are, never as passes.
 
+**Owner's decision (2026-10-12).** The China incident stays a Nature event that Nature may decline: a general war in China was a Japanese choice, and the model's decision space keeps it open. The Japan and Britain-alone controls are re-registered as content controls (the relaxed constraint must be the one the record never lifts), and the United States control is vacuous in v0.
+
 ## D8. The horizon artifact in T5
 
 The second half of T5 holds in v0 because the chain of campaign, air battle and invasion does not fit before 1941Q1. The test passes as registered; the report says why, and phase 2 (horizon 1945) re-tests it.
@@ -74,3 +76,11 @@ T1, T2, T4, T5, T8 and T10 are un-skipped and implemented against `models/ww2/v0
 ## D11. Deliverables
 
 `models/ww2/v0.py` (every action with `source=` from the catalogue; parts named as in D3 and D7), `tests/ww2/test_model_ww2.py`, the six scenario tests, `docs/guard_changelog_ww2.md` entries, `reports/ww2_v0.md` (per-test outcome with rendered traces, state-space counts per hypothesis, the parameter budget, informativeness over the T10 controls, the [SQR] table, failures with proposed amendments), and `reports/ww2_v0_viz.html` (the hegemonic hypothesis, the T1 trace).
+
+## D12. German readiness calibration (owner's decision, 2026-10-12)
+
+Two readings of `arms_GER = high` disagreed by two quarters: the model's rearmament delay (decision 1936Q3, `high` from 1938Q4) and the snapshot builder's numeric threshold on the capabilities table (military personnel at or above one million, first met by the 1939 annual figure). The ontology's own rule defines `high` as "the force of late 1938 and 1939", which is a planning-record definition. Decision: `high` is read from the planning record, the directive of 21 October 1938 on the remainder of Czechoslovakia and the expansion decisions of October 1938 (Goering's conference of 14 October 1938), as a dated event in `events_ww2.csv`; the capabilities table is the cross-check, not the definition. The snapshots and the model then agree on `high` from 1938Q4. The delay of 8 stays.
+
+## D13. Claims amended (owner's decision, 2026-10-12)
+
+T2, T8 and T10 are amended as recorded in ww2_testbed.md section 11: T2 in its conditional form with the tick-0 hegemonic result recorded; T8(b) as the load-bearing-obligation result, the kernel comparison deferred to phase 2 when snapshots carry pending decisions; T10's Japan and Britain-alone controls as content controls, the United States control vacuous in v0. The tests follow the amended wording; the model is unchanged by the amendments.

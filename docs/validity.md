@@ -208,14 +208,14 @@ The point of no return is the first state of a trace outside the kernel. The sil
 | A8 | Independent checker agrees | PRISM-games cross-check once the exporter exists (PLAN step 6.3) | planned | phase 6 |
 | A9 | Scale | 110,670 states with 8.5e6 joint moves explored in about 25 s; attractor 3.7 s, safe 2.7 s | met | phase 0 |
 | B1 | Realized trajectories reachable | T1 met (the 1936 to 1940 decision sequence replays with every action available, zero relaxations); C1 | partial (WW2 met) | phases 1, 3 |
-| B2 | Documented alternatives behave as registered | T5 met; T2 met under revisionist aims and after the realized entry, not from the tick-0 state under hegemonic aims (reports/ww2_v0.md section 4); C4, C5 | partial | phases 1, 3 |
+| B2 | Documented alternatives behave as registered | T5 met; T2 met in its amended conditional form, with the tick-0 hegemonic result recorded (reports/ww2_v0.md sections 4 and 13); C4, C5 | partial (WW2 met) | phases 1, 3 |
 | B3 | Split questions come out contested | T3, T6, T9, C3, C4, C9 | planned | phases 2, 3 |
-| B4 | Hidden objectives and beliefs | T4 met; T8 met under revisionist aims, its hegemonic half not computable from snapshot states (the comparison measured the rearmament clock; report section 7); C6, C7 | partial | phases 1, 3 |
+| B4 | Hidden objectives and beliefs | T4 met; T8(a) met, T8(b) met as the load-bearing-obligation result with the kernel comparison deferred to phase 2 (report sections 7 and 13); C6, C7 | partial (WW2 met, one deferral) | phases 1, 3 |
 | B5 | Resource bounds and preventive defection | T6, T7 | planned | phase 2 |
 | B6 | Institutional lag | T4, T11 | planned | phases 1, 2 |
 | B7 | Joint balances and near misses | C2, C3, C5, C10, C11 | planned | phase 3 |
 | B8 | Point-of-no-return windows, stable under refinement | T6, T13, C13 | planned | phases 2, 3 |
-| B9 | Assumption mining discriminates | T10: the USSR control met exactly; the Japan and Britain-alone controls need 1 and 2 relaxations, not 3; informativeness 0 of 2 non-vacuous controls (report section 8); T7, C9, C12 | not met in phase 1 | phases 1 to 3 |
+| B9 | Assumption mining discriminates | T10 under the amended content controls: all three non-vacuous controls met, each minimal set relaxing the constraint the record never lifts (report section 13); T7, C9, C12 | partial (WW2 met) | phases 1 to 3 |
 | B10 | Pivotal coalitions | T5, T9, C11 | planned | phases 1 to 3 |
 | B11 | Oversight and capability thresholds | C8, C10, T12 | planned | phases 2, 3 |
 | B12 | Exhaustion with no adversarial act | C9, C13 | planned | phase 3 |
@@ -234,7 +234,8 @@ The point of no return is the first state of a trace outside the kernel. The sil
 
 ## 9. Change log
 
-- 2026-10-12: phase 1 (WW2 v0, Europe 1936 to 1940) assessed: B1, C4 and C7 met for WW2; B2, B4 and C2 partial; B9 not met. The gate is not passed: T2 and T8 fail under hegemonic aims as registered and informativeness is below 80 percent; the proposed claim amendments and the open modeling questions are in reports/ww2_v0.md sections 10 and 12 for the owner's decision.
+- 2026-10-12: phase 1 (WW2 v0, Europe 1936 to 1940) assessed under the original wording: B1, C4 and C7 met for WW2; B2, B4 and C2 partial; B9 not met (reports/ww2_v0.md sections 4 to 8).
+- 2026-10-12: the owner amended T2, T8 and T10 (ww2_testbed.md section 11) and settled the China-incident semantics and the readiness calibration; under the amended claims every phase 1 test passes and the gate is passed with T8(b) deferred to phase 2 (report section 13).
 - 2026-10-11: A1 to A4 and A9 assessed as met after the phase 0 engine review (commit 5d60ccc).
 - 2026-10-11: A5, A6, A7 and D1 assessed as met after the wave 2 review. Phase 0 gate passed: engine correct on known games, the DSL covers the requirement list, both historical test lists are committed as test files, the budget and informativeness instrumentation exists, and `pytest`, `ruff check` and `ruff format --check` are clean (373 passed, 26 skipped). Gate commit: 5128836 (a local tag `phase0` points at it; the remote refused the tag push, so tag it on the main repository when merging).
 

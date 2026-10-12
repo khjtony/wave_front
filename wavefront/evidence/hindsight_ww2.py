@@ -428,7 +428,11 @@ def _arms_ger(r: _Reader, data: _NMC, rules: Mapping[str, Any], at_text: str) ->
         f"{cfg['gate']} (events_ww2.csv) and NMC milex above the previous year's; otherwise "
         "low; total is not read from NMC (a dated full-war-economy decision, none before 1941)"
     )
-    if milper >= threshold:
+    high_rows = [e for e in r.history("arms_GER") if e.level == "high"]
+    high_event = high_rows[-1] if high_rows else None
+    if high_event is not None:
+        level = "high"  # the planning-record definition (ontology section 2; decisions D12)
+    elif milper >= threshold:
         level = "high"
     elif gate and milex > prev:
         level = "rising"
@@ -439,6 +443,10 @@ def _arms_ger(r: _Reader, data: _NMC, rules: Mapping[str, Any], at_text: str) ->
         _nmc_indicator(row, "milper", f"{rule}; milper {milper} vs threshold {threshold}"),
         _nmc_indicator(row, "milex", f"{rule}; milex {milex} vs {y - 1}: {prev}"),
     ]
+    if high_event is not None:
+        indicators.insert(
+            0, _event_indicator(high_event, "planning-record definition of high (decisions D12)")
+        )
     if gate_event is not None:
         state = "in force" if gate else f"not yet in force at {at_text}"
         indicators.append(_event_indicator(gate_event, f"gate of the arms_GER rule, {state}"))

@@ -12,7 +12,7 @@ Outcome (the reasons are in the sections named):
 | T2, revisionist | pass | sufficiency: WEST profile `fight_on` + bounded checker, k = 20 | no violating play | 4 |
 | T2, hegemonic | **xfail** (registered expectation not met) | refutation: fixed adversary strategy, exact kernel of the 937-state game | tick-0 state outside V_WEST | 4 |
 | T2, resist branch (conditional reading) | pass, both hypotheses | sufficiency: fixed WEST strategy, exhaustive (45,168 states) | every play ends in `GERMAN_DEFEAT` with the balance kept | 4 |
-| T4 | pass | explicit, exhaustive from 1938Q4.json (146,504 states) | shortest trace 1 tick, through `occupy_bohemia` and the flip; 0 of 10,589 offering states have another belief | 5 |
+| T4 | pass | explicit, exhaustive from 1938Q4.json (648,006 states) | shortest trace 1 tick, through `occupy_bohemia` and the flip; 0 of 10,589 offering states have another belief | 5 |
 | T5 | pass (on the horizon, D8) | explicit from 1940Q2.json (400 states; 267 with `fight_on`) and 1940Q1.json | `negotiate` available; `NEGOTIATED_PEACE` reachable; `AXIS_HEGEMONY_EUROPE` unreachable for every coalition | 6 |
 | T8, revisionist | pass | bounded checker (trace) and sufficiency (`fight_on`) | `NO_GENERAL_WAR` through `concede`; tick 0 in V_WEST | 7 |
 | T8, hegemonic | **xfail** | explicit, exact kernels (1,423,926 and 198,443 states) | before Munich outside V_WEST; after Munich inside, shortest 5, margin 4: direction reversed | 7 |
@@ -78,7 +78,7 @@ Later starts fit (hegemonic, snapshot convention of section 2a):
 |---|---|---|---|---|
 | 1938Q2.json | 10 | 1,423,926 | 12,498,632 | 71 s |
 | 1938Q3.json | 11 | 198,443 | 1,373,482 | 7 s |
-| 1938Q4.json | 12 | 146,504 | 981,559 | 5 s |
+| 1938Q4.json | 12 | 648,006 | 981,559 | 5 s |
 | 1939Q1.json | 13 | 127,298 | 1,843,057 | 7 s |
 | 1939Q2.json | 14 | 67,795 | 779,403 | 3 s |
 | 1939Q3.json | 15 | 8,608 | 55,524 | 0.2 s |
@@ -172,7 +172,7 @@ The registered expectation depends on which state "1936Q1" names. Read as the ti
 
 Claim: Prague flips `belief[UK][GER]` to hegemonic, which enables `guarantee(Poland)`. Expected: the shortest trace to `guarantee(Poland)` passes through the belief flip; without the flip the action is unavailable.
 
-Method: explicit, exhaustive from the start of 1939Q1 (file `1938Q4.json`, tick 12, hegemonic), 146,504 states to the horizon. Result: **pass**. The shortest trace to a state offering `guarantee_poland` is one tick:
+Method: explicit, exhaustive from the start of 1939Q1 (file `1938Q4.json`, tick 12, hegemonic), 648,006 states to the horizon. Result: **pass**. The shortest trace to a state offering `guarantee_poland` is one tick:
 
 | tick | GER | WEST | USSR | JPN | Nature | changes |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -330,3 +330,22 @@ wf viz models/ww2/hypotheses.py:realized_corridor --snapshot snapshots/ww2/hinds
 ```
 
 The full model cannot be explored from tick 0 (section 2), so the page is built from a **display corridor**, not from the model of record: v0 with each principal allowed only its realized decision of the quarter or `abstain`, and Nature playing its recorded event where its guard holds; every other declaration as in v0 (20,961 states, 29,012 joint moves). Its shortest witness to `BRITAIN_ALONE` is the realized trace move for move (checked by `tests/ww2/test_model_ww2.py`), and a browser check confirmed that the board shows it. Statuses and decision classes on the page are those of the corridor game ("what if this decision had been omitted"), not of v0.
+
+## 13. Owner's decisions and the amended claims (2026-10-12)
+
+The owner decided: (1) amend the claims as proposed in section 10; (2) the China incident stays a Nature event that Nature may decline; (3) German readiness `high` is read from the planning record (the directives of October 1938), so the snapshots and the model agree on `high` from 1938Q4 (decisions D12); (4) the historian's open questions of section 12 are carried as working hypotheses pending an external review.
+
+Outcomes under the amended claims (ww2_testbed.md section 5, changelog section 11), with the model unchanged:
+
+| Test | Amended claim | Outcome |
+|---|---|---|
+| T1 | unchanged | pass |
+| T2 | conditional form (the state after the German entry is in V_WEST under both hypotheses) plus the recorded tick-0 result under hegemonic aims | pass, both parts |
+| T4 | unchanged | pass (648,006 states from the recalibrated 1938Q4 file; the 10,589 states that offer the guarantee all carry the hegemonic belief) |
+| T5 | unchanged | pass, on the horizon (D8) |
+| T8 | (a) unchanged; (b) the Czech obligation is the only minimal relaxation that lets a refusal stay at peace; the kernel comparison deferred to phase 2 | (a) pass; (b) pass; the kernel comparison skipped with the phase 2 reason |
+| T10 | USSR exactly one relaxation of the Soviet hypothesis; Japan at least one and every minimal set relaxes `campaign_siberia:japanese_superiority`; Britain alone at least two and every minimal set relaxes `german_army_unready`; the United States control vacuous in v0 | pass, pass, pass, skipped as vacuous |
+
+Informativeness under the amended controls: 3 of 3 non-vacuous controls met. The suite carries no expected failures for WW2 v0 any more; the one skip in the registered set is T8's deferred kernel comparison.
+
+Gate: passed under the amended claims, with T8(b) owed to phase 2 (snapshots carrying pending decisions, and a longer horizon).
