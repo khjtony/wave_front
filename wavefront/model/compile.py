@@ -106,10 +106,10 @@ _GLOBALS: dict[str, Any] = {
 _BOOL_NODES = (Const, Cmp, And, Or, Not, InSet, InvariantRef, EndingRef)
 
 
-
 def _trivial(expr: object) -> bool:
     """True for the constant ``TRUE`` guard (or part)."""
     return isinstance(expr, Const) and bool(expr.value)
+
 
 def _make_fn(src: str) -> Callable[[Sequence[int]], Any]:
     """Turn ``src`` (an expression over ``s``) into ``lambda s: src``."""

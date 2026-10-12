@@ -125,7 +125,6 @@ VARIABLES: tuple[Variable, ...] = (
     _flag("anglo_soviet_alliance", False),
     _flag("ussr_axis", False),
     _flag("italy_estranged", True),
-
     _flag("china_war", False),
     _lv("rhineland", "demilitarized remilitarized", "demilitarized", "5"),
     _lv("austria", "independent annexed", "independent", "5"),
