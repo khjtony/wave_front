@@ -1,0 +1,220 @@
+Palette validation for the visualizer page (wavefront/viz/template/viz.css).
+Produced with the data-visualization guidance's validator, scripts/validate_palette.js,
+run with node from the guidance's directory. Each block gives the command, then its output.
+tests/viz/test_palette.py checks that every color declared in viz.css appears below.
+
+Notes
+- Categorical slots: the reference palette's eight hues in its documented order, light and dark.
+  Actors take slots in declaration order and are always named in text; trace A and B in the
+  compare view take slots 1 and 2. The light-mode sub-3:1 WARN (aqua, yellow, magenta) is
+  relieved by the direct labels (actor names on every lane, chip and legend) and the table twins.
+- Status: the four reserved status steps are fixed by the guidance and the design (never themed).
+  The validator's categorical checks do not apply to them (its scope note says so): run as a
+  categorical set, warning (and in dark mode serious) sits outside the lightness band and the
+  warning/serious pair falls below the 15 normal-vision floor (13.6) in both modes. As the
+  guidance requires, a status color never carries meaning alone: every status cell, badge and
+  legend entry pairs it with an icon shape (dot, half ring, quarter ring, cross) and the status
+  name in the legend, tooltip and tables.
+- Ordinal ramp (variable heatmap, level scale) and sequential ramp (landscape forward/backward):
+  the blue ramp, light steps 250..700 and dark steps 600..150 (validated as declared, --ordinal).
+  A variable with n levels takes steps round(i*9/(n-1)) of the ten; the n = 2..5 subsets pass
+  every ordinal check in both modes. Adjacent 50-unit steps (the full ten, used only when a
+  variable has more than five levels, or for continuous depth and rank) sit at delta-L 0.047,
+  below the 0.06 gap check: those rows carry selective direct level labels, a scale legend,
+  tooltips and table twins.
+- Nature uses the de-emphasis gray #898781 (the muted ink token), not a categorical slot.
+
+$ node scripts/validate_palette.js #2a78d6,#eb6834,#1baf7a,#eda100,#e87ba4,#008300,#6250d6,#e34948 --mode light
+
+Palette (light, surface #fcfcfb, categorical): 8 slots
+  [PASS] Lightness band         all 8 inside L 0.43–0.77
+  [PASS] Chroma floor           all 8 >= 0.1
+  [PASS] CVD separation         worst adjacent #eda100↔#1baf7a ΔE 9.1 (protan) · tritan 5.8
+  [PASS] Normal-vision floor    worst adjacent #e87ba4↔#eda100 ΔE 19.6 (normal)
+  [WARN] Contrast vs surface    below 3:1 — relief required (visible labels or table view): [["#1baf7a",2.74],["#eda100",2.11],["#e87ba4",2.62]]
+
+  → ALL CHECKS PASS  (CVD in the 6–8 floor band is legal ONLY with secondary encoding: direct labels, gaps, or texture)
+  scope: categorical palettes only. For a lone status/text color check WCAG text contrast; for a sequential ramp, lightness monotonicity.
+
+(exit 0)
+
+$ node scripts/validate_palette.js #3987e5,#d95926,#199e70,#c98500,#d55181,#008300,#9085e9,#e66767 --mode dark
+
+Palette (dark, surface #1a1a19, categorical): 8 slots
+  [PASS] Lightness band         all 8 inside L 0.48–0.67
+  [PASS] Chroma floor           all 8 >= 0.1
+  [PASS] CVD separation         worst adjacent #c98500↔#199e70 ΔE 8.4 (protan) · tritan 8.7
+  [PASS] Normal-vision floor    worst adjacent #d55181↔#c98500 ΔE 19.3 (normal)
+  [PASS] Contrast vs surface    all 8 >= 3:1
+
+  → ALL CHECKS PASS  (CVD in the 6–8 floor band is legal ONLY with secondary encoding: direct labels, gaps, or texture)
+  scope: categorical palettes only. For a lone status/text color check WCAG text contrast; for a sequential ramp, lightness monotonicity.
+
+(exit 0)
+
+$ node scripts/validate_palette.js #2a78d6,#eb6834,#1baf7a --mode light --pairs all
+
+Palette (light, surface #fcfcfb, categorical): 3 slots
+  [PASS] Lightness band         all 3 inside L 0.43–0.77
+  [PASS] Chroma floor           all 3 >= 0.1
+  [PASS] CVD separation         worst all-pairs #1baf7a↔#eb6834 ΔE 9.2 (deutan) · tritan 9.6
+  [PASS] Normal-vision floor    worst all-pairs #1baf7a↔#2a78d6 ΔE 24.0 (normal)
+  [WARN] Contrast vs surface    below 3:1 — relief required (visible labels or table view): [["#1baf7a",2.74]]
+
+  → ALL CHECKS PASS  (CVD in the 6–8 floor band is legal ONLY with secondary encoding: direct labels, gaps, or texture)
+  scope: categorical palettes only. For a lone status/text color check WCAG text contrast; for a sequential ramp, lightness monotonicity.
+
+(exit 0)
+
+$ node scripts/validate_palette.js #3987e5,#d95926,#199e70 --mode dark --pairs all
+
+Palette (dark, surface #1a1a19, categorical): 3 slots
+  [PASS] Lightness band         all 3 inside L 0.48–0.67
+  [PASS] Chroma floor           all 3 >= 0.1
+  [PASS] CVD separation         worst all-pairs #199e70↔#d95926 ΔE 9.4 (deutan) · tritan 4.0
+  [PASS] Normal-vision floor    worst all-pairs #199e70↔#3987e5 ΔE 20.9 (normal)
+  [PASS] Contrast vs surface    all 3 >= 3:1
+
+  → ALL CHECKS PASS  (CVD in the 6–8 floor band is legal ONLY with secondary encoding: direct labels, gaps, or texture)
+  scope: categorical palettes only. For a lone status/text color check WCAG text contrast; for a sequential ramp, lightness monotonicity.
+
+(exit 0)
+
+$ node scripts/validate_palette.js #0ca30c,#fab219,#ec835a,#d03b3b --mode light
+
+Palette (light, surface #fcfcfb, categorical): 4 slots
+  [FAIL] Lightness band         outside band: [["#fab219",0.811]]
+  [PASS] Chroma floor           all 4 >= 0.1
+  [PASS] CVD separation         worst adjacent #ec835a↔#fab219 ΔE 11.3 (deutan) · tritan 9.6
+  [FAIL] Normal-vision floor    worst adjacent #ec835a↔#fab219 ΔE 13.6 (normal) — below 15, hard to tell apart even with full color vision
+  [WARN] Contrast vs surface    below 3:1 — relief required (visible labels or table view): [["#fab219",1.79],["#ec835a",2.57]]
+
+  → FAILED — fix the marked checks  (CVD in the 6–8 floor band is legal ONLY with secondary encoding: direct labels, gaps, or texture)
+  scope: categorical palettes only. For a lone status/text color check WCAG text contrast; for a sequential ramp, lightness monotonicity.
+
+(exit 1)
+
+$ node scripts/validate_palette.js #0ca30c,#fab219,#ec835a,#d03b3b --mode dark
+
+Palette (dark, surface #1a1a19, categorical): 4 slots
+  [FAIL] Lightness band         outside band: [["#fab219",0.811],["#ec835a",0.717]]
+  [PASS] Chroma floor           all 4 >= 0.1
+  [PASS] CVD separation         worst adjacent #ec835a↔#fab219 ΔE 11.3 (deutan) · tritan 9.6
+  [FAIL] Normal-vision floor    worst adjacent #ec835a↔#fab219 ΔE 13.6 (normal) — below 15, hard to tell apart even with full color vision
+  [PASS] Contrast vs surface    all 4 >= 3:1
+
+  → FAILED — fix the marked checks  (CVD in the 6–8 floor band is legal ONLY with secondary encoding: direct labels, gaps, or texture)
+  scope: categorical palettes only. For a lone status/text color check WCAG text contrast; for a sequential ramp, lightness monotonicity.
+
+(exit 1)
+
+$ node scripts/validate_palette.js #86b6ef,#0d366b --ordinal --mode light
+
+Palette (light, surface #fcfcfb, ordinal ramp): 2 slots
+  [PASS] Lightness monotone     steps read light→dark
+  [PASS] Adjacent ΔL            all gaps >= 0.06
+  [PASS] Light-end contrast     #86b6ef at 2.06:1 vs surface
+  [PASS] Single hue             hue spread 4°
+
+  → ALL CHECKS PASS  (ordinal: one hue, monotone L, visible step gaps, light end clears surface)
+(exit 0)
+
+$ node scripts/validate_palette.js #184f95,#b7d3f6 --ordinal --mode dark
+
+Palette (dark, surface #1a1a19, ordinal ramp): 2 slots
+  [PASS] Lightness monotone     steps read light→dark
+  [PASS] Adjacent ΔL            all gaps >= 0.06
+  [PASS] Light-end contrast     #184f95 at 2.15:1 vs surface
+  [PASS] Single hue             hue spread 2°
+
+  → ALL CHECKS PASS  (ordinal: one hue, monotone L, visible step gaps, light end clears surface)
+(exit 0)
+
+$ node scripts/validate_palette.js #86b6ef,#256abf,#0d366b --ordinal --mode light
+
+Palette (light, surface #fcfcfb, ordinal ramp): 3 slots
+  [PASS] Lightness monotone     steps read light→dark
+  [PASS] Adjacent ΔL            all gaps >= 0.06
+  [PASS] Light-end contrast     #86b6ef at 2.06:1 vs surface
+  [PASS] Single hue             hue spread 4°
+
+  → ALL CHECKS PASS  (ordinal: one hue, monotone L, visible step gaps, light end clears surface)
+(exit 0)
+
+$ node scripts/validate_palette.js #184f95,#5598e7,#b7d3f6 --ordinal --mode dark
+
+Palette (dark, surface #1a1a19, ordinal ramp): 3 slots
+  [PASS] Lightness monotone     steps read light→dark
+  [PASS] Adjacent ΔL            all gaps >= 0.06
+  [PASS] Light-end contrast     #184f95 at 2.15:1 vs surface
+  [PASS] Single hue             hue spread 3°
+
+  → ALL CHECKS PASS  (ordinal: one hue, monotone L, visible step gaps, light end clears surface)
+(exit 0)
+
+$ node scripts/validate_palette.js #86b6ef,#3987e5,#1c5cab,#0d366b --ordinal --mode light
+
+Palette (light, surface #fcfcfb, ordinal ramp): 4 slots
+  [PASS] Lightness monotone     steps read light→dark
+  [PASS] Adjacent ΔL            all gaps >= 0.06
+  [PASS] Light-end contrast     #86b6ef at 2.06:1 vs surface
+  [PASS] Single hue             hue spread 4°
+
+  → ALL CHECKS PASS  (ordinal: one hue, monotone L, visible step gaps, light end clears surface)
+(exit 0)
+
+$ node scripts/validate_palette.js #184f95,#2a78d6,#6da7ec,#b7d3f6 --ordinal --mode dark
+
+Palette (dark, surface #1a1a19, ordinal ramp): 4 slots
+  [PASS] Lightness monotone     steps read light→dark
+  [PASS] Adjacent ΔL            all gaps >= 0.06
+  [PASS] Light-end contrast     #184f95 at 2.15:1 vs surface
+  [PASS] Single hue             hue spread 3°
+
+  → ALL CHECKS PASS  (ordinal: one hue, monotone L, visible step gaps, light end clears surface)
+(exit 0)
+
+$ node scripts/validate_palette.js #86b6ef,#5598e7,#256abf,#184f95,#0d366b --ordinal --mode light
+
+Palette (light, surface #fcfcfb, ordinal ramp): 5 slots
+  [PASS] Lightness monotone     steps read light→dark
+  [PASS] Adjacent ΔL            all gaps >= 0.06
+  [PASS] Light-end contrast     #86b6ef at 2.06:1 vs surface
+  [PASS] Single hue             hue spread 4°
+
+  → ALL CHECKS PASS  (ordinal: one hue, monotone L, visible step gaps, light end clears surface)
+(exit 0)
+
+$ node scripts/validate_palette.js #184f95,#256abf,#5598e7,#86b6ef,#b7d3f6 --ordinal --mode dark
+
+Palette (dark, surface #1a1a19, ordinal ramp): 5 slots
+  [PASS] Lightness monotone     steps read light→dark
+  [PASS] Adjacent ΔL            all gaps >= 0.06
+  [PASS] Light-end contrast     #184f95 at 2.15:1 vs surface
+  [PASS] Single hue             hue spread 3°
+
+  → ALL CHECKS PASS  (ordinal: one hue, monotone L, visible step gaps, light end clears surface)
+(exit 0)
+
+$ node scripts/validate_palette.js #86b6ef,#6da7ec,#5598e7,#3987e5,#2a78d6,#256abf,#1c5cab,#184f95,#104281,#0d366b --ordinal --mode light
+
+Palette (light, surface #fcfcfb, ordinal ramp): 10 slots
+  [PASS] Lightness monotone     steps read light→dark
+  [FAIL] Adjacent ΔL            steps too close: [["#86b6ef","#6da7ec",0.047],["#6da7ec","#5598e7",0.046],["#5598e7","#3987e5",0.049],["#3987e5","#2a78d6",0.047],["#2a78d6","#256abf",0.048],["#256abf","#1c5cab",0.048],["#1c5cab","#184f95",0.047],["#184f95","#104281",0.048],["#104281","#0d366b",0.047]]
+  [PASS] Light-end contrast     #86b6ef at 2.06:1 vs surface
+  [PASS] Single hue             hue spread 4°
+
+  → FAILED — fix the marked checks  (ordinal: one hue, monotone L, visible step gaps, light end clears surface)
+(exit 1)
+
+$ node scripts/validate_palette.js #184f95,#1c5cab,#256abf,#2a78d6,#3987e5,#5598e7,#6da7ec,#86b6ef,#9ec5f4,#b7d3f6 --ordinal --mode dark
+
+Palette (dark, surface #1a1a19, ordinal ramp): 10 slots
+  [PASS] Lightness monotone     steps read light→dark
+  [FAIL] Adjacent ΔL            steps too close: [["#184f95","#1c5cab",0.047],["#1c5cab","#256abf",0.048],["#256abf","#2a78d6",0.048],["#2a78d6","#3987e5",0.047],["#3987e5","#5598e7",0.049],["#5598e7","#6da7ec",0.046],["#6da7ec","#86b6ef",0.047],["#86b6ef","#9ec5f4",0.048],["#9ec5f4","#b7d3f6",0.046]]
+  [PASS] Light-end contrast     #184f95 at 2.15:1 vs surface
+  [PASS] Single hue             hue spread 3°
+
+  → FAILED — fix the marked checks  (ordinal: one hue, monotone L, visible step gaps, light end clears surface)
+(exit 1)
+

@@ -320,6 +320,39 @@ def cmd_pivot(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_viz(args: argparse.Namespace) -> int:
+    from .viz import PageTooLarge, bundle, render_html
+
+    model = load_model(args.model)
+    coalitions = [_names(c) for c in args.coalition] if args.coalition else None
+    endings = [e for text in args.ending for e in _names(text)] if args.ending else None
+    try:
+        data = bundle(
+            model,
+            coalitions=coalitions,
+            endings=endings,
+            profile=_profile(args),
+            snapshot=args.snapshot,
+            max_states=args.max_states,
+            max_moves=args.max_moves,
+            max_relax=args.max_relax,
+        )
+        out = render_html(data, args.out)
+    except PageTooLarge as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 1
+    except OSError as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 1
+    counts = data["meta"]["counts"]
+    scope = "all" if data["moves"]["complete"] else "the shown traces' neighborhood of"
+    print(
+        f"page written to {out} ({out.stat().st_size / 1e6:.1f} MB; {counts['states']} states, "
+        f"{scope} {counts['moves']} joint moves)"
+    )
+    return 0
+
+
 def cmd_report(args: argparse.Namespace) -> int:
     model = load_model(args.model)
     coalitions = [_names(c) for c in args.coalition] if args.coalition else None
@@ -391,6 +424,26 @@ def build_parser() -> argparse.ArgumentParser:
         action="append",
         help="coalition to analyse (comma-separated; repeatable; default: each actor and all)",
     )
+    p = command("viz", cmd_viz, "Self-contained HTML visualizer page.")
+    p.add_argument("--out", required=True, help="the HTML file to write")
+    p.add_argument("--snapshot", help="start from a snapshot file (wavefront.evidence)")
+    p.add_argument(
+        "--coalition",
+        action="append",
+        help="coalition to analyse (comma-separated; repeatable; default: each actor and all)",
+    )
+    p.add_argument(
+        "--ending",
+        action="append",
+        help="ending to offer, the first one selected (repeatable; default: every ending)",
+    )
+    p.add_argument(
+        "--max-moves",
+        type=int,
+        default=1_500_000,
+        help="include the full move table up to this many joint moves (default 1,500,000)",
+    )
+    p.add_argument("--max-relax", type=int, default=2, help="largest relaxation set size")
     return parser
 
 

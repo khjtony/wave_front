@@ -88,3 +88,26 @@ def is_trivial_guard(action: object) -> bool:
 def trace_state_ids(trace: Sequence) -> list[int]:
     """State ids of a :class:`~wavefront.engine.Trace` or of a plain sequence of ids."""
     return [step[0] if isinstance(step, tuple) else step for step in trace]
+
+
+def remap_states(cm_from, cm_to, states):
+    """Re-express states of ``cm_from`` in the variable layout of ``cm_to``, by name.
+
+    A relaxed compile can drop variables (a removed fairness constraint takes its counter
+    with it); those are dropped here. A variable present only in ``cm_to`` takes its first
+    declared initial value. Used so that explicit initial states given for the base model
+    can start an exploration of a relaxed one.
+    """
+    src = cm_from.index
+    out = []
+    for s in states:
+        new = []
+        for v in cm_to.variables:
+            i = src.get(v.name)
+            if i is not None:
+                new.append(s[i])
+            else:
+                init = getattr(v, "init", None)
+                new.append(init[0] if init else 0)
+        out.append(tuple(new))
+    return out

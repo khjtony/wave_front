@@ -2,7 +2,7 @@
 
 A single static HTML file, generated from engine output, that lets a reader see where a model starts, what each actor could do at each tick, what was chosen, where trajectories fork, and when the balance was lost. It is the reading surface for every trace the project produces, from the toy model to the WW2 and Cold War episodes and the AGI reports.
 
-Status: design for phase 0.14 (an addition to PLAN.md). Implementation contract in section 7; acceptance in section 9.
+Status: implemented (phase 0.14) and verified on the toy model; section 9 records the verified numbers and section 10 the choices settled during implementation.
 
 ---
 
@@ -26,7 +26,7 @@ Chosen by the job of the data, after the project's data-visualization guidance; 
 
 | Data | Job | Encoding |
 |---|---|---|
-| State status relative to a coalition's kernel | status | four reserved status colors with an icon and a label: **kept** (inside the kernel; good `#0ca30c`, icon ●), **contested** (neither side can force; warning `#fab219`, ◐), **lost** (the rest can force the invariant false; serious `#ec835a`, ◔), **failed** (the invariant is false; critical `#d03b3b`, ✕). Endings are a fifth, categorical mark (a small labeled flag), never a fifth status color. |
+| State status relative to a coalition's kernel for the selected *property* (`not E` for the selected ending, or a declared invariant; a filter-row select, defaulting to `not E`) | status | four reserved status colors with an icon and a label: **kept** (inside the kernel; good `#0ca30c`, icon ●), **contested** (neither side can force; warning `#fab219`, ◐), **lost** (the rest can force the invariant false; serious `#ec835a`, ◔), **failed** (the invariant is false; critical `#d03b3b`, ✕). Endings are a fifth, categorical mark (a small labeled flag), never a fifth status color. |
 | Actors | identity | categorical slots in declaration order (slot 1 blue `#2a78d6`, slot 2 orange `#eb6834`, slot 3 aqua `#1baf7a`, then 4 to 8); Nature is the de-emphasis gray. Color follows the actor everywhere; filtering never repaints. Actors are always also named in text. |
 | A variable's level over time | ordinal magnitude | one-hue ordinal ramp (blue, light to dark by level index, starting no lighter than step 250 on light); level names as selective direct labels where the level changes; one hue for every row because rows are not compared with each other |
 | Two traces compared | identity | trace A slot 1, trace B slot 2; differing cells carry a muted ◆ marker and the second value in the tooltip; never a diverging ramp |
@@ -146,12 +146,22 @@ Implement sections 1 to 6. Keep the Python side pure (bundle in, HTML out). Use 
 - Render: the file is self-contained (no `http` references), under the size limit for the toy, contains the caveat, and includes the JSON.
 - Page: with Playwright (skipped when unavailable; Chromium is at the path in `PLAYWRIGHT_BROWSERS_PATH`), the toy page loads without console errors, every view renders at least one mark, the filter row changes the status band, and a screenshot is written to the test's temporary directory.
 
-## 9. Acceptance on the toy model
+## 9. Acceptance on the toy model (verified)
 
-Rendered from `models/toy/two_power.py`, hypothesis `aims = hegemonic`, coalition `{INC}`, ending `TAKEOVER`:
+Rendered from `models/toy/two_power.py`, hypothesis `aims = hegemonic`, coalition `{INC}`, ending `TAKEOVER`, property `not TAKEOVER`:
 
-- the status band shows the point of no return at tick 1, the loss at tick 2 and the takeover at tick 3 on the shortest takeover trace, matching `tests/toy`;
-- the decision tree at tick 0 shows `resist` as the only safe INC action and `concede` and `idle` as losing against a hegemonic challenger;
-- the compare view against the `aims = limited` replay shows the first difference at the tick where `expand` stops being available to a limited challenger;
-- the landscape shows the kept region shrinking with control and the boundary between kept and lost visible at control 1 to 2;
-- no label collides, nothing overflows, both themes read, and the table twins carry every number.
+- the status band shows the point of no return t_K at tick 1, the loss point t_L also at tick 1 (from tick 1 the challenger and Nature can force the takeover whatever INC does: if INC resists, CH defects next tick), the declared invariant `balance` first false at tick 2 (marked separately), and the visible failure t_φ with the TAKEOVER flag at tick 3; the silent phase is [1, 3);
+- the decision tree at tick 0 shows `resist` as the only safe INC action; `idle` and `concede` are risky (their worst successor is lost, but a CH that also idles keeps the play inside the kernel), which is the precise reading of the decision-class definition;
+- the compare view against the `aims = limited` replay reports the first difference at tick 1, where `expand` stops being available to a limited challenger and the replay stops, and notes that the hidden variable differs throughout;
+- the landscape shows the kept share falling with control (85 percent at control 0, 73 at 1, 40 at 2, all failed at 3) with the kept/lost boundary between control 1 and 2;
+- no label collides, nothing overflows at 1280 or 390 pixels, both themes read, and the table twins carry every number. The toy page is 2.1 MB.
+
+## 10. Settled during implementation
+
+- Statuses are computed against a selectable property (section 1); the board also marks the first tick at which each other declared invariant is false.
+- Status and decision icons are drawn as shapes (dot, half ring, quarter ring, cross) because the Unicode glyphs render unreliably.
+- The bundle adds `schema`, `properties`, `all_endings`, `meta.default`, `meta.counts`, per-hypothesis `card` and `tables` (computed from that hypothesis's initial state) and per-hypothesis BFS `depth`; statuses are stored as one digit string per property and coalition to keep the page small.
+- The landscape's backward mode has a "forced by" select defaulting to any play; the filter state is mirrored in the URL fragment and the theme choice is kept in browser storage, both as per-viewer conveniences.
+- Narrow screens put row labels above rows and stack compare chips.
+- Variables with more than five levels use adjacent ordinal-ramp steps below the validator's gap and rely on direct labels, tooltips and the table twin.
+- `wf viz` also takes `--max-relax` and `--max-states`.

@@ -12,13 +12,16 @@ dependencies = []
 
 [project.optional-dependencies]
 bmc = ["z3-solver"]
-dev = ["pytest", "hypothesis", "ruff", "jsonschema"]
+dev = ["pytest", "hypothesis", "ruff", "jsonschema", "playwright"]
 
 [project.scripts]
 wf = "wavefront.cli:main"
 
 [tool.setuptools.packages.find]
 include = ["wavefront*"]
+
+[tool.setuptools.package-data]
+"wavefront.viz" = ["template/*.html", "template/*.css", "template/*.js"]
 
 [tool.pytest.ini_options]
 pythonpath = ["."]

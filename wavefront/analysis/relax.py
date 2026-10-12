@@ -9,7 +9,7 @@ from collections.abc import Collection, Iterable, Sequence
 from ..engine import BudgetExceeded, attractor, explore
 from ..model.compile import compile as compile_model
 from ..model.model import Model, ModelError
-from ._common import check_ending
+from ._common import check_ending, remap_states
 
 __all__ = [
     "RelaxSets",
@@ -71,8 +71,11 @@ def _holds(
     profile: str | Iterable[str] | None,
     initial: Sequence[Sequence[int]] | None,
     max_states: int,
+    base_cm=None,
 ) -> bool:
     cm = compile_model(model, profile=profile, relax=relax)
+    if initial is not None and base_cm is not None:
+        initial = remap_states(base_cm, cm, initial)
     g = explore(cm, initial=initial, max_states=max_states)
     target = check_ending(g, ending_name)
     if not target:
@@ -106,7 +109,8 @@ def relax_explicit(
     ``max_states`` in ``undecided``; neither counts as a result. The horizon is the full
     model horizon (no bound ``k``)."""
     _check_ending_name(model, ending_name)
-    names = compile_model(model, profile=profile).assumptions()
+    base_cm = compile_model(model, profile=profile)
+    names = base_cm.assumptions()
     if coalition is not None:
         coalition = list(coalition)
     found: list[frozenset[str]] = []
@@ -119,7 +123,9 @@ def relax_explicit(
             if any(f <= subset for f in found):
                 continue
             try:
-                ok = _holds(model, ending_name, subset, coalition, profile, initial, max_states)
+                ok = _holds(
+                    model, ending_name, subset, coalition, profile, initial, max_states, base_cm
+                )
             except BudgetExceeded as exc:
                 undecided.append((list(combo), str(exc)))
                 continue

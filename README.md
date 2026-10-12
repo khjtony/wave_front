@@ -11,7 +11,15 @@ Instead of forecasting, the project models each actor as a set of constraints an
 
 Because the AGI case has no outcomes to check against, the framework is developed on the Second World War and validated on the Cold War, two episodes with different structures where outcomes, decision records, resource data and dated documents all exist. The AGI model is instantiated only after both suites pass.
 
-Status: design stage.
+Status: phase 0 complete (framework core, bounded model checker, analysis, report, CLI, visualizer); phase 1 (the WW2 model) next.
+
+Try it on the example model:
+
+```
+pip install -e '.[dev,bmc]'
+wf report models/toy/two_power.py --out reports/toy_report.md
+wf viz models/toy/two_power.py --out reports/toy_viz.html   # open in a browser
+```
 
 - [docs/DESIGN.md](docs/DESIGN.md): evaluation of the idea, the framework, and the AGI domain model.
 - [docs/ww2_testbed.md](docs/ww2_testbed.md): the WW2 model, pre-registered tests, data sources, anti-hindsight protocol.
@@ -19,3 +27,4 @@ Status: design stage.
 - [docs/PHASES.md](docs/PHASES.md): the seven phases, each with a gate.
 - [docs/PLAN.md](docs/PLAN.md): the steps inside each phase, with acceptance checks and owners.
 - [docs/framework_spec.md](docs/framework_spec.md): the contract the `wavefront` package implements.
+- [docs/visualizer.md](docs/visualizer.md): the trace visualizer: initial state, decisions, divergence, the viability boundary.
