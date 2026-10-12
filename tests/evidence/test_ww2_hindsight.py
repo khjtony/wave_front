@@ -31,7 +31,8 @@ def events():
 @pytest.fixture(scope="module")
 def committed():
     return {
-        q: json.loads((SNAPSHOTS / f"{q}.json").read_text(encoding="utf-8")) for q in h.QUARTERS
+        q: json.loads((SNAPSHOTS / f"{q}.json").read_text(encoding="utf-8"))
+        for q in [h.TICK0, *h.QUARTERS]
     }
 
 
@@ -136,8 +137,8 @@ def test_quarter_bounds():
 # -- the committed snapshots -----------------------------------------------------------------
 
 
-def test_twenty_snapshots_and_nothing_else():
-    assert sorted(p.stem for p in SNAPSHOTS.glob("*.json")) == list(h.QUARTERS)
+def test_twenty_one_snapshots_and_nothing_else():
+    assert sorted(p.stem for p in SNAPSHOTS.glob("*.json")) == sorted([h.TICK0, *h.QUARTERS])
     assert len(h.QUARTERS) == 20
 
 
@@ -285,12 +286,12 @@ def test_missing_nmc_year_is_an_error(nmc_rows, events):
 
 def test_cli_check_passes_on_the_committed_files(capsys):
     assert h.main(["--out", str(SNAPSHOTS), "--check"]) == 0
-    assert "checked 20 snapshots" in capsys.readouterr().out
+    assert "checked 21 snapshots" in capsys.readouterr().out
 
 
 def test_cli_writes_and_detects_stale_files(tmp_path, capsys):
     assert h.main(["--out", str(tmp_path)]) == 0
-    assert sorted(p.stem for p in tmp_path.glob("*.json")) == list(h.QUARTERS)
+    assert sorted(p.stem for p in tmp_path.glob("*.json")) == sorted([h.TICK0, *h.QUARTERS])
     (tmp_path / "1937Q1.json").write_text("{}", encoding="utf-8")
     assert h.main(["--out", str(tmp_path), "--check"]) == 1
     assert "1937Q1.json" in capsys.readouterr().err

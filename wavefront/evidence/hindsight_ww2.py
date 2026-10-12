@@ -78,6 +78,7 @@ MODEL = "ww2_v0"
 QUARTERS = tuple(f"{y}Q{q}" for y in range(1936, 1941) for q in range(1, 5))
 INTERPOLATED = "interpolated: annual value carried to the quarter"
 EVENT_COLUMNS = ("date", "quarter", "variable", "level", "event", "source", "note")
+TICK0 = "1935Q4"  # file name of the tick-0 initial state (end of 1935Q4)
 
 # COW country codes and abbreviations used below.
 GMY, UKG, FRN, RUS, JPN = 255, 200, 220, 365, 740
@@ -610,7 +611,14 @@ def build_all(
     quarters: Iterable[str] = QUARTERS,
 ) -> dict[str, dict[str, Any]]:
     rows = list(nmc_rows)
-    return {q: build(q, rows, events, ontology_rules) for q in quarters}
+    quarters = list(quarters)
+    out: dict[str, dict[str, Any]] = {}
+    if quarters and quarters[0] == QUARTERS[0]:
+        # The model's tick-0 initial state: the levels in force at the end of 1935Q4, the
+        # last day before the first modeled quarter (snapshots/ww2/hindsight/README.md).
+        out[TICK0] = build(TICK0, rows, events, ontology_rules)
+    out.update({q: build(q, rows, events, ontology_rules) for q in quarters})
+    return out
 
 
 # -- the ontology document ---------------------------------------------------------------------
