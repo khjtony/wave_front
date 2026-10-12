@@ -15,8 +15,7 @@ from dataclasses import dataclass, field
 
 import z3
 
-from ..model.compile import CompiledModel
-from ..model.model import ModelError
+from ..model.compile import CompiledModel, expand_relax
 from .encode import Encoding, Target, encode
 
 __all__ = ["BmcTrace", "RelaxResult", "reach", "relax"]
@@ -139,16 +138,9 @@ def _check(solver: z3.Solver | z3.Optimize, *assumptions: z3.BoolRef) -> z3.Chec
 
 
 def _relax_names(cm: CompiledModel, relax: Iterable[str]) -> frozenset[str]:
-    """Validate relaxation names; trivial guards and unselected profiles are no-ops."""
-    names = frozenset((relax,) if isinstance(relax, str) else relax)
-    m = cm.model
-    known = set(cm.assumptions())
-    known |= {f"{a.name}.{x.name}" for a in [*m.actors, m.nature()] for x in a.actions}
-    known |= {p.name for p in m.profiles}
-    unknown = sorted(names - known)
-    if unknown:
-        raise ModelError(f"model {cm.name!r}: cannot relax unknown assumption(s) {unknown}")
-    return names
+    """Validate relaxation names; trivial guards and unselected profiles are no-ops, and
+    ``<actor>.<action>`` stands for every part of a parted guard."""
+    return expand_relax(cm.model, relax)
 
 
 def reach(

@@ -71,9 +71,27 @@ from .expr import (
     VarRef,
     walk,
 )
-from .model import IDLE, NONE, ActionDecl, LatchDecl, Model, ModelError, VarDecl
+from .model import (
+    IDLE,
+    NONE,
+    ActionDecl,
+    LatchDecl,
+    Model,
+    ModelError,
+    VarDecl,
+    conjunction,
+    is_true,
+)
 
-__all__ = ["compile", "CompiledModel", "VarSpec", "ActionSpec", "ActorSpec", "Contribution"]
+__all__ = [
+    "compile",
+    "CompiledModel",
+    "VarSpec",
+    "ActionSpec",
+    "ActorSpec",
+    "Contribution",
+    "expand_relax",
+]
 
 Contribution = tuple[tuple[tuple[int, int], ...], tuple[tuple[int, int, bool], ...]]
 State = tuple[int, ...]
@@ -111,7 +129,12 @@ class VarSpec:
 @dataclass(eq=False)
 class ActionSpec:
     """A compiled action. ``guard`` is the action's own guard as a callable on a state
-    (delay counters, fairness and profiles are applied by :meth:`CompiledModel.available`)."""
+    (delay counters, fairness and profiles are applied by :meth:`CompiledModel.available`).
+
+    ``guard_expr`` is the guard as compiled (``TRUE`` when relaxed). For a guard declared
+    as named parts, ``guard_parts`` lists ``(part, expr)`` in declaration order with
+    relaxed parts replaced by ``TRUE``, and ``guard_expr`` is the conjunction of the
+    non-trivial ones; ``guard_parts`` is empty for a plain guard."""
 
     name: str
     actor: str
@@ -126,6 +149,7 @@ class ActionSpec:
     pending: int | None = None
     contribution: Contribution | None = None
     contribution_fn: Callable[[Sequence[int]], Contribution] | None = None
+    guard_parts: tuple[tuple[str, Expr], ...] = ()
 
     def contribute(self, state: Sequence[int]) -> Contribution | None:
         """The effect contribution of this action in ``state`` (``None`` if empty)."""
@@ -327,7 +351,7 @@ class CompiledModel:
         self.name = model.name
         self.horizon = model.horizon
         self.timed = model.horizon is not None
-        self.relax = _check_relax(model, relax)
+        self.relax = expand_relax(model, relax)
         self.selected_profiles = _select_profiles(model, profile)
         self.profiles = self.selected_profiles - self.relax
         self.fairness_constraints = [
@@ -427,7 +451,14 @@ class CompiledModel:
         if decl is None:
             return ActionSpec(name, actor.name, j, _make_fn("True"), (), 0, "", False, True, TRUE)
         where = f"guard of {actor.name}.{name}"
-        guard = TRUE if f"{actor.name}.{name}" in self.relax else decl.guard
+        parts = tuple(
+            (part, TRUE if decl.part_assumption(part) in self.relax else expr)
+            for part, expr in decl.guard_parts
+        )
+        if parts:
+            guard = conjunction([e for _, e in parts])
+        else:
+            guard = TRUE if decl.assumption in self.relax else decl.guard
         guard_fn = _make_fn(self._gen.boolean(guard, where))
         pending = self.index.get(f"pending_{actor.name}_{name}") if decl.delay else None
         return ActionSpec(
@@ -442,6 +473,7 @@ class CompiledModel:
             False,
             guard,
             pending,
+            guard_parts=parts,
         )
 
     def _observation_set(self, actor: Any) -> frozenset[str]:
@@ -481,12 +513,21 @@ class CompiledModel:
                         )
 
     def observation_check(self) -> None:
-        """Raise :class:`ModelError` if an actor's action guard, fairness trigger or profile
-        ``unless`` condition references a variable the actor does not observe (these decide
-        the actor's availability; Nature observes everything)."""
+        """Raise :class:`ModelError` if an actor's action guard (every part of a parted
+        guard), fairness trigger or profile ``unless`` condition references a variable the
+        actor does not observe (these decide the actor's availability; Nature observes
+        everything)."""
         for actor in self.actors:
             for action in actor.actions:
-                if not action.is_idle:
+                if action.is_idle:
+                    continue
+                for part, expr in action.guard_parts:
+                    self._check_observed(
+                        actor.name,
+                        expr,
+                        f"the guard part {actor.name}.{action.name}:{part}",
+                    )
+                if not action.guard_parts:
                     self._check_observed(
                         actor.name,
                         action.guard_expr,
@@ -873,17 +914,19 @@ class CompiledModel:
 
     def assumptions(self) -> list[str]:
         """Named assumptions that can be relaxed: non-trivial action guards
-        (``"<actor>.<action>"``), fairness constraints, selected profiles and ``assume``
-        restrictions, in that order. Relaxing a declared action whose guard is ``TRUE`` is
-        accepted as a no-op but such guards are not listed. The list is the same whatever
-        is relaxed."""
+        (``"<actor>.<action>"``, or for a guard declared as named parts its non-trivial
+        parts ``"<actor>.<action>:<part>"`` in declaration order), fairness constraints,
+        selected profiles and ``assume`` restrictions, in that order. Relaxing a declared
+        action whose guard (or part) is ``TRUE`` is accepted as a no-op but such guards are
+        not listed. The list is the same whatever is relaxed."""
         m = self.model
-        guards = [
-            f"{actor.name}.{a.name}"
-            for actor in [*m.actors, m.nature()]
-            for a in actor.actions
-            if not (isinstance(a.guard, Const) and a.guard.value)
-        ]
+        guards: list[str] = []
+        for actor in [*m.actors, m.nature()]:
+            for a in actor.actions:
+                if a.guard_parts:
+                    guards += [a.part_assumption(p) for p, e in a.guard_parts if not is_true(e)]
+                elif not is_true(a.guard):
+                    guards.append(a.assumption)
         fair = [f.name for f in m.fairness_constraints]
         profiles = [p.name for p in m.profiles if p.name in self.selected_profiles]
         return [*guards, *fair, *profiles, *m.assumes]
@@ -974,9 +1017,20 @@ def _select_profiles(model: Model, profile: str | Iterable[str] | None) -> froze
     return frozenset(names)
 
 
-def _check_relax(model: Model, relax: Iterable[str]) -> frozenset[str]:
+def expand_relax(model: Model, relax: Iterable[str]) -> frozenset[str]:
+    """Validate assumption names to relax and expand them: ``<actor>.<action>`` for a guard
+    declared as named parts stands for all of its parts ``<actor>.<action>:<part>``, which
+    are added to the returned set. Unknown names raise :class:`ModelError`; names of
+    trivial guards and parts and of unselected profiles are accepted."""
     names = frozenset((relax,) if isinstance(relax, str) else relax)
-    known = {f"{a.name}.{x.name}" for a in [*model.actors, model.nature()] for x in a.actions}
+    known: set[str] = set()
+    parts_of: dict[str, list[str]] = {}
+    for actor in [*model.actors, model.nature()]:
+        for x in actor.actions:
+            known.add(x.assumption)
+            if x.guard_parts:
+                parts_of[x.assumption] = [x.part_assumption(p) for p, _ in x.guard_parts]
+                known.update(parts_of[x.assumption])
     known |= {f.name for f in model.fairness_constraints}
     known |= {p.name for p in model.profiles}
     known |= set(model.assumes)
@@ -985,7 +1039,10 @@ def _check_relax(model: Model, relax: Iterable[str]) -> frozenset[str]:
         raise ModelError(
             f"model {model.name!r}: cannot relax unknown assumption(s) {', '.join(unknown)}"
         )
-    return names
+    expanded = set(names)
+    for name in names:
+        expanded.update(parts_of.get(name, ()))
+    return frozenset(expanded)
 
 
 def compile(
@@ -995,6 +1052,8 @@ def compile(
 ) -> CompiledModel:
     """Compile ``model``, optionally selecting behavioral profiles and relaxing named
     assumptions (see :meth:`CompiledModel.assumptions`): a relaxed guard becomes ``TRUE``,
-    a relaxed fairness constraint is removed (with its counter), a relaxed profile is not
-    applied and a relaxed ``assume`` no longer filters the initial states."""
+    a relaxed guard part is dropped from its guard's conjunction (relaxing
+    ``<actor>.<action>`` relaxes every part of a parted guard), a relaxed fairness
+    constraint is removed (with its counter), a relaxed profile is not applied and a
+    relaxed ``assume`` no longer filters the initial states."""
     return CompiledModel(model, profile, relax)

@@ -10,12 +10,12 @@ observation sets, effect targets, response actions) are checked by
 from __future__ import annotations
 
 import keyword
-from collections.abc import Iterable, Sequence
+from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING
 
 from .effects import Bump, Set, SetIf
-from .expr import FALSE, TRUE, Expr, Observes, V, lift_bool
+from .expr import FALSE, TRUE, And, Const, Expr, Observes, V, lift_bool
 
 if TYPE_CHECKING:
     from .compile import CompiledModel
@@ -57,9 +57,18 @@ class VarDecl:
     hidden_from: tuple[str, ...] = ()
 
 
+GuardParts = tuple[tuple[str, Expr], ...]
+
+
 @dataclass(frozen=True, eq=False)
 class ActionDecl:
-    """A declared action (or Nature event) of one actor."""
+    """A declared action (or Nature event) of one actor.
+
+    ``guard`` is the whole guard. For a guard declared as named parts (a dict or a list of
+    ``(name, expr)`` pairs), ``guard_parts`` holds them in declaration order and ``guard``
+    is the conjunction of the non-trivial ones (``TRUE`` if there are none); each part is
+    a separate named assumption ``<actor>.<action>:<part>``. ``guard_parts`` is empty for a
+    plain guard."""
 
     actor: str
     name: str
@@ -68,6 +77,16 @@ class ActionDecl:
     delay: int = 0
     source: str = ""
     speculative: bool = False
+    guard_parts: GuardParts = field(default=(), repr=False)
+
+    @property
+    def assumption(self) -> str:
+        """The assumption name of the whole guard, ``<actor>.<action>``."""
+        return f"{self.actor}.{self.name}"
+
+    def part_assumption(self, part: str) -> str:
+        """The assumption name of one guard part, ``<actor>.<action>:<part>``."""
+        return f"{self.actor}.{self.name}:{part}"
 
 
 @dataclass(frozen=True, eq=False)
@@ -100,6 +119,42 @@ class ProfileDecl:
     unless: Expr
 
 
+def is_true(expr: Expr) -> bool:
+    """True for the constant ``TRUE`` (a trivial guard or guard part)."""
+    return isinstance(expr, Const) and bool(expr.value)
+
+
+def conjunction(exprs: Sequence[Expr]) -> Expr:
+    """The conjunction of the non-trivial ``exprs``: ``TRUE`` if there are none, the
+    expression itself if there is one."""
+    items = tuple(e for e in exprs if not is_true(e))
+    if not items:
+        return TRUE
+    return items[0] if len(items) == 1 else And(items)
+
+
+def _guard_parts(guard: object, where: str) -> GuardParts:
+    """Validate a parted guard (a dict or a list of ``(name, expr)`` pairs)."""
+    pairs = list(guard.items()) if isinstance(guard, dict) else list(guard)  # type: ignore[call-overload]
+    if not pairs:
+        raise ModelError(f"action {where}: a parted guard needs at least one part")
+    out: list[tuple[str, Expr]] = []
+    for pair in pairs:
+        if not isinstance(pair, tuple | list) or len(pair) != 2:
+            raise ModelError(f"action {where}: guard part {pair!r} is not a (name, expr) pair")
+        name, expr = pair
+        check_identifier(name, f"guard part of {where}")
+        if any(name == n for n, _ in out):
+            raise ModelError(f"action {where}: duplicate guard part name {name!r}")
+        try:
+            out.append((name, lift_bool(expr)))
+        except TypeError:
+            raise ModelError(
+                f"action {where}: guard part {name!r} is not a boolean expression: {expr!r}"
+            ) from None
+    return tuple(out)
+
+
 def check_identifier(name: object, what: str) -> str:
     """Raise :class:`ModelError` unless ``name`` is a usable identifier."""
     if not isinstance(name, str) or not name.isidentifier() or keyword.iskeyword(name):
@@ -122,14 +177,16 @@ class Actor:
     def action(
         self,
         name: str,
-        guard: Expr | bool = TRUE,
+        guard: Expr | bool | Mapping[str, Expr | bool] | Sequence[tuple[str, Expr | bool]] = TRUE,
         effect: Set | Bump | SetIf | Iterable[Set | Bump | SetIf] | None = None,
         delay: int = 0,
         source: str = "",
         speculative: bool = False,
     ) -> ActionDecl:
         """Declare an action. ``effect`` is one effect or a list; ``delay=d`` applies the
-        effect ``d`` ticks later (see spec 3.1)."""
+        effect ``d`` ticks later (see spec 3.1). ``guard`` is an expression, or named parts
+        (a dict ``{part: expr}`` or a list of ``(part, expr)`` pairs) meaning their
+        conjunction, each part a separate assumption ``<actor>.<action>:<part>``."""
         check_identifier(name, f"action of {self.name}")
         if name in (IDLE, NONE):
             raise ModelError(f"action name {name!r} is reserved for the built-in action")
@@ -137,14 +194,26 @@ class Actor:
             raise ModelError(f"duplicate action name {name!r} for actor {self.name}")
         if isinstance(delay, bool) or not isinstance(delay, int) or delay < 0:
             raise ModelError(f"action {self.name}.{name}: delay must be an int >= 0")
+        parts: GuardParts = ()
+        if isinstance(guard, Expr | bool):
+            whole = lift_bool(guard)
+        elif isinstance(guard, dict | list | tuple):
+            parts = _guard_parts(guard, f"{self.name}.{name}")
+            whole = conjunction([e for _, e in parts])
+        else:
+            raise ModelError(
+                f"action {self.name}.{name}: guard {guard!r} is not an expression, a dict of "
+                "named parts or a list of (name, expr) pairs"
+            )
         decl = ActionDecl(
             actor=self.name,
             name=name,
-            guard=lift_bool(guard),
+            guard=whole,
             effects=_effect_tuple(effect, f"{self.name}.{name}"),
             delay=delay,
             source=str(source),
             speculative=bool(speculative),
+            guard_parts=parts,
         )
         self.actions.append(decl)
         return decl
@@ -152,7 +221,7 @@ class Actor:
     def event(
         self,
         name: str,
-        guard: Expr | bool = TRUE,
+        guard: Expr | bool | Mapping[str, Expr | bool] | Sequence[tuple[str, Expr | bool]] = TRUE,
         effect: Set | Bump | SetIf | Iterable[Set | Bump | SetIf] | None = None,
         delay: int = 0,
         source: str = "",

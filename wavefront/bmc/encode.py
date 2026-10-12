@@ -12,8 +12,9 @@ Unknowns
   ``t = 0..k-1``: the index of the action the actor plays at tick ``t``, numbered as in
   :class:`~wavefront.model.compile.ActorSpec` (index 0 is ``idle`` or ``none``), so a
   decoded joint move can be replayed with :meth:`CompiledModel.step`.
-- ``assume[name]``: a ``Bool`` per name in :meth:`CompiledModel.assumptions`. When it is
-  false the assumption is relaxed: a guard reads ``TRUE``, a fairness constraint no
+- ``assume[name]``: a ``Bool`` per name in :meth:`CompiledModel.assumptions` (one per
+  part for a guard declared as named parts). When it is false the assumption is relaxed:
+  a guard reads ``TRUE``, a guard part drops out of its conjunction, a fairness constraint no
   longer restricts its actor, a profile is not applied, an ``assume`` no longer filters
   the initial states. The encoding itself leaves these Bools free; queries assert or
   assume them.
@@ -26,7 +27,9 @@ Unknowns
 Transitions (non-terminal ``t``, in the order of ``_successor``)
 -----------------------------------------------------------------
 1. availability: ``chosen == j -> available_j(t)`` with the action's guard
-   (``assume_<actor>.<action> -> guard``), its delay counter at 0, the selected profiles
+   (``assume_<actor>.<action> -> guard``, or for a parted guard
+   ``assume_<actor>.<action>:<part> -> part`` for each part), its delay counter at 0, the
+   selected profiles
    (``assume_<profile> -> unless``) and the fairness restrictions
    (``assume_<f> -> (fair_<f> < within or j in responses)``);
 2. immediate effects of the chosen non-delayed actions, evaluated on the pre-state:
@@ -482,10 +485,16 @@ class _Builder:
                         forbids.setdefault(actor.action_index(name), []).append(unless)
             for action in actor.actions:
                 conds: list[z3.BoolRef] = []
-                g = action.guard_expr
-                if not (isinstance(g, Const) and g.value):
-                    a = enc.assume[f"{actor.name}.{action.name}"]
-                    conds.append(z3.Or(z3.Not(a), self.tr.boolean(g, s)))
+                if action.guard_parts:
+                    guards = [
+                        (f"{actor.name}.{action.name}:{part}", g) for part, g in action.guard_parts
+                    ]
+                else:
+                    guards = [(f"{actor.name}.{action.name}", action.guard_expr)]
+                for name, g in guards:
+                    if not (isinstance(g, Const) and g.value):
+                        a = enc.assume[name]
+                        conds.append(z3.Or(z3.Not(a), self.tr.boolean(g, s)))
                 if action.pending is not None:
                     conds.append(s[action.pending] == 0)
                 conds.extend(forbids.get(action.index, []))

@@ -2,83 +2,177 @@
 
 Status: skeleton fixed by the architect (the action list, the feasibility principle, the effect shapes). The historian-facing content (the contemporaneous debate each action is cited to, the exact guard thresholds, delays, and the speculative tags) is filled in phase 1 step 1.2 and reviewed before the model is coded. Read [ww2_testbed.md](ww2_testbed.md) section 7 and [ontology_ww2.md](ontology_ww2.md) first.
 
+Step 1.2 draft: filled for historian review. Every departure from the skeleton's sketch is marked in the notes under each table and collected in the section "Departures from the skeleton". Working notes, the replay check and the analysis of the registered tests against this catalogue are in [ww2_v0_notes.md](ww2_v0_notes.md). Document abbreviations are as in ontology_ww2.md.
+
 ## The feasibility principle
 
 A guard says when an action was *feasible* for the actor: capability, institutional constraint, prior condition. A guard never encodes a preference, a motive or a prediction of what the actor would choose; that is what the engine's nondeterminism explores. "Hitler would not have attacked Poland without the Soviet pact" is a preference and is not a guard. "A western offensive required the Polish front to be closed" is a feasibility constraint and is a guard, cited to the planning record.
 
 Each action carries `source=` naming the contemporaneous record in which the alternative was debated or planned (Cabinet minutes, Hansard, the Führer conferences, DGFP, FRUS, the Imperial Conferences), with a date. An action with no such record is `speculative=True`. Delays are institutional lags, cited.
 
+One declared exception, used as in the toy model: a guard conjunct on a swept hidden objective (`aims_GER == hegemonic`, `aims_USSR == opportunist`) is a **hypothesis gate**, not a feasibility condition. It is how the swept objective shapes the action set. Hypothesis gates are written first in a guard, marked [H], and counted separately in the budget below.
+
+## Conventions
+
+- Guards are written in the DSL's vocabulary: `and`, `or`, `not`, `==`, `!=`, `>=`, `<`, `last_GER == ...`. Level comparisons compare level indices in declaration order (ontology_ww2.md).
+- `x := max(x, L)` means "raise `x` to `L` if lower"; it is `SetIf(V.x < "L", "x", "L")`.
+- `ind_GER += 1` assumes `ind_GER` is coded as a counter 0..2 standing for 3..5, so that the conditional increment in `attack_czechoslovakia` is `SetIf(cond, "ind_GER", V.ind_GER + 1)` (checked to compile).
+- Delay d: chosen at tick t, effect visible at tick t + 1 + d, action unavailable at t + 1 .. t + d (framework_spec.md section 3.1). An effect with delay 0 is visible at t + 1.
+- An action with "no state effect" changes only `last_<actor>`, which other guards read.
+- Composition (framework_spec.md section 3.4): two `Set`s with different values on one variable in one joint move are a model error. The catalogue avoids every such pair; the one pair the skeleton allowed (`invade_britain` with `negotiate`) is resolved with `Bump`s, so that an invasion launched in the same quarter as a British approach prevails.
+
 ## Germany (`GER`)
 
-| Action | Feasibility guard (sketch) | Effect | Delay | Source slot | Speculative? |
-|---|---|---|---|---|---|
-| `rearm` | `arms_GER < total` | `arms_GER += 1` | 4 (one year from decision to force) | rearmament programmes 1936 to 1939; Tooze | |
-| `remilitarize_rhineland` | `rhineland == demilitarized ∧ arms_GER >= rising` | `rhineland := remilitarized; treaty := dead` | 0 | the March 1936 decision record | |
-| `withdraw_rhineland` | `rhineland == remilitarized ∧ last_WEST == resist_rhineland` | `rhineland := demilitarized` | 0 | the documented March 1936 contingency to withdraw if France moved | |
-| `court_italy` | `¬axis ∧ italy_estranged` | `axis := True` | 0 | the Oct 1936 protocols; the May 1939 Pact of Steel | |
-| `annex_austria` | `austria == independent ∧ axis ∧ arms_GER >= rising` | `austria := annexed; ind_GER += 1` | 0 | the 1934 attempt blocked by Italy; the Feb to March 1938 record | |
-| `demand_sudeten` | `sudeten == czech ∧ arms_GER >= high` | opens a crisis that WEST answers with `concede` or `declare_war`; raises `belief_WEST` to uncertain | 0 | the May and September 1938 record | |
-| `occupy_bohemia` | `sudeten == german ∧ bohemia == czech` | `bohemia := german; ind_GER += 1; belief_WEST := hegemonic` | 0 | the March 1939 record | |
-| `propose_pact_ussr` | `¬nazi_soviet_pact ∧ ¬anglo_soviet_alliance` | joint with USSR `accept_pact`: `nazi_soviet_pact := True; oil_GER := secured` | 0 | the August 1939 record | |
-| `attack_poland` | `poland == independent ∧ arms_GER >= high` | `poland := partitioned` if the pact holds, else `german` after a campaign | 0 | Case White planning, April to August 1939 | |
-| `attack_france` | `war_west_ger == war ∧ france == at_war ∧ poland != independent ∧ arms_GER >= high` | `france := fallen` via Nature `campaign_west` (nondeterministic: the 1940 outcome was contested in planning) | 0 | Case Yellow, Oct 1939 to May 1940 | |
-| `air_offensive` | `france == fallen ∧ britain == at_war ∧ channel_air == contested` | Nature resolves `channel_air` | 0 | the July 1940 directives | |
-| `invade_britain` | `channel_air == german ∧ france == fallen` | `britain := invaded` | 0 | Sea Lion planning, July to Sept 1940 | |
-| `offer_terms_britain` | `france == fallen ∧ britain == at_war` | enables WEST `negotiate` | 0 | the July 1940 Reichstag speech | |
-| `align_balkans` | `balkans == neutral ∧ (nazi_soviet_pact ∨ france == fallen)` | `balkans := german_aligned; oil_GER := secured` | 0 | the 1940 Romanian alignment | |
+| Action | Feasibility guard | Effect | Delay | Speculative? |
+|---|---|---|---|---|
+| `rearm` | `arms_GER < total` | `arms_GER += 1` | 8 | no |
+| `remilitarize_rhineland` | `rhineland == demilitarized and arms_GER >= rising` | `rhineland := remilitarized` | 0 | no |
+| `withdraw_rhineland` | `rhineland == remilitarized and last_WEST == resist_rhineland` | `rhineland := demilitarized; treaty := enforced` | 0 | no |
+| `court_italy` | `not axis and italy_estranged` | `axis := True` | 0 | no |
+| `annex_austria` | `austria == independent and axis and arms_GER >= rising` | `austria := annexed; ind_GER += 1` | 0 | no |
+| `demand_sudeten` | `sudeten == czech and rhineland == remilitarized and arms_GER >= rising` | `belief_WEST := max(belief_WEST, uncertain)`; opens the crisis read by WEST through `last_GER == demand_sudeten` | 0 | no |
+| `attack_czechoslovakia` (added) | `sudeten == czech and last_GER == demand_sudeten and war_west_ger == peace and arms_GER >= rising` | `sudeten := german`; and if `aims_GER == hegemonic` [H]: `bohemia := german; ind_GER += 1; belief_WEST := hegemonic` | 0 | no |
+| `occupy_bohemia` | [H] `aims_GER == hegemonic` and `sudeten == german and bohemia == czech` | `bohemia := german; ind_GER += 1; belief_WEST := hegemonic` | 0 | no |
+| `propose_pact_ussr` | `not nazi_soviet_pact and not anglo_soviet_alliance` | no state effect; the pact is the effect of USSR `accept_pact` | 0 | no |
+| `attack_poland` | [H] `aims_GER == hegemonic` and `poland == independent and arms_GER >= high` | `poland := german` | 0 | no |
+| `attack_france` | `war_west_ger == war and france == at_war and poland != independent and arms_GER >= high` | no state effect; Nature `campaign_west` resolves at the next tick | 0 | no |
+| `air_offensive` | `france == fallen and britain == at_war and channel_air == contested` | no state effect; Nature `air_battle_*` resolves at the next tick | 0 | no |
+| `invade_britain` | `channel_air == german and france == fallen and britain == at_war` | `britain += 2` (at_war to invaded) | 0 | no |
+| `offer_terms_britain` | `war_west_ger == war and britain == at_war` | no state effect; enables WEST `negotiate` at the next tick | 0 | no |
+| `align_balkans` | `balkans == neutral and france == fallen` | `balkans := german_aligned; oil_GER := secured` | 0 | no |
+
+Sources (the `source=` text) and notes:
+
+- **`rearm`**. Source: "Hitler's memorandum on the Four-Year Plan, Aug 1936 (armed forces operational within four years) and the army armament programme of Aug 1936; Goering's conference of 14 Oct 1938 announcing an enlarged programme (Nuremberg document 1301-PS) and the Z-Plan of Jan 1939." Delay 8 (departure from 4): the army's August 1936 programme ran to October 1940 (Deist, in *Germany and the Second World War* vol. I); the threshold rule for `high` is the force of late 1938 and 1939, and a decision of 1936Q3 reaches it at 1938Q4 under delay 8, while delay 4 would put it at 1937Q4, when the generals at the conference of 5 Nov 1937 (386-PS) objected that the army was not ready. Note: rearmament continues during a war with the West; the capability constraint on a war begun early is placed on `campaign_west` through `arms_at_war`, not here.
+- **`remilitarize_rhineland`**. Source: "Blomberg's directive of 2 Mar 1936 for the entry into the zone (operation Winterübung); German memorandum to the Locarno powers and Reichstag speech of 7 Mar 1936 (DGFP Series C vol. V)." Feasibility: conscription in force and troops available to garrison the zone. The skeleton's `treaty := dead` is moved to Nature's `locarno_lapses` (see Departures).
+- **`withdraw_rhineland`**. Source: "Debated in Berlin 7 to 9 Mar 1936: Blomberg's proposal to pull back the forward garrisons if France moved, refused by Hitler (Kershaw, *Hubris*, 1998; Weinberg 1970; Emmerson, *The Rhineland Crisis*, 1977); the contingency is attested after the war (Jodl's testimony before the IMT, June 1946; Schmidt, *Statist auf diplomatischer Bühne*, 1949)." Feasibility: the window in which France had answered with military measures (`last_WEST == resist_rhineland`). Not speculative, but the record of the debate is reconstructed from postwar testimony and Blomberg's reported proposal; whether Blomberg's directive of 2 Mar 1936 itself provided for withdrawal, or only for a fighting retreat, is disputed (Emmerson argues the withdrawal story is overstated). This is the documented March 1936 branch T2 needs. Effect adds `treaty := enforced` (departure): a violation reversed under threat of force meets the ontology's rule for `enforced`.
+- **`court_italy`**. Source: "October Protocols signed by Ciano and Neurath, 23 Oct 1936, and Mussolini's Milan speech of 1 Nov 1936; the Pact of Steel, 22 May 1939 (DGFP Series C vol. V; Series D vol. VI)." Feasibility: Italy estranged from the Stresa partners by the sanctions over Ethiopia.
+- **`annex_austria`**. Source: "Hitler and Schuschnigg at Berchtesgaden, 12 Feb 1938; Case Otto directive, 11 Mar 1938 (Nuremberg document C-102); reunification law, 13 Mar 1938 (DGFP Series D vol. I)." Feasibility: Italian acquiescence, which the Axis supplied (Mussolini's message of 11 Mar 1938); in July 1934 Italian divisions on the Brenner had made the first attempt infeasible. `arms_GER >= rising` is always true in v0 and is kept as the stated capability.
+- **`demand_sudeten`**. Source: "Hitler's instructions to Henlein, 28 Mar 1938; Case Green directive, 30 May 1938 (388-PS); Nuremberg speech of 12 Sep, Berchtesgaden 15 Sep and the Godesberg memorandum of 23 Sep 1938 (DGFP Series D vol. II)." Guard departure: the skeleton's `arms_GER >= high` is replaced by `arms_GER >= rising and rhineland == remilitarized`. Under the ontology's rule `high` is the force of late 1938 and 1939, so the skeleton's guard would make the documented demand of 1938 unavailable. The feasibility condition that the planning record does name is cover in the West: the conference of 5 Nov 1937 assumes the West is held while Czechoslovakia is struck, and the fortification of the western frontier was accelerated in May 1938; a demilitarized Rhineland would have left the Ruhr open to France. The skeleton's `belief_WEST` effect is kept and written as a raise so that it never lowers a belief.
+- **`attack_czechoslovakia`** (added; needed by T3 and T8). Source: "Case Green directive of 30 May 1938 (388-PS) with readiness by 1 Oct 1938; the Sportpalast speech of 26 Sep 1938 and the deadline of 28 Sep." The record's alternative to accepting Munich was Case Green, not inaction: Hitler held to military action until 28 Sep 1938. Without it, a refused demand costs WEST nothing in the model, T3's "Munich refused" branch has no German move, and concessions in T8 cannot matter. Feasibility: an open demand (`last_GER == demand_sudeten`) and peace with the West (a war already begun makes it a different operation). The hegemonic-conditional part of the effect [H] encodes what each hypothesis does with victory: Case Green aimed at the destruction of Czechoslovakia, which the revisionist hypothesis excludes. Composes without conflict with WEST `concede` in the same tick (both set `sudeten := german`).
+- **`occupy_bohemia`**. Source: "Directive of 21 Oct 1938 on the liquidation of the remainder of Czechoslovakia (Nuremberg document C-136) and its supplement of 17 Dec 1938; Hacha in Berlin and the entry into Prague, 14 to 15 Mar 1939 (DGFP Series D vol. IV)." Hypothesis gate [H] added (departure): Prague was the first non-German territory taken, and the revisionist hypothesis as the ontology states it stops at German-speaking lands. Taylor reads Prague as an improvisation forced by the Slovak crisis; the gate excludes that reading from the revisionist hypothesis and the historian should confirm the choice. Without some gate on `aims_GER`, no v0 guard reads the hidden objective and T8 cannot distinguish the hypotheses.
+- **`propose_pact_ussr`**. Source: "Weizsäcker's instruction to Schulenburg of 30 May 1939 to open political talks (DGFP Series D vol. VI); Schnurre and Astakhov, 26 Jul 1939; Hitler's telegram to Stalin, 20 Aug 1939 (DGFP Series D vol. VII). Earlier alternative, turned down by Hitler: the Kandelaki approaches of 1935 to 1937." Feasibility: no pact and no rival alliance in force.
+- **`attack_poland`**. Source: "Case White directive of 3 Apr 1939 (Nuremberg document C-120); conference of 23 May 1939 (L-79); Directive No. 1 for the Conduct of the War, 31 Aug 1939 (Trevor-Roper (ed.), *Hitler's War Directives 1939-1945*)." Hypothesis gate [H] added (departure); see the note on Danzig in ontology_ww2.md section 7 and ww2_v0_notes.md section 4 (T8). Effect departure: `poland := german` always; the Soviet share is the effect of USSR `occupy_east_poland`, because the pact and the attack fall in the same quarter and the attack's effect cannot read a pact concluded in the same tick (ontology_ww2.md section 9, item 1). Not encoded, by the feasibility principle: any condition on the pact or on Western resolve.
+- **`attack_france`**. Source: "Directive No. 1, 31 Aug 1939 (defensive posture in the West while Poland is fought); Directive No. 6, 9 Oct 1939; OKH deployment directive for Case Yellow, 24 Feb 1940; offensive launched 10 May 1940." `poland != independent` is the closed Polish front: Directive No. 1 kept the West defensive during the Polish campaign and Directive No. 6 was issued after it ended. The offensive was postponed many times between Nov 1939 and May 1940, so GER may choose `attack_france` in several consecutive ticks; Nature resolves the campaign one tick after a choice.
+- **`air_offensive`**. Source: "Directive No. 16 on preparations for a landing in England, 16 Jul 1940 (air superiority a precondition); Directive No. 17 for the air and sea war against England, 1 Aug 1940; main offensive from 13 Aug 1940."
+- **`invade_britain`**. Source: "Directive No. 16, 16 Jul 1940 (Sea Lion); the Naval Staff's assessments of Jul 1940 on the crossing." Effect written as `britain += 2` (departure from `britain := invaded`, same result alone) so that it composes with WEST `negotiate`. The naval obstacle is not modeled (ontology_ww2.md section 7).
+- **`offer_terms_britain`**. Source: "Reichstag speeches of 6 Oct 1939 and 19 Jul 1940 (the 'appeal to reason'); answered by Chamberlain in the Commons, 12 Oct 1939, and by Halifax's broadcast, 22 Jul 1940." Guard departure: the skeleton's `france == fallen` is replaced by `war_west_ger == war and britain == at_war`, because the record has an offer in October 1939, before France fell.
+- **`align_balkans`**. Source: "Romania's renunciation of the Anglo-French guarantee, 1 Jul 1940; the Second Vienna Award and the German guarantee of Romania, 30 Aug 1940; the German military mission to Romania, Oct 1940; Hungary (20 Nov) and Romania (23 Nov 1940) adhere to the Tripartite Pact (DGFP Series D vol. XI)." Guard departure: the skeleton's disjunct `nazi_soviet_pact` is dropped. Romania was under the Anglo-French guarantee of 13 Apr 1939 until France fell, and the record has no German attempt to align the Balkans politically between Aug 1939 and Jun 1940 (German policy then sought quiet in the region and its supplies); the prior condition the record names is the collapse of the Western guarantee.
 
 ## The West (`WEST`)
 
-| Action | Feasibility guard (sketch) | Effect | Delay | Source slot | Speculative? |
-|---|---|---|---|---|---|
-| `rearm` | `arms_WEST < high` | `arms_WEST += 1` | 4 | the 1936 Defence Requirements decisions; the French programmes | |
-| `resist_rhineland` | `rhineland == remilitarized ∧ last_GER == remilitarize_rhineland` | `commit_WEST := wary` and opens a crisis | 0 | the French Cabinet, 7 to 9 March 1936; the Flandin mission | |
-| `concede` | a German demand is open (`sudeten == czech ∧ last_GER == demand_sudeten`) | `sudeten := german; belief_WEST stays; commit_WEST := wary` | 0 | the Munich record, Sept 1938 | |
-| `declare_war` | `war_west_ger == peace ∧ (a German attack on a guaranteed state or an open demand refused)` | `war_west_ger := war; france := at_war; britain := at_war; commit_WEST := at_war` | 0 | the Sept 1938 and Sept 1939 Cabinet records | |
-| `guarantee_poland` | `poland == independent ∧ belief_WEST == hegemonic ∧ commit_WEST >= wary` | `polish_guarantee := True; commit_WEST := resolved` | 0 | Cabinet and Hansard, 17 to 31 March 1939 (the institutional feasibility rests on the belief change; this is the registered T4 claim) | |
-| `approach_ussr` | `polish_guarantee ∧ ¬nazi_soviet_pact` | joint with USSR `accept_alliance`: `anglo_soviet_alliance := True` | 0 | the April to August 1939 talks | |
-| `negotiate` | `france == fallen ∧ britain == at_war ∧ last_GER == offer_terms_britain` | `britain := negotiated` | 0 | the War Cabinet, 26 to 28 May 1940 (Lukacs 1999) | |
-| `fight_on` | `france == fallen ∧ britain == at_war` | `commit_WEST := at_war` (no other effect) | 0 | the same record | |
+| Action | Feasibility guard | Effect | Delay | Speculative? |
+|---|---|---|---|---|
+| `rearm` | `arms_WEST < high` | `arms_WEST += 1` | 4 | no |
+| `resist_rhineland` | `rhineland == remilitarized and last_GER == remilitarize_rhineland` | `commit_WEST := max(commit_WEST, wary)`; opens the crisis read through `last_WEST == resist_rhineland` | 0 | no |
+| `concede` | `sudeten == czech and last_GER == demand_sudeten and war_west_ger == peace` | `sudeten := german; commit_WEST := max(commit_WEST, wary)`; `belief_WEST` unchanged | 0 | no |
+| `declare_war` | `war_west_ger == peace and (polish_guarantee or last_GER == demand_sudeten or last_GER == attack_czechoslovakia or (last_WEST == resist_rhineland and rhineland == remilitarized))` | `war_west_ger := war; france := at_war; britain := at_war; commit_WEST := at_war` | 0 | no |
+| `guarantee_poland` | `poland == independent and not polish_guarantee and belief_WEST == hegemonic and commit_WEST >= wary` | `polish_guarantee := True; commit_WEST := max(commit_WEST, resolved)` | 0 | no |
+| `approach_ussr` | `not nazi_soviet_pact and not anglo_soviet_alliance` | no state effect; the alliance is the effect of USSR `accept_alliance` | 0 | no |
+| `negotiate` | `war_west_ger == war and britain == at_war and (france == fallen or last_GER == attack_france or last_GER == offer_terms_britain)` | `britain += 1` (at_war to negotiated) | 0 | no |
+| `fight_on` | same as `negotiate` | no state effect (`commit_WEST` is already at_war whenever the guard holds) | 0 | no |
+
+Sources and notes:
+
+- **`rearm`**. Source: "Cabinet approval of the Defence Requirements Committee programme, Feb 1936, and the Statement Relating to Defence, 3 Mar 1936 (Cmd. 5107); the French four-year programme of 7 Sep 1936; the British post-Munich decisions of Oct to Nov 1938 (CAB 23) and the French decree-laws of Nov 1938." Delay 4: about a year from a funded programme to forces in being, the lag of the shadow-factory scheme (1936) and of the air expansion schemes. One WEST action stands for both governments' programmes.
+- **`resist_rhineland`**. Source: "French Council of Ministers, 7 and 8 Mar 1936, and Sarraut's broadcast of 8 Mar ('we are not disposed to leave Strasbourg under the fire of German guns'); Gamelin's advice that any action in the zone required mobilization; Flandin's case to the Locarno powers in Paris and London, 10 to 19 Mar 1936 (DDF 2e série vol. I); the British Cabinet's discussions of Mar 1936 (CAB 23)." Feasibility: a one-tick window after the remilitarization, the period in which the Rhine Pact treated a flagrant breach as allowing immediate action. Under the quarterly tick the window falls one quarter after the entry, although the historical window was the week of 7 to 14 Mar 1936 (ww2_v0_notes.md section 2). The effect raises rather than sets `commit_WEST` so that it never lowers it.
+- **`concede`**. Source: "Anglo-French proposals to Prague, 18 to 19 Sep 1938; Munich agreement, 29 to 30 Sep 1938; Cabinet, 17 to 30 Sep 1938 (CAB 23); HC Deb 3 to 6 Oct 1938." Guard departure: `war_west_ger == peace` added (a concession of a third state's territory presupposes negotiation, which a war ends; without it `concede` during a war would lower `commit_WEST`).
+- **`declare_war`**. Source: "Cabinet and French government, 24 to 28 Sep 1938 (French partial mobilization from 24 Sep; fleet mobilization 27 to 28 Sep); Cabinet of 2 Sep 1939 and the declarations of 3 Sep 1939 (CAB 23); French Council of Ministers, 7 to 8 Mar 1936, for the Rhineland branch." The guard lists the institutional bases on which Parliament and the French Chambers would sanction war: a standing guarantee, an open German demand (the September 1938 branch), a German attack on France's treaty ally Czechoslovakia (Franco-Czechoslovak treaty of 16 Oct 1925), or a resisted remilitarization that Germany holds. The guarantee is read from state, not from a German attack in the same tick, because the attack of 1 Sep and the declaration of 3 Sep fall in one quarter; the cost is that the guard also admits a declaration under the guarantee before any German attack, a branch with no record (no British or French minister proposed a preventive declaration in 1939). Reports that use that branch should say so.
+- **`guarantee_poland`**. Source: "Cabinet conclusions of 18 to 30 Mar 1939 (CAB 23), with the Foreign Policy Committee (CAB 27); the Prime Minister's statement in the Commons, 31 Mar 1939 (HC Deb 31 Mar 1939); Chamberlain at Birmingham, 17 Mar 1939; against the Foreign Policy Committee's rejection of a guarantee to Czechoslovakia, 18 to 22 Mar 1938, and the Prime Minister's statement of 24 Mar 1938." `not polish_guarantee` added (a guarantee is given once). The belief condition is the registered T4 claim and is kept. Its justification as an institutional constraint: in March 1938 the Foreign Policy Committee and the Cabinet considered a guarantee to an East European state and rejected it on three grounds, the impossibility of giving direct military help, the Dominions' opposition, and the absence of a majority for a continental commitment; on 24 Mar 1938 Chamberlain told the Commons that Britain would not give an automatic commitment. After Prague the Cabinet, the Conservative backbenches and the opposition could carry exactly such a commitment within sixteen days, and the Dominions did not block it. The military ground had not changed (Britain could no more help Poland directly in 1939 than Czechoslovakia in 1938). What changed was the governing coalition's reading of German aims. My assessment: this guard is a political-feasibility condition only in the sense that a democratic executive cannot commit to war without a parliamentary majority, and that majority moved with belief; on the capability axis the guarantee was as feasible in March 1938 as in March 1939. It is closer to a belief-conditioned preference than to a capability constraint, and the T4 result should be read as "the record supports the belief flip as the political precondition", not as a capability finding (ww2_v0_notes.md section 5).
+- **`approach_ussr`**. Source: "Litvinov's proposal of 17 Mar 1938 and the Foreign Policy Committee's rejection (CAB 27); the British proposal of a four-power declaration, 20 Mar 1939; Anglo-French proposals to Moscow from 14 to 15 Apr 1939; the Cabinet decision of 24 May 1939 to negotiate an alliance; the military missions in Moscow, 11 to 21 Aug 1939 (DBFP Third Series vols. V to VII)." Guard departure: the skeleton's `polish_guarantee` is dropped. It is a sequence artefact, not a feasibility condition: the four-power proposal of 20 Mar 1939 preceded the guarantee, and the alignment was institutionally possible from the Franco-Soviet pact of 2 May 1935. The first documented debate of the option in London is March 1938; paths that use it in 1936 to 1937 use it before any record of debate, and reports should flag that timing.
+- **`negotiate`**. Source: "War Cabinet, 26 to 28 May 1940, on an approach to Mussolini (CAB 65 conclusions and confidential annexes; Lukacs 1999); the Cabinet's answer to the German offer of 6 Oct 1939 (HC Deb 12 Oct 1939); Halifax's broadcast of 22 Jul 1940." Guard departure: the skeleton's `france == fallen and last_GER == offer_terms_britain` excludes the documented alternative it is cited to, since the War Cabinet debated seeking terms on 26 to 28 May 1940, before France fell and with no German offer on the table. The feasibility version: Britain at war and either France fallen, the German western offensive under way (`last_GER == attack_france`), or a German offer on the table. Effect written as `britain += 1` so that it composes with `invade_britain`.
+- **`fight_on`**. Source: the same record; decision of 28 May 1940. Guard as `negotiate`, so the pair is always offered together (the profile `fight_on` removes `negotiate`).
 
 ## The Soviet Union (`USSR`)
 
-| Action | Feasibility guard (sketch) | Effect | Delay | Source slot | Speculative? |
-|---|---|---|---|---|---|
-| `rearm` | `arms_USSR == weak` | `arms_USSR := strong` | 4 | the 1939 to 1941 expansion | |
-| `accept_pact` | `last_GER == propose_pact_ussr ∧ ¬anglo_soviet_alliance` | with GER: pact | 0 | the August 1939 record | |
-| `accept_alliance` | `last_WEST == approach_ussr ∧ ¬nazi_soviet_pact` | with WEST: alliance | 0 | the 1939 talks (Soviet conditions on Poland and the Baltics) | |
-| `occupy_east_poland` | `nazi_soviet_pact ∧ poland == partitioned` | (already in `partitioned`) | 0 | 17 Sept 1939 | |
-| `join_axis` | `aims_USSR == opportunist ∧ nazi_soviet_pact ∧ france == fallen` | `ussr_axis := True` | 0 | the Nov 1940 Berlin talks; the Soviet counter-conditions | |
+| Action | Feasibility guard | Effect | Delay | Speculative? |
+|---|---|---|---|---|
+| `rearm` | `arms_USSR == weak` | `arms_USSR := strong` | 4 | no |
+| `accept_pact` | `last_GER == propose_pact_ussr and not anglo_soviet_alliance and not nazi_soviet_pact` | `nazi_soviet_pact := True; oil_GER := secured` | 0 | no |
+| `accept_alliance` | `last_WEST == approach_ussr and not nazi_soviet_pact and not anglo_soviet_alliance` | `anglo_soviet_alliance := True` | 0 | no |
+| `occupy_east_poland` | `nazi_soviet_pact and poland == german` | `poland := partitioned` | 0 | no |
+| `join_axis` | [H] `aims_USSR == opportunist` and `nazi_soviet_pact and france == fallen and not ussr_axis` | `ussr_axis := True` | 0 | no (negative control) |
+
+Sources and notes:
+
+- **`rearm`**. Source: "Central Committee conference on the lessons of the Finnish war, Apr 1940; Timoshenko People's Commissar of Defence, 7 May 1940, and the reforms that followed (Erickson 1962)." Delay 4: replacing a purged command takes at least a year; the record shows the Red Army still in reorganization in June 1941, so a decision of 1940 lands after the horizon.
+- **`accept_pact`**. Source: "Molotov to Schulenburg, 19 Aug 1939; Stalin's reply to Hitler, 21 Aug 1939; non-aggression pact and secret protocol, 23 Aug 1939; German-Soviet credit agreement, 19 Aug 1939 (*Nazi-Soviet Relations 1939-1941*; DGFP Series D vol. VII)." `not nazi_soviet_pact` added (one-shot). `oil_GER := secured`: deliveries under the commercial agreements began in 1940; the level records the supply route (ontology_ww2.md).
+- **`accept_alliance`**. Source: "Soviet proposal of a triple alliance, 17 Apr 1939; the draft-treaty negotiations of Jun to Jul 1939 (the 'indirect aggression' dispute); Voroshilov's question of 14 Aug 1939 on passage through Poland and Romania (DBFP Third Series vol. VII)." Poland's refusal of passage is folded into this choice (ontology_ww2.md section 7).
+- **`occupy_east_poland`**. Source: "Soviet entry into Poland, 17 Sep 1939, two days after the Nomonhan ceasefire of 15 Sep; boundary and friendship treaty, 28 Sep 1939." Guard and effect departure: `poland == german` replaces `poland == partitioned`, and the effect is `poland := partitioned` (skeleton: no effect), following the change of the `poland` level order.
+- **`join_axis`**. Source: "Ribbentrop's letter to Stalin, 13 Oct 1940; Molotov in Berlin, 12 to 13 Nov 1940; the Soviet conditions of 25 Nov 1940 for joining the proposed four-power pact (*Nazi-Soviet Relations 1939-1941*; DGFP Series D vol. XI)." Exists for the negative control T10. `not ussr_axis` added (one-shot).
 
 ## Japan (`JPN`)
 
-| Action | Feasibility guard (sketch) | Effect | Delay | Source slot | Speculative? |
-|---|---|---|---|---|---|
-| `sign_anticomintern` | `¬anticomintern` | with GER: `anticomintern := True` | 0 | Nov 1936 | |
-| `strike_north` | `anticomintern ∧ arms_JPN == high ∧ arms_USSR == weak ∧ war_west_ger == war` | opens `siberia` to Nature `campaign_siberia` | 0 | the 1938 to 1939 border fighting; the Nomonhan outcome as the constraint | |
+| Action | Feasibility guard | Effect | Delay | Speculative? |
+|---|---|---|---|---|
+| `sign_anticomintern` | `not anticomintern` | `anticomintern := True` | 0 | no |
+| `strike_north` | `anticomintern and arms_USSR == weak` | no state effect; Nature `campaign_siberia` reads `last_JPN == strike_north` | 0 | **yes** (negative control) |
+
+Sources and notes:
+
+- **`sign_anticomintern`**. Source: "Anti-Comintern Pact and secret protocol, 25 Nov 1936, after the Ribbentrop and Oshima talks of 1935 to 1936 (DGFP Series C vol. V)." Germany is the counterparty, but the act is JPN's in the catalogue so that GER's single action in 1936Q4 can be the Axis (both are realized that quarter). No GER guard is needed: German assent is on record from 1935.
+- **`strike_north`**. Source: "No national decision for a northern war was debated in the v0 window: the Changkufeng (Jul to Aug 1938) and Nomonhan (May to Sep 1939) fighting were Kwantung Army escalations that Tokyo sought to contain; the strike-north debate proper is the Liaison and Imperial Conferences of Jun to Jul 1941 (Ike 1967), outside v0." Tagged speculative for 1936 to 1940 (departure). Guard departure: the skeleton's `war_west_ger == war` is dropped. A war between Germany and the West does not draw Soviet forces from the Far East, so it is not a capability condition for Japan; as a reason to strike it is a motive ("strike while Europe is busy"). The documented feasibility condition of 1941, a German-Soviet war going in Germany's favour, has no v0 variable and sits on `campaign_siberia`. `arms_JPN == high` is dropped because `arms_JPN` is a constant (ontology_ww2.md section 9).
 
 ## Nature
 
-| Event | Guard | Effect | Source slot |
+| Event | Guard | Effect | Source |
 |---|---|---|---|
-| `purge` | `arms_USSR == strong` | `arms_USSR := weak` | 1937 to 1938 |
-| `campaign_west` | an attack on France is under way | resolves `france := fallen` or leaves `at_war` (nondeterministic) | the planning assessments of 1939 to 1940 |
-| `air_battle` | an air offensive is under way | `channel_air := german` or `british` | July to Oct 1940 |
-| `campaign_siberia` | `strike_north` under way | `siberia := japanese` only if `arms_USSR == weak` and the USSR is engaged in Europe; otherwise no effect | Nomonhan |
-| `us_neutrality_revision` | `war_west_ger == war ∧ commit_US == isolationist` | `commit_US := wary` | Nov 1939 |
-| `us_engages` | `france == fallen ∧ commit_US == wary` | `commit_US := engaged` | Sept 1940 |
-| `italy_reconciles` | `italy_estranged ∧ ¬axis` | `italy_estranged := False` | the Stresa alternative, 1935 to 1936 |
+| `purge` | `arms_USSR == strong` | `arms_USSR := weak` | "Tukhachevsky trial and executions, 11 to 12 Jun 1937; the arrests of 1937 to 1938." |
+| `locarno_lapses` (added) | `rhineland == remilitarized and treaty != dead and last_GER != remilitarize_rhineland and last_WEST != resist_rhineland` | `treaty := dead` | "London proposals of the Locarno powers and the League Council's finding of a breach, both 19 Mar 1936: condemnation without enforcement." |
+| `campaign_west` | `last_GER == attack_france and france == at_war and arms_at_war >= high` | `france := fallen`; Nature's `none` is the front holding | "German planning doubts of Oct to Nov 1939 (the first Case Yellow aimed at Belgium and the Channel coast, not the defeat of France); the Allied Dyle plan of Nov 1939 to Mar 1940; Beck's memoranda of May to Jul 1938 on a war begun with the 1938 force." |
+| `air_battle_german` (split) | `last_GER == air_offensive and channel_air == contested` | `channel_air := german` | "Directive No. 17, 1 Aug 1940; the Luftwaffe's estimates of Jul to Aug 1940." |
+| `air_battle_british` (split) | `last_GER == air_offensive and channel_air == contested` | `channel_air := british` | "Sea Lion postponed 17 Sep 1940 and to spring 1941 on 12 Oct 1940." |
+| `campaign_siberia` | `last_JPN == strike_north and arms_USSR == weak and ussr_at_war_in_europe` (the last term is the constant `FALSE` in v0) | `siberia := japanese` | "Nomonhan, Aug 1939: the Soviet counteroffensive defeated the Kwantung Army with the Red Army not engaged in Europe; the Imperial Conference of 2 Jul 1941 made a northern war conditional on the German-Soviet war going in Germany's favour (Ike 1967)." Negative control. |
+| `us_neutrality_revision` | `war_west_ger == war and commit_US == isolationist` | `commit_US := wary` | "Roosevelt's message to the special session of Congress, 21 Sep 1939; Neutrality Act of 4 Nov 1939." |
+| `us_engages` | `france == fallen and commit_US == wary` | `commit_US := engaged` | "Destroyers-for-bases agreement, 2 Sep 1940 (FRUS 1940 vol. III); Selective Training and Service Act, 16 Sep 1940." |
+| `italy_reconciles` | `italy_estranged and not axis` | `italy_estranged := False` | "The Hoare-Laval proposals, Dec 1935; the lifting of League sanctions, Jul 1936." |
+
+Notes:
+
+- **`locarno_lapses`** is added (needed by T2). The skeleton's effect `treaty := dead` on `remilitarize_rhineland` makes `balance_europe` false in the state right after the entry, before WEST can resist, so no branch could keep 1936Q1 in V_WEST. The event fires only after the resistance window has passed without resistance, which is what happened: the treaty regime died when the guarantors declined to act on 19 Mar 1936. Under the quarterly tick it fires at tick 2 at the earliest, so the model's treaty dies at 1936Q4 against 1936Q2 in the hindsight record.
+- **`campaign_west`**: the `arms_at_war >= high` condition is added (departure; the latch is the skeleton's own). Its basis is capability: the 1940 victory rested on the force built before the war began, and the German military record of 1936 to 1938 (the withdrawal contingency of March 1936; Beck's memoranda of 1938; Jodl's later account of the thinly held western front in September 1938) holds that a war begun earlier, with the force of that year, could not have defeated France. Without the condition, a war begun over the Rhineland in 1936 lets Germany rearm to `high` by 1938Q3 and take France by 1939Q2 in the model, which contradicts that record and makes T2 fail for the hegemonic start (checked, ww2_v0_notes.md section 3). I flag openly that I chose this condition after seeing the T2 analysis; the historian should judge it on the record alone. The event also admits a French collapse after an autumn 1939 attack, which the planning record of Oct to Nov 1939 does not support; it does not affect the realized path.
+- **`air_battle`** is split into two events (departure) because an event has one effect and Nature's `none` already means "no decision this quarter".
+- **`campaign_siberia`**: "the USSR is engaged in Europe" has no v0 variable (there is no German-Soviet war before 1941), so the condition is the constant `FALSE`, and the event can fire only when its guard is relaxed.
+- **`italy_reconciles`**: the record of the alternative is Western (the Hoare-Laval proposals; the lifting of sanctions) and Italian (Grandi's and Ciano's soundings); the effect, Italy back on the Stresa front, is the counterfactual. Not tagged speculative because the alternative was debated; reports that use it should say the effect is the contested part.
 
 ## Constraints
 
-- Fairness `democratic_response` on WEST: once `belief_WEST == hegemonic` and a German attack has occurred, WEST plays `declare_war` or `rearm` within 2 ticks. Source slot: the 1939 record.
+- Fairness `democratic_response` on WEST (departure in trigger and responses): trigger `belief_WEST == hegemonic and commit_WEST <= wary and poland == independent`, within 2, responses `guarantee_poland`, `rearm`. Source: "Prague (15 Mar 1939) to the guarantee (31 Mar 1939) and the doubling of the Territorial Army (29 Mar 1939): sixteen days." The skeleton's responses (`declare_war`, `rearm`) would raise a model error whenever WEST's rearmament is pending and no guarantee exists, because `declare_war` needs a guarantee or an open crisis; the realized response to the belief flip was the guarantee. The trigger ends once a commitment exists (`commit_WEST >= resolved`) or Poland has fallen, so the constraint does not force a declaration of war. `guarantee_poland` is available whenever the trigger holds unless its guard is relaxed, so the restriction never leaves WEST without a response.
 - Profile `fight_on`: forbids `negotiate` (the registered T5 alternative).
 - Profile `appeaser`: forbids `declare_war` while `belief_WEST != hegemonic`.
 - Assume `ussr_defensive`: `aims_USSR == defensive`.
+- Proposed, not adopted (for the architect): fairness `czech_obligation` on WEST, trigger `last_GER == attack_czechoslovakia`, within 1, responses `declare_war`. Source: the French statements of September 1938 that France would honour the treaty of 1925 and the British statement of 26 Sep 1938 that Britain would stand by France. It would make a refused Munich lead to war rather than to a WEST that stands aside, which is what T3 and T8 are about; I have not adopted it because it encodes a behaviour, and the choice between a constraint and the engine's nondeterminism is the architect's.
+
+## Parameter budget (this draft)
+
+| Item | Count |
+|---|---|
+| Actions with a non-trivial guard | 30 (GER 15, WEST 8, USSR 5, JPN 2) |
+| Nature events | 9 |
+| Speculative actions | 1 (`strike_north`) |
+| Hypothesis gates [H] | 3 guards (`occupy_bohemia`, `attack_poland`, `join_axis`) and 1 conditional effect (`attack_czechoslovakia`) |
+| Delayed actions | 3 (GER `rearm` 8, WEST `rearm` 4, USSR `rearm` 4) |
+| Fairness constraints, profiles, assumptions | 1, 2, 1 |
+| Actions or events added to the skeleton | 2 (`attack_czechoslovakia`, `locarno_lapses`), plus the split of `air_battle` |
+
+Reachable set of a scratch encoding of this catalogue: more than 3 x 10^6 states from the two initial states (exploration stopped at the budget). The testbed's target is 10^6 or fewer, so step 1.5 needs a reduction or the bounded path (ww2_v0_notes.md section 3).
+
+## Departures from the skeleton
+
+Each is also noted under its action. None edits a registered claim.
+
+1. Added `attack_czechoslovakia` (T3, T8) and Nature `locarno_lapses` (T2); split `air_battle` into `air_battle_german` and `air_battle_british`.
+2. Effects: `remilitarize_rhineland` no longer sets `treaty := dead`; `withdraw_rhineland` also sets `treaty := enforced`; `attack_poland` sets `poland := german` and `occupy_east_poland` sets `partitioned` (with the level reorder in ontology_ww2.md); `invade_britain` and `negotiate` written as bumps; raises written as `max` so that no effect lowers `belief_WEST` or `commit_WEST`.
+3. Guards made feasibility-based where the sketch used a sequence artefact, a motive or an inconsistent threshold: `demand_sudeten` (`>= rising` and the Rhineland, not `>= high`), `negotiate` and `fight_on` (the May 1940 debate), `offer_terms_britain` (the October 1939 offer), `approach_ussr` (no guarantee needed), `align_balkans` (no pact disjunct), `strike_north` (no `war_west_ger` term).
+4. Guards tightened with a prior condition: `concede` (`war_west_ger == peace`), `guarantee_poland`, `accept_pact`, `join_axis` (one-shot), `campaign_west` (`arms_at_war >= high`).
+5. Hypothesis gates added on `occupy_bohemia` and `attack_poland` (T8 needs some guard to read `aims_GER`; the skeleton had none).
+6. Delay of GER `rearm` 8 instead of 4.
+7. `strike_north` tagged speculative.
+8. Fairness `democratic_response`: trigger and responses changed (model-error risk; the realized response).
 
 ## Historian's review checklist (step 1.2)
 
-- [ ] every action's source names a dated record in which the alternative was debated or planned
-- [ ] every guard is a feasibility or institutional constraint, not a preference
-- [ ] the actions that exist only for negative controls are marked and their guards cite the documented constraints
-- [ ] no action needed by T1, T2, T4, T5, T8 or T10 is missing; nothing is added beyond what the record supports without a speculative tag
+- [ ] every action's source names a dated record in which the alternative was debated or planned. All do except `strike_north` (tagged speculative). Two rest on records the historian should check: `withdraw_rhineland` (the debate is reconstructed from postwar testimony and the disputed reading of Blomberg's directive) and `italy_reconciles` (the effect is counterfactual).
+- [ ] every guard is a feasibility or institutional constraint, not a preference. Not met as a whole, by design: the [H] conjuncts are hypothesis gates, and the belief condition of `guarantee_poland` is in my assessment closer to a belief-conditioned preference than to capability (kept, because T4 is registered). Every other guard is written as feasibility.
+- [x] the actions that exist only for negative controls are marked and their guards cite the documented constraints (`strike_north`, `join_axis`, Nature `campaign_siberia`)
+- [ ] no action needed by T1, T2, T4, T5, T8 or T10 is missing; nothing is added beyond what the record supports without a speculative tag. Two actions added from the record. T10's controls "Germany conquers the United States" and "Britain alone defeats Germany by 1941" have no action or variable in v0 (ww2_v0_notes.md section 4).

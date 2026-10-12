@@ -252,6 +252,7 @@ The AGI model is a second instance of the same DSL, engine, analysis and snapsho
 ## 11. Changelog of pre-registered tests
 
 - 2026-10-11: T1 to T13 registered. No guards written yet.
+- 2026-10-12: clarification, no change of claim: T1's "realized trajectory" is the quarter-by-quarter decision sequence in `data/ww2/realized_moves.csv`; at quarterly granularity a reaction to another actor's same-quarter decision appears one tick later (marked [SQR] there). T10's "relaxations" count named assumptions including named guard parts (framework_spec.md section 3.1); a control whose ending has no variable or action in the model is reported as vacuous, not as a pass.
 - 2026-10-11: clarification, no change of claim: "assumption sets" in T7 and "relaxations" in T10 range over named assumptions (guards, fairness constraints, profiles, and named initial-state restrictions declared with `assume`), per framework_spec.md section 3.1; "embargo maintained" in T7 is a profile forbidding `lift_embargo`.
 
 ---
