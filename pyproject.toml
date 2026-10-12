@@ -12,6 +12,7 @@ dependencies = []
 
 [project.optional-dependencies]
 bmc = ["z3-solver"]
+data = ["pyreadr"]
 dev = ["pytest", "hypothesis", "ruff", "jsonschema", "playwright"]
 
 [project.scripts]

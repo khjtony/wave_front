@@ -1,0 +1,8 @@
+# Test fixture: synthetic rows in the official dispute-level MID (MIDA) CSV layout.
+# The values are invented for the loader tests and describe no real dispute.
+dispnum,stday,stmon,styear,endday,endmon,endyear,outcome,settle,fatality,fatalpre,mindur,maxdur,hiact,hostlev,recip,numa,numb,version
+9001,1,3,1936,-9,4,1936,4,3,0,0,31,61,7,3,0,1,1,5.0
+9002,-9,9,1938,30,9,1938,3,1,0,0,1,30,8,3,1,1,2,5.0
+9003,1,9,1939,6,10,1939,1,-9,6,-9,36,36,20,5,1,1,1,5.0
+9004,10,5,1940,22,6,1940,1,1,6,-9,43,43,20,5,1,1,3,5.0
+9005,15,7,1934,15,7,1934,5,3,0,0,1,1,7,3,0,1,1,5.0
