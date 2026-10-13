@@ -228,9 +228,9 @@ The point of no return is the first state of a trace outside the kernel. The sil
 | C6 | Budget does not buy fit | budget and informativeness per report | planned | phases 1 to 3 |
 | C7 | Negative controls in CI | T10 runs in the suite (two expectations as strict xfail, one vacuous skip) | met for phase 1 | phases 1, 3 |
 | D1 | Snapshot provenance | strict JSON Schema plus hand-written validator cross-checked against `jsonschema` on a 1,715-document mutation corpus; loader refuses missing provenance, unknown levels and unfixed swept variables; 93 tests | met | phase 0 |
-| D2 | Blind replay | date-filtered corpora | planned | phase 2 |
-| D3 | Replay agreement | replay metrics, WW2 and Cold War | planned | phases 2, 3 |
-| D4 | Extraction reviewed | extractor and review CLI | planned | phase 2 |
+| D2 | Blind replay | FRUS 1936 to 1940 (12 volumes, 10,550 documents from a pinned mirror commit) replayed quarter by quarter with the corpus filtered strictly by dateline; the editors' bracketed insertions, which carry later facts into earlier documents, are stripped (reports/replay_ww2_frus.md; docs/replay_harness.md) | met in mechanics (WW2) | phase 2 |
+| D3 | Replay agreement | rule backend on real FRUS, proposal level, nothing reviewed: text variables 356/500 (71 percent) against 305/500 for reading nothing; the belief and commitment variables below the reading-nothing baseline; 4 of 9 documented belief and commitment flips within a quarter; resource variables come from datasets and are not replayed from text. The registered criterion is not met by the rule backend; the Claude backend needs a credential on the owner's machine (reports/replay_ww2_frus.md) | not met (WW2, rule backend) | phases 2, 3 |
+| D4 | Extraction reviewed | the extractor emits only schema-valid proposals with verbatim quotes and document ids; the review step is the only writer of replay snapshots and refuses auto-acceptance outside the synthetic corpus; `--measure-proposals` measures unreviewed proposals without writing a snapshot (tests/evidence) | met in mechanics; no real proposal reviewed yet | phase 2 |
 
 ## 9. Change log
 
