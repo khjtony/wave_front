@@ -1,6 +1,6 @@
 # Theory
 
-This note gives the formal objects behind the `wavefront` framework, the logic fragment it decides, the algorithms, and the statements the engine's outputs rest on. It is written against [framework_spec.md](framework_spec.md) (cited as "spec §n"); where the two disagree, the spec is the contract and this note is wrong. Design motivation is in [DESIGN.md](DESIGN.md). Phase 0 status: sections 1 to 6, 8 and 9 describe what phase 0 implements; section 7 is a design hook only.
+This note gives the formal objects behind the `wavefront` framework, the logic fragment it decides, the algorithms, and the statements the engine's outputs rest on. It is written against [framework_spec.md](framework_spec.md) (cited as "spec §n"); where the two disagree, the spec is the contract and this note is wrong. Design motivation is in [DESIGN.md](DESIGN.md). Phase 0 status: sections 1 to 6, 8 and 9 describe what phase 0 implements; section 7 was a design hook in phase 0 and is implemented in phase 2 (spec §14).
 
 Notation. `Agt` is the set of actors, Nature `N` included. For a coalition `C ⊆ Agt`, `C̄ = Agt ∖ C` is the rest, which contains Nature unless `N ∈ C`. Levels are indices. `[[e]]` is the set of states where expression `e` holds.
 
@@ -309,28 +309,36 @@ An unbounded version is needed only if the tick is abstracted away, giving a cyc
 
 ---
 
-## 7. Multi-resolution time (design hook; not implemented in phase 0)
+## 7. Multi-resolution time
 
-The Cold War needs annual ticks with crises at daily or weekly resolution (coldwar_testbed.md §0). PLAN.md step 2.2 schedules the implementation. The definitions here fix what it must satisfy.
+The Cold War needs annual ticks with crises at daily or weekly resolution (coldwar_testbed.md §0, claim C3). PLAN.md step 2.2 schedules the implementation; it is `wavefront.engine.multires` (spec §14), which builds the flattened game below. The definitions here fix what it satisfies.
 
-**Setting.** A coarse game `G` and, for some coarse states, a fine sub-game `H` with:
-- an entry map `ι : S_G → S_H`, so the sub-game's initial state is determined by the coarse state, with fine-only variables at declared initial values;
-- an exit map `λ : Term_H → S_G`, so each terminal fine state returns one coarse state, with the coarse tick advanced by a fixed amount;
-- an actor map: each fine actor is a coarse actor, and `Obs_H(a)` reveals nothing that `Obs_G(a)` hides.
+**Setting.** A coarse game `G` and, for the coarse states where a declared coarse action `crisis` of actor `a` is available, a fine sub-game `H` (a timed compiled model with its own horizon and endings) with:
+- an entry map `ι : S_G → S_H`, so the sub-game's initial state is determined by the coarse state, with fine-only variables at declared initial values (a swept fine variable must be fixed by `ι`);
+- an exit map `λ_s : Term_H → S_G` for each entry state `s`, so each terminal fine state returns one coarse state: the coarse transition from `s` whose only immediate effects are the levels the crisis sets, with the coarse tick advanced by one (the crisis fits inside one coarse tick);
+- an actor map: each fine actor is the coarse actor of the same name (Nature included), so a coalition names the same players at both levels; and `Obs_H(a)` reveals nothing that `Obs_G(a)` hides.
 
-**Macro-transition.** At a coarse state `s` where the crisis applies, a coarse action `crisis` stands for playing `H` from `ι(s)`. For plain reachability its successor set is `λ(Term_H ∩ Reach_H(ι(s)))`. For a coalition `C`, the lift must preserve the ∃∀ semantics:
+**Macro-transition.** At a coarse state `s` where the crisis applies, the action `crisis` stands for playing `H` from `ι(s)`. For plain reachability its successor set is `λ_s(Term_H ∩ Reach_H(ι(s)))`. For a coalition `C`, the lift preserves the ∃∀ semantics:
 
 ```
-s ∈ CPre_C^G(X) via crisis   iff   ι(s) ∈ Attr_C^H( λ⁻¹(X) )
+s ∈ CPre_C^G(X) via crisis   iff   ι(s) ∈ Attr_C^H( λ_s⁻¹(X) )
 ```
 
-For safety, the fine invariant `φ_H` (the coarse `φ` read on fine states) must also hold during the crisis: replace `Attr_C^H(λ⁻¹(X))` by the constrained attractor `μY. (λ⁻¹(X) ∩ φ_H) ∪ (φ_H ∩ CPre_C^H(Y))`.
+The implementation fixes the following rules.
+- *The crisis is the tick.* A joint move in which `a` plays `crisis` enters `ι(s)` whatever the other actors chose; their coarse moves in that tick are discarded. Two crisis actions in one joint move are an error. The crisis action itself has no effect and no delay.
+- *Frozen coarse state.* During the crisis the coarse state is frozen: delay counters, latches, fairness counters and `last_<actor>` of `G` do not move. They resume in the return transition, which is an ordinary coarse transition in which `a` plays `crisis` and every other actor its built-in `idle` or `none`: delayed effects falling due fire, latches and fairness counters update, and a delayed `Set` overrides a level the crisis set, as it overrides any immediate `Set`.
+- *Predicates.* Coarse invariants and endings are evaluated on coarse states only. On a fine state every coarse invariant holds and no coarse ending holds; a fine ending only ends the sub-game. Hence the safety lift is the same equation with `X` the kernel, `ι(s) ∈ Attr_C^H(λ_s⁻¹(K))`. The constrained attractor `μY. (λ_s⁻¹(X) ∩ φ_H) ∪ (φ_H ∩ CPre_C^H(Y))`, which would also demand a fine reading `φ_H` of the coarse invariant during the crisis, is not implemented: a model that needs it gives the fine model an ending for the breach and maps that ending to a coarse state outside `φ`.
 
-**Soundness condition.** Under these conditions the lifted fixpoints equal the fixpoints of the flattened game, in which the crisis states are inlined. That flattened game is again a finite concurrent game, so Theorems 1 to 4 apply. Flattening is a valid implementation; repeated sub-game solves are the alternative.
+**Soundness condition.** Under these conditions the lifted fixpoints equal the fixpoints of the flattened game, in which the crisis states are inlined: a fine state is the pair of the frozen entry state and a state of `H`, and coarse actors outside `H` have the single move `idle` there. The flattened game is again a finite concurrent game (finite because `H` is timed; acyclic when `G` is timed), so Theorems 1 to 4 apply to it. Flattening is the implementation; repeated sub-game solves are the alternative.
 
-**The unsound shortcut.** Replacing the crisis by a single set-valued outcome, resolved by Nature, makes the outcome adversarial to every coalition. Positive forcing results remain true. Theorem 2 fails: `C` might win by playing the crisis well. The contested region then grows artificially.
+What the soundness condition covers: membership of every state, coarse and fine, in attractors, safety kernels and contested regions, for every coalition; the equation above, checked against separate solves of `H` in `tests/engine/test_multires.py`, which also checks the flattening state by state against the same game written by hand as one model (fixed and random games). What it does not cover:
+- *Ranks and witness lengths* count transitions of the flattening: a crisis costs its entry, its fine steps and its return, while the coarse tick advances by one. Shortest witnesses therefore measure transitions, not years, and a tick-weighted rank is not implemented.
+- *Observation.* The actor-map condition on `Obs_H` is a modelling obligation the code does not check. Strategies are perfect-information, as everywhere (spec §1); uniformity on a flattened game compares observations tagged with the crisis.
+- *Invariants inside the crisis*, as above: a breach inside the crisis that the exit map undoes is invisible at the coarse level.
+- *The discarded moves at entry* are a modelling choice of how a crisis preempts a tick, not a consequence of the theorem.
+- *Other tools.* Relaxation search, the bounded and symbolic encodings, sensitivity and the report orchestrator recompile a `Model` and do not take a flattened game; a fine model's assumptions are relaxed by recompiling the fine model and flattening again. Nested crises (a crisis inside a crisis) are not supported.
 
-Ranks in a composed game count coarse ticks; fine steps inside the crisis are reported separately.
+**The unsound shortcut.** Replacing the crisis by a single set-valued outcome, resolved by Nature, makes the outcome adversarial to every coalition. Positive forcing results remain true. Theorem 2 fails: `C` might win by playing the crisis well. The contested region then grows artificially. The flattening avoids it: `tests/engine/test_multires.py` has a sub-game one coalition controls, which lifts to a coarse outcome that coalition forces, and a matching-pennies sub-game, which lifts to a contested one.
 
 ---
 

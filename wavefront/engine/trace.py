@@ -28,27 +28,38 @@ class Trace(list[tuple[int, tuple[int, ...] | None]]):
     def render(self, g: Graph) -> str:
         """A Markdown table: tick, each actor's action, and the variables that changed
         (level names; ``tick`` and ``last_*`` are omitted as redundant). In an untimed
-        model the first column is the step number."""
+        model the first column is the step number. A model that defines
+        ``trace_tick(state, step)`` and ``trace_changes(state, next_state)`` (the flattened
+        multi-resolution model of :mod:`wavefront.engine.multires`) supplies those two
+        columns itself."""
         cm = g.model
+        tick_of = getattr(cm, "trace_tick", None)
+        changes_of = getattr(cm, "trace_changes", None)
         names = cm.actor_names
         header = ["tick" if cm.timed else "step", *names, "changes"]
         rows = [header, ["---"] * len(header)]
         shown = [i for i, v in enumerate(cm.variables) if v.origin not in ("tick", "last")]
         for k, (sid, move) in enumerate(self):
             state = g.states[sid]
-            tick = str(state[cm.index["tick"]]) if cm.timed else str(k)
+            if tick_of is not None:
+                tick = tick_of(state, k)
+            else:
+                tick = str(state[cm.index["tick"]]) if cm.timed else str(k)
             if move is None:
                 end = g.ending[sid]
                 note = f"ending: {end}" if end is not None else "(trace ends)"
                 rows.append([tick, *(["-"] * len(names)), note])
                 continue
             nxt = g.states[self[k + 1][0]]
-            changes = [
-                f"{cm.variables[i].name}: {cm.level_name(i, state[i])} -> "
-                f"{cm.level_name(i, nxt[i])}"
-                for i in shown
-                if state[i] != nxt[i]
-            ]
+            if changes_of is not None:
+                changes = changes_of(state, nxt)
+            else:
+                changes = [
+                    f"{cm.variables[i].name}: {cm.level_name(i, state[i])} -> "
+                    f"{cm.level_name(i, nxt[i])}"
+                    for i in shown
+                    if state[i] != nxt[i]
+                ]
             rows.append([tick, *g.move_names(move), "; ".join(changes) or "-"])
         return "\n".join("| " + " | ".join(row) + " |" for row in rows)
 

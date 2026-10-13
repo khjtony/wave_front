@@ -1,7 +1,9 @@
-"""The explicit-state engine: exploration, fixpoints and witness traces."""
+"""The explicit-state engine: exploration, fixpoints, witness traces and the flattening of
+crisis sub-games (multi-resolution time)."""
 
 from .explore import BudgetExceeded, explore
 from .graph import Graph
+from .multires import Crisis, FlatModel, flatten
 from .solve import (
     AttractorResult,
     ContestedResult,
@@ -18,6 +20,9 @@ __all__ = [
     "safe",
     "contested",
     "witness",
+    "flatten",
+    "Crisis",
+    "FlatModel",
     "Graph",
     "Trace",
     "BudgetExceeded",
