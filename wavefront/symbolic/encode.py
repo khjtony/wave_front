@@ -701,27 +701,47 @@ class Encoding:
 
     def image(self, s: int) -> int:
         """Successors of the states in ``s`` under available joint moves (terminal states
-        are frozen: their image is themselves). A relational product over the partitioned
-        transition relation, quantifying each current and action bit as soon as no
-        remaining part mentions it; unchanged variables keep their current bits."""
+        are frozen: their image is themselves).
+
+        A relational product over the partitioned transition relation and the actors'
+        availability: parts are conjoined greedily, each time the part that lets the most
+        action and current bits be quantified (action bits weigh more), and every bit is
+        quantified as soon as no remaining part mentions it. Unchanged variables keep their
+        current bits."""
         mgr = self.mgr
-        acc = mgr.AND(mgr.DIFF(s, self.term), self.moves)
-        parts = self.trans_parts()
+        acts = set(self.action_levels)
+        parts = [(rel, set(sup)) for rel, sup in self.trans_parts()]
+        parts += [(av, set(mgr.support(av))) for av in self.avail]
         changed = self.changed_levels
-        quant = set(self.action_levels) | changed
-        after: list[set[int]] = []
-        tail: set[int] = set()
-        for _, sup in reversed(parts):
-            after.append(set(tail))
-            tail |= sup
-        after.reverse()
-        done = quant - tail
+        quant = acts | changed
+        acc = mgr.DIFF(s, self.term)
+        acc_sup = mgr.support(acc)
+        occurs: dict[int, set[int]] = {}
+        for k, (_, sup) in enumerate(parts):
+            for v in sup:
+                occurs.setdefault(v, set()).add(k)
+        done = {v for v in quant & acc_sup if not occurs.get(v)}
         if done:
             acc = mgr.exists(acc, done)
-        for (rel, _), later in zip(parts, after, strict=True):
-            q = (quant - later) - done
+        remaining = set(range(len(parts)))
+        while remaining:
+            best: tuple[tuple[int, int, int], int, set[int]] | None = None
+            for k in sorted(remaining):
+                sup = parts[k][1]
+                q = {v for v in (sup & quant) - done if occurs[v] == {k}}
+                score = sum(4 if v in acts else 1 for v in q)
+                key = (score, -len(sup - acc_sup), -k)
+                if best is None or key > best[0]:
+                    best = (key, k, q)
+            assert best is not None
+            _, k, q = best
+            rel, sup = parts[k]
             acc = mgr.and_exists(acc, rel, q) if q else mgr.AND(acc, rel)
             done |= q
+            acc_sup |= sup
+            remaining.discard(k)
+            for v in sup:
+                occurs[v].discard(k)
         leftover = quant - done
         if leftover:
             acc = mgr.exists(acc, leftover)

@@ -40,6 +40,7 @@ from __future__ import annotations
 
 import sys
 import weakref
+from array import array
 from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass
 
@@ -53,6 +54,10 @@ _ESHIFT = 35  # bits per edge in packed keys (edges < 2**35)
 _VSHIFT = 15  # bits per level in packed unique-table keys (levels < 2**15)
 _SSHIFT = 20  # bits per varset id in packed cache keys
 _CACHE_LIMIT = 3_000_000
+_RECURSION = 20_000  # enough for about 5,000 variables (see add_var)
+
+if sys.getrecursionlimit() < _RECURSION:
+    sys.setrecursionlimit(_RECURSION)
 
 
 @dataclass(frozen=True, eq=False)
@@ -72,9 +77,9 @@ class BDD:
     FALSE = FALSE
 
     def __init__(self) -> None:
-        self._var: list[int] = [_TERMVAR]
-        self._lo: list[int] = [0]
-        self._hi: list[int] = [0]
+        self._var = array("q", [_TERMVAR])
+        self._lo = array("q", [0])
+        self._hi = array("q", [0])
         self._unique: dict[int, int] = {}
         self._free: list[int] = []
         self.names: list[str] = []
@@ -102,7 +107,7 @@ class BDD:
         if level >= 1 << _VSHIFT:
             raise ValueError("too many BDD variables")
         self.names.append(name if name is not None else f"x{level}")
-        need = 6 * (level + 1) + 2000
+        need = 4 * (level + 1) + 500
         if sys.getrecursionlimit() < need:
             sys.setrecursionlimit(need)
         return level

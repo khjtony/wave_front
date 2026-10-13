@@ -489,7 +489,8 @@ def witness(
         for a, j in zip(members, sub, strict=True):
             if j not in avail[a]:
                 raise ModelError(f"strategy move {sub} is not available in {state}")
-        choices = [[j] if a in members else acts for a, acts in enumerate(avail)]
+        fixed = dict(zip(members, sub, strict=True))
+        choices = [[fixed[a]] if a in fixed else acts for a, acts in enumerate(avail)]
         best: tuple[int, tuple[int, ...], State] | None = None
         for jm in itertools.product(*choices):
             nxt = cm.step(state, jm)
