@@ -134,10 +134,15 @@ TEI_SAMPLE = """<?xml version="1.0" encoding="UTF-8"?>
     <head><hi rend="italic">The Minister in Czechoslovakia</hi> (<persName>Carr</persName>)
       to the Secretary of State</head>
     <opener><dateline><placeName>Praha</placeName>, <date calendar="gregorian"
-      when="1939-03-19T18:00:00+01:00">March 19, 1939—6 p.m.</date></dateline></opener>
+      when="1939-03-19T18:00:00+01:00">March 19, 1939—6 p.m.</date><lb/>[Received March
+      19—3 p.m.]</dateline></opener>
     <p>The Czechoslovak state <pb n="55"/> has ended.<note n="1" xml:id="d50fn1">An
-      editor's footnote written decades later.</note> Arrests continue.</p>
-    <p>Second paragraph.</p>
+      editor's footnote written decades later.</note> Arrests continue [sic].</p>
+    <p>[Here follows text of a note handed over March 21, 1939, printed infra.]</p>
+    <p>Sir: [Here follows review of the negotiations since March 3.] Second paragraph.</p>
+    <closer><signed>Carr</signed></closer>
+    <p>[In telegram No. 9, April 2, 1940, the Department replied:</p>
+    <p>“The occupation was never recognized.” (860F.01/1)]</p>
    </div>
    <div subtype="editorial-note" type="document" xml:id="d51">
     <head>Editorial Note</head><p>Written by the editors.</p></div>
@@ -160,12 +165,73 @@ def test_frus_parse_volume_dates_by_dateline_and_drops_notes_and_editorial_docum
     assert d.date == date(1939, 3, 19)  # the writer's local date, not the normalized one
     assert d.url == "https://history.state.gov/historicaldocuments/frus1939v01/d50"
     assert d.title == "The Minister in Czechoslovakia (Carr) to the Secretary of State"
-    assert "has ended. Arrests continue." in d.text
+    assert "has ended. Arrests continue [sic]." in d.text  # a restoration is kept
     assert "footnote" not in d.text and "860F.48" not in d.text
-    assert d.text.endswith("Second paragraph.")
+    assert "[Received March 19—3 p.m.]" in d.text  # the receipt stamp is part of the document
+    # The editors' bracketed insertions, single or across paragraphs, are left out.
+    assert "Here follows" not in d.text and "1940" not in d.text and "recognized" not in d.text
+    assert "Sir: Second paragraph." in d.text
+    assert d.text.endswith("Carr")
     assert docs["d52"].date == date(1939, 8, 24)
     assert any("d51" in s and "editorial-note" in s for s in skipped)
     assert any("d53" in s and "undated" in s for s in skipped)
+
+
+def test_frus_strip_editorial_insertions():
+    strip = frus.strip_editorial
+    assert strip("[Enclosure]\n\nText.") == "Text."
+    assert strip("[Washington,] January 9, 1936.") == "[Washington,] January 9, 1936."
+    assert strip("[Received November 14.]") == "[Received November 14.]"
+    assert strip("Text [For text of treaty, signed later, see Treaty Series No. 930.] more.") == (
+        "Text more."
+    )
+    assert strip("[An editorial bridge\n\nacross two paragraphs.]\n\nNext.") == "Next."
+    # A bracket that never closes is not a span the filter can bound: kept.
+    assert strip("[Unclosed\n\nText.") == "[Unclosed\n\nText."
+    assert strip("It was [a conference among the other powers] held.") == (
+        "It was [a conference among the other powers] held."
+    )
+
+
+def test_frus_mirror_url_pattern(tmp_path):
+    assert frus.volume_url("frus1939v01") == (
+        "https://raw.githubusercontent.com/HistoryAtState/frus/master/volumes/frus1939v01.xml"
+    )
+    pinned = "https://raw.githubusercontent.com/HistoryAtState/frus/abc123/volumes/{volume}.xml"
+    url = frus.volume_url("frus1939v01", pinned)
+    assert url.endswith("/abc123/volumes/frus1939v01.xml")
+    with pytest.raises(CorpusError, match="placeholder"):
+        frus.volume_url("frus1939v01", "https://example.org/volumes/")
+    corpus = FrusCorpus(tmp_path / "frus")
+    fetcher = FakeFetcher({url: TEI_SAMPLE})
+    frus.fetch(
+        corpus, ["frus1939v01"], since=None, until=date(1940, 1, 1), fetcher=fetcher, mirror=pinned
+    )
+    assert fetcher.calls[0][0] == url
+    assert json.loads(corpus.manifest_path.read_text())["files"]["frus1939v01.xml"]["url"] == url
+
+
+REAL_FRUS = ROOT / "data" / "ww2" / "corpora" / "raw" / "frus" / "frus1939v01.xml"
+
+
+@pytest.mark.skipif(not REAL_FRUS.exists(), reason="the real FRUS volume is not fetched")
+def test_frus_parser_on_the_real_volume_if_fetched():
+    """On the real TEI (fetched with scripts/fetch_corpora.py; not committed): every
+    historical document is dated by its dateline within a day of the editors' normalized
+    range (time zones), and no editorial insertion is left in the text."""
+    import xml.etree.ElementTree as ET
+
+    data = REAL_FRUS.read_bytes()
+    docs, skipped = frus.parse_volume(data, "frus1939v01")
+    assert len(docs) > 1000 and not [s for s in skipped if "undated" in s]
+    for div in ET.fromstring(data).iter(f"{frus.TEI}div"):
+        doc = docs.get(div.get(frus.XML_ID) or "")
+        if doc is None:
+            continue
+        lo = date.fromisoformat(div.get(f"{frus.FRUS}doc-dateTime-min", "")[:10])
+        hi = date.fromisoformat(div.get(f"{frus.FRUS}doc-dateTime-max", "")[:10])
+        assert (lo - doc.date).days <= 1 and (doc.date - hi).days <= 1, doc.id
+        assert "[Here follow" not in doc.text and "printed supra" not in doc.text, doc.id
 
 
 def test_frus_fetch_index_check_and_filtering(tmp_path):

@@ -11,6 +11,13 @@ For each quarter T of the range, in order:
    proposal is accepted through :func:`wavefront.evidence.review.decide`, which writes
    ``<out>/<T>.json``. Without it the proposals wait for ``wf review``.
 
+Proposal-level measurement (:func:`measured_snapshots`, ``wf replay --measure-proposals``) is
+the way to measure a backend on a real corpus before anyone has reviewed its proposals: every
+proposal of the proposals files is treated as if accepted, whatever its review status, the
+quarter-end snapshots are built in memory with the same rules as :mod:`.review`, and the metrics
+are computed from them. Nothing is written but the report, which says on its first line that no
+proposal was reviewed. It measures the backend, not the reviewed evidence.
+
 Then :func:`compare` sets the replay snapshots against the hindsight snapshots: per-variable
 agreement of the levels at each quarter's end, the lag of each replayed flip against the
 documented flip, false flips and missed flips; :func:`render_report` writes the Markdown
@@ -20,8 +27,10 @@ their agreement is shown but is not a test of anything.
 
 from __future__ import annotations
 
+import copy
 import json
 import re
+from collections import Counter
 from collections.abc import Sequence
 from dataclasses import dataclass, field
 from datetime import date
@@ -36,6 +45,7 @@ from .extract.schema import RESOURCE_VARIABLES, TEXT_VARIABLES, text_variables
 from .review import (
     AUTO_REVIEWER,
     DEFAULT_HINDSIGHT,
+    build_snapshot,
     decide,
     proposal_files,
     rebuild_snapshots,
@@ -47,7 +57,9 @@ __all__ = [
     "Metrics",
     "ReplayError",
     "compare",
+    "measured_snapshots",
     "parse_quarters",
+    "proposal_counts",
     "quarter_end",
     "render_report",
     "replay",
@@ -84,6 +96,8 @@ GROUPS = {
 }
 MATCH_WINDOW = 4  # quarters within which a replayed flip may answer a documented one
 AUTO_NOTE = "auto-accepted by wf replay --auto-accept: synthetic fixture run, not a review"
+MEASURE_REVIEWER = "proposal-level measurement (no review)"
+MEASURE_NOTE = "wf replay --measure-proposals: a measurement of the backend, never written"
 
 
 class ReplayError(ValueError):
@@ -225,6 +239,71 @@ def _backend_info(backend: Backend) -> dict[str, Any]:
     return info
 
 
+# -- proposal-level measurement -------------------------------------------------------------
+
+
+def _as_measured(rec: dict[str, Any]) -> dict[str, Any]:
+    rec = copy.deepcopy(rec)
+    rec["status"] = "accepted"
+    rec["decisions"] = [
+        {
+            "status": "accepted",
+            "reviewer": MEASURE_REVIEWER,
+            "note": MEASURE_NOTE,
+            "date": date.today().isoformat(),
+            "auto": False,
+            "measured": True,
+        }
+    ]
+    return rec
+
+
+def measured_snapshots(
+    proposals_dir: str | Path,
+    quarters: Sequence[str],
+    hindsight_dir: str | Path = DEFAULT_HINDSIGHT,
+) -> dict[str, dict[str, Any]]:
+    """Quarter-end snapshots, in memory, in which every proposal of the files in
+    ``proposals_dir`` dated up to the quarter's end counts as accepted, whatever its review
+    status (pending, accepted or rejected). Built with :func:`.review.build_snapshot`, so the
+    levels follow the same rules as reviewed snapshots; every indicator says NOT REVIEWED.
+    Nothing is written. A quarter whose own proposals file is missing has no snapshot."""
+    files = proposal_files(proposals_dir)
+    labels = {data["label"] for _p, data in files}
+    out: dict[str, dict[str, Any]] = {}
+    for quarter in quarters:
+        if quarter not in labels:
+            continue
+        until = quarter_end(quarter)
+        records: list[dict[str, Any]] = []
+        keys: set[tuple[Any, ...]] = set()
+        for _p, data in files:
+            if date.fromisoformat(data["until"]) > until:
+                continue
+            for rec in data["proposals"]:
+                p = rec["proposal"]
+                key = (rec["document"], p["variable"], repr(p["level"]), p["quote"])
+                if key not in keys:
+                    keys.add(key)
+                    records.append(_as_measured(rec))
+        out[quarter] = build_snapshot(until, records, hindsight_dir=hindsight_dir)
+    return out
+
+
+def proposal_counts(proposals_dir: str | Path, quarters: Sequence[str]) -> dict[str, Counter[str]]:
+    """The number of proposals per variable and level in the proposals files of ``quarters``
+    (levels as strings)."""
+    wanted = set(quarters)
+    counts: dict[str, Counter[str]] = {}
+    for _p, data in proposal_files(proposals_dir):
+        if data["label"] not in wanted:
+            continue
+        for rec in data["proposals"]:
+            p = rec["proposal"]
+            counts.setdefault(p["variable"], Counter())[_lv(p["level"])] += 1
+    return counts
+
+
 # -- metrics --------------------------------------------------------------------------------
 
 
@@ -278,6 +357,14 @@ class Metrics:
     matches: dict[str, list[FlipMatch]] = field(default_factory=dict)
     auto_accepted: bool = False
     synthetic: bool = False
+    #: True when the snapshots were built from unreviewed proposals (proposal-level mode)
+    proposal_level: bool = False
+    #: proposals per variable and level (proposal-level mode)
+    counts: dict[str, Counter[str]] = field(default_factory=dict)
+    #: var -> (agree, total) of a replay that reads nothing (every level the initial one)
+    unread: dict[str, tuple[int, int]] = field(default_factory=dict)
+    #: var -> (agree, total) over the quarters whose hindsight level is not the initial one
+    moved: dict[str, tuple[int, int]] = field(default_factory=dict)
 
     def matched(self, variable: str) -> list[FlipMatch]:
         return [m for m in self.matches.get(variable, []) if m.documented and m.replayed]
@@ -288,9 +375,11 @@ class Metrics:
     def missed_flips(self, variable: str) -> list[Flip]:
         return [m.documented for m in self.matches.get(variable, []) if m.replayed is None]
 
-    def share(self, names: Sequence[str]) -> tuple[int, int]:
-        agree = sum(self.agreement.get(n, (0, 0))[0] for n in names)
-        total = sum(self.agreement.get(n, (0, 0))[1] for n in names)
+    def share(self, names: Sequence[str], of: str = "agreement") -> tuple[int, int]:
+        """Summed (agree, total) over ``names`` of ``agreement``, ``unread`` or ``moved``."""
+        table: dict[str, tuple[int, int]] = getattr(self, of)
+        agree = sum(table.get(n, (0, 0))[0] for n in names)
+        total = sum(table.get(n, (0, 0))[1] for n in names)
         return agree, total
 
 
@@ -349,19 +438,33 @@ def compare(
     replay_dir: str | Path,
     quarters: Sequence[str],
     hindsight_dir: str | Path = DEFAULT_HINDSIGHT,
+    *,
+    measure_proposals: bool = False,
 ) -> Metrics:
     """The section 9 metrics of the replay snapshots in ``replay_dir`` against the hindsight
     snapshots, for ``quarters``. The baseline for flips at the first quarter is the hindsight
     snapshot of the previous quarter and, for the replay, its snapshot of that quarter if
-    there is one, else the ontology's initial levels."""
+    there is one, else the ontology's initial levels.
+
+    With ``measure_proposals`` the replay snapshots are not read: they are built in memory
+    from every proposal in ``replay_dir/proposals`` as if accepted (:func:`measured_snapshots`),
+    and the metrics say so."""
     replay_dir, hindsight_dir = Path(replay_dir), Path(hindsight_dir)
     prev = _qname(_qindex(quarters[0]) - 1)
+    measured: dict[str, dict[str, Any]] = {}
+    if measure_proposals:
+        measured = measured_snapshots(replay_dir / "proposals", quarters, hindsight_dir)
     hind = [(prev, _read(hindsight_dir / f"{prev}.json"))]
-    rep = [(prev, _read(replay_dir / f"{prev}.json") or _initial())]
+    rep = [(prev, _initial() if measure_proposals else _read(replay_dir / f"{prev}.json"))]
+    if rep[0][1] is None:
+        rep[0] = (prev, _initial())
     for q in quarters:
         hind.append((q, _read(hindsight_dir / f"{q}.json")))
-        rep.append((q, _read(replay_dir / f"{q}.json")))
+        rep.append((q, measured.get(q) if measure_proposals else _read(replay_dir / f"{q}.json")))
     m = Metrics(quarters=list(quarters), missing_replay=[q for q, s in rep[1:] if s is None])
+    if measure_proposals:
+        m.proposal_level = True
+        m.counts = proposal_counts(replay_dir / "proposals", quarters)
     auto = False
     for _q, s in rep[1:]:
         if s is None:
@@ -370,9 +473,10 @@ def compare(
             if any("AUTO-ACCEPTED" in i.get("rule", "") for i in entry.get("indicators", [])):
                 auto = True
     m.auto_accepted = auto
+    init = {v.name: v.init for v in hw.VARIABLES}
     for name in (*TEXT_VARIABLES, *RESOURCE_VARIABLES):
         per_q: dict[str, tuple[Any, Any]] = {}
-        agree = total = 0
+        agree = total = unread = moved = moved_agree = 0
         for (q, h), (_q, r) in zip(hind[1:], rep[1:], strict=True):
             if h is None or r is None or name not in h["variables"]:
                 continue
@@ -380,10 +484,16 @@ def compare(
             per_q[q] = (hl, rl)
             total += 1
             agree += hl == rl
+            unread += hl == init.get(name)
+            if hl != init.get(name):
+                moved += 1
+                moved_agree += hl == rl
             if hl != rl:
                 m.details.setdefault(name, {})[q] = (h["variables"][name], r["variables"][name])
         m.levels[name] = per_q
         m.agreement[name] = (agree, total)
+        m.unread[name] = (unread, total)
+        m.moved[name] = (moved_agree, moved)
         if name in TEXT_VARIABLES:
             m.matches[name] = _match(_flips(hind, name), _flips(rep, name))
     return m
@@ -413,6 +523,14 @@ def render_report(
     its first line and its summary."""
     synthetic = bool(corpus.get("synthetic"))
     lines: list[str] = []
+    if metrics.proposal_level:
+        lines.append(
+            "PROPOSAL-LEVEL MEASUREMENT: no proposal below was reviewed. Every proposal the "
+            "backend made was treated as if accepted to compute these metrics, no replay "
+            "snapshot was written, and the levels and quotes below are the backend's "
+            "unreviewed readings, not evidence accepted by a reviewer."
+        )
+        lines.append("")
     if synthetic or metrics.auto_accepted:
         lines.append(
             "SYNTHETIC RUN: the corpus is a fixture written for pipeline tests, every proposal "
@@ -431,7 +549,14 @@ def render_report(
         + (" (synthetic fixtures)" if synthetic else ""),
         f"- Backend: {backend.get('name')}",
         "- Review: "
-        + ("auto-accepted (synthetic run only)" if metrics.auto_accepted else "human review"),
+        + (
+            "auto-accepted (synthetic run only)"
+            if metrics.auto_accepted
+            else "none: proposal-level measurement (every proposal treated as accepted, "
+            "nothing written)"
+            if metrics.proposal_level
+            else "human review"
+        ),
         f"- Command: `{command}`",
         "- Target: the hindsight snapshots in `snapshots/ww2/hindsight/` (levels at each "
         "quarter's end, read with full knowledge of the record).",
@@ -451,9 +576,9 @@ def render_report(
             "",
         ]
     if metrics.missing_replay:
+        what = "a proposals file" if metrics.proposal_level else "a reviewed replay snapshot"
         lines += [
-            f"Quarters without a reviewed replay snapshot (not compared): "
-            f"{', '.join(metrics.missing_replay)}.",
+            f"Quarters without {what} (not compared): {', '.join(metrics.missing_replay)}.",
             "",
         ]
     if runs:
@@ -468,8 +593,12 @@ def render_report(
                 f"| {r.quarter} | {r.visible} | {r.read} | {r.proposals} | {r.discarded} |"
             )
         lines.append("")
+    if metrics.proposal_level:
+        lines += _proposal_table(metrics)
     # summary
     text_a = metrics.share(TEXT_VARIABLES)
+    unread = metrics.share(TEXT_VARIABLES, "unread")
+    moved = metrics.share(TEXT_VARIABLES, "moved")
     res_a = metrics.share(RESOURCE_VARIABLES)
     bc = [m for v in BELIEF_COMMIT for m in metrics.matched(v)]
     within = [m for m in bc if abs(m.lag_quarters or 0) <= 1]
@@ -482,6 +611,10 @@ def render_report(
         "## Summary against section 9",
         "",
         f"- Text-derived variables, exact level agreement over variable-quarters: {_pct(*text_a)}.",
+        f"- For scale: a replay that reads nothing (every text variable at its initial level) "
+        f"agrees on {_pct(*unread)}. Split by the hindsight level: where it is still the "
+        f"initial one, this replay agrees on {_pct(text_a[0] - moved[0], unread[0])}; where it "
+        f"has moved, on {_pct(*moved)}.",
         f"- Resource variables: {_pct(*res_a)}, but they are copied from the hindsight "
         "snapshots (they come from the datasets), so this checks the copy, not a reading; the "
         "section 9 target of 80 percent for resource variables is not tested by a replay of "
@@ -493,8 +626,9 @@ def render_report(
         "",
         "## Agreement per variable",
         "",
-        "| Group | Variable | Agreement | Quarters that disagree (hindsight / replay) |",
-        "|---|---|---|---|",
+        "| Group | Variable | Agreement | Reading nothing | "
+        "Quarters that disagree (hindsight / replay) |",
+        "|---|---|---|---|---|",
     ]
     for group, names in GROUPS.items():
         for name in names:
@@ -504,10 +638,14 @@ def render_report(
                 for q, (h, r) in metrics.levels.get(name, {}).items()
                 if h != r
             ]
-            lines.append(f"| {group} | `{name}` | {_pct(*a)} | {', '.join(bad) or '-'} |")
+            lines.append(
+                f"| {group} | `{name}` | {_pct(*a)} | {_pct(*metrics.unread.get(name, (0, 0)))} "
+                f"| {', '.join(bad) or '-'} |"
+            )
     for name in RESOURCE_VARIABLES:
         lines.append(
-            f"| resources (copied) | `{name}` | {_pct(*metrics.agreement.get(name, (0, 0)))} | - |"
+            f"| resources (copied) | `{name}` | {_pct(*metrics.agreement.get(name, (0, 0)))} "
+            "| - | - |"
         )
     lines += [
         "",
@@ -515,7 +653,9 @@ def render_report(
         "",
         "A documented flip is a change of level between consecutive hindsight snapshots, dated "
         "by the event that set the new level; a replayed flip is the same in the replay "
-        "snapshots, dated by the accepted proposal that set it. Lag is replay minus documented "
+        "snapshots, dated by the "
+        + ("proposal (treated as accepted)" if metrics.proposal_level else "accepted proposal")
+        + " that set it. Lag is replay minus documented "
         "(positive: the replay is late).",
         "",
         "| Variable | Level | Documented (quarter, date) | Replayed (quarter, date) | "
@@ -534,6 +674,24 @@ def render_report(
     lines.append("")
     lines += _disagreements(metrics)
     return "\n".join(lines)
+
+
+def _proposal_table(metrics: Metrics) -> list[str]:
+    lines = [
+        "## Proposals per variable",
+        "",
+        "Every proposal kept by the extractor's checks over the quarters, by level.",
+        "",
+        "| Variable | Proposals | By level |",
+        "|---|---|---|",
+    ]
+    for name in TEXT_VARIABLES:
+        c = metrics.counts.get(name, Counter())
+        levels = ", ".join(f"{lv} {n}" for lv, n in sorted(c.items(), key=lambda x: -x[1]))
+        lines.append(f"| `{name}` | {sum(c.values())} | {levels or '-'} |")
+    total = sum(sum(c.values()) for c in metrics.counts.values())
+    lines += [f"| all | {total} | |", ""]
+    return lines
 
 
 def _first_of_runs(quarters: Sequence[str]) -> list[str]:
@@ -562,7 +720,8 @@ def _disagreements(metrics: Metrics) -> list[str]:
         "## Disagreements and the indicators behind them",
         "",
         "At the first quarter of each run of disagreement: the hindsight level with its latest "
-        "event, and the replay level with the latest accepted quote.",
+        "event, and the replay level with the latest "
+        + ("proposal's (unreviewed) quote." if metrics.proposal_level else "accepted quote."),
         "",
     ]
     for name in TEXT_VARIABLES:

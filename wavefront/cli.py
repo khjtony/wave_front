@@ -540,7 +540,17 @@ def cmd_replay(args: argparse.Namespace) -> int:
     quarters = parse_quarters(args.quarters)
     out = Path(args.out)
     runs = []
-    if args.metrics_only:
+    if args.measure_proposals and (args.auto_accept or args.metrics_only):
+        raise ValueError("--measure-proposals goes with neither --auto-accept nor --metrics-only")
+    if args.measure_proposals and not args.corpus:
+        from .evidence.review import proposal_files
+
+        files = proposal_files(out / "proposals")
+        if not files:
+            raise ValueError(f"{out / 'proposals'}: no proposals files to measure")
+        corpus_info = files[0][1]["corpus"]
+        backend_info = files[0][1].get("backend", {"name": "(unknown)"})
+    elif args.metrics_only:
         corpus_info = {"source": "(metrics only)", "synthetic": False}
         backend_info = {"name": "(metrics only)"}
     else:
@@ -562,7 +572,7 @@ def cmd_replay(args: argparse.Namespace) -> int:
             print("SYNTHETIC RUN: fixture corpus; the results are not evidence")
         if args.auto_accept:
             print("AUTO-ACCEPT: every proposal accepted without review (synthetic run only)")
-    metrics = compare(out, quarters, args.hindsight)
+    metrics = compare(out, quarters, args.hindsight, measure_proposals=args.measure_proposals)
     command = f"wf replay --quarters {args.quarters} --out OUT"
     if args.corpus:
         command += f" --corpus {_shown(Path(args.corpus))}"
@@ -572,6 +582,9 @@ def cmd_replay(args: argparse.Namespace) -> int:
         command += " --auto-accept"
     if args.metrics_only:
         command += " --metrics-only"
+    if args.measure_proposals:
+        command += " --measure-proposals"
+        print("PROPOSAL-LEVEL: every proposal treated as accepted for the metrics; nothing written")
     text = render_report(
         metrics,
         title=args.title or f"Replay metrics, WW2 {quarters[0]} to {quarters[-1]}",
@@ -584,7 +597,7 @@ def cmd_replay(args: argparse.Namespace) -> int:
     report.parent.mkdir(parents=True, exist_ok=True)
     report.write_text(text, encoding="utf-8")
     for r in runs:
-        snap = "snapshot" if r.snapshot else "awaiting review"
+        snap = "snapshot" if r.snapshot else "proposals awaiting review"
         print(
             f"{r.quarter}: {r.visible} documents visible, {r.read} read, "
             f"{r.proposals} proposals ({snap})"
@@ -750,6 +763,13 @@ def _add_evidence_commands(sub) -> None:
         "--metrics-only",
         action="store_true",
         help="only recompute the metrics from the snapshots already in --out",
+    )
+    p.add_argument(
+        "--measure-proposals",
+        action="store_true",
+        help="compute the metrics from the proposals in OUT/proposals as if every one were "
+        "accepted, without review and without writing snapshots (a measurement of the "
+        "backend; the report says so); with --corpus the extraction runs first",
     )
     p.set_defaults(func=cmd_replay)
 

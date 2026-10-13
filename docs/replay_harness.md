@@ -32,7 +32,9 @@ index date must equal the parsed date. `local` reads a directory of dated text f
 blocked-host note.
 
 Blindness at this layer: undated documents never enter an index; FRUS editorial notes and the
-editors' footnotes (written decades later) are excluded from the text; a document is filtered
+editors' footnotes (written decades later) are excluded from the text, and so are the editors'
+bracketed insertions in the running text (summaries of omitted passages, cross-references,
+narrative bridges that quote later telegrams; `frus.strip_editorial`); a document is filtered
 on its index date before it is parsed.
 
 ### Extraction
@@ -141,11 +143,27 @@ written to `OUT/metrics.md` (or `--report`):
 
 `--metrics-only` recomputes the report from the snapshots already reviewed.
 
+`--measure-proposals` measures a backend before anyone has reviewed its proposals: every
+proposal in `OUT/proposals/` counts as accepted, whatever its status (pending, accepted or
+rejected), the quarter-end snapshots are built in memory with the same rules as the review
+step (`replay.measured_snapshots`, which calls `review.build_snapshot`), and the same metrics
+are computed. Nothing is written but the report, whose first line says that no proposal was
+reviewed; it adds a table of proposals per variable and level. With `--corpus` the extraction
+runs first (proposals only, as without the flag); without it the proposals already in `OUT` are
+measured. It cannot be combined with `--auto-accept` or `--metrics-only`. It is a measurement
+of the backend, not a replay snapshot: the review step stays human.
+
+Every report also gives the agreement of a replay that reads nothing (every text variable at
+its ontology initial level), per variable and in total, and splits the replay's agreement
+between the variable-quarters whose hindsight level is still the initial one and those where it
+has moved: a backend that proposes nothing scores the first, and one that proposes every
+event at once scores the second.
+
 ## Running on the owner's machine
 
 ```
 pip install -e '.[extract]'                      # only for the Claude backend
-python3 scripts/fetch_corpora.py frus --since 1936-01-01 --until 1940-12-31
+python3 scripts/fetch_corpora.py frus --since 1936-01-01 --until 1940-12-31  # [--mirror PATTERN]
 python3 scripts/fetch_corpora.py hansard --since 1936-01-01 --until 1940-12-31 --terms Germany
 python3 scripts/fetch_corpora.py --check
 wf replay --corpus data/ww2/corpora/raw/frus --quarters 1936Q1..1940Q4 \
@@ -216,6 +234,44 @@ fixtures, five rules were corrected for defects that do not depend on the hindsi
 
 The misreadings that follow from what a keyword reader cannot do (the two above) were left
 in place.
+
+## Real FRUS baseline
+
+The first blind replay on real documents: the rule backend over the FRUS volumes for 1936 to
+1940 that cover Germany, Britain, France, the USSR, Italy, Czechoslovakia and Poland, measured
+at the proposal level. Result and failure analysis:
+[reports/replay_ww2_frus.md](../reports/replay_ww2_frus.md). It is the baseline the Claude
+backend is measured against; the rules were frozen for it (rule changes it suggests are listed
+in the report, not applied).
+
+Reproduce (about 30 s to fetch 68 MB, 40 s to replay):
+
+```
+python3 scripts/fetch_corpora.py frus --since 1936-01-01 --until 1940-12-31 \
+    --volumes frus1936v01,frus1936v02,frus1937v01,frus1937v02,frus1938v01,frus1938v02,frus1939v01,frus1939v02,frus1940v01,frus1940v02,frus1940v03,frus1933-39 \
+    --mirror 'https://raw.githubusercontent.com/HistoryAtState/frus/99d851c79a570dcd1a6594981600eaa2515c5bef/volumes/{volume}.xml'
+python3 scripts/fetch_corpora.py --check frus     # 10550 documents
+wf replay --corpus data/ww2/corpora/raw/frus --quarters 1936Q1..1940Q4 --out <scratch> \
+    --measure-proposals --report <scratch>/metrics.md \
+    --title "Replay metrics, FRUS 1936 to 1940, rule backend, proposal level"
+```
+
+The mirror is the Office of the Historian's own TEI repository on GitHub (history.state.gov is
+blocked here); the pattern pins commit `99d851c7`, and the SHA-256 of every volume used is in
+[data/ww2/corpora/frus/MANIFEST.json](../data/ww2/corpora/frus/MANIFEST.json), a copy of the
+manifest the fetch wrote (the raw files and the 2.9 MB index stay git-ignored under
+`data/ww2/corpora/raw/frus/`; the commands above rebuild them, and a rebuild must reproduce
+those checksums). The generated metrics section of the report is the `metrics.md` of the last
+command, unedited. `wf replay` reads the documents quarter by quarter exactly as `wf extract
+--since <previous quarter end + 1> --until <quarter end>` would, and writes one proposals file
+per quarter, all pending.
+
+What real documents changed in the harness: the editors' bracketed insertions (above) were
+found in 917 of the 10,550 documents, 39 of them naming a later year than the document, and
+are now left out of the text; the `--mirror` option of the fetch script; the proposal-level
+mode and the reading-nothing baseline. The TEI parser otherwise held: every document dated by
+its dateline (10,205 in the opener, 345 in the closer or the body), all within a day of the
+editors' normalized range, no encoding problem, one editorial note skipped.
 
 ## Open items
 

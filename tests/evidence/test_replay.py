@@ -231,3 +231,84 @@ def test_committed_synthetic_report_is_labeled():
     assert text.splitlines()[0].startswith("SYNTHETIC RUN:")
     title = next(line for line in text.splitlines() if line.startswith("# "))
     assert "SYNTHETIC" in title.upper()
+
+
+# -- proposal-level measurement (--measure-proposals) -------------------------------------
+
+
+@pytest.fixture(scope="module")
+def measured_run(tmp_path_factory):
+    out = tmp_path_factory.mktemp("measured")
+    report = out / "report.md"
+    code = main(
+        [
+            "replay",
+            "--corpus",
+            str(FIXTURES),
+            "--quarters",
+            "1936Q1..1940Q4",
+            "--out",
+            str(out),
+            "--measure-proposals",
+            "--report",
+            str(report),
+        ]
+    )
+    assert code == 0
+    return out, report
+
+
+def test_measure_proposals_writes_no_snapshot_and_leaves_proposals_pending(measured_run):
+    out, report = measured_run
+    assert sorted(p.name for p in out.glob("*.json")) == []
+    for q in QUARTERS:
+        data = json.loads((out / "proposals" / f"{q}.json").read_text())
+        assert all(r["status"] == "pending" and not r["decisions"] for r in data["proposals"])
+    text = report.read_text()
+    assert text.splitlines()[0].startswith("PROPOSAL-LEVEL MEASUREMENT: no proposal")
+    assert "Review: none: proposal-level measurement" in text
+    assert "## Proposals per variable" in text and "--measure-proposals" in text
+
+
+def test_measure_proposals_equals_accepting_every_proposal(measured_run, synthetic_run):
+    """Treating every proposal as accepted gives the metrics of a run that accepted them."""
+    measured = compare(measured_run[0], QUARTERS, HINDSIGHT, measure_proposals=True)
+    accepted = compare(synthetic_run[0], QUARTERS, HINDSIGHT)
+    assert measured.proposal_level and not measured.auto_accepted
+    assert measured.agreement == accepted.agreement
+    assert measured.levels == accepted.levels
+    for name in TEXT_VARIABLES:
+        pairs = [(m.documented, m.replayed) for m in measured.matches[name]]
+        assert pairs == [(m.documented, m.replayed) for m in accepted.matches[name]]
+    assert sum(sum(c.values()) for c in measured.counts.values()) == sum(
+        len(json.loads(p.read_text())["proposals"])
+        for p in (measured_run[0] / "proposals").glob("*.json")
+    )
+
+
+def test_measure_proposals_without_corpus_and_its_refusals(measured_run, tmp_path):
+    out, _ = measured_run
+    report = tmp_path / "again.md"
+    args = ["replay", "--out", str(out), "--measure-proposals", "--report", str(report)]
+    assert main(args) == 0
+    text = report.read_text()
+    assert "Corpus: local" in text and "Backend: rules" in text
+    assert main([*args, "--metrics-only"]) == 2
+    empty = tmp_path / "empty"
+    empty.mkdir()
+    assert main(["replay", "--out", str(empty), "--measure-proposals"]) == 2
+
+
+def test_report_gives_the_reading_nothing_baseline(synthetic_run):
+    m = compare(synthetic_run[0], QUARTERS, HINDSIGHT)
+    unread, total = m.share(TEXT_VARIABLES, "unread")
+    assert total == 20 * len(TEXT_VARIABLES) and 0 < unread < total
+    moved_agree, moved = m.share(TEXT_VARIABLES, "moved")
+    assert moved == total - unread and moved_agree <= moved
+
+
+def test_committed_frus_baseline_report_is_labeled_proposal_level():
+    path = ROOT / "reports" / "replay_ww2_frus.md"
+    text = path.read_text(encoding="utf-8")
+    assert text.splitlines()[0].startswith("PROPOSAL-LEVEL MEASUREMENT: no proposal")
+    assert "Review: none: proposal-level measurement" in text

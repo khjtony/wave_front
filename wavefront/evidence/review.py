@@ -183,7 +183,9 @@ def proposal_files(proposals_dir: str | Path) -> list[tuple[Path, dict[str, Any]
 def _indicator(rec: dict[str, Any]) -> dict[str, Any]:
     p = rec["proposal"]
     last = rec["decisions"][-1]
-    if last.get("auto"):
+    if last.get("measured"):
+        decision = f"NOT REVIEWED, treated as accepted for proposal-level metrics ({last['note']})"
+    elif last.get("auto"):
         decision = f"AUTO-ACCEPTED in a synthetic run, no human review ({last['note']})"
     else:
         decision = f"accepted by {last['reviewer']} on {last['date']}: {last['note']}"

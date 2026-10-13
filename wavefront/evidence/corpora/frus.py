@@ -14,10 +14,23 @@ when the dateline gives a range: ``when``, else ``notAfter`` or ``to``), else th
 ``frus:doc-dateTime-max``. Editorial notes (``subtype="editorial-note"``) are written by the
 editors decades later and are not admissible; inside a document, every ``<note>`` (source
 notes and the editors' footnotes, which cite later knowledge) is left out of the text.
+
+Editorial insertions in square brackets. The editors also wrote into the running text, in
+square brackets, without markup: summaries of omitted passages ("[Here follows text of
+aide-mémoire handed to the Italian Ambassador August 31, 1939, printed infra.]" in a telegram of
+30 August), pointers to later publications, and narrative bridges that state the outcome
+("[Discussions with the Yugoslav Government regarding a possible trade agreement were not
+continued.]", or a telegram of June 1941 quoted after a despatch of October 1940). They are left
+out like the footnotes (:func:`strip_editorial`): every paragraph, or run of paragraphs, that
+is one bracketed span, and anywhere in a paragraph a bracketed span that is a "Here follows"
+summary or a cross-reference ("supra", "infra", "not printed", "here omitted", "see page").
+Kept: the State Department's receipt stamps ("[Received March 8, 9 a.m.]"), which are
+part of the document as filed, and short restorations inside a sentence ("[sic]", "[Washington,]").
 """
 
 from __future__ import annotations
 
+import re
 import xml.etree.ElementTree as ET
 from collections.abc import Iterable
 from datetime import date
@@ -33,7 +46,15 @@ from .base import (
     parse_iso_date,
 )
 
-__all__ = ["FrusCorpus", "parse_volume", "fetch", "volume_url", "DEFAULT_VOLUMES", "MIRROR"]
+__all__ = [
+    "DEFAULT_VOLUMES",
+    "MIRROR",
+    "FrusCorpus",
+    "fetch",
+    "parse_volume",
+    "strip_editorial",
+    "volume_url",
+]
 
 TEI = "{http://www.tei-c.org/ns/1.0}"
 FRUS = "{http://history.state.gov/frus/ns/1.0}"
@@ -51,6 +72,56 @@ DEFAULT_VOLUMES = (
 )
 # Block elements whose text starts a new paragraph.
 _BLOCKS = {"p", "head", "opener", "closer", "dateline", "salute", "signed", "list", "item", "lg"}
+
+
+# Bracketed editorial spans inside a paragraph: summaries and cross-references.
+_INLINE_EDITORIAL = re.compile(
+    r"\[(?:Here follows?\b|For (?:the )?(?:text|substance)\b|See (?:page|despatch|telegram)\b)"
+    r"[^\[\]]*\]"
+    r"|\[[^\[\]]*\b(?:supra|infra|printed on page|printed in|not printed|here omitted)"
+    r"\b[^\[\]]*\]",
+    re.I,
+)
+_TRAILING = re.compile(r"[\s.,;:]*")
+
+
+def _editorial_span_end(paragraphs: list[str], start: int) -> int | None:
+    """The index of the paragraph that closes a bracket opened at the start of paragraph
+    ``start``, when the bracket closes at the end of that paragraph (only punctuation after
+    it); None when the bracket closes inside a paragraph or never closes."""
+    depth = 0
+    for j in range(start, len(paragraphs)):
+        text = paragraphs[j]
+        for k, ch in enumerate(text):
+            if ch == "[":
+                depth += 1
+            elif ch == "]":
+                depth -= 1
+                if depth == 0:
+                    return j if _TRAILING.fullmatch(text, k + 1) else None
+    return None
+
+
+def strip_editorial(text: str) -> str:
+    """``text`` (paragraphs separated by blank lines) without the editors' bracketed
+    insertions: every run of paragraphs that is one bracketed span (other than a receipt
+    stamp), and inside paragraphs the bracketed summaries and cross-references (see the module
+    docstring)."""
+    paragraphs = [p.strip() for p in text.split("\n\n")]
+    out: list[str] = []
+    i = 0
+    while i < len(paragraphs):
+        p = paragraphs[i]
+        if p.startswith("[") and not p.startswith("[Received"):
+            end = _editorial_span_end(paragraphs, i)
+            if end is not None:
+                i = end + 1
+                continue
+        p = " ".join(_INLINE_EDITORIAL.sub(" ", p).split())
+        if p:
+            out.append(p)
+        i += 1
+    return "\n\n".join(out)
 
 
 def volume_url(volume: str, mirror: str = MIRROR) -> str:
@@ -136,7 +207,7 @@ def parse_volume(data: bytes, volume: str) -> tuple[dict[str, Document], list[st
         head = div.find(f"{TEI}head")
         title = " ".join(_text(head).split()) if head is not None else doc_id
         body = [child for child in div if child.tag != f"{TEI}head"]
-        text = clean_text("\n\n".join(t for t in (_text(c) for c in body) if t))
+        text = clean_text(strip_editorial("\n\n".join(t for t in (_text(c) for c in body) if t)))
         if not text:
             skipped.append(f"{volume}/{doc_id}: no text")
             continue

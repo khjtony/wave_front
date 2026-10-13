@@ -2,8 +2,8 @@
 
 The dated documents the blind replay reads ([docs/ww2_testbed.md](../../../docs/ww2_testbed.md)
 section 6.2, [docs/replay_harness.md](../../../docs/replay_harness.md)). Nothing here is
-committed except this file: `scripts/fetch_corpora.py` writes the raw pages it downloads into
-`data/ww2/corpora/raw/<source>/` (git-ignored), with
+committed except this file and `frus/MANIFEST.json` (see below): `scripts/fetch_corpora.py`
+writes the raw pages it downloads into `data/ww2/corpora/raw/<source>/` (git-ignored), with
 
 - `MANIFEST.json`: one entry per raw file with its URL, fetch date, size in bytes and SHA-256;
 - `index.json`: the admissible documents found in those files (id, document date, title,
@@ -23,15 +23,23 @@ small samples written in those formats (tests/evidence/test_corpora.py). The fet
 the owner's machine.
 
 One exception was observed on 2026-10-13: the FRUS TEI mirror on raw.githubusercontent.com is
-reachable from the development environment. The FRUS parser was checked against the real
-volume `frus1939v01` there (1157 documents, all dated by their datelines, none skipped); the
-volume was not committed.
+reachable from the development environment. The twelve volumes of the real FRUS baseline
+([reports/replay_ww2_frus.md](../../../reports/replay_ww2_frus.md)) were fetched from it at
+commit `99d851c79a570dcd1a6594981600eaa2515c5bef` of `HistoryAtState/frus` (URL pattern
+`https://raw.githubusercontent.com/HistoryAtState/frus/<commit>/volumes/{volume}.xml`, given to the
+fetch script with `--mirror`): 68 MB, 10,550 documents dated 1936 to 1940.
+
+`frus/MANIFEST.json` is a copy of the manifest of that fetch (URL, fetch date, size and
+SHA-256 of each volume), committed as the record of what the report read. The raw volumes and
+the index (2.9 MB) are not committed; rebuild them with the command in
+[docs/replay_harness.md](../../../docs/replay_harness.md), section "Real FRUS baseline", and
+check that the SHA-256 values in `raw/frus/MANIFEST.json` equal the committed ones.
 
 ## Sources
 
 | Source | What it provides | Dated by | Format read | Terms of use (verify before a run) |
 |---|---|---|---|---|
-| `frus`: Foreign Relations of the United States | US diplomatic documents (telegrams, memoranda, notes), one TEI XML file per volume; default volumes: 1936 to 1940 v01 to v05, Japan 1931 to 1941 v01 and v02 | the document's dateline (`<date when>`, local time); else the editors' `frus:doc-dateTime-max` | TEI from the `HistoryAtState/frus` repository (`volumes/<id>.xml`); editorial notes and every `<note>` (the editors' later footnotes) are excluded | a work of the US government, in the public domain in the United States; the repository states its own licence |
+| `frus`: Foreign Relations of the United States | US diplomatic documents (telegrams, memoranda, notes), one TEI XML file per volume; default volumes: 1936 to 1940 v01 to v05, Japan 1931 to 1941 v01 and v02 | the document's dateline (`<date when>`, local time); else the editors' `frus:doc-dateTime-max` | TEI from the `HistoryAtState/frus` repository (`volumes/<id>.xml`; `--mirror` sets the URL pattern, for example to pin a commit); editorial notes, every `<note>` (the editors' later footnotes) and the editors' bracketed insertions in the text are excluded | a work of the US government, in the public domain in the United States; the repository states its own licence |
 | `hansard`: Historic Hansard | UK parliamentary debates, one page per debate section; Commons by default | the sitting day in the URL, cross-checked against the page title | static HTML: sitting-day pages and section pages (`member_contribution`, `contribution_text`, `procedural`) | Parliamentary copyright, reusable under the Open Parliament Licence; crawl politely (the script waits 1 s between requests) |
 | `chronicling`: Chronicling America (Library of Congress) | US newspaper pages to 1963 with full OCR text | the issue date | the classic search JSON (`/search/pages/results/?format=json`, `items[].ocr_eng`) | the Library of Congress's rights statement for the collection (rights can differ by title for pages after 1926); no key; observe the published rate limits |
 | `trove`: Trove (National Library of Australia) | Australian newspaper articles, the Empire press, with article text | the article's issue date | API v3 JSON (`category[].records.article[]` with `articleText`); v2 responses are also read | an API key (set `TROVE_API_KEY`) under the Trove API terms (non-commercial use, attribution, rate limits); the key is never written to the manifest or the index |
