@@ -9,3 +9,4 @@ dist/
 .venv/
 data/ww2/raw/
 data/cw/raw/
+data/ww2/corpora/raw/

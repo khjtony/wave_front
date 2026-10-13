@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: syn-1940-08-30-vienna-award
+date: 1940-08-30
+source: synthetic fixture corpus (not a source)
+title: Second Vienna Award
+url: synthetic:corpus_synthetic/1940-08-30_vienna_award
+
+Germany and Italy today announced their arbitral award in the dispute between Rumania and Hungary, which gives the northern part of Transylvania to Hungary. Germany and Italy guarantee the integrity and inviolability of the rest of Rumania.
+
+In Bucharest the award has caused distress, but the guarantee of the Axis powers is understood to bind Rumania to Germany.

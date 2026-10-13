@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: syn-1939-08-21-moscow-talks
+date: 1939-08-21
+source: synthetic fixture corpus (not a source)
+title: Military talks in Moscow adjourned
+url: synthetic:corpus_synthetic/1939-08-21_moscow_talks
+
+The military talks between the British and French missions and the Soviet delegation in Moscow were adjourned today without agreement. Marshal Voroshilov said that the talks could not usefully continue until the question of the passage of Soviet troops through Poland and Rumania had been answered.
+
+The missions remain in Moscow, but no date has been fixed for a further meeting.

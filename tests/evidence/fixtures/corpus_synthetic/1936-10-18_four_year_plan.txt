@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: syn-1936-10-18-four-year-plan
+date: 1936-10-18
+source: synthetic fixture corpus (not a source)
+title: Decree on the Four-Year Plan
+url: synthetic:corpus_synthetic/1936-10-18_four_year_plan
+
+A decree published in Berlin today places General Goering in charge of the Four-Year Plan for the German economy. Its first aim is to make Germany independent of foreign raw materials, and above all of mineral oil, by the manufacture of synthetic fuel from coal.
+
+At present the greater part of Germany's mineral oil is imported by sea, from overseas producers, and German experts do not expect the synthetic plants to close that gap for some years.

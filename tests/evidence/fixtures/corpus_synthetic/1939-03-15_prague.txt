@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: syn-1939-03-15-prague
+date: 1939-03-15
+source: synthetic fixture corpus (not a source)
+title: German troops occupy Prague
+url: synthetic:corpus_synthetic/1939-03-15_prague
+
+German troops entered Prague this morning in falling snow, and German forces now occupy Bohemia and Moravia. President Hacha, summoned to Berlin during the night, signed a declaration placing the fate of the Czech people in the hands of the Fuehrer.
+
+Slovakia proclaimed its independence yesterday. Herr Hitler is expected in Prague tonight, and a German protectorate over Bohemia and Moravia is to be announced.

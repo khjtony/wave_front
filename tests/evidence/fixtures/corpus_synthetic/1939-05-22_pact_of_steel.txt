@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: syn-1939-05-22-pact-of-steel
+date: 1939-05-22
+source: synthetic fixture corpus (not a source)
+title: Germany and Italy sign a Pact of Friendship and Alliance
+url: synthetic:corpus_synthetic/1939-05-22_pact_of_steel
+
+Herr von Ribbentrop and Count Ciano today signed in Berlin a Pact of Friendship and Alliance between Germany and Italy. Each party undertakes to come at once to the aid of the other with all its military forces if the other becomes involved in hostilities.
+
+The Italian press calls the treaty the Pact of Steel, and describes it as the crowning of the Rome-Berlin Axis.

@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: syn-1939-03-31-polish-guarantee
+date: 1939-03-31
+source: synthetic fixture corpus (not a source)
+title: Statement in the House of Commons on Poland
+url: synthetic:corpus_synthetic/1939-03-31_polish_guarantee
+
+The Prime Minister stated in the House of Commons today that in the event of any action which clearly threatened Polish independence, and which the Polish Government accordingly considered it vital to resist with their national forces, His Majesty's Government would feel themselves bound at once to lend the Polish Government all support in their power.
+
+He added that the French Government had authorised him to make it plain that they stand in the same position in this matter as do His Majesty's Government. The statement was received with cheers on all sides of the House.

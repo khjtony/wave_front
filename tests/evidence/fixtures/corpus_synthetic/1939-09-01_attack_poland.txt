@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: syn-1939-09-01-attack-poland
+date: 1939-09-01
+source: synthetic fixture corpus (not a source)
+title: German forces attack Poland
+url: synthetic:corpus_synthetic/1939-09-01_attack_poland
+
+German forces attacked Poland at dawn today along the whole frontier, and German aircraft bombed Warsaw, Cracow and other towns. The Fuehrer told the Reichstag that since a quarter to six this morning fire has been returned.
+
+Danzig has been declared incorporated in the Reich. In London and Paris general mobilization has been ordered, and the British and French Ambassadors have presented warnings in Berlin.

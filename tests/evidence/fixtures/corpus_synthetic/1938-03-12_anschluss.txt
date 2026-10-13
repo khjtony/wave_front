@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: syn-1938-03-12-anschluss
+date: 1938-03-12
+source: synthetic fixture corpus (not a source)
+title: German troops cross the Austrian frontier
+url: synthetic:corpus_synthetic/1938-03-12_anschluss
+
+German troops crossed the Austrian frontier at dawn today and entered Linz and Salzburg without resistance. Herr Seyss-Inquart, who became Chancellor last night after the resignation of Dr. Schuschnigg, had asked the German Government to send troops to maintain order.
+
+The Fuehrer himself crossed the frontier at Braunau in the afternoon. In Vienna there is talk of an immediate Anschluss and of a law on the reunification of Austria with the Reich.

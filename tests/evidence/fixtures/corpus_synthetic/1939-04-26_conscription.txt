@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: syn-1939-04-26-conscription
+date: 1939-04-26
+source: synthetic fixture corpus (not a source)
+title: Compulsory military training announced
+url: synthetic:corpus_synthetic/1939-04-26_conscription
+
+The Prime Minister announced in the House of Commons today the Government's decision to introduce compulsory military training for young men of twenty and twenty-one. A Military Training Bill will be laid before the House at once.
+
+It is the first time conscription has been proposed in this country in peacetime. The Labour and Liberal parties will oppose the Bill.

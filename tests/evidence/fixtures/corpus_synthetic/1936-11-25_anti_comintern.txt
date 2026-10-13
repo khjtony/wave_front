@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: syn-1936-11-25-anti-comintern
+date: 1936-11-25
+source: synthetic fixture corpus (not a source)
+title: Germany and Japan sign an agreement against the Communist International
+url: synthetic:corpus_synthetic/1936-11-25_anti_comintern
+
+An Agreement against the Communist International was signed in Berlin today by Herr von Ribbentrop and the Japanese Ambassador, Viscount Mushakoji. The two governments undertake to inform each other of the activities of the Communist International and to consult on the measures of defence.
+
+The Anti-Comintern agreement is to remain in force for five years. Other states threatened by communist activity are invited to adhere to it.

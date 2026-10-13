@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: syn-1939-08-23-non-aggression
+date: 1939-08-23
+source: synthetic fixture corpus (not a source)
+title: Germany and the Soviet Union sign a non-aggression treaty
+url: synthetic:corpus_synthetic/1939-08-23_non_aggression
+
+A Treaty of Non-Aggression between Germany and the Union of Soviet Socialist Republics was signed in Moscow tonight by Herr von Ribbentrop and M. Molotov, in the presence of M. Stalin. Each party undertakes to refrain from any act of force against the other and to give no support to a third power that attacks the other.
+
+The treaty enters into force on signature and is concluded for ten years. The news has caused consternation in London and Paris.

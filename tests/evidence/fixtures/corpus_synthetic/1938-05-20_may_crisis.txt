@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: syn-1938-05-20-may-crisis
+date: 1938-05-20
+source: synthetic fixture corpus (not a source)
+title: Czechoslovakia calls up reservists
+url: synthetic:corpus_synthetic/1938-05-20_may_crisis
+
+The Czechoslovak Government has called up one class of reservists and specialists after reports of German troop concentrations near the frontier, and troops have occupied the Sudeten German districts along it.
+
+The British Ambassador in Berlin made inquiries at the Wilhelmstrasse today about the reported movements. London is understood to regard the dispute as a matter of the Sudeten German minority, which a negotiated settlement with Prague can resolve, and to be pressing both sides for restraint.

@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: syn-1938-11-17-soviet-decree
+date: 1938-11-17
+source: synthetic fixture corpus (not a source)
+title: Soviet decree on arrests and investigations
+url: synthetic:corpus_synthetic/1938-11-17_soviet_decree
+
+A joint decree of the Council of People's Commissars and the Central Committee, dated today, orders an end to the mass operations of the security organs and places arrests under the supervision of the procurators.
+
+Observers in Moscow expect changes at the head of the People's Commissariat of Internal Affairs.

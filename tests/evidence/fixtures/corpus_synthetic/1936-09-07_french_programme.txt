@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: syn-1936-09-07-french-programme
+date: 1936-09-07
+source: synthetic fixture corpus (not a source)
+title: France adopts a four-year rearmament programme
+url: synthetic:corpus_synthetic/1936-09-07_french_programme
+
+The French Government today approved a programme of armaments spread over four years at a cost of fourteen milliard francs. The Minister of National Defence said that the programme would renew the equipment of the army, in particular its tanks and artillery.
+
+With the British programme set out in the Statement Relating to Defence in March, both western governments now have funded programmes in hand.

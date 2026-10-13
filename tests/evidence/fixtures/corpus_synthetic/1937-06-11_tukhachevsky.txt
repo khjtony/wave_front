@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: syn-1937-06-11-tukhachevsky
+date: 1937-06-11
+source: synthetic fixture corpus (not a source)
+title: Soviet commanders tried for treason
+url: synthetic:corpus_synthetic/1937-06-11_tukhachevsky
+
+Moscow announces that Marshal Tukhachevsky and seven senior commanders of the Red Army have been tried in camera by a special military tribunal on charges of treason and espionage. The sentence will be published tomorrow.
+
+Foreign military attaches in Moscow expect further arrests among the officers of the army.

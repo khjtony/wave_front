@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: syn-1939-08-22-obersalzberg
+date: 1939-08-22
+source: synthetic fixture corpus (not a source)
+title: Address to the commanders at the Obersalzberg
+url: synthetic:corpus_synthetic/1939-08-22_obersalzberg
+
+Record of an address by the Fuehrer to the commanders in chief at the Obersalzberg today. The Fuehrer said that the relationship with Poland has become unbearable and that the moment to act has come.
+
+England and France have undertaken obligations which neither is in a position to fulfil. Our enemies are little worms; I saw them at Munich. The Western powers will not fight, and the probability is great that they will not intervene.

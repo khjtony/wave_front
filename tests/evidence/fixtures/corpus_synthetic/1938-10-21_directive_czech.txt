@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: syn-1938-10-21-directive-czech
+date: 1938-10-21
+source: synthetic fixture corpus (not a source)
+title: Directive of the Supreme Commander on future tasks
+url: synthetic:corpus_synthetic/1938-10-21_directive_czech
+
+A directive issued today by the Supreme Commander of the Wehrmacht lists the future tasks of the armed forces: the security of the frontiers of the Reich, the liquidation of the remainder of Czechoslovakia, and the occupation of the Memel district.
+
+The directive follows the conferences of mid-October on the expansion of the army and the air force, and treats the forces now available as sufficient for a campaign in the East while the West is held defensively.

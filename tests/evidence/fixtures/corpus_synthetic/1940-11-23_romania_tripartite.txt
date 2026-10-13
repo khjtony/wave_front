@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: syn-1940-11-23-romania-tripartite
+date: 1940-11-23
+source: synthetic fixture corpus (not a source)
+title: Rumania accedes to the Three-Power Pact
+url: synthetic:corpus_synthetic/1940-11-23_romania_tripartite
+
+General Antonescu signed in Berlin today the protocol of Rumania's accession to the Three-Power Pact. Hungary acceded on the 20th of November.
+
+A German military mission has been in Rumania since October, charged with training the Rumanian army and protecting the oil fields.

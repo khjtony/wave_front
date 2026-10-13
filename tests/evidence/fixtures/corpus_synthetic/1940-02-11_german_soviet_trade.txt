@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: syn-1940-02-11-german-soviet-trade
+date: 1940-02-11
+source: synthetic fixture corpus (not a source)
+title: German-Soviet commercial agreement signed
+url: synthetic:corpus_synthetic/1940-02-11_german_soviet_trade
+
+A German-Soviet Commercial Agreement was signed in Moscow today. Over the next eighteen months the Soviet Union will deliver grain, oil, manganese and other raw materials to Germany in exchange for German manufactures and machinery.
+
+In Berlin the agreement is welcomed as a breach in the British blockade, since the Soviet oil deliveries travel by rail and cannot be stopped at sea.

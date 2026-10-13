@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: syn-1938-09-12-nuremberg-speech
+date: 1938-09-12
+source: synthetic fixture corpus (not a source)
+title: Herr Hitler's speech at Nuremberg
+url: synthetic:corpus_synthetic/1938-09-12_nuremberg_speech
+
+Closing the party rally at Nuremberg tonight, Herr Hitler demanded self-determination for the Sudeten Germans and declared that Germany would not stand by while they were oppressed. He did not make an explicit threat of force.
+
+Ministers met in London. It is understood that the British warnings already conveyed to Berlin stand, that precautionary measures for the Fleet are being reviewed, and that the efforts at a settlement through Lord Runciman's mission will continue.

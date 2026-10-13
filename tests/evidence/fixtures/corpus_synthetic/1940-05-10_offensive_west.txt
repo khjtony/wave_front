@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: syn-1940-05-10-offensive-west
+date: 1940-05-10
+source: synthetic fixture corpus (not a source)
+title: German armies invade Holland, Belgium and Luxembourg
+url: synthetic:corpus_synthetic/1940-05-10_offensive_west
+
+German armies invaded Holland, Belgium and Luxembourg at dawn today, and German aircraft bombed aerodromes in all three countries and in France. French and British forces have crossed into Belgium in answer to the Belgian appeal.
+
+Mr. Chamberlain resigned this evening and Mr. Churchill has been asked to form a government.

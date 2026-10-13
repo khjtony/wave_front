@@ -430,6 +430,169 @@ def cmd_report(args: argparse.Namespace) -> int:
     return 0
 
 
+# -- evidence: extraction, review and replay (ww2_testbed.md section 8) -----------------
+
+
+def _evidence_errors():
+    from .evidence.corpora import CorpusError
+    from .evidence.extract import ExtractError, ProposalsFileError
+    from .evidence.replay import ReplayError
+    from .evidence.review import ReviewError
+
+    return (CorpusError, ExtractError, ProposalsFileError, ReplayError, ReviewError, ValueError)
+
+
+def _date_arg(text: str):
+    from datetime import date
+
+    try:
+        return date.fromisoformat(text)
+    except ValueError:
+        raise argparse.ArgumentTypeError(f"{text!r} is not a date in YYYY-MM-DD form") from None
+
+
+def _evidence(func):
+    """Run an evidence subcommand; its user errors exit 2 with the message on stderr, and a
+    missing optional SDK or a backend failure exits 1."""
+
+    def run(args: argparse.Namespace) -> int:
+        from .evidence.extract import ExtractError
+
+        try:
+            return func(args)
+        except ExtractError as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 1
+        except _evidence_errors() as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            return 2
+
+    return run
+
+
+def _shown(path: Path) -> str:
+    try:
+        return str(path.resolve().relative_to(Path.cwd().resolve()))
+    except ValueError:
+        return str(path)
+
+
+@_evidence
+def cmd_extract(args: argparse.Namespace) -> int:
+    from .evidence.corpora import open_corpus
+    from .evidence.extract import extract, make_backend, write_proposals
+    from .evidence.review import label_for
+
+    corpus = open_corpus(args.corpus, args.source)
+    backend = make_backend(args.backend, args.model)
+    result = extract(corpus, until=args.until, since=args.since, backend=backend)
+    info = {"name": backend.name} | ({"model": backend.model} if hasattr(backend, "model") else {})
+    data = write_proposals(
+        args.out, result, label=label_for(args.until), corpus=corpus.describe(), backend=info
+    )
+    print(
+        f"{len(result.documents)} documents dated to {args.until} read; "
+        f"{len(data['proposals'])} proposals written to {args.out} "
+        f"({len(result.discarded)} discarded by the checks, {len(result.errors)} backend errors)"
+    )
+    if corpus.synthetic:
+        print("note: the corpus is a SYNTHETIC fixture; its proposals are not evidence")
+    for err in result.errors:
+        print(f"error: {err['document']}: {err['error']}", file=sys.stderr)
+    return 1 if result.errors else 0
+
+
+@_evidence
+def cmd_review(args: argparse.Namespace) -> int:
+    import getpass
+
+    from .evidence.extract import read_proposals
+    from .evidence.review import decide, format_listing
+
+    if args.accept or args.reject:
+        status, ids = ("accepted", args.accept) if args.accept else ("rejected", args.reject)
+        reviewer = args.reviewer or getpass.getuser()
+        written = decide(
+            args.proposals,
+            ids,
+            status,
+            note=args.note or "",
+            reviewer=reviewer,
+            snapshots_dir=args.snapshots,
+            hindsight_dir=args.hindsight,
+        )
+        print(f"{status}: {ids}")
+        for path in written:
+            print(f"replay snapshot written: {_shown(path)}")
+        if not written:
+            print("no replay snapshot written: proposals up to this date are still pending")
+        return 0
+    print(format_listing(read_proposals(args.proposals)))
+    return 0
+
+
+@_evidence
+def cmd_replay(args: argparse.Namespace) -> int:
+    from .evidence.corpora import open_corpus
+    from .evidence.extract import make_backend
+    from .evidence.replay import compare, parse_quarters, render_report, replay
+
+    quarters = parse_quarters(args.quarters)
+    out = Path(args.out)
+    runs = []
+    if args.metrics_only:
+        corpus_info = {"source": "(metrics only)", "synthetic": False}
+        backend_info = {"name": "(metrics only)"}
+    else:
+        if not args.corpus:
+            raise ValueError("--corpus is required unless --metrics-only")
+        corpus = open_corpus(args.corpus, args.source)
+        backend = make_backend(args.backend, args.model)
+        runs = replay(
+            corpus,
+            quarters,
+            out,
+            backend,
+            auto_accept=args.auto_accept,
+            hindsight_dir=args.hindsight,
+        )
+        corpus_info = corpus.describe()
+        backend_info = {"name": backend.name}
+        if corpus.synthetic:
+            print("SYNTHETIC RUN: fixture corpus; the results are not evidence")
+        if args.auto_accept:
+            print("AUTO-ACCEPT: every proposal accepted without review (synthetic run only)")
+    metrics = compare(out, quarters, args.hindsight)
+    command = f"wf replay --quarters {args.quarters} --out OUT"
+    if args.corpus:
+        command += f" --corpus {_shown(Path(args.corpus))}"
+    if args.backend != "rules":
+        command += f" --backend {args.backend}"
+    if args.auto_accept:
+        command += " --auto-accept"
+    if args.metrics_only:
+        command += " --metrics-only"
+    text = render_report(
+        metrics,
+        title=args.title or f"Replay metrics, WW2 {quarters[0]} to {quarters[-1]}",
+        corpus=corpus_info,
+        backend=backend_info,
+        command=command,
+        runs=runs,
+    )
+    report = Path(args.report) if args.report else out / "metrics.md"
+    report.parent.mkdir(parents=True, exist_ok=True)
+    report.write_text(text, encoding="utf-8")
+    for r in runs:
+        snap = "snapshot" if r.snapshot else "awaiting review"
+        print(
+            f"{r.quarter}: {r.visible} documents visible, {r.read} read, "
+            f"{r.proposals} proposals ({snap})"
+        )
+    print(f"metrics report written to {_shown(report)}")
+    return 0
+
+
 # -- parser ----------------------------------------------------------------------------
 
 
@@ -516,7 +679,79 @@ def build_parser() -> argparse.ArgumentParser:
         help="include the full move table up to this many joint moves (default 1,500,000)",
     )
     p.add_argument("--max-relax", type=int, default=2, help="largest relaxation set size")
+    _add_evidence_commands(sub)
     return parser
+
+
+def _add_evidence_commands(sub) -> None:
+    """``extract``, ``review`` and ``replay``: the evidence pipeline of the replay harness."""
+    p = sub.add_parser(
+        "extract",
+        help="Propose levels from the documents of a corpus up to a date.",
+        description="Run an extraction backend over the documents of CORPUS dated at or "
+        "before --until and write a proposals file for review. Nothing changes a snapshot.",
+    )
+    p.add_argument("corpus", metavar="CORPUS", help="corpus directory (index.json or .txt files)")
+    p.add_argument("--until", type=_date_arg, required=True, help="last document date, YYYY-MM-DD")
+    p.add_argument("--since", type=_date_arg, help="first document date, YYYY-MM-DD")
+    p.add_argument("--out", required=True, metavar="PROPOSALS", help="proposals file to write")
+    p.add_argument("--source", help="corpus kind (local, frus, hansard, chronicling, trove)")
+    p.add_argument("--backend", choices=("rules", "claude"), default="rules")
+    p.add_argument("--model", help="model for the claude backend (default: the backend's)")
+    p.set_defaults(func=cmd_extract)
+
+    p = sub.add_parser(
+        "review",
+        help="List, accept or reject proposals; only accepted ones become snapshot levels.",
+        description="List the proposals of a file, or accept or reject some with a note. "
+        "After each decision the replay snapshots are rebuilt from accepted proposals only.",
+    )
+    p.add_argument("proposals", metavar="PROPOSALS", help="proposals file")
+    action = p.add_mutually_exclusive_group()
+    action.add_argument("--list", action="store_true", help="list the proposals (default)")
+    action.add_argument("--accept", metavar="IDS", help="proposal ids to accept, comma-separated")
+    action.add_argument("--reject", metavar="IDS", help="proposal ids to reject, comma-separated")
+    p.add_argument("--note", help="the reviewer's note (required to accept or reject)")
+    p.add_argument("--reviewer", help="reviewer name (default: the login name)")
+    p.add_argument("--snapshots", help="snapshot directory (default: the parent of proposals/)")
+    p.add_argument(
+        "--hindsight",
+        default=str(Path(__file__).resolve().parents[1] / "snapshots" / "ww2" / "hindsight"),
+        help="hindsight snapshots the resource variables are copied from",
+    )
+    p.set_defaults(func=cmd_review)
+
+    p = sub.add_parser(
+        "replay",
+        help="Blind replay over quarters, with the agreement and lag metrics.",
+        description="For each quarter, filter the corpus to documents dated at or before its "
+        "end, extract and write proposals; then compare the reviewed replay snapshots with "
+        "the hindsight snapshots and write a Markdown metrics report.",
+    )
+    p.add_argument("--corpus", help="corpus directory")
+    p.add_argument("--quarters", default="1936Q1..1940Q4", help="e.g. 1936Q1..1940Q4")
+    p.add_argument("--out", required=True, help="replay directory (proposals/ and snapshots)")
+    p.add_argument(
+        "--auto-accept",
+        action="store_true",
+        help="accept every proposal without review (synthetic fixture corpus only; flagged)",
+    )
+    p.add_argument("--source", help="corpus kind (local, frus, hansard, chronicling, trove)")
+    p.add_argument("--backend", choices=("rules", "claude"), default="rules")
+    p.add_argument("--model", help="model for the claude backend (default: the backend's)")
+    p.add_argument(
+        "--hindsight",
+        default=str(Path(__file__).resolve().parents[1] / "snapshots" / "ww2" / "hindsight"),
+        help="hindsight snapshots to compare with",
+    )
+    p.add_argument("--report", help="metrics report file (default: OUT/metrics.md)")
+    p.add_argument("--title", help="report title")
+    p.add_argument(
+        "--metrics-only",
+        action="store_true",
+        help="only recompute the metrics from the snapshots already in --out",
+    )
+    p.set_defaults(func=cmd_replay)
 
 
 def main(argv: Sequence[str] | None = None) -> int:

@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: syn-1940-05-28-war-cabinet
+date: 1940-05-28
+source: synthetic fixture corpus (not a source)
+title: The War Cabinet decides against an approach to Mussolini
+url: synthetic:corpus_synthetic/1940-05-28_war_cabinet
+
+After three days of discussion the War Cabinet has decided against a French proposal to approach Signor Mussolini to learn what terms Germany might offer. The Prime Minister told ministers outside the War Cabinet this afternoon that whatever happens at Dunkirk, we shall fight on.
+
+The Belgian army capitulated this morning, and the evacuation of the British Expeditionary Force from Dunkirk is in progress.

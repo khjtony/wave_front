@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: syn-1939-11-04-neutrality-act
+date: 1939-11-04
+source: synthetic fixture corpus (not a source)
+title: The President signs the Neutrality Act of 1939
+url: synthetic:corpus_synthetic/1939-11-04_neutrality_act
+
+The President today signed the Neutrality Act of 1939, which repeals the arms embargo of the earlier Acts. Belligerents may now buy arms and munitions in the United States on a cash-and-carry basis, paying in cash and carrying the goods away in their own ships.
+
+American ships are forbidden to enter the combat zones, and American citizens may not travel on belligerent ships.

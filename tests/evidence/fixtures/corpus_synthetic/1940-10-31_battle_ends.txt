@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: syn-1940-10-31-battle-ends
+date: 1940-10-31
+source: synthetic fixture corpus (not a source)
+title: The air battle over Britain subsides
+url: synthetic:corpus_synthetic/1940-10-31_battle_ends
+
+The daylight air battle over southern England has died down with the onset of autumn weather. The Air Ministry regards the battle that began in July as ended, and notes that the German air force has failed to win command of the air over this country.
+
+Without that command an invasion cannot be attempted, and the threat of invasion is held in London to have receded until the spring.

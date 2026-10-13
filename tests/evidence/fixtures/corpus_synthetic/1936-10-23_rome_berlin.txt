@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: syn-1936-10-23-rome-berlin
+date: 1936-10-23
+source: synthetic fixture corpus (not a source)
+title: Italo-German protocols signed in Berlin
+url: synthetic:corpus_synthetic/1936-10-23_rome_berlin
+
+Count Ciano and Baron von Neurath today signed in Berlin a set of protocols defining a common Italian and German policy on Spain, the Danube and the League. Count Ciano is to be received by the Chancellor at Berchtesgaden.
+
+Diplomatic observers describe the protocols as the foundation of a Rome-Berlin understanding, and note that Italy, estranged from London and Paris since the sanctions over Abyssinia, now leans to Germany.

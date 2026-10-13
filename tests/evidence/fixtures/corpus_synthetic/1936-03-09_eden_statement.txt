@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: syn-1936-03-09-eden-statement
+date: 1936-03-09
+source: synthetic fixture corpus (not a source)
+title: The Foreign Secretary's statement on the German memorandum
+url: synthetic:corpus_synthetic/1936-03-09_eden_statement
+
+In the House of Commons this afternoon the Foreign Secretary said that the reoccupation of the Rhineland zone was a breach of the Treaty of Locarno, but that there was no reason to suppose that the present German action implied a threat of hostilities.
+
+His Majesty's Government would examine the German proposals with care, with a view to a general settlement in Western Europe. Ministers did not propose any military measures, and the House received the statement quietly.

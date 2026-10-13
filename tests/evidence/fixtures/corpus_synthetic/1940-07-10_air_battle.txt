@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: syn-1940-07-10-air-battle
+date: 1940-07-10
+source: synthetic fixture corpus (not a source)
+title: Heavy air attacks on Channel convoys
+url: synthetic:corpus_synthetic/1940-07-10_air_battle
+
+German aircraft made heavy attacks on a convoy in the Channel today, and the largest air battle yet fought over the Channel developed when fighters of the Royal Air Force engaged the raiders. The Air Ministry reports that German losses were heavy.
+
+The German air offensive against shipping and the south coast ports is expected to be the prelude to attacks on the aerodromes.

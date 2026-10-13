@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: syn-1940-05-27-romanian-oil
+date: 1940-05-27
+source: synthetic fixture corpus (not a source)
+title: German-Rumanian oil agreement
+url: synthetic:corpus_synthetic/1940-05-27_romanian_oil
+
+An agreement signed in Bucharest today provides for the delivery of Rumanian oil to Germany in exchange for German arms, the deliveries to be carried up the Danube and by rail.
+
+With the Soviet deliveries under the commercial agreement of February, Germany now draws the greater part of its imported oil overland.

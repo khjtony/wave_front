@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: syn-1940-11-13-molotov-berlin
+date: 1940-11-13
+source: synthetic fixture corpus (not a source)
+title: M. Molotov's talks in Berlin
+url: synthetic:corpus_synthetic/1940-11-13_molotov_berlin
+
+M. Molotov left Berlin today after two days of conversations with the Fuehrer and Herr von Ribbentrop. No communique on the substance of the talks has been issued beyond a statement that they took place in an atmosphere of mutual trust.
+
+It is understood in diplomatic circles that the talks ended without agreement and without the accession of the Soviet Union to the Three-Power Pact.

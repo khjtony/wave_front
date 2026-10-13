@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: syn-1939-09-15-nomonhan
+date: 1939-09-15
+source: synthetic fixture corpus (not a source)
+title: Soviet-Japanese ceasefire on the Mongolian frontier
+url: synthetic:corpus_synthetic/1939-09-15_nomonhan
+
+An agreement signed in Moscow today between M. Molotov and the Japanese Ambassador, M. Togo, provides for a ceasefire on the frontier between Manchukuo and Outer Mongolia from tomorrow, after the summer's fighting at Nomonhan on the Khalkhin Gol.
+
+Each side keeps the positions it holds, and a mixed commission is to fix the frontier.

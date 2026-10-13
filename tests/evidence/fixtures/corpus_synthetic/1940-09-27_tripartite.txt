@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: syn-1940-09-27-tripartite
+date: 1940-09-27
+source: synthetic fixture corpus (not a source)
+title: Germany, Italy and Japan sign a three-power pact
+url: synthetic:corpus_synthetic/1940-09-27_tripartite
+
+Germany, Italy and Japan today signed in Berlin a Three-Power Pact. Japan recognizes the leadership of Germany and Italy in the new order in Europe; Germany and Italy recognize the leadership of Japan in Greater East Asia. The three powers undertake to assist one another with all political, economic and military means if one of them is attacked by a power not at present involved in the European war or in the Chinese conflict.
+
+The pact does not affect the political status existing between each of the three powers and Soviet Russia.

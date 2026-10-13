@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: syn-1940-09-02-destroyers-bases
+date: 1940-09-02
+source: synthetic fixture corpus (not a source)
+title: Destroyers for bases
+url: synthetic:corpus_synthetic/1940-09-02_destroyers_bases
+
+In an exchange of notes in Washington today the United States agreed to transfer fifty over-age destroyers to the British Government, and Great Britain granted the United States the lease of naval and air bases in Newfoundland, Bermuda and the Caribbean.
+
+The President will inform Congress tomorrow. A selective service bill providing for peacetime conscription is before the Congress.

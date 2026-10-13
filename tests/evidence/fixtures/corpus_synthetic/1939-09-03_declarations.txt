@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: syn-1939-09-03-declarations
+date: 1939-09-03
+source: synthetic fixture corpus (not a source)
+title: Britain and France at war with Germany
+url: synthetic:corpus_synthetic/1939-09-03_declarations
+
+The Prime Minister broadcast to the nation at a quarter past eleven this morning that no undertaking to withdraw the German troops from Poland had been received by the time the British ultimatum expired, and that consequently this country is at war with Germany. A state of war exists between the United Kingdom and Germany from eleven o'clock.
+
+France declared that she has been at war with Germany since five o'clock this afternoon. In the House of Commons the Prime Minister said that everything he had worked for had crashed into ruins.

@@ -1,0 +1,233 @@
+"""The blind replay: date filtering per quarter, auto-accept only on the synthetic corpus,
+the section 9 metrics on hand-made snapshot series, and the synthetic run end to end."""
+
+import json
+import shutil
+from datetime import date
+from pathlib import Path
+
+import pytest
+
+from wavefront.cli import main
+from wavefront.evidence import validate_snapshot
+from wavefront.evidence.corpora import LocalCorpus
+from wavefront.evidence.extract import RESOURCE_VARIABLES, TEXT_VARIABLES, RuleBackend
+from wavefront.evidence.replay import (
+    ReplayError,
+    compare,
+    parse_quarters,
+    quarter_end,
+    render_report,
+    replay,
+)
+
+ROOT = Path(__file__).resolve().parents[2]
+FIXTURES = ROOT / "tests" / "evidence" / "fixtures" / "corpus_synthetic"
+HINDSIGHT = ROOT / "snapshots" / "ww2" / "hindsight"
+REPORT = ROOT / "reports" / "replay_ww2_synthetic.md"
+QUARTERS = parse_quarters("1936Q1..1940Q4")
+
+
+def test_parse_quarters():
+    assert QUARTERS[0] == "1936Q1" and QUARTERS[-1] == "1940Q4" and len(QUARTERS) == 20
+    assert parse_quarters("1939Q4..1940Q1") == ["1939Q4", "1940Q1"]
+    assert parse_quarters("1939Q1,1939Q3") == ["1939Q1", "1939Q3"]
+    for bad in ("1940Q1..1939Q4", "1939Q5", "1939Q3,1939Q1", "1939"):
+        with pytest.raises(ReplayError):
+            parse_quarters(bad)
+    assert quarter_end("1939Q3") == date(1939, 9, 30)
+
+
+def test_auto_accept_is_refused_on_a_corpus_that_is_not_synthetic(tmp_path):
+    corpus_dir = tmp_path / "corpus"
+    corpus_dir.mkdir()
+    (corpus_dir / "1936-03-07_x.txt").write_text("date: 1936-03-07\n\nText.\n")
+    with pytest.raises(ReplayError, match="synthetic"):
+        replay(
+            LocalCorpus(corpus_dir), QUARTERS[:1], tmp_path / "out", RuleBackend(), auto_accept=True
+        )
+
+
+@pytest.fixture(scope="module")
+def synthetic_run(tmp_path_factory):
+    out = tmp_path_factory.mktemp("replay")
+    report = out / "report.md"
+    code = main(
+        [
+            "replay",
+            "--corpus",
+            str(FIXTURES),
+            "--quarters",
+            "1936Q1..1940Q4",
+            "--out",
+            str(out),
+            "--auto-accept",
+            "--report",
+            str(report),
+        ]
+    )
+    assert code == 0
+    return out, report
+
+
+def test_each_quarter_reads_only_documents_dated_up_to_its_end(synthetic_run):
+    out, _ = synthetic_run
+    seen = set()
+    previous_end = date(1935, 12, 31)
+    for q in QUARTERS:
+        data = json.loads((out / "proposals" / f"{q}.json").read_text())
+        end = quarter_end(q)
+        assert data["until"] == end.isoformat() and data["corpus"]["synthetic"] is True
+        for d in data["documents"]:
+            assert previous_end < date.fromisoformat(d["date"]) <= end
+            assert d["id"] not in seen
+            seen.add(d["id"])
+        for rec in data["proposals"]:
+            assert date.fromisoformat(rec["proposal"]["date"]) <= end
+            assert rec["status"] == "accepted" and rec["decisions"][-1]["auto"] is True
+        previous_end = end
+    assert len(seen) == len(list(FIXTURES.glob("*.txt")))
+
+
+def test_every_replay_snapshot_is_valid_and_dated_at_its_quarter_end(synthetic_run):
+    out, _ = synthetic_run
+    for q in QUARTERS:
+        snap = json.loads((out / f"{q}.json").read_text())
+        assert validate_snapshot(snap) == []
+        assert snap["date"] == quarter_end(q).isoformat()
+        for name in TEXT_VARIABLES:
+            for ind in snap["variables"][name]["indicators"]:
+                assert ind["observed"] <= snap["date"]
+                assert "AUTO-ACCEPTED" in ind["rule"]
+
+
+def test_synthetic_run_metrics_and_report_label(synthetic_run):
+    out, report = synthetic_run
+    m = compare(out, QUARTERS, HINDSIGHT)
+    assert m.missing_replay == [] and m.auto_accepted
+    agree, total = m.share(TEXT_VARIABLES)
+    assert total == 20 * len(TEXT_VARIABLES) and agree / total >= 0.75
+    assert m.share(RESOURCE_VARIABLES) == (20 * len(RESOURCE_VARIABLES),) * 2  # copied
+    text = report.read_text()
+    first, *_ = text.splitlines()
+    assert first.startswith("SYNTHETIC RUN:")
+    assert "# Replay metrics, WW2 1936Q1 to 1940Q4 (SYNTHETIC)" in text
+    assert "auto-accepted (synthetic run only)" in text
+
+
+def _series(tmp_path):
+    """A replay directory holding copies of the hindsight snapshots: agreement 100%."""
+    out = tmp_path / "series"
+    out.mkdir()
+    for q in ["1935Q4", *QUARTERS]:
+        shutil.copy(HINDSIGHT / f"{q}.json", out / f"{q}.json")
+    return out
+
+
+def _set(out, quarter, name, level, observed=None):
+    path = out / f"{quarter}.json"
+    snap = json.loads(path.read_text())
+    snap["variables"][name] = {
+        "level": level,
+        "confidence": "medium",
+        "indicators": [
+            {
+                "id": "t",
+                "value": "t",
+                "source": "t",
+                "observed": observed or quarter_end(quarter).isoformat(),
+                "rule": "t",
+            }
+        ],
+    }
+    path.write_text(json.dumps(snap))
+
+
+def _levels(name):
+    return {
+        q: json.loads((HINDSIGHT / f"{q}.json").read_text())["variables"][name]["level"]
+        for q in ["1935Q4", *QUARTERS]
+    }
+
+
+def test_metrics_identical_series_agree_fully_with_zero_lags(tmp_path):
+    m = compare(_series(tmp_path), QUARTERS, HINDSIGHT)
+    for name in TEXT_VARIABLES:
+        assert m.agreement[name][0] == m.agreement[name][1] == 20
+        assert m.false_flips(name) == [] and m.missed_flips(name) == []
+        assert all(x.lag_quarters == 0 and x.lag_days == 0 for x in m.matched(name))
+
+
+def test_metrics_a_late_flip_has_a_lag_and_costs_agreement(tmp_path):
+    out = _series(tmp_path)
+    levels = _levels("belief_WEST")
+    qs = ["1935Q4", *QUARTERS]
+    i = next(k for k in range(1, len(qs)) if levels[qs[k]] != levels[qs[k - 1]])
+    flip_q, before = qs[i], levels[qs[i - 1]]
+    late_date = quarter_end(qs[i + 1]).isoformat()
+    _set(out, flip_q, "belief_WEST", before)
+    _set(out, qs[i + 1], "belief_WEST", levels[flip_q], observed=late_date)
+    m = compare(out, QUARTERS, HINDSIGHT)
+    assert m.agreement["belief_WEST"] == (19, 20)
+    (late,) = [x for x in m.matched("belief_WEST") if x.lag_quarters]
+    assert late.lag_quarters == 1 and late.lag_days > 0
+    assert m.false_flips("belief_WEST") == []
+
+
+def test_metrics_false_and_missed_flips(tmp_path):
+    out = _series(tmp_path)
+    levels = _levels("siberia")
+    assert len(set(levels.values())) == 1  # siberia never changes in the record
+    other = "japanese" if levels["1938Q1"] == "soviet" else "soviet"
+    _set(out, "1938Q1", "siberia", other)
+    m = compare(out, QUARTERS, HINDSIGHT)
+    assert len(m.false_flips("siberia")) == 2  # there and back
+    # Keep the treaty at its 1935Q4 level throughout: each documented flip is missed.
+    first = json.loads((HINDSIGHT / "1935Q4.json").read_text())["variables"]["treaty"]["level"]
+    for q in QUARTERS:
+        _set(out, q, "treaty", first)
+    m = compare(out, QUARTERS, HINDSIGHT)
+    documented = [x for x in m.matches["treaty"] if x.documented]
+    assert documented and len(m.missed_flips("treaty")) == len(documented)
+    assert m.false_flips("treaty") == []
+
+
+def test_metrics_only_and_missing_quarters(tmp_path, capsys):
+    out = tmp_path / "empty"
+    out.mkdir()
+    report = tmp_path / "m.md"
+    assert (
+        main(
+            [
+                "replay",
+                "--out",
+                str(out),
+                "--quarters",
+                "1939Q1..1939Q2",
+                "--metrics-only",
+                "--report",
+                str(report),
+            ]
+        )
+        == 0
+    )
+    text = report.read_text()
+    assert "not compared): 1939Q1, 1939Q2" in text and "SYNTHETIC" not in text
+    assert main(["replay", "--out", str(out)]) == 2  # no corpus
+    assert "--corpus" in capsys.readouterr().err
+
+
+def test_render_report_labels_auto_accepted_runs_as_synthetic(tmp_path):
+    m = compare(_series(tmp_path), QUARTERS, HINDSIGHT)
+    m.auto_accepted = True
+    text = render_report(
+        m, title="T", corpus={"source": "x"}, backend={"name": "rules"}, command="c"
+    )
+    assert text.splitlines()[0].startswith("SYNTHETIC RUN") and "# T (SYNTHETIC)" in text
+
+
+def test_committed_synthetic_report_is_labeled():
+    text = REPORT.read_text(encoding="utf-8")
+    assert text.splitlines()[0].startswith("SYNTHETIC RUN:")
+    title = next(line for line in text.splitlines() if line.startswith("# "))
+    assert "SYNTHETIC" in title.upper()

@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: syn-1940-06-22-compiegne
+date: 1940-06-22
+source: synthetic fixture corpus (not a source)
+title: Franco-German armistice signed at Compiegne
+url: synthetic:corpus_synthetic/1940-06-22_compiegne
+
+The French plenipotentiaries signed an armistice with Germany this evening at Compiegne, in the railway carriage in which the armistice of 1918 was signed. German troops will occupy the north of France and the Atlantic coast; the French fleet is to be demobilized under German and Italian control.
+
+The armistice will come into force when France has also signed an armistice with Italy.

@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: syn-1939-03-17-birmingham
+date: 1939-03-17
+source: synthetic fixture corpus (not a source)
+title: The Prime Minister speaks at Birmingham
+url: synthetic:corpus_synthetic/1939-03-17_birmingham
+
+Speaking at Birmingham this evening, the Prime Minister said that the German occupation of Prague was a breach of the assurances given at Munich, and that he had been deceived. He asked: Is this the last attack upon a small State, or is it to be followed by others? Is this, in fact, a step in the direction of an attempt to dominate the world by force?
+
+He added that no greater mistake could be made than to suppose that this nation has so lost its fibre that it will not take part to the utmost of its power in resisting such a challenge if it ever were made.

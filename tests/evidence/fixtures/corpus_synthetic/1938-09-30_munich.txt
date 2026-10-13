@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: syn-1938-09-30-munich
+date: 1938-09-30
+source: synthetic fixture corpus (not a source)
+title: Agreement concluded at Munich
+url: synthetic:corpus_synthetic/1938-09-30_munich
+
+The agreement signed at Munich in the early hours of this morning by Germany, the United Kingdom, France and Italy provides for the evacuation of the Sudeten German territory by Czechoslovakia and its occupation by German troops in four stages between the 1st and the 10th of October. An international commission will fix the remaining frontier.
+
+The Prime Minister, on his return from Munich, said that he believed it was peace for our time. Ministers are understood to agree that the rearmament programme must now be accelerated with all speed, and the Government will press forward the expansion of the air force.
