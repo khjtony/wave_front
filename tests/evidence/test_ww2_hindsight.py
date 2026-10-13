@@ -1,4 +1,6 @@
-"""The WW2 v0 hindsight snapshots: the events file, the builder and the 20 committed files."""
+"""The WW2 v0 hindsight snapshots: the events file, the builder and the 21 committed files.
+
+The built-ins section (phase 2 decision F2) is tested in tests/evidence/test_builtins_ww2.py."""
 
 import copy
 import json
@@ -143,13 +145,24 @@ def test_twenty_one_snapshots_and_nothing_else():
 
 
 def test_committed_snapshots_are_up_to_date(nmc_rows, events, committed):
-    assert h.build_all(nmc_rows, events) == committed
+    built = h.build_all(nmc_rows, events, decisions=h.load_decisions(), moves=h.load_moves())
+    assert built == committed
+
+
+def test_the_variables_do_not_depend_on_the_built_ins(nmc_rows, events, committed):
+    """The built-ins are an added section: every variable level, confidence and indicator is
+    what the builder gives without the decision records and the realized moves."""
+    bare = h.build_all(nmc_rows, events)
+    for quarter, snap in committed.items():
+        assert "builtins" not in bare[quarter]
+        assert bare[quarter] == {k: v for k, v in snap.items() if k != "builtins"}, quarter
 
 
 def test_committed_snapshots_are_valid(committed):
     for quarter, snap in committed.items():
         assert validate_snapshot(snap) == [], quarter
         assert h.check_against_ontology(snap) == [], quarter
+        assert h.check_builtins(snap) == [], quarter
         assert snap["model"] == "ww2_v0"
         assert snap["date"] == h.quarter_bounds(quarter)[1].isoformat()
         assert not any(name.startswith("aims_") for name in snap["variables"])

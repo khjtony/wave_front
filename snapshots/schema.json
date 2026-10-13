@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "wave_front state snapshot",
-  "description": "A dated estimate of the current state with provenance (DESIGN.md section 5.1, framework_spec.md section 9). Every variable carries a level, a confidence and the indicators it was read from; only a variable with confidence 'assumed' may have an empty indicator list. Rates are validated here and are not part of the state.",
+  "description": "A dated estimate of the current state with provenance (DESIGN.md section 5.1, framework_spec.md section 9). Every variable carries a level, a confidence and the indicators it was read from; only a variable with confidence 'assumed' may have an empty indicator list. The optional builtins section sets the model's built-in variables (pending delayed decisions, last actions, latches, fairness counters; phase 2 decision F2) with the same provenance and a rule. Rates are validated here and are not part of the state.",
   "type": "object",
   "required": ["date", "model", "variables"],
   "additionalProperties": false,
@@ -24,6 +24,12 @@
       "type": "object",
       "propertyNames": { "$ref": "#/$defs/name" },
       "additionalProperties": { "$ref": "#/$defs/variable" }
+    },
+    "builtins": {
+      "description": "Built-in variables of the model by name (decision F2): pending_<actor>_<action> with the ticks remaining until the delayed effect applies (0 to the action's delay), last_<actor> with an action name or 'none', a latch with one of its levels or 'unset', fair_<name> with its count (0 to the constraint's 'within'). The loader fills them into the state after the variables and refuses a name that is not a settable built-in of the model (tick included) and a value out of range. Declared variables cannot be set here, and built-ins cannot be set in variables.",
+      "type": "object",
+      "propertyNames": { "$ref": "#/$defs/name" },
+      "additionalProperties": { "$ref": "#/$defs/builtin" }
     },
     "rates": {
       "description": "Observed lags and growth caps, by name. Evidence for the rates of the model; they never edit its transition relation.",
@@ -58,6 +64,38 @@
         "indicators": {
           "type": "array",
           "items": { "$ref": "#/$defs/indicator" }
+        }
+      },
+      "if": {
+        "required": ["confidence"],
+        "properties": { "confidence": { "not": { "const": "assumed" } } }
+      },
+      "then": {
+        "properties": { "indicators": { "minItems": 1 } }
+      }
+    },
+    "builtin": {
+      "type": "object",
+      "required": ["value", "confidence", "indicators", "rule"],
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "description": "A non-negative integer for a pending or fairness counter (and a latch of the tick), an action name or 'none' for a last action, a level name or 'unset' for a latch (a boolean for a latch of a flag).",
+          "type": ["string", "integer", "boolean"],
+          "minLength": 1,
+          "minimum": 0
+        },
+        "confidence": {
+          "enum": ["high", "medium", "low", "assumed"]
+        },
+        "indicators": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/indicator" }
+        },
+        "rule": {
+          "description": "How the value follows from the indicators (for a counter, the arithmetic); with confidence 'assumed', why no indicator supports it.",
+          "type": "string",
+          "minLength": 1
         }
       },
       "if": {

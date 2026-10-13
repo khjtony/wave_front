@@ -499,6 +499,117 @@
       ]
     }
   },
+  "builtins": {
+    "belief_at_munich": {
+      "value": "uncertain",
+      "confidence": "medium",
+      "indicators": [
+        {
+          "id": "event_1938-09-30_sudeten",
+          "value": "Munich Agreement (signed in the early hours of 30 September, dated 29 September); occupation 1 to 10 October 1938",
+          "source": "ICB crisis 'Munich'; Agreement concluded at Munich, 29 September 1938 (text: Avalon Project, Yale Law School); Weinberg 1994, A World at Arms, ch. 1",
+          "observed": "1938-09-30",
+          "rule": "the event that sets the latch's condition (sudeten == german). Note: The occupation began on 1 October 1938 (1938Q4); the transfer is dated by the agreement."
+        },
+        {
+          "id": "event_1938-09-12_belief_WEST",
+          "value": "Sudeten demand: Hitler's Nuremberg speech demands self-determination for the Sudeten Germans; escalated at Berchtesgaden (15 September) and Godesberg (22 to 23 September)",
+          "source": "Hitler, closing speech at the Nuremberg party rally, 12 September 1938; Cabinet minutes, September 1938 (CAB 23); Weinberg 1994, A World at Arms, ch. 1",
+          "observed": "1938-09-12",
+          "rule": "belief_WEST in force at the end of 1938Q3. Note: Threshold judgment: the ontology does not yet give a rule for 'uncertain'; this row follows the action catalogue (demand_sudeten raises belief_WEST to uncertain). Godesberg would give the same quarter. For the historian."
+        }
+      ],
+      "rule": "belief_at_munich = uncertain: the latch takes belief_WEST in the first transition after which sudeten == german holds, the transition into tick 11 (the end of 1938Q3); belief_WEST in force on 1938-09-30 is uncertain"
+    },
+    "pending_GER_rearm": {
+      "value": 0,
+      "confidence": "medium",
+      "indicators": [
+        {
+          "id": "decision_1938-10-14_GER_rearm",
+          "value": "GER rearm, delay 8 ticks",
+          "source": "Goering's conference of 14 Oct 1938 announcing Hitler's order for a greatly enlarged armaments programme (Nuremberg document 1301-PS); the Z-Plan of Jan 1939",
+          "observed": "1938-10-14",
+          "rule": "the latest GER rearm decision. Note: realized_moves.csv tick 11. With delay 8 the effect falls at tick 20, the horizon."
+        }
+      ],
+      "rule": "pending_GER_rearm = max(0, d - (index(Q) - index(t))) = max(0, 8 - (19 - 11)) = 0: GER rearm decided 1938-10-14 (1938Q4, model tick 11) with delay d = 8, read at the end of Q = 1940Q4 (tick 20); the effect applied in the transition into tick 20 (the end of 1940Q4), so nothing is pending; the delay is the model's (docs/actions_ww2.md), hence medium"
+    },
+    "pending_WEST_rearm": {
+      "value": 0,
+      "confidence": "medium",
+      "indicators": [
+        {
+          "id": "decision_1938-11-30_WEST_rearm",
+          "value": "WEST rearm, delay 4 ticks",
+          "source": "British post-Munich decisions of Oct to Nov 1938 (CAB 23 conclusions of Oct and Nov 1938; air expansion scheme approved Nov 1938) and the French decree-laws of Nov 1938",
+          "observed": "1938-11-30",
+          "rule": "the latest WEST rearm decision. Note: realized_moves.csv tick 11. Month precision: the record gives Oct to Nov 1938, and the date is the last day of the latest month named; the quarter is 1938Q4 either way. arms_WEST high visible at tick 16."
+        }
+      ],
+      "rule": "pending_WEST_rearm = max(0, d - (index(Q) - index(t))) = max(0, 4 - (19 - 11)) = 0: WEST rearm decided 1938-11-30 (1938Q4, model tick 11) with delay d = 4, read at the end of Q = 1940Q4 (tick 20); the effect applied in the transition into tick 16 (the end of 1939Q4), so nothing is pending; the delay is the model's (docs/actions_ww2.md), hence medium"
+    },
+    "pending_USSR_rearm": {
+      "value": 2,
+      "confidence": "medium",
+      "indicators": [
+        {
+          "id": "decision_1940-05-07_USSR_rearm",
+          "value": "USSR rearm, delay 4 ticks",
+          "source": "Central Committee conference on the lessons of the Finnish war, Apr 1940; Timoshenko People's Commissar of Defence, 7 May 1940, and the reforms that followed (Erickson 1962)",
+          "observed": "1940-05-07",
+          "rule": "the latest USSR rearm decision. Note: realized_moves.csv tick 17. The date is Timoshenko's appointment; the effect falls after the horizon (tick 22)."
+        }
+      ],
+      "rule": "pending_USSR_rearm = max(0, d - (index(Q) - index(t))) = max(0, 4 - (19 - 17)) = 2: USSR rearm decided 1940-05-07 (1940Q2, model tick 17) with delay d = 4, read at the end of Q = 1940Q4 (tick 20); the effect applies in the transition into tick 22 (the end of 1941Q2) and USSR rearm is unavailable until then; the delay is the model's (docs/actions_ww2.md), hence medium"
+    },
+    "last_GER": {
+      "value": "align_balkans",
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "move_1940Q4_GER",
+          "value": "align_balkans",
+          "source": "DGFP Series D vol. XI; Nazi-Soviet Relations 1939-1941; Trevor-Roper (ed.), Hitler's War Directives",
+          "observed": "1940-12-31",
+          "rule": "realized move of GER in 1940Q4 (1940-10-01 to 1940-12-31)"
+        }
+      ],
+      "rule": "last_GER = align_balkans: GER's realized move of 1940Q4 (data/ww2/realized_moves.csv, tick 19), the action chosen in the transition into tick 20"
+    },
+    "last_WEST": {
+      "value": "idle",
+      "confidence": "medium",
+      "indicators": [
+        {
+          "id": "move_1940Q4_WEST",
+          "value": "idle",
+          "source": "DGFP Series D vol. XI; Nazi-Soviet Relations 1939-1941; Trevor-Roper (ed.), Hitler's War Directives",
+          "observed": "1940-12-31",
+          "rule": "realized move of WEST in 1940Q4 (1940-10-01 to 1940-12-31)"
+        }
+      ],
+      "rule": "last_WEST = idle: WEST's realized move of 1940Q4 (data/ww2/realized_moves.csv, tick 19), the action chosen in the transition into tick 20; idle is a reading of the record: no catalogue action of the actor that quarter"
+    },
+    "fair_democratic_response": {
+      "value": 0,
+      "confidence": "assumed",
+      "indicators": [],
+      "rule": "fair_democratic_response = 0, assumed (decision F2: fairness counters default to 0). The counter counts consecutive ticks in which the constraint's trigger held without one of its responses; no dated record observes it. Missing: a reconstruction of the trigger over the preceding quarters"
+    },
+    "fair_czech_obligation": {
+      "value": 0,
+      "confidence": "assumed",
+      "indicators": [],
+      "rule": "fair_czech_obligation = 0, assumed (decision F2: fairness counters default to 0). The counter counts consecutive ticks in which the constraint's trigger held without one of its responses; no dated record observes it. Missing: a reconstruction of the trigger over the preceding quarters"
+    },
+    "fair_rhineland_resolution": {
+      "value": 0,
+      "confidence": "assumed",
+      "indicators": [],
+      "rule": "fair_rhineland_resolution = 0, assumed (decision F2: fairness counters default to 0). The counter counts consecutive ticks in which the constraint's trigger held without one of its responses; no dated record observes it. Missing: a reconstruction of the trigger over the preceding quarters"
+    }
+  },
   "rates": {
     "rearm_delay_ticks": {
       "ticks": 4,

@@ -8,12 +8,15 @@ README prescribes.
 
 Tick mapping (snapshot README): the file named for quarter ``Q`` holds the levels in force
 at the *end* of ``Q``, which is the model's state at tick ``index(Q) + 1``, where
-``index("1936Q1") == 0``; ``1935Q4.json`` is tick 0. The snapshot loader leaves every
-built-in at its initial value, so :func:`snapshot_state` sets ``tick`` from the file name
-and leaves the rest as the loader does: no pending delayed effect, no last action
-(``last_GER`` and ``last_WEST`` are ``none``), fairness counters at zero. Latches are set
-by the loader from the loaded state (so ``belief_at_munich`` reads the snapshot's belief,
-not the belief of October 1938).
+``index("1936Q1") == 0``; ``1935Q4.json`` is tick 0. :func:`snapshot_state` sets ``tick``
+from the file name. Since phase 2 (decision F2) the files also carry the other built-ins
+(pending delayed decisions, last actions, the latch, fairness counters) in a ``builtins``
+section. ``snapshot_state(..., builtins=True)`` loads them. The default, ``builtins=False``,
+drops the section and keeps the phase 1 convention under which the registered tests T1 to
+T13 were run and reported (reports/ww2_v0.md section 2a): every built-in at its initial
+value (no pending delayed effect, ``last_GER`` and ``last_WEST`` ``none``, fairness counters
+at zero), and the latch set by the loader from the loaded state (so ``belief_at_munich``
+reads the snapshot's belief, not the belief of October 1938).
 
 :func:`realized_moves` reads ``data/ww2/realized_moves.csv`` as joint moves (action indices
 in actor order, Nature last); :func:`fixed_model` returns a copy of a model with swept
@@ -85,11 +88,14 @@ def quarter_tick(quarter: str) -> int:
     return index + 1
 
 
-def snapshot_data(quarter: str, **fixed: str) -> dict[str, Any]:
+def snapshot_data(quarter: str, *, builtins: bool = True, **fixed: str) -> dict[str, Any]:
     """The parsed snapshot ``<quarter>.json`` with each ``fixed`` variable added as an
-    ``assumed`` entry (the snapshot must not already contain it)."""
+    ``assumed`` entry (the snapshot must not already contain it), and without its
+    ``builtins`` section unless ``builtins`` is true."""
     data = read_snapshot(SNAPSHOTS / f"{quarter}.json")
     data = copy.deepcopy(data)
+    if not builtins:
+        data.pop("builtins", None)
     for name, level in fixed.items():
         if name in data["variables"]:
             raise ModelError(f"snapshot {quarter} already fixes {name!r}")
@@ -102,10 +108,14 @@ def snapshot_state(
     quarter: str,
     aims_GER: str,
     aims_USSR: str = "defensive",
+    *,
+    builtins: bool = False,
 ) -> tuple[int, ...]:
     """The state of ``cm`` at the end of ``quarter`` (tick ``quarter_tick(quarter)``) read
-    from the hindsight snapshot, with the hidden objectives fixed to one hypothesis."""
-    data = snapshot_data(quarter, aims_GER=aims_GER, aims_USSR=aims_USSR)
+    from the hindsight snapshot, with the hidden objectives fixed to one hypothesis. With
+    ``builtins=True`` the snapshot's built-ins (pending decisions, last actions, the latch,
+    fairness counters) are loaded too; by default they are dropped (module docstring)."""
+    data = snapshot_data(quarter, builtins=builtins, aims_GER=aims_GER, aims_USSR=aims_USSR)
     state = list(snapshot_to_state(data, cm))
     if cm.timed:
         state[cm.index["tick"]] = quarter_tick(quarter)

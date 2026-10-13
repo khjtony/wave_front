@@ -70,9 +70,10 @@ def test_the_schema_is_a_draft_2020_12_schema_with_the_required_shape():
     assert s["$schema"] == "https://json-schema.org/draft/2020-12/schema"
     assert s["type"] == "object" and s["additionalProperties"] is False
     assert s["required"] == ["date", "model", "variables"]
-    assert set(s["properties"]) == {"$schema", "date", "model", "variables", "rates"}
+    assert set(s["properties"]) == {"$schema", "date", "model", "variables", "builtins", "rates"}
     defs = s["$defs"]
     assert defs["variable"]["required"] == ["level", "confidence", "indicators"]
+    assert defs["builtin"]["required"] == ["value", "confidence", "indicators", "rule"]
     assert defs["variable"]["properties"]["confidence"]["enum"] == [
         "high",
         "medium",

@@ -16,6 +16,14 @@ and the rates. A snapshot file carries both, with the indicators each level was 
           ]
         }
       },
+      "builtins": {
+        "pending_INC_fund_oversight": {
+          "value": 1, "confidence": "medium",
+          "indicators": [{"id": "budget_2026", "value": "...", "source": "<url>",
+                          "observed": "2026-07-01", "rule": "programme funded in 2026Q3"}],
+          "rule": "decided in 2026Q3 with delay 2: 2 - (2026Q4 - 2026Q3) = 1"
+        }
+      },
       "rates": {"fund_oversight": {"ticks": 2, "basis": "..."}}
     }
 
@@ -35,10 +43,21 @@ The mapping is deliberately strict. Level variables are given by level *name*, c
 integer and flags by boolean. A variable the snapshot does not mention takes its declared
 initial value, except that a variable declared with ``init=None`` (a swept hidden objective or
 parameter) has no such value, so the snapshot must fix it; pin a hypothesis with
-``confidence: "assumed"``. Built-in variables (``tick``, ``last_*``, ``pending_*``,
-``fair_*``, latches) are not part of a snapshot: they start from their initial values, and a
-latch whose condition already holds in the snapshot is set to the snapshot's value of the
-variable it copies, exactly as for the model's own initial states.
+``confidence: "assumed"``.
+
+Built-in variables cannot be set in ``variables``. The optional ``builtins`` section
+(phase 2 decision F2) sets them, each with a ``value``, a ``confidence``, ``indicators`` and
+the ``rule`` that derives the value: ``pending_<actor>_<action>`` takes the ticks remaining
+until the delayed effect applies (an integer from 0 to the action's delay),
+``last_<actor>`` an action name of that actor or ``none``, a latch one of its levels or
+``unset`` (a boolean for a latch of a flag, an integer for a latch of the tick), and
+``fair_<name>`` its count (0 to the constraint's ``within``). They are filled in after the
+variables. ``tick`` is not settable: a snapshot is dated, and the caller maps the date to a
+tick. Built-ins a snapshot omits keep their initial values, and a latch the snapshot omits
+is set, when its condition already holds in the loaded state, to the loaded value of the
+variable it copies, exactly as for the model's own initial states. A latch given as
+``unset`` although its condition holds in the loaded state is refused: no play of the model
+reaches such a state.
 
 The returned state is not filtered by the model's ``assume`` restrictions (spec 3.1a): a
 snapshot is evidence about where the world is, so it may lie outside what the model assumes,
@@ -75,8 +94,9 @@ _DATE = re.compile(r"[0-9]{4}-[0-9]{2}-[0-9]{2}")
 _NAME = re.compile(r"[A-Za-z_][A-Za-z0-9_]*")
 
 _TOP_REQUIRED = ("date", "model", "variables")
-_TOP_ALLOWED = (*_TOP_REQUIRED, "rates", "$schema")
+_TOP_ALLOWED = (*_TOP_REQUIRED, "builtins", "rates", "$schema")
 _VARIABLE_FIELDS = ("level", "confidence", "indicators")
+_BUILTIN_FIELDS = ("value", "confidence", "indicators", "rule")
 _INDICATOR_FIELDS = ("id", "value", "source", "observed", "rule")
 _RATE_FIELDS = ("ticks", "basis")
 
@@ -173,6 +193,11 @@ def _check_variable(name: str, entry: object, problems: list[str]) -> None:
             problems.append(f"{path}.level: must be a level name, an integer or a boolean")
         elif level == "":
             problems.append(f"{path}.level: must not be an empty string")
+    _check_provenance(path, var, problems)
+
+
+def _check_provenance(path: str, var: dict[str, Any], problems: list[str]) -> None:
+    """The ``confidence`` and ``indicators`` of a variable or built-in entry."""
     confidence = var.get("confidence")
     if "confidence" in var and not (
         isinstance(confidence, str) and confidence in CONFIDENCE_LEVELS
@@ -193,6 +218,31 @@ def _check_variable(name: str, entry: object, problems: list[str]) -> None:
             f"{path}: no indicators, and only confidence {ASSUMED!r} may omit them "
             f"(confidence is {confidence!r})"
         )
+
+
+def _check_builtin(name: str, entry: object, problems: list[str]) -> None:
+    path = f"builtins.{name}"
+    if not _NAME.fullmatch(name):
+        problems.append(f"builtins: {name!r} is not a valid built-in name")
+    var = _object(entry, path, _BUILTIN_FIELDS, _BUILTIN_FIELDS, problems)
+    if var is None:
+        return
+    if "value" in var:
+        value = var["value"]
+        if isinstance(value, str):
+            if value == "":
+                problems.append(f"{path}.value: must not be an empty string")
+        elif isinstance(value, bool):
+            pass
+        elif not _is_int(value):
+            problems.append(
+                f"{path}.value: must be a non-negative integer, a name or a boolean, not {value!r}"
+            )
+        elif value < 0:
+            problems.append(f"{path}.value: must not be negative, not {value!r}")
+    if "rule" in var and not _is_text(var["rule"]):
+        problems.append(f"{path}.rule: must be a non-empty string")
+    _check_provenance(path, var, problems)
 
 
 def _check_rate(name: str, entry: object, problems: list[str]) -> None:
@@ -217,8 +267,8 @@ def validate_snapshot(data: object) -> list[str]:
 
     Returns the problems found, each prefixed with the path of the offending field; the list
     is empty exactly when the snapshot is valid. This includes the provenance rule: every
-    variable lists at least one indicator unless its confidence is ``"assumed"``. It does not
-    look at any model; :func:`snapshot_to_state` does."""
+    variable and every built-in lists at least one indicator unless its confidence is
+    ``"assumed"``. It does not look at any model; :func:`snapshot_to_state` does."""
     problems: list[str] = []
     top = _object(data, "snapshot", _TOP_REQUIRED, _TOP_ALLOWED, problems)
     if top is None:
@@ -236,6 +286,13 @@ def validate_snapshot(data: object) -> list[str]:
                 _check_variable(str(name), entry, problems)
         else:
             problems.append("variables: must be an object")
+    if "builtins" in top:
+        builtins = top["builtins"]
+        if isinstance(builtins, dict):
+            for name, entry in builtins.items():
+                _check_builtin(str(name), entry, problems)
+        else:
+            problems.append("builtins: must be an object")
     if "rates" in top:
         rates = top["rates"]
         if isinstance(rates, dict):
@@ -269,14 +326,97 @@ def _level_value(spec: VarSpec, level: object) -> tuple[int, None] | tuple[None,
     return None, f"variable {spec.name!r} is a flag, so level {level!r} is not true or false"
 
 
+def _settable_builtins(cm: CompiledModel) -> dict[str, tuple[VarSpec, str]]:
+    """The built-ins a snapshot may set, with a description of each one's range."""
+    out: dict[str, tuple[VarSpec, str]] = {}
+    delayed = {
+        f"pending_{actor.name}_{a.name}": f"{actor.name}.{a.name}"
+        for actor in cm.actors
+        for a in actor.actions
+        if a.delay
+    }
+    for spec in cm.variables:
+        if spec.origin == "pending":
+            what = delayed.get(spec.name, spec.name)
+            out[spec.name] = (spec, f"the delay of {what} is {spec.size - 1}")
+        elif spec.origin == "fair":
+            out[spec.name] = (spec, f"its 'within' is {spec.size - 1}")
+        elif spec.origin in ("last", "latch"):
+            out[spec.name] = (spec, f"levels: {', '.join(spec.levels)}")
+    return out
+
+
+def _builtin_value(cm: CompiledModel, spec: VarSpec, rng: str, value: object) -> int | str:
+    """The state value for a built-in entry's ``value``, or a message saying why not."""
+    name = spec.name
+    if spec.origin in ("pending", "fair"):
+        counter = "pending counter" if spec.origin == "pending" else "fairness counter"
+        if not _is_int(value) or isinstance(value, str):
+            return f"built-in {name!r} is a {counter}, so {value!r} is not an integer"
+        n = int(value)  # type: ignore[arg-type]
+        if not 0 <= n < spec.size:
+            return f"built-in {name!r} is {n}, outside 0..{spec.size - 1} ({rng})"
+        return n
+    if spec.origin == "last":
+        if isinstance(value, str) and value in spec.levels:
+            return spec.levels.index(value)
+        return f"built-in {name!r} has no action {value!r} ({rng})"
+    # a latch: 'unset', or a level of the variable it copies, given as that variable is
+    latch = next(d for d in cm.model.latches if d.name == name)
+    source = cm.variables[cm.index[latch.of]]
+    if value == "unset" and isinstance(value, str):
+        return 0
+    if latch.of == "tick" or source.kind == "counter":
+        ok = _is_int(value) and not isinstance(value, str)
+        text = str(int(value)) if ok else None  # type: ignore[arg-type]
+    elif source.kind == "flag":
+        ok = isinstance(value, bool)
+        text = str(value) if ok else None
+    else:
+        ok = isinstance(value, str)
+        text = value if ok else None  # type: ignore[assignment]
+    if ok and text in spec.levels:
+        return spec.levels.index(text)
+    return f"built-in {name!r} (a latch of {latch.of!r}) has no level {value!r} ({rng})"
+
+
+def _fill_builtins(
+    cm: CompiledModel, given: Mapping[str, Mapping[str, Any]], problems: list[str]
+) -> dict[str, int]:
+    settable = _settable_builtins(cm)
+    values: dict[str, int] = {}
+    for name, entry in given.items():
+        value = entry["value"]
+        if name not in settable:
+            if name == "tick":
+                why = "it is not settable: the caller maps the snapshot's date to a tick"
+            elif name in cm.index:
+                why = "it is a declared variable; set it in the snapshot's variables"
+            else:
+                names = ", ".join(settable) or "none"
+                why = f"not a built-in of model {cm.name!r} (built-ins: {names})"
+            problems.append(f"snapshot built-in {name!r} (value {value!r}): {why}")
+            continue
+        spec, rng = settable[name]
+        result = _builtin_value(cm, spec, rng, value)
+        if isinstance(result, str):
+            problems.append(result)
+        else:
+            values[name] = result
+    return values
+
+
 def snapshot_to_state(data: dict[str, Any], cm: CompiledModel) -> tuple[int, ...]:
     """Map a snapshot onto a state of ``cm``: one value per variable, in state order.
 
     ``data`` is validated first (:func:`validate_snapshot`). Then every variable in the
     snapshot must be a declared variable of the model with a level of the right kind;
     variables the snapshot omits take their declared initial value, except those declared
-    with ``init=None``, which the snapshot must fix. Raises :class:`SnapshotError` naming the
-    variable and level of every problem found."""
+    with ``init=None``, which the snapshot must fix. The ``builtins`` section, if any, is
+    filled in after the variables: each name must be a settable built-in of the model
+    (``pending_*``, ``last_*``, a latch, ``fair_*``) and each value in its range (a pending
+    counter at most the action's delay). Raises :class:`SnapshotError` naming the variable
+    or built-in and the value of every problem found."""
     problems = validate_snapshot(data)
     if problems:
         raise SnapshotError("invalid snapshot: " + "; ".join(problems), problems)
@@ -289,7 +429,8 @@ def snapshot_to_state(data: dict[str, Any], cm: CompiledModel) -> tuple[int, ...
         if spec is None:
             kind = "a built-in of" if name in cm.index else "not a variable of"
             hint = (
-                "a snapshot sets declared variables only"
+                "a snapshot's variables set declared variables only; built-ins go in its "
+                "builtins section"
                 if name in cm.index
                 else f"variables: {', '.join(declared)}"
             )
@@ -312,13 +453,24 @@ def snapshot_to_state(data: dict[str, Any], cm: CompiledModel) -> tuple[int, ...
             )
         else:
             values[spec.name] = spec.init[0]
+    builtins: Mapping[str, Mapping[str, Any]] = data.get("builtins", {})
+    values.update(_fill_builtins(cm, builtins, problems))
     if problems:
         raise SnapshotError("; ".join(problems), problems)
     state = [values.get(spec.name, spec.init[0]) for spec in cm.variables]
     for latch in cm.model.latches:
         i = cm.index[latch.name]
-        if state[i] == 0 and cm.evaluate(latch.when, state):
+        if state[i] != 0 or not cm.evaluate(latch.when, state):
+            continue
+        if latch.name in builtins:
+            problems.append(
+                f"built-in {latch.name!r} is given as 'unset', but its condition already "
+                "holds in the loaded state, so the latch would have been set"
+            )
+        else:
             state[i] = state[cm.index[latch.of]] + 1
+    if problems:
+        raise SnapshotError("; ".join(problems), problems)
     return tuple(state)
 
 
@@ -360,8 +512,9 @@ def load_snapshot(path: str | Path, cm: CompiledModel) -> tuple[int, ...]:
 
     Raises :class:`SnapshotError` if the file is not valid JSON, does not satisfy the
     schema (including the provenance rule), or does not fit the model: an unknown variable,
-    an unknown level, or a swept variable the snapshot leaves unfixed. The message names
-    the file, the variable and the level."""
+    an unknown level, a swept variable the snapshot leaves unfixed, or a built-in that is
+    unknown, set in ``variables`` or out of range. The message names the file, the variable
+    or built-in and the value."""
     data = read_snapshot(path)
     try:
         return snapshot_to_state(data, cm)

@@ -443,6 +443,110 @@
       ]
     }
   },
+  "builtins": {
+    "belief_at_munich": {
+      "value": "unset",
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "event_1938-09-30_sudeten",
+          "value": "Munich Agreement (signed in the early hours of 30 September, dated 29 September); occupation 1 to 10 October 1938",
+          "source": "ICB crisis 'Munich'; Agreement concluded at Munich, 29 September 1938 (text: Avalon Project, Yale Law School); Weinberg 1994, A World at Arms, ch. 1",
+          "observed": "1938-09-30",
+          "rule": "the event that sets the latch's condition, after 1937Q4. Note: The occupation began on 1 October 1938 (1938Q4); the transfer is dated by the agreement."
+        }
+      ],
+      "rule": "belief_at_munich = unset: its condition sudeten == german first holds at the end of 1938Q3 (1938-09-30), after 1937Q4"
+    },
+    "pending_GER_rearm": {
+      "value": 3,
+      "confidence": "medium",
+      "indicators": [
+        {
+          "id": "decision_1936-08-24_GER_rearm",
+          "value": "GER rearm, delay 8 ticks",
+          "source": "Hitler's memorandum on the Four-Year Plan, Aug 1936 (armed forces operational within four years; text in Treue, Vierteljahrshefte fuer Zeitgeschichte 1955) and the army armament programme of Aug 1936 (Deist, in Germany and the Second World War vol. I); two-year service decreed 24 Aug 1936; Tooze 2006",
+          "observed": "1936-08-24",
+          "rule": "the latest GER rearm decision. Note: realized_moves.csv tick 2. The memorandum and the army programme are dated to the month only; the date is that of the two-year service decree, the one exact date realized_moves.csv gives for this decision. With delay 8 the effect (arms_GER high) is visible at tick 11."
+        }
+      ],
+      "rule": "pending_GER_rearm = max(0, d - (index(Q) - index(t))) = max(0, 8 - (7 - 2)) = 3: GER rearm decided 1936-08-24 (1936Q3, model tick 2) with delay d = 8, read at the end of Q = 1937Q4 (tick 8); the effect applies in the transition into tick 11 (the end of 1938Q3) and GER rearm is unavailable until then; the delay is the model's (docs/actions_ww2.md), hence medium"
+    },
+    "pending_WEST_rearm": {
+      "value": 0,
+      "confidence": "medium",
+      "indicators": [
+        {
+          "id": "decision_1936-03-03_WEST_rearm",
+          "value": "WEST rearm, delay 4 ticks",
+          "source": "Cabinet approval of the Defence Requirements Committee programme, Feb 1936, and the Statement Relating to Defence, 3 Mar 1936 (Cmd. 5107); CAB 23 conclusions of Feb and Mar 1936",
+          "observed": "1936-03-03",
+          "rule": "the latest WEST rearm decision. Note: realized_moves.csv tick 0. The French four-year programme of 7 Sep 1936 and the Defence Loans Act of 1937 fall under this pending decision (realized_moves.csv ticks 2 and 4): one WEST action stands for both governments' programmes (docs/actions_ww2.md). arms_WEST rising visible at tick 5."
+        }
+      ],
+      "rule": "pending_WEST_rearm = max(0, d - (index(Q) - index(t))) = max(0, 4 - (7 - 0)) = 0: WEST rearm decided 1936-03-03 (1936Q1, model tick 0) with delay d = 4, read at the end of Q = 1937Q4 (tick 8); the effect applied in the transition into tick 5 (the end of 1937Q1), so nothing is pending; the delay is the model's (docs/actions_ww2.md), hence medium"
+    },
+    "pending_USSR_rearm": {
+      "value": 0,
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "decision_1940-05-07_USSR_rearm",
+          "value": "USSR rearm, delay 4 ticks",
+          "source": "Central Committee conference on the lessons of the Finnish war, Apr 1940; Timoshenko People's Commissar of Defence, 7 May 1940, and the reforms that followed (Erickson 1962)",
+          "observed": "1940-05-07",
+          "rule": "the first such decision, dated after 1937Q4. Note: realized_moves.csv tick 17. The date is Timoshenko's appointment; the effect falls after the horizon (tick 22)."
+        }
+      ],
+      "rule": "pending_USSR_rearm = 0: no USSR rearm decision in data/ww2/decisions_ww2.csv at or before 1937Q4, so nothing is pending at the end of 1937Q4 (tick 8)"
+    },
+    "last_GER": {
+      "value": "idle",
+      "confidence": "medium",
+      "indicators": [
+        {
+          "id": "move_1937Q4_GER",
+          "value": "idle",
+          "source": "Nuremberg document 386-PS (Hossbach memorandum, 10 Nov 1937); DBFP Second Series",
+          "observed": "1937-12-31",
+          "rule": "realized move of GER in 1937Q4 (1937-10-01 to 1937-12-31)"
+        }
+      ],
+      "rule": "last_GER = idle: GER's realized move of 1937Q4 (data/ww2/realized_moves.csv, tick 7), the action chosen in the transition into tick 8; idle is a reading of the record: no catalogue action of the actor that quarter"
+    },
+    "last_WEST": {
+      "value": "idle",
+      "confidence": "medium",
+      "indicators": [
+        {
+          "id": "move_1937Q4_WEST",
+          "value": "idle",
+          "source": "Nuremberg document 386-PS (Hossbach memorandum, 10 Nov 1937); DBFP Second Series",
+          "observed": "1937-12-31",
+          "rule": "realized move of WEST in 1937Q4 (1937-10-01 to 1937-12-31)"
+        }
+      ],
+      "rule": "last_WEST = idle: WEST's realized move of 1937Q4 (data/ww2/realized_moves.csv, tick 7), the action chosen in the transition into tick 8; idle is a reading of the record: no catalogue action of the actor that quarter"
+    },
+    "fair_democratic_response": {
+      "value": 0,
+      "confidence": "assumed",
+      "indicators": [],
+      "rule": "fair_democratic_response = 0, assumed (decision F2: fairness counters default to 0). The counter counts consecutive ticks in which the constraint's trigger held without one of its responses; no dated record observes it. Missing: a reconstruction of the trigger over the preceding quarters"
+    },
+    "fair_czech_obligation": {
+      "value": 0,
+      "confidence": "assumed",
+      "indicators": [],
+      "rule": "fair_czech_obligation = 0, assumed (decision F2: fairness counters default to 0). The counter counts consecutive ticks in which the constraint's trigger held without one of its responses; no dated record observes it. Missing: a reconstruction of the trigger over the preceding quarters"
+    },
+    "fair_rhineland_resolution": {
+      "value": 0,
+      "confidence": "assumed",
+      "indicators": [],
+      "rule": "fair_rhineland_resolution = 0, assumed (decision F2: fairness counters default to 0). The counter counts consecutive ticks in which the constraint's trigger held without one of its responses; no dated record observes it. Missing: a reconstruction of the trigger over the preceding quarters"
+    }
+  },
   "rates": {
     "rearm_delay_ticks": {
       "ticks": 4,

@@ -64,9 +64,13 @@ def test_T08_revisionist():
     assert bmc.reach(m.compile(profile="fight_on"), 20, ~V.invariant("balance_europe")) is None
 
 
-def kernel_entry(quarter):
+def kernel_entry(quarter, max_states=3_000_000):
+    """WEST's kernel for balance_europe from the snapshot of ``quarter`` with its built-ins
+    (pending decisions, last actions, the latch, fairness counters; phase 2 decision F2)
+    under hegemonic aims: (reachable states, membership, shortest distance out)."""
     cm = model.compile()
-    g = explore(cm, initial=[snapshot_state(cm, quarter, "hegemonic")], max_states=3_000_000)
+    start = snapshot_state(cm, quarter, "hegemonic", builtins=True)
+    g = explore(cm, initial=[start], max_states=max_states)
     kernel = viability(g, ["WEST"], "balance_europe").kernel
     s = g.initial[0]
     d = distance_table(g, [s], kernel, ["WEST"], None)[s]
@@ -75,24 +79,37 @@ def kernel_entry(quarter):
 
 @pytest.mark.slow
 @pytest.mark.skip(
-    reason="deferred to phase 2 by the amended claim: the kernel comparison needs states that "
-    "carry the pending rearmament (snapshots with pending decisions); the snapshot-state "
-    "comparison measured the clock, see reports/ww2_v0.md section 7"
+    reason="phase 2 evaluation blocked by the explicit engine's budget: from the 1938Q2 file with "
+    "its built-ins (GER rearmament pending 1 tick, last_GER demand_sudeten) the exploration passes "
+    "3,000,000 states and, on the one retry the protocol allows, 5,000,000 states (343 s); the "
+    "symbolic engine (phase 2 decision F1) is needed. The 1938Q3 half is computed below. See "
+    "reports/ww2_v0.md section 14"
 )
 def test_T08_hegemonic():
     """(b) Under hegemonic aims, the Munich concession shrinks V_WEST: compare the state
     before it (1938Q2.json, start of 1938Q3, tick 10) with the state after it (1938Q3.json,
-    tick 11). Registered direction: membership lost, or (both inside) the shortest distance
-    out of the kernel reduced. Computed exactly: before, outside the kernel (1,423,926
-    states); after, inside with shortest distance 5 (198,443 states). The direction is
-    reversed, and the reason is the clock, not the concession (report section 7)."""
-    n_before, in_before, short_before = kernel_entry("1938Q2")
+    tick 11), both with the built-ins of decision F2. Registered direction: membership lost,
+    or (both inside) the shortest distance out of the kernel reduced. The phase 1 comparison
+    without built-ins (before outside, after inside at distance 5) measured the rearmament
+    clock; with the built-ins the before state carries the 1936 programme one tick from
+    landing."""
+    n_before, in_before, short_before = kernel_entry("1938Q2", max_states=5_000_000)
     n_after, in_after, short_after = kernel_entry("1938Q3")
-    assert (n_before, n_after) == (1_423_926, 198_443)
     shrinks = (in_before and not in_after) or (
         in_before and in_after and short_after < short_before
     )
     assert shrinks
+
+
+@pytest.mark.slow
+def test_T08_hegemonic_after_concession_recorded():
+    """The half of the amended T8(b) the explicit engine computes, recorded for section 14 of
+    the report, not a verdict on the claim: from 1938Q3.json with its built-ins (no rearmament
+    pending, last_GER demand_sudeten, last_WEST concede, belief_at_munich uncertain) the
+    reachable set has 601,353 states and the state is in V_WEST for balance_europe with
+    shortest distance 3 out of the kernel (phase 1, without built-ins: 198,443 states,
+    inside, distance 5)."""
+    assert kernel_entry("1938Q3") == (601_353, True, 3)
 
 
 @pytest.mark.slow
