@@ -29,8 +29,13 @@ def named_states(cm):
     out = {}
     for aims in ("revisionist", "hegemonic"):
         out[f"tick0 {aims}"] = snapshot_state(cm, "1935Q4", aims)
-    for q in QUARTERS:
-        out[f"T13 {q} hegemonic"] = snapshot_state(cm, q, "hegemonic")
+    for aims in ("hegemonic", "revisionist"):
+        for q in QUARTERS:
+            out[f"T13 {q} {aims}"] = snapshot_state(cm, q, aims)
+            try:
+                out[f"T13 {q} {aims} builtins"] = snapshot_state(cm, q, aims, builtins=True)
+            except Exception as exc:  # a snapshot without a builtins section
+                print(f"# {q} {aims} builtins: {exc}")
     arms = cm.index["arms_GER"]
     high = cm.variables[arms].levels.index("high")
     for q in ("1938Q2", "1938Q3"):
@@ -61,7 +66,7 @@ def shortest_out(enc, start, kernel, limit=None):
             return d
         if limit is not None and d >= limit:
             return None
-        frontier = mgr.DIFF(enc.image(frontier), seen)
+        frontier = mgr.DIFF(enc.image(frontier, keep=[seen, outside]), seen)
         seen = mgr.OR(seen, frontier)
         d += 1
     return None
@@ -127,7 +132,7 @@ def cmd_reach(args):
         r = reachable(
             enc,
             enc.state_cube(s),
-            check=False,
+            check=args.check,
             on_iteration=lambda st: print(" ", label, st, flush=True),
         )
         t_reach = time.perf_counter() - t
@@ -159,6 +164,7 @@ def main():
     k.add_argument("--depth", type=int, default=None)
     r = sub.add_parser("reach")
     r.add_argument("labels", nargs="+")
+    r.add_argument("--check", action="store_true")
     args = p.parse_args()
     {"kernel": cmd_kernel, "reach": cmd_reach}[args.cmd](args)
 

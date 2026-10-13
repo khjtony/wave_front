@@ -44,8 +44,8 @@ Availability per actor (:attr:`Encoding.avail`): the action's guard (``guard_exp
 conjunction of a parted guard's unrelaxed parts), its delay counter at 0, the selected
 profiles' ``unless`` conditions, and the fairness restrictions (an actor whose counter has
 reached ``within`` may only play its responses). ``live`` holds where every actor has an
-available action, and ``active`` is ``dom & ~term & live``. Terminal states (an ending holds, or ``tick == horizon``) have no moves;
-their image is themselves (they are frozen).
+available action, and ``active`` is ``dom & ~term & live``. Terminal states (an ending
+holds, or ``tick == horizon``) have no moves; their image is themselves (they are frozen).
 
 The per-variable transition relation parts ``x' <-> f(s, a)`` (:meth:`Encoding.trans_parts`)
 are used for forward images; backward steps substitute the next-state functions into the
@@ -186,6 +186,7 @@ class Encoding:
         self.P = _Parts(self.mgr)
         self._gen = cm._gen
         self._named_cache: dict[tuple[str, str], int] = {}
+        self._predicates: dict[object, int] = {}
         self._layout(var_order, actions)
         self.state_vs = self.mgr.varset(self.state_levels)
         self.next_vs = self.mgr.varset(self.next_levels)
@@ -434,7 +435,14 @@ class Encoding:
     def predicate(self, target: Expr | str) -> int:
         """A state predicate: an ending name (``"HORIZON"``: terminal by tick with no
         ending), an invariant name, or an expression (see :meth:`condition`). Restricted to
-        the domain."""
+        the domain. Results are cached (by name, or by expression identity) and kept alive
+        with the encoding."""
+        hit = self._predicates.get(target)
+        if hit is None:
+            hit = self._predicates[target] = self._predicate(target)
+        return hit
+
+    def _predicate(self, target: Expr | str) -> int:
         cm = self.cm
         if isinstance(target, str):
             if target == "HORIZON" and "HORIZON" not in cm.model.endings:
@@ -546,9 +554,7 @@ class Encoding:
             out.append(("set", i, cond, value))
         return out
 
-    def _compose(
-        self, env: list[Partition], contributions: list[tuple[int, list[tuple]]]
-    ) -> None:
+    def _compose(self, env: list[Partition], contributions: list[tuple[int, list[tuple]]]) -> None:
         """Spec 3.4 for one phase: per variable, Sets win (first in order; two different
         values are an error), then summed Bumps, then clamping (strict: error)."""
         mgr, P = self.mgr, self.P
@@ -676,10 +682,7 @@ class Encoding:
     def changed_levels(self) -> frozenset[int]:
         """Current bit levels of the state variables whose value can change."""
         return frozenset(
-            lv
-            for bits in self.cur
-            if any(c in self.next_fn for c in bits)
-            for lv in bits
+            lv for bits in self.cur if any(c in self.next_fn for c in bits) for lv in bits
         )
 
     def trans_parts(self) -> list[tuple[int, frozenset[int]]]:
@@ -699,9 +702,10 @@ class Encoding:
             self._trans_parts = parts
         return self._trans_parts
 
-    def image(self, s: int) -> int:
+    def image(self, s: int, keep: Sequence[int] | None = None) -> int:
         """Successors of the states in ``s`` under available joint moves (terminal states
-        are frozen: their image is themselves).
+        are frozen: their image is themselves). With ``keep`` (every other edge the caller
+        still needs), garbage may be collected between steps.
 
         A relational product over the partitioned transition relation and the actors'
         availability: parts are conjoined greedily, each time the part that lets the most
@@ -737,6 +741,8 @@ class Encoding:
             _, k, q = best
             rel, sup = parts[k]
             acc = mgr.and_exists(acc, rel, q) if q else mgr.AND(acc, rel)
+            if keep is not None:
+                mgr.maybe_gc([acc, s, *keep])
             done |= q
             acc_sup |= sup
             remaining.discard(k)
@@ -753,8 +759,7 @@ class Encoding:
         """Per actor, the available action indices in ``state`` read from the BDDs."""
         arr = self._state_array(state)
         return [
-            [j for j, g in enumerate(row) if self.mgr.evaluate(g, arr)]
-            for row in self.action_avail
+            [j for j, g in enumerate(row) if self.mgr.evaluate(g, arr)] for row in self.action_avail
         ]
 
     def successor(self, state: Sequence[int], move: Sequence[int]) -> tuple[int, ...]:
@@ -819,6 +824,7 @@ class Encoding:
             *self.next_fn.values(),
             *self.ending_bdds.values(),
             *self._named_cache.values(),
+            *self._predicates.values(),
             *(c for part in self.cur_env for c in part.values()),
         ]
         if self._trans_parts is not None:

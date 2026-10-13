@@ -20,7 +20,11 @@ Three ways to obtain the files:
     and recorded in the manifest.
 
 Then, unless ``--no-extract``, the NMC rows for the eight WW2 powers, 1933 to 1941, are written
-to ``data/ww2/nmc_1936_1940.csv``.
+to ``data/ww2/nmc_1936_1940.csv`` (the v0 extract). ``--extract v1`` writes the v1 extract
+instead, ``data/ww2/nmc_1941_1945.csv``: 1941 to 1945 for the seven powers of WW2 v1 with China
+and the Netherlands for context only (docs/ww2_v1_decisions.md E7); ``--extract both`` writes
+both. Rows NMC does not have (COW system membership gaps) are left out, never filled, and the
+header lists them.
 """
 
 from __future__ import annotations
@@ -43,12 +47,17 @@ from wavefront.evidence.datasets import mid, nmc  # noqa: E402
 
 RAW_DIR = ROOT / "data" / "ww2" / "raw"
 EXTRACT = ROOT / "data" / "ww2" / "nmc_1936_1940.csv"
+EXTRACT_V1 = ROOT / "data" / "ww2" / "nmc_1941_1945.csv"
 MIRRORS = {"nmc": nmc.MIRROR_URL, "mid": mid.MIRROR_URL}
 OFFICIAL_PAGES = {"nmc": nmc.OFFICIAL_PAGE, "mid": mid.OFFICIAL_PAGE}
 
 # Germany, France, the United Kingdom, the USSR, Japan, Italy, the United States, Poland.
 EXTRACT_CCODES = (255, 220, 200, 365, 740, 325, 2, 290)
 EXTRACT_YEARS = range(1933, 1942)
+# WW2 v1 (decisions E7): the United States, the United Kingdom, France, Germany, Italy, the
+# USSR and Japan, with the Netherlands and China for context only; 1941 to 1945.
+EXTRACT_V1_CCODES = (2, 200, 220, 255, 325, 365, 740, 210, 710)
+EXTRACT_V1_YEARS = range(1941, 1946)
 
 
 def shown(path: Path) -> str:
@@ -136,6 +145,54 @@ def write_extract(raw: Path, out: Path, manifest: dict) -> None:
     print(f"extract: {shown(out)} ({len(chosen)} rows, NMC version {versions})")
 
 
+def gaps(rows: list[dict], years: range, ccodes: tuple[int, ...]) -> list[str]:
+    """The (state, year) rows NMC does not have and the missing (``-9``) cells of the rows it
+    has, for the extract's header: flagged, never filled."""
+    have = {(r["ccode"], r["year"]): r for r in rows}
+    out = []
+    for c in ccodes:
+        abb = nmc.COW_ABB.get(c, str(c))
+        absent = [y for y in years if (c, y) not in have]
+        if absent:
+            out.append(f"{abb} ({c}) has no row for {', '.join(map(str, absent))}")
+        for y in years:
+            row = have.get((c, y))
+            if row is None:
+                continue
+            missing = [
+                k
+                for k in ("irst", "milex", "milper", "pec", "tpop", "upop", "cinc")
+                if row[k] is None
+            ]
+            if missing:
+                out.append(f"{abb} {y}: {', '.join(missing)} missing (-9)")
+    return out
+
+
+def write_extract_v1(raw: Path, out: Path, manifest: dict) -> None:
+    rows = nmc.load(raw, obtained_via=manifest.get(raw.name, {}).get("obtained_via"))
+    chosen = nmc.extract(rows, EXTRACT_V1_YEARS, EXTRACT_V1_CCODES)
+    versions = sorted({r["version"] for r in chosen})
+    first, last = min(r["year"] for r in rows), max(r["year"] for r in rows)
+    flagged = gaps(chosen, EXTRACT_V1_YEARS, EXTRACT_V1_CCODES)
+    header = (
+        f"Source: {nmc.SOURCE}, version {', '.join(versions)} ({first} to {last}).\n"
+        "Extract: USA, UKG, FRN, GMY, ITA, RUS, JPN, with NTH and CHN for context only; years "
+        "1941 to 1945 (docs/ww2_v1_decisions.md E7). 1941 repeats nmc_1936_1940.csv for the "
+        "states both carry.\n"
+        "Gaps (COW system membership or missing cells; flagged, not filled): "
+        + ("; ".join(flagged) if flagged else "none")
+        + ".\n"
+        "Units: milex thousands of current US dollars; milper thousands; irst thousands of "
+        "tons; pec thousands of coal-ton equivalents; tpop, upop thousands. -9 = missing.\n"
+        f"Derived by scripts/fetch_ww2_data.py --extract v1 from {raw.name} (sha256 "
+        f"{sha256(raw)}); see data/ww2/README.md."
+    )
+    out.parent.mkdir(parents=True, exist_ok=True)
+    nmc.write_csv(chosen, out, header)
+    print(f"extract: {shown(out)} ({len(chosen)} rows, NMC version {versions})")
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     mode = parser.add_mutually_exclusive_group()
@@ -152,6 +209,13 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument("--raw-dir", type=Path, default=RAW_DIR)
     parser.add_argument("--extract-out", type=Path, default=EXTRACT)
+    parser.add_argument("--extract-v1-out", type=Path, default=EXTRACT_V1)
+    parser.add_argument(
+        "--extract",
+        choices=("v0", "v1", "both"),
+        default="v0",
+        help="which committed extract to write (default v0: nmc_1936_1940.csv)",
+    )
     parser.add_argument("--no-extract", action="store_true")
     args = parser.parse_args(argv)
 
@@ -194,7 +258,10 @@ def main(argv: list[str] | None = None) -> int:
         if raw is None:
             print(f"no NMC file in {raw_dir}; run with --mirror or --official first")
             return 1
-        write_extract(raw, args.extract_out.resolve(), manifest)
+        if args.extract in ("v0", "both"):
+            write_extract(raw, args.extract_out.resolve(), manifest)
+        if args.extract in ("v1", "both"):
+            write_extract_v1(raw, args.extract_v1_out.resolve(), manifest)
     return 0
 
 

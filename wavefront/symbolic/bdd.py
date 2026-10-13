@@ -40,8 +40,8 @@ from __future__ import annotations
 
 import sys
 import weakref
-from array import array
-from collections.abc import Iterable, Mapping, Sequence
+from collections.abc import Iterable, Iterator, Mapping, Sequence
+from contextlib import contextmanager
 from dataclasses import dataclass
 
 __all__ = ["BDD", "TRUE", "FALSE", "VarSet"]
@@ -77,9 +77,9 @@ class BDD:
     FALSE = FALSE
 
     def __init__(self) -> None:
-        self._var = array("q", [_TERMVAR])
-        self._lo = array("q", [0])
-        self._hi = array("q", [0])
+        self._var: list[int] = [_TERMVAR]
+        self._lo: list[int] = [0]
+        self._hi: list[int] = [0]
         self._unique: dict[int, int] = {}
         self._free: list[int] = []
         self.names: list[str] = []
@@ -93,6 +93,9 @@ class BDD:
         self._holders: weakref.WeakSet = weakref.WeakSet()
         self.peak_nodes = 1
         self.gc_runs = 0
+        self.gc_min_nodes = 2_000_000
+        self.gc_factor = 2.0
+        self._after_gc = 0
         self._build()
 
     # -- variables -----------------------------------------------------------------------
@@ -811,6 +814,18 @@ class BDD:
         else:
             self._protected[n] = k
 
+    @contextmanager
+    def protecting(self, *edges: int | None) -> Iterator[None]:
+        """Protect ``edges`` (``None`` entries are skipped) for the duration of a block."""
+        held = [e for e in edges if e is not None]
+        for e in held:
+            self.protect(e)
+        try:
+            yield
+        finally:
+            for e in held:
+                self.unprotect(e)
+
     def register(self, holder: object) -> None:
         """Keep the edges returned by ``holder.bdd_roots()`` alive while ``holder`` lives."""
         self._holders.add(holder)
@@ -857,6 +872,19 @@ class BDD:
             cache.clear()
         self.gc_runs += 1
         return freed
+
+    def maybe_gc(self, roots: Iterable[int] = ()) -> bool:
+        """Run :meth:`gc` if the live nodes exceed both ``gc_min_nodes`` and ``gc_factor``
+        times the live nodes left by the previous collection. Callers pass every edge they
+        still need that is not protected or held by a registered holder."""
+        if self.live_nodes <= max(self.gc_min_nodes, self.gc_factor * self._after_gc):
+            return False
+        n = len(self._var)
+        if n > self.peak_nodes:
+            self.peak_nodes = n
+        self.gc(roots)
+        self._after_gc = self.live_nodes
+        return True
 
     def stats(self) -> dict[str, int]:
         """Counters: live nodes, node-table high-water mark, cache sizes, collections."""

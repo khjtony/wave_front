@@ -1,4 +1,5 @@
-"""Helpers for running ``models/ww2/v0.py`` from the hindsight snapshots, per hypothesis.
+"""Helpers for running ``models/ww2/v0.py`` (and ``v1.py``) from the hindsight snapshots, per
+hypothesis.
 
 The hindsight snapshots (``snapshots/ww2/hindsight/``) omit the two swept hidden objectives
 ``aims_GER`` and ``aims_USSR`` on purpose: a snapshot that fixed them would assert a
@@ -31,6 +32,12 @@ opponents, it cannot keep it against all of them, so a state outside the kernel 
 restricted game is outside the true kernel (a refutation of membership); conversely, fixing
 the coalition's own strategy and finding no violating play shows membership (the
 sufficiency check of decisions D6).
+
+WW2 v1 (decisions E7): the v1 snapshots are in ``snapshots/ww2/hindsight_v1/``
+(:data:`SNAPSHOTS_V1`, ``1935Q4.json`` to ``1945Q3.json``) and the v1 realized moves in
+``data/ww2/realized_moves_v1.csv`` (:data:`REALIZED_MOVES_V1`). :func:`snapshot_data` and
+:func:`snapshot_state` take the snapshot directory as ``snapshots=`` and pass any further
+hidden objective to fix (``aims_JPN=...``) through; the v0 call sites are unchanged.
 """
 
 from __future__ import annotations
@@ -49,7 +56,9 @@ from wavefront.model.compile import CompiledModel
 __all__ = [
     "ROOT",
     "SNAPSHOTS",
+    "SNAPSHOTS_V1",
     "REALIZED_MOVES",
+    "REALIZED_MOVES_V1",
     "HYPOTHESES",
     "quarter_tick",
     "snapshot_data",
@@ -66,6 +75,8 @@ __all__ = [
 ROOT = Path(__file__).resolve().parents[2]
 SNAPSHOTS = ROOT / "snapshots" / "ww2" / "hindsight"
 REALIZED_MOVES = ROOT / "data" / "ww2" / "realized_moves.csv"
+SNAPSHOTS_V1 = ROOT / "snapshots" / "ww2" / "hindsight_v1"
+REALIZED_MOVES_V1 = ROOT / "data" / "ww2" / "realized_moves_v1.csv"
 
 # The two hypotheses of the registered tests: aims_GER swept, aims_USSR fixed by the
 # default assumption ``ussr_defensive``.
@@ -88,11 +99,18 @@ def quarter_tick(quarter: str) -> int:
     return index + 1
 
 
-def snapshot_data(quarter: str, *, builtins: bool = True, **fixed: str) -> dict[str, Any]:
-    """The parsed snapshot ``<quarter>.json`` with each ``fixed`` variable added as an
-    ``assumed`` entry (the snapshot must not already contain it), and without its
-    ``builtins`` section unless ``builtins`` is true."""
-    data = read_snapshot(SNAPSHOTS / f"{quarter}.json")
+def snapshot_data(
+    quarter: str,
+    *,
+    builtins: bool = True,
+    snapshots: str | Path = SNAPSHOTS,
+    **fixed: str,
+) -> dict[str, Any]:
+    """The parsed snapshot ``<quarter>.json`` of the directory ``snapshots`` (default: the
+    v0 files) with each ``fixed`` variable added as an ``assumed`` entry (the snapshot must
+    not already contain it), and without its ``builtins`` section unless ``builtins`` is
+    true."""
+    data = read_snapshot(Path(snapshots) / f"{quarter}.json")
     data = copy.deepcopy(data)
     if not builtins:
         data.pop("builtins", None)
@@ -110,12 +128,23 @@ def snapshot_state(
     aims_USSR: str = "defensive",
     *,
     builtins: bool = False,
+    snapshots: str | Path = SNAPSHOTS,
+    **hidden: str,
 ) -> tuple[int, ...]:
     """The state of ``cm`` at the end of ``quarter`` (tick ``quarter_tick(quarter)``) read
-    from the hindsight snapshot, with the hidden objectives fixed to one hypothesis. With
-    ``builtins=True`` the snapshot's built-ins (pending decisions, last actions, the latch,
-    fairness counters) are loaded too; by default they are dropped (module docstring)."""
-    data = snapshot_data(quarter, builtins=builtins, aims_GER=aims_GER, aims_USSR=aims_USSR)
+    from the hindsight snapshot in ``snapshots`` (default: the v0 files), with the hidden
+    objectives fixed to one hypothesis (``aims_GER``, ``aims_USSR`` and any further one passed
+    by name, such as ``aims_JPN`` for v1). With ``builtins=True`` the snapshot's built-ins
+    (pending decisions, last actions, the latch, fairness counters) are loaded too; by default
+    they are dropped (module docstring)."""
+    data = snapshot_data(
+        quarter,
+        builtins=builtins,
+        snapshots=snapshots,
+        aims_GER=aims_GER,
+        aims_USSR=aims_USSR,
+        **hidden,
+    )
     state = list(snapshot_to_state(data, cm))
     if cm.timed:
         state[cm.index["tick"]] = quarter_tick(quarter)

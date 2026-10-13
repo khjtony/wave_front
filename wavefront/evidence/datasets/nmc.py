@@ -65,11 +65,13 @@ MIRROR_NOTE = f"peacesciencer R package mirror ({MIRROR_URL})"
 COW_ABB = {
     2: "USA",
     200: "UKG",
+    210: "NTH",
     220: "FRN",
     255: "GMY",
     290: "POL",
     325: "ITA",
     365: "RUS",
+    710: "CHN",
     740: "JPN",
 }
 

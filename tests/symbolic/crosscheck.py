@@ -54,7 +54,9 @@ def check_attractor(g, enc, coalition, goal, tb):
         if xa.rank[i] == 0:
             assert move is None
             continue
-        followers = [t for jm, t in zip(g.moves[i], g.succ[i], strict=True) if _sub(jm, members) == move]
+        followers = [
+            t for jm, t in zip(g.moves[i], g.succ[i], strict=True) if _sub(jm, members) == move
+        ]
         assert followers, "the strategy move is available"
         assert all(xa.rank.get(t, -1) in range(xa.rank[i]) for t in followers)
     for i in g.initial:
@@ -94,7 +96,9 @@ def check_safe(g, enc, coalition, phi, pb, within=None):
         if g.terminal[i]:
             assert move is None
             continue
-        followers = [t for jm, t in zip(g.moves[i], g.succ[i], strict=True) if _sub(jm, members) == move]
+        followers = [
+            t for jm, t in zip(g.moves[i], g.succ[i], strict=True) if _sub(jm, members) == move
+        ]
         assert followers, "the strategy move is available"
         assert all(t in xs.kernel for t in followers)
 
@@ -108,12 +112,16 @@ def check_contested(g, enc, coalition, goal, tb):
             assert sc.region(s) == want
 
 
-def check_model(model, profile=None, seed=0, every_coalition=False):
+def check_model(model, profile=None, seed=0, every_coalition=False, gc_always=False):
     """All checks on one model; ``False`` if the explicit engine rejects it (then the
-    symbolic ``reachable`` must reject it too)."""
+    symbolic ``reachable`` must reject it too). ``gc_always`` makes the manager collect
+    garbage at every opportunity."""
     cm = model.compile(profile=profile)
     g = try_explore(cm)
     enc = encode(cm)
+    if gc_always:
+        enc.mgr.gc_min_nodes = 0
+        enc.mgr.gc_factor = 0.0
     if g is None:
         try:
             reachable(enc)

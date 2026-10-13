@@ -1,0 +1,1043 @@
+{
+  "$schema": "../../schema.json",
+  "date": "1942-03-31",
+  "model": "ww2_v1",
+  "variables": {
+    "arms_GER": {
+      "level": "total",
+      "confidence": "medium",
+      "indicators": [
+        {
+          "id": "event_1942-02-08_arms_GER",
+          "value": "Speer appointed Minister for Armaments and Munitions after Hitler's decree 'Ruestung 1942' (10 January 1942)",
+          "source": "Tooze 2006 (chapter on Speer's armaments ministry, not verified); Hitler's decree of 10 January 1942 ?",
+          "observed": "1942-02-08",
+          "rule": "planning-record definition of total (decisions D12). Note: Threshold reading of v0's rule for total. The model's v0 decision of October 1938 makes total visible at 1941Q1; for the historian (ontology_ww2_v1.md section 2.2)."
+        },
+        {
+          "id": "nmc_GMY_1942_milper",
+          "value": 7028,
+          "source": "Correlates of War Project, National Material Capabilities data set (Singer, Bremer and Stuckey 1972; Singer 1988), version 7.0, obtained via peacesciencer R package mirror (https://raw.githubusercontent.com/svmiller/peacesciencer/master/data/cow_nmc.rda); committed extract data/ww2/nmc_1941_1945.csv",
+          "observed": "1942-12-31",
+          "rule": "provisional rule for arms_GER (ontology section 2): high if NMC milper >= 1000 thousand (a field army able to sustain a major campaign); rising if conscription in force (events_ww2.csv) and NMC milex above the previous year's; otherwise low; high and total are also read from the dated planning record (decisions D12; events_ww2_v1.csv for total); milper 7028 vs threshold 1000; interpolated: annual value carried to the quarter"
+        },
+        {
+          "id": "nmc_GMY_1942_milex",
+          "value": 36900000,
+          "source": "Correlates of War Project, National Material Capabilities data set (Singer, Bremer and Stuckey 1972; Singer 1988), version 7.0, obtained via peacesciencer R package mirror (https://raw.githubusercontent.com/svmiller/peacesciencer/master/data/cow_nmc.rda); committed extract data/ww2/nmc_1941_1945.csv",
+          "observed": "1942-12-31",
+          "rule": "provisional rule for arms_GER (ontology section 2): high if NMC milper >= 1000 thousand (a field army able to sustain a major campaign); rising if conscription in force (events_ww2.csv) and NMC milex above the previous year's; otherwise low; high and total are also read from the dated planning record (decisions D12; events_ww2_v1.csv for total); milex 36900000 vs 1941: 28900000; interpolated: annual value carried to the quarter"
+        },
+        {
+          "id": "event_1935-03-16_arms_GER",
+          "value": "Germany reintroduces conscription (Law for the Reconstruction of the Wehrmacht)",
+          "source": "Gesetz fuer den Aufbau der Wehrmacht, 16 March 1935 (Reichsgesetzblatt 1935 I); Weinberg 1994, A World at Arms, ch. 1",
+          "observed": "1935-03-16",
+          "rule": "gate of the arms_GER rule, in force. Note: Gate of the arms_GER rule: conscription in force. The NMC milex and milper tests apply on top of it."
+        }
+      ]
+    },
+    "arms_WEST": {
+      "level": "high",
+      "confidence": "medium",
+      "indicators": [
+        {
+          "id": "nmc_UKG_FRN_1942_milex",
+          "value": 14220632,
+          "source": "Correlates of War Project, National Material Capabilities data set (Singer, Bremer and Stuckey 1972; Singer 1988), version 7.0, obtained via peacesciencer R package mirror (https://raw.githubusercontent.com/svmiller/peacesciencer/master/data/cow_nmc.rda); committed extract data/ww2/nmc_1941_1945.csv",
+          "observed": "1942-12-31",
+          "rule": "provisional rule for arms_WEST (ontology section 2): high if the combined United Kingdom and France NMC milex is at least 3.0 times its 1935 value (the year before the programmes); rising if both western rearmament programmes in force (events_ww2.csv) and the combined milex is above the previous year's; otherwise low; combined milex 14220632 (UKG 13478623 + FRN 742009); 1935: 1513452 (ratio 9.40, threshold 3.0); 1941: 11885861; interpolated: annual value carried to the quarter"
+        },
+        {
+          "id": "nmc_UKG_1942_milper",
+          "value": 3390,
+          "source": "Correlates of War Project, National Material Capabilities data set (Singer, Bremer and Stuckey 1972; Singer 1988), version 7.0, obtained via peacesciencer R package mirror (https://raw.githubusercontent.com/svmiller/peacesciencer/master/data/cow_nmc.rda); committed extract data/ww2/nmc_1941_1945.csv",
+          "observed": "1942-12-31",
+          "rule": "context for arms_WEST, not in the rule; UKG milper; interpolated: annual value carried to the quarter"
+        },
+        {
+          "id": "event_1936-09-07_arms_WEST",
+          "value": "French four-year rearmament programme (14 billion francs) adopted; with the British programme of March 1936 both western programmes are in force",
+          "source": "Statement Relating to Defence, Cmd. 5107 (March 1936); French government decision on the Daladier rearmament programme, September 1936 ?",
+          "observed": "1936-09-07",
+          "rule": "gate of the arms_WEST rule, in force. Note: Day of the French decision uncertain (early September 1936); the quarter is not affected. Gate of the arms_WEST rule: both programmes in force. The NMC milex tests apply on top of it."
+        }
+      ]
+    },
+    "arms_USSR": {
+      "level": "strong",
+      "confidence": "medium",
+      "indicators": [
+        {
+          "id": "event_1938-11-17_arms_USSR",
+          "value": "Decree of the Council of People's Commissars and the Central Committee ends the mass operations; Yezhov replaced by Beria (November to December 1938)",
+          "source": "Decree 'On arrests, procuratorial supervision and the conduct of investigations', 17 November 1938 ?",
+          "observed": "1938-11-17",
+          "rule": "arms_USSR takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (arms_USSR := strong). Note: Day recalled as 17 November 1938. Literal reading of the ontology ('weak: purged 1937 to 1938; strong otherwise'): the end of the arrests does not date a recovery of command quality, and the Winter War of 1939 to 1940 argues against one. For the historian."
+        },
+        {
+          "id": "nmc_RUS_1942_milper",
+          "value": 4932,
+          "source": "Correlates of War Project, National Material Capabilities data set (Singer, Bremer and Stuckey 1972; Singer 1988), version 7.0, obtained via peacesciencer R package mirror (https://raw.githubusercontent.com/svmiller/peacesciencer/master/data/cow_nmc.rda); committed extract data/ww2/nmc_1941_1945.csv",
+          "observed": "1942-12-31",
+          "rule": "supporting indicator for arms_USSR (ontology section 2: weak while the officer corps is purged, 1937 to 1938; strong otherwise); NMC milper counts personnel and does not register the purge; interpolated: annual value carried to the quarter"
+        }
+      ]
+    },
+    "arms_JPN": {
+      "level": "high",
+      "confidence": "medium",
+      "indicators": [
+        {
+          "id": "nmc_JPN_1942_milex",
+          "value": 4414273,
+          "source": "Correlates of War Project, National Material Capabilities data set (Singer, Bremer and Stuckey 1972; Singer 1988), version 7.0, obtained via peacesciencer R package mirror (https://raw.githubusercontent.com/svmiller/peacesciencer/master/data/cow_nmc.rda); committed extract data/ww2/nmc_1941_1945.csv",
+          "observed": "1942-12-31",
+          "rule": "arms_JPN is fixed at high in v0 and v1 (ontology section 2); NMC shown as context; interpolated: annual value carried to the quarter"
+        },
+        {
+          "id": "nmc_JPN_1942_milper",
+          "value": 3075,
+          "source": "Correlates of War Project, National Material Capabilities data set (Singer, Bremer and Stuckey 1972; Singer 1988), version 7.0, obtained via peacesciencer R package mirror (https://raw.githubusercontent.com/svmiller/peacesciencer/master/data/cow_nmc.rda); committed extract data/ww2/nmc_1941_1945.csv",
+          "observed": "1942-12-31",
+          "rule": "arms_JPN is fixed at high in v0 and v1 (ontology section 2); NMC shown as context; interpolated: annual value carried to the quarter"
+        }
+      ]
+    },
+    "ind_GER": {
+      "level": 5,
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "event_1938-03-12_austria",
+          "value": "German troops enter Austria (12 March); law on the reunification of Austria with the Reich (13 March)",
+          "source": "ICB crisis 'Anschluss'; Gesetz ueber die Wiedervereinigung Oesterreichs mit dem Deutschen Reich, 13 March 1938 (Reichsgesetzblatt 1938 I); Weinberg 1994, A World at Arms, ch. 1",
+          "observed": "1938-03-12",
+          "rule": "ind_GER = 3 + 1 with Austria annexed + 1 with Bohemia german (ontology section 2); austria is annexed, bohemia is german"
+        },
+        {
+          "id": "event_1939-03-15_bohemia",
+          "value": "German occupation of Prague; Protectorate of Bohemia and Moravia proclaimed (16 March)",
+          "source": "Erlass des Fuehrers und Reichskanzlers ueber das Protektorat Boehmen und Maehren, 16 March 1939 (Reichsgesetzblatt 1939 I); Weinberg 1994, A World at Arms, ch. 1",
+          "observed": "1939-03-15",
+          "rule": "ind_GER = 3 + 1 with Austria annexed + 1 with Bohemia german (ontology section 2); austria is annexed, bohemia is german"
+        },
+        {
+          "id": "nmc_GMY_1942_irst",
+          "value": 20480,
+          "source": "Correlates of War Project, National Material Capabilities data set (Singer, Bremer and Stuckey 1972; Singer 1988), version 7.0, obtained via peacesciencer R package mirror (https://raw.githubusercontent.com/svmiller/peacesciencer/master/data/cow_nmc.rda); committed extract data/ww2/nmc_1941_1945.csv",
+          "observed": "1942-12-31",
+          "rule": "cross-check for ind_GER, not in the rule: German iron and steel (NMC irst); interpolated: annual value carried to the quarter"
+        }
+      ]
+    },
+    "oil_GER": {
+      "level": "secured",
+      "confidence": "medium",
+      "indicators": [
+        {
+          "id": "event_1940-02-11_oil_GER",
+          "value": "German-Soviet Commercial Agreement: Soviet oil and grain deliveries against German manufactures",
+          "source": "German-Soviet Commercial Agreement, Moscow, 11 February 1940 (DGFP series D); Tooze 2006, The Wages of Destruction (chapter not verified)",
+          "observed": "1940-02-11",
+          "rule": "oil_GER takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (oil_GER := secured). Note: The ontology rule (deliveries under the 1939 to 1940 agreements) dates the level here; the action catalogue sets oil_GER secured at the August 1939 pact (1939Q3). For the historian."
+        },
+        {
+          "id": "event_1940-05-27_oil_GER",
+          "value": "German-Romanian oil-for-arms agreement",
+          "source": "German-Romanian economic agreement on oil deliveries, May 1940 (DGFP series D) ?",
+          "observed": "1940-05-27",
+          "rule": "oil_GER takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (oil_GER := secured). Note: Day recalled as 27 May 1940; no level change (confirms secured)."
+        }
+      ]
+    },
+    "arms_USA": {
+      "level": "rising",
+      "confidence": "medium",
+      "indicators": [
+        {
+          "id": "nmc_USA_1942_milper",
+          "value": 3859,
+          "source": "Correlates of War Project, National Material Capabilities data set (Singer, Bremer and Stuckey 1972; Singer 1988), version 7.0, obtained via peacesciencer R package mirror (https://raw.githubusercontent.com/svmiller/peacesciencer/master/data/cow_nmc.rda); committed extract data/ww2/nmc_1941_1945.csv",
+          "observed": "1942-12-31",
+          "rule": "provisional rule for arms_USA (docs/ontology_ww2_v1.md section 2.1; decisions E7): high if NMC milper >= 5000 thousand; rising if a funded general programme in force (events_ww2_v1.csv, 19 Jul 1940) and NMC milex above the previous year's; otherwise low; threshold for the historian's review; milper 3859 vs threshold 5000; interpolated: annual value carried to the quarter"
+        },
+        {
+          "id": "nmc_USA_1942_milex",
+          "value": 26001000,
+          "source": "Correlates of War Project, National Material Capabilities data set (Singer, Bremer and Stuckey 1972; Singer 1988), version 7.0, obtained via peacesciencer R package mirror (https://raw.githubusercontent.com/svmiller/peacesciencer/master/data/cow_nmc.rda); committed extract data/ww2/nmc_1941_1945.csv",
+          "observed": "1942-12-31",
+          "rule": "provisional rule for arms_USA (docs/ontology_ww2_v1.md section 2.1; decisions E7): high if NMC milper >= 5000 thousand; rising if a funded general programme in force (events_ww2_v1.csv, 19 Jul 1940) and NMC milex above the previous year's; otherwise low; threshold for the historian's review; milex 26001000 vs 1941: 6301000; interpolated: annual value carried to the quarter"
+        },
+        {
+          "id": "event_1940-07-19_arms_USA",
+          "value": "Two-Ocean Navy Act, after the message of 16 May 1940 and the defence appropriations of June; Selective Training and Service Act of 16 September 1940",
+          "source": "Two-Ocean Navy Act, 19 July 1940; Roosevelt's message to Congress, 16 May 1940; Selective Training and Service Act, 16 September 1940",
+          "observed": "1940-07-19",
+          "rule": "gate of the arms_USA rule, in force. Note: Rule reading: the programme in force. The model's us_rearm (delay 4) makes rising visible at 1941Q4, as v0's WEST rearm lags its own rule reading; for the historian."
+        }
+      ]
+    },
+    "mob_USSR": {
+      "level": "peace",
+      "confidence": "medium",
+      "indicators": [
+        {
+          "id": "event_1941-06-24_mob_USSR",
+          "value": "Evacuation Council established (GKO on 30 June 1941)",
+          "source": "Decree of 24 June 1941 establishing the Evacuation Council; Harrison 1985",
+          "observed": "1941-06-24",
+          "rule": "mob_USSR takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (mob_USSR := peace). Note: No level change: the decision record of mobilize_total; the level changes when output recovers (1942)."
+        }
+      ]
+    },
+    "exhaustion_GER": {
+      "level": "sustainable",
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "event_1943-01-13_exhaustion_GER",
+          "value": "Decree on the comprehensive deployment of men and women for Reich defence",
+          "source": "Fuehrer decree of 13 January 1943; Tooze 2006 (chapter not verified)",
+          "observed": "1943-01-13",
+          "rule": "no dated event changes exhaustion_GER before 1942-03-31 (end of quarter), so it keeps the ontology's 1936Q1 initial level 'sustainable' (docs/ontology_ww2_v1.md section 2); the first dated change or confirmation is the event shown"
+        }
+      ]
+    },
+    "oil_JPN": {
+      "level": "secure",
+      "confidence": "medium",
+      "indicators": [
+        {
+          "id": "event_1942-03-08_oil_JPN",
+          "value": "The Indies oilfields in Japanese hands (Palembang, Balikpapan), the sea lanes open",
+          "source": "USSBS, Oil in Japan's War (1946), hindsight only",
+          "observed": "1942-03-08",
+          "rule": "oil_JPN takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (oil_JPN := secure). Note: Threshold reading: production was restored only in part in 1942; secure reads control and the open sea lanes, not output. For the historian."
+        }
+      ]
+    },
+    "jpn_navy": {
+      "level": "strong",
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "event_1936-01-15_jpn_navy",
+          "value": "Japan leaves the London Naval Conference; the Washington treaty expires on 31 December 1936 on Japan's notice of 29 December 1934",
+          "source": "Japanese delegation's withdrawal, London Naval Conference, 15 January 1936; Japanese notice of 29 December 1934 (FRUS Japan 1931-1941 vol. I)",
+          "observed": "1936-01-15",
+          "rule": "jpn_navy takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (jpn_navy := strong). Note: Defends the initial level (strong)."
+        }
+      ]
+    },
+    "bomb_ready": {
+      "level": false,
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "event_1945-07-16_bomb_ready",
+          "value": "Trinity test; weapons delivered to Tinian in late July",
+          "source": "Hewlett and Anderson, The New World (1962)",
+          "observed": "1945-07-16",
+          "rule": "no dated event changes bomb_ready before 1942-03-31 (end of quarter), so it keeps the ontology's 1936Q1 initial level False (docs/ontology_ww2_v1.md section 2); the first dated change or confirmation is the event shown"
+        }
+      ]
+    },
+    "strategic_bombing": {
+      "level": false,
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "event_1943-01-21_strategic_bombing",
+          "value": "Casablanca directive of the Combined Chiefs for the bomber offensive against Germany",
+          "source": "CCS directive of 21 January 1943; Webster and Frankland, The Strategic Air Offensive against Germany (1961)",
+          "observed": "1943-01-21",
+          "rule": "no dated event changes strategic_bombing before 1942-03-31 (end of quarter), so it keeps the ontology's 1936Q1 initial level False (docs/ontology_ww2_v1.md section 2); the first dated change or confirmation is the event shown"
+        }
+      ]
+    },
+    "air_west": {
+      "level": "contested",
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "event_1944-02-25_air_west",
+          "value": "Big Week (20 to 25 February 1944): the German day-fighter force broken by escorted daylight raids",
+          "source": "Murray, Strategy for Defeat (1983); Webster and Frankland 1961",
+          "observed": "1944-02-25",
+          "rule": "no dated event changes air_west before 1942-03-31 (end of quarter), so it keeps the ontology's 1936Q1 initial level 'contested' (docs/ontology_ww2_v1.md section 2); the first dated change or confirmation is the event shown. Note: Threshold judgment: COSSAC's condition was met by May 1944; the decisive battles are dated February. For the historian."
+        }
+      ]
+    },
+    "belief_WEST": {
+      "level": "hegemonic",
+      "confidence": "medium",
+      "indicators": [
+        {
+          "id": "event_1939-03-17_belief_WEST",
+          "value": "Chamberlain's Birmingham speech asks whether Germany is attempting to dominate the world by force",
+          "source": "Chamberlain, speech at Birmingham, 17 March 1939 (The Times, 18 March 1939)",
+          "observed": "1939-03-17",
+          "rule": "belief_WEST takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (belief_WEST := hegemonic). Note: Indicator named by the ontology."
+        }
+      ]
+    },
+    "belief_GER": {
+      "level": "will_fight",
+      "confidence": "medium",
+      "indicators": [
+        {
+          "id": "event_1939-09-03_belief_GER",
+          "value": "The declarations of war disprove the expectation of 22 August",
+          "source": "Hansard, HC Deb 3 September 1939; British ultimatum delivered in Berlin, 3 September 1939 (DGFP series D)",
+          "observed": "1939-09-03",
+          "rule": "belief_GER takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (belief_GER := will_fight). Note: Observed resolve, not a reported belief."
+        }
+      ]
+    },
+    "commit_WEST": {
+      "level": "at_war",
+      "confidence": "medium",
+      "indicators": [
+        {
+          "id": "event_1939-09-03_commit_WEST",
+          "value": "Britain and France declare war on Germany",
+          "source": "ICB crisis 'Entry into World War II'; Hansard, HC Deb 3 September 1939 (Prime Minister's statement)",
+          "observed": "1939-09-03",
+          "rule": "commit_WEST takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (commit_WEST := at_war)"
+        }
+      ]
+    },
+    "commit_US": {
+      "level": "total",
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "event_1941-12-08_commit_US",
+          "value": "Congress declares war on Japan (Senate 82 to 0, House 388 to 1)",
+          "source": "Joint resolution of 8 December 1941",
+          "observed": "1941-12-08",
+          "rule": "commit_US takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (commit_US := total)"
+        }
+      ]
+    },
+    "treaty": {
+      "level": "dead",
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "event_1936-03-07_treaty",
+          "value": "Germany repudiates the Treaty of Locarno and remilitarizes the Rhineland",
+          "source": "ICB crisis 'Remilitarization of the Rhineland'; German memorandum to the Locarno powers, 7 March 1936 (DGFP series C); Weinberg 1994, A World at Arms, ch. 1",
+          "observed": "1936-03-07",
+          "rule": "treaty takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (treaty := dead)"
+        }
+      ]
+    },
+    "axis": {
+      "level": true,
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "event_1936-10-23_axis",
+          "value": "Rome-Berlin protocols signed by Ciano and Neurath; announced by Mussolini as an 'axis' on 1 November 1936",
+          "source": "German-Italian protocol (Ciano-Neurath), 23 October 1936 ? (DGFP series C); Mussolini, speech at Milan, 1 November 1936; Weinberg 1994, A World at Arms, ch. 1",
+          "observed": "1936-10-23",
+          "rule": "axis takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (axis := True). Note: Day of signature recalled as 23 October 1936; the quarter is not affected."
+        },
+        {
+          "id": "event_1940-09-27_axis",
+          "value": "Tripartite Pact between Germany, Italy and Japan",
+          "source": "Three-Power Pact, Berlin, 27 September 1940 (text: Avalon Project, Yale Law School)",
+          "observed": "1940-09-27",
+          "rule": "axis takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (axis := True). Note: No level change: confirms the axis flag."
+        }
+      ]
+    },
+    "anticomintern": {
+      "level": true,
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "event_1936-11-25_anticomintern",
+          "value": "Anti-Comintern Pact between Germany and Japan",
+          "source": "Agreement against the Communist International, Berlin, 25 November 1936 (text: Avalon Project, Yale Law School)",
+          "observed": "1936-11-25",
+          "rule": "anticomintern takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (anticomintern := True)"
+        },
+        {
+          "id": "event_1940-09-27_anticomintern",
+          "value": "Tripartite Pact between Germany, Italy and Japan",
+          "source": "Three-Power Pact, Berlin, 27 September 1940 (text: Avalon Project, Yale Law School)",
+          "observed": "1940-09-27",
+          "rule": "anticomintern takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (anticomintern := True). Note: No level change: confirms the German-Japanese alignment."
+        }
+      ]
+    },
+    "nazi_soviet_pact": {
+      "level": true,
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "event_1939-08-23_nazi_soviet_pact",
+          "value": "Molotov-Ribbentrop Pact, with the secret protocol on spheres of interest",
+          "source": "Treaty of Non-Aggression between Germany and the USSR, Moscow, 23 August 1939 (text: Avalon Project, Yale Law School)",
+          "observed": "1939-08-23",
+          "rule": "nazi_soviet_pact takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (nazi_soviet_pact := True)"
+        }
+      ]
+    },
+    "polish_guarantee": {
+      "level": true,
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "event_1939-03-31_polish_guarantee",
+          "value": "British guarantee to Poland announced in the Commons; France associated",
+          "source": "Hansard, HC Deb 31 March 1939 (Prime Minister's statement on Poland)",
+          "observed": "1939-03-31",
+          "rule": "polish_guarantee takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (polish_guarantee := True)"
+        }
+      ]
+    },
+    "anglo_soviet_alliance": {
+      "level": true,
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "event_1941-07-12_anglo_soviet_alliance",
+          "value": "Anglo-Soviet Agreement: mutual assistance, no separate armistice or peace",
+          "source": "Agreement between the United Kingdom and the USSR, Moscow, 12 July 1941 (Cmd. 6304) ?",
+          "observed": "1941-07-12",
+          "rule": "anglo_soviet_alliance takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (anglo_soviet_alliance := True). Note: The model sets the flag with the attack of 22 June (actions_ww2_v1.md). Command paper number recalled, not verified."
+        }
+      ]
+    },
+    "ussr_axis": {
+      "level": false,
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "event_1940-11-13_ussr_axis",
+          "value": "Molotov's talks in Berlin (12 to 13 November) end without Soviet accession to the Tripartite Pact; the Soviet counter-conditions of 25 November go unanswered",
+          "source": "Records of the Hitler-Molotov conversations, 12 to 13 November 1940 (DGFP series D); Kershaw 2007, Fateful Choices, ch. 2",
+          "observed": "1940-11-13",
+          "rule": "ussr_axis takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (ussr_axis := False). Note: No level change."
+        }
+      ]
+    },
+    "italy_estranged": {
+      "level": true,
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "event_1935-10-03_italy_estranged",
+          "value": "Italy invades Ethiopia; League of Nations sanctions from 18 November 1935",
+          "source": "League of Nations, Official Journal 1935 (sanctions resolutions); Weinberg 1994, A World at Arms, ch. 1",
+          "observed": "1935-10-03",
+          "rule": "italy_estranged takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (italy_estranged := True). Note: Defends the ontology's initial level. The Anglo-Italian Agreement (April 1938) is not read as ending the estrangement."
+        }
+      ]
+    },
+    "china_war": {
+      "level": true,
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "event_1937-07-07_china_war",
+          "value": "Marco Polo Bridge incident; the Konoe cabinet sends reinforcements (11 Jul) and the fighting spreads to Shanghai (13 Aug 1937)",
+          "source": "Japanese cabinet decision of 11 Jul 1937 and the Imperial Headquarters orders of Aug 1937; Iriye, The Origins of the Second World War in Asia and the Pacific (1987), ch. 2 (chapter not verified)",
+          "observed": "1937-07-07",
+          "rule": "china_war takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (china_war := True). Note: Sets the main feasibility constraint on a northern strike (decisions D7). From here the army is engaged in China."
+        },
+        {
+          "id": "event_1938-11-03_china_war",
+          "value": "Konoe statement on a New Order in East Asia",
+          "source": "Japanese government statement of 3 November 1938; Iriye 1987 (chapter not verified)",
+          "observed": "1938-11-03",
+          "rule": "china_war takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (china_war := True). Note: No level change. Also the first dated statement of the regional hypothesis for aims_JPN (ontology_ww2_v1.md section 1); aims are not snapshot variables."
+        }
+      ]
+    },
+    "east_war": {
+      "level": true,
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "event_1941-06-22_east_war",
+          "value": "Germany attacks the USSR",
+          "source": "Trevor-Roper (ed.), Hitler's War Directives, Directive No. 21; German note and declaration of 22 June 1941 (DGFP Series D vol. XII)",
+          "observed": "1941-06-22",
+          "rule": "east_war takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (east_war := True)"
+        }
+      ]
+    },
+    "war_us_ger": {
+      "level": "war",
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "event_1941-12-11_war_us_ger",
+          "value": "Germany and Italy declare war on the United States; Congress declares war on both",
+          "source": "German declaration of war, 11 December 1941 (DGFP Series D vol. XIII); joint resolutions of 11 December 1941",
+          "observed": "1941-12-11",
+          "rule": "war_us_ger takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (war_us_ger := war)"
+        }
+      ]
+    },
+    "pacific_war": {
+      "level": "war",
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "event_1941-12-07_pacific_war",
+          "value": "Japan attacks Pearl Harbor, Malaya, the Philippines and Hong Kong (7 to 8 December 1941)",
+          "source": "Ike (Imperial Conference of 1 December 1941); Japanese Imperial rescript of 8 December 1941",
+          "observed": "1941-12-07",
+          "rule": "pacific_war takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (pacific_war := war)"
+        }
+      ]
+    },
+    "reich": {
+      "level": "fighting",
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "event_1945-05-07_reich",
+          "value": "Unconditional surrender of the German armed forces at Reims (7 May) and Berlin (8 May 1945)",
+          "source": "Act of military surrender, Reims, 7 May 1945, and Berlin, 8 May 1945 (text: Avalon Project, Yale Law School)",
+          "observed": "1945-05-07",
+          "rule": "no dated event changes reich before 1942-03-31 (end of quarter), so it keeps the ontology's 1936Q1 initial level 'fighting' (docs/ontology_ww2_v1.md section 4); the first dated change or confirmation is the event shown"
+        }
+      ]
+    },
+    "east_feeler": {
+      "level": false,
+      "confidence": "medium",
+      "indicators": [
+        {
+          "id": "moves_without_USSR_seek_terms_east",
+          "value": "no USSR seek_terms_east in the realized moves",
+          "source": "data/ww2/realized_moves_v1.csv",
+          "observed": "1945-09-30",
+          "rule": "east_feeler is set only by USSR seek_terms_east, which no row of data/ww2/realized_moves_v1.csv records (ticks 0 to 38), so it keeps its initial level False at the end of 1942Q1 (docs/ontology_ww2_v1.md section 4)"
+        }
+      ]
+    },
+    "east_peace": {
+      "level": false,
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "moves_without_GER_negotiate_east",
+          "value": "no GER negotiate_east in the realized moves",
+          "source": "data/ww2/realized_moves_v1.csv",
+          "observed": "1945-09-30",
+          "rule": "east_peace is set only by GER negotiate_east, which no row of data/ww2/realized_moves_v1.csv records (ticks 0 to 38), so it keeps its initial level False at the end of 1942Q1 (docs/ontology_ww2_v1.md section 4)"
+        }
+      ]
+    },
+    "midway_ordered": {
+      "level": false,
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "moves_without_JPN_offensive_midway",
+          "value": "no JPN offensive_midway in the realized moves",
+          "source": "data/ww2/realized_moves_v1.csv",
+          "observed": "1945-09-30",
+          "rule": "midway_ordered is set only by JPN offensive_midway, which no row of data/ww2/realized_moves_v1.csv records (ticks 0 to 38), so it keeps its initial level False at the end of 1942Q1 (docs/ontology_ww2_v1.md section 4)"
+        }
+      ]
+    },
+    "rhineland": {
+      "level": "remilitarized",
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "event_1936-03-07_rhineland",
+          "value": "German troops reoccupy the demilitarized Rhineland",
+          "source": "ICB crisis 'Remilitarization of the Rhineland'; German memorandum to the Locarno powers, 7 March 1936 (DGFP series C); Weinberg 1994, A World at Arms, ch. 1",
+          "observed": "1936-03-07",
+          "rule": "rhineland takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (rhineland := remilitarized)"
+        }
+      ]
+    },
+    "austria": {
+      "level": "annexed",
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "event_1938-03-12_austria",
+          "value": "German troops enter Austria (12 March); law on the reunification of Austria with the Reich (13 March)",
+          "source": "ICB crisis 'Anschluss'; Gesetz ueber die Wiedervereinigung Oesterreichs mit dem Deutschen Reich, 13 March 1938 (Reichsgesetzblatt 1938 I); Weinberg 1994, A World at Arms, ch. 1",
+          "observed": "1938-03-12",
+          "rule": "austria takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (austria := annexed)"
+        }
+      ]
+    },
+    "sudeten": {
+      "level": "german",
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "event_1938-09-30_sudeten",
+          "value": "Munich Agreement (signed in the early hours of 30 September, dated 29 September); occupation 1 to 10 October 1938",
+          "source": "ICB crisis 'Munich'; Agreement concluded at Munich, 29 September 1938 (text: Avalon Project, Yale Law School); Weinberg 1994, A World at Arms, ch. 1",
+          "observed": "1938-09-30",
+          "rule": "sudeten takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (sudeten := german). Note: The occupation began on 1 October 1938 (1938Q4); the transfer is dated by the agreement."
+        }
+      ]
+    },
+    "bohemia": {
+      "level": "german",
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "event_1939-03-15_bohemia",
+          "value": "German occupation of Prague; Protectorate of Bohemia and Moravia proclaimed (16 March)",
+          "source": "Erlass des Fuehrers und Reichskanzlers ueber das Protektorat Boehmen und Maehren, 16 March 1939 (Reichsgesetzblatt 1939 I); Weinberg 1994, A World at Arms, ch. 1",
+          "observed": "1939-03-15",
+          "rule": "bohemia takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (bohemia := german)"
+        }
+      ]
+    },
+    "poland": {
+      "level": "partitioned",
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "event_1939-09-17_poland",
+          "value": "Soviet forces enter eastern Poland; the partition is fixed by the German-Soviet Boundary and Friendship Treaty (28 September)",
+          "source": "Molotov, radio address of 17 September 1939; German-Soviet Boundary and Friendship Treaty, Moscow, 28 September 1939 (text: Avalon Project, Yale Law School)",
+          "observed": "1939-09-17",
+          "rule": "poland takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (poland := partitioned)"
+        }
+      ]
+    },
+    "france": {
+      "level": "fallen",
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "event_1940-06-22_france",
+          "value": "Franco-German armistice signed at Compiegne (in force 25 June)",
+          "source": "ICB crisis 'Fall of Western Europe'; Franco-German Armistice, Compiegne, 22 June 1940 (text: Avalon Project, Yale Law School)",
+          "observed": "1940-06-22",
+          "rule": "france takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (france := fallen)"
+        }
+      ]
+    },
+    "britain": {
+      "level": "at_war",
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "event_1939-09-03_britain",
+          "value": "Britain declares war on Germany",
+          "source": "ICB crisis 'Entry into World War II'; Hansard, HC Deb 3 September 1939 (Prime Minister's statement)",
+          "observed": "1939-09-03",
+          "rule": "britain takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (britain := at_war)"
+        },
+        {
+          "id": "event_1940-05-28_britain",
+          "value": "War Cabinet debate on an approach to Mussolini (26 to 28 May); Churchill's decision to fight on",
+          "source": "War Cabinet confidential annexes, 26 to 28 May 1940 (CAB 65/13); Lukacs 1999, Five Days in London; Kershaw 2007, Fateful Choices, ch. 1",
+          "observed": "1940-05-28",
+          "rule": "britain takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (britain := at_war). Note: No level change: the negotiate alternative was debated and not taken. CAB piece number as cited in the literature; verify."
+        }
+      ]
+    },
+    "balkans": {
+      "level": "german_aligned",
+      "confidence": "medium",
+      "indicators": [
+        {
+          "id": "event_1940-08-30_balkans",
+          "value": "Second Vienna Award: Germany and Italy guarantee the remainder of Romania",
+          "source": "Second Vienna Award, 30 August 1940 (DGFP series D); Kershaw 2007, Fateful Choices, ch. 2",
+          "observed": "1940-08-30",
+          "rule": "balkans takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (balkans := german_aligned). Note: Alternatives: the German military mission to Romania (October 1940) or Romania's accession to the Tripartite Pact (23 November 1940) would date the alignment in 1940Q4. For the historian."
+        },
+        {
+          "id": "event_1940-11-23_balkans",
+          "value": "Romania accedes to the Tripartite Pact (Hungary on 20 November)",
+          "source": "Protocol of Romania's accession to the Three-Power Pact, Berlin, 23 November 1940",
+          "observed": "1940-11-23",
+          "rule": "balkans takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (balkans := german_aligned). Note: No level change: confirms the alignment."
+        }
+      ]
+    },
+    "siberia": {
+      "level": "soviet",
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "event_1939-09-15_siberia",
+          "value": "Soviet-Japanese ceasefire at Nomonhan (Khalkhin Gol) after the Soviet August offensive",
+          "source": "Soviet-Japanese ceasefire agreement, Moscow, 15 September 1939",
+          "observed": "1939-09-15",
+          "rule": "siberia takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (siberia := soviet). Note: No level change; siberia exists for the Japan negative control."
+        },
+        {
+          "id": "event_1941-04-13_siberia",
+          "value": "Soviet-Japanese Neutrality Pact",
+          "source": "Pact of Neutrality between the USSR and Japan, Moscow, 13 April 1941 (text: Avalon Project, Yale Law School)",
+          "observed": "1941-04-13",
+          "rule": "siberia takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (siberia := soviet). Note: No level change; the institutional context of the northern option in 1941."
+        }
+      ]
+    },
+    "channel_air": {
+      "level": "british",
+      "confidence": "medium",
+      "indicators": [
+        {
+          "id": "event_1940-10-31_channel_air",
+          "value": "End of the daylight battle (British official dating); Sea Lion postponed to the spring on 12 October 1940 after the first postponement of 17 September",
+          "source": "Air Ministry dating of the Battle of Britain, 10 July to 31 October 1940; OKW order postponing Sea Lion, 12 October 1940 ?",
+          "observed": "1940-10-31",
+          "rule": "channel_air takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (channel_air := british). Note: Day of the second postponement recalled as 12 October 1940. The postponement of 17 September would date british in 1940Q3; the end of the battle is the conservative date. For the historian."
+        }
+      ]
+    },
+    "war_west_ger": {
+      "level": "war",
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "event_1939-09-03_war_west_ger",
+          "value": "Britain and France declare war on Germany",
+          "source": "ICB crisis 'Entry into World War II'; Hansard, HC Deb 3 September 1939 (Prime Minister's statement)",
+          "observed": "1939-09-03",
+          "rule": "war_west_ger takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (war_west_ger := war)"
+        }
+      ]
+    },
+    "w_ussr": {
+      "level": "contested",
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "event_1941-06-22_w_ussr",
+          "value": "German armies cross the Soviet frontier on a front from the Baltic to the Black Sea",
+          "source": "Directive No. 21; Halder war diary, 22 June 1941; Glantz and House 1995",
+          "observed": "1941-06-22",
+          "rule": "w_ussr takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (w_ussr := contested)"
+        },
+        {
+          "id": "event_1941-12-05_w_ussr",
+          "value": "Soviet counteroffensive before Moscow; the German offensive halted",
+          "source": "Trevor-Roper (ed.), Hitler's War Directives, Directive No. 39 (8 December 1941); Glantz and House 1995",
+          "observed": "1941-12-05",
+          "rule": "w_ussr takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (w_ussr := contested). Note: No level change: the record's resolution of Typhoon is that neither side changes the region's level."
+        }
+      ]
+    },
+    "caucasus": {
+      "level": "soviet",
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "event_1942-07-23_caucasus",
+          "value": "Rostov taken; Directive No. 45 orders the advance into the Caucasus (Maikop reached 9 August 1942)",
+          "source": "Trevor-Roper (ed.), Hitler's War Directives, Directive No. 45; Glantz and House 1995",
+          "observed": "1942-07-23",
+          "rule": "no dated event changes caucasus before 1942-03-31 (end of quarter), so it keeps the ontology's 1936Q1 initial level 'soviet' (docs/ontology_ww2_v1.md section 5); the first dated change or confirmation is the event shown"
+        }
+      ]
+    },
+    "italy": {
+      "level": "at_war",
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "event_1940-06-10_italy",
+          "value": "Italy declares war on France and Britain",
+          "source": "Italian declaration of war, 10 June 1940; Ciano's diary",
+          "observed": "1940-06-10",
+          "rule": "italy takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (italy := at_war). Note: The model's effect is visible at 1940Q2 (decision at 1940Q1)."
+        }
+      ]
+    },
+    "indochina": {
+      "level": "occupied",
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "event_1941-07-28_indochina",
+          "value": "Japanese forces enter southern Indochina; agreement with Vichy of 29 July 1941",
+          "source": "Ike (Imperial Conference of 2 July 1941); Franco-Japanese agreement of 29 July 1941; FRUS Japan 1931-1941 vol. II",
+          "observed": "1941-07-28",
+          "rule": "indochina takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (indochina := occupied)"
+        }
+      ]
+    },
+    "dei": {
+      "level": "japanese",
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "event_1942-03-08_dei",
+          "value": "Dutch capitulation on Java (Kalidjati, 8 to 9 March 1942); Palembang taken 14 to 16 February",
+          "source": "Dutch capitulation at Kalidjati, 8 March 1942; Frank 1999 (chapter not verified)",
+          "observed": "1942-03-08",
+          "rule": "dei takes the level of the latest dated event at or before 1942-03-31 (end of quarter) (dei := japanese)"
+        }
+      ]
+    }
+  },
+  "builtins": {
+    "belief_at_munich": {
+      "value": "uncertain",
+      "confidence": "medium",
+      "indicators": [
+        {
+          "id": "event_1938-09-30_sudeten",
+          "value": "Munich Agreement (signed in the early hours of 30 September, dated 29 September); occupation 1 to 10 October 1938",
+          "source": "ICB crisis 'Munich'; Agreement concluded at Munich, 29 September 1938 (text: Avalon Project, Yale Law School); Weinberg 1994, A World at Arms, ch. 1",
+          "observed": "1938-09-30",
+          "rule": "the event that sets the latch's condition (sudeten == german). Note: The occupation began on 1 October 1938 (1938Q4); the transfer is dated by the agreement."
+        },
+        {
+          "id": "event_1938-09-12_belief_WEST",
+          "value": "Sudeten demand: Hitler's Nuremberg speech demands self-determination for the Sudeten Germans; escalated at Berchtesgaden (15 September) and Godesberg (22 to 23 September)",
+          "source": "Hitler, closing speech at the Nuremberg party rally, 12 September 1938; Cabinet minutes, September 1938 (CAB 23); Weinberg 1994, A World at Arms, ch. 1",
+          "observed": "1938-09-12",
+          "rule": "belief_WEST in force at the end of 1938Q3. Note: Threshold judgment: the ontology does not yet give a rule for 'uncertain'; this row follows the action catalogue (demand_sudeten raises belief_WEST to uncertain). Godesberg would give the same quarter. For the historian."
+        }
+      ],
+      "rule": "belief_at_munich = uncertain: the latch takes belief_WEST in the first transition after which sudeten == german holds, the transition into tick 11 (the end of 1938Q3); belief_WEST in force on 1938-09-30 is uncertain"
+    },
+    "pending_GER_rearm": {
+      "value": 0,
+      "confidence": "medium",
+      "indicators": [
+        {
+          "id": "decision_1938-10-14_GER_rearm",
+          "value": "GER rearm, delay 8 ticks",
+          "source": "Goering's conference of 14 Oct 1938 announcing Hitler's order for a greatly enlarged armaments programme (Nuremberg document 1301-PS); the Z-Plan of Jan 1939",
+          "observed": "1938-10-14",
+          "rule": "the latest GER rearm decision. Note: v0 decision restated. Realized tick 11; effect (arms_GER total) visible at tick 20 (1941Q1). In v0 it fell at the horizon; in v1 it lands, a year before the record's reading of total (Speer, 8 Feb 1942; ontology_ww2_v1.md section 2.2). No v1 guard reads total."
+        }
+      ],
+      "rule": "pending_GER_rearm = max(0, d - (index(Q) - index(t))) = max(0, 8 - (24 - 11)) = 0: GER rearm decided 1938-10-14 (1938Q4, model tick 11) with delay d = 8, read at the end of Q = 1942Q1 (tick 25); the effect applied in the transition into tick 20 (the end of 1940Q4), so nothing is pending; the delay is the model's (docs/actions_ww2_v1.md), hence medium"
+    },
+    "pending_WEST_rearm": {
+      "value": 0,
+      "confidence": "medium",
+      "indicators": [
+        {
+          "id": "decision_1938-11-30_WEST_rearm",
+          "value": "WEST rearm, delay 4 ticks",
+          "source": "British post-Munich decisions of Oct to Nov 1938 (CAB 23), the air expansion scheme approved Nov 1938; the French decree-laws of Nov 1938",
+          "observed": "1938-11-30",
+          "rule": "the latest WEST rearm decision. Note: v0 decision restated. Day not given (Nov 1938); the last day of the month is used. Realized tick 11; effect (arms_WEST high) visible at tick 16 (1940Q1)."
+        }
+      ],
+      "rule": "pending_WEST_rearm = max(0, d - (index(Q) - index(t))) = max(0, 4 - (24 - 11)) = 0: WEST rearm decided 1938-11-30 (1938Q4, model tick 11) with delay d = 4, read at the end of Q = 1942Q1 (tick 25); the effect applied in the transition into tick 16 (the end of 1939Q4), so nothing is pending; the delay is the model's (docs/actions_ww2_v1.md), hence medium"
+    },
+    "pending_WEST_us_rearm": {
+      "value": 0,
+      "confidence": "medium",
+      "indicators": [
+        {
+          "id": "decision_1940-07-19_WEST_us_rearm",
+          "value": "WEST us_rearm, delay 4 ticks",
+          "source": "Roosevelt's message of 16 May 1940 (50,000 aircraft a year); the Two-Ocean Navy Act, 19 Jul 1940; the Selective Training and Service Act, 16 Sep 1940",
+          "observed": "1940-07-19",
+          "rule": "the latest WEST us_rearm decision. Note: v1. Realized tick 18 (replacing v0's fight_on in that row); effect (arms_USA rising) visible at tick 23 (1941Q4)."
+        }
+      ],
+      "rule": "pending_WEST_us_rearm = max(0, d - (index(Q) - index(t))) = max(0, 4 - (24 - 18)) = 0: WEST us_rearm decided 1940-07-19 (1940Q3, model tick 18) with delay d = 4, read at the end of Q = 1942Q1 (tick 25); the effect applied in the transition into tick 23 (the end of 1941Q3), so nothing is pending; the delay is the model's (docs/actions_ww2_v1.md), hence medium"
+    },
+    "pending_WEST_victory_program": {
+      "value": 5,
+      "confidence": "medium",
+      "indicators": [
+        {
+          "id": "decision_1942-01-06_WEST_victory_program",
+          "value": "WEST victory_program, delay 5 ticks",
+          "source": "Joint Board estimate of 11 Sep 1941 (the Victory Program: 1 Jul 1943 as the earliest date for major offensive operations); State of the Union message, 6 Jan 1942 (production goals); War Production Board, 16 Jan 1942",
+          "observed": "1942-01-06",
+          "rule": "the latest WEST victory_program decision. Note: v1. Realized tick 24; effect (arms_USA high) visible at tick 30 (1943Q3), the quarter beginning 1 Jul 1943, the date of the 1941 estimate."
+        }
+      ],
+      "rule": "pending_WEST_victory_program = max(0, d - (index(Q) - index(t))) = max(0, 5 - (24 - 24)) = 5: WEST victory_program decided 1942-01-06 (1942Q1, model tick 24) with delay d = 5, read at the end of Q = 1942Q1 (tick 25); the effect applies in the transition into tick 30 (the end of 1943Q2) and WEST victory_program is unavailable until then; the delay is the model's (docs/actions_ww2_v1.md), hence medium"
+    },
+    "pending_WEST_atomic_program": {
+      "value": 0,
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "decision_1942-06-17_WEST_atomic_program",
+          "value": "WEST atomic_program, delay 12 ticks",
+          "source": "Bush-Conant report of 13 Jun 1942 approved by Roosevelt 17 Jun 1942; Manhattan District 13 Aug 1942; Groves 17 Sep 1942 (Hewlett and Anderson 1962)",
+          "observed": "1942-06-17",
+          "rule": "the first such decision, dated after 1942Q1. Note: v1. Realized tick 25; effect (bomb_ready) visible at tick 38 (1945Q3; Trinity 16 Jul 1945). Earlier, smaller decision: Roosevelt's go-ahead of 9 Oct 1941 to expand the work (tick 23); from that date the same landing would need delay 14."
+        }
+      ],
+      "rule": "pending_WEST_atomic_program = 0: no WEST atomic_program decision in data/ww2/decisions_ww2_v1.csv at or before 1942Q1, so nothing is pending at the end of 1942Q1 (tick 25)"
+    },
+    "pending_USSR_rearm": {
+      "value": 0,
+      "confidence": "medium",
+      "indicators": [
+        {
+          "id": "decision_1940-05-07_USSR_rearm",
+          "value": "USSR rearm, delay 4 ticks",
+          "source": "Central Committee conference on the lessons of the Finnish war, Apr 1940; Timoshenko People's Commissar of Defence, 7 May 1940 (Erickson 1962)",
+          "observed": "1940-05-07",
+          "rule": "the latest USSR rearm decision. Note: v0 decision restated. Realized tick 17; effect (arms_USSR strong) visible at tick 22 (1941Q3), which the v1 ontology questions (section 2.2); no v1 eastern guard reads arms_USSR."
+        }
+      ],
+      "rule": "pending_USSR_rearm = max(0, d - (index(Q) - index(t))) = max(0, 4 - (24 - 17)) = 0: USSR rearm decided 1940-05-07 (1940Q2, model tick 17) with delay d = 4, read at the end of Q = 1942Q1 (tick 25); the effect applied in the transition into tick 22 (the end of 1941Q2), so nothing is pending; the delay is the model's (docs/actions_ww2_v1.md), hence medium"
+    },
+    "pending_USSR_mobilize_total": {
+      "value": 1,
+      "confidence": "medium",
+      "indicators": [
+        {
+          "id": "decision_1941-06-30_USSR_mobilize_total",
+          "value": "USSR mobilize_total, delay 3 ticks",
+          "source": "Evacuation Council, 24 Jun 1941; State Defence Committee (GKO), 30 Jun 1941; war-economic plan for the eastern regions, 16 Aug 1941 (Harrison 1985)",
+          "observed": "1941-06-30",
+          "rule": "the latest USSR mobilize_total decision. Note: v1. [SQR]: the record date falls in 1941Q2, the quarter of the attack it answers; the quarter column is the model tick (22). Delay 3 is counted from the attack quarter (actions_ww2_v1.md convention 3); effect (mob_USSR total) visible at tick 26 (1942Q3). The lag is the least certain delay in the catalogue."
+        }
+      ],
+      "rule": "pending_USSR_mobilize_total = max(0, d - (index(Q) - index(t))) = max(0, 3 - (24 - 22)) = 1: USSR mobilize_total decided 1941-06-30 (1941Q3, model tick 22) with delay d = 3, read at the end of Q = 1942Q1 (tick 25); the effect applies in the transition into tick 26 (the end of 1942Q2) and USSR mobilize_total is unavailable until then; the delay is the model's (docs/actions_ww2_v1.md), hence medium"
+    },
+    "last_GER": {
+      "value": "declare_war_us",
+      "confidence": "medium",
+      "indicators": [
+        {
+          "id": "move_1942Q1_GER",
+          "value": "declare_war_us",
+          "source": "German declaration of war on the United States and Reichstag speech, 11 Dec 1941 (DGFP Series D vol. XIII); State of the Union message, 6 Jan 1942; Executive Order 9024 (War Production Board), 16 Jan 1942; Declaration by United Nations, 1 Jan 1942; Dutch capitulation at Kalidjati, 8 Mar 1942",
+          "observed": "1942-03-31",
+          "rule": "realized move of GER in 1942Q1 (1942-01-01 to 1942-03-31)"
+        }
+      ],
+      "rule": "last_GER = declare_war_us: GER's realized move of 1942Q1 (data/ww2/realized_moves_v1.csv, tick 24), the action chosen in the transition into tick 25; the move is placed one quarter after its historical date [SQR]"
+    },
+    "last_WEST": {
+      "value": "victory_program",
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "move_1942Q1_WEST",
+          "value": "victory_program",
+          "source": "German declaration of war on the United States and Reichstag speech, 11 Dec 1941 (DGFP Series D vol. XIII); State of the Union message, 6 Jan 1942; Executive Order 9024 (War Production Board), 16 Jan 1942; Declaration by United Nations, 1 Jan 1942; Dutch capitulation at Kalidjati, 8 Mar 1942",
+          "observed": "1942-03-31",
+          "rule": "realized move of WEST in 1942Q1 (1942-01-01 to 1942-03-31)"
+        }
+      ],
+      "rule": "last_WEST = victory_program: WEST's realized move of 1942Q1 (data/ww2/realized_moves_v1.csv, tick 24), the action chosen in the transition into tick 25"
+    },
+    "last_USSR": {
+      "value": "counteroffensive",
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "move_1942Q1_USSR",
+          "value": "counteroffensive",
+          "source": "German declaration of war on the United States and Reichstag speech, 11 Dec 1941 (DGFP Series D vol. XIII); State of the Union message, 6 Jan 1942; Executive Order 9024 (War Production Board), 16 Jan 1942; Declaration by United Nations, 1 Jan 1942; Dutch capitulation at Kalidjati, 8 Mar 1942",
+          "observed": "1942-03-31",
+          "rule": "realized move of USSR in 1942Q1 (1942-01-01 to 1942-03-31)"
+        }
+      ],
+      "rule": "last_USSR = counteroffensive: USSR's realized move of 1942Q1 (data/ww2/realized_moves_v1.csv, tick 24), the action chosen in the transition into tick 25"
+    },
+    "fair_democratic_response": {
+      "value": 0,
+      "confidence": "medium",
+      "indicators": [
+        {
+          "id": "trigger_democratic_response_1942Q1",
+          "value": false,
+          "source": "the variables section of this snapshot (belief_WEST, commit_WEST, poland)",
+          "observed": "1942-03-31",
+          "rule": "trigger of democratic_response: belief_WEST == hegemonic and commit_WEST == wary and poland == independent"
+        },
+        {
+          "id": "move_1942Q1_WEST",
+          "value": "victory_program",
+          "source": "German declaration of war on the United States and Reichstag speech, 11 Dec 1941 (DGFP Series D vol. XIII); State of the Union message, 6 Jan 1942; Executive Order 9024 (War Production Board), 16 Jan 1942; Declaration by United Nations, 1 Jan 1942; Dutch capitulation at Kalidjati, 8 Mar 1942",
+          "observed": "1942-03-31",
+          "rule": "realized move of WEST in 1942Q1 (data/ww2/realized_moves_v1.csv); responses of democratic_response: guarantee_poland, rearm"
+        }
+      ],
+      "rule": "fair_democratic_response = 0: computed along the realized path (decisions E1): the trigger (belief_WEST == hegemonic and commit_WEST == wary and poland == independent) does not hold on this snapshot's levels (belief_WEST = hegemonic, commit_WEST = at_war, poland = partitioned; last_GER = declare_war_us, last_WEST = victory_program) and WEST's realized move of 1942Q1 is victory_program"
+    },
+    "fair_czech_obligation": {
+      "value": 0,
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "trigger_czech_obligation_1942Q1",
+          "value": false,
+          "source": "the variables section of this snapshot (sudeten, war_west_ger)",
+          "observed": "1942-03-31",
+          "rule": "trigger of czech_obligation: last_GER == attack_czechoslovakia and sudeten == german and war_west_ger == peace"
+        },
+        {
+          "id": "move_1942Q1_WEST",
+          "value": "victory_program",
+          "source": "German declaration of war on the United States and Reichstag speech, 11 Dec 1941 (DGFP Series D vol. XIII); State of the Union message, 6 Jan 1942; Executive Order 9024 (War Production Board), 16 Jan 1942; Declaration by United Nations, 1 Jan 1942; Dutch capitulation at Kalidjati, 8 Mar 1942",
+          "observed": "1942-03-31",
+          "rule": "realized move of WEST in 1942Q1 (data/ww2/realized_moves_v1.csv); responses of czech_obligation: declare_war, concede"
+        }
+      ],
+      "rule": "fair_czech_obligation = 0: computed along the realized path (decisions E1): the trigger (last_GER == attack_czechoslovakia and sudeten == german and war_west_ger == peace) does not hold on this snapshot's levels (sudeten = german, war_west_ger = war; last_GER = declare_war_us, last_WEST = victory_program) and WEST's realized move of 1942Q1 is victory_program"
+    },
+    "fair_rhineland_resolution": {
+      "value": 0,
+      "confidence": "medium",
+      "indicators": [
+        {
+          "id": "trigger_rhineland_resolution_1942Q1",
+          "value": false,
+          "source": "the variables section of this snapshot (arms_GER)",
+          "observed": "1942-03-31",
+          "rule": "trigger of rhineland_resolution: last_WEST == offensive_west and arms_GER <= rising"
+        },
+        {
+          "id": "move_1942Q1_Nature",
+          "value": "campaign_south",
+          "source": "German declaration of war on the United States and Reichstag speech, 11 Dec 1941 (DGFP Series D vol. XIII); State of the Union message, 6 Jan 1942; Executive Order 9024 (War Production Board), 16 Jan 1942; Declaration by United Nations, 1 Jan 1942; Dutch capitulation at Kalidjati, 8 Mar 1942",
+          "observed": "1942-03-31",
+          "rule": "realized move of Nature in 1942Q1 (data/ww2/realized_moves_v1.csv); responses of rhineland_resolution: campaign_rhineland"
+        }
+      ],
+      "rule": "fair_rhineland_resolution = 0: computed along the realized path (decisions E1): the trigger (last_WEST == offensive_west and arms_GER <= rising) does not hold on this snapshot's levels (arms_GER = total; last_GER = declare_war_us, last_WEST = victory_program) and Nature's realized move of 1942Q1 is campaign_south"
+    },
+    "fair_oil_clock": {
+      "value": 0,
+      "confidence": "medium",
+      "indicators": [
+        {
+          "id": "trigger_oil_clock_1942Q1",
+          "value": false,
+          "source": "the variables section of this snapshot (oil_JPN)",
+          "observed": "1942-03-31",
+          "rule": "trigger of oil_clock: oil_JPN == embargoed"
+        },
+        {
+          "id": "move_1942Q1_Nature",
+          "value": "campaign_south",
+          "source": "German declaration of war on the United States and Reichstag speech, 11 Dec 1941 (DGFP Series D vol. XIII); State of the Union message, 6 Jan 1942; Executive Order 9024 (War Production Board), 16 Jan 1942; Declaration by United Nations, 1 Jan 1942; Dutch capitulation at Kalidjati, 8 Mar 1942",
+          "observed": "1942-03-31",
+          "rule": "realized move of Nature in 1942Q1 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down"
+        }
+      ],
+      "rule": "fair_oil_clock = 0: computed along the realized path (decisions E1): the trigger (oil_JPN == embargoed) does not hold on this snapshot's levels (oil_JPN = secure; last_GER = declare_war_us, last_WEST = victory_program) and Nature's realized move of 1942Q1 is campaign_south"
+    }
+  },
+  "rates": {
+    "rearm_delay_ticks": {
+      "ticks": 4,
+      "basis": "Provisional: the action catalogue's one-year lag from a rearmament decision to fielded force (docs/actions_ww2.md, rearm). NMC shows German military personnel rising from 461 to 596 thousand (1935 to 1936) in the year after conscription was reintroduced in March 1935, and British milex rising by 40 to 50 percent a year from 1936 to 1938 before the 1939 jump. To be refined by the historian from the programme records (Tooze 2006 for Germany; the Defence Requirements reports for Britain)."
+    }
+  }
+}

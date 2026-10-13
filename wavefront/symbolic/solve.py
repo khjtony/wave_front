@@ -29,6 +29,12 @@ Results are predicates (BDD edges over current-state bits) with ``contains(state
 coalition sub-move (action indices in actor order) witnessing membership, computed by
 restricting the same quantified formula to the one state. :func:`witness` steps the
 explicit model under that strategy against an adversary that maximizes the rank.
+
+Memory: the fixpoints collect garbage between steps (:meth:`BDD.maybe_gc`). Edges stay
+valid across a call if they are its arguments, are held by a result, by the encoding
+(including :meth:`Encoding.predicate` results), or are protected
+(:meth:`BDD.protect`, :meth:`BDD.protecting`); any other edge the caller holds may be
+invalidated by a collection during the call.
 """
 
 from __future__ import annotations
@@ -61,16 +67,10 @@ State = tuple[int, ...]
 SubMove = tuple[int, ...]
 Progress = Callable[[dict], None]
 
-GC_MIN_NODES = 1_500_000
-
 
 def _maybe_gc(enc: Encoding, roots: Sequence[int]) -> None:
-    """Collect garbage when the node table has grown enough since the last collection."""
-    mgr = enc.mgr
-    last = getattr(mgr, "_last_live", 0)
-    if mgr.live_nodes > max(GC_MIN_NODES, 2 * last):
-        mgr.gc(roots)
-        mgr._last_live = mgr.live_nodes  # type: ignore[attr-defined]
+    """Collect garbage when the node table has grown enough (see :meth:`BDD.maybe_gc`)."""
+    enc.mgr.maybe_gc(roots)
 
 
 def _split(enc: Encoding, coalition: Collection[str]) -> tuple[list[int], list[int]]:
@@ -245,12 +245,13 @@ class SymbolicContested:
 @dataclass(eq=False)
 class SymbolicReach:
     """``states``: every state reachable from ``initial``; ``layers[d]``: the states first
-    reached at depth ``d``."""
+    reached at depth ``d`` (when kept); ``depth``: the number of breadth-first steps."""
 
     enc: Encoding
     initial: int
     states: int
     layers: list[int]
+    depth: int = 0
     stats: list[dict] = field(default_factory=list, repr=False)
 
     def __post_init__(self) -> None:
@@ -286,6 +287,16 @@ def attractor(
     on_iteration: Progress | None = None,
 ) -> SymbolicAttractor:
     """States from which ``coalition`` can force ``target`` (a state predicate)."""
+    with enc.mgr.protecting(target):
+        return _attractor(enc, coalition, target, on_iteration)
+
+
+def _attractor(
+    enc: Encoding,
+    coalition: Collection[str],
+    target: int,
+    on_iteration: Progress | None,
+) -> SymbolicAttractor:
     mgr = enc.mgr
     members, others = _split(enc, coalition)
     goal = mgr.AND(target, enc.dom)
@@ -323,6 +334,18 @@ def safe(
     :func:`reachable`: the kernel is computed inside it, and each step's argument is
     simplified with it as the care set. ``method``: ``"layered"`` (timed models only),
     ``"iterate"``, or ``"auto"`` (layered when timed)."""
+    with enc.mgr.protecting(phi, within):
+        return _safe(enc, coalition, phi, within, method, on_iteration)
+
+
+def _safe(
+    enc: Encoding,
+    coalition: Collection[str],
+    phi: int,
+    within: int | None,
+    method: str,
+    on_iteration: Progress | None,
+) -> SymbolicSafe:
     mgr = enc.mgr
     members, others = _split(enc, coalition)
     base = mgr.AND(phi, enc.dom)
@@ -389,16 +412,19 @@ def contested(
     mgr = enc.mgr
     members = set(enc.actor_indices(coalition))
     rest = [a.name for a in enc.cm.actors if a.index not in members]
+    if kind not in ("reach", "keep"):
+        raise ValueError(f"kind must be 'reach' or 'keep', not {kind!r}")
     goal = mgr.AND(goal, enc.dom)
     other = mgr.DIFF(enc.dom, goal)
-    if kind == "reach":
-        forced = attractor(enc, coalition, goal).win
-        blocked = safe(enc, rest, other).kernel
-    elif kind == "keep":
-        forced = safe(enc, coalition, goal).kernel
-        blocked = attractor(enc, rest, other).win
-    else:
-        raise ValueError(f"kind must be 'reach' or 'keep', not {kind!r}")
+    with mgr.protecting(goal, other):
+        if kind == "reach":
+            first = attractor(enc, coalition, goal)
+            second = safe(enc, rest, other)
+            forced, blocked = first.win, second.kernel
+        else:
+            first = safe(enc, coalition, goal)
+            second = attractor(enc, rest, other)
+            forced, blocked = first.kernel, second.win
     middle = mgr.DIFF(mgr.DIFF(enc.dom, forced), blocked)
     return SymbolicContested(enc, forced, blocked, middle)
 
@@ -408,28 +434,45 @@ def reachable(
     initial: int | None = None,
     check: bool = True,
     on_iteration: Progress | None = None,
+    keep_layers: bool = False,
 ) -> SymbolicReach:
     """States reachable from ``initial`` (default: the model's initial states). With
-    ``check``, raises :class:`ModelError` where :func:`wavefront.engine.explore` would."""
+    ``check``, raises :class:`ModelError` where :func:`wavefront.engine.explore` would.
+    ``keep_layers`` keeps the breadth-first layers (the states first reached at each
+    depth) in ``layers``; otherwise only the last frontier is kept."""
+    with enc.mgr.protecting(initial):
+        return _reachable(enc, initial, check, on_iteration, keep_layers)
+
+
+def _reachable(
+    enc: Encoding,
+    initial: int | None,
+    check: bool,
+    on_iteration: Progress | None,
+    keep_layers: bool,
+) -> SymbolicReach:
     mgr = enc.mgr
     init = mgr.AND(enc.initial if initial is None else initial, enc.dom)
     states = init
     frontier = init
-    layers = [init]
+    layers = [init] if keep_layers else []
+    depth = 0
     stats: list[dict] = []
     t0 = time.perf_counter()
     while frontier != FALSE:
-        new = mgr.DIFF(enc.image(frontier), states)
+        new = mgr.DIFF(enc.image(frontier, keep=[states, init, *layers]), states)
         if new == FALSE:
             break
         states = mgr.OR(states, new)
         frontier = new
-        layers.append(new)
-        stats.append(_stat(enc, len(layers) - 1, t0, states))
+        depth += 1
+        if keep_layers:
+            layers.append(new)
+        stats.append(_stat(enc, depth, t0, states))
         if on_iteration is not None:
             on_iteration(stats[-1])
         _maybe_gc(enc, [states, frontier, init, *layers])
-    res = SymbolicReach(enc, init, states, layers, stats)
+    res = SymbolicReach(enc, init, states, layers, depth, stats)
     if check:
         _check(enc, states)
     return res
