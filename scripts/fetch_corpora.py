@@ -12,6 +12,8 @@ Examples::
 
     python3 scripts/fetch_corpora.py frus --since 1936-01-01 --until 1940-12-31
     python3 scripts/fetch_corpora.py frus --volumes frus1939v01,frus1931-41v02
+    python3 scripts/fetch_corpora.py frus --volumes frus1939v01 --mirror \\
+        'https://raw.githubusercontent.com/HistoryAtState/frus/<commit>/volumes/{volume}.xml'
     python3 scripts/fetch_corpora.py hansard --since 1939-03-01 --until 1939-04-30
     python3 scripts/fetch_corpora.py chronicling --since 1939-03-01 --until 1939-03-31 \\
         --terms Hitler,Chamberlain,Danzig
@@ -119,6 +121,13 @@ def main(argv: list[str] | None = None) -> int:
 
     p = sub.add_parser("frus", parents=[common], help="FRUS volumes (TEI XML)")
     p.add_argument("--volumes", type=_list, default=list(frus.DEFAULT_VOLUMES))
+    p.add_argument(
+        "--mirror",
+        default=frus.MIRROR,
+        metavar="URL_PATTERN",
+        help="raw-file URL pattern with a {volume} placeholder (default: the HistoryAtState/frus "
+        "GitHub mirror at master; put a commit hash in place of master to pin the files)",
+    )
     p = sub.add_parser("hansard", parents=[common], help="Historic Hansard sitting days")
     p.add_argument("--houses", type=_list, default=["commons"])
     p = sub.add_parser("chronicling", parents=[common], help="Chronicling America pages")
@@ -143,6 +152,7 @@ def main(argv: list[str] | None = None) -> int:
                 until=args.until,
                 terms=args.terms or (),
                 fetcher=fetcher,
+                mirror=args.mirror,
             )
         elif args.source == "hansard":
             n, skipped = hansard.fetch(

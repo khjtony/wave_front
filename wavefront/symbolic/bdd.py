@@ -661,6 +661,27 @@ class BDD:
 
         return rec(f)
 
+    def transfer(self, f: int, other: BDD, mapping: Mapping[int, int] | None = None) -> int:
+        """Copy ``f`` into the manager ``other``, sending level ``v`` to ``mapping[v]``
+        (default: the same level); the orders may differ."""
+        var, lo, hi = self._var, self._lo, self._hi
+        memo: dict[int, int] = {}
+        get = (lambda v: v) if mapping is None else mapping.__getitem__
+
+        def rec(f: int) -> int:
+            if f <= 1:
+                return f
+            n = f >> 1
+            r = memo.get(n)
+            if r is None:
+                r0 = rec(lo[n])
+                r1 = rec(hi[n])
+                r = other.ITE(other.var(get(var[n])), r1, r0)
+                memo[n] = r
+            return r ^ (f & 1)
+
+        return rec(f)
+
     # -- queries -------------------------------------------------------------------------
     def evaluate(self, f: int, value: Mapping[int, int] | Sequence[int]) -> bool:
         """``f`` under a total assignment (a mapping or a sequence indexed by level; levels

@@ -33,11 +33,13 @@ from .base import (
     parse_iso_date,
 )
 
-__all__ = ["FrusCorpus", "parse_volume", "fetch", "volume_url", "DEFAULT_VOLUMES"]
+__all__ = ["FrusCorpus", "parse_volume", "fetch", "volume_url", "DEFAULT_VOLUMES", "MIRROR"]
 
 TEI = "{http://www.tei-c.org/ns/1.0}"
 FRUS = "{http://history.state.gov/frus/ns/1.0}"
 XML_ID = "{http://www.w3.org/XML/1998/namespace}id"
+# The raw-file URL pattern of the GitHub mirror; ``{volume}`` is replaced by the volume id.
+# ``master`` follows the repository; a commit hash in its place pins the files fetched.
 MIRROR = "https://raw.githubusercontent.com/HistoryAtState/frus/master/volumes/{volume}.xml"
 READING = "https://history.state.gov/historicaldocuments/{volume}/{doc}"
 
@@ -51,8 +53,11 @@ DEFAULT_VOLUMES = (
 _BLOCKS = {"p", "head", "opener", "closer", "dateline", "salute", "signed", "list", "item", "lg"}
 
 
-def volume_url(volume: str) -> str:
-    return MIRROR.format(volume=volume)
+def volume_url(volume: str, mirror: str = MIRROR) -> str:
+    """The URL of a volume's TEI file under the URL pattern ``mirror`` (see :data:`MIRROR`)."""
+    if "{volume}" not in mirror:
+        raise CorpusError(f"mirror pattern {mirror!r} has no {{volume}} placeholder")
+    return mirror.replace("{volume}", volume)
 
 
 def _text(elem: ET.Element) -> str:
@@ -161,11 +166,12 @@ def fetch(
     until: date,
     terms: Iterable[str] = (),
     fetcher: Fetcher,
+    mirror: str = MIRROR,
 ) -> tuple[int, list[str]]:
-    """Download each volume's TEI file into the raw directory and index the documents dated
-    in ``[since, until]`` whose text contains one of ``terms`` (all when ``terms`` is empty).
-    Existing index entries of other volumes are kept. Returns the number indexed and the
-    skipped documents with reasons."""
+    """Download each volume's TEI file (from the URL pattern ``mirror``) into the raw
+    directory and index the documents dated in ``[since, until]`` whose text contains one of
+    ``terms`` (all when ``terms`` is empty). Existing index entries of other volumes are kept.
+    Returns the number indexed and the skipped documents with reasons."""
     terms = list(terms)
     try:
         kept = corpus.read_index()
@@ -175,7 +181,7 @@ def fetch(
     entries = [e for e in kept if e.path.removesuffix(".xml") not in volumes]
     skipped: list[str] = []
     for volume in volumes:
-        url = volume_url(volume)
+        url = volume_url(volume, mirror)
         data = fetcher(url)
         name = corpus.store_raw(f"{volume}.xml", data, url)
         docs, rejected = parse_volume(data, volume)
