@@ -77,28 +77,59 @@ def kernel_entry(quarter, max_states=3_000_000):
     return g.size(), s in kernel, d.shortest
 
 
+def symbolic_entry(quarter, **override):
+    """WEST's kernel for balance_europe under hegemonic aims from the snapshot of ``quarter``
+    with its built-ins, by the symbolic engine (phase 2 decision F1): (reachable states,
+    membership, shortest distance out). ``override`` sets variables of the start state (the
+    model-consistent readiness variant of reports/ww2_v0.md section 14.1)."""
+    from wavefront.symbolic import encode, reachable, safe, shortest
+
+    cm = model.compile()
+    start = list(snapshot_state(cm, quarter, "hegemonic", builtins=True))
+    for name, level in override.items():
+        start[cm.index[name]] = cm.variables[cm.index[name]].levels.index(level)
+    start = tuple(start)
+    enc = encode(cm)
+    reach = reachable(enc, enc.state_cube(start))
+    kernel = safe(enc, ["WEST"], enc.predicate("balance_europe"), within=reach.states)
+    inside = kernel.contains(start)
+    outside = enc.mgr.DIFF(enc.dom, kernel.kernel)
+    return reach.count(), inside, (shortest(enc, start, outside) if inside else 0)
+
+
 @pytest.mark.slow
-@pytest.mark.skip(
-    reason="phase 2 evaluation blocked by the explicit engine's budget: from the 1938Q2 file with "
-    "its built-ins (GER rearmament pending 1 tick, last_GER demand_sudeten) the exploration passes "
-    "3,000,000 states and, on the one retry the protocol allows, 5,000,000 states (343 s); the "
-    "symbolic engine (phase 2 decision F1) is needed. The 1938Q3 half is computed below. See "
-    "reports/ww2_v0.md section 14"
-)
 def test_T08_hegemonic():
     """(b) Under hegemonic aims, the Munich concession shrinks V_WEST: compare the state
     before it (1938Q2.json, start of 1938Q3, tick 10) with the state after it (1938Q3.json,
     tick 11), both with the built-ins of decision F2. Registered direction: membership lost,
-    or (both inside) the shortest distance out of the kernel reduced. The phase 1 comparison
-    without built-ins (before outside, after inside at distance 5) measured the rearmament
-    clock; with the built-ins the before state carries the 1936 programme one tick from
-    landing."""
-    n_before, in_before, short_before = kernel_entry("1938Q2", max_states=5_000_000)
-    n_after, in_after, short_after = kernel_entry("1938Q3")
+    or (both inside) the shortest distance out of the kernel reduced. The after state is
+    read with the readiness the model's own clock gives at tick 11 (the programme of Aug
+    1936 with delay 8: arms_GER high), because the file's reading (rising, nothing pending)
+    is one quarter behind the model and from it no German army is ready before the horizon
+    (reports/ww2_v0.md section 14.1). Symbolic engine (phase 2 decision F1): the before
+    state is outside V_WEST already, so the registered direction is not met; the test fails
+    as registered and the report proposes the amendment."""
+    n_before, in_before, short_before = symbolic_entry("1938Q2")
+    n_after, in_after, short_after = symbolic_entry("1938Q3", arms_GER="high")
+    assert (n_before, n_after) == (11_398_836, 4_134_692)
     shrinks = (in_before and not in_after) or (
         in_before and in_after and short_after < short_before
     )
-    assert shrinks
+    assert shrinks, (
+        f"before Munich: in V_WEST {in_before}, shortest {short_before}; after (consistent): "
+        f"in V_WEST {in_after}, shortest {short_after}: the kernel was left before Munich"
+    )
+
+
+@pytest.mark.slow
+def test_T08_hegemonic_states_recorded():
+    """The memberships of reports/ww2_v0.md section 14.1, pinned: the before state and the
+    model-consistent after state are outside V_WEST; the file's after state, with the
+    rearmament neither landed nor pending, is inside with shortest distance 3 (the artifact
+    of the one-tick readiness disagreement)."""
+    assert symbolic_entry("1938Q2") == (11_398_836, False, 0)
+    assert symbolic_entry("1938Q3", arms_GER="high") == (4_134_692, False, 0)
+    assert symbolic_entry("1938Q3") == (601_353, True, 3)
 
 
 @pytest.mark.slow
