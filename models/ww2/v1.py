@@ -1396,12 +1396,17 @@ model.fairness(
 # Imperial Conferences of 6 Sep and 5 Nov 1941 and the Liaison Conferences of Oct to Nov 1941
 # (Ike); Suzuki Teiichi's materials report of 5 Nov 1941. A physical clock, not a behaviour:
 # at eight quarters under embargo Nature must play stocks_run_down.
+# Well-formedness edit before any registered test (guard changelog, 2026-10-13): Nature's
+# one event per tick cannot carry both forced resolutions when the clock reaches 8 in the
+# quarter after a French offensive against the unready German army (rhineland_resolution);
+# campaign_rhineland is then also a response of the clock. It ends the run in
+# GERMAN_DEFEAT, so the clock has no later quarter to bind in.
 model.fairness(
     "oil_clock",
     actor="Nature",
     trigger=V.oil_JPN == "embargoed",
     within=8,
-    responses=["stocks_run_down"],
+    responses=["stocks_run_down", "campaign_rhineland"],
 )
 model.profile("fight_on", actor="WEST", forbid=["negotiate"])
 # The appeaser never declares war unless convinced of hegemonic aims or bound by the Czech

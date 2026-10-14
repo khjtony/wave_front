@@ -972,7 +972,7 @@
           "value": "none",
           "source": "DGFP Series D vol. II; DBFP Third Series vol. II; CAB 23 conclusions of 17 to 30 Sep 1938; Munich agreement of 29 Sep 1938",
           "observed": "1938-09-30",
-          "rule": "realized move of Nature in 1938Q3 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down"
+          "rule": "realized move of Nature in 1938Q3 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down, campaign_rhineland"
         }
       ],
       "rule": "fair_oil_clock = 0: computed along the realized path (decisions E1): the trigger (oil_JPN == embargoed) does not hold on this snapshot's levels (oil_JPN = dependent; last_GER = demand_sudeten, last_WEST = concede) and Nature's realized move of 1938Q3 is none"

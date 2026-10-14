@@ -1042,7 +1042,7 @@
           "value": "german_strain",
           "source": "CCS directive of 21 Jan 1943 (Webster and Frankland 1961); Fuehrer decree on the deployment of men and women for Reich defence, 13 Jan 1943; Goebbels, Sportpalast speech, 18 Feb 1943",
           "observed": "1943-03-31",
-          "rule": "realized move of Nature in 1943Q1 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down"
+          "rule": "realized move of Nature in 1943Q1 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down, campaign_rhineland"
         }
       ],
       "rule": "fair_oil_clock = 0: computed along the realized path (decisions E1): the trigger (oil_JPN == embargoed) does not hold on this snapshot's levels (oil_JPN = secure; last_GER = idle, last_WEST = bomber_offensive) and Nature's realized move of 1943Q1 is german_strain"

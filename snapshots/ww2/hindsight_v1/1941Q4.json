@@ -1035,7 +1035,7 @@
           "value": "none",
           "source": "Ike (Liaison Conference of 1 Nov; Imperial Conferences of 5 Nov and 1 Dec 1941); FRUS Japan 1931-1941 vol. II (Proposal B, 20 Nov; Hull note, 26 Nov 1941); FRUS 1941 vol. IV; Trevor-Roper (ed.), Hitler's War Directives, Directive No. 39; joint resolution of 8 Dec 1941",
           "observed": "1941-12-31",
-          "rule": "realized move of Nature in 1941Q4 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down"
+          "rule": "realized move of Nature in 1941Q4 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down, campaign_rhineland"
         }
       ],
       "rule": "fair_oil_clock = min(1 + 1, 8) = 2: computed along the realized path (decisions E1): the trigger (oil_JPN == embargoed) holds on this snapshot's levels (oil_JPN = embargoed; last_GER = idle, last_WEST = idle) and Nature's realized move of 1941Q4 is none"

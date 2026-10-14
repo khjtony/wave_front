@@ -19,7 +19,7 @@ import time
 
 from models.ww2.hypotheses import fixed_model, realized_moves, snapshot_state
 from models.ww2.v0 import model
-from wavefront.symbolic import BDD, FALSE, encode, reachable, safe
+from wavefront.symbolic import BDD, encode, reachable, safe, shortest
 
 QUARTERS = [f"{y}Q{q}" for y in range(1936, 1940) for q in range(1, 5)][:15]  # to 1939Q3
 
@@ -54,24 +54,6 @@ def named_states(cm):
     return out
 
 
-def shortest_out(enc, start, kernel, limit=None):
-    """Fewest transitions from ``start`` to a state outside ``kernel`` (``None`` if none
-    is reachable); ``limit`` caps the number of layers explored."""
-    mgr = enc.mgr
-    seen = frontier = enc.state_cube(start)
-    outside = mgr.DIFF(enc.dom, kernel)
-    d = 0
-    while frontier != FALSE:
-        if mgr.AND(frontier, outside) != FALSE:
-            return d
-        if limit is not None and d >= limit:
-            return None
-        frontier = mgr.DIFF(enc.image(frontier, keep=[seen, outside]), seen)
-        seen = mgr.OR(seen, frontier)
-        d += 1
-    return None
-
-
 def cmd_kernel(args):
     cm = (fixed_model(model, aims_GER=args.aims) if args.aims else model).compile()
     mgr = BDD()
@@ -99,7 +81,8 @@ def cmd_kernel(args):
             continue
         t = time.perf_counter()
         inside = res.contains(s)
-        d = shortest_out(enc, s, res.kernel, args.depth) if args.distance else None
+        outside = mgr.DIFF(enc.dom, res.kernel)
+        d = shortest(enc, s, outside, args.depth) if args.distance else None
         print(
             json.dumps(
                 {

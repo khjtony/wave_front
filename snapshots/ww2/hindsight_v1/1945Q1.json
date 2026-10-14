@@ -1056,7 +1056,7 @@
           "value": "sea_lanes_cut",
           "source": "USSBS, Oil in Japan's War (1946); FRUS, The Conferences at Malta and Yalta 1945 (1955)",
           "observed": "1945-03-31",
-          "rule": "realized move of Nature in 1945Q1 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down"
+          "rule": "realized move of Nature in 1945Q1 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down, campaign_rhineland"
         }
       ],
       "rule": "fair_oil_clock = 0: computed along the realized path (decisions E1): the trigger (oil_JPN == embargoed) does not hold on this snapshot's levels (oil_JPN = critical; last_GER = idle, last_WEST = idle) and Nature's realized move of 1945Q1 is sea_lanes_cut"

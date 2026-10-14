@@ -1042,7 +1042,7 @@
           "value": "none",
           "source": "Trevor-Roper (ed.), Hitler's War Directives, Directive No. 21; Halder war diary; Churchill's broadcast of 22 Jun 1941; Soviet-Japanese Neutrality Pact, 13 Apr 1941; Ike (Liaison Conferences of Jun 1941)",
           "observed": "1941-06-30",
-          "rule": "realized move of Nature in 1941Q2 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down"
+          "rule": "realized move of Nature in 1941Q2 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down, campaign_rhineland"
         }
       ],
       "rule": "fair_oil_clock = 0: computed along the realized path (decisions E1): the trigger (oil_JPN == embargoed) does not hold on this snapshot's levels (oil_JPN = dependent; last_GER = attack_ussr, last_WEST = idle) and Nature's realized move of 1941Q2 is none"

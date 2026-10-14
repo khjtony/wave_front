@@ -276,7 +276,7 @@ FAIRNESS: tuple[Fairness, ...] = (
         "oil_clock",
         "Nature",
         8,
-        ("stocks_run_down",),
+        ("stocks_run_down", "campaign_rhineland"),
         ("oil_JPN",),
         "oil_JPN == embargoed",
         lambda s, last: s["oil_JPN"] == "embargoed",

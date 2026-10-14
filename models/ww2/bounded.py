@@ -36,7 +36,12 @@ from wavefront.model.expr import Const, Expr
 
 __all__ = [
     "available",
+    "avoid",
+    "blocks",
+    "forces",
+    "strategies",
     "chosen",
+    "exists_from",
     "fix",
     "never",
     "play",
@@ -141,15 +146,45 @@ def available(enc: Encoding, t: int, actor: str, action: str) -> z3.BoolRef:
 
 def play(enc: Encoding, actor: str, priorities: Sequence[str]) -> list[z3.BoolRef]:
     """``actor`` plays a fixed memoryless strategy at every non-terminal step: the first
-    action of ``priorities`` that is available, else its built-in action (index 0)."""
+    available action of ``priorities``, then of the actor's remaining actions in index order
+    (the built-in ``idle`` or ``none`` first). The order is total, so the strategy is defined
+    in every state in which the actor has an available action (a fairness restriction
+    included), and the constraint never removes a play for want of a move."""
     a = _actor(enc.cm, actor)
+    names = [x.name for x in a.actions]
+    unknown = [p for p in priorities if p not in names]
+    if unknown:
+        raise ValueError(f"{actor} has no action {unknown}")
+    order = [*priorities, *(n for n in names if n not in priorities)]
     out = []
     for t in range(enc.k):
-        choice: z3.ArithRef = z3.IntVal(0)
-        for name in reversed(priorities):
+        choice: z3.ArithRef = z3.IntVal(a.action_index(order[-1]))
+        for name in reversed(order[:-1]):
             choice = z3.If(available(enc, t, actor, name), a.action_index(name), choice)
         out.append(z3.Implies(z3.Not(enc.terminal[t]), chosen(enc, t, actor) == choice))
     return out
+
+
+def exists_from(
+    cm: CompiledModel,
+    start: Sequence[int],
+    k: int,
+    condition: Callable[[Encoding], z3.BoolRef],
+    constrain: Constrain | Sequence[Constrain] | None = None,
+) -> BmcTrace | None:
+    """A play of at most ``k`` transitions from ``start``, with every named assumption
+    asserted and the extra constraints, on which ``condition(enc)`` (a Z3 formula over the
+    unrolled states and moves) holds; the play returned runs to step ``k`` (states past a
+    terminal state repeat it). ``None`` if there is none."""
+    q = _QueryFrom(cm, start, k, terminal(cm))
+    enc = q.enc
+    solver = enc.solver()
+    solver.add(*enc.active, *enc.assume.values(), *_constraints(enc, constrain), condition(enc))
+    if _check(solver) != z3.sat:
+        return None
+    model = solver.model()
+    states, moves = enc.decode(model, k)
+    return BmcTrace(states, moves)
 
 
 def _constraints(enc: Encoding, constrain: Constrain | Sequence[Constrain] | None) -> list:
@@ -337,12 +372,68 @@ def wellformed_from(
         for name, cond in _hazards(enc, t):
             by_name.setdefault(name, []).append(z3.And(live, cond))
     base = enc.solver()
+    base.add(*enc.assume.values())
     for name, conds in by_name.items():
-        if _check(base, z3.Or(*conds)) == z3.sat:
+        base.push()
+        base.add(z3.Or(*conds))
+        if _check(base) == z3.sat:
             model = base.model()
             last = next(
                 t for t, c in enumerate(conds) if z3.is_true(model.eval(c, model_completion=True))
             )
             states, moves = enc.decode(model, last)
             found.append((name, BmcTrace(states, moves)))
+        base.pop()
     return found
+
+
+def avoid(expr: Any) -> Constrain:
+    """A constraint: ``expr`` is false at every step of the play (an expression, or an
+    ending or invariant name)."""
+
+    def fn(enc: Encoding) -> list[z3.BoolRef]:
+        return [z3.Implies(enc.active[t], z3.Not(enc.target(expr, t))) for t in range(enc.k + 1)]
+
+    return fn
+
+
+def strategies(fixed: dict[str, Sequence[str]]) -> Constrain:
+    """Every actor in ``fixed`` plays :func:`play` with its priority list."""
+
+    def fn(enc: Encoding) -> list[z3.BoolRef]:
+        return [c for actor, prio in fixed.items() for c in play(enc, actor, prio)]
+
+    return fn
+
+
+def forces(
+    cm: CompiledModel,
+    start: Sequence[int],
+    target: Any,
+    fixed: dict[str, Sequence[str]],
+    k: int | None = None,
+) -> tuple[bool, BmcTrace | None]:
+    """Whether the actors in ``fixed``, playing those strategies, force ``target`` from
+    ``start`` within ``k`` transitions (default: to the horizon) against every play of the
+    others: no play avoids the target until a terminal state or step ``k``. Returns
+    ``(True, None)``, or ``(False, play)`` with an avoiding play (which shows only that this
+    strategy does not force it)."""
+    k = cm.horizon - start[cm.index["tick"]] if k is None else k
+    end = terminal(cm) | (V.tick >= start[cm.index["tick"]] + k)
+    trace = reach_from(cm, start, k, end, constrain=[strategies(fixed), avoid(target)])
+    return trace is None, trace
+
+
+def blocks(
+    cm: CompiledModel,
+    start: Sequence[int],
+    target: Any,
+    fixed: dict[str, Sequence[str]],
+    k: int | None = None,
+) -> tuple[bool, BmcTrace | None]:
+    """Whether the actors in ``fixed``, playing those strategies, keep ``target`` false from
+    ``start`` for ``k`` transitions (default: to the horizon) against every play of the
+    others. Returns ``(True, None)``, or ``(False, play)`` with a play reaching the target."""
+    k = cm.horizon - start[cm.index["tick"]] if k is None else k
+    trace = reach_from(cm, start, k, target, constrain=[strategies(fixed)])
+    return trace is None, trace

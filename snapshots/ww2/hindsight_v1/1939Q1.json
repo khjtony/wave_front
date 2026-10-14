@@ -986,7 +986,7 @@
           "value": "none",
           "source": "DGFP Series D vol. IV and VI; DBFP Third Series vol. IV; Chamberlain's Birmingham speech, 17 Mar 1939",
           "observed": "1939-03-31",
-          "rule": "realized move of Nature in 1939Q1 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down"
+          "rule": "realized move of Nature in 1939Q1 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down, campaign_rhineland"
         }
       ],
       "rule": "fair_oil_clock = 0: computed along the realized path (decisions E1): the trigger (oil_JPN == embargoed) does not hold on this snapshot's levels (oil_JPN = dependent; last_GER = occupy_bohemia, last_WEST = approach_ussr) and Nature's realized move of 1939Q1 is none"

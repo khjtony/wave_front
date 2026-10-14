@@ -1000,7 +1000,7 @@
           "value": "none",
           "source": "CAB 23 conclusions of 30 Mar 1939; HC Deb 31 Mar 1939; DGFP Series D vol. VI; Nuremberg documents C-120 (3 Apr 1939) and L-79 (23 May 1939)",
           "observed": "1939-06-30",
-          "rule": "realized move of Nature in 1939Q2 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down"
+          "rule": "realized move of Nature in 1939Q2 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down, campaign_rhineland"
         }
       ],
       "rule": "fair_oil_clock = 0: computed along the realized path (decisions E1): the trigger (oil_JPN == embargoed) does not hold on this snapshot's levels (oil_JPN = dependent; last_GER = propose_pact_ussr, last_WEST = guarantee_poland) and Nature's realized move of 1939Q2 is none"

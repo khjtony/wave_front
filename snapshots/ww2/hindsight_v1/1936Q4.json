@@ -951,7 +951,7 @@
           "value": "none",
           "source": "DGFP Series C vol. V and VI; Ciano's diplomatic papers; Anti-Comintern Pact text of 25 Nov 1936",
           "observed": "1936-12-31",
-          "rule": "realized move of Nature in 1936Q4 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down"
+          "rule": "realized move of Nature in 1936Q4 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down, campaign_rhineland"
         }
       ],
       "rule": "fair_oil_clock = 0: computed along the realized path (decisions E1): the trigger (oil_JPN == embargoed) does not hold on this snapshot's levels (oil_JPN = dependent; last_GER = court_italy, last_WEST = idle) and Nature's realized move of 1936Q4 is none"

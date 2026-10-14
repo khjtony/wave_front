@@ -1035,7 +1035,7 @@
           "value": "none",
           "source": "An Act to Promote the Defense of the United States (Lend-Lease Act), 11 Mar 1941; FRUS 1941 vol. III; Trevor-Roper (ed.), Hitler's War Directives (Directives No. 20, 21, 25)",
           "observed": "1941-03-31",
-          "rule": "realized move of Nature in 1941Q1 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down"
+          "rule": "realized move of Nature in 1941Q1 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down, campaign_rhineland"
         }
       ],
       "rule": "fair_oil_clock = 0: computed along the realized path (decisions E1): the trigger (oil_JPN == embargoed) does not hold on this snapshot's levels (oil_JPN = dependent; last_GER = idle, last_WEST = lend_lease) and Nature's realized move of 1941Q1 is none"

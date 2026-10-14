@@ -333,3 +333,29 @@ def realized_corridor(model: Model | None = None, path: str | Path = REALIZED_MO
     out.actors = actors[:-1]
     out._nature = actors[-1]
     return out
+
+
+def corridor_state(
+    corridor_cm: CompiledModel,
+    full_cm: CompiledModel,
+    quarter: str,
+    aims_GER: str,
+    *,
+    snapshots: str | Path = SNAPSHOTS,
+    **hidden: str,
+) -> tuple[int, ...]:
+    """The snapshot state of ``quarter`` with its built-ins, loaded into ``full_cm`` and
+    carried into the display corridor ``corridor_cm`` (:func:`realized_corridor`), where a
+    principal's built-in ``idle`` is called ``abstain``. A display device, as the corridor."""
+    s = snapshot_state(full_cm, quarter, aims_GER, builtins=True, snapshots=snapshots, **hidden)
+    d = full_cm.state_dict(s)
+    out = []
+    for v in corridor_cm.variables:
+        if v.name not in d:  # the corridor's own fairness counters start at 0
+            out.append(0)
+            continue
+        x = d[v.name]
+        if v.origin == "last" and x == "idle":
+            x = "abstain"
+        out.append(v.levels.index(x))
+    return tuple(out)

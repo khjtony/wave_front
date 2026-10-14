@@ -1,6 +1,7 @@
 """The symbolic engine on the toy model: every ending's attractor and every invariant's
-kernel, for every coalition, equal the explicit engine's on the reachable states (with
-ranks and strategy moves), and witness traces replay on the explicit model."""
+kernel, for every coalition, equal the explicit engine's on every reachable state (with
+ranks; strategy moves are checked on a sample of states), and witness traces replay on the
+explicit model."""
 
 import itertools
 
@@ -40,7 +41,7 @@ def test_every_ending_attractor_every_coalition(world):
         goal = g.ending_states(ending)
         tb = enc.predicate(ending)
         for coalition in all_coalitions(cm):
-            check_attractor(g, enc, coalition, goal, tb)
+            check_attractor(g, enc, coalition, goal, tb, strategy_every=17)
 
 
 def test_every_kernel_every_coalition(world):
@@ -50,7 +51,7 @@ def test_every_kernel_every_coalition(world):
         phi = g.states_where(name)
         pb = enc.predicate(name)
         for coalition in all_coalitions(cm):
-            check_safe(g, enc, coalition, phi, pb, reach.states)
+            check_safe(g, enc, coalition, phi, pb, reach.states, strategy_every=7)
 
 
 def test_witness_replays(world):

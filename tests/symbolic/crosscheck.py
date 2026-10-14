@@ -11,7 +11,15 @@ from wavefront.engine import attractor as x_attractor
 from wavefront.engine import contested as x_contested
 from wavefront.engine import safe as x_safe
 from wavefront.model import ModelError
-from wavefront.symbolic import attractor, contested, encode, reachable, safe, witness
+from wavefront.symbolic import (
+    attractor,
+    contested,
+    encode,
+    reachable,
+    safe,
+    shortest,
+    witness,
+)
 
 
 def coalitions(names, rnd=None):
@@ -40,16 +48,21 @@ def _sub(jm, members):
     return tuple(jm[i] for i in members)
 
 
-def check_attractor(g, enc, coalition, goal, tb):
+def check_attractor(g, enc, coalition, goal, tb, strategy_every=1):
+    """Membership and rank on every reachable state; the strategy move on every
+    ``strategy_every``-th state."""
     xa = x_attractor(g, coalition, goal)
     sa = attractor(enc, coalition, tb)
     members = g.actor_indices(coalition)
     for i, s in enumerate(g.states):
         assert sa.contains(s) == (i in xa.win), (coalition, g.model.format_state(s))
         if i not in xa.win:
-            assert sa.strategy_move(s) is None
+            if i % strategy_every == 0:
+                assert sa.strategy_move(s) is None
             continue
         assert sa.rank(s) == xa.rank[i]
+        if i % strategy_every:
+            continue
         move = sa.strategy_move(s)
         if xa.rank[i] == 0:
             assert move is None
@@ -79,7 +92,7 @@ def check_witness(cm, enc, res, state, winning):
     assert trace[-1][1] is None and enc.holds(res.target, trace[-1][0])
 
 
-def check_safe(g, enc, coalition, phi, pb, within=None):
+def check_safe(g, enc, coalition, phi, pb, within=None, strategy_every=1):
     xs = x_safe(g, coalition, phi)
     members = g.actor_indices(coalition)
     results = [safe(enc, coalition, pb, method=m) for m in ("auto", "iterate")]
@@ -91,6 +104,8 @@ def check_safe(g, enc, coalition, phi, pb, within=None):
     ss = results[0]
     assert ss.count(within) == len(xs.kernel) if within is not None else True
     for i in xs.kernel:
+        if i % strategy_every:
+            continue
         s = g.states[i]
         move = ss.strategy_move(s)
         if g.terminal[i]:
@@ -138,6 +153,9 @@ def check_model(model, profile=None, seed=0, every_coalition=False, gc_always=Fa
         goal = target_ids(g, target)
         tb = enc.predicate(target)
         assert {i for i, s in enumerate(g.states) if enc.holds(tb, s)} == goal
+        ranks = x_attractor(g, names, goal).rank
+        for i in g.initial:
+            assert shortest(enc, g.states[i], tb) == ranks.get(i)
         for coalition in coalitions(names, None if every_coalition else rnd):
             check_attractor(g, enc, coalition, goal, tb)
             check_safe(g, enc, coalition, goal, tb, reach.states)

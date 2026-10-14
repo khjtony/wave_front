@@ -11,7 +11,7 @@ from models.ww2.v0 import model
 from wavefront.analysis import viability
 from wavefront.analysis.viability import distance_table
 from wavefront.engine import explore
-from wavefront.symbolic import FALSE, attractor, encode, reachable, safe
+from wavefront.symbolic import encode, reachable, safe, shortest
 
 
 def compare(quarter, expected_size=None, builtins=False, full=False):
@@ -36,22 +36,21 @@ def compare(quarter, expected_size=None, builtins=False, full=False):
         whole = safe(enc, ["WEST"], phi)
         assert whole.contains(start) == (s in kernel)
         assert whole.count(reach.states) == len(kernel)
-    outside = enc.mgr.DIFF(reach.states, res.kernel)
-    if outside != FALSE:
-        everyone = cm.actor_names
-        assert attractor(enc, everyone, outside).rank(start) == explicit_distance
+    outside = enc.mgr.DIFF(enc.dom, res.kernel)
+    assert shortest(enc, start, outside) == explicit_distance
     return s in kernel
 
 
-def test_late_state_1939Q3():
-    """8,608 states: quick enough for the default suite."""
-    compare("1939Q3", 8_608, full=True)
+def test_late_state_1939Q2():
+    """67,795 states, 2,366 of them in the kernel: quick enough for the default suite."""
+    assert not compare("1939Q2", 67_795)
 
 
 @pytest.mark.slow
 def test_after_munich_1938Q3():
-    """198,443 states; the start state is in the kernel (reports/ww2_v0.md, T8)."""
-    assert compare("1938Q3", 198_443)
+    """198,443 states; the start state is in the kernel (reports/ww2_v0.md, T8), also by
+    the kernel over the whole state space."""
+    assert compare("1938Q3", 198_443, full=True)
 
 
 @pytest.mark.slow

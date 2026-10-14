@@ -56,6 +56,7 @@ __all__ = [
     "safe",
     "contested",
     "reachable",
+    "shortest",
     "witness",
     "SymbolicAttractor",
     "SymbolicSafe",
@@ -476,6 +477,35 @@ def _reachable(
     if check:
         _check(enc, states)
     return res
+
+
+def shortest(
+    enc: Encoding,
+    state: Sequence[int],
+    target: int,
+    max_depth: int | None = None,
+) -> int | None:
+    """The fewest transitions from ``state`` to a state in ``target`` (breadth-first
+    images; terminal states are not expanded), or ``None`` if no target state is
+    reachable (within ``max_depth`` steps, if given). This is the rank of ``state`` in the
+    attractor of every actor, Nature included (the explicit ``distance(...).shortest``
+    when ``target`` is the outside of a kernel), computed forward so that only states
+    reachable from ``state`` are built."""
+    mgr = enc.mgr
+    with mgr.protecting(target):
+        seen = frontier = enc.state_cube(state)
+        depth = 0
+        while frontier != FALSE:
+            if mgr.AND(frontier, target) != FALSE:
+                return depth
+            if max_depth is not None and depth >= max_depth:
+                return None
+            with mgr.protecting(seen):
+                nxt = enc.image(frontier, keep=[seen, target])
+            frontier = mgr.DIFF(nxt, seen)
+            seen = mgr.OR(seen, frontier)
+            depth += 1
+    return None
 
 
 def _example(enc: Encoding, f: int) -> State:

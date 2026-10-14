@@ -1056,7 +1056,7 @@
           "value": "atomic",
           "source": "Hewlett and Anderson 1962; Potsdam Declaration, 26 Jul 1945; Butow, Japan's Decision to Surrender (1954); Frank 1999",
           "observed": "1945-09-30",
-          "rule": "realized move of Nature in 1945Q3 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down"
+          "rule": "realized move of Nature in 1945Q3 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down, campaign_rhineland"
         }
       ],
       "rule": "fair_oil_clock = 0: computed along the realized path (decisions E1): the trigger (oil_JPN == embargoed) does not hold on this snapshot's levels (oil_JPN = critical; last_GER = idle, last_WEST = idle) and Nature's realized move of 1945Q3 is atomic"

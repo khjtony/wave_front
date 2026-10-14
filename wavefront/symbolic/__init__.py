@@ -19,6 +19,7 @@ from .solve import (
     cpre,
     reachable,
     safe,
+    shortest,
     witness,
 )
 
@@ -33,6 +34,7 @@ __all__ = [
     "safe",
     "contested",
     "reachable",
+    "shortest",
     "witness",
     "SymbolicAttractor",
     "SymbolicSafe",

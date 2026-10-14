@@ -1028,7 +1028,7 @@
           "value": "midway",
           "source": "Trevor-Roper (ed.), Hitler's War Directives, Directive No. 45; Morison vol. IV (1949); Matloff and Snell 1953 (Sledgehammer and Torch); Erickson 1975",
           "observed": "1942-09-30",
-          "rule": "realized move of Nature in 1942Q3 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down"
+          "rule": "realized move of Nature in 1942Q3 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down, campaign_rhineland"
         }
       ],
       "rule": "fair_oil_clock = 0: computed along the realized path (decisions E1): the trigger (oil_JPN == embargoed) does not hold on this snapshot's levels (oil_JPN = secure; last_GER = offensive_caucasus, last_WEST = idle) and Nature's realized move of 1942Q3 is midway"

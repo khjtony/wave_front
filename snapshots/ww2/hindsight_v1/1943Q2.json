@@ -1042,7 +1042,7 @@
           "value": "none",
           "source": "Hitler's Operations Order No. 6, 15 Apr 1943; CCS minutes of the Trident conference, May 1943; Glantz and House 1995",
           "observed": "1943-06-30",
-          "rule": "realized move of Nature in 1943Q2 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down"
+          "rule": "realized move of Nature in 1943Q2 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down, campaign_rhineland"
         }
       ],
       "rule": "fair_oil_clock = 0: computed along the realized path (decisions E1): the trigger (oil_JPN == embargoed) does not hold on this snapshot's levels (oil_JPN = secure; last_GER = offensive_east, last_WEST = invade_italy) and Nature's realized move of 1943Q2 is none"

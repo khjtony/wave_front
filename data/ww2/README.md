@@ -9,6 +9,7 @@ harness of [docs/ww2_testbed.md](../../docs/ww2_testbed.md) sections 6 and 8.
 |---|---|---|---|
 | `raw/` | downloaded datasets, with `raw/MANIFEST.json` (URL, date, size, SHA-256 of each) | no (git-ignored) | `scripts/fetch_ww2_data.py` |
 | `nmc_1936_1940.csv` | NMC rows for Germany, France, the United Kingdom, the USSR, Japan, Italy, the United States and Poland, 1933 to 1941 (70 rows: Poland has none after 1939) | yes | `raw/cow_nmc.rda` or an official NMC CSV |
+| `nmc_1941_1945.csv` | NMC rows for the United States, the United Kingdom, France, Germany, Italy, the USSR and Japan, with the Netherlands and China for context only, 1941 to 1945 (40 rows; the header lists the gaps: no row for France 1943 and the Netherlands 1941 to 1944, France's `milper` 1942 and Italy's 1941 missing), for the WW2 v1 snapshots (`snapshots/ww2/hindsight_v1/`) | yes | `raw/cow_nmc.rda` by `scripts/fetch_ww2_data.py --extract v1` |
 | `events_ww2.csv` | dated structural events, 1935 to 1940, one row per event and variable | yes | written by hand from the sources in its `source` column |
 | `realized_moves.csv` | the realized joint moves per quarter | yes | maintained with the historical documents, not by this pipeline |
 
@@ -51,6 +52,7 @@ package's own licence (its `DESCRIPTION` file) governs the mirror files.
 ```
 pip install -e '.[data]'                     # pyreadr, needed only for the .rda mirrors
 python3 scripts/fetch_ww2_data.py --mirror   # peacesciencer mirrors into data/ww2/raw/
+python3 scripts/fetch_ww2_data.py --extract v1   # the v1 extract, nmc_1941_1945.csv
 ```
 
 On a machine that reaches the official host, download from the data set pages and either

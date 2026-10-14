@@ -1014,7 +1014,7 @@
           "value": "campaign_west",
           "source": "CAB 65 War Cabinet conclusions and confidential annexes, 26 to 28 May 1940; Lukacs 1999; Franco-German armistice of 22 Jun 1940",
           "observed": "1940-06-30",
-          "rule": "realized move of Nature in 1940Q2 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down"
+          "rule": "realized move of Nature in 1940Q2 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down, campaign_rhineland"
         }
       ],
       "rule": "fair_oil_clock = 0: computed along the realized path (decisions E1): the trigger (oil_JPN == embargoed) does not hold on this snapshot's levels (oil_JPN = dependent; last_GER = attack_france, last_WEST = fight_on) and Nature's realized move of 1940Q2 is campaign_west"

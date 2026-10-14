@@ -1042,7 +1042,7 @@
           "value": "none",
           "source": "Trevor-Roper (ed.), Hitler's War Directives, Directives No. 33 to 35; Halder war diary; Executive Order 8832, 26 Jul 1941; FRUS 1941 vol. IV; Ike (Imperial Conferences of 2 Jul and 6 Sep 1941); Harrison 1985",
           "observed": "1941-09-30",
-          "rule": "realized move of Nature in 1941Q3 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down"
+          "rule": "realized move of Nature in 1941Q3 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down, campaign_rhineland"
         }
       ],
       "rule": "fair_oil_clock = min(0 + 1, 8) = 1: computed along the realized path (decisions E1): the trigger (oil_JPN == embargoed) holds on this snapshot's levels (oil_JPN = embargoed; last_GER = offensive_east, last_WEST = embargo_jpn) and Nature's realized move of 1941Q3 is none"

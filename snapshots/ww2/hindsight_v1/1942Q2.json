@@ -1028,7 +1028,7 @@
           "value": "none",
           "source": "Trevor-Roper (ed.), Hitler's War Directives, Directive No. 41; Hewlett and Anderson 1962 (the Bush-Conant report and the President's approval, Jun 1942); Morison vol. IV (1949); Glantz and House 1995",
           "observed": "1942-06-30",
-          "rule": "realized move of Nature in 1942Q2 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down"
+          "rule": "realized move of Nature in 1942Q2 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down, campaign_rhineland"
         }
       ],
       "rule": "fair_oil_clock = 0: computed along the realized path (decisions E1): the trigger (oil_JPN == embargoed) does not hold on this snapshot's levels (oil_JPN = secure; last_GER = offensive_caucasus, last_WEST = atomic_program) and Nature's realized move of 1942Q2 is none"

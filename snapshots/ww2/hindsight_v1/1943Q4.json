@@ -1049,7 +1049,7 @@
           "value": "none",
           "source": "FRUS, The Conferences at Cairo and Tehran 1943 (1961); Erickson 1983",
           "observed": "1943-12-31",
-          "rule": "realized move of Nature in 1943Q4 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down"
+          "rule": "realized move of Nature in 1943Q4 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down, campaign_rhineland"
         }
       ],
       "rule": "fair_oil_clock = 0: computed along the realized path (decisions E1): the trigger (oil_JPN == embargoed) does not hold on this snapshot's levels (oil_JPN = secure; last_GER = idle, last_WEST = idle) and Nature's realized move of 1943Q4 is none"

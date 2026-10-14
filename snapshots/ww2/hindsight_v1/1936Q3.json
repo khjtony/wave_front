@@ -951,7 +951,7 @@
           "value": "locarno_lapses",
           "source": "Four-Year Plan memorandum, Aug 1936 (text in Treue, Vierteljahrshefte fuer Zeitgeschichte 1955); Tooze 2006; Deist in Germany and the Second World War vol. I",
           "observed": "1936-09-30",
-          "rule": "realized move of Nature in 1936Q3 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down"
+          "rule": "realized move of Nature in 1936Q3 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down, campaign_rhineland"
         }
       ],
       "rule": "fair_oil_clock = 0: computed along the realized path (decisions E1): the trigger (oil_JPN == embargoed) does not hold on this snapshot's levels (oil_JPN = dependent; last_GER = rearm, last_WEST = idle) and Nature's realized move of 1936Q3 is locarno_lapses"

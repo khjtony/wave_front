@@ -1028,7 +1028,7 @@
           "value": "campaign_south",
           "source": "German declaration of war on the United States and Reichstag speech, 11 Dec 1941 (DGFP Series D vol. XIII); State of the Union message, 6 Jan 1942; Executive Order 9024 (War Production Board), 16 Jan 1942; Declaration by United Nations, 1 Jan 1942; Dutch capitulation at Kalidjati, 8 Mar 1942",
           "observed": "1942-03-31",
-          "rule": "realized move of Nature in 1942Q1 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down"
+          "rule": "realized move of Nature in 1942Q1 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down, campaign_rhineland"
         }
       ],
       "rule": "fair_oil_clock = 0: computed along the realized path (decisions E1): the trigger (oil_JPN == embargoed) does not hold on this snapshot's levels (oil_JPN = secure; last_GER = declare_war_us, last_WEST = victory_program) and Nature's realized move of 1942Q1 is campaign_south"

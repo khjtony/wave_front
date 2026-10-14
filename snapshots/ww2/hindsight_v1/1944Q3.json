@@ -1056,7 +1056,7 @@
           "value": "campaign_france",
           "source": "Pogue, The Supreme Command (1954); Erickson 1983",
           "observed": "1944-09-30",
-          "rule": "realized move of Nature in 1944Q3 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down"
+          "rule": "realized move of Nature in 1944Q3 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down, campaign_rhineland"
         }
       ],
       "rule": "fair_oil_clock = 0: computed along the realized path (decisions E1): the trigger (oil_JPN == embargoed) does not hold on this snapshot's levels (oil_JPN = secure; last_GER = idle, last_WEST = idle) and Nature's realized move of 1944Q3 is campaign_france"

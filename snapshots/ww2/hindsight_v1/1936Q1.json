@@ -951,7 +951,7 @@
           "value": "none",
           "source": "DGFP Series C vol. V (German memorandum to the Locarno powers, 7 Mar 1936); Cmd. 5107 (3 Mar 1936); DDF 2e serie vol. I; CAB 23 conclusions of Feb and Mar 1936",
           "observed": "1936-03-31",
-          "rule": "realized move of Nature in 1936Q1 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down"
+          "rule": "realized move of Nature in 1936Q1 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down, campaign_rhineland"
         }
       ],
       "rule": "fair_oil_clock = 0: computed along the realized path (decisions E1): the trigger (oil_JPN == embargoed) does not hold on this snapshot's levels (oil_JPN = dependent; last_GER = remilitarize_rhineland, last_WEST = rearm) and Nature's realized move of 1936Q1 is none"

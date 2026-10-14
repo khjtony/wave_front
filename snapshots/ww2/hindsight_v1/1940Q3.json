@@ -1021,7 +1021,7 @@
           "value": "us_engages",
           "source": "Trevor-Roper (ed.), Hitler's War Directives, Directives No. 16 and 17; Reichstag speech of 19 Jul 1940; FRUS 1940 vol. III (destroyers for bases); Two-Ocean Navy Act, 19 Jul 1940; Selective Training and Service Act, 16 Sep 1940; Morley (ed.), The Fateful Choice (1980)",
           "observed": "1940-09-30",
-          "rule": "realized move of Nature in 1940Q3 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down"
+          "rule": "realized move of Nature in 1940Q3 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down, campaign_rhineland"
         }
       ],
       "rule": "fair_oil_clock = 0: computed along the realized path (decisions E1): the trigger (oil_JPN == embargoed) does not hold on this snapshot's levels (oil_JPN = dependent; last_GER = air_offensive, last_WEST = us_rearm) and Nature's realized move of 1940Q3 is us_engages"

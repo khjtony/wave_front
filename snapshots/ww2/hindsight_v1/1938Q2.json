@@ -972,7 +972,7 @@
           "value": "none",
           "source": "Nuremberg document 388-PS (Case Green, 30 May 1938); DGFP Series D vol. II; DBFP Third Series vol. I",
           "observed": "1938-06-30",
-          "rule": "realized move of Nature in 1938Q2 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down"
+          "rule": "realized move of Nature in 1938Q2 (data/ww2/realized_moves_v1.csv); responses of oil_clock: stocks_run_down, campaign_rhineland"
         }
       ],
       "rule": "fair_oil_clock = 0: computed along the realized path (decisions E1): the trigger (oil_JPN == embargoed) does not hold on this snapshot's levels (oil_JPN = dependent; last_GER = demand_sudeten, last_WEST = idle) and Nature's realized move of 1938Q2 is none"
