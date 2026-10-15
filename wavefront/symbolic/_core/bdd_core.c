@@ -10,9 +10,10 @@
  *   - Nodes: three uint32_t arrays var, lo, hi, grown by doubling. A free node has
  *     var = BDD_TERMVAR and is chained through lo (free list, last freed first reused).
  *     During a collection the top bit of var marks a live node.
- *   - Unique table: open addressing with linear probing; a slot holds the key (var, lo,
- *     hi) and the node index (0 = empty), so a lookup reads no node array. It doubles past
- *     a load of 0.7 and is rebuilt by every collection.
+ *   - Unique table: open addressing with linear probing; an 8-byte slot holds the node
+ *     index (0 = empty) and the top 32 bits of the hash of its key (var, lo, hi), so that a
+ *     probe reads the node arrays only when the tags agree. It doubles past a load of 0.7
+ *     and is rebuilt by every collection.
  *   - Computed tables (and, xor, ite, exists, and_exists): open addressing in buckets of
  *     WAYS = 4 entries of 16 bytes (one 64-byte line). A table doubles past a load of 0.5
  *     until it reaches its cap, the power of two at or above the node table's capacity
@@ -65,10 +66,10 @@ typedef struct {
     size_t count;
 } cache;
 
-/* A unique-table slot: the node's key and its index (n = 0: empty), so that a lookup does
- * not read the node arrays. */
+/* A unique-table slot: the node index (n = 0: empty) and the top 32 bits of its key's hash,
+ * so that most probes that miss do not read the node arrays. */
 typedef struct {
-    uint32_t lo, hi, var, n;
+    uint32_t n, tag;
 } uent;
 
 typedef struct {
@@ -371,14 +372,15 @@ uint32_t bdd_error_level(const bdd_mgr *m) { return m->err_level; }
 
 /* -- node construction ------------------------------------------------------------------ */
 
-static void unique_insert(uent *tab, size_t mask, uint32_t v, uint32_t lo, uint32_t hi,
-                          uint32_t n) {
-    size_t h = hash3(v, lo, hi) & mask;
-    while (tab[h].n) h = (h + 1) & mask;
-    tab[h].lo = lo;
-    tab[h].hi = hi;
-    tab[h].var = v;
-    tab[h].n = n;
+static inline uint64_t unique_hash(uint32_t v, uint32_t lo, uint32_t hi) {
+    return hash3(v, lo, hi);
+}
+
+static void unique_insert(uent *tab, size_t mask, uint64_t h, uint32_t n) {
+    size_t i = h & mask;
+    while (tab[i].n) i = (i + 1) & mask;
+    tab[i].n = n;
+    tab[i].tag = (uint32_t)(h >> 32);
 }
 
 static void unique_grow(bdd_mgr *m) {
@@ -386,8 +388,8 @@ static void unique_grow(bdd_mgr *m) {
     uent *tab = calloc(size, sizeof(uent));
     if (!tab) fail(m);
     for (size_t i = 0; i <= m->umask; i++) {
-        const uent *u = &m->utab[i];
-        if (u->n) unique_insert(tab, size - 1, u->var, u->lo, u->hi, u->n);
+        uint32_t n = m->utab[i].n;
+        if (n) unique_insert(tab, size - 1, unique_hash(VAR(m, n), LO(m, n), HI(m, n)), n);
     }
     free(m->utab);
     m->utab = tab;
@@ -419,16 +421,19 @@ static uint32_t mk(bdd_mgr *m, uint32_t v, uint32_t low, uint32_t high) {
         low ^= 1;
         high ^= 1;
     }
-    size_t h = hash3(v, low, high) & m->umask;
+    uint64_t hk = unique_hash(v, low, high);
+    uint32_t tag = (uint32_t)(hk >> 32);
+    size_t h = hk & m->umask;
     for (;;) {
-        const uent *u = &m->utab[h];
-        if (!u->n) break;
-        if (u->lo == low && u->hi == high && u->var == v) return u->n << 1 | neg;
+        uint32_t n = m->utab[h].n;
+        if (!n) break;
+        if (m->utab[h].tag == tag && LO(m, n) == low && HI(m, n) == high && VAR(m, n) == v)
+            return n << 1 | neg;
         h = (h + 1) & m->umask;
     }
     if (10 * (m->ucount + 1) > 7 * (m->umask + 1)) {
         unique_grow(m);
-        h = hash3(v, low, high) & m->umask;
+        h = hk & m->umask;
         while (m->utab[h].n) h = (h + 1) & m->umask;
     }
     uint32_t n;
@@ -443,10 +448,8 @@ static uint32_t mk(bdd_mgr *m, uint32_t v, uint32_t low, uint32_t high) {
     VAR(m, n) = v;
     LO(m, n) = low;
     HI(m, n) = high;
-    m->utab[h].lo = low;
-    m->utab[h].hi = high;
-    m->utab[h].var = v;
     m->utab[h].n = n;
+    m->utab[h].tag = tag;
     m->ucount++;
     return n << 1 | neg;
 }
@@ -1244,7 +1247,7 @@ int64_t bdd_gc(bdd_mgr *m, const uint32_t *roots, size_t n) {
         if (v & MARK) {
             v &= VMASK;
             VAR(m, i) = v;
-            unique_insert(m->utab, m->umask, v, LO(m, i), HI(m, i), i);
+            unique_insert(m->utab, m->umask, unique_hash(v, LO(m, i), HI(m, i)), i);
             m->ucount++;
         } else if (v != BDD_TERMVAR) {
             VAR(m, i) = BDD_TERMVAR;
