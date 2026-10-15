@@ -398,3 +398,55 @@ def test_monotone_decrease_is_excluded():
     assert reach(cm, 3, V.g == "g1") is None
     trace = reach(cm, 3, V.moved == True)  # noqa: E712
     assert [cm.actors[0].actions[mv[0]].name for mv in trace.moves] == ["mark"]
+
+
+# -- cadence -------------------------------------------------------------------------------
+
+
+def cadence_model(cadence):
+    m = Model("cadence", horizon=8)
+    m.counter("x", max=4)
+    m.counter("y", max=4)
+    m.flag("alarm")
+    a = m.actor("A", cadence=cadence)
+    a.action("push", effect=Bump("x", 1))
+    a.action("raise_alarm", effect=Set("alarm", True))
+    a.action("respond", guard=V.alarm, effect=[Set("alarm", False), Bump("y", 1)])
+    m.fairness("F", actor="A", trigger=V.alarm, within=1, responses=["respond"])
+    return m
+
+
+@pytest.mark.parametrize("cadence, ticks", [(1, 2), (2, 3), (3, 4)])
+def test_cadence_spaces_decisions(cadence, ticks):
+    """Two pushes need k + 1 ticks with cadence k; BMC and the explicit engine agree."""
+    cm = cadence_model(cadence).compile()
+    target = V.x >= 2
+    assert reach(cm, ticks - 1, target) is None
+    trace = reach(cm, ticks, target)
+    assert len(trace) == ticks
+    replay(cm, trace, target)
+    g = explore(cm)
+    assert len(witness(g, g.initial[0], g.states_where(target))) == ticks + 1
+
+
+def test_a_binding_fairness_restriction_overrides_the_cadence_in_bmc():
+    """Alarm raised at tick 0, answered at tick 1 although the cadence counter is 2 there:
+    y = 1 at tick 2. With F relaxed the answer waits for the counter: y = 1 at tick 4."""
+    cm = cadence_model(3).compile()
+    target = V.y >= 1
+    trace = reach(cm, 8, target)
+    assert [cm.actors[0].actions[mv[0]].name for mv in trace.moves] == ["raise_alarm", "respond"]
+    replay(cm, trace, target)
+    enc = encode(cm, 2)
+    s = solve(enc, enc.active[2], chosen(enc, "A", "raise_alarm", 0))
+    assert s is not None
+    assert [value(enc, s, "cadence_A", t) for t in range(3)] == [0, 2, 2]
+    result = relax(cm, 8, target)
+    assert result.reachable_as_is and len(result.trace) == 2
+    relaxed = reach(cm, 8, target, relax={"F"})
+    assert [cm.actors[0].actions[mv[0]].name for mv in relaxed.moves] == [
+        "raise_alarm",
+        "idle",
+        "idle",
+        "respond",
+    ]

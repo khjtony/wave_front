@@ -1,0 +1,8 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: rules-1939-09-29-boundary-treaty
+date: 1939-09-29
+source: synthetic fixture corpus for the harness rules (not a source)
+title: The German-Soviet boundary treaty
+url: synthetic:corpus_rules/1939-09-29_boundary_treaty
+
+The boundary treaty signed in Moscow yesterday fixes the partition of Poland between Germany and the Soviet Union. Soviet troops have entered Lwow and Vilna.

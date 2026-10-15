@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: rules-1939-09-17-soviet-entry
+date: 1939-09-17
+source: synthetic fixture corpus for the harness rules (not a source)
+title: Soviet troops enter eastern Poland
+url: synthetic:corpus_rules/1939-09-17_soviet_entry
+
+Soviet troops crossed the Polish frontier at dawn today along its whole length from the Dvina to the Dniester. M. Molotov declared in a broadcast that the Polish state had ceased to exist and that the Red Army would take under its protection the Ukrainians and White Russians of eastern Poland.
+
+Poland is now under attack from both west and east; German and Soviet forces are expected to meet along a line to be fixed between the two governments.

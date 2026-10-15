@@ -12,6 +12,7 @@ from wavefront.cli import main
 from wavefront.evidence import validate_snapshot
 from wavefront.evidence.corpora import LocalCorpus
 from wavefront.evidence.extract import RESOURCE_VARIABLES, TEXT_VARIABLES, RuleBackend
+from wavefront.evidence.harness_rules import DEFAULT_RULES
 from wavefront.evidence.replay import (
     ReplayError,
     compare,
@@ -48,26 +49,24 @@ def test_auto_accept_is_refused_on_a_corpus_that_is_not_synthetic(tmp_path):
         )
 
 
-@pytest.fixture(scope="module")
-def synthetic_run(tmp_path_factory):
-    out = tmp_path_factory.mktemp("replay")
+def _run(out, *extra):
     report = out / "report.md"
-    code = main(
-        [
-            "replay",
-            "--corpus",
-            str(FIXTURES),
-            "--quarters",
-            "1936Q1..1940Q4",
-            "--out",
-            str(out),
-            "--auto-accept",
-            "--report",
-            str(report),
-        ]
-    )
+    args = ["replay", "--corpus", str(FIXTURES), "--quarters", "1936Q1..1940Q4"]
+    code = main([*args, "--out", str(out), "--report", str(report), *extra])
     assert code == 0
     return out, report
+
+
+@pytest.fixture(scope="module")
+def synthetic_run(tmp_path_factory):
+    """The mechanics run of reports/replay_ww2_synthetic.md: harness rules off (the fixture
+    corpus has one document per event, so the two-document rule would hold most flips)."""
+    return _run(tmp_path_factory.mktemp("replay"), "--auto-accept", "--rules", "none")
+
+
+@pytest.fixture(scope="module")
+def synthetic_run_rules(tmp_path_factory):
+    return _run(tmp_path_factory.mktemp("replay_rules"), "--auto-accept")
 
 
 def test_each_quarter_reads_only_documents_dated_up_to_its_end(synthetic_run):
@@ -113,6 +112,7 @@ def test_synthetic_run_metrics_and_report_label(synthetic_run):
     assert first.startswith("SYNTHETIC RUN:")
     assert "# Replay metrics, WW2 1936Q1 to 1940Q4 (SYNTHETIC)" in text
     assert "auto-accepted (synthetic run only)" in text
+    assert "- Harness rules in force: none" in text
 
 
 def _series(tmp_path):
@@ -238,24 +238,12 @@ def test_committed_synthetic_report_is_labeled():
 
 @pytest.fixture(scope="module")
 def measured_run(tmp_path_factory):
-    out = tmp_path_factory.mktemp("measured")
-    report = out / "report.md"
-    code = main(
-        [
-            "replay",
-            "--corpus",
-            str(FIXTURES),
-            "--quarters",
-            "1936Q1..1940Q4",
-            "--out",
-            str(out),
-            "--measure-proposals",
-            "--report",
-            str(report),
-        ]
-    )
-    assert code == 0
-    return out, report
+    return _run(tmp_path_factory.mktemp("measured"), "--measure-proposals", "--rules", "none")
+
+
+@pytest.fixture(scope="module")
+def measured_run_rules(tmp_path_factory):
+    return _run(tmp_path_factory.mktemp("measured_rules"), "--measure-proposals")
 
 
 def test_measure_proposals_writes_no_snapshot_and_leaves_proposals_pending(measured_run):
@@ -270,10 +258,16 @@ def test_measure_proposals_writes_no_snapshot_and_leaves_proposals_pending(measu
     assert "## Proposals per variable" in text and "--measure-proposals" in text
 
 
-def test_measure_proposals_equals_accepting_every_proposal(measured_run, synthetic_run):
-    """Treating every proposal as accepted gives the metrics of a run that accepted them."""
+@pytest.mark.parametrize("rules", ["off", "on"])
+def test_measure_proposals_equals_accepting_every_proposal(rules, request):
+    """Treating every proposal as accepted gives the metrics of a run that accepted them, with
+    the harness rules off and on (auto-accept then accepts what a measurement counts)."""
+    suffix = "" if rules == "off" else "_rules"
+    measured_run = request.getfixturevalue(f"measured_run{suffix}")
+    synthetic_run = request.getfixturevalue(f"synthetic_run{suffix}")
     measured = compare(measured_run[0], QUARTERS, HINDSIGHT, measure_proposals=True)
     accepted = compare(synthetic_run[0], QUARTERS, HINDSIGHT)
+    assert measured.rules == accepted.rules == (() if rules == "off" else DEFAULT_RULES)
     assert measured.proposal_level and not measured.auto_accepted
     assert measured.agreement == accepted.agreement
     assert measured.levels == accepted.levels

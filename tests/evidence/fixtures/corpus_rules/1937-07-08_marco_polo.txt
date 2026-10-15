@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: rules-1937-07-08-marco-polo
+date: 1937-07-08
+source: synthetic fixture corpus for the harness rules (not a source)
+title: Fighting at the Marco Polo Bridge
+url: synthetic:corpus_rules/1937-07-08_marco_polo
+
+Japanese troops on night manoeuvres near the Marco Polo Bridge, some ten miles west of Peiping, exchanged fire with Chinese troops of the Twenty-Ninth Army late last night. The Japanese commander demands the withdrawal of the Chinese forces from the bridge.
+
+Firing continued intermittently through the day, and both sides are reported to be bringing up reinforcements.

@@ -2,13 +2,14 @@
 
 :func:`build_rich_model` starts from the shared tiny-model generator
 (:func:`helpers.random_games.build_random_model`) and adds, at random, the constructs that
-generator leaves out: delayed actions, strict Bumps, ``SetIf`` and expression ``Set``s,
-a flag used directly as a condition (guards, an ending, assumes, the invariant, targets),
+generator leaves out: delayed actions, strict Bumps, ``SetIf`` and expression ``Set``s, a
+flag used directly as a condition (guards, an ending, assumes, the invariant, targets),
 latches, ``remember_last``, fairness constraints, a profile (returned so the caller
 selects it), ``assume`` restrictions, an invariant and a decision cadence of 2 or 3 for
-some actors (drawn last, so the other constructs of a seed do not depend on it). Some of these can make the explicit
-engine raise ``ModelError`` (conflicting Sets, a strict Bump out of range, a fairness
-restriction with no available response); callers skip those models.
+some actors (drawn last, so the other constructs of a seed do not depend on it), sometimes
+with a fairness constraint on one of them. Some of these can make the explicit engine
+raise ``ModelError`` (conflicting Sets, a strict Bump out of range, a fairness restriction
+with no available response); callers skip those models.
 """
 
 from __future__ import annotations
@@ -105,8 +106,21 @@ def build_rich_model(seed, max_vars=4, max_horizon=4, cadence_rate=0.35):
     if rnd.random() < 0.3:
         m.invariant("I0", condition())
     if rnd.random() < cadence_rate:
-        for actor in rnd.sample(users, rnd.randint(1, len(users))):
+        cadenced = rnd.sample(users, rnd.randint(1, len(users)))
+        for actor in cadenced:
             actor.cadence = rnd.choice((2, 3))
+        if rnd.random() < 0.5:
+            # A fairness constraint on a cadenced actor, so that restrictions binding while
+            # the cadence counter is above 0 (the override of spec 3.1) occur.
+            actor = rnd.choice(cadenced)
+            names = [a.name for a in actor.actions]
+            m.fairness(
+                "FC",
+                actor=actor.name,
+                trigger=_predicate(rnd, sizes, allow_true=True),
+                within=1,
+                responses=rnd.sample(names, rnd.randint(1, len(names))),
+            )
     return m, profile
 
 
@@ -164,3 +178,19 @@ def check_replay(cm, trace, holds):
             assert j in acts, f"{actor.name} plays unavailable action {j} at {t}"
         assert cm.step(state, move) == trace.states[t + 1], f"step {t} disagrees"
     assert holds(trace.states[-1])
+
+
+def cadence_overrides(g):
+    """Number of (state, actor) pairs of ``g`` in which an actor's cadence counter is above
+    0, one of its fairness restrictions binds, and a declared action is available: the
+    fairness override of spec 3.1 at work."""
+    count = 0
+    for i, s in enumerate(g.states):
+        if g.terminal[i]:
+            continue
+        for actor, acts in zip(g.model.actors, g.avail[i], strict=True):
+            if actor.cadence is None or not s[actor.cadence]:
+                continue
+            if any(s[idx] >= within for idx, within, _, _ in actor.fairness) and any(acts):
+                count += 1
+    return count

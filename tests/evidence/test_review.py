@@ -36,7 +36,9 @@ SCHEMA = json.loads((ROOT / "snapshots" / "schema.json").read_text())
 HINDSIGHT = ROOT / "snapshots" / "ww2" / "hindsight"
 
 
-def _extract(corpus_dir, out_dir, until, label=None, since=None):
+def _extract(corpus_dir, out_dir, until, label=None, since=None, rules=()):
+    """Proposals file for ``until``; the harness rules are off unless given (these tests
+    check the review mechanics; tests/evidence/test_harness_rules.py checks the rules)."""
     corpus = LocalCorpus(corpus_dir)
     result = extract(corpus, until=until, since=since, backend=RuleBackend())
     path = out_dir / "proposals" / f"{label or label_for(until)}.json"
@@ -46,6 +48,7 @@ def _extract(corpus_dir, out_dir, until, label=None, since=None):
         label=label or label_for(until),
         corpus=corpus.describe(),
         backend={"name": "rules"},
+        harness_rules=rules,
     )
     return path
 
@@ -186,7 +189,19 @@ def test_cli_extract_and_review(real_corpus, tmp_path, capsys):
     out = tmp_path / "replay"
     proposals = out / "proposals" / "1936Q4.json"
     assert (
-        main(["extract", str(real_corpus), "--until", "1936-12-31", "--out", str(proposals)]) == 0
+        main(
+            [
+                "extract",
+                str(real_corpus),
+                "--until",
+                "1936-12-31",
+                "--out",
+                str(proposals),
+                "--rules",
+                "none",
+            ]
+        )
+        == 0
     )
     printed = capsys.readouterr().out
     assert "proposals written" in printed and "SYNTHETIC" not in printed

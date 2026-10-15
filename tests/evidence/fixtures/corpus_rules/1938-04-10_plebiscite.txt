@@ -1,0 +1,8 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: rules-1938-04-10-plebiscite
+date: 1938-04-10
+source: synthetic fixture corpus for the harness rules (not a source)
+title: The plebiscite in Austria
+url: synthetic:corpus_rules/1938-04-10_plebiscite
+
+The plebiscite held today confirmed the Anschluss. Austria voted by an overwhelming majority for the reunification of Austria with the Reich, a month after the event.

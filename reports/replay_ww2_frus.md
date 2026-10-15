@@ -307,3 +307,119 @@ At the first quarter of each run of disagreement: the hindsight level with its l
 - `balkans`, 1937Q2: hindsight `neutral` from 1940-08-30: "Second Vienna Award: Germany and Italy guarantee the remainder of Romania"; replay `german_aligned` from 1937-05-06: "Every time that he suggested to Czechoslovakia, Rumania, Yugoslavia or Austria that they should together with France take a more decided attitude of opposition to Germany the reply was “we should be very glad to do so if England would join France in guaranteeing us against Germany.".
 - `channel_air`, 1940Q4: hindsight `british` from 1940-10-31: "End of the daylight battle (British official dating); Sea Lion postponed to the spring on 12 October 1940 after the first postponement of 17 September"; replay `contested` from 1940-11-01: "Erkko thought such an opportunity had been presented by failure of German air attack on Britain as well as by success of British evacuation of Dunkirk.".
 - `oil_GER`, 1939Q1: hindsight `dependent` from 1936-10-18: "Four-Year Plan decree: synthetic fuel programme to reduce dependence on imported oil"; replay `secured` from 1939-02-20: "An agreement regulating trade between the two countries on a basis of parity between exports and imports whereby the Soviet Union will purchase in Germany machinery and equipment other than those clearly for military purposes and will sell to that country an amount equal in value of some 15 categories of raw materials including timber, mostly pulp logs, manganese ore, flax, cotton and small quantities of iron and oil.".
+
+## Harness rules adopted, 2026-10-15
+
+The owner adopted the two harness changes left for decision above (decision 9 of 2026-10-15). They are implemented in the replay and review layer (`wavefront/evidence/harness_rules.py`), not in the keyword table, which stays frozen; their exact semantics are in [docs/replay_harness.md](../docs/replay_harness.md), section "Harness rules". In short:
+
+- **`two-document`**: a flip of a variable that changes once (every flag, and every variable `models/ww2/v0.py` declares monotone: the pacts, the regions but `rhineland`, `war_west_ger`, and also `belief_WEST`, `commit_WEST`, `commit_US` and `oil_GER`) is shown for review and counted only when a second document (another document id, dated at or before the quarter) proposes the same level; the flip is then carried and dated by the second document's proposal.
+- **`no-retrospective`**: a proposal that would move a variable back to an earlier level is never applied to a monotone variable; for another variable (`belief_GER`, `treaty`, `rhineland`, `italy_estranged`) it is flagged `retrospective?` and not counted by the measurement (a reviewer may accept it).
+
+Both are on by default, switchable with `--rules`, recorded in the proposals files, and named in every generated report. The baseline above was measured before they existed; nothing in it changes.
+
+### How it was measured
+
+The same 1,030 proposals as the baseline (the proposals files of the baseline run, not re-extracted), against the same hindsight snapshots (unchanged since `3e97f34`), with the rules off, each alone, and both:
+
+```
+wf replay --out <scratch> --quarters 1936Q1..1940Q4 --measure-proposals --rules none \
+    --report <scratch>/m_none.md
+wf replay --out <scratch> --quarters 1936Q1..1940Q4 --measure-proposals --rules two-document \
+    --report <scratch>/m_two.md
+wf replay --out <scratch> --quarters 1936Q1..1940Q4 --measure-proposals --rules no-retrospective \
+    --report <scratch>/m_back.md
+wf replay --out <scratch> --quarters 1936Q1..1940Q4 --measure-proposals \
+    --report <scratch>/m_both.md                  # the default: both rules
+```
+
+With `--rules none` the generated report is identical to the "Generated metrics" section above, line for line, apart from the new line naming the rules in force: the rule backend was not changed and the harness reproduces the baseline.
+
+### Side by side
+
+| Measure | Rules off (baseline) | `two-document` only | `no-retrospective` only | Both (default) |
+|---|---|---|---|---|
+| Text variables, agreement over 500 variable-quarters | 356 (71%) | 383 (77%) | 357 (71%) | **389 (78%)** |
+| where the hindsight level is still the initial one (305) | 182 (60%) | 211 (69%) | 180 (59%) | 209 (69%) |
+| where it has moved (195) | 174 (89%) | 172 (88%) | 177 (91%) | 180 (92%) |
+| Reading nothing, for scale | 305 (61%) | 305 (61%) | 305 (61%) | 305 (61%) |
+| Belief and commitment flips replayed within one quarter (of 9) | 4 | 4 | 1 | 2 |
+| matched within four quarters | 8 | 8 | 1 | 3 |
+| False flips, all text variables | 29 | 27 | 14 | **11** |
+| Missed flips, all text variables | 8 | 8 | 15 | 14 |
+| Proposals counted (of 1,030) | 1,030 | 1,005 | 894 | 890 |
+| held: one document / first of two documents | - | 2 / 23 | - | 3 / 20 |
+| blocked: monotone, back / `retrospective?` | - | - | 112 / 24 | 93 / 24 |
+
+Per variable (quarters in agreement, of 20):
+
+| Group | Variable | Reading nothing | Rules off (baseline) | `two-document` only | `no-retrospective` only | Both (default) |
+|---|---|---|---|---|---|---|
+| beliefs and commitment | `belief_WEST` | 10/20 | 3/20 | 3/20 | 2/20 | 2/20 |
+| beliefs and commitment | `belief_GER` | 13/20 | 2/20 | 2/20 | 7/20 | 7/20 |
+| beliefs and commitment | `commit_WEST` | 10/20 | 8/20 | 8/20 | 7/20 | 7/20 |
+| beliefs and commitment | `commit_US` | 15/20 | 14/20 | 18/20 | 11/20 | 18/20 |
+| treaty | `treaty` | 0/20 | 20/20 | 20/20 | 20/20 | 20/20 |
+| pacts and structural flags | `axis` | 3/20 | 17/20 | 17/20 | 17/20 | 17/20 |
+| pacts and structural flags | `anticomintern` | 3/20 | 17/20 | 20/20 | 17/20 | 20/20 |
+| pacts and structural flags | `nazi_soviet_pact` | 14/20 | 17/20 | 19/20 | 17/20 | 19/20 |
+| pacts and structural flags | `polish_guarantee` | 12/20 | 9/20 | 12/20 | 9/20 | 12/20 |
+| pacts and structural flags | `anglo_soviet_alliance` | 20/20 | 20/20 | 20/20 | 20/20 | 20/20 |
+| pacts and structural flags | `ussr_axis` | 20/20 | 20/20 | 20/20 | 20/20 | 20/20 |
+| pacts and structural flags | `italy_estranged` | 20/20 | 20/20 | 20/20 | 20/20 | 20/20 |
+| pacts and structural flags | `china_war` | 6/20 | 20/20 | 18/20 | 20/20 | 18/20 |
+| war | `war_west_ger` | 14/20 | 13/20 | 15/20 | 13/20 | 15/20 |
+| regions | `rhineland` | 0/20 | 20/20 | 20/20 | 20/20 | 20/20 |
+| regions | `austria` | 8/20 | 12/20 | 14/20 | 12/20 | 14/20 |
+| regions | `sudeten` | 10/20 | 19/20 | 19/20 | 19/20 | 19/20 |
+| regions | `bohemia` | 12/20 | 20/20 | 20/20 | 20/20 | 20/20 |
+| regions | `poland` | 14/20 | 4/20 | 8/20 | 7/20 | 11/20 |
+| regions | `france` | 14/20 | 13/20 | 15/20 | 13/20 | 15/20 |
+| regions | `britain` | 14/20 | 6/20 | 7/20 | 3/20 | 7/20 |
+| regions | `balkans` | 18/20 | 7/20 | 10/20 | 7/20 | 10/20 |
+| regions | `siberia` | 20/20 | 20/20 | 20/20 | 20/20 | 20/20 |
+| regions | `channel_air` | 19/20 | 19/20 | 19/20 | 20/20 | 19/20 |
+| oil | `oil_GER` | 16/20 | 16/20 | 19/20 | 16/20 | 19/20 |
+
+What the rules did with both on, as generated (the "What the harness rules did" table of the measurement, unedited):
+
+| Variable | Proposals | Shown and counted | Held: one document | First of two documents | Blocked: monotone, back | retrospective? (not counted) |
+|---|---|---|---|---|---|---|
+| `belief_WEST` | 113 | 80 | 0 | 1 | 32 | 0 |
+| `belief_GER` | 102 | 78 | 0 | 0 | 0 | 24 |
+| `commit_WEST` | 78 | 34 | 0 | 2 | 42 | 0 |
+| `commit_US` | 11 | 9 | 0 | 2 | 0 | 0 |
+| `treaty` | 14 | 14 | 0 | 0 | 0 | 0 |
+| `axis` | 217 | 216 | 0 | 1 | 0 | 0 |
+| `anticomintern` | 59 | 58 | 0 | 1 | 0 | 0 |
+| `nazi_soviet_pact` | 27 | 26 | 0 | 1 | 0 | 0 |
+| `polish_guarantee` | 56 | 55 | 0 | 1 | 0 | 0 |
+| `anglo_soviet_alliance` | 1 | 1 | 0 | 0 | 0 | 0 |
+| `ussr_axis` | 3 | 3 | 0 | 0 | 0 | 0 |
+| `italy_estranged` | 27 | 27 | 0 | 0 | 0 | 0 |
+| `china_war` | 6 | 5 | 0 | 1 | 0 | 0 |
+| `war_west_ger` | 27 | 26 | 0 | 1 | 0 | 0 |
+| `rhineland` | 12 | 12 | 0 | 0 | 0 | 0 |
+| `austria` | 52 | 51 | 0 | 1 | 0 | 0 |
+| `sudeten` | 35 | 34 | 0 | 1 | 0 | 0 |
+| `bohemia` | 13 | 12 | 0 | 1 | 0 | 0 |
+| `poland` | 57 | 39 | 1 | 1 | 16 | 0 |
+| `france` | 30 | 25 | 0 | 2 | 3 | 0 |
+| `britain` | 28 | 26 | 1 | 1 | 0 | 0 |
+| `balkans` | 45 | 44 | 0 | 1 | 0 | 0 |
+| `siberia` | 1 | 1 | 0 | 0 | 0 | 0 |
+| `channel_air` | 8 | 7 | 1 | 0 | 0 | 0 |
+| `oil_GER` | 8 | 7 | 0 | 1 | 0 | 0 |
+| all | 1030 | 890 | 3 | 20 | 93 | 24 |
+
+### What the rules change, and what they do not
+
+- **The two-document rule delays the rule backend's false flips more than it removes them.** Its false readings come from keywords that recur across the record, so a second document is nearly always found: of the 1,030 proposals only 2 stay held at the end. Alone it removes 2 of the 29 false flips. What it does is move them later and onto a second, often different, misreading: `austria` is annexed from 1936-07-11 instead of 1936-03-14 (the Austro-German agreement's own "the Anschluss propaganda would fall in the category, as it is contrary to the principle of the independence of Austria", `frus:frus1936v01/d256`), `britain` at war from 1936-06-04 ("get in the fight on trade barriers", `frus:frus1936v01/d625`) instead of 1936-01-16, `polish_guarantee` from 1937-02-20 ("Poland should give a guarantee to Czechoslovakia", `frus:frus1937v01/d39`) instead of 1936-04-02, `poland` partitioned from 1937-05-20 (doubts about Soviet aid over "Soviet roads and railroads leading to the west", `frus:frus1937v01/d62`) instead of 1936-04-20. The gain in agreement (356 to 383) is those quarters of delay, and four flips that only one document had made early: `anticomintern` now flips 29 days early instead of 307, `nazi_soviet_pact` 76 days early instead of 266, `oil_GER` 103 days instead of 356, and `commit_US` loses its two false flips of 1938 and 1939.
+- **The no-retrospective rule removes the oscillations and freezes the first error.** `belief_WEST` flipped eight times without a documented flip in the baseline; with the rule it flips once, to `uncertain` in January 1936, and never moves again, because every later `limited` reading is a move back on a variable v0 declares monotone (32 blocked) and `hegemonic` is never proposed. `commit_WEST` goes to `resolved` in April 1936 and to `at_war` in May 1938 (a French minister's conditional about "a French declaration of war") and then stays there, so all three documented commitment flips are missed (42 blocked). `poland` no longer falls back from `partitioned` to `german` on Welles's recollection of 26 February 1940, which is the case the report named; but the same rule also keeps `poland` partitioned from the 1937 misreading on. `belief_GER`, which is not monotone, keeps `uncertain` from January 1936 because its 24 later readings of `will_not_fight` are back to its initial level and are flagged, not counted; the documented `will_fight` flip is still read twelve days late.
+- **Together**: false flips fall from 29 to 11, agreement rises from 71 to 78 percent (and above the reading-nothing baseline by 17 points instead of 10), and missed flips rise from 8 to 14. The belief and commitment flips, the variables the replay exists for, get worse: 2 of 9 within a quarter instead of 4, 3 matched within four quarters instead of 8 (three of the baseline's eight were early misreadings paired by the window, as the baseline notes; with the rules on, the earlier misreading is the one that sticks). Missed flips rise because a level already in force from a misreading cannot flip to itself: `austria` (annexed since 1936), `war_west_ger`, `france` and `britain` at war since 1938 or 1936, `poland` partitioned since 1937.
+- **Neither rule makes a wrong reading right.** They change which wrong reading the measurement keeps: the two-document rule asks a misreading to occur twice, which a keyword misreading does; the no-retrospective rule then keeps whichever misreading came first. A backend that reads a sentence correctly gains from both rules (a single stray reading no longer flips a pact, a recollection no longer moves a region back); a backend whose first reading of a variable is wrong is penalized harder than without them, since the error now holds to the end. The reviewer, who sees held, blocked and `retrospective?` proposals marked as such, stays the safeguard.
+
+### What this means for the comparison with the Claude backend
+
+The figures above change what the metric measures, as the baseline section said they would. The comparison with the Claude backend is therefore made on both settings, from the same proposals: the rules-off figures above (356/500, 29 false flips, 4 of 9 timely belief and commitment flips) remain the baseline of the backend alone, and the rules-on figures (389/500, 11 false flips, 2 of 9) are the baseline of the harness as adopted. The commands of [docs/replay_harness.md](../docs/replay_harness.md), section "Running the Claude backend on the real corpus", produce both reports for the Claude run.
+
+Caveats. The monotone set is the v0 model's (`belief_WEST`, `commit_WEST`, `commit_US` and `oil_GER` included); if belief and commitment were meant to stay outside "a variable that changes once", the two-document set and the strict no-retrospective set both narrow by those four, and the measurement can be redone in seconds on these proposals. Documents printed in two volumes under two ids count as two documents (listed as an open item in the harness document). The rules act on a measurement here, where every proposal counts as accepted; in a reviewed replay they act on the accepted proposals, so a reviewer who rejects the January 1936 `belief_WEST` reading leaves the variable free to move later.

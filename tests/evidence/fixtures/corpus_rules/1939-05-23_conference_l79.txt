@@ -1,0 +1,10 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: rules-1939-05-23-conference
+date: 1939-05-23
+source: synthetic fixture corpus for the harness rules (not a source)
+title: Minutes of a conference in the Reich Chancellery
+url: synthetic:corpus_rules/1939-05-23_conference_l79
+
+Minutes of a conference held today in the Reich Chancellery, the Fuehrer presiding, with the commanders in chief of the three services. The Fuehrer stated that there is no question of sparing Poland, and that the decision has been taken to attack Poland at the first suitable opportunity.
+
+The Fuehrer doubts the possibility of a peaceful settlement with England. Success in isolating Poland is a matter of skilful politics; it must not come to a simultaneous showdown with the West. If it is not certain that a German-Polish conflict will not lead to war in the West, the fight must be primarily against England and France, and preparations must be made for a long war as well as a surprise attack.

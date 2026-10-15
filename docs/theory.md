@@ -18,7 +18,7 @@ G = (Var, D, I, Agt, Act, avail, δ, Term, Obs)
 
 | Component | Definition |
 |---|---|
-| `Var` | variables in declaration order, followed by the built-ins: `tick`, `last_<a>`, `pending_<a>_<α>`, `fair_<f>`, latch variables |
+| `Var` | variables in declaration order, followed by the built-ins: `tick`, `last_<a>`, `pending_<a>_<α>`, `fair_<f>`, `cadence_<a>`, latch variables |
 | `D(v)` | `{0, …, n_v − 1}`: level indices, counter values `0..max`, or `{0, 1}` for flags |
 | `S` | `Π_v D(v)`; a state is a tuple of indices. Only the reachable part is built |
 | `I ⊆ S` | `Π_v I_v` with `I_v = {init(v)}`, or `I_v = D(v)` when `init=None`; built-ins start at 0, `none` or `unset` |
@@ -33,13 +33,14 @@ G = (Var, D, I, Agt, Act, avail, δ, Term, Obs)
 1. `s ⊨ guard_α`;
 2. `pending_<a>_<α>(s) = 0` when `α` has a delay;
 3. for every fairness constraint `f` of `a` with `fair_f(s) = within_f`, `α ∈ responses_f`;
-4. if a profile `p` is selected and forbids `α` for `a`, then `s ⊨ unless_p`.
+4. if a profile `p` is selected and forbids `α` for `a`, then `s ⊨ unless_p`;
+5. when `a` has a cadence `k ≥ 2` and `α` is a declared action (not `idle`): `cadence_a(s) = 0`, or some fairness constraint `f` of `a` has `fair_f(s) = within_f` (a binding restriction overrides the cadence; clause 3 then confines `α` to the responses).
 
 The engine checks that `avail(a, s) ≠ ∅` for every actor and every non-terminal reachable state (spec §1). This matters below: the universal quantifier in the controllable predecessor is never vacuous.
 
 **Joint moves.** `Moves(s) = Π_a avail(a, s)` for `s ∉ Term`, and `Moves(s) = ∅` for `s ∈ Term`. For a coalition, `Moves_C(s) = Π_{a∈C} avail(a, s)`. A joint move is a pair `(m_C, m_C̄)`. For `C = ∅`, `Moves_∅(s)` holds only the empty tuple.
 
-**Step.** `δ(s, m)` is computed in two stages (spec §3.4). First, every chosen action's effects are evaluated on `s`; per variable, a `Set` value is taken if present (two different `Set`s are a `ModelError`), all `Bump`s are summed and added, and the result is clamped. Second, the system updates run in this order: `tick := tick + 1`; delay counters (set to `d` for a delayed action chosen now, decremented each tick, delayed effect applied in the update in which the counter goes from 1 to 0); `last_<a> := chosen action`; latches; fairness counters (section 6). Nature's nondeterminism is its choice of event; given the joint move there is no further choice.
+**Step.** `δ(s, m)` is computed in two stages (spec §3.4). First, every chosen action's effects are evaluated on `s`; per variable, a `Set` value is taken if present (two different `Set`s are a `ModelError`), all `Bump`s are summed and added, and the result is clamped. Second, the system updates run in this order: `tick := tick + 1`; delay counters (set to `d` for a delayed action chosen now, decremented each tick, delayed effect applied in the update in which the counter goes from 1 to 0); cadence counters (`cadence_a := k − 1` when `a` chose a declared action, else `max(cadence_a − 1, 0)`); `last_<a> := chosen action`; latches; fairness counters (section 6). Nature's nondeterminism is its choice of event; given the joint move there is no further choice.
 
 **Consequences used throughout.**
 - Every move increments `tick`, and `tick = horizon` is terminal. The state graph is therefore acyclic and every play is finite, of length at most `horizon − tick(s₀)`. "Forever" in this framework means "until a terminal state".
@@ -59,6 +60,7 @@ The engine checks that `avail(a, s) ≠ ∅` for every actor and every non-termi
 | `action(guard, effect)` | `α ∈ Act_a`, clause 1 of `avail`, the effect part of `δ` |
 | `delay=d` | built-in `pending_<a>_<α>`, clause 2 of `avail`, delayed effect in `δ` |
 | `remember_last=True` | built-in `last_<a>` |
+| `m.actor(name, cadence=k)`, `k ≥ 2` | built-in `cadence_<a>`, clause 5 of `avail` |
 | `m.latch(name, of, when)` | latch variable with `unset` prepended to the levels of `of` |
 | `m.fairness(...)` | built-in `fair_<f>`, clause 3 of `avail` |
 | `m.profile(...)`, selected at explore time | clause 4 of `avail` |
@@ -74,7 +76,7 @@ A **history strategy** for `C` maps each finite history `s₀ s₁ … s_i` with
 
 **Uniformity.** Write `s ~_a s'` when `s` and `s'` agree on `Obs(a)`. A strategy is uniform when every member's component is constant on `~_a` classes. The spec requires the guard of each action of `a` to mention only variables in `Obs(a)` (spec §1, §4 `observation_check`). Three things follow, and one does not.
 
-1. **Uniform availability (holds, with conditions).** If `s ~_a s'`, clause 1 of `avail` gives the same answer in both states. Clauses 2 to 4 also agree when the built-in counters are in `Obs(a)` and the fairness triggers and profile `unless` conditions of `a` mention only `Obs(a)`. The spec's check covers guards only, so the last condition is the modeler's responsibility (the DESIGN.md §6.3 sketch has a fairness trigger for `H` on `a_control`, which `H` does not observe).
+1. **Uniform availability (holds, with conditions).** If `s ~_a s'`, clause 1 of `avail` gives the same answer in both states. Clauses 2 to 5 also agree when the built-in counters are in `Obs(a)` and the fairness triggers and profile `unless` conditions of `a` mention only `Obs(a)`. The spec's check covers guards only, so the last condition is the modeler's responsibility (the DESIGN.md §6.3 sketch has a fairness trigger for `H` on `a_control`, which `H` does not observe).
 2. **Information as explicit state (holds).** What an actor has learned is carried by belief variables (`a_known`, `belief[P][Q]`) updated by effects and Nature events, and guards are written on those beliefs. This is the abstraction: the modeler writes the knowledge dynamics instead of deriving them from observation histories.
 3. **Negative results transfer (holds).** Uniform strategies are a subset of all strategies, so "no strategy of `C` exists" (section 3) remains true under any information assumption.
 4. **Positive results are perfect-information results (the loss).** The fixpoints in section 3 choose a move per state. Nothing forces that choice to be constant on observation classes. Example: `x ∈ {0, 1}` with `init=None`, hidden from actor `a`; `a` picks `left` or `right`; the target is reached iff `left` is picked when `x = 0` and `right` when `x = 1`. The attractor for `{a}` contains both initial states; no uniform strategy wins from both. So "`C` can force `T`" or "`s` is in `C`'s kernel" is an upper bound on `C`'s ability whenever a member of `C` lacks observations. DESIGN.md §4.2 states this correctly ("this keeps the engine in perfect-information ATL").

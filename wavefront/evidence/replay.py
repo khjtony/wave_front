@@ -73,9 +73,11 @@ from .review import (
 
 __all__ = [
     "BELIEF_COMMIT",
+    "CHARS_PER_TOKEN",
     "Flip",
     "Metrics",
     "ReplayError",
+    "backend_info",
     "compare",
     "measured_snapshots",
     "parse_quarters",
@@ -191,6 +193,16 @@ def _read_before(proposals_dir: Path, first_quarter: str) -> set[str]:
     return read
 
 
+def _reviewed(path: Path) -> int:
+    """The proposals of an existing file that carry a decision other than an auto-accept."""
+    if not path.exists():
+        return 0
+    data = json.loads(path.read_text(encoding="utf-8"))
+    return sum(
+        1 for r in data.get("proposals", []) if any(not d.get("auto") for d in r["decisions"])
+    )
+
+
 def _cached(backend: Backend, out_dir: Path, cache: bool) -> Backend:
     if not cache or backend.name == "rules" or isinstance(backend, CachedBackend):
         return backend
@@ -224,6 +236,14 @@ def replay(
     variables = text_variables()
     runs: list[QuarterRun] = []
     for quarter in quarters:
+        reviewed = _reviewed(proposals_dir / f"{quarter}.json")
+        if reviewed:
+            raise ReplayError(
+                f"{quarter}: {reviewed} proposal(s) of {proposals_dir / quarter}.json carry a "
+                "reviewer's decision, and replaying the quarter would rewrite the file with "
+                "every proposal pending; start --quarters after it, or use another --out"
+            )
+    for quarter in quarters:
         until = quarter_end(quarter)
         visible = sum(1 for _ in corpus.iter_documents(until=until))
         usage_before = Counter(getattr(backend, "usage", None) or {})
@@ -250,7 +270,7 @@ def replay(
                 )
             )
         path = proposals_dir / f"{quarter}.json"
-        info = _backend_info(backend)
+        info = backend_info(backend)
         usage = Counter(getattr(backend, "usage", None) or {}) - usage_before
         if usage:
             info["usage"] = dict(usage)
@@ -365,7 +385,7 @@ def plan(
     return rows
 
 
-def _backend_info(backend: Backend) -> dict[str, Any]:
+def backend_info(backend: Backend) -> dict[str, Any]:
     info: dict[str, Any] = {"name": backend.name}
     model = getattr(backend, "model", None)
     if isinstance(model, str) and model:

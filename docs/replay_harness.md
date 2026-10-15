@@ -13,6 +13,7 @@ corpus (dated documents)          wavefront/evidence/corpora/
 extractor + backend               wavefront/evidence/extract/
    | proposals (fixed schema)       checked: level, date <= document date, verbatim quote
 proposals file                    <dir>/proposals/<label>.json
+   | harness rules                  two-document, no-retrospective (wavefront/evidence/harness_rules.py)
    | wf review --accept/--reject    a note for every decision; history kept
 replay snapshot                   <dir>/<label>.json   (written only by review.py)
    | compare with hindsight         wavefront/evidence/replay.py
@@ -118,6 +119,11 @@ variable with no accepted proposal keeps the ontology's initial level as `assume
 resource variables are copied from the hindsight snapshot and marked as copied. The
 snapshots validate against `snapshots/schema.json` and the ontology.
 
+Under the harness rules (next section) the listing puts the proposals the rules hold or block
+after the proposals for review, under "not for review under the harness rules", flags a
+`retrospective?` one, and gives the reason on a `harness:` line; `--accept` refuses a held or
+blocked proposal, and a held or blocked proposal does not keep a snapshot from being written.
+
 `--auto-accept` exists for the synthetic run only: it is refused unless the corpus is the
 synthetic fixture corpus (every file carries the `SYNTHETIC FIXTURE` header), the reviewer
 name it uses is reserved, and every indicator it produces says AUTO-ACCEPTED.
@@ -159,6 +165,69 @@ between the variable-quarters whose hindsight level is still the initial one and
 has moved: a backend that proposes nothing scores the first, and one that proposes every
 event at once scores the second.
 
+## Harness rules
+
+Adopted by the owner on 2026-10-15 (decision 9), from the two harness changes the FRUS
+baseline left for decision ([reports/replay_ww2_frus.md](../reports/replay_ww2_frus.md)). They
+act in the replay and review layer (`wavefront/evidence/harness_rules.py`) on the proposals of
+any backend; the rule backend's keyword table is not touched and stays the frozen baseline.
+
+**`two-document`.** A flip of a variable that changes once needs two independent documents
+before it is shown as a proposal for review or counted by `--measure-proposals`. "Changes
+once" is every flag and every variable the model declares monotone (`MONOTONE`, kept equal by a
+test to the `monotone=True` declarations of `models/ww2/v0.py`, the model the replay snapshots
+are for): the pacts and structural flags (with `italy_estranged`, a flag that is not monotone),
+the regions except `rhineland`, `war_west_ger`, and, because v0 declares them monotone,
+`belief_WEST`, `commit_WEST`, `commit_US` and `oil_GER`. Not under the rule: `belief_GER`,
+`treaty`, `rhineland`. A flip is a proposal whose level differs from the variable's current
+level in the replay; "independent" means a different document id, so a document printed in two
+FRUS volumes under two ids counts twice (the baseline report lists such near-duplicates). Both
+documents are dated at or before the quarter, because a quarter's proposals come only from
+documents dated up to its end. The first proposal is *held*: not shown for review, not
+acceptable, not counted. The proposal of the second document carries the flip, so the flip
+enters the quarter of that document and is dated by it; the first is then shown with it as
+*corroborating* and never sets the level by itself. Later proposals of the same level are
+shown as usual. In review a rejected proposal does not count as a proposing document.
+
+**`no-retrospective`.** A proposal that would move a variable back to an earlier level (a
+retrospective reading) is, for a monotone variable, never applied (*blocked*: listed apart, not
+acceptable, not counted); for any other variable it is shown flagged `retrospective?` and never
+applied automatically: the measurement does not count it, `--auto-accept` rejects it with a
+note that says why, and only a reviewer's acceptance applies it. "Back" means, for a monotone
+variable, a level below the current one in the level order; for any other variable, a level the
+variable has held earlier in the replay (its initial level included) and has since left (so
+`treaty` moving from `eroded` to `enforced` is a flip, and back from `dead` to `eroded` is
+flagged).
+
+**The current level** is the replay's own level just before the proposal's date, the proposals
+taken in date order with file order breaking ties: in review, the level set by the accepted
+proposals in force; in a measurement or an auto-accepted run, the level set by every proposal in
+force. So the rules make a level sticky once it is in force: a false flip that two documents
+support is not undone by a later correct reading of a monotone variable, and the reviewer, not
+the rules, is the safeguard against it.
+
+**Switching.** `--rules two-document,no-retrospective` (the default), `--rules two-document`,
+`--rules no-retrospective` or `--rules none` on `wf replay` and `wf extract`. The rules are
+recorded in each proposals file (`harness_rules`; a file written before 2026-10-15 has none and
+reads as the default), `wf review` uses the recorded rules (the files of a directory must
+agree), and `wf replay --measure-proposals --rules ...` on proposals already written replaces
+the recorded rules for that measurement only, which is how the same proposals are measured with
+the rules on and off. Every generated report states the rules in force on its "Harness rules in
+force" line, and a measurement under the rules adds a table of what they did (proposals shown
+and counted, held, first of two documents, blocked, `retrospective?`).
+
+**On the fixtures.** `tests/evidence/fixtures/corpus_rules/` holds eight synthetic documents,
+one case per rule: a single document on the Marco Polo Bridge (held: `china_war` never flips),
+two documents on the Anschluss in 1938Q1 and 1938Q2 (`austria` flips in 1938Q2, dated by the
+second), the conference of 23 May and the Obersalzberg address (`belief_GER` back to its
+initial level: `retrospective?`), and two documents on the partition of Poland followed by a
+1940 recollection of the German attack (`poland` back from `partitioned` to `german`:
+blocked). `tests/evidence/test_harness_rules.py` runs them through the measurement (each rule
+on, off and alone), the review step, auto-accept, and the Claude backend with a fake client.
+The synthetic run corpus has one document per event, so with the rules on most of its flips
+are held (agreement 363/500, 73 percent, against 488/500 with the rules off); its committed
+report is the mechanics run with `--rules none`.
+
 ## Running on the owner's machine
 
 ```
@@ -188,7 +257,7 @@ not a source`; they are not evidence and are never cited as such.
 
 ```
 wf replay --corpus tests/evidence/fixtures/corpus_synthetic --quarters 1936Q1..1940Q4 \
-    --out <scratch> --auto-accept --report reports/replay_ww2_synthetic.md \
+    --out <scratch> --auto-accept --rules none --report reports/replay_ww2_synthetic.md \
     --title "Replay metrics on the synthetic fixture corpus, WW2 1936Q1 to 1940Q4"
 ```
 
@@ -252,9 +321,16 @@ python3 scripts/fetch_corpora.py frus --since 1936-01-01 --until 1940-12-31 \
     --mirror 'https://raw.githubusercontent.com/HistoryAtState/frus/99d851c79a570dcd1a6594981600eaa2515c5bef/volumes/{volume}.xml'
 python3 scripts/fetch_corpora.py --check frus     # 10550 documents
 wf replay --corpus data/ww2/corpora/raw/frus --quarters 1936Q1..1940Q4 --out <scratch> \
-    --measure-proposals --report <scratch>/metrics.md \
+    --measure-proposals --rules none --report <scratch>/metrics.md \
     --title "Replay metrics, FRUS 1936 to 1940, rule backend, proposal level"
+wf replay --out <scratch> --quarters 1936Q1..1940Q4 --measure-proposals \
+    --report <scratch>/metrics_rules.md \
+    --title "Replay metrics, FRUS 1936 to 1940, rule backend, proposal level, harness rules on"
 ```
+
+The baseline was measured before the harness rules existed, so its reproduction needs
+`--rules none`; the second command measures the same proposals with the rules on (the report's
+section "Harness rules adopted, 2026-10-15").
 
 The mirror is the Office of the Historian's own TEI repository on GitHub (history.state.gov is
 blocked here); the pattern pins commit `99d851c7`, and the SHA-256 of every volume used is in
@@ -273,12 +349,133 @@ mode and the reading-nothing baseline. The TEI parser otherwise held: every docu
 its dateline (10,205 in the opener, 345 in the closer or the body), all within a day of the
 editors' normalized range, no encoding problem, one editorial note skipped.
 
+## Running the Claude backend on the real corpus
+
+Decision 8 of 2026-10-15: the owner runs the Claude backend over the same FRUS corpus on their
+own machine, with their API key, and sends the proposals back. Nothing below needs this
+repository's environment; every step but 3 and 4 is free.
+
+What runs: `wavefront/evidence/extract/claude_backend.py` with its defaults, which these
+commands do not change: model `claude-opus-5-5` (`DEFAULT_MODEL`), effort `high`, adaptive
+thinking, `max_tokens` 16,000, structured output to the proposal schema, the server-side refusal
+fallback, the system prompt cached. One request per document (a document over 200,000
+characters is read in parts: one in this corpus). The SDK reads the key from the environment
+variable `ANTHROPIC_API_KEY` (it also accepts `ANTHROPIC_AUTH_TOKEN` or a profile from
+`ant auth login`); never put the key in a file of the repository or in a command you send back.
+
+```
+# 0. Once: the SDK, and the key in the environment (the value is yours; it is never written).
+pip install -e '.[extract]'
+export ANTHROPIC_API_KEY=...            # in your shell only
+
+# 1. The corpus, from the pinned mirror (skip the fetch if --check already passes).
+python3 scripts/fetch_corpora.py frus --since 1936-01-01 --until 1940-12-31 \
+    --volumes frus1936v01,frus1936v02,frus1937v01,frus1937v02,frus1938v01,frus1938v02,frus1939v01,frus1939v02,frus1940v01,frus1940v02,frus1940v03,frus1933-39 \
+    --mirror 'https://raw.githubusercontent.com/HistoryAtState/frus/99d851c79a570dcd1a6594981600eaa2515c5bef/volumes/{volume}.xml'
+python3 scripts/fetch_corpora.py --check frus     # 10550 documents; checksums as in data/ww2/corpora/frus/MANIFEST.json
+
+# 2. What a run would send (free; nothing is sent or written).
+OUT=~/wf_runs/frus_claude                          # outside the repository
+wf replay --corpus data/ww2/corpora/raw/frus --quarters 1936Q1..1940Q4 --out $OUT \
+    --backend claude --dry-run
+
+# 3. Pilot: one quarter (320 documents, 3 percent of the corpus). The proposals file records
+#    the tokens used ("backend": {"usage": ...}) and the cache hits.
+wf replay --corpus data/ww2/corpora/raw/frus --quarters 1936Q1..1936Q1 --out $OUT \
+    --backend claude --workers 4
+python3 -c "import json,sys; print(json.load(open(sys.argv[1]))['backend'])" $OUT/proposals/1936Q1.json
+
+# 4. The rest. If it stops (network, rate limit, an interruption), run the same command again:
+#    every document already answered is read from $OUT/cache/claude/ and not sent again.
+wf replay --corpus data/ww2/corpora/raw/frus --quarters 1936Q2..1940Q4 --out $OUT \
+    --backend claude --workers 4
+
+# 5. The measurement (free): with the harness rules on (the default) and off, as for the baseline.
+wf replay --out $OUT --quarters 1936Q1..1940Q4 --measure-proposals \
+    --report $OUT/metrics_claude.md \
+    --title "Replay metrics, FRUS 1936 to 1940, Claude backend, proposal level"
+wf replay --out $OUT --quarters 1936Q1..1940Q4 --measure-proposals --rules none \
+    --report $OUT/metrics_claude_rules_off.md \
+    --title "Replay metrics, FRUS 1936 to 1940, Claude backend, proposal level, harness rules off"
+
+# 6. The review (human, free, can wait): list, then accept or reject with a note.
+wf review $OUT/proposals/1936Q1.json
+wf review $OUT/proposals/1936Q1.json --accept 1936Q1-001,1936Q1-003 --note "..."
+wf review $OUT/proposals/1936Q1.json --reject 1936Q1-002 --note "..."
+wf replay --out $OUT --quarters 1936Q1..1940Q4 --metrics-only --report $OUT/metrics_reviewed.md
+```
+
+**What to send back:** the two reports of step 5 (`$OUT/metrics_claude.md`,
+`$OUT/metrics_claude_rules_off.md`), the proposals directory `$OUT/proposals/` (twenty JSON
+files: every proposal with its quote, the documents read, the discarded proposals with their
+reasons, the backend errors, and per quarter the model, the tokens and the cache counts), the
+output of `fetch_corpora.py --check frus`, and the commit of the repository the run used
+(`git rev-parse HEAD`). The cache is not needed. If a quarter fails on a refusal ("the request
+was declined", not retryable: running again asks again), send the error message as well.
+
+**Resuming.** The answers are cached per document under `$OUT/cache/claude/`, keyed by the
+model, the effort, the token and part limits, the system prompt with the ontology's threshold
+rules, and the document's text; only complete answers are cached, never an error. Running the
+same command again therefore sends only the documents not yet answered (`--dry-run` shows how
+many are left: its "cached" column). Keep `--model` and the repository's commit the same across
+the resumed runs: a different model or a changed threshold rule reads every document again. A
+quarter whose proposals carry a reviewer's decision is never replayed over (the replay refuses
+instead of resetting the decisions), so start `--quarters` after the reviewed ones. `--workers`
+sets how many documents are read at once (default 1); with a low rate limit a 429 surfaces as an
+error after the SDK's own retries, and running again resumes.
+
+**Cost, order of magnitude.** From the dry run of step 2 on this corpus (computed here, not on
+the owner's machine):
+
+| Quarter | Documents | Characters | Quarter | Documents | Characters |
+|---|---|---|---|---|---|
+| 1936Q1 | 320 | 892,763 | 1938Q3 | 508 | 1,255,652 |
+| 1936Q2 | 266 | 803,937 | 1938Q4 | 475 | 1,192,121 |
+| 1936Q3 | 532 | 1,189,967 | 1939Q1 | 385 | 938,914 |
+| 1936Q4 | 506 | 1,175,680 | 1939Q2 | 437 | 1,080,498 |
+| 1937Q1 | 430 | 1,073,509 | 1939Q3 | 682 | 1,356,684 |
+| 1937Q2 | 454 | 1,126,700 | 1939Q4 | 776 | 1,459,335 |
+| 1937Q3 | 495 | 1,272,486 | 1940Q1 | 452 | 1,263,065 |
+| 1937Q4 | 444 | 1,265,183 | 1940Q2 | 937 | 1,638,654 |
+| 1938Q1 | 518 | 1,578,001 | 1940Q3 | 702 | 1,531,071 |
+| 1938Q2 | 505 | 1,364,406 | 1940Q4 | 726 | 1,542,941 |
+
+10,550 documents, 10,551 requests, 25.0 million characters of document text. At a rough four
+characters a token (a planning figure, not the API's count, which can differ by a third either
+way): about 6.3 million tokens of document text and about 1.1 million of per-request headers (the
+dry run allows 400 characters a request for the document's id, date, title and URL), plus the
+system prompt (11,795 characters, about 2,950 tokens) on every request, 31 million tokens in
+all, which the prompt cache serves at the cache-read price once written, as long as requests
+keep coming less than five minutes apart. The output is
+the JSON answer (`{"proposals": [...]}`; a proposal with its one-sentence quote and rule is
+roughly 100 to 150 tokens, and most documents should have none or one) and the adaptive
+thinking at effort `high`, which is billed as output and has no fixed size; it is the large
+unknown and the pilot measures it.
+
+Prices, from the Claude API reference bundled with the Claude Code `claude-api` skill (its model
+table, cached 2026-10-06, and its prompt-caching notes; the `anthropic` SDK itself is not
+installed in this environment, and the live pricing page should be checked before the run):
+`claude-opus-5-5` costs $4 per million input tokens and $20 per million output tokens; cache
+reads $0.20 per million, cache writes 1.25 times the input price for the five-minute TTL.
+Hence, before thinking: document text and headers about $29, the cached system prompt about $6
+(about $125 if it were never cached), the JSON answers about $20 to $35; each 1,000 thinking
+tokens a request, on average, adds about 10.6 million output tokens, about $210. Order of
+magnitude: one to a few hundred dollars for the whole corpus, dominated by thinking. The pilot
+of step 3 reads 320 of the 10,551 requests: multiply its recorded `usage` by about 33 for the
+whole run, and its wall-clock time by 33 divided by the `--workers` used.
+
 ## Open items
 
 - framework_spec.md section 2 (package layout), section 9 (evidence) and section 10 (CLI)
-  do not yet list the `corpora`, `extract`, `review` and `replay` modules and the `extract`,
-  `review` and `replay` subcommands; the spec belongs to the framework step and should gain
-  a paragraph for each.
+  do not yet list the `corpora`, `extract` (with its per-document cache), `harness_rules`,
+  `review` and `replay` modules and the `extract`, `review` and `replay` subcommands with their
+  options (`--rules`, `--workers`, `--cache`, `--no-cache`, `--dry-run`); the spec belongs to
+  the framework step and should gain a paragraph for each.
+- The two-document rule counts document ids, so a document printed in two FRUS volumes under
+  two ids corroborates itself; a near-duplicate check (same date, same sender, most of the
+  text in common) would close that.
+- A document the Claude backend refuses stops its quarter on every run; a way to record it and
+  go on (with the quarter marked incomplete in the report) is not built.
 - Chronicling America's move to the loc.gov API (snippets only in search results) needs a
   page-text fetch before that source can be replayed.
 - DGFP, the Nuremberg documents, the 1941 Imperial Conference records and the Cabinet papers

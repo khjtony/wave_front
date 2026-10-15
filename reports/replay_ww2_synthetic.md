@@ -5,8 +5,9 @@ SYNTHETIC RUN: the corpus is a fixture written for pipeline tests, every proposa
 - Quarters: 1936Q1 to 1940Q4 (20); snapshot compared at each quarter's last day.
 - Corpus: local, `tests/evidence/fixtures/corpus_synthetic` (synthetic fixtures)
 - Backend: rules
+- Harness rules in force: none (every proposal is shown and counted as the backend made it) ([docs/replay_harness.md](../docs/replay_harness.md), section "Harness rules")
 - Review: auto-accepted (synthetic run only)
-- Command: `wf replay --quarters 1936Q1..1940Q4 --out OUT --corpus tests/evidence/fixtures/corpus_synthetic --auto-accept`
+- Command: `wf replay --quarters 1936Q1..1940Q4 --out OUT --corpus tests/evidence/fixtures/corpus_synthetic --rules none --auto-accept`
 - Target: the hindsight snapshots in `snapshots/ww2/hindsight/` (levels at each quarter's end, read with full knowledge of the record).
 
 What this run shows: that the harness filters each quarter's corpus by document date, extracts proposals in the fixed schema, checks them, turns accepted proposals into schema-valid snapshots with their quotes and rules, and computes the agreement, lag and false-flip metrics against the hindsight snapshots. What it does not show: anything about extraction quality on real documents. The fixtures summarize the same dated events the hindsight snapshots are built from, and the rule backend's keywords were written alongside them, so high agreement is expected; the disagreements that remain are listed at the end with the indicators behind them.
@@ -39,44 +40,45 @@ What this run shows: that the harness filters each quarter's corpus by document 
 ## Summary against section 9
 
 - Text-derived variables, exact level agreement over variable-quarters: 488/500 (98%).
+- For scale: a replay that reads nothing (every text variable at its initial level) agrees on 305/500 (61%). Split by the hindsight level: where it is still the initial one, this replay agrees on 305/305 (100%); where it has moved, on 183/195 (94%).
 - Resource variables: 100/100 (100%), but they are copied from the hindsight snapshots (they come from the datasets), so this checks the copy, not a reading; the section 9 target of 80 percent for resource variables is not tested by a replay of documents.
 - Belief and commitment flips: 8 of 9 documented flips replayed within one quarter (8 matched within 4 quarters).
 - False flips (replayed, no documented flip to the same level within 4 quarters): 2. Missed flips: 1.
 
 ## Agreement per variable
 
-| Group | Variable | Agreement | Quarters that disagree (hindsight / replay) |
-|---|---|---|---|
-| beliefs and commitment | `belief_WEST` | 14/20 (70%) | 1939Q3 (hegemonic / uncertain), 1939Q4 (hegemonic / uncertain), 1940Q1 (hegemonic / uncertain), 1940Q2 (hegemonic / uncertain), 1940Q3 (hegemonic / uncertain), 1940Q4 (hegemonic / uncertain) |
-| beliefs and commitment | `belief_GER` | 14/20 (70%) | 1939Q3 (will_fight / will_not_fight), 1939Q4 (will_fight / will_not_fight), 1940Q1 (will_fight / will_not_fight), 1940Q2 (will_fight / will_not_fight), 1940Q3 (will_fight / will_not_fight), 1940Q4 (will_fight / will_not_fight) |
-| beliefs and commitment | `commit_WEST` | 20/20 (100%) | - |
-| beliefs and commitment | `commit_US` | 20/20 (100%) | - |
-| treaty | `treaty` | 20/20 (100%) | - |
-| pacts and structural flags | `axis` | 20/20 (100%) | - |
-| pacts and structural flags | `anticomintern` | 20/20 (100%) | - |
-| pacts and structural flags | `nazi_soviet_pact` | 20/20 (100%) | - |
-| pacts and structural flags | `polish_guarantee` | 20/20 (100%) | - |
-| pacts and structural flags | `anglo_soviet_alliance` | 20/20 (100%) | - |
-| pacts and structural flags | `ussr_axis` | 20/20 (100%) | - |
-| pacts and structural flags | `italy_estranged` | 20/20 (100%) | - |
-| pacts and structural flags | `china_war` | 20/20 (100%) | - |
-| war | `war_west_ger` | 20/20 (100%) | - |
-| regions | `rhineland` | 20/20 (100%) | - |
-| regions | `austria` | 20/20 (100%) | - |
-| regions | `sudeten` | 20/20 (100%) | - |
-| regions | `bohemia` | 20/20 (100%) | - |
-| regions | `poland` | 20/20 (100%) | - |
-| regions | `france` | 20/20 (100%) | - |
-| regions | `britain` | 20/20 (100%) | - |
-| regions | `balkans` | 20/20 (100%) | - |
-| regions | `siberia` | 20/20 (100%) | - |
-| regions | `channel_air` | 20/20 (100%) | - |
-| oil | `oil_GER` | 20/20 (100%) | - |
-| resources (copied) | `arms_GER` | 20/20 (100%) | - |
-| resources (copied) | `arms_WEST` | 20/20 (100%) | - |
-| resources (copied) | `arms_USSR` | 20/20 (100%) | - |
-| resources (copied) | `arms_JPN` | 20/20 (100%) | - |
-| resources (copied) | `ind_GER` | 20/20 (100%) | - |
+| Group | Variable | Agreement | Reading nothing | Quarters that disagree (hindsight / replay) |
+|---|---|---|---|---|
+| beliefs and commitment | `belief_WEST` | 14/20 (70%) | 10/20 (50%) | 1939Q3 (hegemonic / uncertain), 1939Q4 (hegemonic / uncertain), 1940Q1 (hegemonic / uncertain), 1940Q2 (hegemonic / uncertain), 1940Q3 (hegemonic / uncertain), 1940Q4 (hegemonic / uncertain) |
+| beliefs and commitment | `belief_GER` | 14/20 (70%) | 13/20 (65%) | 1939Q3 (will_fight / will_not_fight), 1939Q4 (will_fight / will_not_fight), 1940Q1 (will_fight / will_not_fight), 1940Q2 (will_fight / will_not_fight), 1940Q3 (will_fight / will_not_fight), 1940Q4 (will_fight / will_not_fight) |
+| beliefs and commitment | `commit_WEST` | 20/20 (100%) | 10/20 (50%) | - |
+| beliefs and commitment | `commit_US` | 20/20 (100%) | 15/20 (75%) | - |
+| treaty | `treaty` | 20/20 (100%) | 0/20 (0%) | - |
+| pacts and structural flags | `axis` | 20/20 (100%) | 3/20 (15%) | - |
+| pacts and structural flags | `anticomintern` | 20/20 (100%) | 3/20 (15%) | - |
+| pacts and structural flags | `nazi_soviet_pact` | 20/20 (100%) | 14/20 (70%) | - |
+| pacts and structural flags | `polish_guarantee` | 20/20 (100%) | 12/20 (60%) | - |
+| pacts and structural flags | `anglo_soviet_alliance` | 20/20 (100%) | 20/20 (100%) | - |
+| pacts and structural flags | `ussr_axis` | 20/20 (100%) | 20/20 (100%) | - |
+| pacts and structural flags | `italy_estranged` | 20/20 (100%) | 20/20 (100%) | - |
+| pacts and structural flags | `china_war` | 20/20 (100%) | 6/20 (30%) | - |
+| war | `war_west_ger` | 20/20 (100%) | 14/20 (70%) | - |
+| regions | `rhineland` | 20/20 (100%) | 0/20 (0%) | - |
+| regions | `austria` | 20/20 (100%) | 8/20 (40%) | - |
+| regions | `sudeten` | 20/20 (100%) | 10/20 (50%) | - |
+| regions | `bohemia` | 20/20 (100%) | 12/20 (60%) | - |
+| regions | `poland` | 20/20 (100%) | 14/20 (70%) | - |
+| regions | `france` | 20/20 (100%) | 14/20 (70%) | - |
+| regions | `britain` | 20/20 (100%) | 14/20 (70%) | - |
+| regions | `balkans` | 20/20 (100%) | 18/20 (90%) | - |
+| regions | `siberia` | 20/20 (100%) | 20/20 (100%) | - |
+| regions | `channel_air` | 20/20 (100%) | 19/20 (95%) | - |
+| oil | `oil_GER` | 20/20 (100%) | 16/20 (80%) | - |
+| resources (copied) | `arms_GER` | 20/20 (100%) | - | - |
+| resources (copied) | `arms_WEST` | 20/20 (100%) | - | - |
+| resources (copied) | `arms_USSR` | 20/20 (100%) | - | - |
+| resources (copied) | `arms_JPN` | 20/20 (100%) | - | - |
+| resources (copied) | `ind_GER` | 20/20 (100%) | - | - |
 
 ## Flips: lag against the documented date
 

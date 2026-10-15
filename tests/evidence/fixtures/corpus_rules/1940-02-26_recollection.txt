@@ -1,0 +1,8 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: rules-1940-02-26-recollection
+date: 1940-02-26
+source: synthetic fixture corpus for the harness rules (not a source)
+title: A conversation recalling the autumn
+url: synthetic:corpus_rules/1940-02-26_recollection
+
+In a conversation today the Minister recalled how German forces attacked Poland in the autumn, and how quickly the Polish army had been overrun.

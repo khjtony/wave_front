@@ -480,21 +480,38 @@ def _shown(path: Path) -> str:
 @_evidence
 def cmd_extract(args: argparse.Namespace) -> int:
     from .evidence.corpora import open_corpus
-    from .evidence.extract import extract, make_backend, write_proposals
+    from .evidence.extract import CachedBackend, extract, make_backend, write_proposals
+    from .evidence.harness_rules import parse_rules
+    from .evidence.replay import backend_info
     from .evidence.review import label_for
 
+    rules = parse_rules(args.rules)
     corpus = open_corpus(args.corpus, args.source)
     backend = make_backend(args.backend, args.model)
-    result = extract(corpus, until=args.until, since=args.since, backend=backend)
-    info = {"name": backend.name} | ({"model": backend.model} if hasattr(backend, "model") else {})
+    if args.cache:
+        backend = CachedBackend(backend, args.cache)
+    result = extract(
+        corpus, until=args.until, since=args.since, backend=backend, workers=args.workers
+    )
+    info = backend_info(backend)
+    usage = getattr(backend, "usage", None)
+    if usage:
+        info["usage"] = dict(usage)
     data = write_proposals(
-        args.out, result, label=label_for(args.until), corpus=corpus.describe(), backend=info
+        args.out,
+        result,
+        label=label_for(args.until),
+        corpus=corpus.describe(),
+        backend=info,
+        harness_rules=rules,
     )
     print(
         f"{len(result.documents)} documents dated to {args.until} read; "
         f"{len(data['proposals'])} proposals written to {args.out} "
         f"({len(result.discarded)} discarded by the checks, {len(result.errors)} backend errors)"
     )
+    if usage:
+        print("tokens: " + ", ".join(f"{k} {v}" for k, v in sorted(usage.items())))
     if corpus.synthetic:
         print("note: the corpus is a SYNTHETIC fixture; its proposals are not evidence")
     for err in result.errors:
@@ -507,7 +524,7 @@ def cmd_review(args: argparse.Namespace) -> int:
     import getpass
 
     from .evidence.extract import read_proposals
-    from .evidence.review import decide, format_listing
+    from .evidence.review import decide, file_gates, format_listing
 
     if args.accept or args.reject:
         status, ids = ("accepted", args.accept) if args.accept else ("rejected", args.reject)
@@ -527,21 +544,83 @@ def cmd_review(args: argparse.Namespace) -> int:
         if not written:
             print("no replay snapshot written: proposals up to this date are still pending")
         return 0
-    print(format_listing(read_proposals(args.proposals)))
+    data = read_proposals(args.proposals)
+    print(format_listing(data, file_gates(args.proposals)))
     return 0
+
+
+def _print_plan(rows, backend) -> None:
+    from .evidence.extract import text_variables
+    from .evidence.extract.claude_backend import system_prompt
+    from .evidence.replay import CHARS_PER_TOKEN
+
+    system_chars = len(system_prompt(text_variables())) if backend.name == "claude" else 0
+    print("DRY RUN: nothing is sent to the backend and nothing is written")
+    print(
+        f"{'quarter':8} {'visible':>8} {'to read':>8} {'cached':>7} {'requests':>9} "
+        f"{'characters':>11}"
+    )
+    for r in rows:
+        print(
+            f"{r.quarter:8} {r.visible:8d} {r.to_read:8d} {r.cached:7d} {r.requests:9d} "
+            f"{r.characters:11d}"
+        )
+    requests = sum(r.requests for r in rows)
+    chars = sum(r.characters for r in rows)
+    print(
+        f"total: {sum(r.to_read for r in rows)} documents to read, "
+        f"{sum(r.cached for r in rows)} of them cached, {requests} requests, "
+        f"{chars} characters of document text"
+    )
+    if system_chars:
+        per_request = system_chars + 400  # the system prompt and the document header
+        text_tokens = chars // CHARS_PER_TOKEN
+        prompt_tokens = requests * per_request // CHARS_PER_TOKEN
+        print(
+            f"input tokens, estimated at {CHARS_PER_TOKEN} characters a token: about "
+            f"{text_tokens + prompt_tokens} ({text_tokens} of document text, {prompt_tokens} of "
+            f"system prompt and headers, of which the {system_chars // CHARS_PER_TOKEN}-token "
+            "system prompt is cacheable); output tokens (thinking and the JSON answer) are "
+            "not estimated: measure them on a pilot quarter (the proposals file records usage)"
+        )
 
 
 @_evidence
 def cmd_replay(args: argparse.Namespace) -> int:
     from .evidence.corpora import open_corpus
     from .evidence.extract import make_backend
-    from .evidence.replay import compare, parse_quarters, render_report, replay
+    from .evidence.harness_rules import parse_rules
+    from .evidence.replay import (
+        backend_info,
+        compare,
+        parse_quarters,
+        plan,
+        render_report,
+        replay,
+    )
 
     quarters = parse_quarters(args.quarters)
     out = Path(args.out)
     runs = []
+    rules = parse_rules(args.rules) if args.rules is not None else None
     if args.measure_proposals and (args.auto_accept or args.metrics_only):
         raise ValueError("--measure-proposals goes with neither --auto-accept nor --metrics-only")
+    if args.dry_run and (args.auto_accept or args.metrics_only or args.measure_proposals):
+        raise ValueError(
+            "--dry-run goes with none of --auto-accept, --metrics-only, --measure-proposals"
+        )
+    if args.metrics_only and rules is not None:
+        raise ValueError(
+            "--rules does not go with --metrics-only: the reviewed snapshots were built under the "
+            "rules recorded in the proposals files"
+        )
+    if args.dry_run:
+        if not args.corpus:
+            raise ValueError("--dry-run needs --corpus")
+        corpus = open_corpus(args.corpus, args.source)
+        backend = make_backend(args.backend, args.model)
+        _print_plan(plan(corpus, quarters, out, backend), backend)
+        return 0
     if args.measure_proposals and not args.corpus:
         from .evidence.review import proposal_files
 
@@ -549,10 +628,10 @@ def cmd_replay(args: argparse.Namespace) -> int:
         if not files:
             raise ValueError(f"{out / 'proposals'}: no proposals files to measure")
         corpus_info = files[0][1]["corpus"]
-        backend_info = files[0][1].get("backend", {"name": "(unknown)"})
+        backend_record = files[0][1].get("backend", {"name": "(unknown)"})
     elif args.metrics_only:
         corpus_info = {"source": "(metrics only)", "synthetic": False}
-        backend_info = {"name": "(metrics only)"}
+        backend_record = {"name": "(metrics only)"}
     else:
         if not args.corpus:
             raise ValueError("--corpus is required unless --metrics-only")
@@ -565,19 +644,28 @@ def cmd_replay(args: argparse.Namespace) -> int:
             backend,
             auto_accept=args.auto_accept,
             hindsight_dir=args.hindsight,
+            rules=parse_rules(args.rules),
+            workers=args.workers,
+            cache=not args.no_cache,
         )
         corpus_info = corpus.describe()
-        backend_info = {"name": backend.name}
+        backend_record = backend_info(backend)
         if corpus.synthetic:
             print("SYNTHETIC RUN: fixture corpus; the results are not evidence")
         if args.auto_accept:
             print("AUTO-ACCEPT: every proposal accepted without review (synthetic run only)")
-    metrics = compare(out, quarters, args.hindsight, measure_proposals=args.measure_proposals)
+    metrics = compare(
+        out, quarters, args.hindsight, measure_proposals=args.measure_proposals, rules=rules
+    )
     command = f"wf replay --quarters {args.quarters} --out OUT"
     if args.corpus:
         command += f" --corpus {_shown(Path(args.corpus))}"
     if args.backend != "rules":
         command += f" --backend {args.backend}"
+    if args.model:
+        command += f" --model {args.model}"
+    if args.rules is not None:
+        command += f" --rules {args.rules}"
     if args.auto_accept:
         command += " --auto-accept"
     if args.metrics_only:
@@ -589,7 +677,7 @@ def cmd_replay(args: argparse.Namespace) -> int:
         metrics,
         title=args.title or f"Replay metrics, WW2 {quarters[0]} to {quarters[-1]}",
         corpus=corpus_info,
-        backend=backend_info,
+        backend=backend_record,
         command=command,
         runs=runs,
     )
@@ -602,6 +690,7 @@ def cmd_replay(args: argparse.Namespace) -> int:
             f"{r.quarter}: {r.visible} documents visible, {r.read} read, "
             f"{r.proposals} proposals ({snap})"
         )
+    print(f"harness rules: {', '.join(metrics.rules) if metrics.rules else 'none'}")
     print(f"metrics report written to {_shown(report)}")
     return 0
 
@@ -711,6 +800,23 @@ def _add_evidence_commands(sub) -> None:
     p.add_argument("--source", help="corpus kind (local, frus, hansard, chronicling, trove)")
     p.add_argument("--backend", choices=("rules", "claude"), default="rules")
     p.add_argument("--model", help="model for the claude backend (default: the backend's)")
+    p.add_argument(
+        "--rules",
+        metavar="RULES",
+        help="harness rules recorded in the proposals file, comma-separated: two-document, "
+        "no-retrospective, or none (default: both)",
+    )
+    p.add_argument(
+        "--workers",
+        type=int,
+        default=1,
+        help="documents read at a time by the backend (default 1)",
+    )
+    p.add_argument(
+        "--cache",
+        metavar="DIR",
+        help="cache each document's answer in DIR; a second run reads cached documents from it",
+    )
     p.set_defaults(func=cmd_extract)
 
     p = sub.add_parser(
@@ -770,6 +876,31 @@ def _add_evidence_commands(sub) -> None:
         help="compute the metrics from the proposals in OUT/proposals as if every one were "
         "accepted, without review and without writing snapshots (a measurement of the "
         "backend; the report says so); with --corpus the extraction runs first",
+    )
+    p.add_argument(
+        "--rules",
+        metavar="RULES",
+        help="harness rules, comma-separated: two-document, no-retrospective, or none. With "
+        "--corpus they are recorded in the proposals files (default: both); with "
+        "--measure-proposals alone they replace the recorded ones for the measurement",
+    )
+    p.add_argument(
+        "--workers",
+        type=int,
+        default=1,
+        help="documents read at a time by the backend (default 1)",
+    )
+    p.add_argument(
+        "--no-cache",
+        action="store_true",
+        help="do not cache the answers of a paid backend under OUT/cache/ (default: cached, so "
+        "running the same command again resumes a stopped run)",
+    )
+    p.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="count the documents, requests and characters a run would send per quarter "
+        "(skipping documents already read or cached) and stop; nothing is sent or written",
     )
     p.set_defaults(func=cmd_replay)
 
