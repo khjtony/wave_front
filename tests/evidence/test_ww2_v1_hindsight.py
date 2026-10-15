@@ -53,7 +53,8 @@ def test_builder_variables_match_both_ontology_documents():
     assert doc["bomb_ready"]["levels"] == (False, True) and doc["bomb_ready"]["init"] is False
     assert doc["aims_JPN"]["init"] is None
     assert set(doc) == {v.name for v in h.VARIABLES} | set(h.HIDDEN)
-    assert len(h.NEW) == 20  # the 21 new ontology variables less the swept aims_JPN
+    # the 22 new ontology variables (east_offer added 2026-10-15) less the swept aims_JPN
+    assert len(h.NEW) == 21
 
 
 def test_quarters_and_ticks():
@@ -211,6 +212,51 @@ def test_move_flags(committed):
     for q in FILES:
         assert committed[q]["variables"]["east_feeler"]["level"] is False
         assert committed[q]["variables"]["east_peace"]["level"] is False
+        offer = committed[q]["variables"]["east_offer"]
+        assert offer["level"] is False and offer["confidence"] == "medium"
+
+
+# The clock-consistency pass (owner's decision 7 of 2026-10-15): (quarter, variable, before,
+# after, case) for every change it makes to the event-dated readings of the v1 series.
+CLOCK_CHANGES = [
+    ("1938Q2", "belief_WEST", "limited", "uncertain", "b"),  # demand_sudeten; record Sep 1938
+    ("1938Q3", "arms_GER", "rising", "high", "a"),  # the programme of Aug 1936; record Oct 1938
+    ("1941Q2", "anglo_soviet_alliance", False, True, "b"),  # attack_ussr; record 12 Jul 1941
+    ("1942Q2", "caucasus", "soviet", "contested", "b"),  # offensive_caucasus; record Jul 1942
+    ("1945Q2", "bomb_ready", False, True, "a"),  # atomic_program of Jun 1942; Trinity Jul 1945
+]
+
+
+def test_clock_consistency_pass_changes(inputs, committed):
+    changes = []
+    snaps, _ = h.build_all(**inputs, changes=changes)
+    found = [(c["quarter"], c["variable"], c["before"], c["after"], c["case"]) for c in changes]
+    assert found == CLOCK_CHANGES
+    bare, _ = h.build_all(**inputs, clock=False)
+    for q in FILES:
+        for name, entry in committed[q]["variables"].items():
+            if (q, name) in {(c[0], c[1]) for c in CLOCK_CHANGES}:
+                assert entry["indicators"][0]["id"] == f"clock_{q}_{name}"
+                assert "overrides the event-dated reading" in entry["indicators"][0]["rule"]
+                assert entry["confidence"] == "medium"
+                assert bare[q]["variables"][name]["level"] != entry["level"]
+            else:
+                assert bare[q]["variables"][name] == entry, (q, name)
+    rule = committed["1941Q2"]["variables"]["anglo_soviet_alliance"]["indicators"][0]["rule"]
+    assert "case (b)" in rule and "GER attack_ussr" in rule and "1941-07-12" in rule
+
+
+def test_clock_pass_keeps_the_nsl_placement_and_the_one_year_discrepancies(inputs):
+    """Rule (c): italy at 1940Q1 is a one-tick lag in form but an [NSL] placement, kept; it
+    would change if the move were not marked [NSL]. The one-year discrepancies of decisions
+    E2 item 9 (arms_GER total from 1940Q4) are not one-tick lags and are kept."""
+    moves = [dict(r, note=r["note"].replace("[NSL", "[nsl")) for r in inputs["moves"]]
+    changes = []
+    h.build_all(**{**inputs, "moves": moves}, changes=changes)
+    extra = {(c["quarter"], c["variable"]) for c in changes} - {c[:2] for c in CLOCK_CHANGES}
+    assert extra == {("1940Q1", "italy")}
+    snaps, _ = h.build_all(**inputs)
+    assert snaps["1940Q4"]["variables"]["arms_GER"]["level"] == "high"
 
 
 def test_start_of_1936q1_is_the_ontology_initial_state(inputs):

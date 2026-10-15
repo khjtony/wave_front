@@ -51,6 +51,7 @@ Command line: ``python3 -m wavefront.evidence.hindsight_ww2 --out snapshots/ww2/
 from __future__ import annotations
 
 import argparse
+import copy
 import csv
 import json
 import re
@@ -62,10 +63,11 @@ from pathlib import Path
 from typing import Any
 
 from .datasets import nmc
-from .snapshot import validate_snapshot
+from .snapshot import snapshot_to_state, validate_snapshot
 
 __all__ = [
     "BUILTIN_NAMES",
+    "Clock",
     "DECISION_COLUMNS",
     "DELAYED",
     "Decision",
@@ -88,6 +90,9 @@ __all__ = [
     "check_against_ontology",
     "check_builtins",
     "check_decisions_against_moves",
+    "clock_consistency",
+    "default_clock",
+    "format_changes",
     "load_decisions",
     "load_events",
     "load_moves",
@@ -889,8 +894,40 @@ def build(
     at: str = "end",
     decisions: Sequence[Decision] | None = None,
     moves: Sequence[Mapping[str, str]] | None = None,
+    clock: Clock | bool | None = None,
 ) -> dict[str, Any]:
-    """The hindsight snapshot for ``quarter`` (``1936Q1`` to ``1940Q4``).
+    """The hindsight snapshot for ``quarter`` (``1935Q4`` to ``1940Q4``) as
+    :func:`build_all` gives it: with ``decisions`` and ``moves`` and ``at="end"`` the
+    clock-consistency pass applies (``clock=False`` skips it). ``at="start"`` and a call
+    without the decision records give the event-dated reading of :func:`_build`."""
+    if at == "end" and decisions is not None and moves is not None and clock is not False:
+        upto = QUARTERS[: quarter_index(quarter) + 2]
+        snaps = build_all(
+            nmc_rows,
+            events,
+            ontology_rules,
+            upto,
+            decisions=decisions,
+            moves=moves,
+            clock=clock,
+        )
+        return snaps[quarter]
+    return _build(
+        quarter, nmc_rows, events, ontology_rules, at=at, decisions=decisions, moves=moves
+    )
+
+
+def _build(
+    quarter: str,
+    nmc_rows: Iterable[Mapping[str, Any]],
+    events: Sequence[Event],
+    ontology_rules: Mapping[str, Any] = ONTOLOGY_RULES,
+    *,
+    at: str = "end",
+    decisions: Sequence[Decision] | None = None,
+    moves: Sequence[Mapping[str, str]] | None = None,
+) -> dict[str, Any]:
+    """The event-dated hindsight snapshot for ``quarter``, before the clock-consistency pass.
 
     ``at="end"`` (the default) reads the levels in force on the quarter's last day, which is
     the snapshot's ``date``; ``at="start"`` reads them on its first day, before any event of the
@@ -983,9 +1020,13 @@ def build_all(
     *,
     decisions: Sequence[Decision] | None = None,
     moves: Sequence[Mapping[str, str]] | None = None,
+    clock: Clock | bool | None = None,
+    changes: list[dict[str, Any]] | None = None,
 ) -> dict[str, dict[str, Any]]:
     """The snapshots of ``quarters`` (with the tick-0 file when they start at 1936Q1), with
-    ``builtins`` when ``decisions`` and ``moves`` are given."""
+    ``builtins`` when ``decisions`` and ``moves`` are given, and then the clock-consistency
+    pass (:func:`clock_consistency`, with :func:`default_clock` unless ``clock`` is given;
+    ``clock=False`` skips it). The pass's changes are appended to ``changes`` if given."""
     rows = list(nmc_rows)
     quarters = list(quarters)
     kw: dict[str, Any] = {"decisions": decisions, "moves": moves}
@@ -993,9 +1034,245 @@ def build_all(
     if quarters and quarters[0] == QUARTERS[0]:
         # The model's tick-0 initial state: the levels in force at the end of 1935Q4, the
         # last day before the first modeled quarter (snapshots/ww2/hindsight/README.md).
-        out[TICK0] = build(TICK0, rows, events, ontology_rules, **kw)
-    out.update({q: build(q, rows, events, ontology_rules, **kw) for q in quarters})
+        out[TICK0] = _build(TICK0, rows, events, ontology_rules, **kw)
+    out.update({q: _build(q, rows, events, ontology_rules, **kw) for q in quarters})
+    if decisions is None or moves is None or clock is False:
+        return out
+    if clock is None or clock is True:
+        clock = default_clock()
+    out, found = clock_consistency(out, decisions, moves, clock, BY_NAME)
+    if changes is not None:
+        changes.extend(found)
     return out
+
+
+# -- the clock-consistency pass (owner's decision 7 of 2026-10-15) ---------------------------
+#
+# Start states follow the model's own clock where the record lags it by one tick. After the
+# event-dated reading of quarter Q (the end of Q, tick index(Q) + 1), the model is stepped once
+# from the model-consistent snapshot of the quarter before (variables and built-ins) under the
+# realized joint move of Q. A variable written in that step by (a) the delayed effect of a
+# recorded decision landing in that transition (decided at tick t with delay d, landing in the
+# transition into tick t + 1 + d == index(Q) + 1), or (b) the immediate effect of a realized move
+# of Q, takes the model's value when the event-dated reading of Q differs from it and the
+# event-dated reading of Q + 1 equals it (a one-tick lag of the record behind the model). The
+# entry keeps the overridden reading in its provenance. Nothing else changes: a disagreement that
+# lasts longer than one tick, a record that leads the model, a move placed by [NSL] (one Nature
+# event per tick), and the last quarter of a series (no next reading) stay as the record reads
+# them. A decision that landed before Q can only give a change at Q if the record lagged by more
+# than one tick, so case (a) acts in the landing quarter.
+
+
+@dataclass(frozen=True)
+class Clock:
+    """The compiled model the realized moves are stepped through, and the hidden objectives
+    fixed for the step (the hypothesis under which the realized path is available)."""
+
+    cm: Any
+    hidden: Mapping[str, str]
+
+
+def default_clock() -> Clock:
+    """``models/ww2/v0.py`` under hegemonic German aims and defensive Soviet aims, the
+    hypothesis under which every realized move is available (imported only when the pass
+    runs, so that the evidence package does not depend on the domain model otherwise)."""
+    from models.ww2.v0 import model
+
+    return Clock(model.compile(), {"aims_GER": "hegemonic", "aims_USSR": "defensive"})
+
+
+def _snapshot_level(var: Variable, text: str) -> Any:
+    if var.kind == "flag":
+        return text == "True"
+    if var.kind == "integer":
+        return int(text)
+    return text
+
+
+def _written(contribution: Any) -> set[int]:
+    if not contribution:
+        return set()
+    sets, bumps = contribution
+    return {v for v, _ in sets} | {v for v, _, _ in bumps}
+
+
+def _model_step(
+    clock: Clock, prev: Mapping[str, Any], iq: int, row: Mapping[str, str]
+) -> tuple[dict[str, str], dict[str, tuple[str, str, str]]]:
+    """The model's step for the quarter of index ``iq`` from the snapshot ``prev`` (the end of
+    the quarter before, with its built-ins) under the realized ``row``: the level names after
+    the step, and ``{variable: (case, actor, action)}`` for every variable an effect wrote,
+    case ``a`` for a delayed effect landing in this transition and ``b`` for an immediate
+    effect of a realized move."""
+    cm = clock.cm
+    data = {
+        "date": prev["date"],
+        "model": prev["model"],
+        "variables": dict(prev["variables"]),
+        "builtins": prev.get("builtins", {}),
+    }
+    for name, level in clock.hidden.items():
+        data["variables"][name] = {"level": level, "confidence": "assumed", "indicators": []}
+    state = list(snapshot_to_state(data, cm))
+    state[cm.index["tick"]] = iq
+    pre = tuple(state)
+    move = []
+    writes: dict[int, tuple[str, str, str]] = {}
+    for actor in cm.actors:
+        name = row[actor.name].strip()
+        j = actor.action_index(name)
+        move.append(j)
+        action = actor.actions[j]
+        if not action.delay:
+            for v in _written(action.contribute(pre)):
+                writes[v] = ("b", actor.name, name)
+    for actor in cm.actors:
+        for action in actor.actions:
+            if action.delay and pre[cm.index[f"pending_{actor.name}_{action.name}"]] == 1:
+                for v in _written(action.contribute(pre)):
+                    writes[v] = ("a", actor.name, action.name)
+    new = cm.step(pre, tuple(move))
+    levels = {spec.name: cm.level_name(i, new[i]) for i, spec in enumerate(cm.variables)}
+    return levels, {cm.variables[i].name: w for i, w in writes.items()}
+
+
+def _record_indicator(entry: Mapping[str, Any], quarter: str) -> dict[str, Any]:
+    """The indicator of the next quarter's reading that dates the record's level: the first
+    event observed in ``quarter``, else the first indicator."""
+    first, last = quarter_bounds(quarter)
+    inds = entry["indicators"]
+    for ind in inds:
+        day = date.fromisoformat(ind["observed"])
+        if ind["id"].startswith("event_") and first <= day <= last:
+            return ind
+    return inds[0]
+
+
+def clock_consistency(
+    snapshots: Mapping[str, Mapping[str, Any]],
+    decisions: Sequence[Decision],
+    moves: Sequence[Mapping[str, str]],
+    clock: Clock,
+    variables: Mapping[str, Variable],
+    moves_name: str = "data/ww2/realized_moves.csv",
+) -> tuple[dict[str, dict[str, Any]], list[dict[str, Any]]]:
+    """The clock-consistency pass over a series of event-dated snapshots (``{quarter:
+    snapshot}`` in quarter order, consecutive, each with its ``builtins``): the corrected
+    series and the list of changes ``{quarter, variable, before, after, case, by}``. See the
+    comment above for the rule; ``variables`` are the ontology variables the pass may change
+    (by name)."""
+    names = list(snapshots)
+    out: dict[str, dict[str, Any]] = {}
+    changes: list[dict[str, Any]] = []
+    for k, q in enumerate(names):
+        snap = snapshots[q]
+        if k == 0 or k + 1 >= len(names):  # no previous state, or no next reading
+            out[q] = copy.deepcopy(snap)
+            continue
+        iq = quarter_index(q)
+        prev, nq = names[k - 1], names[k + 1]
+        if quarter_index(prev) != iq - 1 or quarter_index(nq) != iq + 1:
+            raise ValueError(f"the series must be consecutive around {q}")
+        row = moves[iq]
+        model, writes = _model_step(clock, out[prev], iq, row)
+        new = copy.deepcopy(snap)
+        for name, (case, actor, action) in writes.items():
+            var = variables.get(name)
+            if var is None or name not in snap["variables"]:
+                continue  # not an ontology variable (the model step's own flags)
+            value = _snapshot_level(var, model[name])
+            before = snap["variables"][name]["level"]
+            record = snapshots[nq]["variables"][name]
+            if before == value or record["level"] != value:
+                continue  # agrees, or not a one-tick lag of the record (rule (c))
+            if case == "b" and f"{action} [NSL" in (row.get("note") or ""):
+                continue  # an [NSL] placement stays as the record reads it (rule (c))
+            rec = _record_indicator(record, nq)
+            note = (
+                f"Note: overrides the event-dated reading {name} = {before} at the end of {q}; "
+                f"the record reaches {value} on {rec['observed']} ({rec['value']}), in {nq}, "
+                "one tick after the model's clock"
+            )
+            step = (
+                f"the model's step from the model-consistent snapshot of the end of {prev} "
+                f"under the realized moves of {q} ({moves_name}, tick {iq}) gives {name} = "
+                f"{value} at tick {iq + 1}"
+            )
+            head = (
+                "clock-consistency pass (owner's decision 7 of 2026-10-15; framework_spec.md "
+                "section 9)"
+            )
+            if case == "a":
+                d = next(
+                    d
+                    for d in decisions
+                    if (d.actor, d.action) == (actor, action)
+                    and quarter_index(d.quarter) + 1 + d.delay == iq + 1
+                )
+                ind = {
+                    "id": f"clock_{q}_{name}",
+                    "value": f"{d.actor} {d.action} decided {d.date.isoformat()}, delay {d.delay}",
+                    "source": d.source,
+                    "observed": d.date.isoformat(),
+                    "rule": (
+                        f"{head}, case (a), a landed decision: {d.actor} {d.action} decided in "
+                        f"{d.quarter} (tick {quarter_index(d.quarter)}) with delay {d.delay} "
+                        f"lands in the transition into tick {iq + 1}, the end of {q}; {step}. "
+                        f"{note}"
+                    ),
+                }
+                by = f"{d.actor} {d.action} of {d.date.isoformat()} (delay {d.delay})"
+            else:
+                ind = {
+                    "id": f"clock_{q}_{name}",
+                    "value": f"{actor} {action}",
+                    "source": row["source"],
+                    "observed": quarter_bounds(q)[1].isoformat(),
+                    "rule": (
+                        f"{head}, case (b), the effect of a realized move: {actor} {action}, "
+                        f"realized in {q}, writes {name}; {step}. {note}"
+                    ),
+                }
+                by = f"{actor} {action} of {q}"
+            old = snap["variables"][name]["indicators"]
+            marked = [
+                dict(
+                    i,
+                    rule=f"event-dated reading overridden by the clock-consistency pass: "
+                    f"{i['rule']}",
+                )
+                for i in old
+            ]
+            dated = dict(rec, rule=f"the record's date for {name} = {value}: {rec['rule']}")
+            new["variables"][name] = {
+                "level": value,
+                "confidence": "medium",
+                "indicators": [ind, dated, *marked],
+            }
+            changes.append(
+                {
+                    "quarter": q,
+                    "variable": name,
+                    "before": before,
+                    "after": value,
+                    "case": case,
+                    "by": by,
+                }
+            )
+        out[q] = new
+    return out, changes
+
+
+def format_changes(changes: Sequence[Mapping[str, Any]]) -> str:
+    """The clock-consistency pass's changes, one line each."""
+    lines = [
+        f"  {c['quarter']} {c['variable']}: {c['before']} -> {c['after']} (case ({c['case']}), "
+        f"{c['by']})"
+        for c in changes
+    ]
+    return "\n".join(
+        ["clock-consistency pass: " + (f"{len(lines)} changes" if lines else "none")] + lines
+    )
 
 
 # -- the ontology document ---------------------------------------------------------------------
@@ -1105,8 +1382,13 @@ def main(argv: list[str] | None = None) -> int:
         problems += [f"ontology: {p}" for p in ontology_mismatches(args.ontology)]
     decisions, moves = load_decisions(args.decisions), load_moves(args.moves)
     problems += check_decisions_against_moves(decisions, moves)
+    changes: list[dict[str, Any]] = []
     snapshots = build_all(
-        nmc.load(args.nmc), load_events(args.events), decisions=decisions, moves=moves
+        nmc.load(args.nmc),
+        load_events(args.events),
+        decisions=decisions,
+        moves=moves,
+        changes=changes,
     )
     for quarter, snap in snapshots.items():
         problems += [f"{quarter}: {p}" for p in validate_snapshot(snap)]
@@ -1130,6 +1412,7 @@ def main(argv: list[str] | None = None) -> int:
         return 1
     verb = "checked" if args.check else "wrote"
     print(f"{verb} {len(snapshots)} snapshots in {args.out}")
+    print(format_changes(changes))
     return 0
 
 

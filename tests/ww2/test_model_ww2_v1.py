@@ -80,9 +80,10 @@ def test_every_ontology_variable_with_its_levels_order_and_init():
 
 def test_monotone_variables():
     """Notes section 3 item 6: every new variable is monotone except w_ussr, caucasus,
-    oil_JPN and indochina; commit_US and france stay monotone; belief_GER becomes monotone."""
+    oil_JPN and indochina; commit_US and france stay monotone; belief_GER becomes monotone.
+    The 21 include east_offer, added 2026-10-15 on the owner's decision 1."""
     new = set(DECLARED) - {v.name for v in CM0.variables} - {"aims_JPN"}
-    assert len(new) == 20
+    assert len(new) == 21 and "east_offer" in new
     not_monotone = {n for n in new if not DECLARED[n].monotone}
     assert not_monotone == {"w_ussr", "caucasus", "oil_JPN", "indochina"}
     for name in ("commit_US", "france", "belief_GER"):
@@ -109,7 +110,8 @@ def test_sources_speculative_and_hypothesis_gates():
             if not x.is_idle:
                 assert x.source.strip(), f"{a.name}.{x.name} has no source"
     spec = sorted(f"{a.name}.{x.name}" for a in CM.actors for x in a.actions if x.speculative)
-    assert spec == ["JPN.strike_colonies_only", "USSR.seek_terms_east"]
+    # USSR.accept_terms_east: added 2026-10-15 on the owner's decision 1 (speculative).
+    assert spec == ["JPN.strike_colonies_only", "USSR.accept_terms_east", "USSR.seek_terms_east"]
     gated = sorted(
         f"{d.actor}.{d.name}"
         for d in declared(model).values()
@@ -146,6 +148,7 @@ PARTS = {
     ],
     ("GER", "declare_war_us"): ["not_yet", "japanese_war"],
     ("GER", "negotiate_east"): ["at_war", "feeler"],
+    ("GER", "offer_terms_east"): ["at_war", "once"],  # owner's decision 1, 2026-10-15
     ("WEST", "lend_lease"): ["us_policy", "belligerent"],
     ("WEST", "embargo_jpn"): ["instrument", "trade_link", "peace"],
     ("WEST", "lift_embargo"): ["in_force", "peace", "before_clock"],
@@ -168,6 +171,7 @@ PARTS = {
     ("USSR", "mobilize_total"): ["at_war", "once"],
     ("USSR", "counteroffensive"): ["at_war"],
     ("USSR", "seek_terms_east"): ["at_war", "no_separate_peace", "once"],
+    ("USSR", "accept_terms_east"): ["offer", "no_separate_peace"],  # owner's decision 1
     ("JPN", "enter_north_indochina"): ["target", "vichy_weak"],
     ("JPN", "occupy_south_indochina"): ["hypothesis", "north_held", "vichy_weak"],
     ("JPN", "withdraw_south_indochina"): ["held", "peace"],
@@ -253,6 +257,40 @@ def test_guard_parts_delays_and_the_oil_clock():
     assert SEASON_TICKS[:4] == (1, 2, 5, 6) and SEASON_TICKS[-1] == 38
 
 
+def test_owners_decision_1_the_german_offer_in_the_east():
+    """The two actions of the content decision of docs/german_exit_1941_1945.md (owner's
+    decision 1, 2026-10-15, an edit after first sight): a documented, refused German offer
+    and a speculative Soviet acceptance, the latter closed by the alliance that the attack
+    sets, so from the T7 start state (alliance set) it is unavailable whatever is offered."""
+    decl = declared(model)
+    offer, accept = decl[("GER", "offer_terms_east")], decl[("USSR", "accept_terms_east")]
+    assert [(p, expr_text(e, CM)) for p, e in offer.guard_parts] == [
+        ("at_war", "V.east_war"),
+        ("once", "not V.east_offer"),
+    ]
+    assert [(p, expr_text(e, CM)) for p, e in accept.guard_parts] == [
+        ("offer", "V.east_offer"),
+        ("no_separate_peace", "not V.anglo_soviet_alliance"),
+    ]
+    assert [effect_text(e, CM) for e in offer.effects] == ["Set(east_offer, True)"]
+    assert [effect_text(e, CM) for e in accept.effects] == ["Set(east_peace, True)"]
+    assert not offer.speculative and accept.speculative
+    assert not offer.delay and not accept.delay
+    for text in ("Ribbentrop", "Oshima, 29 Jul 1943", "Goebbels's diary, Sep 1943"):
+        assert text in offer.source
+    for text in ("No Soviet decision record", "Stockholm", "Koch", "Mastny"):
+        assert text in accept.source
+    assert DECLARED["east_offer"].monotone and DECLARED["east_offer"].init == (0,)
+    s = list(
+        snapshot_state(
+            CM, "1941Q2", "hegemonic", builtins=True, snapshots=SNAPSHOTS_V1, aims_JPN="hegemonic"
+        )
+    )
+    s[CM.index["east_offer"]] = 1
+    ussr = actor(CM, "USSR")
+    assert ussr.action_index("accept_terms_east") not in CM.available(tuple(s))[ussr.index]
+
+
 def test_constraints_profiles_invariants():
     assert [f.name for f in model.fairness_constraints] == [
         "democratic_response",
@@ -305,6 +343,15 @@ CATALOGUE = {
     "assume": 1,
     "variables_added": 21,
 }
+# Added after first sight on the owner's decision 1 of 2026-10-15 (docs/german_exit_1941_1945.md;
+# docs/guard_changelog_ww2.md): GER offer_terms_east, USSR accept_terms_east (speculative) and
+# the flag east_offer. Before: actions 84, guards 84, guard_parts 202, speculative 2,
+# variables 55, levels 141, assumptions 207.
+DECISION_1 = {
+    "actions_by_actor": {"GER": 1, "USSR": 1},
+    "speculative": 1,
+    "variables_added": 1,
+}
 
 
 def test_parameter_budget(capsys):
@@ -312,14 +359,19 @@ def test_parameter_budget(capsys):
     with capsys.disabled():
         print("\nWW2 v1 budget():", {k: v for k, v in b.items() if k != "state_space_bound"})
     by_actor = {a.name: len(a.actions) - 1 for a in CM.actors}
-    assert by_actor == {**CATALOGUE["actions_by_actor"], "Nature": CATALOGUE["nature_events"]}
-    assert b["actions"] == 56 + 28
-    assert b["speculative_actions"] == CATALOGUE["speculative"]
+    expected = {
+        k: n + DECISION_1["actions_by_actor"].get(k, 0)
+        for k, n in CATALOGUE["actions_by_actor"].items()
+    }
+    assert by_actor == {**expected, "Nature": CATALOGUE["nature_events"]}
+    assert b["actions"] == 56 + 2 + 28
+    assert b["speculative_actions"] == CATALOGUE["speculative"] + DECISION_1["speculative"]
     assert b["delays"] == CATALOGUE["delays"]
     assert b["fairness_constraints"] == CATALOGUE["fairness"]
     assert len(model.assumes) == CATALOGUE["assume"]
     assert len(model.profiles) == CATALOGUE["profiles"] + 1  # + deterred (decisions E5)
-    assert b["variables"] - 34 == CATALOGUE["variables_added"]  # v0 declares 34
+    added = CATALOGUE["variables_added"] + DECISION_1["variables_added"]
+    assert b["variables"] - 34 == added  # v0 declares 34
     assert {
         k: b[k]
         for k in (
@@ -334,17 +386,17 @@ def test_parameter_budget(capsys):
             "builtin_variables",
         )
     } == {
-        "variables": 55,
-        "levels": 141,
-        "actions": 84,
-        "guards": 84,
-        "guard_parts": 202,
+        "variables": 56,
+        "levels": 143,
+        "actions": 86,
+        "guards": 86,
+        "guard_parts": 206,
         "latches": 1,
         "invariants": 8,
         "endings": 11,
         "builtin_variables": 16,
     }
-    assert len(CM.assumptions()) == 207
+    assert len(CM.assumptions()) == 211
 
 
 # -- transcription drift against v0 ----------------------------------------------------------
@@ -536,17 +588,20 @@ def test_realized_replay_under_status_quo_stops_at_the_southern_occupation():
 
 # Differences between the v1 hindsight snapshots (with built-ins) and the realized replay,
 # variable by variable at the end of each quarter, with the reason (reports/ww2_v1.md
-# section 3 tabulates them; snapshots/ww2/hindsight_v1/README.md explains each).
+# section 3 tabulates them; snapshots/ww2/hindsight_v1/README.md explains each). The five
+# one-tick lags of the record behind the model's clock (belief_WEST 1938Q2, arms_GER 1938Q3,
+# anglo_soviet_alliance 1941Q2, caucasus 1942Q2, bomb_ready 1945Q2) are gone since the
+# clock-consistency pass of the builder (owner's decision 7 of 2026-10-15); italy at 1940Q1
+# is an [NSL] placement and stays.
 EXPECTED_DIFFERENCES = {
     "treaty": ({"1936Q1", "1936Q2"}, "[SQR] locarno_lapses at tick 2 (v0)"),
     "arms_WEST": (
         {"1936Q3", "1936Q4", "1939Q1", "1939Q2", "1939Q3"},
         "NMC reading against the delay-4 programme (v0)",
     ),
-    "belief_WEST": ({"1938Q2"}, "demand_sudeten placed at Case Green (v0)"),
     "arms_GER": (
-        {"1938Q3", "1940Q4", "1941Q1", "1941Q2", "1941Q3", "1941Q4"},
-        "1938Q3 as v0; total lands at tick 20 against the record's 1942 (E2 item 9)",
+        {"1940Q4", "1941Q1", "1941Q2", "1941Q3", "1941Q4"},
+        "total lands at tick 20 against the record's 1942 (E2 item 9); not a one-tick lag",
     ),
     "arms_USSR": (
         {f"{y}Q{q}" for y in (1939, 1940) for q in range(1, 5)} | {"1938Q4", "1941Q1"},
@@ -567,17 +622,10 @@ EXPECTED_DIFFERENCES = {
         "NMC annual reading against the delay-4 and delay-5 programmes",
     ),
     "balkans": ({"1940Q3"}, "align_balkans at tick 19 (v0)"),
-    "anglo_soviet_alliance": (
-        {"1941Q2"},
-        "the alliance written as an effect of the attack (E2 item 5); the record dates the "
-        "agreement 12 Jul 1941",
-    ),
     "war_us_ger": ({"1941Q4"}, "[SQR] declare_war_us"),
     "jpn_navy": ({"1942Q2"}, "[SQR] midway"),
-    "caucasus": ({"1942Q2"}, "offensive_caucasus placed at Blue (Apr 1942); contested from Jul"),
     "w_ussr": ({"1944Q1"}, "east_liberated placed at 1944Q2; the Prut reached 26 Mar 1944"),
     "exhaustion_GER": ({"1944Q3"}, "[NSL] german_exhaustion"),
-    "bomb_ready": ({"1945Q2"}, "delay 12 lands at the start of 1945Q3; Trinity 16 Jul 1945"),
 }
 
 

@@ -153,6 +153,9 @@ model.var(
 model.var("reich", levels=["fighting", "surrendered"], init="fighting", monotone=True)
 model.flag("east_feeler", init=False, monotone=True)
 model.flag("east_peace", init=False, monotone=True)
+# Added 2026-10-15 on the owner's decision 1 (docs/german_exit_1941_1945.md): a German offer
+# of terms in the East, made or not.
+model.flag("east_offer", init=False, monotone=True)
 model.flag("midway_ordered", init=False, monotone=True)
 
 # -- regions (ontology section 5; v1 section 5) ---------------------------------------------
@@ -469,6 +472,23 @@ GER.action(
         "and Hitler's answer that the moment was not right; Ribbentrop's proposals of 1942 to "
         "1943 for a settlement with Moscow (Ribbentrop, Zwischen London und Moskau, 1953, "
         "postwar)."
+    ),
+)
+# Added 2026-10-15 on the owner's decision 1, after first sight (docs/german_exit_1941_1945.md;
+# docs/guard_changelog_ww2.md): the documented German alternative to fighting on in the East,
+# put to Hitler and refused. Its acceptance is USSR.accept_terms_east (speculative).
+GER.action(
+    "offer_terms_east",
+    guard={"at_war": V.east_war, "once": ~V.east_offer},
+    effect=Set("east_offer", True),
+    source=(
+        "Ribbentrop's proposal of late 1942, after the encirclement at Stalingrad, to approach "
+        "the Soviet embassy in Stockholm, refused by Hitler (Ribbentrop, Zwischen London und "
+        "Moskau, 1953; Goebbels's diary); Hitler to Ambassador Oshima, 29 Jul 1943, refusing "
+        "Japan's pressure for a separate peace with Moscow (Oshima's reports, read through the "
+        "decrypts, declassified 1978); Goebbels's diary, Sep 1943, on raising a separate peace "
+        "with Hitler and being told the moment was not right (Koch, Journal of Contemporary "
+        "History, 1975)."
     ),
 )
 
@@ -871,6 +891,23 @@ USSR.action(
         "Sudoplatov's memoir, 1994) and the contested Stockholm contacts of 1942 to 1943 "
         "(Mastny, 'Stalin and the prospects of a separate peace in World War II', American "
         "Historical Review, 1972)."
+    ),
+    speculative=True,
+)
+# Added 2026-10-15 on the owner's decision 1, after first sight: acceptance of a German offer.
+USSR.action(
+    "accept_terms_east",
+    guard={"offer": V.east_offer, "no_separate_peace": ~V.anglo_soviet_alliance},
+    effect=Set("east_peace", True),
+    source=(
+        "No Soviet decision record. The nearest evidence is the Stockholm contacts of 1942 to "
+        "1943 (Kleist's account through Clauss; the US telegram of 1943, FRUS 1943 vol. I "
+        "document 504, records a German approach, not a Soviet decision), read as Soviet "
+        "policy by Koch ('The Spectre of a Separate Peace in the East', Journal of "
+        "Contemporary History, 1975) and as a low-level initiative broken off in May 1943 by "
+        "Mastny ('Stalin and the prospects of a separate peace in World War II', American "
+        "Historical Review, 1972); Stalin ridiculed a separate peace at the Moscow Conference, "
+        "Oct 1943."
     ),
     speculative=True,
 )

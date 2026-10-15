@@ -4,29 +4,43 @@
   "model": "ww2_v0",
   "variables": {
     "arms_GER": {
-      "level": "rising",
+      "level": "high",
       "confidence": "medium",
       "indicators": [
+        {
+          "id": "clock_1938Q3_arms_GER",
+          "value": "GER rearm decided 1936-08-24, delay 8",
+          "source": "Hitler's memorandum on the Four-Year Plan, Aug 1936 (armed forces operational within four years; text in Treue, Vierteljahrshefte fuer Zeitgeschichte 1955) and the army armament programme of Aug 1936 (Deist, in Germany and the Second World War vol. I); two-year service decreed 24 Aug 1936; Tooze 2006",
+          "observed": "1936-08-24",
+          "rule": "clock-consistency pass (owner's decision 7 of 2026-10-15; framework_spec.md section 9), case (a), a landed decision: GER rearm decided in 1936Q3 (tick 2) with delay 8 lands in the transition into tick 11, the end of 1938Q3; the model's step from the model-consistent snapshot of the end of 1938Q2 under the realized moves of 1938Q3 (data/ww2/realized_moves.csv, tick 10) gives arms_GER = high at tick 11. Note: overrides the event-dated reading arms_GER = rising at the end of 1938Q3; the record reaches high on 1938-10-21 (Directive on the liquidation of the remainder of Czechoslovakia (21 Oct 1938) and the expansion decisions of Oct 1938 (Goering's conference of 14 Oct 1938): the force German planning treated as able to conduct a campaign in the East while holding the West), in 1938Q4, one tick after the model's clock"
+        },
+        {
+          "id": "event_1938-10-21_arms_GER",
+          "value": "Directive on the liquidation of the remainder of Czechoslovakia (21 Oct 1938) and the expansion decisions of Oct 1938 (Goering's conference of 14 Oct 1938): the force German planning treated as able to conduct a campaign in the East while holding the West",
+          "source": "Nuremberg documents C-136 (directive of 21 Oct 1938) and 1301-PS (conference of 14 Oct 1938); Weinberg 1994, A World at Arms, ch. 1",
+          "observed": "1938-10-21",
+          "rule": "the record's date for arms_GER = high: planning-record definition of high (decisions D12). Note: Planning-record definition of high (decisions D12); NMC milper 782 thousand for 1938 and 2750 thousand for 1939 is the cross-check."
+        },
         {
           "id": "nmc_GMY_1938_milper",
           "value": 782,
           "source": "Correlates of War Project, National Material Capabilities data set (Singer, Bremer and Stuckey 1972; Singer 1988), version 7.0, obtained via peacesciencer R package mirror (https://raw.githubusercontent.com/svmiller/peacesciencer/master/data/cow_nmc.rda); committed extract data/ww2/nmc_1936_1940.csv",
           "observed": "1938-12-31",
-          "rule": "provisional rule for arms_GER (ontology section 2): high if NMC milper >= 1000 thousand (a field army able to sustain a major campaign); rising if conscription in force (events_ww2.csv) and NMC milex above the previous year's; otherwise low; total is not read from NMC (a dated full-war-economy decision, none before 1941); milper 782 vs threshold 1000; interpolated: annual value carried to the quarter"
+          "rule": "event-dated reading overridden by the clock-consistency pass: provisional rule for arms_GER (ontology section 2): high if NMC milper >= 1000 thousand (a field army able to sustain a major campaign); rising if conscription in force (events_ww2.csv) and NMC milex above the previous year's; otherwise low; total is not read from NMC (a dated full-war-economy decision, none before 1941); milper 782 vs threshold 1000; interpolated: annual value carried to the quarter"
         },
         {
           "id": "nmc_GMY_1938_milex",
           "value": 7415163,
           "source": "Correlates of War Project, National Material Capabilities data set (Singer, Bremer and Stuckey 1972; Singer 1988), version 7.0, obtained via peacesciencer R package mirror (https://raw.githubusercontent.com/svmiller/peacesciencer/master/data/cow_nmc.rda); committed extract data/ww2/nmc_1936_1940.csv",
           "observed": "1938-12-31",
-          "rule": "provisional rule for arms_GER (ontology section 2): high if NMC milper >= 1000 thousand (a field army able to sustain a major campaign); rising if conscription in force (events_ww2.csv) and NMC milex above the previous year's; otherwise low; total is not read from NMC (a dated full-war-economy decision, none before 1941); milex 7415163 vs 1937: 3298869; interpolated: annual value carried to the quarter"
+          "rule": "event-dated reading overridden by the clock-consistency pass: provisional rule for arms_GER (ontology section 2): high if NMC milper >= 1000 thousand (a field army able to sustain a major campaign); rising if conscription in force (events_ww2.csv) and NMC milex above the previous year's; otherwise low; total is not read from NMC (a dated full-war-economy decision, none before 1941); milex 7415163 vs 1937: 3298869; interpolated: annual value carried to the quarter"
         },
         {
           "id": "event_1935-03-16_arms_GER",
           "value": "Germany reintroduces conscription (Law for the Reconstruction of the Wehrmacht)",
           "source": "Gesetz fuer den Aufbau der Wehrmacht, 16 March 1935 (Reichsgesetzblatt 1935 I); Weinberg 1994, A World at Arms, ch. 1",
           "observed": "1935-03-16",
-          "rule": "gate of the arms_GER rule, in force. Note: Gate of the arms_GER rule: conscription in force. The NMC milex and milper tests apply on top of it."
+          "rule": "event-dated reading overridden by the clock-consistency pass: gate of the arms_GER rule, in force. Note: Gate of the arms_GER rule: conscription in force. The NMC milex and milper tests apply on top of it."
         }
       ]
     },

@@ -5,6 +5,7 @@ The built-ins section (phase 2 decision F2) is tested in tests/evidence/test_bui
 import copy
 import json
 import re
+from datetime import date
 from pathlib import Path
 
 import pytest
@@ -149,13 +150,172 @@ def test_committed_snapshots_are_up_to_date(nmc_rows, events, committed):
     assert built == committed
 
 
-def test_the_variables_do_not_depend_on_the_built_ins(nmc_rows, events, committed):
-    """The built-ins are an added section: every variable level, confidence and indicator is
-    what the builder gives without the decision records and the realized moves."""
+# The clock-consistency pass (owner's decision 7 of 2026-10-15) on the v0 series.
+CLOCK_CHANGES = [
+    ("1938Q2", "belief_WEST", "limited", "uncertain", "b"),  # demand_sudeten; record Sep 1938
+    ("1938Q3", "arms_GER", "rising", "high", "a"),  # the programme of Aug 1936; record Oct 1938
+]
+
+
+def test_the_variables_depend_on_the_built_ins_only_through_the_clock_pass(
+    nmc_rows, events, committed
+):
+    """The built-ins are an added section, and the decision records and realized moves move
+    a variable only through the clock-consistency pass: every other level, confidence and
+    indicator is what the builder gives without them; each changed entry names its case and
+    keeps the event-dated reading it overrides in its provenance."""
     bare = h.build_all(nmc_rows, events)
+    changes = []
+    built = h.build_all(
+        nmc_rows, events, decisions=h.load_decisions(), moves=h.load_moves(), changes=changes
+    )
+    assert built == committed
+    assert [
+        (c["quarter"], c["variable"], c["before"], c["after"], c["case"]) for c in changes
+    ] == CLOCK_CHANGES
+    changed = {(c[0], c[1]) for c in CLOCK_CHANGES}
     for quarter, snap in committed.items():
         assert "builtins" not in bare[quarter]
-        assert bare[quarter] == {k: v for k, v in snap.items() if k != "builtins"}, quarter
+        for name, entry in snap["variables"].items():
+            if (quarter, name) in changed:
+                ind = entry["indicators"][0]
+                assert ind["id"] == f"clock_{quarter}_{name}"
+                assert "overrides the event-dated reading" in ind["rule"]
+                old = bare[quarter]["variables"][name]
+                assert entry["level"] != old["level"]
+                assert len(entry["indicators"]) == len(old["indicators"]) + 2
+            else:
+                assert entry == bare[quarter]["variables"][name], (quarter, name)
+    rule = committed["1938Q3"]["variables"]["arms_GER"]["indicators"][0]["rule"]
+    assert "case (a)" in rule and "1938-10-21" in rule and "tick 11" in rule
+
+
+# -- the clock-consistency pass on a small fixture ---------------------------------------------
+
+
+def _toy_clock():
+    from wavefront.model import Bump, Model, Set, V
+
+    m = Model("toy_clock", horizon=6)
+    m.var("arms", levels=["low", "rising", "high"], init="low", monotone=True)
+    m.flag("pact", init=False, monotone=True)
+    a = m.actor("A", observes=V.all())
+    b = m.actor("B", observes=V.all())
+    m.nature()
+    a.action("build", guard=V.arms < "high", effect=Bump("arms", 1), delay=1, source="s")
+    b.action("sign", effect=Set("pact", True), source="s")
+    return h.Clock(m.compile(), {})
+
+
+TOY_VARIABLES = {
+    "arms": h.Variable("arms", "level", ("low", "rising", "high"), "low", "2"),
+    "pact": h.Variable("pact", "flag", (False, True), False, "4"),
+}
+TOY_QUARTERS = ["1935Q4", "1936Q1", "1936Q2", "1936Q3", "1936Q4"]
+
+
+def _toy_series(arms, pact, pending):
+    out = {}
+    for q, x, f, p in zip(TOY_QUARTERS, arms, pact, pending, strict=True):
+        day = h.quarter_bounds(q)[1].isoformat()
+
+        def entry(name, level, day=day):
+            ind = {"id": f"event_{day}_{name}", "value": f"{name} event", "source": "src"}
+            ind |= {"observed": day, "rule": f"{name} read from the event"}
+            return {"level": level, "confidence": "high", "indicators": [ind]}
+
+        out[q] = {
+            "date": day,
+            "model": "toy_clock",
+            "variables": {"arms": entry("arms", x), "pact": entry("pact", f)},
+            "builtins": {
+                "pending_A_build": {
+                    "value": p,
+                    "confidence": "assumed",
+                    "indicators": [],
+                    "rule": "fixture",
+                }
+            },
+        }
+    return out
+
+
+def _toy_moves(sign_note=""):
+    plays = [("build", "idle"), ("idle", "idle"), ("idle", "sign"), ("idle", "idle")]
+    return [
+        {"tick": str(k), "quarter": h.quarter_name(k), "A": x, "B": y, "Nature": "none"}
+        | {"source": f"row {k}", "note": sign_note if y == "sign" else ""}
+        for k, (x, y) in enumerate(plays)
+    ]
+
+
+TOY_DECISIONS = [h.Decision(date(1936, 2, 1), "1936Q1", "A", "build", 1, "src A", "")]
+
+
+def test_fixture_clock_pass_both_cases():
+    """Case (a): A's build of 1936Q1 with delay 1 lands in the transition into tick 2 (the
+    end of 1936Q2), where the record still reads low and reads rising one quarter later.
+    Case (b): B's sign of 1936Q3 sets the pact at once, where the record reads it from
+    1936Q4. Both entries take the model's value; nothing else changes."""
+    series = _toy_series(
+        ["low", "low", "low", "rising", "rising"],
+        [False, False, False, False, True],
+        [0, 1, 0, 0, 0],
+    )
+    out, changes = h.clock_consistency(
+        series, TOY_DECISIONS, _toy_moves(), _toy_clock(), TOY_VARIABLES
+    )
+    assert [(c["quarter"], c["variable"], c["before"], c["after"], c["case"]) for c in changes] == [
+        ("1936Q2", "arms", "low", "rising", "a"),
+        ("1936Q3", "pact", False, True, "b"),
+    ]
+    a = out["1936Q2"]["variables"]["arms"]
+    assert (a["level"], a["confidence"]) == ("rising", "medium")
+    assert a["indicators"][0]["id"] == "clock_1936Q2_arms"
+    assert (
+        a["indicators"][0]["observed"] == "1936-02-01" and a["indicators"][0]["source"] == "src A"
+    )
+    assert "case (a)" in a["indicators"][0]["rule"]
+    assert (
+        "overrides the event-dated reading arms = low at the end of 1936Q2"
+        in (a["indicators"][0]["rule"])
+    )
+    assert "the record reaches rising on 1936-09-30" in a["indicators"][0]["rule"]
+    assert a["indicators"][1]["id"] == "event_1936-09-30_arms"
+    assert a["indicators"][2]["rule"].startswith("event-dated reading overridden")
+    b = out["1936Q3"]["variables"]["pact"]
+    assert b["level"] is True and "case (b)" in b["indicators"][0]["rule"]
+    assert b["indicators"][0]["source"] == "row 2"
+    for q in TOY_QUARTERS:
+        for name in TOY_VARIABLES:
+            if (q, name) not in {("1936Q2", "arms"), ("1936Q3", "pact")}:
+                assert out[q]["variables"][name] == series[q]["variables"][name]
+
+
+def test_fixture_clock_pass_exclusions():
+    """Rule (c): a lag of two ticks, a record that leads the model, an [NSL] placement and
+    the last quarter of a series (no next reading) stay as the record reads them."""
+    clock = _toy_clock()
+    two_ticks = _toy_series(["low", "low", "low", "low", "rising"], [False] * 5, [0, 1, 0, 0, 0])
+    _, changes = h.clock_consistency(two_ticks, TOY_DECISIONS, _toy_moves(), clock, TOY_VARIABLES)
+    assert changes == []
+    leads = _toy_series(
+        ["low", "rising", "rising", "rising", "rising"], [False] * 5, [0, 1, 0, 0, 0]
+    )
+    _, changes = h.clock_consistency(leads, TOY_DECISIONS, _toy_moves(), clock, TOY_VARIABLES)
+    assert changes == []
+    pact = _toy_series(
+        ["low", "low", "rising", "rising", "rising"],
+        [False, False, False, False, True],
+        [0, 1, 0, 0, 0],
+    )
+    _, changes = h.clock_consistency(
+        pact, TOY_DECISIONS, _toy_moves("sign [NSL]"), clock, TOY_VARIABLES
+    )
+    assert changes == []
+    short = {q: pact[q] for q in TOY_QUARTERS[:4]}  # 1936Q3 is now the last quarter
+    _, changes = h.clock_consistency(short, TOY_DECISIONS, _toy_moves(), clock, TOY_VARIABLES)
+    assert changes == []
 
 
 def test_committed_snapshots_are_valid(committed):

@@ -81,6 +81,7 @@ __all__ = [
     "check_against_ontology",
     "check_builtins",
     "check_decisions_against_moves",
+    "default_clock",
     "fairness_series",
     "load_decisions",
     "load_events",
@@ -163,6 +164,7 @@ VARIABLES: tuple[Variable, ...] = (
     _lv("reich", "fighting surrendered", "fighting", "4"),
     _flag("east_feeler", False),
     _flag("east_peace", False),
+    _flag("east_offer", False),
     _flag("midway_ordered", False),
     *(_V0[n] for n in ("rhineland", "austria", "sudeten", "bohemia", "poland")),
     _CHANGED["france"],
@@ -197,6 +199,10 @@ MOVE_FLAGS: dict[str, tuple[str, str, str]] = {
     "midway_ordered": ("JPN", "offensive_midway", "high"),
     "east_feeler": ("USSR", "seek_terms_east", "medium"),
     "east_peace": ("GER", "negotiate_east", "high"),
+    # added 2026-10-15 (owner's decision 1): Hitler refused the offer (late 1942, 29 Jul and
+    # Sep 1943); the Stockholm contacts of Ribbentrop's office were not an offer by him, hence
+    # medium
+    "east_offer": ("GER", "offer_terms_east", "medium"),
 }
 
 # Built-ins of models/ww2/v1.py, in the model's state order.
@@ -1046,6 +1052,16 @@ def build_builtins(
     return out
 
 
+def default_clock() -> v0.Clock:
+    """``models/ww2/v1.py`` under the hypothesis of the realized replay (decisions E4:
+    hegemonic German aims, defensive Soviet aims; hegemonic Japanese aims, whose steps along
+    the realized path are those of regional aims), imported only when the pass runs."""
+    from models.ww2.v1 import model
+
+    hidden = {"aims_GER": "hegemonic", "aims_USSR": "defensive", "aims_JPN": "hegemonic"}
+    return v0.Clock(model.compile(), hidden)
+
+
 def _rates(rules: Mapping[str, Any]) -> dict[str, Any]:
     return {name: {"ticks": s["ticks"], "basis": s["basis"]} for name, s in rules["rates"].items()}
 
@@ -1057,9 +1073,15 @@ def build_all(
     moves: Sequence[Mapping[str, str]],
     rules: Mapping[str, Any] = ONTOLOGY_RULES,
     quarters: Iterable[str] = QUARTERS,
+    *,
+    clock: v0.Clock | bool | None = None,
+    changes: list[dict[str, Any]] | None = None,
 ) -> tuple[dict[str, dict[str, Any]], list[str]]:
     """The snapshots of :data:`TICK0` and ``quarters`` (which must start at 1936Q1 and be
-    consecutive, since the fairness counters run along the path), and the NMC gaps met."""
+    consecutive, since the fairness counters run along the path), and the NMC gaps met.
+    The clock-consistency pass applies (:func:`default_clock` unless ``clock`` is given;
+    ``clock=False`` skips it; its changes are appended to ``changes``); the last quarter
+    built has no next reading and stays as the record reads it."""
     quarters = list(quarters)
     if quarters and quarters[0] != QUARTERS[0]:
         raise ValueError("the fairness counters need the quarters from 1936Q1 on")
@@ -1071,17 +1093,31 @@ def build_all(
     dated: dict[str, tuple[str, dict[str, Any]]] = {}
     for q in [TICK0, *quarters]:
         dated[q] = _variables(q, data, events, moves, rules)
-    fair = fairness_series({q: v for q, (_, v) in dated.items()}, moves)
-    out: dict[str, dict[str, Any]] = {}
-    for q, (day, variables) in dated.items():
-        out[q] = {
-            "$schema": "../../schema.json",
-            "date": day,
-            "model": MODEL,
-            "variables": variables,
-            "builtins": build_builtins(q, events, decisions, moves, fair[q]),
-            "rates": _rates(rules),
+
+    def assemble(levels: Mapping[str, Mapping[str, Any]]) -> dict[str, dict[str, Any]]:
+        fair = fairness_series(levels, moves)
+        return {
+            q: {
+                "$schema": "../../schema.json",
+                "date": dated[q][0],
+                "model": MODEL,
+                "variables": dict(levels[q]),
+                "builtins": build_builtins(q, events, decisions, moves, fair[q]),
+                "rates": _rates(rules),
+            }
+            for q in levels
         }
+
+    out = assemble({q: v for q, (_, v) in dated.items()})
+    if clock is not False:
+        # The clock-consistency pass (owner's decision 7; v0.clock_consistency), then the
+        # fairness counters again, on the corrected levels their triggers read.
+        if clock is None or clock is True:
+            clock = default_clock()
+        out, found = v0.clock_consistency(out, decisions, moves, clock, BY_NAME, MOVES_NAME)
+        out = assemble({q: snap["variables"] for q, snap in out.items()})
+        if changes is not None:
+            changes.extend(found)
     return out, sorted(data.gaps)
 
 
@@ -1093,9 +1129,11 @@ def build(
     moves: Sequence[Mapping[str, str]],
     rules: Mapping[str, Any] = ONTOLOGY_RULES,
 ) -> dict[str, Any]:
-    """The snapshot for the end of ``quarter`` (``1935Q4`` to ``1945Q3``)."""
+    """The snapshot for the end of ``quarter`` (``1935Q4`` to ``1945Q3``) as
+    :func:`build_all` gives it (built through the next quarter, whose reading the
+    clock-consistency pass compares)."""
     iq = quarter_index(quarter)
-    upto = [q for q in QUARTERS if quarter_index(q) <= iq]
+    upto = [q for q in QUARTERS if quarter_index(q) <= iq + 1]
     snaps, _ = build_all(nmc_rows, events, decisions, moves, rules, upto)
     return snaps[quarter]
 
@@ -1275,7 +1313,10 @@ def main(argv: list[str] | None = None) -> int:
         problems += [f"ontology: {p}" for p in ontology_mismatches(args.ontology)]
     decisions, moves = load_decisions(args.decisions), load_moves(args.moves)
     problems += check_decisions_against_moves(decisions, moves)
-    snapshots, gaps = build_all(load_nmc(args.nmc), load_events(args.events), decisions, moves)
+    changes: list[dict[str, Any]] = []
+    snapshots, gaps = build_all(
+        load_nmc(args.nmc), load_events(args.events), decisions, moves, changes=changes
+    )
     for quarter, snap in snapshots.items():
         problems += [f"{quarter}: {p}" for p in validate_snapshot(snap)]
         problems += [f"{quarter}: {p}" for p in check_against_ontology(snap)]
@@ -1298,6 +1339,7 @@ def main(argv: list[str] | None = None) -> int:
         return 1
     verb = "checked" if args.check else "wrote"
     print(f"{verb} {len(snapshots)} snapshots in {args.out}")
+    print(v0.format_changes(changes))
     if gaps:
         print("NMC gaps flagged (not filled): " + "; ".join(gaps))
     return 0

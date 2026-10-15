@@ -2,7 +2,7 @@
 
 > Every result is conditional on the model version and the initial state; no bare reachability result is a finding. Results computed by a fixed strategy with the bounded checker (decisions E6) are sufficiency checks or refutations, never the kernel itself; each is marked with its method.
 
-Model `ww2_v1` (`models/ww2/v1.py`), fingerprint `5deb2902f6bf`. Hindsight snapshots from `snapshots/ww2/hindsight_v1/` with their built-ins (decisions E1), hidden objectives fixed per hypothesis (`models/ww2/hypotheses.py`, `snapshots=SNAPSHOTS_V1, aims_JPN=...`). Registered claims: [docs/ww2_testbed.md](../docs/ww2_testbed.md) section 5, unedited; readings: [docs/ww2_v1_decisions.md](../docs/ww2_v1_decisions.md) E5 (logged in section 11 of the testbed on 2026-10-13). v0 and its report are unchanged; the v0 suite still passes.
+Model `ww2_v1` (`models/ww2/v1.py`), fingerprint `5deb2902f6bf` at first sight, `e7a0968964a7` since the edit of 2026-10-15 (owner's decision 1, section 14). Hindsight snapshots from `snapshots/ww2/hindsight_v1/` with their built-ins (decisions E1), hidden objectives fixed per hypothesis (`models/ww2/hypotheses.py`, `snapshots=SNAPSHOTS_V1, aims_JPN=...`). Registered claims: [docs/ww2_testbed.md](../docs/ww2_testbed.md) section 5, unedited; readings: [docs/ww2_v1_decisions.md](../docs/ww2_v1_decisions.md) E5 (logged in section 11 of the testbed on 2026-10-13). v0 and its report are unchanged; the v0 suite still passes.
 
 **Hold-out record.** The whole v1 suite (`python3 -m pytest tests/ww2 tests/evidence`) was first run, in one go, on 2026-10-13 at commit `3d5c55ec8b76c0ad9458a44c5ca96bdc9b1511c6` with the working tree uncommitted (the architect's last commit is the base; `3d5c55e` itself is an unreviewed WIP snapshot that already held this step's files). That run completed (93 min 19 s: 14 failed, 417 passed, 3 skipped) and is the first sight of T6, T7, T11 and T12 (and of T3, T9, T13 and T10 on v1). A process interruption afterwards led the coordinator to believe the run had died; it had not, and its log is the record used here. The suite was rerun whole on 2026-10-14 at `930f9b7` with no change to `models/ww2/v1.py`, with identical results (section 14). **No guard, effect, delay, fairness constraint, profile or assume of v1 changed after first sight; `docs/guard_changelog_ww2.md` has no row after the first-sight row.** Before first sight one registered query was seen while testing the harness, T3's refusal query (section 4, a smoke test of the bounded helper), and v0's T13 kernel was computed once to time the symbolic engine without reading any membership; no model edit followed either.
 
@@ -43,24 +43,24 @@ Coding choices (none changes a catalogue condition; all in the guard changelog's
 - `midway_ordered`, `east_feeler` and `east_peace` have no event rows; the snapshot builder reads them from the realized moves.
 - The profile `deterred` (T9 only) and the analysis invariants `undefeated`, `poland_blocked`, `european_peace`, `european_peace_t20` (E5) are declared in the model.
 
-Parameter budget (`CompiledModel.budget()`) against the catalogue's table (actions_ww2_v1.md, "Parameter budget (v1 draft)"):
+Parameter budget (`CompiledModel.budget()`) against the catalogue's table (actions_ww2_v1.md, "Parameter budget (v1 draft)"), as of 2026-10-15: after first sight the owner's decision 1 added the flag `east_offer` and two actions, GER `offer_terms_east` and the speculative USSR `accept_terms_east` (docs/german_exit_1941_1945.md; guard changelog; section 14). Budget before the edit → after: variables 55 → 56, levels 141 → 143, actions 84 → 86, guards 84 → 86, guard_parts 202 → 206, speculative 2 → 3, named assumptions 207 → 211; fairness 4, delays 7, profiles 5, assume 1 and the 16 built-ins unchanged.
 
 | Item | Catalogue | Model | Note |
 |---|---|---|---|
-| Declared variables / levels | 21 added to v0's 34 | 55 / 141 | as catalogue |
+| Declared variables / levels | 21 added to v0's 34 | 56 / 143 | as catalogue, + `east_offer` (decision 1, 2026-10-15; 55 / 141 before) |
 | Built-in variables | | 16 (`tick`, the latch, 7 pending counters, `last_GER`, `last_WEST`, `last_USSR`, 4 fairness counters) | |
-| Actions GER, WEST, USSR, JPN | 56 (20, 20, 8, 8) | 56 (20, 20, 8, 8) | as catalogue |
+| Actions GER, WEST, USSR, JPN | 56 (20, 20, 8, 8) | 58 (21, 20, 9, 8) | as catalogue, + GER `offer_terms_east`, USSR `accept_terms_east` (decision 1, 2026-10-15) |
 | Nature events | 28 | 28 | as catalogue |
-| Guards (non-trivial) | | 84 | |
-| Guard parts | not counted | 202 | 200 as transcribed, +1 `purge:prewar` (E2 item 10), +1 `lift_embargo:before_clock` (E3) |
+| Guards (non-trivial) | | 86 | 84 before decision 1 |
+| Guard parts | not counted | 206 | 200 as transcribed, +1 `purge:prewar` (E2 item 10), +1 `lift_embargo:before_clock` (E3), +4 for the two actions of decision 1 (2026-10-15, after first sight) |
 | Hypothesis gates | 8 guards, 1 conditional effect | 8 (+ the [H] effect of `attack_czechoslovakia`) | as catalogue |
-| Speculative actions | 2 | 2 (`JPN.strike_colonies_only`, `USSR.seek_terms_east`) | as catalogue |
+| Speculative actions | 2 | 3 (`JPN.strike_colonies_only`, `USSR.seek_terms_east`, `USSR.accept_terms_east`) | as catalogue, + `accept_terms_east` (decision 1) |
 | Delayed actions | 7 | 7 (GER `rearm` 8; WEST `rearm` 4, `us_rearm` 4, `victory_program` 5, `atomic_program` 12; USSR `rearm` 4, `mobilize_total` 3) | as catalogue |
 | Fairness | 4 | 4 | `oil_clock` has a second response (section 2) |
 | Profiles | 4 | **5** | `deterred`, adopted for T9 by E5 after the catalogue; reported, not tuned |
 | `assume` / latches | 1 / | 1 (`ussr_defensive`) / 1 | |
 | Invariants / endings | | 8 / 11 | 4 invariants are E5's analysis predicates |
-| Named assumptions (`assumptions()`, no profile) | | 207 | |
+| Named assumptions (`assumptions()`, no profile) | | 211 | 207 before decision 1 |
 
 ## 2. Well-formedness, engines and methods
 
@@ -133,8 +133,7 @@ Comparison with the v1 hindsight snapshots (built-ins loaded), end of each quart
 |---|---|---|---|---|
 | `treaty` | 1936Q1, 1936Q2 | dead | eroded | [SQR] locarno_lapses at tick 2 (v0) |
 | `arms_WEST` | 1936Q3, 1936Q4, 1939Q1, 1939Q2, 1939Q3 | high, rising | low, rising | NMC reading against the delay-4 programme (v0) |
-| `belief_WEST` | 1938Q2 | limited | uncertain | demand_sudeten placed at Case Green (v0) |
-| `arms_GER` | 1938Q3, 1940Q4, 1941Q1, 1941Q2, 1941Q3, 1941Q4 | high, rising | high, total | 1938Q3 as v0; total lands at tick 20 against the record's 1942 (E2 item 9) |
+| `arms_GER` | 1940Q4, 1941Q1, 1941Q2, 1941Q3, 1941Q4 | high | total | total lands at tick 20 against the record's 1942 (E2 item 9); not a one-tick lag, kept |
 | `arms_USSR` | 1938Q4, 1939Q1, 1939Q2, 1939Q3, 1939Q4, 1940Q1, 1940Q2, 1940Q3, 1940Q4, 1941Q1 | strong | weak | the record's Nov 1938 against the model's rearm of 1940Q2 landing at tick 22 (v0) |
 | `commit_WEST` | 1939Q1 | resolved | wary | [SQR] guarantee_poland (v0) |
 | `polish_guarantee` | 1939Q1 | True | False | [SQR] guarantee_poland (v0) |
@@ -144,15 +143,14 @@ Comparison with the v1 hindsight snapshots (built-ins loaded), end of each quart
 | `italy` | 1940Q1 | nonbelligerent | at_war | [NSL] italy_enters at the decision in principle (31 Mar 1940) |
 | `arms_USA` | 1940Q3, 1940Q4, 1941Q1, 1941Q2, 1943Q1 | high, rising | low, rising | NMC annual reading against the delay-4 and delay-5 programmes |
 | `balkans` | 1940Q3 | german_aligned | neutral | align_balkans at tick 19 (v0) |
-| `anglo_soviet_alliance` | 1941Q2 | False | True | the alliance written as an effect of the attack (E2 item 5); the record dates the agreement 12 Jul 1941 |
 | `war_us_ger` | 1941Q4 | war | peace | [SQR] declare_war_us |
 | `jpn_navy` | 1942Q2 | attrited | strong | [SQR] midway |
-| `caucasus` | 1942Q2 | soviet | contested | offensive_caucasus placed at Blue (Apr 1942); contested from Jul |
 | `w_ussr` | 1944Q1 | soviet | contested | east_liberated placed at 1944Q2; the Prut reached 26 Mar 1944 |
 | `exhaustion_GER` | 1944Q3 | exhausted | strained | [NSL] german_exhaustion |
-| `bomb_ready` | 1945Q2 | False | True | delay 12 lands at the start of 1945Q3; Trinity 16 Jul 1945 |
 
-The two one-year discrepancies of E2 item 9 appear as `arms_GER` (`total` in the model from tick 20, 1941Q1; in the record from Speer's appointment, Feb 1942) and `arms_USSR` (the model's `strong` from tick 22 against the snapshot's reading from Nov 1938; the record's restored command of Oct 1942 is shown in the snapshots as a confirming event only). `anglo_soviet_alliance` at the end of 1941Q2 matters for T7 (section 6).
+The two one-year discrepancies of E2 item 9 appear as `arms_GER` (`total` in the model from tick 20, 1941Q1; in the record from Speer's appointment, Feb 1942) and `arms_USSR` (the model's `strong` from tick 22 against the snapshot's reading from Nov 1938; the record's restored command of Oct 1942 is shown in the snapshots as a confirming event only).
+
+**The table shrank on 2026-10-15 (owner's decision 7, the snapshot convention).** The builders now apply a clock-consistency pass (`snapshots/ww2/hindsight_v1/README.md`, "Clock consistency"; framework_spec.md section 9): where a landed delayed decision (case a) or the effect of a realized move (case b) gives a level that the event-dated reading reaches one quarter later, the file carries the model's level, with the overridden reading and the record's date in its provenance. Five rows of the table as first computed disappeared, each a one-tick lag of the record behind the model: `belief_WEST` at 1938Q2 (limited → uncertain, case b: `demand_sudeten` placed at Case Green; the record's public demand of 12 Sep 1938), `arms_GER` at 1938Q3 (rising → high, case a: the programme of Aug 1936 landing at tick 11; the record's 21 Oct 1938), `anglo_soviet_alliance` at 1941Q2 (False → True, case b: the effect of `attack_ussr`; the agreement of 12 Jul 1941), `caucasus` at 1942Q2 (soviet → contested, case b: `offensive_caucasus` placed at Directive No. 41; contested from Jul 1942) and `bomb_ready` at 1945Q2 (False → True, case a: `atomic_program` of Jun 1942 with delay 12 landing at tick 38; Trinity 16 Jul 1945). The rows left are the disagreements the rule keeps: records that lead the model ([SQR], the NMC readings, the purge's end), longer lags (the two one-year discrepancies, `oil_GER`), and the [NSL] placement of `italy` at 1940Q1, which is a one-tick lag in form and is kept because `italy_enters` is placed by [NSL]. The v1 files also gain the variable `east_offer` (False throughout; owner's decision 1, section 14). The realized replay itself (the trace above) is unchanged: the two actions of decision 1 are not in the realized moves.
 
 **Same-quarter reactions [SQR] and Nature slots [NSL].** v0's five [SQR] rows stand (the non-resistance of Mar 1936, `locarno_lapses`, `guarantee_poland`, `occupy_east_poland`, `air_battle_british`; reports/ww2_v0.md section 1). v1 adds:
 
@@ -310,7 +308,7 @@ Claim as registered: "the quarter at which the state leaves V for `NO_GENERAL_WA
 | The WEST aggregate (kickoff D1) | London and Washington share one action per quarter; at 1940Q3 `us_rearm` displaces `fight_on`. In T6 and T7 the West's ability to negotiate in 1941 (a British option) and to declare war (an American one) compete for one slot. |
 | The Soviet mobilization lag (`mobilize_total`, delay 3) | The least certain number of the catalogue (notes section 4). T6's point of no return does not move with it within the horizon (the collapse chain fits either way), but the visible-failure tick would. |
 | The two one-year discrepancies (E2 item 9) | `arms_GER = total` from 1941Q1 (record 1942) and `arms_USSR = strong` from 1941Q3 (record autumn 1942); no v1 guard reads either level in the East (section 3 table). |
-| The three automatic reactions (E2 item 5) | `attack_ussr` sets `anglo_soviet_alliance`; `attack_south`, `declare_war_us` and the WEST declarations raise `commit_US` to `total`. T11's "immediate" holds by the second; the first leaves the alliance unset for good when a run starts after the attack from a snapshot dated before 12 Jul 1941 (T7, section 6). |
+| The three automatic reactions (E2 item 5) | `attack_ussr` sets `anglo_soviet_alliance`; `attack_south`, `declare_war_us` and the WEST declarations raise `commit_US` to `total`. T11's "immediate" holds by the second. The first left the alliance unset for good when a run started after the attack from a snapshot dated before 12 Jul 1941 (T7 at first sight); since the snapshot convention of 2026-10-15 `1941Q2.json` carries the alliance (section 3), so no test start has the gap. |
 | The two date-coded parts (E2 item 6) | `embargo_jpn:instrument` (tick >= 18) and `atomic_program:knowledge` (tick >= 22) stand for an institutional and a scientific precondition; relaxable, not relaxed in any minimal set found. |
 | Lend-lease to the USSR, a Soviet condition on the Caucasus, Italy at 1940Q1, `oil_JPN = secure` from Mar 1942 (E2 item 11) | Accepted as written; none enters a minimal set found here. |
 | The Atlantic, the Soviet entry into the Pacific war, a surrender without the bomb (ontology section 7) | T10's United States control vacuous; T12's surrender is the bomb's by construction. |

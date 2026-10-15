@@ -67,12 +67,21 @@ def test_T08_revisionist():
     assert bmc.reach(m.compile(profile="fight_on"), 20, ~V.invariant("balance_europe")) is None
 
 
-def kernel_entry(quarter, max_states=3_000_000):
+def _override(cm, state, override):
+    start = list(state)
+    for name, level in override.items():
+        start[cm.index[name]] = cm.variables[cm.index[name]].levels.index(level)
+    return tuple(start)
+
+
+def kernel_entry(quarter, max_states=3_000_000, **override):
     """WEST's kernel for balance_europe from the snapshot of ``quarter`` with its built-ins
     (pending decisions, last actions, the latch, fairness counters; phase 2 decision F2)
-    under hegemonic aims: (reachable states, membership, shortest distance out)."""
+    under hegemonic aims: (reachable states, membership, shortest distance out).
+    ``override`` sets variables of the start state (the event-dated reading that the
+    snapshot builder's clock-consistency pass overrides, for the recorded wave A state)."""
     cm = model.compile()
-    start = snapshot_state(cm, quarter, "hegemonic", builtins=True)
+    start = _override(cm, snapshot_state(cm, quarter, "hegemonic", builtins=True), override)
     g = explore(cm, initial=[start], max_states=max_states)
     kernel = viability(g, ["WEST"], "balance_europe").kernel
     s = g.initial[0]
@@ -84,14 +93,12 @@ def symbolic_entry(quarter, **override):
     """WEST's kernel for balance_europe under hegemonic aims from the snapshot of ``quarter``
     with its built-ins, by the symbolic engine (phase 2 decision F1): (reachable states,
     membership, shortest distance out). ``override`` sets variables of the start state (the
-    model-consistent readiness variant of reports/ww2_v0.md section 14.1)."""
+    event-dated readings that the snapshot builder's clock-consistency pass overrides, for
+    the recorded states of reports/ww2_v0.md section 14.1)."""
     from wavefront.symbolic import encode, reachable, safe, shortest
 
     cm = model.compile()
-    start = list(snapshot_state(cm, quarter, "hegemonic", builtins=True))
-    for name, level in override.items():
-        start[cm.index[name]] = cm.variables[cm.index[name]].levels.index(level)
-    start = tuple(start)
+    start = _override(cm, snapshot_state(cm, quarter, "hegemonic", builtins=True), override)
     enc = encode(cm)
     reach = reachable(enc, enc.state_cube(start))
     kernel = safe(enc, ["WEST"], enc.predicate("balance_europe"), within=reach.states)
@@ -104,35 +111,45 @@ def symbolic_entry(quarter, **override):
 def test_T08_hegemonic():
     """(b) as amended 2026-10-15: the kernel question reduces to T13. Both the state before
     Munich (1938Q2.json, tick 10, the 1936 programme one tick from landing) and the state
-    after it (1938Q3.json, tick 11, read with the readiness the model's own clock gives
-    there) are outside V_WEST for balance_europe under hegemonic aims: the kernel was left
-    at 1936Q2 (T13), and the concession changes nothing in kernel terms. Symbolic engine."""
+    after it (1938Q3.json, tick 11, which since the clock-consistency pass of 2026-10-15
+    carries the readiness the model's own clock gives there) are outside V_WEST for
+    balance_europe under hegemonic aims: the kernel was left at 1936Q2 (T13), and the
+    concession changes nothing in kernel terms. Symbolic engine."""
     n_before, in_before, _ = symbolic_entry("1938Q2")
-    n_after, in_after, _ = symbolic_entry("1938Q3", arms_GER="high")
+    n_after, in_after, _ = symbolic_entry("1938Q3")
     assert (in_before, in_after) == (False, False)
     assert n_before > n_after > 0
 
 
 @pytest.mark.slow
 def test_T08_hegemonic_states_recorded():
-    """The memberships of reports/ww2_v0.md section 14.1, pinned: the before state and the
-    model-consistent after state are outside V_WEST; the file's after state, with the
-    rearmament neither landed nor pending, is inside with shortest distance 3 (the artifact
+    """The memberships of reports/ww2_v0.md section 14.1, pinned. Since the clock-consistency
+    pass of 2026-10-15 the files carry the model's clock: 1938Q2.json reads belief_WEST
+    uncertain (demand_sudeten of 1938Q2, case (b)) and 1938Q3.json arms_GER high (the
+    programme of Aug 1936 landing at tick 11, case (a)), so the arms_GER="high" override of
+    14.1 is a no-op. Both states are outside V_WEST. The states of 14.1 as computed on
+    2026-10-14 are the event-dated readings the pass overrides: the before state with
+    belief_WEST limited (11,398,836 states, outside) and the after state with arms_GER rising,
+    the rearmament neither landed nor pending, inside with shortest distance 3 (the artifact
     of the one-tick readiness disagreement)."""
-    assert symbolic_entry("1938Q2") == (11_398_836, False, 0)
-    assert symbolic_entry("1938Q3", arms_GER="high") == (4_134_692, False, 0)
-    assert symbolic_entry("1938Q3") == (601_353, True, 3)
+    assert symbolic_entry("1938Q2") == (8_906_961, False, 0)
+    assert symbolic_entry("1938Q3") == (4_134_692, False, 0)
+    assert symbolic_entry("1938Q3", arms_GER="high") == symbolic_entry("1938Q3")
+    assert symbolic_entry("1938Q2", belief_WEST="limited") == (11_398_836, False, 0)
+    assert symbolic_entry("1938Q3", arms_GER="rising") == (601_353, True, 3)
 
 
 @pytest.mark.slow
 def test_T08_hegemonic_after_concession_recorded():
     """The half of the amended T8(b) the explicit engine computes, recorded for section 14 of
     the report, not a verdict on the claim: from 1938Q3.json with its built-ins (no rearmament
-    pending, last_GER demand_sudeten, last_WEST concede, belief_at_munich uncertain) the
-    reachable set has 601,353 states and the state is in V_WEST for balance_europe with
-    shortest distance 3 out of the kernel (phase 1, without built-ins: 198,443 states,
-    inside, distance 5)."""
-    assert kernel_entry("1938Q3") == (601_353, True, 3)
+    pending, last_GER demand_sudeten, last_WEST concede, belief_at_munich uncertain) and its
+    event-dated readiness arms_GER rising (the reading the clock-consistency pass of
+    2026-10-15 overrides; the file now reads high, 4,134,692 states, past this engine's
+    budget) the reachable set has 601,353 states and the state is in V_WEST for
+    balance_europe with shortest distance 3 out of the kernel (phase 1, without built-ins:
+    198,443 states, inside, distance 5)."""
+    assert kernel_entry("1938Q3", arms_GER="rising") == (601_353, True, 3)
 
 
 @pytest.mark.slow

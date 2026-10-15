@@ -138,22 +138,36 @@
       ]
     },
     "belief_WEST": {
-      "level": "limited",
+      "level": "uncertain",
       "confidence": "medium",
       "indicators": [
+        {
+          "id": "clock_1938Q2_belief_WEST",
+          "value": "GER demand_sudeten",
+          "source": "Nuremberg document 388-PS (Case Green, 30 May 1938); DGFP Series D vol. II; DBFP Third Series vol. I",
+          "observed": "1938-06-30",
+          "rule": "clock-consistency pass (owner's decision 7 of 2026-10-15; framework_spec.md section 9), case (b), the effect of a realized move: GER demand_sudeten, realized in 1938Q2, writes belief_WEST; the model's step from the model-consistent snapshot of the end of 1938Q1 under the realized moves of 1938Q2 (data/ww2/realized_moves.csv, tick 9) gives belief_WEST = uncertain at tick 10. Note: overrides the event-dated reading belief_WEST = limited at the end of 1938Q2; the record reaches uncertain on 1938-09-12 (Sudeten demand: Hitler's Nuremberg speech demands self-determination for the Sudeten Germans; escalated at Berchtesgaden (15 September) and Godesberg (22 to 23 September)), in 1938Q3, one tick after the model's clock"
+        },
+        {
+          "id": "event_1938-09-12_belief_WEST",
+          "value": "Sudeten demand: Hitler's Nuremberg speech demands self-determination for the Sudeten Germans; escalated at Berchtesgaden (15 September) and Godesberg (22 to 23 September)",
+          "source": "Hitler, closing speech at the Nuremberg party rally, 12 September 1938; Cabinet minutes, September 1938 (CAB 23); Weinberg 1994, A World at Arms, ch. 1",
+          "observed": "1938-09-12",
+          "rule": "the record's date for belief_WEST = uncertain: belief_WEST takes the level of the latest dated event at or before 1938-09-30 (end of quarter) (belief_WEST := uncertain). Note: Threshold judgment: the ontology does not yet give a rule for 'uncertain'; this row follows the action catalogue (demand_sudeten raises belief_WEST to uncertain). Godesberg would give the same quarter. For the historian."
+        },
         {
           "id": "event_1936-03-09_belief_WEST",
           "value": "Eden's Commons statement treats the reoccupation as a treaty breach, not a threat of hostilities; no British military response",
           "source": "Hansard, HC Deb 9 March 1936 (Foreign Secretary's statement on the German memorandum) ?",
           "observed": "1936-03-09",
-          "rule": "belief_WEST takes the level of the latest dated event at or before 1938-06-30 (end of quarter) (belief_WEST := limited). Note: Date and content as recalled; check against Hansard. The reading is the absence of any finding by London of aims beyond the treaty revisions."
+          "rule": "event-dated reading overridden by the clock-consistency pass: belief_WEST takes the level of the latest dated event at or before 1938-06-30 (end of quarter) (belief_WEST := limited). Note: Date and content as recalled; check against Hansard. The reading is the absence of any finding by London of aims beyond the treaty revisions."
         },
         {
           "id": "event_1938-05-20_belief_WEST",
           "value": "May crisis: Czechoslovak partial mobilization on reports of German troop movements; British warnings to Berlin (21 May)",
           "source": "Documents on British Foreign Policy, third series (May 1938); Weinberg 1994, A World at Arms, ch. 1",
           "observed": "1938-05-20",
-          "rule": "belief_WEST takes the level of the latest dated event at or before 1938-06-30 (end of quarter) (belief_WEST := limited). Note: No level change: London treated the crisis as a Sudeten question, a limited aim. Listed as the dated confirming observation."
+          "rule": "event-dated reading overridden by the clock-consistency pass: belief_WEST takes the level of the latest dated event at or before 1938-06-30 (end of quarter) (belief_WEST := limited). Note: No level change: London treated the crisis as a Sudeten question, a limited aim. Listed as the dated confirming observation."
         }
       ]
     },

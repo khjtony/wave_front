@@ -61,6 +61,41 @@ historian's review):
 | `arms_USSR` | `weak` from the Tukhachevsky trial (June 1937) to the decree ending the mass operations (November 1938); `strong` otherwise (a literal reading of the ontology; NMC `milper` shown as context) |
 | `arms_JPN` | fixed at `high` in v0 |
 
+## Clock consistency (owner's decision 7 of 2026-10-15)
+
+Start states follow the model's own clock where the record lags it by one tick. After the
+event-dated reading of quarter Q (the end of Q, tick index(Q) + 1), the builder steps
+`models/ww2/v0.py` once from the model-consistent snapshot of the quarter before (variables and
+built-ins, hegemonic German and defensive Soviet aims, the hypothesis under which every
+realized move is available) under the realized joint move of Q (`clock_consistency` in the
+builder; framework_spec.md section 9). Two cases change a variable:
+
+- **(a) a landed decision**: a decision of `data/ww2/decisions_ww2.csv` decided at tick t with
+  delay d lands in the transition into tick t + 1 + d = index(Q) + 1; the variable its delayed
+  effect writes carries the landed level;
+- **(b) the effect of a realized move**: a variable written by the immediate effect of a
+  realized move of Q carries the model's value;
+
+in both cases only where the event-dated reading of Q differs from the model's value **and
+the event-dated reading of Q + 1 equals it** (a one-tick lag of the record behind the model).
+The entry then has confidence `medium`, the decision or the move as its first indicator (with
+a note naming the event-dated reading it overrides and the date of the event at which the
+record reaches the level), the event of Q + 1 as the second, and the overridden indicators
+after them, marked as such. Nothing else changes (rule (c)): a disagreement longer than one
+tick, a record that leads the model (the [SQR] placements), a move placed by [NSL], and the
+last quarter of the series (1940Q4: no next reading) stay as the record reads them. A decision
+that landed before Q could only give a change at Q if the record lagged by more than one tick,
+so case (a) acts in the landing quarter. The command prints the changes. On the v0 series:
+
+| File | Variable | Event-dated reading | Snapshot | Case | By | The record's date |
+|---|---|---|---|---|---|---|
+| `1938Q2.json` | `belief_WEST` | limited | uncertain | (b) | GER `demand_sudeten` of 1938Q2 (Case Green, 30 May 1938), which raises the belief at once | 12 Sep 1938 (the public demand), 1938Q3 |
+| `1938Q3.json` | `arms_GER` | rising | high | (a) | GER `rearm` of 24 Aug 1936, delay 8, landing at tick 11 | 21 Oct 1938 (the planning record, decisions D12), 1938Q4 |
+
+Kept by rule (c): `arms_GER` total at 1940Q4 (the Oct 1938 programme landing at tick 20; the
+last file, and the record reads no total before 1942), `oil_GER` at 1939Q3 and 1939Q4 (two
+ticks), and every row of the table below.
+
 ## The hidden objectives are not fixed
 
 `aims_GER` and `aims_USSR` are swept by the model (ontology section 1) and are omitted. A
@@ -141,8 +176,6 @@ differences, each listed in the test with its reason, are:
 | `treaty` | 1936Q1, 1936Q2 | dead | eroded | `locarno_lapses` is placed at tick 2 [SQR]; the record dates the lapse 7 to 19 Mar 1936 |
 | `arms_WEST` | 1936Q3, 1936Q4 | rising | low | the NMC reading turns `rising` with the French programme (Sep 1936); the model's delay-4 effect of the Mar 1936 decision lands at tick 5 (1937Q1) |
 | `china_war` | 1937Q3 to 1940Q4 | True | False | the China incident (7 Jul 1937) is not in the realized moves: Nature may decline it (owner's decision of 2026-10-12) and the file records `none` |
-| `belief_WEST` | 1938Q2 | limited | uncertain | `demand_sudeten` is placed at tick 9 (Case Green, 30 May 1938) and raises the belief at once; the record moves the belief with the public demand of September (1938Q3) |
-| `arms_GER` | 1938Q3 | rising | high | the 1936 programme lands at tick 11 under delay 8; the planning record reads `high` from 21 Oct 1938 (decisions D12), one tick later |
 | `arms_USSR` | 1938Q4 to 1940Q4 | strong | weak | the record restores `strong` with the decree of Nov 1938; in the model only USSR `rearm` restores it, decided in 1940Q2 and landing after the horizon |
 | `arms_WEST` | 1939Q1 to 1939Q3 | high | rising | NMC 1939 reads `high` from 1939Q1 (the 1939 figures include the wartime mobilization); the Oct to Nov 1938 decision lands at tick 16 (1939Q4) |
 | `commit_WEST`, `polish_guarantee` | 1939Q1 | resolved, True | wary, False | `guarantee_poland` is placed at tick 13 [SQR]; the record dates it 31 Mar 1939 |
@@ -155,6 +188,9 @@ differences, each listed in the test with its reason, are:
 
 None of these is a defect of the built-ins: the variable differences are the snapshot readings
 and the model's placement of the realized moves disagreeing, as they did before phase 2 (the
-built-ins did not change any variable level). The one at the 1938Q3 file matters for the
-amended T8(b) (reports/ww2_v0.md section 14): the 1938Q3 file reads `arms_GER` `rising` and,
-since the 1936 programme has landed by then, carries no pending German rearmament.
+built-ins did not change any variable level). Until 2026-10-15 the table had two more rows,
+`belief_WEST` at 1938Q2 and `arms_GER` at 1938Q3, both one-tick lags of the record behind the
+model; the clock-consistency pass (section above) removed them. The second mattered for the
+amended T8(b) (reports/ww2_v0.md sections 14 and 14.1): the 1938Q3 file read `arms_GER`
+`rising` and, since the 1936 programme had landed, carried no pending German rearmament; it now
+reads `high`.

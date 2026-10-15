@@ -537,6 +537,19 @@
         }
       ]
     },
+    "east_offer": {
+      "level": false,
+      "confidence": "medium",
+      "indicators": [
+        {
+          "id": "moves_without_GER_offer_terms_east",
+          "value": "no GER offer_terms_east in the realized moves",
+          "source": "data/ww2/realized_moves_v1.csv",
+          "observed": "1945-09-30",
+          "rule": "east_offer is set only by GER offer_terms_east, which no row of data/ww2/realized_moves_v1.csv records (ticks 0 to 38), so it keeps its initial level False at the end of 1939Q4 (docs/ontology_ww2_v1.md section 4)"
+        }
+      ]
+    },
     "midway_ordered": {
       "level": false,
       "confidence": "high",

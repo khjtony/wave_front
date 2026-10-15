@@ -13,10 +13,18 @@ from wavefront.analysis.viability import distance_table
 from wavefront.engine import explore
 from wavefront.symbolic import encode, reachable, safe, shortest
 
+# The event-dated readings that the snapshot builder's clock-consistency pass overrides
+# (owner's decision 7 of 2026-10-15): restoring them reproduces the start states on which
+# these engine comparisons were pinned (phase 1 and wave A).
+EVENT_DATED = {"1938Q2": {"belief_WEST": "limited"}, "1938Q3": {"arms_GER": "rising"}}
+
 
 def compare(quarter, expected_size=None, builtins=False, full=False):
     cm = model.compile()
-    start = snapshot_state(cm, quarter, "hegemonic", builtins=builtins)
+    start = list(snapshot_state(cm, quarter, "hegemonic", builtins=builtins))
+    for name, level in EVENT_DATED.get(quarter, {}).items():
+        start[cm.index[name]] = cm.variables[cm.index[name]].levels.index(level)
+    start = tuple(start)
     g = explore(cm, initial=[start], max_states=3_000_000)
     if expected_size is not None:
         assert g.size() == expected_size
@@ -49,17 +57,19 @@ def test_late_state_1939Q2():
 @pytest.mark.slow
 def test_after_munich_1938Q3():
     """198,443 states; the start state is in the kernel (reports/ww2_v0.md, T8), also by
-    the kernel over the whole state space."""
+    the kernel over the whole state space (the file's event-dated readiness, EVENT_DATED)."""
     assert compare("1938Q3", 198_443, full=True)
 
 
 @pytest.mark.slow
 def test_after_munich_1938Q3_with_builtins():
-    """601,353 states with the snapshot's built-ins: inside, shortest distance 3."""
+    """601,353 states with the snapshot's built-ins and its event-dated readiness: inside,
+    shortest distance 3."""
     assert compare("1938Q3", 601_353, builtins=True)
 
 
 @pytest.mark.slow
 def test_before_munich_1938Q2():
-    """1,423,926 states; the start state is outside the kernel (reports/ww2_v0.md, T8)."""
+    """1,423,926 states; the start state is outside the kernel (reports/ww2_v0.md, T8; the
+    file's event-dated belief, EVENT_DATED)."""
     assert not compare("1938Q2", 1_423_926)

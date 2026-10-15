@@ -284,17 +284,16 @@ def test_every_file_loads_with_its_built_ins_under_both_hypotheses(cm, committed
 # -- replay against the snapshots ---------------------------------------------------------------
 
 # Every (file, variable) on which the loaded snapshot state differs from the model's state
-# after replaying data/ww2/realized_moves.csv from the tick-0 state, with its reason. The
+# after replaying data/ww2/realized_moves.csv from the tick-0 state, with its reason. The two
+# one-tick lags of the record behind the model's clock (belief_WEST at 1938Q2, arms_GER at
+# 1938Q3) are gone since the builder's clock-consistency pass (owner's decision 7 of
+# 2026-10-15). The
 # reasons are explained in snapshots/ww2/hindsight/README.md ("Replay against the snapshots").
 REASONS = {
     "treaty": "locarno_lapses placed at tick 2 [SQR]; the record dates the lapse 7 to 19 Mar 1936",
     "arms_WEST_rising": "NMC reading with the French programme gate (Sep 1936) before the "
     "delay-4 effect of the Mar 1936 decision lands at tick 5",
     "china_war": "the China incident (7 Jul 1937) is not in the realized moves; Nature declines it",
-    "belief_WEST": "demand_sudeten is placed at tick 9 (Case Green, May 1938) and raises the "
-    "belief at once; the record has the belief move with the public demand of Sep 1938",
-    "arms_GER_high": "the 1936 programme lands at tick 11 under delay 8; the planning record "
-    "reads high from 21 Oct 1938 (decisions D12): one tick",
     "arms_USSR": "the record restores strong in Nov 1938; in the model only USSR rearm restores "
     "it, decided in 1940Q2 and landing after the horizon",
     "arms_WEST_high": "NMC 1939 reads high from 1939Q1; the Oct to Nov 1938 decision lands at "
@@ -322,8 +321,6 @@ def _expected():
     add("treaty", "treaty", ["1936Q1", "1936Q2"])
     add("arms_WEST_rising", "arms_WEST", ["1936Q3", "1936Q4"])
     add("china_war", "china_war", [q for q in h.QUARTERS if q >= "1937Q3"])
-    add("belief_WEST", "belief_WEST", ["1938Q2"])
-    add("arms_GER_high", "arms_GER", ["1938Q3"])
     add("arms_USSR", "arms_USSR", [q for q in h.QUARTERS if q >= "1938Q4"])
     add("arms_WEST_high", "arms_WEST", ["1939Q1", "1939Q2", "1939Q3"])
     add("guarantee", "commit_WEST", ["1939Q1"])
