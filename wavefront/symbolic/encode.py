@@ -33,19 +33,21 @@ For every current state bit the *next-state function* ``f(s, a)`` over current a
 bits is built in the order of ``_successor``: immediate effects of the chosen non-delayed
 actions (``Set`` values win, ``Bump`` amounts summed, then clamped), tick increment, delay
 counters with the delayed effects of the counters going from 1 to 0 composed as a second
-phase, ``last_<actor>``, latches on the state built so far, fairness counters on the state
-built so far with the chosen action. Transitions on which the explicit engine raises
-(conflicting ``Set`` values in one phase, a strict ``Bump`` out of range, a monotone
-variable decreasing) are collected in :attr:`Encoding.error`; the fixpoints do not use it
-and :func:`wavefront.symbolic.solve.reachable` raises :class:`ModelError` when a reachable
-state has such a move, as ``explore`` does.
+phase, cadence counters, ``last_<actor>``, latches on the state built so far, fairness
+counters on the state built so far with the chosen action. Transitions on which the
+explicit engine raises (conflicting ``Set`` values in one phase, a strict ``Bump`` out of
+range, a monotone variable decreasing) are collected in :attr:`Encoding.error`; the
+fixpoints do not use it and :func:`wavefront.symbolic.solve.reachable` raises
+:class:`ModelError` when a reachable state has such a move, as ``explore`` does.
 
 Availability per actor (:attr:`Encoding.avail`): the action's guard (``guard_expr``: the
 conjunction of a parted guard's unrelaxed parts), its delay counter at 0, the selected
-profiles' ``unless`` conditions, and the fairness restrictions (an actor whose counter has
-reached ``within`` may only play its responses). ``live`` holds where every actor has an
-available action, and ``active`` is ``dom & ~term & live``. Terminal states (an ending
-holds, or ``tick == horizon``) have no moves; their image is themselves (they are frozen).
+profiles' ``unless`` conditions, the fairness restrictions (an actor whose counter has
+reached ``within`` may only play its responses) and, for a declared action of an actor
+with a cadence, ``cadence_<actor> == 0`` unless one of the actor's fairness restrictions
+binds. ``live`` holds where every actor has an available action, and ``active`` is ``dom &
+~term & live``. Terminal states (an ending holds, or ``tick == horizon``) have no moves;
+their image is themselves (they are frozen).
 
 The per-variable transition relation parts ``x' <-> f(s, a)`` (:meth:`Encoding.trans_parts`)
 are used for forward images; backward steps substitute the next-state functions into the
@@ -519,8 +521,19 @@ class Encoding:
                     for name in p.forbid:
                         forbids.setdefault(actor.action_index(name), []).append(unless)
             row = []
+            ready = TRUE
+            if actor.cadence is not None:
+                binding = mgr.or_all(
+                    c
+                    for idx, within, _, _ in actor.fairness
+                    for x, c in self.cur_env[idx].items()
+                    if x >= within
+                )
+                ready = mgr.OR(self.cur_env[actor.cadence][0], binding)
             for action in actor.actions:
                 g = self.boolean(action.guard_expr)
+                if not action.is_idle:
+                    g = mgr.AND(g, ready)
                 if action.pending is not None:
                     g = mgr.AND(g, self.cur_env[action.pending][0])
                 for unless in forbids.get(action.index, ()):
@@ -634,6 +647,14 @@ class Encoding:
                 fired.append((cur[1], items))
         if fired:
             self._compose(env, fired)
+        for actor in cm.actors:
+            if actor.cadence is not None:
+                idle = self.chosen(actor.index, 0)
+                new = {}
+                for x, c in self.cur_env[actor.cadence].items():
+                    P.add_into(new, actor.period - 1, mgr.DIFF(c, idle))
+                    P.add_into(new, max(x - 1, 0), mgr.AND(c, idle))
+                env[actor.cadence] = new
         for actor in cm.actors:
             if actor.last is not None:
                 part: Partition = {}

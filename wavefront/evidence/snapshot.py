@@ -45,17 +45,18 @@ initial value, except that a variable declared with ``init=None`` (a swept hidde
 parameter) has no such value, so the snapshot must fix it; pin a hypothesis with
 ``confidence: "assumed"``.
 
-Built-in variables cannot be set in ``variables``. The optional ``builtins`` section
-(phase 2 decision F2) sets them, each with a ``value``, a ``confidence``, ``indicators`` and
-the ``rule`` that derives the value: ``pending_<actor>_<action>`` takes the ticks remaining
-until the delayed effect applies (an integer from 0 to the action's delay),
-``last_<actor>`` an action name of that actor or ``none``, a latch one of its levels or
-``unset`` (a boolean for a latch of a flag, an integer for a latch of the tick), and
-``fair_<name>`` its count (0 to the constraint's ``within``). They are filled in after the
-variables. ``tick`` is not settable: a snapshot is dated, and the caller maps the date to a
-tick. Built-ins a snapshot omits keep their initial values, and a latch the snapshot omits
-is set, when its condition already holds in the loaded state, to the loaded value of the
-variable it copies, exactly as for the model's own initial states. A latch given as
+Built-in variables cannot be set in ``variables``. The optional ``builtins`` section (phase
+2 decision F2) sets them, each with a ``value``, a ``confidence``, ``indicators`` and the
+``rule`` that derives the value: ``pending_<actor>_<action>`` takes the ticks remaining
+until the delayed effect applies (an integer from 0 to the action's delay), ``last_<actor>``
+an action name of that actor or ``none``, a latch one of its levels or ``unset`` (a boolean
+for a latch of a flag, an integer for a latch of the tick), ``fair_<name>`` its count (0
+to the constraint's ``within``), and ``cadence_<actor>`` its count (0 to the actor's cadence
+minus 1: the ticks until its declared actions are available again). They are filled in after
+the variables. ``tick`` is not settable: a snapshot is dated, and the caller maps the date
+to a tick. Built-ins a snapshot omits keep their initial values, and a latch the snapshot
+omits is set, when its condition already holds in the loaded state, to the loaded value of
+the variable it copies, exactly as for the model's own initial states. A latch given as
 ``unset`` although its condition holds in the loaded state is refused: no play of the model
 reaches such a state.
 
@@ -341,6 +342,8 @@ def _settable_builtins(cm: CompiledModel) -> dict[str, tuple[VarSpec, str]]:
             out[spec.name] = (spec, f"the delay of {what} is {spec.size - 1}")
         elif spec.origin == "fair":
             out[spec.name] = (spec, f"its 'within' is {spec.size - 1}")
+        elif spec.origin == "cadence":
+            out[spec.name] = (spec, f"the cadence of {spec.name[len('cadence_') :]} is {spec.size}")
         elif spec.origin in ("last", "latch"):
             out[spec.name] = (spec, f"levels: {', '.join(spec.levels)}")
     return out
@@ -349,8 +352,12 @@ def _settable_builtins(cm: CompiledModel) -> dict[str, tuple[VarSpec, str]]:
 def _builtin_value(cm: CompiledModel, spec: VarSpec, rng: str, value: object) -> int | str:
     """The state value for a built-in entry's ``value``, or a message saying why not."""
     name = spec.name
-    if spec.origin in ("pending", "fair"):
-        counter = "pending counter" if spec.origin == "pending" else "fairness counter"
+    if spec.origin in ("pending", "fair", "cadence"):
+        counter = {
+            "pending": "pending counter",
+            "fair": "fairness counter",
+            "cadence": "cadence counter",
+        }[spec.origin]
         if not _is_int(value) or isinstance(value, str):
             return f"built-in {name!r} is a {counter}, so {value!r} is not an integer"
         n = int(value)  # type: ignore[arg-type]
@@ -414,8 +421,9 @@ def snapshot_to_state(data: dict[str, Any], cm: CompiledModel) -> tuple[int, ...
     variables the snapshot omits take their declared initial value, except those declared
     with ``init=None``, which the snapshot must fix. The ``builtins`` section, if any, is
     filled in after the variables: each name must be a settable built-in of the model
-    (``pending_*``, ``last_*``, a latch, ``fair_*``) and each value in its range (a pending
-    counter at most the action's delay). Raises :class:`SnapshotError` naming the variable
+    (``pending_*``, ``last_*``, a latch, ``fair_*``, ``cadence_*``) and each value in its
+    range (a pending counter at most the action's delay, a cadence counter at most the
+    actor's cadence minus 1). Raises :class:`SnapshotError` naming the variable
     or built-in and the value of every problem found."""
     problems = validate_snapshot(data)
     if problems:

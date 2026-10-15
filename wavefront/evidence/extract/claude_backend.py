@@ -28,13 +28,21 @@ How a document is read:
   :class:`~.backend.ExtractError` with ``retryable`` set for rate limits, server errors and
   network failures. The SDK already retries those a few times before raising.
 
+Every response's ``usage`` (input, output, cache write and cache read tokens) is added to
+:attr:`ClaudeBackend.usage`, and the replay records it per quarter in the proposals file, so a
+pilot run measures the cost of a full run. :meth:`ClaudeBackend.cache_identity` names what an
+answer depends on, for the per-document cache (:mod:`.cache`) that lets a stopped run resume.
+
 The extractor (:mod:`.extractor`) then checks every proposal: a quote that is not verbatim in
 the document, a date after the document's, or an unknown level is discarded with a reason.
 """
 
 from __future__ import annotations
 
+import hashlib
 import json
+import threading
+from collections import Counter
 from collections.abc import Sequence
 from typing import Any
 
@@ -57,6 +65,12 @@ DEFAULT_MAX_TOKENS = 16000
 DEFAULT_MAX_CHARS = 200_000
 DEFAULT_EFFORT = "high"
 MAX_RESPLITS = 4
+USAGE_FIELDS = (
+    "input_tokens",
+    "output_tokens",
+    "cache_creation_input_tokens",
+    "cache_read_input_tokens",
+)
 
 SYSTEM_PROMPT = """\
 You read one dated historical document and propose levels for the variables of a model of \
@@ -134,6 +148,27 @@ class ClaudeBackend:
         self._client = client
         self._sdk = sdk
         self.requests = 0
+        #: tokens reported by the responses so far (:data:`USAGE_FIELDS`)
+        self.usage: Counter[str] = Counter()
+        self._lock = threading.Lock()
+
+    def cache_identity(self, variables: Sequence[VariableSpec]) -> dict[str, Any]:
+        """What an answer depends on besides the document (for :mod:`.cache`)."""
+        return {
+            "model": self.model,
+            "effort": self.effort,
+            "max_tokens": self.max_tokens,
+            "max_chars": self.max_chars,
+            "fallbacks": self.fallbacks,
+            "system": hashlib.sha256(system_prompt(variables).encode("utf-8")).hexdigest(),
+            "schema": hashlib.sha256(
+                json.dumps(proposal_list_schema(variables), sort_keys=True).encode("utf-8")
+            ).hexdigest(),
+        }
+
+    def parts(self, document: Document) -> list[str]:
+        """The parts the document is read in (one request each, before any re-split)."""
+        return split_paragraphs(document.text, self.max_chars)
 
     # -- the SDK, imported lazily ---------------------------------------------------------
 
@@ -200,7 +235,8 @@ class ClaudeBackend:
 
     def _create(self, params: dict[str, Any]) -> Any:
         sdk = self.sdk
-        self.requests += 1
+        with self._lock:
+            self.requests += 1
         try:
             if self.fallbacks:
                 return self.client.beta.messages.create(**params)
@@ -231,6 +267,7 @@ class ClaudeBackend:
         out: list[Proposal] = []
         for i, part in enumerate(parts):
             response = self._create(self.request_params(document, part, i, len(parts), variables))
+            self._count(response)
             stop = getattr(response, "stop_reason", None)
             if stop == "refusal":
                 details = getattr(response, "stop_details", None)
@@ -249,6 +286,16 @@ class ClaudeBackend:
                 continue
             out += self._parse(document, response, variables)
         return out
+
+    def _count(self, response: Any) -> None:
+        usage = getattr(response, "usage", None)
+        if usage is None:
+            return
+        with self._lock:
+            for name in USAGE_FIELDS:
+                value = getattr(usage, name, None)
+                if isinstance(value, int) and not isinstance(value, bool):
+                    self.usage[name] += value
 
     def _parse(
         self, document: Document, response: Any, variables: Sequence[VariableSpec]
@@ -292,5 +339,5 @@ class ClaudeBackend:
         return out
 
     def propose(self, document: Document, variables: Sequence[VariableSpec]) -> list[Proposal]:
-        parts = split_paragraphs(document.text, self.max_chars)
+        parts = self.parts(document)
         return merge_proposals(self._read_parts(document, parts, variables, 0), document.text)

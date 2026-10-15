@@ -23,6 +23,13 @@ variables:
 
 ``--auto-accept`` (:data:`AUTO_REVIEWER`) is refused unless the proposals came from a
 synthetic fixture corpus, and every indicator it produces says AUTO-ACCEPTED.
+
+The harness rules (:mod:`.harness_rules`; recorded in each proposals file as
+``harness_rules``, both on by default) act here: a proposal *held* by the two-document rule or
+*blocked* by the no-retrospective rule is not a proposal for review, cannot be accepted and
+does not keep a snapshot from being written; a ``retrospective?`` proposal is shown flagged
+and needs a decision like any other; a level is set only by proposals in force under the
+rules (:func:`.harness_rules.gate_records`).
 """
 
 from __future__ import annotations
@@ -38,6 +45,15 @@ from typing import Any
 from . import hindsight_ww2 as hw
 from .extract.extractor import read_proposals, save_proposals
 from .extract.schema import RESOURCE_VARIABLES, TEXT_VARIABLES
+from .harness_rules import (
+    DEFAULT_RULES,
+    FOR_REVIEW,
+    Gate,
+    Gating,
+    gate_records,
+    parse_rules,
+    record_key,
+)
 from .snapshot import validate_snapshot
 
 __all__ = [
@@ -47,10 +63,14 @@ __all__ = [
     "ReviewError",
     "build_snapshot",
     "decide",
+    "directory_rules",
+    "file_gates",
+    "file_rules",
     "format_listing",
     "label_for",
     "proposal_files",
     "rebuild_snapshots",
+    "review_gating",
 ]
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -78,33 +98,134 @@ def _parse_ids(ids: str | Iterable[str]) -> list[str]:
     return [i.strip() for i in ids if i.strip()]
 
 
-def format_listing(data: dict[str, Any]) -> str:
+def _proposal_lines(rec: dict[str, Any], gate: Gate | None) -> list[str]:
+    p = rec["proposal"]
+    flag = ""
+    if gate is not None and gate.status not in ("ok",):
+        flag = f"  {gate.status}"
+    lines = [
+        f"{rec['id']}  [{rec['status']}]{flag}  {p['variable']} := {p['level']}  "
+        f"({p['date']}, {p['confidence']})  {rec['document']}",
+        f"    quote: {p['quote']}",
+        f"    rule:  {p['rule']}",
+    ]
+    if gate is not None and gate.status != "ok":
+        lines.append(f"    harness: {gate.reason}")
+    if rec["decisions"]:
+        last = rec["decisions"][-1]
+        lines.append(f"    decision: {last['status']} by {last['reviewer']}: {last['note']}")
+    return lines
+
+
+def format_listing(
+    data: dict[str, Any],
+    gates: dict[str, Gate] | None = None,
+    rules: Sequence[str] | None = None,
+) -> str:
     """A plain-text listing of a proposals file for the reviewer: every proposal with its
-    status, the variable and level, the document and the full quote."""
+    status, the variable and level, the document and the full quote. With ``gates`` (by
+    proposal id, :func:`file_gates`) the proposals the harness rules hold or block are listed
+    apart, after the proposals for review, and a ``retrospective?`` one is flagged."""
+    gates = gates or {}
+    rules = file_rules(data) if rules is None else tuple(rules)
     lines = [
         f"proposals {data['label']} (documents dated to {data['until']}; "
         f"corpus {data['corpus'].get('source')}"
         + (", SYNTHETIC" if data["corpus"].get("synthetic") else "")
-        + f"; backend {data.get('backend', {}).get('name')})"
+        + f"; backend {data.get('backend', {}).get('name')}; "
+        f"harness rules: {', '.join(rules) or 'none'})"
     ]
+    apart = []
     for rec in data["proposals"]:
-        p = rec["proposal"]
+        gate = gates.get(rec["id"])
+        if gate is not None and gate.status in ("held", "blocked"):
+            apart.append(rec)
+            continue
+        lines += _proposal_lines(rec, gate)
+    if apart:
         lines.append(
-            f"{rec['id']}  [{rec['status']}]  {p['variable']} := {p['level']}  "
-            f"({p['date']}, {p['confidence']})  {rec['document']}"
+            f"-- not for review under the harness rules ({len(apart)}): held until a second "
+            "document proposes the same flip, or a move back of a monotone variable, never "
+            "applied --"
         )
-        lines.append(f"    quote: {p['quote']}")
-        lines.append(f"    rule:  {p['rule']}")
-        if rec["decisions"]:
-            last = rec["decisions"][-1]
-            lines.append(f"    decision: {last['status']} by {last['reviewer']}: {last['note']}")
+        for rec in apart:
+            lines += _proposal_lines(rec, gates[rec["id"]])
     pending = sum(1 for r in data["proposals"] if r["status"] == "pending")
+    review = sum(
+        1
+        for r in data["proposals"]
+        if r["status"] == "pending" and (r["id"] not in gates or gates[r["id"]].for_review)
+    )
     lines.append(
-        f"{len(data['proposals'])} proposals, {pending} pending; "
+        f"{len(data['proposals'])} proposals, {pending} pending ({review} awaiting review); "
         f"{len(data.get('discarded', []))} discarded by the checks; "
         f"{len(data.get('errors', []))} backend errors"
     )
     return "\n".join(lines)
+
+
+def file_rules(data: dict[str, Any]) -> tuple[str, ...]:
+    """The harness rules recorded in a proposals file (the default for a file written before
+    the rules were recorded)."""
+    recorded = data.get("harness_rules")
+    return DEFAULT_RULES if recorded is None else parse_rules(recorded)
+
+
+def directory_rules(files: Sequence[tuple[Path, dict[str, Any]]]) -> tuple[str, ...]:
+    """The harness rules of a directory of proposals files; they must all agree."""
+    found = {file_rules(data) for _p, data in files}
+    if len(found) > 1:
+        shown = "; ".join(sorted(", ".join(r) or "none" for r in found))
+        raise ReviewError(
+            f"the proposals files disagree on the harness rules ({shown}); replay the "
+            "directory with one --rules setting"
+        )
+    return found.pop() if found else DEFAULT_RULES
+
+
+def _unique(files: Sequence[tuple[Path, dict[str, Any]]]) -> tuple[list[dict[str, Any]], dict]:
+    records: list[dict[str, Any]] = []
+    index: dict[tuple[Any, ...], int] = {}
+    for _p, data in files:
+        for rec in data["proposals"]:
+            key = record_key(rec)
+            if key not in index:
+                index[key] = len(records)
+                records.append(rec)
+    return records, index
+
+
+def review_gating(
+    files: Sequence[tuple[Path, dict[str, Any]]],
+    until: date,
+    rules: Sequence[str],
+    *,
+    measure: bool = False,
+) -> tuple[list[dict[str, Any]], dict[tuple[Any, ...], int], Gating]:
+    """The harness rules applied at ``until`` to the proposals of ``files`` (deduplicated,
+    in file order): the records, the index of each record key and the gating."""
+    records, index = _unique(files)
+    return records, index, gate_records(records, until, rules, measure=measure)
+
+
+def file_gates(path: str | Path) -> dict[str, Gate]:
+    """The gate of each proposal of the file at ``path`` (by proposal id), at its cut-off,
+    with the files of its directory dated up to it and the directory's harness rules."""
+    path = Path(path).resolve()
+    files = [f for f in proposal_files(path.parent)]
+    this = next((data for p, data in files if p.resolve() == path), None)
+    if this is None:  # pragma: no cover - the file is in its own directory
+        this = read_proposals(path)
+        files = [(path, this)]
+    until = date.fromisoformat(this["until"])
+    upto = [f for f in files if date.fromisoformat(f[1]["until"]) <= until]
+    records, index, gating = review_gating(upto, until, directory_rules(files))
+    out: dict[str, Gate] = {}
+    for rec in this["proposals"]:
+        gate = gating.gates[index[record_key(rec)]]
+        if gate is not None:
+            out[rec["id"]] = gate
+    return out
 
 
 def decide(
@@ -155,6 +276,14 @@ def decide(
     unknown = [i for i in wanted if i not in by_id]
     if unknown:
         raise ReviewError(f"{path}: no proposals {', '.join(unknown)}")
+    if status == "accepted":
+        gates = file_gates(path)
+        refused = [i for i in wanted if i in gates and not gates[i].acceptable]
+        if refused:
+            raise ReviewError(
+                f"{path}: {', '.join(refused)} cannot be accepted under the harness rules "
+                f"({gates[refused[0]].reason}); see the listing"
+            )
     stamp = (today or date.today()).isoformat()
     for i in wanted:
         rec = by_id[i]
@@ -280,31 +409,31 @@ def rebuild_snapshots(
 ) -> list[Path]:
     """Rebuild every replay snapshot of ``proposals_dir`` into ``snapshots_dir`` (see the
     module docstring). Proposals repeated across files (the same document, variable, level
-    and quote) count once. Returns the files written."""
+    and quote) count once. Under the directory's harness rules, a snapshot is written for a
+    file when no proposal of it or of an earlier file still awaits review (held and blocked
+    proposals do not), and its levels come from the accepted proposals in force. Returns the
+    files written."""
     out_dir = Path(snapshots_dir)
     files = proposal_files(proposals_dir)
+    rules = directory_rules(files)
     written: list[Path] = []
-    accepted: list[dict[str, Any]] = []
-    keys: set[tuple[Any, ...]] = set()
-    pending_so_far = 0
-    for _path, data in files:
-        for rec in data["proposals"]:
-            if rec["status"] == "pending":
-                pending_so_far += 1
-            elif rec["status"] == "accepted":
-                p = rec["proposal"]
-                key = (rec["document"], p["variable"], repr(p["level"]), p["quote"])
-                if key not in keys:
-                    keys.add(key)
-                    accepted.append(rec)
+    for n, (_path, data) in enumerate(files):
         until = date.fromisoformat(data["until"])
+        upto = files[: n + 1]
+        records, index, gating = review_gating(upto, until, rules)
+        awaiting = 0
+        for _p, d in upto:
+            for rec in d["proposals"]:
+                gate = gating.gates[index[record_key(rec)]]
+                if rec["status"] == "pending" and (gate is None or gate.status in FOR_REVIEW):
+                    awaiting += 1
         target = out_dir / f"{data['label']}.json"
-        if pending_so_far:
+        if awaiting:
             if target.exists():
                 target.unlink()  # stale: evidence up to this date is not all reviewed
             continue
         snapshot = build_snapshot(
-            until, accepted, hindsight_dir=hindsight_dir, schema_ref=_schema_ref(out_dir)
+            until, gating.in_force, hindsight_dir=hindsight_dir, schema_ref=_schema_ref(out_dir)
         )
         out_dir.mkdir(parents=True, exist_ok=True)
         target.write_text(

@@ -108,7 +108,7 @@ DECISION_NAMES = ("safe", "risky", "losing", "ends")
 KEPT, CONTESTED, LOST, FAILED = range(4)
 SAFE, RISKY, LOSING, ENDS = range(4)
 DEFAULT_MAX_MOVES = 1_500_000
-_BUILTIN_ORIGINS = ("tick", "pending", "last", "fair")
+_BUILTIN_ORIGINS = ("tick", "pending", "last", "fair", "cadence")
 
 Coalition = tuple[str, ...]
 

@@ -38,7 +38,7 @@ NATURE = "Nature"
 IDLE = "idle"
 NONE = "none"
 RESERVED_NAMES = frozenset({"tick", NATURE}) | V.RESERVED
-RESERVED_PREFIXES = ("last_", "pending_", "fair_")
+RESERVED_PREFIXES = ("last_", "pending_", "fair_", "cadence_")
 
 
 class ModelError(ValueError):
@@ -155,6 +155,19 @@ def _guard_parts(guard: object, where: str) -> GuardParts:
     return tuple(out)
 
 
+def check_cadence(actor: str, cadence: object, idle: bool) -> int:
+    """Raise :class:`ModelError` unless ``cadence`` is an int >= 1, and >= 2 only for an
+    actor with the built-in ``idle`` (the only action available between decisions)."""
+    if isinstance(cadence, bool) or not isinstance(cadence, int) or cadence < 1:
+        raise ModelError(f"actor {actor}: cadence must be an int >= 1, not {cadence!r}")
+    if cadence > 1 and not idle:
+        raise ModelError(
+            f"actor {actor}: cadence {cadence} needs the built-in idle action (declared "
+            "with idle=False), which is the only action available between decisions"
+        )
+    return cadence
+
+
 def check_identifier(name: object, what: str) -> str:
     """Raise :class:`ModelError` unless ``name`` is a usable identifier."""
     if not isinstance(name, str) or not name.isidentifier() or keyword.iskeyword(name):
@@ -164,7 +177,10 @@ def check_identifier(name: object, what: str) -> str:
 
 @dataclass(eq=False)
 class Actor:
-    """A player. Create with :meth:`Model.actor` or :meth:`Model.nature`."""
+    """A player. Create with :meth:`Model.actor` or :meth:`Model.nature`.
+
+    ``cadence`` is the actor's decision period in ticks (spec 3.1): 1 decides every tick;
+    ``k >= 2`` makes the declared actions available only once every ``k`` ticks."""
 
     model: Model
     name: str
@@ -173,6 +189,7 @@ class Actor:
     idle: bool = True
     is_nature: bool = False
     actions: list[ActionDecl] = field(default_factory=list)
+    cadence: int = 1
 
     def action(
         self,
@@ -349,15 +366,19 @@ class Model:
         observes: Observes | None = None,
         remember_last: bool = False,
         idle: bool = True,
+        cadence: int = 1,
     ) -> Actor:
-        """Declare an actor. ``observes`` defaults to ``V.all()``."""
+        """Declare an actor. ``observes`` defaults to ``V.all()``. ``cadence=k`` (an int
+        >= 1) lets the actor choose a declared action at most once every ``k`` ticks, with
+        the built-in ``idle`` in between (spec 3.1); ``k == 1`` adds nothing."""
         self._claim(name, "actor")
         observes = V.all() if observes is None else observes
         if not isinstance(observes, Observes):
             raise ModelError(
                 f"actor {name}: observes must be V.all(), V.all_except(...) or V.only(...)"
             )
-        actor = Actor(self, name, observes, bool(remember_last), bool(idle))
+        check_cadence(name, cadence, bool(idle))
+        actor = Actor(self, name, observes, bool(remember_last), bool(idle), cadence=cadence)
         self.actors.append(actor)
         return actor
 

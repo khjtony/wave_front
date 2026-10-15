@@ -10,6 +10,7 @@ A proposals file (JSON) holds::
       "until": "1939-03-31", "since": null,
       "corpus": {"source": "local", "synthetic": true, "root": "..."},
       "backend": {"name": "rules"},
+      "harness_rules": ["two-document", "no-retrospective"],   # see evidence/harness_rules.py
       "documents": [{"id", "date", "source", "title", "url"}, ...],
       "proposals": [
         {"id": "1939Q1-001", "document": "<document id>",
@@ -24,13 +25,18 @@ A proposals file (JSON) holds::
 Only documents dated at or before ``until`` (and on or after ``since``) are read: the corpus
 filters by document date before the backend sees anything. Every proposal of every backend is
 checked (:func:`~.schema.check_proposal`); a proposal that fails is kept under ``discarded``
-with its reasons, never silently dropped.
+with its reasons, never silently dropped. ``harness_rules`` records the replay and review
+layer's rules for the file (absent: the default, both on); the extractor does not apply them.
+
+With ``workers`` above 1 the backend reads several documents at once (threads); the results
+are recorded in document order, so the file is the same as with one worker.
 """
 
 from __future__ import annotations
 
 import json
 from collections.abc import Iterable, Sequence
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
 from datetime import date
 from pathlib import Path
@@ -77,11 +83,13 @@ def extract(
     variables: Sequence[VariableSpec] | None = None,
     skip_ids: Iterable[str] = (),
     stop_on_error: bool = False,
+    workers: int = 1,
 ) -> Extraction:
     """Run ``backend`` on every document of ``corpus`` dated in ``[since, until]`` except
     those in ``skip_ids`` (already read in an earlier step of a replay), check its proposals,
     and return what was kept, discarded and failed. With ``stop_on_error`` the first backend
-    error is raised instead of recorded."""
+    error is raised instead of recorded. ``workers`` documents are read at a time; the
+    results are recorded in document order."""
     variables = list(variables) if variables is not None else text_variables()
     by_name = {v.name: v for v in variables}
     skip = set(skip_ids)
@@ -92,16 +100,27 @@ def extract(
         if doc.id in skip:
             continue
         result.documents.append(doc)
+
+    def read(doc: Document) -> list[Proposal] | ExtractError:
         try:
-            proposals = backend.propose(doc, variables)
+            return backend.propose(doc, variables)
         except ExtractError as exc:
             if stop_on_error:
                 raise
+            return exc
+
+    if workers > 1 and len(result.documents) > 1:
+        with ThreadPoolExecutor(max_workers=workers) as pool:
+            outcomes = list(pool.map(read, result.documents))
+    else:
+        outcomes = [read(doc) for doc in result.documents]
+    for doc, outcome in zip(result.documents, outcomes, strict=True):
+        if isinstance(outcome, ExtractError):
             result.errors.append(
-                {"document": doc.id, "error": str(exc), "retryable": exc.retryable}
+                {"document": doc.id, "error": str(outcome), "retryable": outcome.retryable}
             )
             continue
-        for p in proposals:
+        for p in outcome:
             reasons = check_proposal(p, by_name, doc.date, doc.text)
             if reasons:
                 result.discarded.append(
@@ -119,8 +138,11 @@ def write_proposals(
     label: str,
     corpus: dict[str, Any],
     backend: dict[str, Any],
+    harness_rules: Sequence[str] | None = None,
 ) -> dict[str, Any]:
-    """Write ``extraction`` as a proposals file with every proposal pending."""
+    """Write ``extraction`` as a proposals file with every proposal pending, recording the
+    harness rules the replay and review layer applies to it (``None``: not recorded, which
+    reads as the default)."""
     seen: set[str] = set()
     records = []
     for n, (doc, p) in enumerate(extraction.kept, start=1):
@@ -148,6 +170,7 @@ def write_proposals(
         "since": extraction.since.isoformat() if extraction.since else None,
         "corpus": corpus,
         "backend": backend,
+        **({} if harness_rules is None else {"harness_rules": list(harness_rules)}),
         "documents": [d.header() for d in extraction.documents],
         "proposals": records,
         "discarded": extraction.discarded,

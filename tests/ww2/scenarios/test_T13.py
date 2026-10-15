@@ -45,14 +45,24 @@ CLAIM = {
     "id": "T13",
     "from_state": "each quarter 1936Q1 to 1939Q3",
     "claim": (
-        "the quarter at which the state leaves V for `NO_GENERAL_WAR` falls inside the "
-        "window, and the report names the driving variable"
+        "the quarter whose decisions leave V_WEST for `balance_europe` (the last quarter "
+        "at which the realized state is inside the kernel, followed by a state outside "
+        "it) falls inside the window, and the report names the driving variable"
     ),
-    "expected": "departure inside 1936Q1 to 1939Q3; stable within 2 quarters under refinement",
-    "sources": "the Rhineland, Munich and Prague readings",
+    "expected": (
+        "departure inside 1936Q1 to 1939Q3; stable within 2 quarters under refinement; "
+        "recorded (symbolic engine, v0): 1936Q2 under hegemonic aims (the quarter in "
+        "which the Rhineland was not resisted) and 1939Q3 under revisionist aims (the "
+        "attack on Poland); the registered predicate `NO_GENERAL_WAR`, which forbids the "
+        "West's own war, gave an empty kernel from 1936Q1 under hegemonic aims and is "
+        "retired for this test"
+    ),
+    "sources": "the Rhineland, Munich and Prague readings; amended 2026-10-15",
 }
 
 WINDOW = range(0, 15)  # ticks 0 (1936Q1) to 14 (1939Q3)
+# Amended 2026-10-15: V is WEST's kernel for balance_europe; the retired predicate is kept
+# for the recorded degenerate result.
 NO_GENERAL_WAR = (V.war_west_ger == "peace") & (V.poland == "independent")
 FILES = [f"{y}Q{q}" for y in range(1936, 1940) for q in range(1, 5)][:14]  # to 1939Q2
 FILES = ["1935Q4", *FILES]  # start of 1936Q1 to start of 1939Q3
@@ -62,6 +72,17 @@ TAKE_POLAND = {"GER": ["attack_poland", "rearm"]}
 
 @pytest.fixture(scope="module")
 def v0_kernel():
+    """WEST's kernel for balance_europe over the whole v0 state space (about a minute)."""
+    cm = v0_model.compile()
+    enc = encode(cm)
+    res = safe(enc, ["WEST"], enc.predicate("balance_europe"))
+    return cm, res
+
+
+@pytest.fixture(scope="module")
+def v0_kernel_retired():
+    """The retired predicate (no war with Germany and Poland independent), kept for the
+    recorded degenerate result."""
     cm = v0_model.compile()
     enc = encode(cm)
     res = safe(enc, ["WEST"], enc.predicate(NO_GENERAL_WAR))
@@ -82,13 +103,17 @@ def v0_path(cm, aims):
 
 
 def departure(memberships):
-    """The first tick whose state is outside V, given (tick, membership) pairs in order;
-    None if every state is inside or a membership is undecided before any is outside."""
+    """The quarter whose decisions leave V (amended 2026-10-15): the last tick whose state
+    is inside V and whose successor state is outside, given (tick, membership) pairs in
+    order; None if no state is inside before the first outside one, if every state is
+    inside, or if a membership is undecided before the departure."""
+    prev = None
     for tick, m in memberships:
-        if m == "out":
-            return tick
         if m == "undecided":
             return None
+        if m == "out" and prev is not None and prev[1] == "in":
+            return prev[0]
+        prev = (tick, m)
     return None
 
 
@@ -107,33 +132,56 @@ def sensitivity(cm, res, state):
     return rows
 
 
+@pytest.mark.slow
 @pytest.mark.parametrize("aims", ["revisionist", "hegemonic"])
 def test_T13_v0_departure_inside_the_window(v0_kernel, aims):
-    """Primary (v0, symbolic): the realized path's departure from V and the driving
-    variable; the snapshot files (with built-ins) printed beside it. Under revisionist aims
-    the path may never leave V (no German attack on Poland in the hypothesis), which is
-    printed; the registered window is asserted for the hypothesis under which the path leaves
-    V."""
+    """Primary (v0, symbolic, amended 2026-10-15): the quarter whose decisions leave
+    WEST's kernel for balance_europe along the realized path (the hindsight snapshot states
+    with their built-ins), and the driving variable at the first state outside. Recorded:
+    1936Q2 (tick 1) under hegemonic aims, 1939Q3 (tick 14) under revisionist aims. The
+    realized path is read from the snapshot files because the model's own replay carries
+    the built-ins only from tick 1 on."""
     cm, res = v0_kernel
-    path = v0_path(cm, aims)
-    seen = [(s[cm.index["tick"]], "in" if res.contains(s) else "out") for s in path[:15]]
-    files = {q: res.contains(snapshot_state(cm, q, aims, builtins=True)) for q in FILES}
+    states = [(q, snapshot_state(cm, q, aims, builtins=True)) for q in [*FILES, "1939Q3"]]
+    seen = [(st[cm.index["tick"]], "in" if res.contains(st) else "out") for _, st in states]
     t = departure(seen)
-    drivers = sensitivity(cm, res, path[t]) if t is not None else []
+    first_out = None
+    if t is not None:
+        first_out = next((st for _, st in states if st[cm.index["tick"]] == t + 1), None)
+    drivers = sensitivity(cm, res, first_out) if first_out is not None else []
+    path = v0_path(cm, aims)
+    replay = [(s[cm.index["tick"]], "in" if res.contains(s) else "out") for s in path[:16]]
     print(
-        f"\nT13 v0 ({aims}): realized path {seen}; departure tick {t}; driving variables "
-        f"{drivers}; snapshot files in V {files}"
+        f"\nT13 v0 ({aims}): snapshot states {seen}; departure quarter tick {t}; driving "
+        f"variables at the first state outside {drivers}; the model's own replay {replay}"
     )
+    assert t is not None and t in WINDOW
+    assert t == {"hegemonic": 1, "revisionist": 14}[aims]
+    assert drivers
+
+
+@pytest.mark.slow
+@pytest.mark.parametrize("aims", ["revisionist", "hegemonic"])
+def test_T13_retired_predicate_recorded(v0_kernel_retired, aims):
+    """Recorded: under the retired predicate (no war with Germany and Poland independent),
+    which forbids the West's own war, the kernel is empty along the path from 1936Q1 under
+    hegemonic aims and never left under revisionist aims (reports/ww2_v1.md section 11)."""
+    cm, res = v0_kernel_retired
+    path = v0_path(cm, aims)
+    seen = ["in" if res.contains(s) else "out" for s in path[:15]]
     if aims == "hegemonic":
-        assert t is not None and t in WINDOW
-        assert drivers
+        assert set(seen) == {"out"}
+    else:
+        assert set(seen) == {"in"}
 
 
 def v1_membership(cm, s):
+    """Membership of WEST's kernel for balance_europe through tick 20 on v1, by fixed
+    strategies (amended 2026-10-15; before it, the European-peace predicate)."""
     k = 21 - s[cm.index["tick"]]
     if k <= 0:
         return "in"
-    broken = ~V.invariant("european_peace_t20")
+    broken = ~V.invariant("balance_europe") & (V.tick <= 20)
     inside, _ = bounded.blocks(cm, s, broken, KEEP_PEACE, k=k)
     if inside:
         return "in"
@@ -155,31 +203,29 @@ def v1_path(aims):
 @pytest.mark.parametrize("aims", ["revisionist", "hegemonic"])
 def test_T13_v1_refinement_is_stable_within_two_quarters(v0_kernel, aims):
     """Refinement (v1, bounded checker with fixed strategies): the departure along the v1
-    realized path for european_peace_t20, against v0's departure; asserted within two
-    quarters when both depart."""
+    snapshot states for balance_europe through tick 20, against v0's departure from the
+    v0 snapshot states; asserted within two quarters when both depart."""
     cm0, res = v0_kernel
-    seen0 = [(s[cm0.index["tick"]], "in" if res.contains(s) else "out") for s in v0_path(cm0, aims)]
-    t0 = departure(seen0[:15])
-    cm, path = v1_path(aims)
-    seen = []
-    for s in path[:15]:
-        m = v1_membership(cm, s)
-        seen.append((s[cm.index["tick"]], m))
-        if m != "in":
-            break
-    t1 = departure(seen)
-    files = {}
+    seen0 = [
+        (st[cm0.index["tick"]], "in" if res.contains(st) else "out")
+        for st in (snapshot_state(cm0, q, aims, builtins=True) for q in [*FILES, "1939Q3"])
+    ]
+    t0 = departure(seen0)
     plain = v1_model.compile()
-    for q in FILES:
-        s = snapshot_state(
+    seen = []
+    for q in [*FILES, "1939Q3"]:
+        st = snapshot_state(
             plain, q, aims, builtins=True, snapshots=SNAPSHOTS_V1, aims_JPN="hegemonic"
         )
-        files[q] = v1_membership(plain, s)
-        if files[q] != "in":
+        m = v1_membership(plain, st)
+        seen.append((st[plain.index["tick"]], m))
+        if m == "out" and len(seen) > 1 and seen[-2][1] == "in":
             break
+    t1 = departure(seen)
+    cm, path = v1_path(aims)
+    replay = [(s[cm.index["tick"]], v1_membership(cm, s)) for s in path[:3]]
     print(
-        f"\nT13 v1 ({aims}): realized path {seen}; departure tick {t1} (v0: {t0}); "
-        f"snapshot files {files}"
+        f"\nT13 v1 ({aims}): snapshot states {seen}; departure quarter tick {t1} (v0: {t0}); "
+        f"the model's own replay, first ticks: {replay}"
     )
-    if t0 is not None or t1 is not None:
-        assert t0 is not None and t1 is not None and abs(t1 - t0) <= 2
+    assert t0 is not None and t1 is not None and abs(t1 - t0) <= 2

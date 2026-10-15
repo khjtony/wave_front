@@ -10,7 +10,9 @@ A state is a tuple of small non-negative ints, one per variable, in this order:
 3. ``pending_<actor>_<action>`` delay counters (actor order, then action order);
 4. ``last_<actor>`` for actors declared with ``remember_last=True`` (levels ``"none"``
    followed by the actor's action names in action order);
-5. ``fair_<name>`` fairness counters, in declaration order.
+5. ``fair_<name>`` fairness counters, in declaration order;
+6. ``cadence_<actor>`` decision-cadence counters (values ``0..k-1``) for actors declared
+   with ``cadence=k``, ``k >= 2``, in actor order.
 
 Each actor's actions are its built-in action first (``idle``, or ``none`` for Nature),
 then its declared actions in declaration order. A joint move is a tuple with one action
@@ -79,6 +81,7 @@ from .model import (
     Model,
     ModelError,
     VarDecl,
+    check_cadence,
     conjunction,
     is_true,
 )
@@ -120,7 +123,7 @@ def _make_fn(src: str) -> Callable[[Sequence[int]], Any]:
 class VarSpec:
     """One state component. ``kind`` is ``'level'``, ``'counter'``, ``'flag'`` or
     ``'builtin'``; ``origin`` says which construct created it (``'tick'``, ``'var'``,
-    ``'latch'``, ``'pending'``, ``'last'``, ``'fair'``)."""
+    ``'latch'``, ``'pending'``, ``'last'``, ``'fair'``, ``'cadence'``)."""
 
     name: str
     kind: str
@@ -165,7 +168,10 @@ class ActionSpec:
 
 @dataclass(eq=False)
 class ActorSpec:
-    """A compiled actor with its actions (built-in action first) and observation set."""
+    """A compiled actor with its actions (built-in action first) and observation set.
+
+    ``period`` is the declared cadence ``k`` and ``cadence`` the state index of its counter
+    ``cadence_<actor>`` (``None`` when ``k == 1``)."""
 
     name: str
     index: int
@@ -176,6 +182,8 @@ class ActorSpec:
     avail_fn: Callable[[Sequence[int]], list[int]] | None = None
     observed_indices: tuple[int, ...] = ()
     fairness: list[tuple[int, int, frozenset[int], str]] = field(default_factory=list)
+    period: int = 1
+    cadence: int | None = None
 
     def action_index(self, name: str) -> int:
         """Index of the action called ``name``."""
@@ -418,6 +426,26 @@ class CompiledModel:
         for f in self.fairness_constraints:
             levels = tuple(str(i) for i in range(f.within + 1))
             self._add(VarSpec(f"fair_{f.name}", "builtin", levels, len(levels), "fair", (0,)))
+        for actor in self._actor_decls():
+            period = self._period(actor)
+            if period > 1:
+                levels = tuple(str(i) for i in range(period))
+                self._add(
+                    VarSpec(
+                        f"cadence_{actor.name}", "builtin", levels, len(levels), "cadence", (0,)
+                    )
+                )
+
+    @staticmethod
+    def _period(actor: Any) -> int:
+        """The actor's cadence, checked again here because the attribute can be assigned
+        after declaration."""
+        cadence = getattr(actor, "cadence", 1)
+        if actor.is_nature:
+            if cadence != 1:
+                raise ModelError(f"actor {actor.name}: Nature has no cadence")
+            return 1
+        return check_cadence(actor.name, cadence, bool(actor.idle))
 
     def _latch_source_levels(self, decl: LatchDecl, decls: dict[str, VarDecl]) -> tuple[str, ...]:
         if decl.of == "tick" and self.horizon is not None:
@@ -447,6 +475,8 @@ class CompiledModel:
             last = self.index.get(f"last_{decl.name}") if decl.remember_last else None
             observes = self._observation_set(decl)
             spec = ActorSpec(decl.name, i, actions, observes, bool(decl.is_nature), last)
+            spec.period = self._period(decl)
+            spec.cadence = self.index.get(f"cadence_{decl.name}") if spec.period > 1 else None
             spec.observed_indices = tuple(
                 j for j, v in enumerate(self.variables) if v.name in observes
             )
@@ -493,7 +523,7 @@ class CompiledModel:
             if obs.kind == "except":
                 base = everything - frozenset(obs.names)
             else:
-                own = {"tick", f"last_{actor.name}"}
+                own = {"tick", f"last_{actor.name}", f"cadence_{actor.name}"}
                 own |= {n for n in self.index if n.startswith(f"pending_{actor.name}_")}
                 own |= {
                     f"fair_{f.name}" for f in self.fairness_constraints if f.actor == actor.name
@@ -636,6 +666,9 @@ class CompiledModel:
                         (actor.index, action.index, action.pending, action.delay, action)
                     )
         self._lasts = [(a.index, a.last) for a in self.actors if a.last is not None]
+        self._cadences = [
+            (a.index, a.cadence, a.period) for a in self.actors if a.cadence is not None
+        ]
         self._latches: list[tuple[int, int, Callable[[Sequence[int]], Any]]] = []
         for decl in self.model.latches:
             where = f"latch {decl.name}"
@@ -733,13 +766,17 @@ class CompiledModel:
 
     def available(self, state: Sequence[int]) -> list[list[int]]:
         """Per actor, the indices of available actions: guards, delay counters, selected
-        profiles and fairness restrictions. Raises :class:`ModelError` naming the state and
-        actor if some actor has no available action."""
+        profiles, fairness restrictions and the cadence counter (only the built-in ``idle``
+        while it is above 0, unless a fairness restriction binds). Raises
+        :class:`ModelError` naming the state and actor if some actor has no available
+        action."""
         out = []
         for actor in self.actors:
             acts = actor.avail_fn(state)  # type: ignore[misc]
+            binding = False
             for idx, within, responses, fname in actor.fairness:
                 if state[idx] >= within:
+                    binding = True
                     acts = [j for j in acts if j in responses]
                     if not acts:
                         raise ModelError(
@@ -747,6 +784,8 @@ class CompiledModel:
                             f"its responses, but none is available in state "
                             f"{self.format_state(state)}"
                         )
+            if actor.cadence is not None and state[actor.cadence] and not binding:
+                acts = [j for j in acts if j == 0]
             if not acts:
                 raise ModelError(
                     f"actor {actor.name} has no available action in state "
@@ -797,6 +836,10 @@ class CompiledModel:
             new[self._tick] = s[self._tick] + 1
         if self._delays:
             self._update_delays(new, s, jm)
+        for actor_i, idx, period in self._cadences:
+            # index 0 is the built-in idle (a cadenced actor always has it)
+            c = s[idx]
+            new[idx] = period - 1 if jm[actor_i] else (c - 1 if c else 0)
         for actor_i, idx in self._lasts:
             new[idx] = jm[actor_i] + 1
         for idx, src, when in self._latches:
@@ -1005,6 +1048,7 @@ class CompiledModel:
             "speculative_actions": sum(1 for a in declared if a.speculative),
             "fairness_constraints": len(self.model.fairness_constraints),
             "delays": sum(1 for a in declared if a.delay),
+            "cadence": sum(1 for a in self.actors if a.period > 1),
             "latches": len(self.model.latches),
             "invariants": len(self.model.invariants),
             "endings": len(self.model.endings),

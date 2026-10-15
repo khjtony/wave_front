@@ -2,6 +2,7 @@
 section 5.3): a backend protocol, a deterministic rule backend and a Claude backend."""
 
 from .backend import Backend, ExtractError, merge_proposals, split_paragraphs
+from .cache import CachedBackend
 from .claude_backend import ClaudeBackend, ExtractionRefused
 from .extractor import Extraction, ProposalsFileError, extract, read_proposals, write_proposals
 from .rules import RuleBackend
@@ -21,6 +22,7 @@ __all__ = [
     "RESOURCE_VARIABLES",
     "TEXT_VARIABLES",
     "Backend",
+    "CachedBackend",
     "ClaudeBackend",
     "ExtractError",
     "Extraction",

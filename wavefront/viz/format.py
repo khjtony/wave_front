@@ -50,7 +50,7 @@ __all__ = ["expr_text", "guard_text"]
 
 # Precedence: higher binds tighter.
 _OR, _AND, _NOT, _CMP, _ARITH, _ATOM = 1, 2, 3, 4, 5, 6
-_NUMERIC_ORIGINS = ("tick", "pending", "fair")
+_NUMERIC_ORIGINS = ("tick", "pending", "fair", "cadence")
 _BOOL_NODES = (Const, Cmp, And, Or, Not, InSet, InvariantRef, EndingRef)
 
 

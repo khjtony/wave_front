@@ -30,17 +30,20 @@ Transitions (non-terminal ``t``, in the order of ``_successor``)
    (``assume_<actor>.<action> -> guard``, or for a parted guard
    ``assume_<actor>.<action>:<part> -> part`` for each part), its delay counter at 0, the
    selected profiles
-   (``assume_<profile> -> unless``) and the fairness restrictions
-   (``assume_<f> -> (fair_<f> < within or j in responses)``);
+   (``assume_<profile> -> unless``), the fairness restrictions
+   (``assume_<f> -> (fair_<f> < within or j in responses)``) and, for a declared action
+   of an actor with a cadence, ``cadence_<actor> == 0`` unless one of the actor's fairness
+   restrictions binds (``assume_<f> and fair_<f> >= within``);
 2. immediate effects of the chosen non-delayed actions, evaluated on the pre-state:
    ``Set`` values win, summed ``Bump`` amounts are added, the result is clamped;
 3. tick increment;
 4. delay counters (``d`` when chosen, then decremented) and the delayed effects of the
    counters going from 1 to 0, evaluated on the pre-state and composed as a second phase
    (delayed ``Set`` overrides, delayed ``Bump`` adds, then clamping);
-5. ``last_<actor>``;
-6. latches, in declaration order, on the state built so far;
-7. fairness counters, in declaration order, on the state built so far.
+5. cadence counters (``k - 1`` when a declared action is chosen, else decremented to 0);
+6. ``last_<actor>``;
+7. latches, in declaration order, on the state built so far;
+8. fairness counters, in declaration order, on the state built so far.
 
 Transitions the explicit engine rejects with :class:`~wavefront.model.ModelError`
 (two different ``Set`` values on one variable in one phase, a strict ``Bump`` taking a
@@ -405,6 +408,7 @@ class _Builder:
             responses = frozenset(actor.action_index(r) for r in f.responses)
             self.fair.append((cm.index[f"fair_{f.name}"], actor.index, responses, f))
         self.lasts = [(a.index, a.last) for a in cm.actors if a.last is not None]
+        self.cadences = [(a.index, a.cadence, a.period) for a in cm.actors if a.cadence is not None]
         self.monotone = [i for i, v in enumerate(cm.variables) if v.monotone]
 
     # -- top level -----------------------------------------------------------------------
@@ -464,6 +468,7 @@ class _Builder:
         self._immediate_effects(env, s, ch, side)
         self._tick_increment(env, s)
         self._delays(env, s, ch, side)
+        self._cadence(env, s, ch)
         self._last_actions(env, ch)
         self._latches(env)
         self._fairness(env, s, ch)
@@ -483,8 +488,15 @@ class _Builder:
                     unless = z3.Or(z3.Not(enc.assume[p.name]), self.tr.boolean(p.unless, s))
                     for name in p.forbid:
                         forbids.setdefault(actor.action_index(name), []).append(unless)
+            binding = [
+                z3.And(enc.assume[f.name], s[idx] >= f.within)
+                for idx, actor_i, _, f in self.fair
+                if actor_i == actor.index
+            ]
             for action in actor.actions:
                 conds: list[z3.BoolRef] = []
+                if actor.cadence is not None and not action.is_idle:
+                    conds.append(z3.Or(s[actor.cadence] == 0, *binding))
                 if action.guard_parts:
                     guards = [
                         (f"{actor.name}.{action.name}:{part}", g) for part, g in action.guard_parts
@@ -572,6 +584,11 @@ class _Builder:
                 fired.append((c == 1, items))
         if fired:
             self._compose(env, s, fired, side)
+
+    def _cadence(self, env: list[Any], s: Env, ch: Sequence[Any]) -> None:
+        for actor_i, idx, period in self.cadences:
+            c = s[idx]
+            env[idx] = z3.If(ch[actor_i] != 0, period - 1, z3.If(c > 0, c - 1, 0))
 
     def _last_actions(self, env: list[Any], ch: Sequence[Any]) -> None:
         for actor_i, idx in self.lasts:

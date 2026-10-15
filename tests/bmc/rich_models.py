@@ -5,7 +5,8 @@
 generator leaves out: delayed actions, strict Bumps, ``SetIf`` and expression ``Set``s,
 a flag used directly as a condition (guards, an ending, assumes, the invariant, targets),
 latches, ``remember_last``, fairness constraints, a profile (returned so the caller
-selects it), ``assume`` restrictions and an invariant. Some of these can make the explicit
+selects it), ``assume`` restrictions, an invariant and a decision cadence of 2 or 3 for
+some actors (drawn last, so the other constructs of a seed do not depend on it). Some of these can make the explicit
 engine raise ``ModelError`` (conflicting Sets, a strict Bump out of range, a fairness
 restriction with no available response); callers skip those models.
 """
@@ -21,8 +22,9 @@ from wavefront.model import FALSE, Bump, ModelError, Set, SetIf, V
 from wavefront.model.model import VarDecl
 
 
-def build_rich_model(seed, max_vars=4, max_horizon=4):
-    """A random model with extra constructs; returns ``(model, profile or None)``."""
+def build_rich_model(seed, max_vars=4, max_horizon=4, cadence_rate=0.35):
+    """A random model with extra constructs; returns ``(model, profile or None)``. With
+    probability ``cadence_rate`` some declared actors get a cadence of 2 or 3."""
     m = build_random_model(seed, max_vars=max_vars, max_horizon=max_horizon)
     rnd = random.Random(seed * 7919 + 17)
     sizes = [len(d.levels) for d in m.variables if isinstance(d, VarDecl)]
@@ -102,6 +104,9 @@ def build_rich_model(seed, max_vars=4, max_horizon=4):
         m.assume(f"H{n}", condition())
     if rnd.random() < 0.3:
         m.invariant("I0", condition())
+    if rnd.random() < cadence_rate:
+        for actor in rnd.sample(users, rnd.randint(1, len(users))):
+            actor.cadence = rnd.choice((2, 3))
     return m, profile
 
 

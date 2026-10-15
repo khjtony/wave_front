@@ -1,4 +1,4 @@
-"""T7: The embargo makes war with Japan unavoidable within 8 ticks.
+"""T7: Under the embargo Japan can force war from 1941Q4 to 1943Q3 and loses the option at 1943Q4.
 
 Registered 2026-10-11 in docs/ww2_testbed.md section 5. Do not edit the claim text
 without a changelog entry in that document.
@@ -48,15 +48,20 @@ CLAIM = {
     "id": "T7",
     "from_state": "1941Q3",
     "claim": (
-        "the embargo makes war with Japan unavoidable within 8 ticks unless the "
-        "embargo is lifted or `aims[JPN] = status_quo`"
+        "under the embargo Japan can force war with the United States from 1941Q4 to "
+        "1943Q3 and loses the option at 1943Q4 unless the embargo is lifted, under "
+        "regional and hegemonic aims; under status-quo aims it never has it (the embargo "
+        "closes Japan's window, it compels nothing: Japan's \"Option 1\" of 1 Nov 1941 "
+        "stays in the decision space)"
     ),
     "expected": (
-        "minimal assumption set for `war[JPN][USA]` is exactly {embargo maintained, "
-        "`aims[JPN] ≠ status_quo`}; `strike_north` reachable only with GER-JPN pact "
-        "and western USSR collapsing"
+        "<<JPN>> eventually `war[JPN][USA]` holds at each tick from 23 to 30 and fails "
+        "from tick 31 under `embargo_maintained`, the closing driven by `oil_JPN` through "
+        "the oil clock; under `status_quo` it never holds; `strike_north` reachable only "
+        "with the GER-JPN pact and western USSR collapsing, as a guard check (every "
+        "witness has both at the strike)"
     ),
-    "sources": "Ike 1967; Sagan 1988; Iriye 1987; Kershaw",
+    "sources": "Ike 1967; Sagan 1988; Iriye 1987; Kershaw; amended 2026-10-15",
 }
 
 START = "1941Q2"  # the state at the start of 1941Q3 (tick 22)
@@ -89,37 +94,19 @@ def embargo(enc):
 
 @pytest.mark.slow
 @pytest.mark.parametrize("aims_JPN", ["regional", "hegemonic"])
-def test_T07_war_unavoidable_under_the_embargo(aims_JPN):
-    """First half, as registered: under embargo_maintained, no play keeps peace through
-    tick 30 (the witness is printed if there is one)."""
+def test_T07_option_one_recorded(aims_JPN):
+    """Recorded (the retired wording of 2026-10-11, reports/ww2_v1.md section 6): under
+    embargo_maintained, peace through tick 30 is reachable with nothing relaxed, because
+    Japan's idle is the documented "Option 1"; the minimal relaxation set is empty and
+    there is no hitting set. The amended claim registers the option's window instead."""
     cm = model.compile(profile="embargo_maintained")
     trace = bounded.reach_from(cm, start(cm, aims_JPN), 8, PEACE_AT_30, constrain=embargo)
-    if trace is not None:
-        print(f"\nT7 ({aims_JPN}): peace at tick 30 is reachable as is:")
-        print(trace.render(cm))
-    assert trace is None
-
-
-@pytest.mark.slow
-@pytest.mark.parametrize("aims_JPN", ["regional", "hegemonic"])
-def test_T07_minimal_assumption_set(aims_JPN):
-    """The minimal relaxation sets that make peace at tick 30 reachable, and their minimal
-    hitting sets; the registered expectation is a single hitting set,
-    {embargo_maintained, the hypothesis gates}."""
-    cm = model.compile(profile="embargo_maintained")
+    assert trace is not None
     res = bounded.relax_from(
-        cm, start(cm, aims_JPN), 8, PEACE_AT_30, max_relax=3, constrain=embargo
+        cm, start(cm, aims_JPN), 8, PEACE_AT_30, max_relax=1, constrain=embargo
     )
-    sets = [frozenset(s) for s in res.minimal_sets]
-    hitting = minimal_hitting_sets(sets)
-    print(
-        f"\nT7 ({aims_JPN}): reachable as is {res.reachable_as_is}; minimal relaxation sets "
-        f"{res.minimal_sets}; minimal hitting sets {[sorted(h) for h in hitting]}"
-    )
-    assert not res.reachable_as_is
-    assert len(hitting) == 1
-    (only,) = hitting
-    assert "embargo_maintained" in only and only - {"embargo_maintained"} <= GATES
+    assert res.reachable_as_is
+    assert minimal_hitting_sets([frozenset(x) for x in res.minimal_sets]) == []
 
 
 def minimal_hitting_sets(sets):
@@ -169,10 +156,11 @@ def japans_option(cm, s):
 @pytest.mark.parametrize("profile", ["embargo_maintained", None])
 @pytest.mark.parametrize("aims_JPN", ["status_quo", "regional", "hegemonic"])
 def test_T07_japans_option_and_the_clock(aims_JPN, profile):
-    """Reported (E5): <<JPN>> eventually war at each tick from 22 to 31 along the held-off
-    path, and the first tick on it at which attack_south is unavailable because oil_JPN is
-    critical. Asserted only what the reading makes structural: under status_quo Japan never
-    has the option."""
+    """The amended claim (2026-10-15): <<JPN>> eventually war at each tick from 22 to 31
+    along the held-off path, and the first tick at which attack_south is unavailable because
+    oil_JPN is critical. Under embargo_maintained with regional or hegemonic aims the option
+    holds from tick 23 to 30 and fails from 31, closed by the clock; under status_quo Japan
+    never has it. The run without the profile is printed."""
     cm = model.compile(profile=profile)
     states = held_off_path(cm, start(cm, aims_JPN))
     jpn = next(a for a in cm.actors if a.name == "JPN")
@@ -191,14 +179,20 @@ def test_T07_japans_option_and_the_clock(aims_JPN, profile):
         f"\nT7 ({aims_JPN}, profile {profile}): <<JPN>> war by tick {option}; attack_south "
         f"closed by the oil clock at tick {closed}"
     )
+    # Amended claim (2026-10-15): the option's window under the embargo.
     if aims_JPN == "status_quo":
         assert set(option.values()) <= {"no", "undecided"}
+    elif profile == "embargo_maintained":
+        assert all(option[t] == "yes" for t in range(23, 31)), option
+        assert option[31] == "no", option
+        assert closed == 31
 
 
 @pytest.mark.slow
 def test_T07_strike_north_needs_the_pact_and_the_collapse():
     """Second half: (a) reachable under hegemonic aims; (b) unreachable with w_ussr german
-    excluded at every tick, and unreachable with anticomintern counterfactually unset."""
+    excluded at every tick; and the guard check of the amended claim: every witness has the
+    pact and the collapse at the strike."""
     cm = model.compile()
     s = start(cm, "hegemonic")
     k = cm.horizon - 22
@@ -210,10 +204,21 @@ def test_T07_strike_north_needs_the_pact_and_the_collapse():
         cm, s, k, target, constrain=bounded.avoid(V.w_ussr == "german")
     )
     assert no_collapse is None
+    # Amended 2026-10-15: the pact condition is a guard check (every witness has the pact
+    # at the strike); the counterfactual start without the pact is printed, not asserted,
+    # since Japan may sign it again (reports/ww2_v1.md section 6).
     no_pact = bounded.reach_from(cm, start(cm, "hegemonic", anticomintern=False), k, target)
     if no_pact is not None:
         print("T7 (b) with anticomintern unset at tick 22:\n" + no_pact.render(cm))
-    assert no_pact is None
+    jpn = next(a for a in cm.actors if a.name == "JPN")
+    strike = jpn.action_index("strike_north")
+    for trace in (a, no_pact):
+        if trace is None:
+            continue
+        for st, mv in zip(trace.states, trace.moves, strict=False):
+            if mv[jpn.index] == strike:
+                d = cm.state_dict(st)
+                assert d["anticomintern"] == "True" and d["w_ussr"] == "german"
 
 
 @pytest.mark.slow

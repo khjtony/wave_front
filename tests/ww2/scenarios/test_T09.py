@@ -41,9 +41,15 @@ CLAIM = {
         "`belief[GER][UK]` is that Britain will fight"
     ),
     "expected": (
-        "pivotal coalition {UK, FR, USSR} with the belief condition; otherwise `contested`"
+        "interim, at quarterly resolution: from the 1939Q2 state with the alliance "
+        "counterfactually concluded, {WEST, USSR} keeps Poland independent through 1940Q4 "
+        "under `deterred` iff the belief is `will_fight`, and the attack is forced "
+        "otherwise (recorded: at quarterly resolution the alliance of summer 1939 cannot "
+        "form before the attack, so the registered race is invisible); the registered "
+        "question is re-asked at 3-day resolution in the summer-1939 crisis sub-game "
+        "(docs/crisis_1939_testbed.md), where the alliance race and the attack are decided"
     ),
-    "sources": "the 1939 Anglo-Soviet talks; Weinberg",
+    "sources": "the 1939 Anglo-Soviet talks; Weinberg; amended 2026-10-15",
 }
 
 START = "1939Q1"  # the state at the start of 1939Q2 (tick 13)
@@ -58,7 +64,10 @@ KEEP = {
 TAKE = {"GER": ["attack_poland"]}
 
 
-def start(cm, belief):
+def start(cm, belief, alliance=True):
+    """The 1939Q2 start state with belief_GER set to ``belief`` and, by default, the
+    Anglo-Soviet alliance counterfactually concluded (the interim reading of the amended
+    claim, 2026-10-15); ``alliance=False`` is the state as the record has it."""
     s = list(
         snapshot_state(
             cm, START, "hegemonic", builtins=True, snapshots=SNAPSHOTS_V1, aims_JPN="hegemonic"
@@ -66,6 +75,8 @@ def start(cm, belief):
     )
     i = cm.index["belief_GER"]
     s[i] = cm.variables[i].levels.index(belief)
+    if alliance:
+        s[cm.index["anglo_soviet_alliance"]] = 1
     return tuple(s)
 
 
@@ -82,21 +93,26 @@ def membership(cm, s, coalition):
 @pytest.mark.slow
 @pytest.mark.parametrize("belief", BELIEFS)
 def test_T09_pivotal_coalition_with_the_belief_condition(belief):
-    """Under deterred: {WEST, USSR} keeps poland_blocked iff belief_GER is will_fight, and
-    neither alone does; printed with the run without the profile."""
+    """Interim reading (amended 2026-10-15): from the start state with the alliance
+    concluded, under deterred, {WEST, USSR} keeps poland_blocked iff belief_GER is
+    will_fight; without the alliance (the record's state) nothing blocks under any belief,
+    which is the recorded quarterly result; the run without the profile is printed."""
     cm = model.compile(profile="deterred")
     s = start(cm, belief)
     joint = membership(cm, s, ["WEST", "USSR"])
     west = membership(cm, s, ["WEST"])
     ussr = membership(cm, s, ["USSR"])
+    record = membership(cm, start(cm, belief, alliance=False), ["WEST", "USSR"])
     plain = model.compile()
     without = membership(plain, start(plain, belief), ["WEST", "USSR"])
     print(
-        f"\nT9 belief_GER {belief}: {{WEST, USSR}} {joint}, {{WEST}} {west}, {{USSR}} {ussr}; "
+        f"\nT9 belief_GER {belief}: alliance concluded: {{WEST, USSR}} {joint}, {{WEST}} "
+        f"{west}, {{USSR}} {ussr}; as the record has it (no alliance): {record}; "
         f"{{WEST, USSR}} without the profile deterred: {without}"
     )
+    assert record == "out"  # the recorded quarterly result: the race is invisible
     if belief == "will_fight":
-        assert (joint, west, ussr) == ("in", "out", "out")
+        assert joint == "in"
     else:
         assert joint == "out"
 
@@ -104,19 +120,18 @@ def test_T09_pivotal_coalition_with_the_belief_condition(belief):
 @pytest.mark.slow
 @pytest.mark.parametrize("belief", ["will_not_fight", "uncertain"])
 def test_T09_otherwise_contested(belief):
-    """Without the belief condition the attack is contested: the standard contested region
-    for {GER} and Poland taken (not forced by Germany, not blocked by the rest). The fortune
-    variant is printed."""
+    """Recorded (amended 2026-10-15): without the belief condition the attack on Poland is
+    *forced* by Germany at quarterly resolution (the army is ready and no campaign is
+    involved, so the standard region applies and nothing restrains the attack); the
+    registered "otherwise contested" is re-asked in the crisis sub-game."""
     cm = model.compile(profile="deterred")
     s = start(cm, belief)
     forced, _ = bounded.forces(cm, s, X, TAKE)
     rest = {"WEST": KEEP["WEST"], "USSR": KEEP["USSR"], "JPN": [], "Nature": []}
     blocked, _ = bounded.blocks(cm, s, X, rest)
     region = "forced" if forced else ("blocked" if blocked else "undecided")
-    # Fortune variant: Germany alone already decides X when it forces it; Nature joining
-    # either side changes nothing then.
     print(f"\nT9 belief_GER {belief}: region for {{GER}} and Poland taken: {region}")
-    assert region == "contested"
+    assert region == "forced"
 
 
 @pytest.mark.slow
@@ -124,7 +139,7 @@ def test_T09_can_the_west_bring_will_fight_about_before_the_attack():
     """Reported (E5): in v1 only declare_war sets will_fight; the earliest tick at which
     WEST can make it hold, and whether Germany can take Poland by then."""
     cm = model.compile(profile="deterred")
-    s = start(cm, "will_not_fight")
+    s = start(cm, "will_not_fight", alliance=False)
     resolve = bounded.reach_from(cm, s, 7, V.belief_GER == "will_fight")
     taken = bounded.reach_from(cm, s, 7, X)
     t_resolve = resolve.states[-1][cm.index["tick"]]

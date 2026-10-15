@@ -18,6 +18,13 @@ quarter-end snapshots are built in memory with the same rules as :mod:`.review`,
 are computed from them. Nothing is written but the report, which says on its first line that no
 proposal was reviewed. It measures the backend, not the reviewed evidence.
 
+The harness rules (:mod:`.harness_rules`: ``two-document`` and ``no-retrospective``, both on
+by default) are recorded in every proposals file the replay writes and act on review, on
+auto-accept and on the measurement alike; every report states which rules were in force.
+With a paid backend the replay caches each document's answer under ``<out>/cache/`` (see
+:mod:`.extract.cache`), so a run stopped by an error resumes, when run again, from the
+documents it has not read; :func:`plan` (``wf replay --dry-run``) counts what a run would send.
+
 Then :func:`compare` sets the replay snapshots against the hindsight snapshots: per-variable
 agreement of the levels at each quarter's end, the lag of each replayed flip against the
 documented flip, false flips and missed flips; :func:`render_report` writes the Markdown
@@ -40,15 +47,28 @@ from typing import Any
 from . import hindsight_ww2 as hw
 from .corpora.base import Corpus
 from .extract.backend import Backend, ExtractError
+from .extract.cache import CachedBackend
 from .extract.extractor import extract, write_proposals
 from .extract.schema import RESOURCE_VARIABLES, TEXT_VARIABLES, text_variables
+from .harness_rules import (
+    BLOCKED,
+    CORROBORATING,
+    DEFAULT_RULES,
+    HELD,
+    OK,
+    RETROSPECTIVE,
+    describe_rules,
+    record_key,
+)
 from .review import (
     AUTO_REVIEWER,
     DEFAULT_HINDSIGHT,
     build_snapshot,
     decide,
+    directory_rules,
     proposal_files,
     rebuild_snapshots,
+    review_gating,
 )
 
 __all__ = [
@@ -59,6 +79,7 @@ __all__ = [
     "compare",
     "measured_snapshots",
     "parse_quarters",
+    "plan",
     "proposal_counts",
     "quarter_end",
     "render_report",
@@ -98,6 +119,11 @@ MATCH_WINDOW = 4  # quarters within which a replayed flip may answer a documente
 AUTO_NOTE = "auto-accepted by wf replay --auto-accept: synthetic fixture run, not a review"
 MEASURE_REVIEWER = "proposal-level measurement (no review)"
 MEASURE_NOTE = "wf replay --measure-proposals: a measurement of the backend, never written"
+AUTO_RETRO_NOTE = (
+    "auto-rejected by wf replay --auto-accept: retrospective? under the no-retrospective rule "
+    "is never applied automatically (synthetic fixture run, not a review)"
+)
+CHARS_PER_TOKEN = 4  # a rough planning figure for English prose; the API's count is exact
 
 
 class ReplayError(ValueError):
@@ -154,6 +180,23 @@ class QuarterRun:
     snapshot: Path | None
 
 
+def _read_before(proposals_dir: Path, first_quarter: str) -> set[str]:
+    """The documents read by the proposals files of the quarters before ``first_quarter``."""
+    read: set[str] = set()
+    if proposals_dir.exists():
+        first_end = quarter_end(first_quarter)
+        for _p, data in proposal_files(proposals_dir):
+            if date.fromisoformat(data["until"]) < first_end:
+                read.update(d["id"] for d in data["documents"])
+    return read
+
+
+def _cached(backend: Backend, out_dir: Path, cache: bool) -> Backend:
+    if not cache or backend.name == "rules" or isinstance(backend, CachedBackend):
+        return backend
+    return CachedBackend(backend, out_dir / "cache" / backend.name)
+
+
 def replay(
     corpus: Corpus,
     quarters: Sequence[str],
@@ -162,28 +205,37 @@ def replay(
     *,
     auto_accept: bool = False,
     hindsight_dir: str | Path = DEFAULT_HINDSIGHT,
+    rules: Sequence[str] = DEFAULT_RULES,
+    workers: int = 1,
+    cache: bool = True,
 ) -> list[QuarterRun]:
-    """Run the blind replay over ``quarters`` (see the module docstring)."""
+    """Run the blind replay over ``quarters`` (see the module docstring). ``rules`` are the
+    harness rules recorded in the proposals files; ``workers`` documents are read at a time;
+    a backend other than the rule backend is cached under ``<out>/cache/`` unless ``cache``
+    is false."""
     if auto_accept and not corpus.synthetic:
         raise ReplayError(
             "--auto-accept is only for the synthetic fixture corpus; a real corpus needs wf review"
         )
     out_dir = Path(out_dir)
     proposals_dir = out_dir / "proposals"
-    read_before: set[str] = set()
-    if proposals_dir.exists():
-        first_end = quarter_end(quarters[0])
-        for _p, data in proposal_files(proposals_dir):
-            if date.fromisoformat(data["until"]) < first_end:
-                read_before.update(d["id"] for d in data["documents"])
+    read_before = _read_before(proposals_dir, quarters[0])
+    backend = _cached(backend, out_dir, cache)
     variables = text_variables()
     runs: list[QuarterRun] = []
     for quarter in quarters:
         until = quarter_end(quarter)
         visible = sum(1 for _ in corpus.iter_documents(until=until))
+        usage_before = Counter(getattr(backend, "usage", None) or {})
+        hits_before = getattr(backend, "hits", 0), getattr(backend, "misses", 0)
         try:
             result = extract(
-                corpus, until=until, backend=backend, variables=variables, skip_ids=read_before
+                corpus,
+                until=until,
+                backend=backend,
+                variables=variables,
+                skip_ids=read_before,
+                workers=workers,
             )
         except ExtractError as exc:  # pragma: no cover - extract records errors
             raise ReplayError(f"{quarter}: {exc}") from exc
@@ -191,33 +243,34 @@ def replay(
             raise ReplayError(
                 f"{quarter}: the backend failed on {len(result.errors)} document(s), so the "
                 f"quarter's proposals would be incomplete: {result.errors[0]['error']}"
+                + (
+                    "; the documents read are cached: run the same command again to resume"
+                    if isinstance(backend, CachedBackend)
+                    else ""
+                )
             )
         path = proposals_dir / f"{quarter}.json"
+        info = _backend_info(backend)
+        usage = Counter(getattr(backend, "usage", None) or {}) - usage_before
+        if usage:
+            info["usage"] = dict(usage)
+        if isinstance(backend, CachedBackend):
+            info["cache"] = {
+                "hits": backend.hits - hits_before[0],
+                "misses": backend.misses - hits_before[1],
+            }
         data = write_proposals(
             path,
             result,
             label=quarter,
             corpus=corpus.describe(),
-            backend=_backend_info(backend),
+            backend=info,
+            harness_rules=rules,
         )
         read_before.update(d.id for d in result.documents)
         snapshot = None
-        if auto_accept and data["proposals"]:
-            written = decide(
-                path,
-                [r["id"] for r in data["proposals"]],
-                "accepted",
-                note=AUTO_NOTE,
-                reviewer=AUTO_REVIEWER,
-                snapshots_dir=out_dir,
-                hindsight_dir=hindsight_dir,
-                auto=True,
-            )
-            snapshot = next((w for w in written if w.stem == quarter), None)
-        elif auto_accept:
-            # Nothing to decide in this quarter: rebuild so the quarter still has a snapshot.
-            written = rebuild_snapshots(proposals_dir, out_dir, hindsight_dir=hindsight_dir)
-            snapshot = next((w for w in written if w.stem == quarter), None)
+        if auto_accept:
+            snapshot = _auto_decide(path, data, quarter, out_dir, hindsight_dir)
         runs.append(
             QuarterRun(
                 quarter=quarter,
@@ -231,11 +284,95 @@ def replay(
     return runs
 
 
+def _auto_decide(
+    path: Path, data: dict[str, Any], quarter: str, out_dir: Path, hindsight_dir: str | Path
+) -> Path | None:
+    """Synthetic runs only: accept what a measurement would count, reject (with a note)
+    what the no-retrospective rule never applies automatically, and leave held and blocked
+    proposals pending (they are not proposals for review). The gates are those of a
+    measurement at the quarter's end, so an auto-accepted run and a measurement agree."""
+    proposals_dir = path.parent
+    files = proposal_files(proposals_dir)
+    until = quarter_end(quarter)
+    upto = [f for f in files if date.fromisoformat(f[1]["until"]) <= until]
+    records, index, gating = review_gating(upto, until, directory_rules(files), measure=True)
+    accept, reject = [], []
+    for rec in data["proposals"]:
+        gate = gating.gates[index[record_key(rec)]]
+        if gate is None:
+            continue
+        if gate.status in (OK, CORROBORATING):
+            accept.append(rec["id"])
+        elif gate.status == RETROSPECTIVE:
+            reject.append(rec["id"])
+    common = dict(
+        reviewer=AUTO_REVIEWER, snapshots_dir=out_dir, hindsight_dir=hindsight_dir, auto=True
+    )
+    written: list[Path] = []
+    if reject:
+        written = decide(path, reject, "rejected", note=AUTO_RETRO_NOTE, **common)
+    if accept:
+        written = decide(path, accept, "accepted", note=AUTO_NOTE, **common)
+    if not accept and not reject:
+        # Nothing to decide in this quarter: rebuild so the quarter still has a snapshot.
+        written = rebuild_snapshots(proposals_dir, out_dir, hindsight_dir=hindsight_dir)
+    return next((w for w in written if w.stem == quarter), None)
+
+
+@dataclass
+class PlanRow:
+    """What a replay of one quarter would send to the backend (``wf replay --dry-run``)."""
+
+    quarter: str
+    visible: int
+    to_read: int
+    cached: int
+    characters: int
+    requests: int
+
+
+def plan(
+    corpus: Corpus,
+    quarters: Sequence[str],
+    out_dir: str | Path,
+    backend: Backend,
+) -> list[PlanRow]:
+    """Count, without calling the backend, what :func:`replay` would read per quarter: the
+    documents not read by an earlier quarter's proposals file in ``out_dir``, those of them
+    already in the cache (a resumed run does not send them), and the characters and requests
+    (one per part of at most the backend's ``max_chars``) of the rest."""
+    out_dir = Path(out_dir)
+    read_before = _read_before(out_dir / "proposals", quarters[0])
+    cached = _cached(backend, out_dir, True)
+    variables = text_variables()
+    parts = getattr(backend, "parts", None)
+    rows: list[PlanRow] = []
+    for quarter in quarters:
+        until = quarter_end(quarter)
+        visible = to_read = hits = chars = requests = 0
+        for doc in corpus.iter_documents(until=until):
+            visible += 1
+            if doc.id in read_before:
+                continue
+            read_before.add(doc.id)
+            to_read += 1
+            if isinstance(cached, CachedBackend) and cached.cached(doc, variables):
+                hits += 1
+                continue
+            chars += len(doc.text)
+            requests += len(parts(doc)) if callable(parts) else 1
+        rows.append(PlanRow(quarter, visible, to_read, hits, chars, requests))
+    return rows
+
+
 def _backend_info(backend: Backend) -> dict[str, Any]:
     info: dict[str, Any] = {"name": backend.name}
     model = getattr(backend, "model", None)
-    if model:
+    if isinstance(model, str) and model:
         info["model"] = model
+    effort = getattr(backend, "effort", None)
+    if isinstance(effort, str) and effort:
+        info["effort"] = effort
     return info
 
 
@@ -262,32 +399,40 @@ def measured_snapshots(
     proposals_dir: str | Path,
     quarters: Sequence[str],
     hindsight_dir: str | Path = DEFAULT_HINDSIGHT,
+    rules: Sequence[str] | None = None,
 ) -> dict[str, dict[str, Any]]:
     """Quarter-end snapshots, in memory, in which every proposal of the files in
     ``proposals_dir`` dated up to the quarter's end counts as accepted, whatever its review
-    status (pending, accepted or rejected). Built with :func:`.review.build_snapshot`, so the
-    levels follow the same rules as reviewed snapshots; every indicator says NOT REVIEWED.
-    Nothing is written. A quarter whose own proposals file is missing has no snapshot."""
+    status (pending, accepted or rejected), unless the harness ``rules`` (default: those
+    recorded in the files) hold it, block it or flag it ``retrospective?``. Built with
+    :func:`.review.build_snapshot`, so the levels follow the same rules as reviewed snapshots;
+    every indicator says NOT REVIEWED. Nothing is written. A quarter whose own proposals file
+    is missing has no snapshot."""
     files = proposal_files(proposals_dir)
+    rules = directory_rules(files) if rules is None else tuple(rules)
     labels = {data["label"] for _p, data in files}
     out: dict[str, dict[str, Any]] = {}
     for quarter in quarters:
         if quarter not in labels:
             continue
         until = quarter_end(quarter)
-        records: list[dict[str, Any]] = []
-        keys: set[tuple[Any, ...]] = set()
-        for _p, data in files:
-            if date.fromisoformat(data["until"]) > until:
-                continue
-            for rec in data["proposals"]:
-                p = rec["proposal"]
-                key = (rec["document"], p["variable"], repr(p["level"]), p["quote"])
-                if key not in keys:
-                    keys.add(key)
-                    records.append(_as_measured(rec))
+        upto = [f for f in files if date.fromisoformat(f[1]["until"]) <= until]
+        _records, _index, gating = review_gating(upto, until, rules, measure=True)
+        records = [_as_measured(rec) for rec in gating.in_force]
         out[quarter] = build_snapshot(until, records, hindsight_dir=hindsight_dir)
     return out
+
+
+def gate_counts(
+    proposals_dir: str | Path, quarters: Sequence[str], rules: Sequence[str]
+) -> dict[str, Counter[str]]:
+    """Per variable, how the harness ``rules`` classify the proposals of ``quarters`` at the
+    last quarter's end, measured as in :func:`measured_snapshots`."""
+    files = [f for f in proposal_files(proposals_dir) if f[1]["label"] in set(quarters)]
+    if not files:
+        return {}
+    records, _index, gating = review_gating(files, quarter_end(quarters[-1]), rules, measure=True)
+    return gating.counts(records)
 
 
 def proposal_counts(proposals_dir: str | Path, quarters: Sequence[str]) -> dict[str, Counter[str]]:
@@ -365,6 +510,10 @@ class Metrics:
     unread: dict[str, tuple[int, int]] = field(default_factory=dict)
     #: var -> (agree, total) over the quarters whose hindsight level is not the initial one
     moved: dict[str, tuple[int, int]] = field(default_factory=dict)
+    #: the harness rules in force (None: unknown, no proposals files)
+    rules: tuple[str, ...] | None = None
+    #: per variable, the proposals by harness gate status (proposal-level mode)
+    gates: dict[str, Counter[str]] = field(default_factory=dict)
 
     def matched(self, variable: str) -> list[FlipMatch]:
         return [m for m in self.matches.get(variable, []) if m.documented and m.replayed]
@@ -440,6 +589,7 @@ def compare(
     hindsight_dir: str | Path = DEFAULT_HINDSIGHT,
     *,
     measure_proposals: bool = False,
+    rules: Sequence[str] | None = None,
 ) -> Metrics:
     """The section 9 metrics of the replay snapshots in ``replay_dir`` against the hindsight
     snapshots, for ``quarters``. The baseline for flips at the first quarter is the hindsight
@@ -447,13 +597,16 @@ def compare(
     there is one, else the ontology's initial levels.
 
     With ``measure_proposals`` the replay snapshots are not read: they are built in memory
-    from every proposal in ``replay_dir/proposals`` as if accepted (:func:`measured_snapshots`),
-    and the metrics say so."""
+    from every proposal in ``replay_dir/proposals`` as if accepted (:func:`measured_snapshots`)
+    under the harness ``rules`` (default: those recorded in the files), and the metrics say
+    so."""
     replay_dir, hindsight_dir = Path(replay_dir), Path(hindsight_dir)
     prev = _qname(_qindex(quarters[0]) - 1)
     measured: dict[str, dict[str, Any]] = {}
+    files = proposal_files(replay_dir / "proposals") if (replay_dir / "proposals").exists() else []
+    in_force = tuple(rules) if rules is not None else directory_rules(files) if files else None
     if measure_proposals:
-        measured = measured_snapshots(replay_dir / "proposals", quarters, hindsight_dir)
+        measured = measured_snapshots(replay_dir / "proposals", quarters, hindsight_dir, in_force)
     hind = [(prev, _read(hindsight_dir / f"{prev}.json"))]
     rep = [(prev, _initial() if measure_proposals else _read(replay_dir / f"{prev}.json"))]
     if rep[0][1] is None:
@@ -462,9 +615,11 @@ def compare(
         hind.append((q, _read(hindsight_dir / f"{q}.json")))
         rep.append((q, measured.get(q) if measure_proposals else _read(replay_dir / f"{q}.json")))
     m = Metrics(quarters=list(quarters), missing_replay=[q for q, s in rep[1:] if s is None])
+    m.rules = in_force
     if measure_proposals:
         m.proposal_level = True
         m.counts = proposal_counts(replay_dir / "proposals", quarters)
+        m.gates = gate_counts(replay_dir / "proposals", quarters, in_force or ())
     auto = False
     for _q, s in rep[1:]:
         if s is None:
@@ -547,7 +702,16 @@ def render_report(
         f"- Corpus: {corpus.get('source')}"
         + (f", `{corpus['root']}`" if corpus.get("root") else "")
         + (" (synthetic fixtures)" if synthetic else ""),
-        f"- Backend: {backend.get('name')}",
+        f"- Backend: {backend.get('name')}"
+        + (f", model `{backend['model']}`" if backend.get("model") else "")
+        + (f", effort {backend['effort']}" if backend.get("effort") else ""),
+        "- Harness rules in force: "
+        + (
+            describe_rules(metrics.rules)
+            if metrics.rules is not None
+            else "unknown (no proposals files in the replay directory)"
+        )
+        + ' ([docs/replay_harness.md](../docs/replay_harness.md), section "Harness rules")',
         "- Review: "
         + (
             "auto-accepted (synthetic run only)"
@@ -595,6 +759,8 @@ def render_report(
         lines.append("")
     if metrics.proposal_level:
         lines += _proposal_table(metrics)
+        if metrics.rules:
+            lines += _gate_table(metrics)
     # summary
     text_a = metrics.share(TEXT_VARIABLES)
     unread = metrics.share(TEXT_VARIABLES, "unread")
@@ -691,6 +857,39 @@ def _proposal_table(metrics: Metrics) -> list[str]:
         lines.append(f"| `{name}` | {sum(c.values())} | {levels or '-'} |")
     total = sum(sum(c.values()) for c in metrics.counts.values())
     lines += [f"| all | {total} | |", ""]
+    return lines
+
+
+_GATE_COLUMNS = (
+    (OK, "Shown and counted"),
+    (HELD, "Held: one document"),
+    (CORROBORATING, "First of two documents"),
+    (BLOCKED, "Blocked: monotone, back"),
+    (RETROSPECTIVE, "retrospective? (not counted)"),
+)
+
+
+def _gate_table(metrics: Metrics) -> list[str]:
+    lines = [
+        "## What the harness rules did",
+        "",
+        "Every proposal of the quarters, classified at the last quarter's end under "
+        f"{describe_rules(metrics.rules or ())}. Only the first column is counted by the "
+        "metrics; a flip of a variable under the two-document rule is counted at, and dated "
+        'by, the proposal of its second document (the first is listed under "First of two '
+        'documents").',
+        "",
+        "| Variable | Proposals | " + " | ".join(t for _s, t in _GATE_COLUMNS) + " |",
+        "|---|---|" + "---|" * len(_GATE_COLUMNS),
+    ]
+    totals: Counter[str] = Counter()
+    for name in TEXT_VARIABLES:
+        c = metrics.gates.get(name, Counter())
+        totals.update(c)
+        cells = " | ".join(str(c.get(s, 0)) for s, _t in _GATE_COLUMNS)
+        lines.append(f"| `{name}` | {sum(c.values())} | {cells} |")
+    cells = " | ".join(str(totals.get(s, 0)) for s, _t in _GATE_COLUMNS)
+    lines += [f"| all | {sum(totals.values())} | {cells} |", ""]
     return lines
 
 

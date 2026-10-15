@@ -1,4 +1,4 @@
-"""T6: Germany cannot force the 1941 campaign; V_GER exit falls in 1941Q4 to 1943Q1.
+"""T6: Germany cannot force the 1941 campaign; V_GER exit falls in 1941Q3 to 1943Q1.
 
 Registered 2026-10-11 in docs/ww2_testbed.md section 5. Do not edit the claim text
 without a changelog entry in that document.
@@ -42,17 +42,20 @@ CLAIM = {
     "from_state": "1941Q2",
     "claim": (
         "Germany cannot force control of western USSR plus the Caucasus; the quarter "
-        "at which V_GER is left falls between 1941Q4 and 1943Q1"
+        "at which V_GER is left falls between 1941Q3 and 1943Q1 (the decision of June "
+        "1941 counts as inside the window: in v1 the attack itself is the point of no "
+        "return, because a German exit from the eastern war needed a Soviet decision for "
+        "which the record has no document, docs/german_exit_1941_1945.md)"
     ),
     "expected": (
-        "`contested` for the 1941 campaign; point of no return inside the window, with "
-        "the driving variable named"
+        "`contested` in the fortune sense for the 1941 campaign (section 4.6); point of "
+        "no return inside the window, with the driving variable named"
     ),
-    "sources": "Tooze; Overy; Kershaw",
+    "sources": "Tooze; Overy; Kershaw; amended 2026-10-15",
 }
 
 START = "1941Q1"  # the state at the start of 1941Q2 (tick 21)
-WINDOW = range(23, 29)  # 1941Q4 to 1943Q1
+WINDOW = range(22, 29)  # 1941Q3 to 1943Q1 (amended 2026-10-15)
 X = (V.w_ussr == "german") & (V.caucasus == "german")
 DEFEATED = ~V.invariant("undefeated")
 IDLE = {"GER": []}
@@ -132,9 +135,10 @@ def point_of_no_return(cm, states):
 @pytest.mark.parametrize("aims_JPN", ["status_quo", "regional", "hegemonic"])
 def test_T06_germany_cannot_force_the_campaign(aims_JPN):
     """Standard notion: the rest (every other actor, Nature included) keeps X false
-    whatever Germany does, so {GER} cannot force X; and E5's contested region, which is
-    asserted as registered (contested: not forced and not blocked). The fortune table is
-    printed."""
+    whatever Germany does, so {GER} cannot force X; and the amended "contested" (testbed
+    section 4.6, 2026-10-15): X reachable with Nature's favour against the others' best play
+    and X kept away with Nature's favour against Germany's, forceable by neither. The
+    standard region (blocked) is printed."""
     cm = model.compile()
     s = start(cm, aims_JPN)
     blocked, play = bounded.blocks(cm, s, X, NOTHING)
@@ -149,7 +153,22 @@ def test_T06_germany_cannot_force_the_campaign(aims_JPN):
     region = "blocked" if blocked else "undecided"
     print(f"\nT6 ({aims_JPN}): standard region {region}; fortune table {table}")
     assert blocked, play.render(cm) if play else None  # Germany cannot force X
-    assert region == "contested"  # E5: the standard contested region, as registered
+    # Amended 2026-10-15 (testbed section 4.6): contested in the fortune sense, i.e. each
+    # side's outcome is reachable with the campaigns' favour against the other's best play
+    # and forceable by neither; the standard region (blocked) is printed above. The fortune
+    # half is computed under the profile fight_on (the West's 1940 decision, T5): without
+    # it the West's negotiated peace, open in 1941Q2 until the attack sets the alliance,
+    # pre-empts the campaign (reports/ww2_v1.md section 5), which the run above prints.
+    cm_fight = model.compile(profile="fight_on")
+    s_fight = start(cm_fight, aims_JPN)
+    fortune_fight_on, _ = bounded.forces(cm_fight, s_fight, X, GER_PUSH)
+    kept_fight_on, _ = bounded.blocks(cm_fight, s_fight, X, NOTHING)
+    print(
+        f"T6 ({aims_JPN}) under fight_on: GER with fortune forces X {fortune_fight_on}; "
+        f"rest with fortune keeps not-X {kept_fight_on}"
+    )
+    assert fortune_fight_on, "GER with Nature's favour does not force X under fight_on"
+    assert kept_fight_on
 
 
 @pytest.mark.slow

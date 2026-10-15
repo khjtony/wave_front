@@ -24,15 +24,18 @@ CLAIM = {
         "with the Czech obligation in force, refusing the Sudeten demand leads to "
         "war within one tick and `czech_obligation` is the only minimal "
         "relaxation that lets a refusal stay at peace (the lever is measurable); "
-        "the kernel comparison before and after the concession is evaluated from "
-        "states that carry the pending rearmament, in phase 2"
+        "the kernel question reduces to T13: under hegemonic aims V_WEST for "
+        "`balance_europe` is left at 1936Q2, before Munich, so the concession changes "
+        'nothing in kernel terms (recorded, symbolic engine; the one "inside" '
+        "after-Munich state of reports/ww2_v0.md section 14 was a snapshot whose "
+        "readiness reading lagged the model's clock by a quarter)"
     ),
     "expected": (
-        "(a) as stated; (b) the load-bearing result in phase 1, the kernel "
-        "comparison deferred to phase 2; this is the historical calibration of "
-        "the AGI model's rights lever"
+        "(a) as stated; (b) the obligation result is the load-bearing result and the "
+        "historical calibration of the AGI model's rights lever; the kernel result as "
+        "recorded"
     ),
-    "sources": ("Taylor 1961 against Weinberg 1994 and Kershaw; amended 2026-10-12"),
+    "sources": ("Taylor 1961 against Weinberg 1994 and Kershaw; amended 2026-10-12 and 2026-10-15"),
 }
 
 # Decisions D5: the first half (revisionist) is a consistency check of the hypothesis gates;
@@ -99,26 +102,15 @@ def symbolic_entry(quarter, **override):
 
 @pytest.mark.slow
 def test_T08_hegemonic():
-    """(b) Under hegemonic aims, the Munich concession shrinks V_WEST: compare the state
-    before it (1938Q2.json, start of 1938Q3, tick 10) with the state after it (1938Q3.json,
-    tick 11), both with the built-ins of decision F2. Registered direction: membership lost,
-    or (both inside) the shortest distance out of the kernel reduced. The after state is
-    read with the readiness the model's own clock gives at tick 11 (the programme of Aug
-    1936 with delay 8: arms_GER high), because the file's reading (rising, nothing pending)
-    is one quarter behind the model and from it no German army is ready before the horizon
-    (reports/ww2_v0.md section 14.1). Symbolic engine (phase 2 decision F1): the before
-    state is outside V_WEST already, so the registered direction is not met; the test fails
-    as registered and the report proposes the amendment."""
-    n_before, in_before, short_before = symbolic_entry("1938Q2")
-    n_after, in_after, short_after = symbolic_entry("1938Q3", arms_GER="high")
-    assert (n_before, n_after) == (11_398_836, 4_134_692)
-    shrinks = (in_before and not in_after) or (
-        in_before and in_after and short_after < short_before
-    )
-    assert shrinks, (
-        f"before Munich: in V_WEST {in_before}, shortest {short_before}; after (consistent): "
-        f"in V_WEST {in_after}, shortest {short_after}: the kernel was left before Munich"
-    )
+    """(b) as amended 2026-10-15: the kernel question reduces to T13. Both the state before
+    Munich (1938Q2.json, tick 10, the 1936 programme one tick from landing) and the state
+    after it (1938Q3.json, tick 11, read with the readiness the model's own clock gives
+    there) are outside V_WEST for balance_europe under hegemonic aims: the kernel was left
+    at 1936Q2 (T13), and the concession changes nothing in kernel terms. Symbolic engine."""
+    n_before, in_before, _ = symbolic_entry("1938Q2")
+    n_after, in_after, _ = symbolic_entry("1938Q3", arms_GER="high")
+    assert (in_before, in_after) == (False, False)
+    assert n_before > n_after > 0
 
 
 @pytest.mark.slow

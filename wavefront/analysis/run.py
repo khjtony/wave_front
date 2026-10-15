@@ -38,8 +38,9 @@ def budget(cm: CompiledModel) -> dict:
 
 def fingerprint(model: Model) -> str:
     """A short hash of the model's declarations (variables, actions with guards and guard
-    parts, effects, delays and sources, latches, fairness, profiles, invariants, endings,
-    assumptions and horizon), so a report names the model version it is conditional on."""
+    parts, effects, delays and sources, actor cadences, latches, fairness, profiles,
+    invariants, endings, assumptions and horizon), so a report names the model version it
+    is conditional on."""
     parts = [
         model.name,
         repr(model.horizon),
@@ -60,6 +61,9 @@ def fingerprint(model: Model) -> str:
     ]
     if parted:  # only when used, so fingerprints of models without parts are unchanged
         parts.append(repr(parted))
+    cadenced = [(a.name, a.cadence) for a in model.actors if getattr(a, "cadence", 1) != 1]
+    if cadenced:  # likewise: models without a cadence keep their fingerprints
+        parts.append("cadence " + repr(cadenced))
     return hashlib.sha256("\n".join(parts).encode()).hexdigest()[:12]
 
 
