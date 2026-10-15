@@ -1,0 +1,62 @@
+# The July 1914 crisis: registered claims (daily ticks, 28 June to 4 August 1914)
+
+Status: claims registered 2026-10-15 by the architect on the owner's decision 10(d) of 2026-10-15 (July 1914 promoted from the reserve one-shot of PHASES.md phase 4 to a registered test of actors that decide at different speeds), **before any guard, action, variable or data row is written**. Protocol as ww2_testbed.md section 7: claims before guards; decision spaces from contemporaneous alternatives with dated sources; guard edits after a failing test logged in `docs/guard_changelog_1914.md`; the claims run once, in one go, with the commit of first sight recorded. Because this episode was reserved as a one-shot test, its hold-out is total: J2 to J6 are never re-run after a guard edit that follows their first sight; a second model version is a new registration.
+
+## 0. Why this episode
+
+The AGI model's defining feature is a fast actor against slow institutions (the owner's question of 2026-10-15). July 1914 is the historical case with that structure: mobilization timetables that, once ordered, ran automatically by the day (the German plan made mobilization and war one decision, with no eastern-only variant after the plan of 1913), against cabinets, councils and monarchs who decided every few days, with ambassadors' telegrams a day late. It exercises three framework mechanisms before the AGI model uses them: the per-actor cadence (framework_changes.md, change 1), delayed effects as pre-commitments that cannot be withdrawn after a point, and belief lag under a fast-moving adversary. It also exercises the crisis sub-game form (spec section 14) standing alone: the whole model is one crisis.
+
+## 1. Scope and time
+
+- One tick is one day. Tick 0 is 28 June 1914 (Sarajevo); tick 37 is 4 August 1914 (the British ultimatum expires at 23:00 London time; Germany is at war with Russia, France, Belgium and Britain), the horizon. Thirty-eight ticks.
+- Actors: `AUH` (Austria-Hungary), `GER`, `RUS`, `FRA`, `GBR`, and `Nature` (Serbia's reply, Belgium's refusal, the Kaiser's and the Tsar's interventions where they were not government decisions, the timetables' automatic steps). Five principals and Nature; the DSL's cadence applies per actor (section 3).
+- Hidden objectives (swept): `aims_GER` in {localize, continental} (whether Berlin sought a localized Austro-Serbian war or accepted a continental war to break the encirclement: Fischer against Clark, the historiography's main split), hidden from the others; `aims_RUS` in {deter, fight} (whether partial mobilization was meant as a deterrent or as preparation), hidden from AUH and GER.
+- Cadence (the framework's new construct): a principal's declared actions are available at most once every k days; k is set from the record of each government's decision cycle (the Austro-Hungarian Common Ministerial Council of 7 and 19 July; the Russian Council of Ministers of 24 and 25 July and the Tsar's decisions of 29 and 30 July; the British Cabinet of 24, 27, 29 July and 1 to 4 August; the French Council and Poincaré's absence at sea 16 to 29 July; the German decisions of 5 to 6 July, 25 to 28 July and 30 July to 1 August). Nature's timetable steps have cadence 1.
+
+## 2. Variables the claims refer to (names fixed here; levels and thresholds come with the ontology)
+
+| Variable | Meaning | Record |
+|---|---|---|
+| `ultimatum` | the Austro-Hungarian ultimatum: none, delivered, rejected | delivered 23 July 18:00; Serbian reply 25 July 18:00; relations broken 25 July |
+| `mob_AUH` | none, partial (against Serbia, Plan B), general | partial ordered 25 July (effective 28 July); general 31 July |
+| `mob_RUS` | none, pre_mobilization, partial, general | the "period preparatory to war" 26 July; partial decided 29 July and revoked that evening; general ordered 30 July 17:00 |
+| `mob_GER` | none, kriegsgefahr, general | Kriegsgefahrzustand 31 July 13:00; general mobilization and the declaration on Russia 1 August 17:00 to 19:00 |
+| `mob_FRA` | none, covering_troops, general | the ten-kilometre withdrawal 30 July; general mobilization 1 August 16:00 |
+| `war_AUH_SER` | peace, war | declared 28 July |
+| `war_GER_RUS`, `war_GER_FRA`, `war_GBR_GER` | peace, war | 1 August; 3 August; 4 August |
+| `belgium` | neutral, demanded, invaded | the ultimatum of 2 August 19:00; refused 3 August 07:00; invaded 4 August 08:00 |
+| `belief_GER_GBR` | Berlin's reading of Britain: stays_out, uncertain, fights | Lichnowsky's telegrams of 29 July (Grey's warning) and 1 August (the misread offer); Grey's statement of 3 August; the ultimatum of 4 August |
+| `halt_in_belgrade` | the Kaiser's proposal of 28 July: none, proposed, accepted | proposed 28 July morning; transmitted by Bethmann on the evening of 28 July in weakened form; never accepted |
+| `commitment_GBR` | none, naval_assurance, belgian_guarantee, war | the fleet kept together 26 to 29 July; the Cabinet's refusal to commit 29 July and 1 August; the naval assurance to France 2 August; the Belgian guarantee 3 August |
+
+## 3. Registered claims
+
+"Expected" is what the engine must output; "contested" is in the sense of ww2_testbed.md section 4.6. Windows are in days.
+
+| Id | From | Claim | Expected engine output | Sources |
+|---|---|---|---|---|
+| J1 | tick 0 | the realized sequence (the blank cheque of 5 to 6 July, the ultimatum of 23 July, the Serbian reply, the declaration of 28 July, the Russian partial then general mobilization, the German Kriegsgefahrzustand, the declarations of 1 and 3 August, the Belgian ultimatum and invasion, the British ultimatum) is reachable with zero relaxations, every action available at its tick | reachable, zero relaxations | Geiss, July 1914 (the documents); Albertini; Clark, The Sleepwalkers; Otte, July Crisis |
+| J2 | tick 32 (30 July) | **the timetable as point of no return (hold-out).** Once Russian general mobilization is ordered (30 July), the kernel for "no war between Germany and Russia" is left by every coalition that excludes Russia within two days, and the driving variable is the German plan's coupling of mobilization and war: with the coupling relaxed (an eastern-only deployment available, as it was not after 1913), the kernel is kept two days longer. The point of no return falls between 29 July (the partial mobilization decided and revoked) and 1 August (the German mobilization) | departure inside ticks 31 to 34 with the coupling named as the driving variable; the relaxation of the coupling moves it by at least two days | the Schlieffen-Moltke plan and the abandonment of the eastern deployment (Aufmarsch II Ost) in 1913; the Kaiser's attempt of 1 August to turn east and Moltke's refusal; Russian mobilization orders of 29 and 30 July |
+| J3 | tick 0 to 30 (28 July) | **localization (hold-out).** A localized Austro-Serbian war (AUH at war with Serbia, no great-power mobilization) is reachable to the horizon only under `aims_GER = localize` with Russia at `deter`, and the pivotal coalition for keeping it localized is {GER, RUS} jointly; neither alone keeps it, and GBR is not pivotal before 29 July | pivotal coalition {GER, RUS}; under `continental` aims the localized ending is unreachable; GBR's membership in a pivotal coalition appears only from tick 31 | the "Halt in Belgrade" of 28 July; Sazonov's partial-mobilization scheme; Grey's mediation proposals of 24 to 29 July |
+| J4 | tick 31 (29 July) | **belief lag under a fast adversary (hold-out).** Berlin's reading of Britain flips to `fights` on Lichnowsky's telegram of 29 July, and Bethmann's attempt to restrain Vienna that night is in the decision space; but by the cadence of the Austro-Hungarian decisions and the Russian general mobilization of the next day, the restraint cannot land before the mobilization orders: the belief change precedes the response by an institutional lag of at least one day, and the point of no return (J2) hides inside that lag | the restraint action available at tick 31 with its effect visible at tick 33 or later; the kernel left at tick 32 or 33 | Lichnowsky to Bethmann, 29 July; Bethmann's telegrams to Tschirschky of the night of 29 to 30 July; the Austro-Hungarian general mobilization of 31 July |
+| J5 | tick 35 (2 August) | **the Belgian route as the British trigger (hold-out).** From the state of 2 August, British entry into the war is forced by the German ultimatum to Belgium: with Belgium `demanded`, GBR's war declaration becomes available and the Cabinet's commitment reaches `war` within two days whatever Germany does; without the Belgian ultimatum (a German choice the plan made unavoidable only through the coupling of J2), British entry by 4 August needs at least one relaxation, and every minimal set relaxes either the Belgian route or the naval assurance of 2 August | as stated | the British Cabinet of 2 to 3 August; Grey's statement of 3 August; the ultimatum of 4 August; the German ultimatum to Belgium of 2 August |
+| J6 | tick 0 | **negative control.** A general European war by 15 July (before the ultimatum) needs at least two relaxations, and every minimal set relaxes the Austro-Hungarian decision cadence (the Common Ministerial Council of 7 and 19 July and the harvest leave of the army, which the record never lifts) | as stated | the Council of 7 July; Conrad's harvest-leave constraint; Berchtold's timing of the ultimatum for Poincaré's departure from St Petersburg (23 July) |
+| J7 | tick 0 | **cadence sensitivity (content check, not hold-out).** With every principal's cadence set to 1 (each government deciding daily), the point of no return of J2 moves earlier by at least two days and the localized war of J3 becomes keepable by {GER} alone: the asymmetry of speed, not the content of any single decision, is what shortens the window | as stated | the model's own construction; reported as the mechanism the AGI model inherits |
+
+## 4. Data and documents
+
+- Geiss (ed.), July 1914: The Outbreak of the First World War, Selected Documents (1967); the Austrian Red Book; the German documents (Kautsky collection); the British Documents on the Origins of the War, vol. XI; the French Yellow Book and Documents diplomatiques français, 3rd series, vols. X and XI; the Russian Orange Book.
+- Albertini, The Origins of the War of 1914 (1952 to 1957); Clark, The Sleepwalkers (2012); Otte, July Crisis (2014); Fischer, Germany's Aims in the First World War (1961); Mombauer, Helmuth von Moltke and the Origins of the First World War (2001), for the plan and the coupling; Lieven, Towards the Flame (2015), for the Russian decisions; Trachtenberg, "The Meaning of Mobilization in 1914" (International Security, 1990/91), for the mobilization-equals-war question.
+- For the replay harness: FRUS 1914 Supplement (The World War), dated US diplomatic documents; the British Documents vol. XI by document date.
+
+## 5. Protocol
+
+As ww2_testbed.md section 7, plus: the hold-out of J2 to J5 is total (section 0); the cadence values are set from the decision-cycle record before any claim is run and listed in the report with their sources; J7 is a content check and is reported, not tuned. The historian agent writes the catalogue after this file is committed; the architect's decisions document fixes the readings; the model step follows.
+
+## 6. Metrics
+
+J1 pass; J2 and J4 as the point-of-no-return and institutional-lag results (B6, B8); J3 and J5 as pivotal-coalition and assumption-mining results (B9, B10); J6 informativeness; J7 the mechanism the AGI model inherits (docs/transfer_hypotheses.md H3 and the cadence change).
+
+## 7. Changelog
+
+- 2026-10-15: J1 to J7 registered. No guard written yet.
