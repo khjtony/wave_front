@@ -1,0 +1,8 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: rules-1937-03-08-zone-recalled
+date: 1937-03-08
+source: synthetic fixture corpus for the harness rules (not a source)
+title: A conversation recalling the zone
+url: synthetic:corpus_rules/1937-03-08_zone_recalled
+
+The Ambassador recalled that until a year ago the Rhineland was a demilitarized zone, and that the French General Staff had built its plans on that condition.

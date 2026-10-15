@@ -1,0 +1,12 @@
+SYNTHETIC FIXTURE: written for pipeline tests, not a source
+id: rules-1936-03-07-rhineland
+date: 1936-03-07
+source: synthetic fixture corpus for the harness rules (not a source)
+title: German troops enter the Rhineland
+url: synthetic:corpus_rules/1936-03-07_rhineland
+
+Early this morning German troops marched into the demilitarized zone of the Rhineland and occupied Cologne, Coblenz and Mainz. Infantry battalions crossed the Rhine bridges to the sound of bands, and the population turned out in the streets.
+
+In a memorandum handed to the ambassadors of the Locarno powers, the German Government declared that it no longer considers itself bound by the Treaty of Locarno, which it holds to have been broken by the Franco-Soviet pact. In the Reichstag the Chancellor offered in its place a set of new non-aggression pacts and a return to the League.
+
+The French Cabinet sat through the afternoon. No military measures had been announced by the evening.

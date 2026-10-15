@@ -172,14 +172,21 @@ baseline left for decision ([reports/replay_ww2_frus.md](../reports/replay_ww2_f
 act in the replay and review layer (`wavefront/evidence/harness_rules.py`) on the proposals of
 any backend; the rule backend's keyword table is not touched and stays the frozen baseline.
 
-**`two-document`.** A flip of a variable that changes once needs two independent documents
-before it is shown as a proposal for review or counted by `--measure-proposals`. "Changes
-once" is every flag and every variable the model declares monotone (`MONOTONE`, kept equal by a
-test to the `monotone=True` declarations of `models/ww2/v0.py`, the model the replay snapshots
-are for): the pacts and structural flags (with `italy_estranged`, a flag that is not monotone),
-the regions except `rhineland`, `war_west_ger`, and, because v0 declares them monotone,
-`belief_WEST`, `commit_WEST`, `commit_US` and `oil_GER`. Not under the rule: `belief_GER`,
-`treaty`, `rhineland`. A flip is a proposal whose level differs from the variable's current
+**Scope: the structural variables only.** Neither rule applies to `belief_WEST`, `belief_GER`,
+`commit_WEST` or `commit_US` (`READINGS`, excluded by name): they are the variables the replay
+exists to read, and applied to them the rules froze the first false reading of `belief_WEST`
+and `commit_WEST` on FRUS (decision of 2026-10-15; the measurement of both variants is in the
+FRUS report). A proposal for one of them is shown and counted as the backend made it.
+
+**`two-document`.** A flip of a structural variable that changes once needs two independent
+documents before it is shown as a proposal for review or counted by `--measure-proposals`.
+"Changes once" is every flag and every variable the model declares monotone, less the belief
+and commitment variables (`ONCE`; the list of v0's monotone variables, `V0_MONOTONE`, is kept
+equal by a test to the `monotone=True` declarations of `models/ww2/v0.py`, the model the replay
+snapshots are for, so a change in the model is caught): the pacts and structural flags (with
+`italy_estranged`, a flag that is not monotone), the regions except `rhineland`,
+`war_west_ger` and `oil_GER`. Not under the rule: `treaty`, `rhineland`, and the four belief
+and commitment variables. A flip is a proposal whose level differs from the variable's current
 level in the replay; "independent" means a different document id, so a document printed in two
 FRUS volumes under two ids counts twice (the baseline report lists such near-duplicates). Both
 documents are dated at or before the quarter, because a quarter's proposals come only from
@@ -190,8 +197,9 @@ enters the quarter of that document and is dated by it; the first is then shown 
 shown as usual. In review a rejected proposal does not count as a proposing document.
 
 **`no-retrospective`.** A proposal that would move a variable back to an earlier level (a
-retrospective reading) is, for a monotone variable, never applied (*blocked*: listed apart, not
-acceptable, not counted); for any other variable it is shown flagged `retrospective?` and never
+retrospective reading) is, for a monotone structural variable (`MONOTONE`), never applied
+(*blocked*: listed apart, not acceptable, not counted); for the other structural variables
+(`treaty`, `rhineland`, `italy_estranged`) it is shown flagged `retrospective?` and never
 applied automatically: the measurement does not count it, `--auto-accept` rejects it with a
 note that says why, and only a reviewer's acceptance applies it. "Back" means, for a monotone
 variable, a level below the current one in the level order; for any other variable, a level the
@@ -216,16 +224,19 @@ the rules on and off. Every generated report states the rules in force on its "H
 force" line, and a measurement under the rules adds a table of what they did (proposals shown
 and counted, held, first of two documents, blocked, `retrospective?`).
 
-**On the fixtures.** `tests/evidence/fixtures/corpus_rules/` holds eight synthetic documents,
+**On the fixtures.** `tests/evidence/fixtures/corpus_rules/` holds ten synthetic documents,
 one case per rule: a single document on the Marco Polo Bridge (held: `china_war` never flips),
 two documents on the Anschluss in 1938Q1 and 1938Q2 (`austria` flips in 1938Q2, dated by the
-second), the conference of 23 May and the Obersalzberg address (`belief_GER` back to its
-initial level: `retrospective?`), and two documents on the partition of Poland followed by a
-1940 recollection of the German attack (`poland` back from `partitioned` to `german`:
-blocked). `tests/evidence/test_harness_rules.py` runs them through the measurement (each rule
+second), two documents on the partition of Poland followed by a 1940 recollection of the German
+attack (`poland` back from `partitioned` to `german`: blocked), the remilitarization of the
+Rhineland followed by a 1937 recollection of the demilitarized zone, which the fake Claude
+backend of the tests reads as `demilitarized` (`rhineland` back to its initial level:
+`retrospective?`; the rule backend proposes nothing there), and the conference of 23 May and
+the Obersalzberg address (`belief_GER` back to its initial level: outside the rules, counted
+as made). `tests/evidence/test_harness_rules.py` runs them through the measurement (each rule
 on, off and alone), the review step, auto-accept, and the Claude backend with a fake client.
-The synthetic run corpus has one document per event, so with the rules on most of its flips
-are held (agreement 363/500, 73 percent, against 488/500 with the rules off); its committed
+The synthetic run corpus has one document per event, so with the rules on many of its flips
+are held (agreement 381/500, 76 percent, against 488/500 with the rules off); its committed
 report is the mechanics run with `--rules none`.
 
 ## Running on the owner's machine

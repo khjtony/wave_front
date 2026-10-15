@@ -5,10 +5,16 @@ proposals of any backend, after extraction and before review or measurement. The
 can be switched off one by one (``wf replay --rules``, ``wf extract --rules``), are recorded in
 every proposals file (``harness_rules``) and are stated in every generated report.
 
+Both rules apply to the structural variables only: never to the belief and commitment
+variables (:data:`READINGS`: ``belief_WEST``, ``belief_GER``, ``commit_WEST``,
+``commit_US``), which are what the replay exists to read and whose flips the rules would
+freeze (decision of 2026-10-15 on the FRUS measurement). A proposal for one of them is shown
+and counted as the backend made it.
+
 ``two-document``
-    A flip of a variable that changes once (a flag, or a variable the model declares
-    monotone: the pacts, the regions, the declaration of war, and in v0 also ``belief_WEST``,
-    ``commit_WEST``, ``commit_US`` and ``oil_GER``; :data:`ONCE`) needs two independent
+    A flip of a structural variable that changes once (a flag, or a variable the model
+    declares monotone: the pacts, the regions but the Rhineland, the war, ``oil_GER``;
+    :data:`ONCE`) needs two independent
     documents, that is proposals of the same level from two different document ids, both
     dated at or before the quarter. The first is *held*: it is not shown as a proposal for
     review, cannot be accepted, and is not counted by ``--measure-proposals``. The proposal
@@ -49,6 +55,8 @@ __all__ = [
     "CORROBORATING",
     "DEFAULT_RULES",
     "HELD",
+    "READINGS",
+    "V0_MONOTONE",
     "MONOTONE",
     "NO_RETROSPECTIVE",
     "OK",
@@ -72,7 +80,7 @@ DEFAULT_RULES: tuple[str, ...] = RULE_NAMES
 
 # The text variables that models/ww2/v0.py (the model the replay snapshots are for, hw.MODEL)
 # declares monotone=True. tests/evidence/test_harness_rules.py keeps this equal to the model.
-MONOTONE = frozenset(
+V0_MONOTONE = frozenset(
     {
         "belief_WEST",
         "commit_WEST",
@@ -97,9 +105,13 @@ MONOTONE = frozenset(
         "war_west_ger",
     }
 )
+#: the belief and commitment variables: outside both rules, by name
+READINGS = frozenset({"belief_WEST", "belief_GER", "commit_WEST", "commit_US"})
+#: the monotone variables the rules treat as such: v0's, without the belief and commitment ones
+MONOTONE = V0_MONOTONE - READINGS
 FLAGS = frozenset(n for n in TEXT_VARIABLES if hw.BY_NAME[n].kind == "flag")
-#: the variables under the two-document rule: every flag and every monotone variable
-ONCE = FLAGS | MONOTONE
+#: the variables under the two-document rule: every flag and every structural monotone variable
+ONCE = (FLAGS | MONOTONE) - READINGS
 
 OK = "ok"
 HELD = "held"
@@ -234,6 +246,11 @@ def gate_records(
             gates[i] = Gate(OK, "not a text variable")
             continue
         current = state[name]
+        if name in READINGS:  # outside both rules: shown and counted as the backend made it
+            gates[i] = Gate(OK, "confirms the current level" if level == current else "a flip")
+            if accepted(rec):
+                apply(i, name, level)
+            continue
         if level == current:
             gates[i] = Gate(OK, "confirms the current level")
             if accepted(rec):

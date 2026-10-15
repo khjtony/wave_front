@@ -1,5 +1,6 @@
 """The harness rules of the replay and review layer (decision 9 of 2026-10-15): the
-two-document rule and the no-retrospective rule, each switchable, on the fixture corpus
+two-document rule and the no-retrospective rule, each switchable, acting on the structural
+variables only (not on the belief and commitment variables), on the fixture corpus
 ``corpus_rules`` (one case per rule), in measurement, review and auto-accept, and with the
 Claude backend through a fake client (cache, resume, usage and the dry run included)."""
 
@@ -23,8 +24,10 @@ from wavefront.evidence.harness_rules import (
     NO_RETROSPECTIVE,
     OK,
     ONCE,
+    READINGS,
     RETROSPECTIVE,
     TWO_DOCUMENT,
+    V0_MONOTONE,
     RulesError,
     gate_records,
     parse_rules,
@@ -48,16 +51,20 @@ from wavefront.evidence.review import (
 ROOT = Path(__file__).resolve().parents[2]
 CASES = ROOT / "tests" / "evidence" / "fixtures" / "corpus_rules"
 HINDSIGHT = ROOT / "snapshots" / "ww2" / "hindsight"
-QUARTERS = parse_quarters("1937Q3..1940Q1")
+QUARTERS = parse_quarters("1936Q1..1940Q1")
 SDK = _fake_sdk()
 
-# The four cases of corpus_rules, one proposal per document with the rule backend:
+# The cases of corpus_rules (one proposal per document and variable with the rule backend,
+# except where the fake Claude backend is needed):
 #   china_war   true    one document (1937-07-08)                    two-document: held
 #   austria     annexed two documents (1938-03-12, 1938-04-10)       two-document: flips 1938Q2
-#   belief_GER  uncertain (1939-05-23), then will_not_fight (1939-08-22): back to the initial
-#               level of a variable that is not monotone             no-retrospective: flagged
 #   poland      partitioned twice (1939-09-17, 1939-09-28), then german (1940-02-26, a
 #               recollection): back on a monotone variable           no-retrospective: blocked
+#   rhineland   remilitarized (1936-03-07, one document: not monotone, not a flag, so not under
+#               two-document), then read as demilitarized by the fake Claude backend in a
+#               recollection (1937-03-08): back to its initial level  no-retrospective: flagged
+#   belief_GER  uncertain (1939-05-23), then will_not_fight (1939-08-22): a belief variable,
+#               outside both rules, so the move back is shown and counted as made
 
 
 def _levels(snaps, name):
@@ -86,9 +93,11 @@ def test_monotone_variables_are_those_the_model_declares_monotone():
 
     cm = model.compile()
     declared = {v.name for v in cm.variables if v.monotone}
-    assert declared & set(TEXT_VARIABLES) == MONOTONE
-    assert {"axis", "austria", "poland", "war_west_ger", "italy_estranged"} <= ONCE
-    assert not {"rhineland", "treaty", "belief_GER"} & ONCE
+    assert declared & set(TEXT_VARIABLES) == V0_MONOTONE
+    assert READINGS == {"belief_WEST", "belief_GER", "commit_WEST", "commit_US"}
+    assert MONOTONE == V0_MONOTONE - READINGS and not READINGS & ONCE
+    assert {"axis", "austria", "poland", "war_west_ger", "italy_estranged", "oil_GER"} <= ONCE
+    assert not {"rhineland", "treaty"} & ONCE
 
 
 def _rec(i, doc, var, level, day, status="pending"):
@@ -122,6 +131,15 @@ def test_two_document_rule_counts_documents_not_proposals():
         [_rec(4, "d1", "treaty", "dead", "1936-03-19")], end, DEFAULT_RULES, measure=True
     )
     assert g.gates[0].status == OK and len(g.in_force) == 1
+    # The belief and commitment variables are outside both rules: a single document flips
+    # them, and a move back (here on belief_WEST, which v0 declares monotone) is applied.
+    beliefs = [
+        _rec(5, "d1", "belief_WEST", "uncertain", "1936-01-03"),
+        _rec(6, "d2", "belief_WEST", "limited", "1936-02-03"),
+        _rec(7, "d3", "commit_WEST", "at_war", "1936-03-03"),
+    ]
+    g = gate_records(beliefs, end, DEFAULT_RULES, measure=True)
+    assert [x.status for x in g.gates] == [OK, OK, OK] and len(g.in_force) == 3
 
 
 def test_measurement_with_both_rules_on_the_case_corpus(proposals):
@@ -131,8 +149,9 @@ def test_measurement_with_both_rules_on_the_case_corpus(proposals):
     assert austria["1938Q1"] == "independent" and austria["1938Q2"] == "annexed"
     ind = snaps["1938Q2"]["variables"]["austria"]["indicators"][0]
     assert ind["observed"] == "1938-04-10"  # dated by the second document
-    belief = _levels(snaps, "belief_GER")
-    assert belief["1939Q2"] == "uncertain" and belief["1939Q3"] == "uncertain"
+    belief = _levels(snaps, "belief_GER")  # outside the rules: the move back counts
+    assert belief["1939Q2"] == "uncertain" and belief["1939Q3"] == "will_not_fight"
+    assert _levels(snaps, "rhineland")["1936Q1"] == "remilitarized"  # not under two-document
     poland = _levels(snaps, "poland")
     assert poland["1939Q3"] == poland["1940Q1"] == "partitioned"  # the recollection is blocked
 
@@ -154,7 +173,7 @@ def test_measurement_with_the_rules_off_and_one_at_a_time(proposals):
     )
     assert _levels(back, "austria")["1938Q1"] == "annexed"  # two-document is off
     assert _levels(back, "poland")["1940Q1"] == "partitioned"
-    assert _levels(back, "belief_GER")["1939Q3"] == "uncertain"
+    assert _levels(back, "belief_GER")["1939Q3"] == "will_not_fight"
 
 
 def test_reports_state_the_rules_in_force(proposals, tmp_path):
@@ -164,7 +183,7 @@ def test_reports_state_the_rules_in_force(proposals, tmp_path):
         ("none", "- Harness rules in force: none"),
     ]:
         report = tmp_path / "m.md"
-        args = ["replay", "--out", str(proposals), "--quarters", "1937Q3..1940Q1"]
+        args = ["replay", "--out", str(proposals), "--quarters", "1936Q1..1940Q1"]
         args += ["--measure-proposals", "--report", str(report)]
         assert main(args + (["--rules", rules] if rules else [])) == 0
         text = report.read_text()
@@ -174,7 +193,7 @@ def test_reports_state_the_rules_in_force(proposals, tmp_path):
             assert f"--rules {rules}" in text
     m = compare(proposals, QUARTERS, HINDSIGHT, measure_proposals=True)
     assert m.gates["china_war"][HELD] == 1 and m.gates["poland"][BLOCKED] == 1
-    assert m.gates["belief_GER"][RETROSPECTIVE] == 1 and m.gates["austria"][CORROBORATING] == 1
+    assert m.gates["belief_GER"] == {OK: 2} and m.gates["austria"][CORROBORATING] == 1
     assert main(["replay", "--out", str(proposals), "--metrics-only", "--rules", "none"]) == 2
 
 
@@ -188,62 +207,48 @@ def test_proposals_files_record_the_rules_and_disagreeing_files_are_refused(prop
         rebuild_snapshots(out / "proposals", out)
 
 
-def test_review_hides_held_and_blocked_proposals_and_flags_retrospective_ones(tmp_path, capsys):
+def _ids(path, var):
+    return [r["id"] for r in read_proposals(path)["proposals"] if r["proposal"]["variable"] == var]
+
+
+def _accept_all(path):
+    ids = [r["id"] for r in read_proposals(path)["proposals"]]
+    return decide(path, ids, "accepted", note="ok", reviewer="h") if ids else []
+
+
+def test_review_hides_held_and_blocked_proposals(tmp_path, capsys):
     out = tmp_path / "review"
     replay(LocalCorpus(CASES), QUARTERS, out, RuleBackend())
     files = {q: out / "proposals" / f"{q}.json" for q in QUARTERS}
-
-    def ids(q, var):
-        return [
-            r["id"]
-            for r in read_proposals(files[q])["proposals"]
-            if r["proposal"]["variable"] == var
-        ]
-
+    _accept_all(files["1936Q1"])  # the Rhineland: a flip on one document, outside the rule
     # 1937Q3: the one china_war proposal is held; it cannot be accepted, and it does not keep
     # the quarter's snapshot from being written.
-    (china,) = ids("1937Q3", "china_war")
+    (china,) = _ids(files["1937Q3"], "china_war")
     assert file_gates(files["1937Q3"])[china].status == HELD
     with pytest.raises(ReviewError, match="two-document"):
         decide(files["1937Q3"], [china], "accepted", note="x", reviewer="h")
-    assert rebuild_snapshots(out / "proposals", out)[0] == out / "1937Q3.json"
+    assert out / "1937Q3.json" in rebuild_snapshots(out / "proposals", out)
     assert main(["review", str(files["1937Q3"])]) == 0
     listing = capsys.readouterr().out
     assert "not for review under the harness rules (1)" in listing and "held" in listing
     assert "harness rules: two-document, no-retrospective" in listing
     # 1938Q1 holds the first Anschluss document; 1938Q2 shows the flip with its second.
-    (first,) = ids("1938Q1", "austria")
-    (second,) = ids("1938Q2", "austria")
+    (first,) = _ids(files["1938Q1"], "austria")
+    (second,) = _ids(files["1938Q2"], "austria")
     assert file_gates(files["1938Q1"])[first].status == HELD
     assert file_gates(files["1938Q2"])[second].status == OK
     decide(files["1938Q2"], [second], "accepted", note="the plebiscite", reviewer="h")
-    # 1939Q2 to 1939Q3: accept the conference; the Obersalzberg address reads back to the
-    # initial level of belief_GER and is flagged; it needs a decision and nothing applies it
-    # until a reviewer does.
-    for q in ("1939Q2",):
-        decide(
-            files[q],
-            [r["id"] for r in read_proposals(files[q])["proposals"]],
-            "accepted",
-            note="ok",
-            reviewer="h",
-        )
-    (obersalzberg,) = ids("1939Q3", "belief_GER")
-    gate = file_gates(files["1939Q3"])[obersalzberg]
-    assert gate.status == RETROSPECTIVE and gate.acceptable
-    listing = format_listing(read_proposals(files["1939Q3"]), file_gates(files["1939Q3"]))
-    assert re.search(rf"{obersalzberg}  \[pending\]  retrospective\?", listing)
-    others = [i for i in ids("1939Q3", "poland")]
-    decide(files["1939Q3"], others, "accepted", note="ok", reviewer="h")
-    assert not (out / "1939Q3.json").exists()  # the flagged proposal awaits a decision
-    decide(
-        files["1939Q3"], [obersalzberg], "accepted", note="read as Hitler's belief", reviewer="h"
-    )
+    # 1939Q2 to 1939Q3: belief_GER is outside the rules, so the Obersalzberg address, back to
+    # its initial level, is an ordinary proposal for review.
+    _accept_all(files["1939Q2"])
+    (obersalzberg,) = _ids(files["1939Q3"], "belief_GER")
+    assert file_gates(files["1939Q3"])[obersalzberg].status == OK
+    _accept_all(files["1939Q3"])
     snap = json.loads((out / "1939Q3.json").read_text())
-    assert snap["variables"]["belief_GER"]["level"] == "will_not_fight"  # the reviewer decided
+    assert snap["variables"]["belief_GER"]["level"] == "will_not_fight"
     assert snap["variables"]["poland"]["level"] == "partitioned"
     # 1940Q1: the recollection of the German attack is blocked on the monotone poland.
-    (recollection,) = ids("1940Q1", "poland")
+    (recollection,) = _ids(files["1940Q1"], "poland")
     assert file_gates(files["1940Q1"])[recollection].status == BLOCKED
     with pytest.raises(ReviewError, match="monotone"):
         decide(files["1940Q1"], [recollection], "accepted", note="x", reviewer="h")
@@ -253,10 +258,31 @@ def test_review_hides_held_and_blocked_proposals_and_flags_retrospective_ones(tm
     replay(LocalCorpus(CASES), ["1940Q1"], out, RuleBackend())  # an undecided quarter is fine
 
 
+def test_review_flags_a_retrospective_reading_and_only_a_reviewer_applies_it(tmp_path):
+    out = tmp_path / "retro"
+    quarters = parse_quarters("1936Q1..1937Q1")
+    backend = ClaudeBackend(client=FakeClient(_fake_reply), sdk=SDK)
+    replay(LocalCorpus(CASES), quarters, out, backend)
+    files = {q: out / "proposals" / f"{q}.json" for q in quarters}
+    _accept_all(files["1936Q1"])
+    (zone,) = _ids(files["1937Q1"], "rhineland")
+    gate = file_gates(files["1937Q1"])[zone]
+    assert gate.status == RETROSPECTIVE and gate.acceptable
+    listing = format_listing(read_proposals(files["1937Q1"]), file_gates(files["1937Q1"]))
+    assert re.search(rf"{zone}  \[pending\]  retrospective\?", listing)
+    # Not counted by a measurement; it awaits a decision, so no 1937Q1 snapshot yet.
+    measured = measured_snapshots(out / "proposals", quarters, HINDSIGHT)
+    assert measured["1937Q1"]["variables"]["rhineland"]["level"] == "remilitarized"
+    assert out / "1937Q1.json" not in rebuild_snapshots(out / "proposals", out)
+    decide(files["1937Q1"], [zone], "accepted", note="read as the present", reviewer="h")
+    snap = json.loads((out / "1937Q1.json").read_text())
+    assert snap["variables"]["rhineland"]["level"] == "demilitarized"  # the reviewer decided
+
+
 def test_auto_accept_follows_the_rules_and_says_so(tmp_path):
     out = tmp_path / "auto"
     report = tmp_path / "auto.md"
-    args = ["replay", "--corpus", str(CASES), "--quarters", "1937Q3..1940Q1", "--out", str(out)]
+    args = ["replay", "--corpus", str(CASES), "--quarters", "1936Q1..1940Q1", "--out", str(out)]
     assert main([*args, "--auto-accept", "--report", str(report)]) == 0
     assert all((out / f"{q}.json").exists() for q in QUARTERS)
     by_var = {}
@@ -264,17 +290,27 @@ def test_auto_accept_follows_the_rules_and_says_so(tmp_path):
         for r in read_proposals(out / "proposals" / f"{q}.json")["proposals"]:
             by_var.setdefault(r["proposal"]["variable"], []).append(r)
     assert [r["status"] for r in by_var["china_war"]] == ["pending"]  # held, not decided
-    assert [r["status"] for r in by_var["belief_GER"]] == ["accepted", "rejected"]
-    assert by_var["belief_GER"][1]["decisions"][-1]["note"] == AUTO_RETRO_NOTE
+    assert [r["status"] for r in by_var["belief_GER"]] == ["accepted", "accepted"]
     assert [r["status"] for r in by_var["poland"]] == ["accepted", "accepted", "pending"]
     last = json.loads((out / "1940Q1.json").read_text())["variables"]
-    assert last["poland"]["level"] == "partitioned" and last["belief_GER"]["level"] == "uncertain"
+    assert last["poland"]["level"] == "partitioned"
+    assert last["belief_GER"]["level"] == "will_not_fight"
     assert "- Harness rules in force: `two-document`, `no-retrospective`" in report.read_text()
+    # A retrospective? reading is never auto-accepted: auto-accept rejects it with a note.
+    claude = tmp_path / "auto_claude"
+    backend = ClaudeBackend(client=FakeClient(_fake_reply), sdk=SDK)
+    replay(LocalCorpus(CASES), QUARTERS[:5], claude, backend, auto_accept=True)
+    (zone,) = read_proposals(claude / "proposals" / "1937Q1.json")["proposals"]
+    assert zone["status"] == "rejected" and zone["decisions"][-1]["note"] == AUTO_RETRO_NOTE
+    snap = json.loads((claude / "1937Q1.json").read_text())["variables"]
+    assert snap["rhineland"]["level"] == "remilitarized"
 
 
 # -- the Claude backend through a fake client --------------------------------------------
 
-_FAKE_READINGS = {  # document id: (variable, level) the fake model reads, as the rules do
+_FAKE_READINGS = {  # document id: (variable, level) the fake model reads
+    "rules-1936-03-07-rhineland": ("rhineland", "remilitarized"),
+    "rules-1937-03-08-zone-recalled": ("rhineland", "demilitarized"),
     "rules-1937-07-08-marco-polo": ("china_war", "true"),
     "rules-1938-03-12-anschluss": ("austria", "annexed"),
     "rules-1938-04-10-plebiscite": ("austria", "annexed"),
@@ -315,9 +351,9 @@ def test_claude_backend_end_to_end_under_the_rules_with_cache_resume_and_usage(t
     flaky = FakeClient(lambda p: _fake_reply(p, fail={"rules-1939-08-22-obersalzberg"}))
     with pytest.raises(ReplayError, match="run the same command again to resume"):
         replay(corpus, QUARTERS, out, ClaudeBackend(client=flaky, sdk=SDK), workers=3)
-    # Every document read before the stop is cached, the failed one is not: 1937Q3 to 1939Q2
+    # Every document read before the stop is cached, the failed one is not: 1936Q1 to 1939Q2
     # and the two other documents of 1939Q3.
-    assert len(list((out / "cache" / "claude").glob("*.json"))) == 6
+    assert len(list((out / "cache" / "claude").glob("*.json"))) == 8
     # Resume: the same command, with the quarters already written skipped and cached
     # documents not sent again.
     client = FakeClient(_fake_reply)
@@ -339,7 +375,8 @@ def test_claude_backend_end_to_end_under_the_rules_with_cache_resume_and_usage(t
     assert set(_levels(snaps, "china_war").values()) == {False}
     assert _levels(snaps, "austria")["1938Q1"] == "independent"
     assert _levels(snaps, "austria")["1938Q2"] == "annexed"
-    assert _levels(snaps, "belief_GER")["1939Q3"] == "uncertain"
+    assert _levels(snaps, "belief_GER")["1939Q3"] == "will_not_fight"
+    assert _levels(snaps, "rhineland")["1937Q1"] == "remilitarized"  # retrospective?: not counted
     assert _levels(snaps, "poland")["1940Q1"] == "partitioned"
     # Running the whole range again into the same OUT reads every document from the cache.
     silent = FakeClient(lambda p: pytest.fail("a cached document was sent again"))
@@ -350,22 +387,22 @@ def test_claude_backend_end_to_end_under_the_rules_with_cache_resume_and_usage(t
 
 def test_dry_run_counts_what_a_run_would_send_and_writes_nothing(tmp_path, capsys):
     out = tmp_path / "dry"
-    args = ["replay", "--corpus", str(CASES), "--quarters", "1937Q3..1940Q1", "--out", str(out)]
+    args = ["replay", "--corpus", str(CASES), "--quarters", "1936Q1..1940Q1", "--out", str(out)]
     assert main([*args, "--backend", "claude", "--dry-run"]) == 0
     printed = capsys.readouterr().out
     assert printed.startswith("DRY RUN") and not out.exists()
-    assert "total: 8 documents to read, 0 of them cached, 8 requests" in printed
+    assert "total: 10 documents to read, 0 of them cached, 10 requests" in printed
     assert "input tokens, estimated at 4 characters a token" in printed
-    # After a run of the first four quarters, their three documents are cached.
+    # After a run of 1936Q1 to 1938Q2, their five documents are cached.
     replay(
         LocalCorpus(CASES),
-        QUARTERS[:4],
+        QUARTERS[:10],
         out,
         ClaudeBackend(client=FakeClient(_fake_reply), sdk=SDK),
     )
     assert main([*args, "--backend", "claude", "--dry-run"]) == 0
     printed = capsys.readouterr().out
-    assert "total: 8 documents to read, 3 of them cached, 5 requests" in printed
+    assert "total: 10 documents to read, 5 of them cached, 5 requests" in printed
     assert main(["replay", "--out", str(out), "--dry-run"]) == 2  # needs --corpus
 
 
@@ -378,7 +415,7 @@ def test_cli_extract_records_the_rules_caches_and_reads_in_parallel(tmp_path, ca
     a, b = read_proposals(one), read_proposals(many)
     assert a["harness_rules"] == ["two-document"] and b["harness_rules"] == list(DEFAULT_RULES)
     assert [r["proposal"] for r in a["proposals"]] == [r["proposal"] for r in b["proposals"]]
-    assert len(list(cache.glob("*.json"))) == 8
+    assert len(list(cache.glob("*.json"))) == 10
     assert main([*base, "--out", str(one), "--rules", "three-documents"]) == 2
     assert "unknown harness rule" in capsys.readouterr().err
 
