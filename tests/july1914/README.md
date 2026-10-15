@@ -1,1 +1,1 @@
-Registered claims of the July 1914 crisis (docs/july1914_testbed.md), as skipped tests until the model exists. J2 to J5 are hold-out claims with a total hold-out (one run).
+Registered claims of the July 1914 crisis (docs/july1914_testbed.md), run against models/july1914/v0.py with the readings of docs/july1914_decisions.md section R. J2 to J6 are hold-out claims with a total hold-out (one run; first sight at f00e5be3, reports/july1914.md). J3, J4, J6 and J7 fail as computed and stay failing. test_model_1914.py holds the construction checks; common.py the shared machinery.
