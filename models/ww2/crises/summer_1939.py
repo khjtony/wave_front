@@ -28,10 +28,12 @@ beliefs only.
 
 ``entry(coarse_state_dict)`` and ``exit(fine_state_dict, coarse_state_dict)`` are the maps
 of framework_spec.md section 14; :func:`crisis` builds the :class:`~wavefront.engine.Crisis`
-once v1 has a coarse crisis action to attach it to (a later step; v1 is not edited here).
+for a coarse action with no effect (v1 has none and is not edited here; the K1 test attaches
+the sub-game to a copy of v1 with such an action and flattens it).
 
 Coding choices (each in docs/crisis_1939_decisions.md):
 
+* Dates and placements: ``data/ww2/crises/1939/realized_moves.csv`` (decisions C1 and C2).
 * The declarations of 3 September fall in tick 20, the horizon (the British Cabinet's
   ultimatum decision of 2 September and the attack of 1 September share tick 19). On the
   realized path the attack is visible only at tick 20, so the West's declaration is the
@@ -43,9 +45,9 @@ Coding choices (each in docs/crisis_1939_decisions.md):
   19: ``attack_poland`` is the order executed, and its ``order`` part needs an order to have
   been given once (``attack_order`` ordered or cancelled), so the realized re-order and
   launch are one decision.
-* ``build(inert=False)`` drops the two inert Nature events (Polish mobilization, Mussolini's
-  letter) and their variables, which no guard, effect of another variable, invariant,
-  ending, fairness constraint or profile reads. Every question that does not mention them
+* ``build(inert=False)`` drops the three inert Nature events (the two Polish mobilizations,
+  Mussolini's letter) and their two variables, which no guard, effect of another variable,
+  invariant, ending, fairness constraint or profile reads. Every question that does not mention them
   has the same answer on both builds (Nature's inert events project to ``none``); the
   analysis uses the reduced build for speed and tests/ww2/crisis_1939 checks the
   equivalence.
@@ -71,6 +73,9 @@ __all__ = [
     "ROOT",
     "DATA",
     "REALIZED_MOVES",
+    "EVENTS",
+    "DECISIONS",
+    "INERT_EVENTS",
     "EXIT_VARIABLES",
     "tick_of",
     "tick_days",
@@ -83,6 +88,7 @@ __all__ = [
     "realized_rows",
     "realized_moves",
     "crisis",
+    "replay",
 ]
 
 HORIZON = 20
@@ -90,6 +96,8 @@ TICK0 = datetime.date(1939, 7, 5)
 ROOT = Path(__file__).resolve().parents[3]
 DATA = ROOT / "data" / "ww2" / "crises" / "1939"
 REALIZED_MOVES = DATA / "realized_moves.csv"
+EVENTS = DATA / "events.csv"
+DECISIONS = DATA / "decisions.csv"
 
 # The coarse variables the crisis changes (docs/crisis_1939_testbed.md section 1).
 EXIT_VARIABLES = (
@@ -105,12 +113,16 @@ EXIT_VARIABLES = (
 )
 
 
+# Nature's events that no guard, other effect, predicate or constraint reads.
+INERT_EVENTS = ("mobilize_partial", "mobilize_general", "italy_declines")
+
+
 def tick_of(day: datetime.date) -> int:
     """The tick containing ``day`` (5 July 1939 is tick 0; 3 September is tick 20)."""
-    t = (day - TICK0).days // 3
-    if not 0 <= t <= HORIZON:
+    days = (day - TICK0).days
+    if not 0 <= days <= 3 * HORIZON:
         raise ValueError(f"{day} is outside the sub-game (5 Jul to 3 Sep 1939)")
-    return t
+    return days // 3
 
 
 def tick_days(t: int) -> tuple[datetime.date, datetime.date]:
@@ -532,9 +544,12 @@ def entry(coarse: Mapping[str, object]) -> dict[str, object]:
     ``british_treaty``), the pact (``german_approach``), the alliance, the war in the West
     and a Polish attack already made. Fine-only variables take their declared initial
     values, the record's of 5 July 1939: political talks under way, no military talks, no
-    German approach, no order, Poland unmobilized, Italy's readiness unknown."""
+    German approach, no order, Poland unmobilized, Italy's readiness unknown. The talks are
+    entered as broken when the coarse state already has the pact (WEST's approach to Moscow
+    no longer stands; v1's ``approach_ussr`` needs no pact)."""
     pact = _true(coarse["nazi_soviet_pact"])
     return {
+        "talks": "broken" if pact else "political",
         "aims_GER": coarse["aims_GER"],
         "aims_USSR": coarse["aims_USSR"],
         "belief_GER": coarse["belief_GER"],
@@ -636,7 +651,7 @@ def realized_moves(cm: CompiledModel, path: str | Path = REALIZED_MOVES) -> list
             try:
                 move.append(a.action_index(name))
             except ModelError:
-                if a.is_nature and name in ("mobilize_partial", "mobilize_general", "italy_declines"):
+                if a.is_nature and name in INERT_EVENTS:
                     move.append(0)
                     continue
                 raise ModelError(f"{path}: tick {row['tick']}: {a.name} has no action {name!r}")

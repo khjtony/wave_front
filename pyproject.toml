@@ -14,6 +14,8 @@ dependencies = []
 bmc = ["z3-solver"]
 data = ["pyreadr"]
 extract = ["anthropic"]
+# The compiled BDD core: pip install -e '.[fast]' && python -m wavefront.symbolic._core.build
+fast = ["cffi>=1.15"]
 dev = ["pytest", "hypothesis", "ruff", "jsonschema", "playwright"]
 
 [project.scripts]
@@ -24,6 +26,7 @@ include = ["wavefront*"]
 
 [tool.setuptools.package-data]
 "wavefront.viz" = ["template/*.html", "template/*.css", "template/*.js"]
+"wavefront.symbolic._core" = ["*.c", "*.h"]
 
 [tool.pytest.ini_options]
 pythonpath = ["."]

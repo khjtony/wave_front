@@ -66,8 +66,34 @@ WINDOW = range(0, 15)  # ticks 0 (1936Q1) to 14 (1939Q3)
 NO_GENERAL_WAR = (V.war_west_ger == "peace") & (V.poland == "independent")
 FILES = [f"{y}Q{q}" for y in range(1936, 1940) for q in range(1, 5)][:14]  # to 1939Q2
 FILES = ["1935Q4", *FILES]  # start of 1936Q1 to start of 1939Q3
-KEEP_PEACE = {"WEST": ["concede", "guarantee_poland", "rearm"]}
-TAKE_POLAND = {"GER": ["attack_poland", "rearm"]}
+# Fixed strategies for the v1 refinement (balance_europe through tick 20, amended
+# 2026-10-15), as conditional priority lists (models/ww2/bounded.py `play`): the West keeps
+# the balance only by the 1936 branch (resist, declare war, attack the still-unready army,
+# which rhineland_resolution makes Nature resolve as GERMAN_DEFEAT); Germany breaks it by
+# rearming first, then taking five regions or France once the army is high (T2's recorded
+# result: a Germany that delays its entry until its army is ready).
+KEEP_PEACE = {
+    "WEST": ["offensive_west", "declare_war", "resist_rhineland", "concede", "rearm"],
+}
+TAKE_POLAND = {
+    "GER": [
+        (V.arms_GER < "high", ["rearm"]),
+        (
+            True,
+            [
+                "attack_france",
+                "attack_poland",
+                "occupy_bohemia",
+                "attack_czechoslovakia",
+                "demand_sudeten",
+                "annex_austria",
+                "court_italy",
+                "remilitarize_rhineland",
+            ],
+        ),
+    ],
+    "Nature": ["campaign_west"],
+}
 
 
 @pytest.fixture(scope="module")
@@ -117,8 +143,19 @@ def departure(memberships):
     return None
 
 
-def sensitivity(cm, res, state):
-    """Each variable moved one level in ``state``: the moves that put it inside V."""
+def sensitivity(cm, res, state, move):
+    """The driving variables at the departure state ``state`` (inside V) with the realized
+    joint move ``move`` of its quarter (T6's convention): each variable moved one level; a
+    variable is a driver when the move's availability changes with it (the perturbation
+    removes or creates the decision that leaves V) or when, the move replayed, the successor
+    is inside V."""
+
+    def playable(st):
+        if cm.is_terminal(st):
+            return False
+        return all(j in acts for j, acts in zip(move, cm.available(st), strict=True))
+
+    base = playable(state)
     rows = []
     for i, v in enumerate(cm.variables):
         if v.name == "tick":
@@ -127,8 +164,16 @@ def sensitivity(cm, res, state):
             if 0 <= state[i] + d < v.size:
                 t = list(state)
                 t[i] += d
-                if res.contains(tuple(t)):
-                    rows.append((v.name, cm.level_name(i, t[i])))
+                t = tuple(t)
+                try:
+                    ok = playable(t)
+                except Exception:  # an ill-formed perturbed state
+                    continue
+                level = cm.level_name(i, t[i])
+                if ok != base:
+                    rows.append((v.name, level, "available" if ok else "unavailable"))
+                elif ok and res.contains(cm.step(t, move)):
+                    rows.append((v.name, level, "successor inside V"))
     return rows
 
 
@@ -145,19 +190,23 @@ def test_T13_v0_departure_inside_the_window(v0_kernel, aims):
     states = [(q, snapshot_state(cm, q, aims, builtins=True)) for q in [*FILES, "1939Q3"]]
     seen = [(st[cm.index["tick"]], "in" if res.contains(st) else "out") for _, st in states]
     t = departure(seen)
-    first_out = None
+    drivers = []
     if t is not None:
-        first_out = next((st for _, st in states if st[cm.index["tick"]] == t + 1), None)
-    drivers = sensitivity(cm, res, first_out) if first_out is not None else []
+        at_t = next(st for _, st in states if st[cm.index["tick"]] == t)
+        drivers = sensitivity(cm, res, at_t, realized_moves(cm)[t])
     path = v0_path(cm, aims)
     replay = [(s[cm.index["tick"]], "in" if res.contains(s) else "out") for s in path[:16]]
     print(
         f"\nT13 v0 ({aims}): snapshot states {seen}; departure quarter tick {t}; driving "
-        f"variables at the first state outside {drivers}; the model's own replay {replay}"
+        f"variables at the departure state {drivers}; the model's own replay {replay}"
     )
     assert t is not None and t in WINDOW
     assert t == {"hegemonic": 1, "revisionist": 14}[aims]
     assert drivers
+    if aims == "revisionist":
+        # the record's attack on Poland is unavailable under the hypothesis: the driver is
+        # the hypothesis gate itself (aims_GER)
+        assert any(name == "aims_GER" for name, _, _ in drivers)
 
 
 @pytest.mark.slow

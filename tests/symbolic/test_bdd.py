@@ -1,12 +1,21 @@
-"""The BDD manager against truth tables on random functions of a few variables."""
+"""The BDD managers against truth tables on random functions of a few variables: the
+pure-Python reference and the compiled core (skipped when it is not built)."""
 
 import itertools
 import random
 
+import pytest
 from hypothesis import given, settings
 from hypothesis import strategies as st
 
-from wavefront.symbolic.bdd import BDD, FALSE, TRUE
+from wavefront.symbolic import c_available
+from wavefront.symbolic import manager as new_manager
+from wavefront.symbolic.bdd import FALSE, TRUE
+
+CORES = [
+    "python",
+    pytest.param("c", marks=pytest.mark.skipif(not c_available(), reason="C core not built")),
+]
 
 N = 6
 ROWS = list(itertools.product((0, 1), repeat=N))  # row r assigns level k to ROWS[r][k]
@@ -43,8 +52,8 @@ def random_function(mgr, rnd, depth=4):
     return mgr.ITE(a, b, c), (ta & tb) | ((FULL ^ ta) & tc)
 
 
-def manager():
-    mgr = BDD()
+def manager(core):
+    mgr = new_manager(core)
     for k in range(N):
         mgr.add_var(f"x{k}")
     return mgr
@@ -63,11 +72,12 @@ def exists_table(t, levels):
     return out
 
 
+@pytest.mark.parametrize("core", CORES)
 @settings(max_examples=150, deadline=None)
 @given(seed=st.integers(0, 2**32 - 1))
-def test_operations_match_truth_tables(seed):
+def test_operations_match_truth_tables(core, seed):
     rnd = random.Random(seed)
-    mgr = manager()
+    mgr = manager(core)
     f, tf = random_function(mgr, rnd)
     g, tg = random_function(mgr, rnd)
     assert table(mgr, f) == tf
@@ -122,9 +132,10 @@ def test_operations_match_truth_tables(seed):
     assert mgr.count(FALSE, range(3)) == 0
 
 
-def test_gc_keeps_roots_and_reuses_nodes():
+@pytest.mark.parametrize("core", CORES)
+def test_gc_keeps_roots_and_reuses_nodes(core):
     rnd = random.Random(1)
-    mgr = manager()
+    mgr = manager(core)
     keep, tk = random_function(mgr, rnd, 5)
     for _ in range(20):
         random_function(mgr, rnd, 5)
@@ -138,8 +149,9 @@ def test_gc_keeps_roots_and_reuses_nodes():
     assert table(mgr, keep) == tk
 
 
-def test_protect_and_register():
-    mgr = manager()
+@pytest.mark.parametrize("core", CORES)
+def test_protect_and_register(core):
+    mgr = manager(core)
     f = mgr.AND(mgr.var(0), mgr.var(3))
     mgr.protect(f)
 
@@ -162,9 +174,10 @@ def test_protect_and_register():
     assert mgr.live_nodes == 1
 
 
-def test_deep_order():
+@pytest.mark.parametrize("core", CORES)
+def test_deep_order(core):
     """Hundreds of variables: no recursion trouble, counts as big ints."""
-    mgr = BDD()
+    mgr = new_manager(core)
     levels = [mgr.add_var() for _ in range(600)]
     f = TRUE
     for v in reversed(levels):

@@ -1,0 +1,34 @@
+# Dated structural events for the July 1914 v0 variables (docs/ontology_1914.md). One row per event and variable.
+# tick is the day's tick (the decision or event day); visible_tick = tick + 1 is the first state showing the level. Rows whose
+# level equals the level in force are confirming observations. 'not verified' in the note marks a detail recalled, not checked.
+date,tick,visible_tick,variable,level,event,source,note
+1914-06-28,0,1,mob_RUS,none,no Russian measure before the note (confirming the initial level),Lieven 2015,
+1914-06-28,0,1,belief_GER_GBR,stays_out,Berlin's working assumption of British non-intervention: the Kaiser's statements of 5 to 6 Jul (initial level),Geiss (ed.); Clark 2012,Jagow's statements of mid-July not verified
+1914-07-05,7,8,blank_cheque,True,Wilhelm II's assurance to Szogyeny at Potsdam; confirmed by Bethmann and Zimmermann on 6 Jul,"Szogyeny's telegrams of 5 and 6 Jul 1914 (Geiss (ed.), July 1914)",
+1914-07-07,9,10,ultimatum,resolved,"Common Ministerial Council: action against Serbia in principle, demands in a note",Council minutes of 7 Jul 1914 (Geiss (ed.)),Tisza dissenting until 14 Jul
+1914-07-23,25,26,ultimatum,delivered,"Giesl delivers the note in Belgrade at 18:00, 48-hour limit",Austrian Red Book; Albertini vol. II,decided 19 Jul with the delivery date (delay 4)
+1914-07-25,27,28,ultimatum,rejected,Serbian reply 17:55; Giesl leaves 18:30; relations broken,Austrian Red Book; Geiss (ed.),
+1914-07-25,27,28,mob_AUH,partial,"Franz Joseph orders the mobilization against Serbia (Plan B), first day 28 Jul",Albertini vol. II,hour of the order not verified
+1914-07-25,27,28,mob_RUS,pre_mobilization,Krasnoe Selo council: period preparatory to war from 26 Jul,"Lieven, Towards the Flame (2015); Russian Orange Book",Council of Ministers of 24 Jul deliberated
+1914-07-28,30,31,war_AUH_SER,war,"Berchtold's telegram declaring war, about 11:00",Austrian Red Book; Albertini vol. II,
+1914-07-28,30,31,halt_in_belgrade,proposed,Wilhelm II's note to Jagow (morning); Bethmann's telegram to Tschirschky 22:15 in weakened form,Kautsky documents; Geiss (ed.),pressed again 30 Jul 02:55 and 03:00
+1914-07-29,31,32,mob_RUS,partial,partial mobilization announced; ordered in the night of 29 to 30 Jul after the countermand of the general order,Lieven 2015; Albertini vol. II,the general order signed 29 Jul was revoked about 21:40 (not verified to the minute)
+1914-07-29,31,32,belief_GER_GBR,fights,Lichnowsky's telegram reporting Grey's warning received in Berlin in the evening,Kautsky documents; Geiss (ed.),hour of receipt not verified
+1914-07-30,32,33,mob_RUS,general,"general mobilization ordered about 17:00, first day 31 Jul",Lieven 2015; Albertini vol. II,
+1914-07-30,32,33,mob_FRA,covering_troops,"Council of Ministers: covering troops without reservists, ten-kilometre withdrawal",DDF 3e serie vol. XI; Joffre's memoirs,
+1914-07-31,33,34,mob_AUH,general,"general mobilization signed 12:23, first day 4 Aug",Albertini vol. II; Mombauer 2001,Council of 31 Jul declines the Halt in Belgrade
+1914-07-31,33,34,mob_GER,kriegsgefahr,Zustand drohender Kriegsgefahr proclaimed 13:00; ultimatums to Russia and France,Kautsky documents; Mombauer 2001,
+1914-07-31,33,34,halt_in_belgrade,proposed,Common Ministerial Council declines the Halt (level unchanged; confirming observation),Albertini vol. II,never accepted
+1914-08-01,34,35,mob_GER,general,"mobilization ordered about 17:00, first day 2 Aug",Kautsky documents; Mombauer 2001,the Kaiser's demand to deploy east refused by Moltke the same evening
+1914-08-01,34,35,war_GER_RUS,war,declaration handed to Sazonov by Pourtales about 19:00,Kautsky documents; Geiss (ed.),
+1914-08-01,34,35,mob_FRA,general,"general mobilization posted 15:45 to 16:00, first day 2 Aug",DDF 3e serie vol. XI; French Yellow Book,
+1914-08-01,34,35,belief_GER_GBR,uncertain,"Lichnowsky's misread report of a British neutrality offer (about 17:00), corrected by George V's telegram that night",Kautsky documents; Geiss (ed.),the day's net reading
+1914-08-01,34,35,commitment_GBR,none,Cabinet refuses a commitment (confirming observation),Asquith's letters to Venetia Stanley; BD XI,
+1914-08-02,35,36,commitment_GBR,naval_assurance,Cabinet (morning); Grey's assurance to Cambon in the afternoon,"BD XI; Asquith's letters, 2 Aug",
+1914-08-02,35,36,belgium,demanded,"German note delivered in Brussels 19:00, 12-hour limit",Geiss (ed.); Albertini vol. III,
+1914-08-03,36,37,belgium,demanded,Belgian refusal 07:00 (level unchanged; confirming observation),Geiss (ed.); Albertini vol. III,no separate level (ontology section 4)
+1914-08-03,36,37,commitment_GBR,belgian_guarantee,Cabinet resolution of 2 Aug evening made public in Grey's statement to the Commons,Hansard 3 Aug 1914; BD XI,placed on 3 Aug (one GBR decision per day)
+1914-08-03,36,37,belief_GER_GBR,fights,Grey's statement read in Berlin,Kautsky documents; Geiss (ed.),
+1914-08-03,36,37,war_GER_FRA,war,declaration handed to Viviani by Schoen 18:45,Geiss (ed.); Albertini vol. III,
+1914-08-04,37,38,belgium,invaded,German troops cross the frontier about 08:00 towards Liege,Albertini vol. III,
+1914-08-04,37,38,commitment_GBR,war,ultimatum to Germany expiring 23:00 London time; Britain at war,BD XI,war_GBR_GER folded into commitment_GBR

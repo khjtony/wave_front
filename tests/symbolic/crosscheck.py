@@ -127,13 +127,14 @@ def check_contested(g, enc, coalition, goal, tb):
             assert sc.region(s) == want
 
 
-def check_model(model, profile=None, seed=0, every_coalition=False, gc_always=False):
+def check_model(model, profile=None, seed=0, every_coalition=False, gc_always=False, manager=None):
     """All checks on one model; ``False`` if the explicit engine rejects it (then the
     symbolic ``reachable`` must reject it too). ``gc_always`` makes the manager collect
-    garbage at every opportunity."""
+    garbage at every opportunity; ``manager`` picks the BDD core (default: the selected
+    one, see :func:`wavefront.symbolic.manager`)."""
     cm = model.compile(profile=profile)
     g = try_explore(cm)
-    enc = encode(cm)
+    enc = encode(cm, manager=manager)
     if gc_always:
         enc.mgr.gc_min_nodes = 0
         enc.mgr.gc_factor = 0.0

@@ -13,7 +13,7 @@ The symbolic engine did not fail on the benchmark, so the decision stands:
 - WEST's kernel for `balance_europe` is computed for every state of WW2 v0, both hypotheses at once, in about one minute.
 - Counting that kernel inside the reachable set from tick 0 takes 49 minutes under hegemonic aims (6.55 billion reachable states) and 16 minutes under revisionist aims (0.85 billion).
 
-Section 5 gives the costs and what a larger model (WW2 v1, horizon 39) would need. A compiled BDD core is the named next step if forward reachability over v1 is required.
+Section 5 gives the costs and what a larger model (WW2 v1, horizon 39) would need. A compiled BDD core is the named next step if forward reachability over v1 is required. It now exists (section 7).
 
 **Symbolic engine.** The engine is in-house and written in pure Python (`wavefront/symbolic/`). It needs no third-party dependency. It has three parts:
 
@@ -235,7 +235,7 @@ What would be needed next, for WW2 v1 (horizon 39, 55 variables, 84 actions):
 - The kernel over the whole domain should remain cheap. It is one controllable-predecessor step per tick layer, 0.2 to 8 s each for v0.
 - Forward reachability from tick 0 would not fit in an hour in pure Python at v0's growth rate. It would need about twice as many steps, over larger BDDs.
 - Profiling shows where the time goes. On the step-3 frontier, about 3.3 million node constructions and 5.3 million `and_exists` calls take 18 s under the profiler; the per-call interpreter overhead is about 1 to 2 microseconds.
-- **The next step is a compiled BDD core** (C or Rust behind the same `BDD` interface: unique table, computed tables, `and_exists`, `compose`). That is where a 30 to 100 times gain is available. The encoding and the solver need not change. The kernel and membership questions do not need it.
+- **The next step is a compiled BDD core** (C or Rust behind the same `BDD` interface: unique table, computed tables, `and_exists`, `compose`). That is where a 30 to 100 times gain is available. The encoding and the solver need not change. The kernel and membership questions do not need it. It is built; section 7 gives its design and measures it.
 
 Memory notes: each live node costs about 285 bytes in this representation (lists, unique table and computed tables). Typed arrays instead of lists saved only 10% and cost 10% in speed, so lists were kept.
 
@@ -250,3 +250,73 @@ Memory notes: each live node costs about 285 bytes in this representation (lists
   - The CLI is not wired (wave B).
   - Uniform-strategy checks and pivotal coalitions on symbolic results are not implemented.
   - `framework_spec.md` does not yet describe `wavefront.symbolic`. The spec needs a section for it; that document is outside this step's paths.
+
+## 7. The compiled core
+
+Section 5 named a compiled BDD core as the next step. It is built: `wavefront/symbolic/_core/` (C11, no library) behind the interface of `bdd.BDD`, wrapped by `wavefront/symbolic/bdd_c.py`. The pure-Python manager stays as the reference and the fallback. `encode.py` and `solve.py` run unchanged on either core.
+
+### 7.1 Design
+
+- **Edges and nodes.** The edges are those of `bdd.py`: an edge is `(node << 1) | complement`, TRUE is 0, FALSE is 1, and the high edge of a stored node is never complemented. Nodes are a struct of three `uint32_t` arrays (`var`, `lo`, `hi`) with 32-bit indices, up to 2^31 - 1 nodes, grown by doubling. A free node is chained through `lo`. During a collection the top bit of `var` marks a live node.
+- **Unique table.** It is hash-consed with open addressing and linear probing. A slot holds the key (`var`, `lo`, `hi`) and the node index, 16 bytes, so that a lookup reads no node array. The table doubles past a load of 0.7 and is rebuilt by every collection.
+- **Computed tables.** There is one table for each of `and`, `xor`, `ite`, `exists` and `and_exists`. Each uses open addressing in buckets of four 16-byte entries, one cache line per bucket. A table doubles past a load of 0.5 until it reaches its cap, which is the power of two at or above the node table's capacity, clamped to between 2^18 and 2^25 entries. At the cap, a new entry whose bucket is full replaces one of its entries, so the table is a lossy cache.
+- **Recursions.** The recursions are those of `bdd.py`, with the same terminal cases and normalizations, so every operation returns the same function:
+  - `AND`, `OR`, `XOR`, `IFF`, `IMPLIES`, `DIFF`, `ITE`;
+  - `and_all` and `or_all` (balanced);
+  - `exists`, `forall` and `and_exists`;
+  - `restrict`, `simplify` (Coudert-Madre), `compose` and `rename` (fast path included);
+  - `transfer`.
+
+  `restrict`, `simplify`, `compose`, `rename`, `transfer` and `count` use per-call memo tables, which are freed when the call returns. The recursion runs on the C stack; its depth is a small multiple of the number of variables, so there is no interpreter recursion limit. An operation that runs out of memory, or past 2^31 - 1 nodes, unwinds to its entry point, and the wrapper raises `MemoryError`.
+- **Queries.** The queries are computed in C:
+  - `evaluate`, `support`, `node_count` and `top`/`low`/`high`.
+  - `pick_one` takes the 0 branch whenever it is satisfiable, so the least action codes are chosen.
+  - `count` is exact: fixed-width little-endian numbers of `total/32 + 1` 32-bit limbs, which the wrapper turns into a Python `int`. The benchmark's counts exceed 2^64.
+- **Garbage collection.** Collection is a non-moving mark and sweep, with the same roots as in `bdd.py`. The wrapper keeps protected edges and registered holders (in a `WeakSet`). At each collection it passes the C collector every root: the edges given to `gc`, the protected edges, and each live holder's `bdd_roots()`. `maybe_gc` applies the same policy (`gc_min_nodes`, `gc_factor`, the live count after the previous collection), so both cores collect at the same points.
+- **Selection.** `wavefront.symbolic.manager(kind=None)` returns a new manager:
+  - With `WAVEFRONT_BDD` unset or `c`, it returns the C manager when the extension imports.
+  - With `python`, or when the import fails, it returns the Python manager.
+  - An explicit `manager("c")` raises instead of falling back.
+
+  `encode(cm, ..., manager=None)` uses the factory, and every `stats` entry of a result carries `"core"`. The build embeds a hash of the C sources. If the sources change after a build, the wrapper refuses the stale module, and the default selection falls back to Python with a warning.
+
+### 7.2 Differences from the reference
+
+- **Computed-table clearing.** In `bdd.py` the tables are dictionaries that a collection empties, and any table past 3,000,000 entries is emptied before a top-level operation. In the C core the tables are bounded lossy caches. A collection drops only the entries that mention a reclaimed node and keeps the rest, so the work cached before a collection is reused after it. Nothing else clears them.
+- **Node numbers.** These may differ between the cores: the C free list reuses the lowest freed index first. Results are the same functions, and functions are compared across managers with `transfer`. Node counts, supports, picks and counts are equal, because they depend only on the canonical form. The peak node figures below are equal to the Python run's wherever both were measured.
+- **Interface.** `peak_nodes` is a read-only property (the node table's high-water mark), and `stats()` has extra keys: the other computed tables' sizes, `node_bytes` and `cache_bytes`.
+
+### 7.3 Correctness
+
+`tests/symbolic/` passes under both cores, the slow WW2 states included (`WAVEFRONT_BDD=python` selects the reference). `test_bdd.py` runs every truth-table test on both managers. `test_bdd_differential.py` adds the following checks:
+
+| Test | What is compared | Size |
+|---|---|---|
+| random operation sequences | 19 operations (every boolean operation, quantifiers, `restrict`, `simplify`, `compose`, `rename` on both paths, `cube`, `and_all`/`or_all`) on 10 variables; after each step the C result transferred into the Python manager equals the Python result as an edge, the Python result transferred into C equals the C result, and `node_count`, `support`, `count`, `pick_one`, `top` agree | 300 hypothesis sequences of 40 steps (12,000 steps) |
+| the same, collection at every step | roots passed, protected and held by a registered holder (one third each); the live node counts after each collection are equal, and every live result still agrees | 60 hypothesis sequences of 30 steps, plus 20 seeded sequences of 60 steps (3,000 collections) |
+| exact counts past 64 bits | random functions over 150 levels (5 limbs) with complemented edges at every depth, plus 2 extra free levels | 40 functions, both polarities |
+| transfers | C to C, C to Python and Python to C under a random variable permutation | 50 managers × 5 functions |
+| fixpoints edge by edge | encoding (`dom`, `term`, `live`, `initial`, `error`, `active`), reachable set, one attractor and two safety kernels per ending and `HORIZON` (random coalition) | 40 random models |
+| explicit cross-check under each core | the full `check_model` (every coalition) on both generators, once with `manager="python"`, once with `manager="c"` | 30 + 30 models per core |
+| collection at every step, C | `check_model(..., gc_always=True)` | 20 rich models |
+| errors and selection | the reference's exceptions; `WAVEFRONT_BDD` and explicit selection; `stats` name the core | |
+
+The existing hypothesis cross-checks (`test_symbolic_crosscheck.py`, 400 examples) run on whichever core is selected, so they cover C by default and Python under `WAVEFRONT_BDD=python`. Mutations of the C source caught by these tests: `pick_one` preferring the 1 branch, the borrow of the big-number subtraction in `count` (only the 150-level test), a collector that keeps cache entries whose result was reclaimed, and a wrong cofactor in `simplify`.
+
+### 7.4 Benchmark: Python and C side by side
+
+PLACEHOLDER_BENCH
+
+### 7.5 Build
+
+```
+pip install -e '.[fast]'                    # cffi; a C11 compiler (gcc or clang) is needed
+python -m wavefront.symbolic._core.build    # writes wavefront/symbolic/_core/_bdd*.so
+python -c "import wavefront.symbolic as s; print(s.manager().core)"   # c
+WAVEFRONT_BDD=python python -m pytest tests/symbolic -q                 # the reference
+```
+
+- The build script compiles with cffi in out-of-line API mode (`-std=c11 -O3`). `--debug` builds without optimization, and `--cc` picks the compiler. The cffi declarations are the marked region of `bdd_core.h`.
+- Rerun the build after any change to `bdd_core.c` or `bdd_core.h`. The wrapper refuses a stale module.
+- `pip install -e .` without the extra still works: the engine then uses the Python manager, and the differential tests are skipped.
+- No setuptools hook builds the core at install time. The project builds with plain setuptools and no `setup.py`, and a hook would make cffi and a compiler requirements of every install. `.gitignore` excludes the built `*.so`.

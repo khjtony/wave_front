@@ -17,6 +17,7 @@ Try it on the example model:
 
 ```
 pip install -e '.[dev,bmc]'
+pip install -e '.[fast]' && python -m wavefront.symbolic._core.build   # optional: the compiled BDD core
 wf report models/toy/two_power.py --out reports/toy_report.md
 wf viz models/toy/two_power.py --out reports/toy_viz.html   # open in a browser
 ```

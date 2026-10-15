@@ -81,6 +81,7 @@ from ..model.expr import (
 )
 from ..model.model import ModelError
 from .bdd import BDD, FALSE, TRUE
+from .cores import manager as new_manager
 
 __all__ = ["Encoding", "encode", "Partition"]
 
@@ -182,9 +183,10 @@ class Encoding:
         mgr: BDD | None = None,
         var_order: Sequence[str] | None = None,
         actions: str | Mapping[str, str] = "top",
+        manager: str | None = None,
     ) -> None:
         self.cm = cm
-        self.mgr = mgr if mgr is not None else BDD()
+        self.mgr = mgr if mgr is not None else new_manager(manager)
         self.P = _Parts(self.mgr)
         self._gen = cm._gen
         self._named_cache: dict[tuple[str, str], int] = {}
@@ -858,6 +860,9 @@ def encode(
     mgr: BDD | None = None,
     var_order: Sequence[str] | None = None,
     actions: str | Mapping[str, str] = "top",
+    manager: str | None = None,
 ) -> Encoding:
-    """Encode ``cm`` (see the module docstring)."""
-    return Encoding(cm, mgr, var_order, actions)
+    """Encode ``cm`` (see the module docstring). Without ``mgr``, a new manager of the core
+    ``manager`` (``"c"``, ``"python"``, or ``None`` for the default of
+    :func:`wavefront.symbolic.manager`)."""
+    return Encoding(cm, mgr, var_order, actions, manager)

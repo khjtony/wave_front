@@ -277,6 +277,7 @@ def _stat(enc: Encoding, k: int, t0: float, x: int, **extra: object) -> dict:
         "nodes": mgr.node_count(x),
         "live_nodes": mgr.live_nodes,
         "peak_nodes": mgr.stats()["peak_nodes"],
+        "core": getattr(mgr, "core", "python"),
         **extra,
     }
 

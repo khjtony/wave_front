@@ -1,0 +1,21 @@
+date,tick,actor,action,delay_days,source,note
+1914-07-05,7,GER,blank_cheque,0,Szogyeny's telegrams of 5 and 6 Jul 1914 (Geiss (ed.)),"one decision over 5 and 6 Jul, placed on its first day"
+1914-07-07,9,AUH,council,0,Common Ministerial Council of 7 Jul 1914 (minutes; Geiss (ed.)),
+1914-07-19,21,AUH,ultimatum,4,Common Ministerial Council of 19 Jul 1914; Austrian Red Book,delivery fixed for 23 Jul after Poincare's departure; visible tick 26
+1914-07-25,27,AUH,mobilize_partial,0,Franz Joseph's order of 25 Jul (Albertini vol. II),"first mobilization day 28 Jul; the guard reads the delivery, not the reply"
+1914-07-25,27,RUS,pre_mobilize,0,Council of Ministers 24 Jul; Krasnoe Selo council 25 Jul (Lieven 2015),in force 26 Jul
+1914-07-28,30,AUH,declare_war_SER,0,Austrian Red Book; Albertini vol. II,
+1914-07-28,30,GER,restrain_vienna,0,"Wilhelm II to Jagow, 28 Jul; Bethmann to Tschirschky 22:15 (Kautsky documents)",the Halt in Belgrade in weakened form
+1914-07-29,31,RUS,mobilize_partial,0,Lieven 2015; Albertini vol. II,"announced 29 Jul, ordered in the night"
+1914-07-30,32,GER,restrain_vienna,0,"Bethmann to Tschirschky, 30 Jul 02:55 and 03:00 (Kautsky documents)","after midnight, so on 30 Jul; suspended that night"
+1914-07-30,32,RUS,mobilize_general,0,Lieven 2015; Albertini vol. II,ordered about 17:00
+1914-07-30,32,FRA,covering_troops,0,DDF 3e serie vol. XI,
+1914-07-31,33,AUH,mobilize_general,0,Albertini vol. II; Mombauer 2001,signed 12:23
+1914-07-31,33,GER,kriegsgefahr,0,Kautsky documents; Mombauer 2001,13:00; within one day of the Russian order (mobilization_race)
+1914-08-01,34,GER,mobilize,0,Kautsky documents; Mombauer 2001,with the declaration on Russia the same evening
+1914-08-01,34,FRA,mobilize,0,DDF 3e serie vol. XI; French Yellow Book,
+1914-08-02,35,GER,ultimatum_belgium,0,Geiss (ed.); Albertini vol. III,19:00; western_timetable
+1914-08-02,35,GBR,naval_assurance,0,"BD XI; Asquith's letters, 2 Aug",
+1914-08-03,36,GER,declare_war_FRA,0,Geiss (ed.); Albertini vol. III,18:45
+1914-08-03,36,GBR,guarantee_belgium,0,Hansard 3 Aug 1914; BD XI,Cabinet resolution of 2 Aug evening; Grey's statement 3 Aug
+1914-08-04,37,GBR,ultimatum_GER,0,BD XI,expired 23:00; war

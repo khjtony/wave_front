@@ -1,5 +1,6 @@
 __pycache__/
 *.pyc
+*.so
 .ruff_cache/
 .pytest_cache/
 .hypothesis/

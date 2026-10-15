@@ -35,6 +35,7 @@ from wavefront.model.compile import CompiledModel, expand_relax
 from wavefront.model.expr import Const, Expr
 
 __all__ = [
+    "Priorities",
     "available",
     "avoid",
     "blocks",
@@ -144,23 +145,49 @@ def available(enc: Encoding, t: int, actor: str, action: str) -> z3.BoolRef:
     return z3.And(*conds) if conds else z3.BoolVal(True)
 
 
-def play(enc: Encoding, actor: str, priorities: Sequence[str]) -> list[z3.BoolRef]:
+Priorities = Sequence[str] | Sequence[tuple[Any, Sequence[str]]]
+
+
+def play(enc: Encoding, actor: str, priorities: Priorities) -> list[z3.BoolRef]:
     """``actor`` plays a fixed memoryless strategy at every non-terminal step: the first
     available action of ``priorities``, then of the actor's remaining actions in index order
     (the built-in ``idle`` or ``none`` first). The order is total, so the strategy is defined
     in every state in which the actor has an available action (a fairness restriction
-    included), and the constraint never removes a play for want of a move."""
+    included), and the constraint never removes a play for want of a move.
+
+    ``priorities`` is a list of action names, or a list of ``(condition, names)`` pairs,
+    the condition an expression (or ``True``) on the state of the step: the first pair whose
+    condition holds supplies the priority list for that step (a conditional memoryless
+    strategy, still a function of the state); when none holds the actor plays the first
+    available of its actions in index order."""
     a = _actor(enc.cm, actor)
     names = [x.name for x in a.actions]
-    unknown = [p for p in priorities if p not in names]
-    if unknown:
-        raise ValueError(f"{actor} has no action {unknown}")
-    order = [*priorities, *(n for n in names if n not in priorities)]
-    out = []
-    for t in range(enc.k):
+    cases: list[tuple[Any, Sequence[str]]]
+    if priorities and isinstance(priorities[0], tuple):
+        cases = list(priorities)  # type: ignore[arg-type]
+    else:
+        cases = [(True, list(priorities))]  # type: ignore[arg-type]
+    for _, prio in cases:
+        unknown = [p for p in prio if p not in names]
+        if unknown:
+            raise ValueError(f"{actor} has no action {unknown}")
+
+    def chain(t: int, prio: Sequence[str]) -> z3.ArithRef:
+        order = [*prio, *(n for n in names if n not in prio)]
         choice: z3.ArithRef = z3.IntVal(a.action_index(order[-1]))
         for name in reversed(order[:-1]):
             choice = z3.If(available(enc, t, actor, name), a.action_index(name), choice)
+        return choice
+
+    out = []
+    for t in range(enc.k):
+        choice = chain(t, [])
+        for cond, prio in reversed(cases):
+            branch = chain(t, prio)
+            if cond is True:
+                choice = branch
+            else:
+                choice = z3.If(enc.target(cond, t), branch, choice)
         out.append(z3.Implies(z3.Not(enc.terminal[t]), chosen(enc, t, actor) == choice))
     return out
 
@@ -397,7 +424,7 @@ def avoid(expr: Any) -> Constrain:
     return fn
 
 
-def strategies(fixed: dict[str, Sequence[str]]) -> Constrain:
+def strategies(fixed: dict[str, Priorities]) -> Constrain:
     """Every actor in ``fixed`` plays :func:`play` with its priority list."""
 
     def fn(enc: Encoding) -> list[z3.BoolRef]:
@@ -410,7 +437,7 @@ def forces(
     cm: CompiledModel,
     start: Sequence[int],
     target: Any,
-    fixed: dict[str, Sequence[str]],
+    fixed: dict[str, Priorities],
     k: int | None = None,
 ) -> tuple[bool, BmcTrace | None]:
     """Whether the actors in ``fixed``, playing those strategies, force ``target`` from
@@ -428,7 +455,7 @@ def blocks(
     cm: CompiledModel,
     start: Sequence[int],
     target: Any,
-    fixed: dict[str, Sequence[str]],
+    fixed: dict[str, Priorities],
     k: int | None = None,
 ) -> tuple[bool, BmcTrace | None]:
     """Whether the actors in ``fixed``, playing those strategies, keep ``target`` false from

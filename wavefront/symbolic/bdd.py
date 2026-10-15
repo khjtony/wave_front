@@ -75,6 +75,7 @@ class BDD:
 
     TRUE = TRUE
     FALSE = FALSE
+    core = "python"
 
     def __init__(self) -> None:
         self._var: list[int] = [_TERMVAR]

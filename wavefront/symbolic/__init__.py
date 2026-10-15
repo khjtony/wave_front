@@ -1,6 +1,8 @@
 """The symbolic engine: BDDs, the binary encoding of a compiled model, and fixpoints.
 
-Pure Python, no third-party dependency. :mod:`.bdd` is the BDD manager, :mod:`.encode`
+:mod:`.bdd` is the reference BDD manager, in pure Python with no third-party dependency;
+:mod:`.bdd_c` the same interface over a compiled C core (``_core``, built with cffi), and
+:func:`manager` picks one (``WAVEFRONT_BDD``, see :mod:`.cores`). :mod:`.encode`
 the encoding of a :class:`~wavefront.model.compile.CompiledModel` (state, next-state and
 action bits; availability; next-state functions), :mod:`.solve` the controllable
 predecessor, attractor, safety kernel, contested region, forward reachability and witness
@@ -8,6 +10,7 @@ traces. See ``docs/engine_scaling.md`` for the decision record and the benchmark
 """
 
 from .bdd import BDD, FALSE, TRUE
+from .cores import c_available, manager
 from .encode import Encoding, encode
 from .solve import (
     SymbolicAttractor,
@@ -27,6 +30,8 @@ __all__ = [
     "BDD",
     "TRUE",
     "FALSE",
+    "manager",
+    "c_available",
     "Encoding",
     "encode",
     "cpre",
