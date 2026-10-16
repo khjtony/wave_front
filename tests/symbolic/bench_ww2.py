@@ -13,7 +13,8 @@ Commands:
   built-ins, hegemonic aims for Germany and Japan): ``encode``; ``reach`` (forward
   reachability, ``--check`` for the explicit engine's checks); ``asia`` (WEST's kernel for
   ``balance_asia`` over the whole domain), ``europe`` (WEST's for ``balance_europe``),
-  ``undefeated`` (GER's for ``undefeated``), each with the start state's membership.
+  ``undefeated`` (GER's for ``undefeated``), each with the start state's membership;
+  ``--within`` computes the kernel inside the states reachable from the start state.
 
 The BDD core is the selected one (``WAVEFRONT_BDD``, see :func:`wavefront.symbolic.manager`);
 every line of output names it.
@@ -200,7 +201,16 @@ def cmd_v1(args):
             "europe": ("WEST", "balance_europe"),
             "undefeated": ("GER", "undefeated"),
         }[args.task]
-        res = safe(enc, [coalition], enc.predicate(inv), on_iteration=_progress(args.task))
+        within = None
+        if args.within:  # the kernel inside the states reachable from the start state
+            r = reachable(enc, enc.state_cube(start), check=False)
+            within = r.states
+            out.update(reachable=r.count(), reach_s=round(time.perf_counter() - t, 1))
+        res = safe(
+            enc, [coalition], enc.predicate(inv), within=within, on_iteration=_progress(args.task)
+        )
+        if within is not None:
+            out.update(kernel_reachable=res.count(within))
         out.update(
             coalition=coalition,
             invariant=inv,
@@ -227,6 +237,7 @@ def main():
     v = sub.add_parser("v1")
     v.add_argument("task", choices=["encode", "reach", "asia", "europe", "undefeated"])
     v.add_argument("--check", action="store_true")
+    v.add_argument("--within", action="store_true", help="kernel inside the reachable set")
     args = p.parse_args()
     {"kernel": cmd_kernel, "reach": cmd_reach, "v1": cmd_v1}[args.cmd](args)
 

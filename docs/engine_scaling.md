@@ -305,7 +305,57 @@ The existing hypothesis cross-checks (`test_symbolic_crosscheck.py`, 400 example
 
 ### 7.4 Benchmark: Python and C side by side
 
-PLACEHOLDER_BENCH
+The C figures are from `tests/symbolic/bench_ww2.py` (`kernel`, `reach`, `v1`) on the machine of section 4: 4 cores, 15 GB, CPython 3.13, one core per run. Two or three other jobs ran beside most runs, so each C row also gives the CPU seconds where wall and CPU time differ. The Python figures are those of sections 4 and 5 and of reports/ww2_v1.md section 2. Every count, node count and peak below was equal on both cores wherever both finished. This includes the peak node table, because the cores collect at the same points.
+
+**WW2 v0 (171 BDD variables).**
+
+| Computation | Python | C | Speed-up | Peak nodes (both) |
+|---|---|---|---|---|
+| encoding | 0.2 to 0.7 s | 0.05 to 0.08 s | about 5× | |
+| WEST's kernel for `balance_europe`, whole domain (4.1) | 55 to 60 s | 4.1 to 7.1 s (5.2 s CPU) | about 10× | 2,985,508 |
+| reachable from tick 0, revisionist (851,713,642 states; BDD 816,678 nodes) | 933 s | 93.6 s (84.7 s on a quieter machine) | 10 to 11× | 4,980,185 |
+| reachable from tick 0, hegemonic (6,554,388,846 states; BDD 2,544,348 nodes) | 2,911 s | 276 s (229 s CPU; 256 s on a quieter machine) | 10.5 to 11.4× | 13,622,074 |
+| shortest distance out of the kernel, tick 0 revisionist (5) | 104 s (old image schedule) | 5.1 s | | |
+| T8(b) (1) `1938Q2` built-ins, reachable (11,398,836) | 217 s | 11.5 s | 19× | |
+| T8(b) (2) `1938Q3` built-ins (601,353) | 37 s | 2.1 s | 18× | |
+| T8(b) (3a) (1) with `arms_GER = high` (1,855,561) | 146 s | 7.3 s | 20× | |
+| T8(b) (3b) (2) with `arms_GER = high` (4,134,692) | 106 s | 5.0 s | 21× | |
+| T8(b) (4a) replay to tick 10 (35,627,841) | 270 s | 11.3 s | 24× | |
+| T8(b) (4b) replay to tick 11 (16,538,765) | 164 s | 5.7 s | 29× | |
+
+The kernel-membership, kernel ∩ reachable and shortest-distance columns of 4.2 to 4.4 come out identical; this section records costs, not answers. The T8(b) rows gain more than the tick-0 runs because their peak stays under the 2,000,000-node collection threshold plus the kernel's live set (2,985,508 nodes), so the C caches are never swept. The Python peaks of the T8(b) table in 4.4 were a running high-water mark under an older policy.
+
+The T8(b) rows use the snapshot files as they were for section 4, before the clock-consistency pass (owner's decision 7) changed the 1938Q2 and 1938Q3 readings. `tests/symbolic/test_symbolic_ww2.py` now restores those readings explicitly.
+
+**Where the time goes.** On the whole-domain kernel the C core spends all but 1% of its time in C: `compose` 3.5 s, `and_exists` 1.2 s, collections 0.7 s. That is about 60 million recursive steps (19 M `and`, 19.5 M `ite`, 18 M `mk` calls of which 13.6 M create a node) at about 80 ns each. Each step is one or two cache misses into tables far larger than the processor's caches, so the core is bound by memory latency. The 30 to 100 times estimated in section 5 assumed that the interpreter's overhead was the whole cost. The C core removes that overhead and measures 10 to 11 times on the large images and about 20 times on the medium ones. Two layouts were measured and not kept:
+
+- An array-of-structs node table: same speed, so the struct of arrays stays.
+- 16-byte unique-table slots holding the whole key: 8% faster on the v0 kernel, but they doubled the unique table's memory (4.3 GB at 149 M nodes), so the slots hold a node index and a 32-bit hash tag.
+
+**WW2 v1 (281 BDD variables; 283 after the edits to `models/ww2/v1.py` made during this work).** The start state is the tick-22 state: `snapshot_state(cm, "1941Q2", "hegemonic", builtins=True, snapshots=SNAPSHOTS_V1, aims_JPN="hegemonic")`. The cap is 30 minutes per computation. The memory limit is that of the session's process group, 14.3 GB, shared with the other jobs on the machine.
+
+| Computation | Python (reports/ww2_v1.md section 2) | C, model of the report (281 variables) | C, current model (283 variables) |
+|---|---|---|---|
+| encoding | 18 s, 6.0 M nodes | 2.3 s, 6,000,059 nodes | 3.6 s, 7,033,896 nodes |
+| forward reachability from tick 22 (`check=False`) | did not finish: killed after about 19 min past iteration 15 of 17, 2.7 GB | **fits**: 279 s (238 s CPU), 4,464,563,333 states in 17 steps, BDD 1,970,838 nodes, peak 27,934,406 nodes, 3.0 GB | **fits**: 210 s (187 s CPU), 2,235,910,445 states in 17 steps, BDD 1,295,216 nodes, peak 21,858,154 nodes, 1.9 GB |
+| `safe({WEST}, balance_asia)`, whole domain | abandoned at layer 36 of 39 after 72 s, 18.5 M live nodes, 5.5 GB | **fits**: 696 s (611 s CPU), peak 47,950,386 nodes, kernel BDD 231,805 nodes, 4.7 GB (16-byte unique slots) | **fits**: 782 s (655 s CPU), peak 49,955,433 nodes, kernel BDD 233,174 nodes, 3.1 GB |
+| WEST's kernel for `balance_europe`, whole domain | not attempted | **does not fit**: layer 3 (tick 36) reached 149,308,338 live nodes in 120 s at 8.3 GB; killed at 13.9 GB in layer 4 (16-byte unique slots) | PLACEHOLDER_EUROPE |
+| `safe({GER}, undefeated)`, whole domain | not attempted | **does not fit**: layer 4 (tick 35) reached 95,801,978 live nodes in 103 s at 5.2 GB; killed at 11.7 GB in layer 5 (16-byte slots, other jobs holding about 2.5 GB) | PLACEHOLDER_UNDEFEATED |
+
+What fits now on v1:
+
+- Forward reachability from the tick-22 state, in under 5 minutes. The explicit checks of `reachable(check=True)` were not timed.
+- The whole-domain kernel for `balance_asia`, in about 13 minutes.
+
+The whole-domain kernels for `balance_europe` and for GER's `undefeated` do not fit in 14 GB. Their tick layers grow by a factor of 3 to 6 per layer near the horizon, while `balance_asia`'s grow by under 2. So the obstacle is the size of those BDDs, not the speed of the core: 150 million nodes three layers in. The routes left are those of section 6: the kernel restricted to a reachable set (`safe(..., within=R)`), which now fits because the reachable set from tick 22 fits, or a better variable order.
+
+**Memory per node.** The reference costs about 285 bytes per live node (section 5). The C core costs, per node:
+
+- 12 bytes in the node arrays, of which only the touched part of the doubling capacity is resident;
+- 11 to 23 bytes in the unique table (8-byte slots at a load of 0.35 to 0.7);
+- the computed tables, which are bounded: at most 5 × 2^25 entries of 16 bytes, 1.07 GB in all at the 50 M-node peak above.
+
+At that peak the tables allocate 2.95 GB, 59 bytes per node, and the process holds 3.14 GB, 63 bytes per node with the interpreter and the model. The tick-0 hegemonic run holds 1.37 GB at 13.6 M nodes, against about 4 GB in Python. At the same memory, the C core holds about 4.5 times as many nodes.
 
 ### 7.5 Build
 
