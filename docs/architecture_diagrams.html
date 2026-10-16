@@ -1,0 +1,318 @@
+<title>wave_front Architecture</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400&display=swap">
+<style>
+:root {
+  /* layout: one column of figures, each in its own scroll container; a cool paper with a teal accent */
+  --bg: #f3f5f7; --fg: #1b232d; --muted: #5a6677; --line: #b9c2cd; --panel: #ffffff; --panel-2: #e9edf1;
+  --accent: #0b6e74; --accent-soft: rgba(11,110,116,0.10);
+  --font-body: "IBM Plex Sans", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #131920; --fg: #e4e9ef; --muted: #99a5b5; --line: #3b4756; --panel: #1a222c; --panel-2: #222c38;
+  --accent: #4fc6cc; --accent-soft: rgba(79,198,204,0.14); color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #131920; --fg: #e4e9ef; --muted: #99a5b5; --line: #3b4756; --panel: #1a222c; --panel-2: #222c38;
+  --accent: #4fc6cc; --accent-soft: rgba(79,198,204,0.14); color-scheme: dark }
+body { background: var(--bg); color: var(--fg); font-family: var(--font-body); line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 24px 48px; }
+main { max-width: 1240px; margin: 0 auto; display: grid; gap: 28px; }
+header h1 { font-size: 1.6rem; font-weight: 600; margin: 0 0 6px; letter-spacing: -0.01em; text-wrap: balance; }
+header p, figcaption, .notes p { max-width: 68ch; }
+header p { margin: 0; color: var(--muted); }
+h2 { font-size: 1.15rem; font-weight: 600; margin: 8px 0 0; }
+figure { margin: 0; display: grid; gap: 10px; }
+.scroll { overflow-x: auto; background: var(--panel-2); border: 1px solid var(--line); border-radius: 8px; padding: 12px; }
+figcaption { font-size: 0.92rem; color: var(--muted); }
+code { font-family: var(--font-mono); font-size: 0.9em; }
+.notes { display: grid; gap: 6px; }
+.notes p { margin: 0; }
+.notes b { font-weight: 600; }
+svg { display: block; color: var(--fg); font-family: var(--font-body); }
+svg .box { fill: var(--panel); stroke: var(--line); stroke-width: 1.2; }
+svg .head { fill: var(--panel); stroke: var(--line); stroke-width: 1.2; }
+svg .title { font-size: 12.5px; font-weight: 600; fill: var(--fg); }
+svg .line { font-size: 11.5px; fill: var(--fg); }
+svg .lbl { font-size: 11px; fill: var(--muted); }
+svg .accent { fill: var(--accent); font-weight: 600; }
+svg .edge { fill: none; stroke: currentColor; stroke-width: 1.3; }
+svg .bus { fill: none; stroke: var(--accent); stroke-width: 2; }
+svg .bus[marker-end] { color: var(--accent); }
+svg .dot { fill: var(--accent); }
+svg .life { fill: none; stroke: var(--line); stroke-width: 1.2; }
+svg .head-lbl { font-size: 12.5px; font-weight: 600; fill: var(--fg); }
+svg .head-sub { font-size: 10.5px; fill: var(--muted); font-family: var(--font-mono); }
+svg .band { fill: var(--accent-soft); stroke: none; }
+svg .band-lbl { font-size: 11px; fill: var(--accent); font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto; } }
+</style>
+<main>
+<header>
+<h1>wave_front: system architecture and sequences</h1>
+<p>A finite concurrent-game framework with three interchangeable engines, an evidence pipeline that turns dated documents into start states, and a claim protocol that fixes every expected result before a guard is written. Drawn from the code at the current head of the development branch.</p>
+</header>
+
+<section>
+<h2>1. System architecture</h2>
+<figure>
+<div class="scroll"><svg viewBox="0 0 1240 908" role="img" aria-label="Architecture: the record feeds a domain model and an evidence pipeline; a compiled model and a snapshot start state go to any of three engines; analysis turns their answers into kernels, assumption sets and coalitions for reports, the visualizer, the CLI and the registered claim tests." style="width:1240px;max-width:none"><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+<rect class="box" x="40" y="30" width="560" height="91" rx="4"/>
+<text class="title" x="52" y="54">The record</text>
+<text class="line" x="52" y="76">Dated documents: FRUS, DBFP, DGFP, diaries (data/*/corpora)</text>
+<text class="line" x="52" y="91">Datasets: events, decisions, realized moves (data/*/*.csv)</text>
+<text class="line" x="52" y="106">Research notes with sources (docs/*.md)</text>
+<rect class="box" x="620" y="30" width="560" height="91" rx="4"/>
+<text class="title" x="632" y="54">Registered claims</text>
+<text class="line" x="632" y="76">docs/&lt;episode&gt;_testbed.md: claim, expected engine output, sources</text>
+<text class="line" x="632" y="91">Written before any guard; hold-out claims; negative controls</text>
+<text class="line" x="632" y="106">Hypotheses [H] swept over hidden aims; profiles named</text>
+<rect class="box" x="40" y="177" width="560" height="91" rx="4"/>
+<text class="title" x="52" y="201">Domain model in the DSL (models/ww2/v1.py, models/july1914/v0.py, ...)</text>
+<text class="line" x="52" y="223">Variables with ordered levels; actors with cadence; Nature events</text>
+<text class="line" x="52" y="238">Actions: guard parts, effects, delays, source=, speculative=True</text>
+<text class="line" x="52" y="253">Latches, fairness constraints, profiles, assumptions, endings</text>
+<rect class="box" x="620" y="177" width="560" height="106" rx="4"/>
+<text class="title" x="632" y="201">Evidence pipeline (wavefront/evidence)</text>
+<text class="line" x="632" y="223">extract: a rule or Claude backend reads one dated document</text>
+<text class="line" x="632" y="238">  and proposes indicator, level, date, quote, rule</text>
+<text class="line" x="632" y="253">harness rules: two-document, no-retrospective; review: accept or reject</text>
+<text class="line" x="632" y="268">hindsight snapshots from the full record; replay compares blind readings</text>
+<rect class="box" x="40" y="339" width="560" height="61" rx="4"/>
+<text class="title" x="52" y="363">compile(model, profile, relax) -&gt; CompiledModel (wavefront/model/compile.py)</text>
+<text class="line" x="52" y="385">Guards as expressions over levels; profile and relax applied; budget, fingerprint</text>
+<rect class="box" x="620" y="339" width="560" height="61" rx="4"/>
+<text class="title" x="632" y="363">Snapshot -&gt; start state (wavefront/evidence/snapshot.py)</text>
+<text class="line" x="632" y="385">Levels with provenance + built-ins: pending counters, last moves, latches, fairness</text>
+<rect class="box" x="40" y="470" width="366" height="106" rx="4"/>
+<text class="title" x="52" y="494">Explicit-state engine (wavefront/engine)</text>
+<text class="line" x="52" y="516">explore -&gt; Graph of states and joint moves</text>
+<text class="line" x="52" y="531">attractor (forced), safe (kernel), contested:</text>
+<text class="line" x="52" y="546">  fixpoints on the graph; witness traces</text>
+<text class="line" x="52" y="561">multires flattens crisis sub-games</text>
+<rect class="box" x="427" y="470" width="366" height="106" rx="4"/>
+<text class="title" x="439" y="494">Bounded model checking (wavefront/bmc, Z3)</text>
+<text class="line" x="439" y="516">encode k steps; reach; relax = minimal</text>
+<text class="line" x="439" y="531">  assumption sets by unsat cores and MaxSAT</text>
+<text class="line" x="439" y="546">models/ww2/bounded.py: forces, blocks, play</text>
+<text class="line" x="439" y="561">  from a snapshot state with fixed strategies</text>
+<rect class="box" x="814" y="470" width="366" height="106" rx="4"/>
+<text class="title" x="826" y="494">Symbolic engine (wavefront/symbolic, BDD)</text>
+<text class="line" x="826" y="516">encode sets of states; reachable, attractor,</text>
+<text class="line" x="826" y="531">  safe, contested as set fixpoints</text>
+<text class="line" x="826" y="546">bdd.py in Python or bdd_core.c through cffi,</text>
+<text class="line" x="826" y="561">  chosen by WAVEFRONT_BDD</text>
+<rect class="box" x="40" y="632" width="1140" height="76" rx="4"/>
+<text class="title" x="52" y="656">Analysis (wavefront/analysis)</text>
+<text class="line" x="52" y="678">run_all: kernel membership and distance (viability) | minimal relaxation sets (relax) |</text>
+<text class="line" x="52" y="693">pivotal coalitions (pivotal) | sensitivity | uniformity of strategies | scenario clusters</text>
+<rect class="box" x="40" y="764" width="270" height="76" rx="4"/>
+<text class="title" x="52" y="788">Reports (wavefront/report)</text>
+<text class="line" x="52" y="810">reports/*.md: assumption sets, kernels,</text>
+<text class="line" x="52" y="825">coalitions; no bare reachability</text>
+<rect class="box" x="330" y="764" width="270" height="76" rx="4"/>
+<text class="title" x="342" y="788">Visualizer (wavefront/viz)</text>
+<text class="line" x="342" y="810">reports/*_viz.html: self-contained</text>
+<text class="line" x="342" y="825">page per episode</text>
+<rect class="box" x="620" y="764" width="270" height="76" rx="4"/>
+<text class="title" x="632" y="788">CLI: wf</text>
+<text class="line" x="632" y="810">explore, reach, force, viable, mine,</text>
+<text class="line" x="632" y="825">pivot, report, viz, extract, review, replay</text>
+<rect class="box" x="910" y="764" width="270" height="76" rx="4"/>
+<text class="title" x="922" y="788">Claim tests (pytest)</text>
+<text class="line" x="922" y="810">tests/&lt;episode&gt;/test_*.py assert the</text>
+<text class="line" x="922" y="825">registered output; a failure stands</text>
+<path class="edge" d="M320,121 L320,177" marker-end="url(#arrow)"/>
+<text class="lbl" x="330" y="153" text-anchor="start">catalogue: every action with a dated source</text>
+<path class="edge" d="M560,121 L560,149 L900,149 L900,177" marker-end="url(#arrow)"/>
+<text class="lbl" x="730.0" y="141" text-anchor="middle">dated documents and datasets</text>
+<path class="edge" d="M320,268 L320,339" marker-end="url(#arrow)"/>
+<text class="lbl" x="330" y="300" text-anchor="start">Model</text>
+<path class="edge" d="M900,283 L900,339" marker-end="url(#arrow)"/>
+<text class="lbl" x="910" y="315" text-anchor="start">accepted levels, dated; clock-consistency pass</text>
+<path class="bus" d="M223.0,436 L997.0,436"/>
+<path class="bus" d="M320,400 L320,436"/>
+<path class="bus" d="M900,400 L900,436"/>
+<circle class="dot" cx="320" cy="436" r="3.5"/>
+<circle class="dot" cx="900" cy="436" r="3.5"/>
+<path class="bus" d="M223.0,436 L223.0,470" marker-end="url(#arrow)"/>
+<path class="bus" d="M610.0,436 L610.0,470" marker-end="url(#arrow)"/>
+<path class="bus" d="M997.0,436 L997.0,470" marker-end="url(#arrow)"/>
+<text class="lbl accent" x="330" y="424" text-anchor="start">CompiledModel</text>
+<text class="lbl accent" x="910" y="424" text-anchor="start">start state</text>
+<text class="lbl accent" x="610.0" y="427" text-anchor="middle">the same question to any engine: coalition, target, horizon</text>
+<path class="edge" d="M223.0,576 L223.0,632" marker-end="url(#arrow)"/>
+<text class="lbl" x="233.0" y="608" text-anchor="start">graph and fixpoints</text>
+<path class="edge" d="M610.0,576 L610.0,632" marker-end="url(#arrow)"/>
+<text class="lbl" x="620.0" y="608" text-anchor="start">traces and unsat cores</text>
+<path class="edge" d="M997.0,576 L997.0,632" marker-end="url(#arrow)"/>
+<text class="lbl" x="1007.0" y="608" text-anchor="start">set fixpoints at scale</text>
+<path class="edge" d="M175.0,708 L175.0,764" marker-end="url(#arrow)"/>
+<path class="edge" d="M465.0,708 L465.0,764" marker-end="url(#arrow)"/>
+<path class="edge" d="M755.0,708 L755.0,764" marker-end="url(#arrow)"/>
+<path class="edge" d="M1045.0,708 L1045.0,764" marker-end="url(#arrow)"/>
+<text class="lbl" x="185.0" y="740" text-anchor="start">kernels, assumption sets, coalitions</text>
+<path class="edge" d="M1180,70 L1210,70 L1210,804 L1180,804" marker-end="url(#arrow)"/>
+<text class="lbl" x="1224" y="437.0" text-anchor="middle" transform="rotate(-90 1224 437.0)">expected output, fixed before any guard</text>
+<path class="edge" d="M1045.0,840 L1045.0,868 L20,868 L20,237 L40,237" stroke-dasharray="6 5" marker-end="url(#arrow)"/>
+<text class="lbl" x="542.5" y="886" text-anchor="middle">first sight recorded; a guard edit after a failing test goes to the guard changelog with a full rerun</text>
+</svg></div>
+<figcaption>Data flow, top to bottom. The record enters twice: as the historian's catalogue of actions with dated sources, which becomes the domain model, and as dated documents and datasets, which the evidence pipeline turns into snapshots. A compiled model and a snapshot start state form one question that any of the three engines can answer. The analysis layer turns engine answers into the deliverables: kernel membership and distance, minimal assumption sets, pivotal coalitions and sensitivity drivers. Claim tests also call the engines directly through <code>models/ww2/bounded.py</code> and the symbolic solver when a claim needs a fixed strategy or a whole-domain kernel.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>2. Sequence: one registered claim, from registration to decision</h2>
+<figure>
+<div class="scroll"><svg viewBox="0 0 1210 1198" role="img" aria-label="Sequence of one registered claim: the claim and the model are fixed before first sight; the test compiles the model, loads a snapshot start state, asks an engine whether the coalition blocks or forces the target, mines assumption sets and coalitions, asserts the registered output, and the owner decides amendments afterwards." style="width:1210px;max-width:none"><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+<rect class="band" x="10" y="70" width="1190" height="294" rx="6"/>
+<text class="band-lbl" x="18" y="84" text-anchor="start">Before first sight</text>
+<rect class="band" x="10" y="368" width="1190" height="598" rx="6"/>
+<text class="band-lbl" x="18" y="382" text-anchor="start">The run</text>
+<rect class="band" x="10" y="970" width="1190" height="178" rx="6"/>
+<text class="band-lbl" x="18" y="984" text-anchor="start">After the run</text>
+<path class="life" d="M100,70 L100,1182" stroke-dasharray="4 6"/>
+<rect class="head" x="12" y="18" width="176" height="52" rx="4"/>
+<text class="head-lbl" x="100" y="40" text-anchor="middle">Owner / architect</text>
+<text class="head-sub" x="100" y="57" text-anchor="middle">testbed document</text>
+<path class="life" d="M300,70 L300,1182" stroke-dasharray="4 6"/>
+<rect class="head" x="212" y="18" width="176" height="52" rx="4"/>
+<text class="head-lbl" x="300" y="40" text-anchor="middle">Domain model</text>
+<text class="head-sub" x="300" y="57" text-anchor="middle">models/&lt;episode&gt;/*.py</text>
+<path class="life" d="M500,70 L500,1182" stroke-dasharray="4 6"/>
+<rect class="head" x="412" y="18" width="176" height="52" rx="4"/>
+<text class="head-lbl" x="500" y="40" text-anchor="middle">Snapshots</text>
+<text class="head-sub" x="500" y="57" text-anchor="middle">wavefront/evidence</text>
+<path class="life" d="M700,70 L700,1182" stroke-dasharray="4 6"/>
+<rect class="head" x="612" y="18" width="176" height="52" rx="4"/>
+<text class="head-lbl" x="700" y="40" text-anchor="middle">Claim test</text>
+<text class="head-sub" x="700" y="57" text-anchor="middle">tests/&lt;episode&gt;/test_*.py</text>
+<path class="life" d="M900,70 L900,1182" stroke-dasharray="4 6"/>
+<rect class="head" x="812" y="18" width="176" height="52" rx="4"/>
+<text class="head-lbl" x="900" y="40" text-anchor="middle">Engine</text>
+<text class="head-sub" x="900" y="57" text-anchor="middle">bmc | engine | symbolic</text>
+<path class="life" d="M1100,70 L1100,1182" stroke-dasharray="4 6"/>
+<rect class="head" x="1012" y="18" width="176" height="52" rx="4"/>
+<text class="head-lbl" x="1100" y="40" text-anchor="middle">Report + changelogs</text>
+<text class="head-sub" x="1100" y="57" text-anchor="middle">reports/, docs/</text>
+<path class="edge" d="M100,118 L134,118 L134,134 L101,134" marker-end="url(#arrow)"/>
+<text class="lbl" x="144" y="123" text-anchor="start">register the claim in the testbed document:</text>
+<text class="lbl" x="144" y="136" text-anchor="start">expected engine output and sources, before any guard</text>
+<path class="edge" d="M100,174 L300,174" marker-end="url(#arrow)"/>
+<text class="lbl" x="200.0" y="153" text-anchor="middle">historian&#x27;s catalogue from the record;</text>
+<text class="lbl" x="200.0" y="166" text-anchor="middle">architect&#x27;s decisions (E1 to E8)</text>
+<path class="edge" d="M300,226 L334,226 L334,242 L301,242" marker-end="url(#arrow)"/>
+<text class="lbl" x="344" y="231" text-anchor="start">guards with source=; delays, fairness, profiles;</text>
+<text class="lbl" x="344" y="244" text-anchor="start">speculative=True where the record has no alternative</text>
+<path class="edge" d="M500,282 L534,282 L534,298 L501,298" marker-end="url(#arrow)"/>
+<text class="lbl" x="544" y="287" text-anchor="start">hindsight snapshot per quarter: levels with provenance,</text>
+<text class="lbl" x="544" y="300" text-anchor="start">built-ins along the realized path, clock-consistency pass</text>
+<path class="edge" d="M100,338 L134,338 L134,354 L101,354" marker-end="url(#arrow)"/>
+<text class="lbl" x="144" y="343" text-anchor="start">first sight: the commit hash is recorded;</text>
+<text class="lbl" x="144" y="356" text-anchor="start">the suite runs once, in one go</text>
+<path class="edge" d="M700,416 L300,416" marker-end="url(#arrow)"/>
+<text class="lbl" x="500.0" y="408" text-anchor="middle">model.compile(profile=..., hypothesis levels fixed)</text>
+<path class="edge" d="M300,468 L700,468" stroke-dasharray="6 5" marker-end="url(#arrow)"/>
+<text class="lbl" x="500.0" y="460" text-anchor="middle">CompiledModel</text>
+<path class="edge" d="M700,520 L500,520" marker-end="url(#arrow)"/>
+<text class="lbl" x="600.0" y="512" text-anchor="middle">snapshot_state(cm, quarter, aims)</text>
+<path class="edge" d="M500,572 L700,572" stroke-dasharray="6 5" marker-end="url(#arrow)"/>
+<text class="lbl" x="600.0" y="564" text-anchor="middle">start state with built-ins</text>
+<path class="edge" d="M700,624 L900,624" marker-end="url(#arrow)"/>
+<text class="lbl" x="800.0" y="603" text-anchor="middle">blocks / forces(cm, state, target, strategy);</text>
+<text class="lbl" x="800.0" y="616" text-anchor="middle">fortune variant: Nature joins the coalition</text>
+<path class="edge" d="M900,676 L934,676 L934,692 L901,692" marker-end="url(#arrow)"/>
+<text class="lbl" x="944" y="681" text-anchor="start">encode k steps on Z3 (or explore the</text>
+<text class="lbl" x="944" y="694" text-anchor="start">graph, or iterate BDD fixpoints);</text>
+<text class="lbl" x="944" y="707" text-anchor="start">check; unsat core on failure</text>
+<path class="edge" d="M900,732 L700,732" stroke-dasharray="6 5" marker-end="url(#arrow)"/>
+<text class="lbl" x="800.0" y="724" text-anchor="middle">inside or outside; the play as witness</text>
+<path class="edge" d="M700,784 L900,784" marker-end="url(#arrow)"/>
+<text class="lbl" x="800.0" y="763" text-anchor="middle">relax: minimal assumption sets; pivotal</text>
+<text class="lbl" x="800.0" y="776" text-anchor="middle">coalitions; sensitivity: perturb one level, re-ask</text>
+<path class="edge" d="M900,836 L700,836" stroke-dasharray="6 5" marker-end="url(#arrow)"/>
+<text class="lbl" x="800.0" y="828" text-anchor="middle">sets, coalitions, driving variables</text>
+<path class="edge" d="M700,888 L734,888 L734,904 L701,904" marker-end="url(#arrow)"/>
+<text class="lbl" x="744" y="893" text-anchor="start">assert the registered output;</text>
+<text class="lbl" x="744" y="906" text-anchor="start">a failure stands as computed</text>
+<path class="edge" d="M700,944 L1100,944" marker-end="url(#arrow)"/>
+<text class="lbl" x="900.0" y="923" text-anchor="middle">results, traces and numbers -&gt; reports/&lt;episode&gt;.md,</text>
+<text class="lbl" x="900.0" y="936" text-anchor="middle">the viz page, the testbed changelog row</text>
+<path class="edge" d="M1100,1018 L100,1018" stroke-dasharray="6 5" marker-end="url(#arrow)"/>
+<text class="lbl" x="600.0" y="1010" text-anchor="middle">proposed amendments, listed and not applied</text>
+<path class="edge" d="M100,1070 L134,1070 L134,1086 L101,1086" marker-end="url(#arrow)"/>
+<text class="lbl" x="144" y="1075" text-anchor="start">decision: amend the claim (dated changelog row)</text>
+<text class="lbl" x="144" y="1088" text-anchor="start">or keep it</text>
+<path class="edge" d="M100,1126 L300,1126" stroke-dasharray="6 5" marker-end="url(#arrow)"/>
+<text class="lbl" x="200.0" y="1105" text-anchor="middle">a guard edit after a failing test: guard</text>
+<text class="lbl" x="200.0" y="1118" text-anchor="middle">changelog entry with sources, full rerun</text>
+</svg></div>
+<figcaption>What a claim such as T6 or K2 goes through. Everything above the first band boundary happens before the engine is run and is what the anti-hindsight protocol freezes: the claim's wording and expected output, the guards with their sources, the snapshots. The middle band is the run itself, once and in one go. Amendments and guard edits come after, in dated changelog rows, and a guard edit triggers a full rerun.</figcaption>
+</figure>
+</section>
+
+<section>
+<h2>3. Sequence: a dated document becomes a level in a snapshot</h2>
+<figure>
+<div class="scroll"><svg viewBox="0 0 1210 596" role="img" aria-label="Sequence of the evidence pipeline: a dated document is read into proposals, filtered by the harness rules, accepted or rejected by a reviewer, written into a replay snapshot, and compared with the hindsight snapshot." style="width:1210px;max-width:none"><defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="currentColor"/></marker></defs>
+<path class="life" d="M100,70 L100,580" stroke-dasharray="4 6"/>
+<rect class="head" x="12" y="18" width="176" height="52" rx="4"/>
+<text class="head-lbl" x="100" y="40" text-anchor="middle">Corpus</text>
+<text class="head-sub" x="100" y="57" text-anchor="middle">data/*/corpora</text>
+<path class="life" d="M300,70 L300,580" stroke-dasharray="4 6"/>
+<rect class="head" x="212" y="18" width="176" height="52" rx="4"/>
+<text class="head-lbl" x="300" y="40" text-anchor="middle">Extractor</text>
+<text class="head-sub" x="300" y="57" text-anchor="middle">rule or Claude backend</text>
+<path class="life" d="M500,70 L500,580" stroke-dasharray="4 6"/>
+<rect class="head" x="412" y="18" width="176" height="52" rx="4"/>
+<text class="head-lbl" x="500" y="40" text-anchor="middle">Harness rules</text>
+<text class="head-sub" x="500" y="57" text-anchor="middle">two-document, no-retrospective</text>
+<path class="life" d="M700,70 L700,580" stroke-dasharray="4 6"/>
+<rect class="head" x="612" y="18" width="176" height="52" rx="4"/>
+<text class="head-lbl" x="700" y="40" text-anchor="middle">Reviewer</text>
+<text class="head-sub" x="700" y="57" text-anchor="middle">wf review</text>
+<path class="life" d="M900,70 L900,580" stroke-dasharray="4 6"/>
+<rect class="head" x="812" y="18" width="176" height="52" rx="4"/>
+<text class="head-lbl" x="900" y="40" text-anchor="middle">Replay snapshot</text>
+<text class="head-sub" x="900" y="57" text-anchor="middle">&lt;quarter&gt;.json</text>
+<path class="life" d="M1100,70 L1100,580" stroke-dasharray="4 6"/>
+<rect class="head" x="1012" y="18" width="176" height="52" rx="4"/>
+<text class="head-lbl" x="1100" y="40" text-anchor="middle">Hindsight snapshot</text>
+<text class="head-sub" x="1100" y="57" text-anchor="middle">from the full record</text>
+<path class="edge" d="M100,96 L300,96" marker-end="url(#arrow)"/>
+<text class="lbl" x="200.0" y="88" text-anchor="middle">one dated document: id, date, text</text>
+<path class="edge" d="M300,148 L334,148 L334,164 L301,164" marker-end="url(#arrow)"/>
+<text class="lbl" x="344" y="153" text-anchor="start">read against the ontology&#x27;s threshold rules;</text>
+<text class="lbl" x="344" y="166" text-anchor="start">propose indicator, level, date, quote, rule</text>
+<path class="edge" d="M300,204 L500,204" marker-end="url(#arrow)"/>
+<text class="lbl" x="400.0" y="196" text-anchor="middle">proposals (a quote must occur in the text)</text>
+<path class="edge" d="M500,256 L534,256 L534,272 L501,272" marker-end="url(#arrow)"/>
+<text class="lbl" x="544" y="261" text-anchor="start">a once-only flip needs two documents; a move back</text>
+<text class="lbl" x="544" y="274" text-anchor="start">for a monotone variable is blocked, others flagged</text>
+<path class="edge" d="M500,312 L700,312" marker-end="url(#arrow)"/>
+<text class="lbl" x="600.0" y="291" text-anchor="middle">proposals to show;</text>
+<text class="lbl" x="600.0" y="304" text-anchor="middle">held and blocked listed apart</text>
+<path class="edge" d="M700,364 L734,364 L734,380 L701,380" marker-end="url(#arrow)"/>
+<text class="lbl" x="744" y="369" text-anchor="start">accept or reject, with a note for every decision</text>
+<path class="edge" d="M700,420 L900,420" marker-end="url(#arrow)"/>
+<text class="lbl" x="800.0" y="399" text-anchor="middle">accepted levels only</text>
+<text class="lbl" x="800.0" y="412" text-anchor="middle">(review.py is the sole writer)</text>
+<path class="edge" d="M900,472 L1100,472" marker-end="url(#arrow)"/>
+<text class="lbl" x="1000.0" y="451" text-anchor="middle">compare per quarter: level agreement,</text>
+<text class="lbl" x="1000.0" y="464" text-anchor="middle">flips within a quarter (replay.py)</text>
+<path class="edge" d="M1100,524 L900,524" stroke-dasharray="6 5" marker-end="url(#arrow)"/>
+<text class="lbl" x="1000.0" y="503" text-anchor="middle">agreement and lag metrics</text>
+<text class="lbl" x="1000.0" y="516" text-anchor="middle">-&gt; reports/replay_*.md</text>
+</svg></div>
+<figcaption>The blind replay. The extractor sees only documents dated up to the quarter's end and must quote the text it reads a level from. The harness rules hold a once-only flip until a second document corroborates it and block a monotone variable from moving back. Only a reviewer's acceptance writes a level, and the written snapshot is scored against the hindsight snapshot on level agreement and on how many flips land within a quarter.</figcaption>
+</figure>
+</section>
+
+<section class="notes">
+<h2>Reading the diagrams</h2>
+<p><b>One question, three engines.</b> Every forcing or kernel question is a coalition, a target and a horizon. The explicit engine builds the graph and runs fixpoints on it; the bounded checker unrolls k steps into Z3 and explains failures with unsat cores; the symbolic engine runs the same fixpoints on BDD-encoded state sets, with a compiled core when the sets are large. Results are cross-checked across engines in the test suite.</p>
+<p><b>Snapshots carry more than levels.</b> A start state includes the built-ins the model needs to be consistent at that tick: pending delayed decisions, last moves, latched history and fairness counters, computed along the realized path.</p>
+<p><b>The protocol is part of the system.</b> Claims are registered before guards, a first-sight commit is recorded, failures are reported as computed, and amendments are the owner's decisions written as dated changelog rows. The diagrams draw those steps because the results mean nothing without them.</p>
+</section>
+</main>
