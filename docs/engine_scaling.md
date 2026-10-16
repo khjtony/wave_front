@@ -258,7 +258,7 @@ Section 5 named a compiled BDD core as the next step. It is built: `wavefront/sy
 ### 7.1 Design
 
 - **Edges and nodes.** The edges are those of `bdd.py`: an edge is `(node << 1) | complement`, TRUE is 0, FALSE is 1, and the high edge of a stored node is never complemented. Nodes are a struct of three `uint32_t` arrays (`var`, `lo`, `hi`) with 32-bit indices, up to 2^31 - 1 nodes, grown by doubling. A free node is chained through `lo`. During a collection the top bit of `var` marks a live node.
-- **Unique table.** It is hash-consed with open addressing and linear probing. A slot holds the key (`var`, `lo`, `hi`) and the node index, 16 bytes, so that a lookup reads no node array. The table doubles past a load of 0.7 and is rebuilt by every collection.
+- **Unique table.** It is hash-consed with open addressing and linear probing. An 8-byte slot holds the node index and the top 32 bits of the hash of its key (`var`, `lo`, `hi`), so a probe reads the node arrays only when the tags agree. The table doubles past a load of 0.7 and is rebuilt by every collection.
 - **Computed tables.** There is one table for each of `and`, `xor`, `ite`, `exists` and `and_exists`. Each uses open addressing in buckets of four 16-byte entries, one cache line per bucket. A table doubles past a load of 0.5 until it reaches its cap, which is the power of two at or above the node table's capacity, clamped to between 2^18 and 2^25 entries. At the cap, a new entry whose bucket is full replaces one of its entries, so the table is a lossy cache.
 - **Recursions.** The recursions are those of `bdd.py`, with the same terminal cases and normalizations, so every operation returns the same function:
   - `AND`, `OR`, `XOR`, `IFF`, `IMPLIES`, `DIFF`, `ITE`;
@@ -301,7 +301,7 @@ Section 5 named a compiled BDD core as the next step. It is built: `wavefront/sy
 | collection at every step, C | `check_model(..., gc_always=True)` | 20 rich models |
 | errors and selection | the reference's exceptions; `WAVEFRONT_BDD` and explicit selection; `stats` name the core | |
 
-The existing hypothesis cross-checks (`test_symbolic_crosscheck.py`, 400 examples) run on whichever core is selected, so they cover C by default and Python under `WAVEFRONT_BDD=python`. Mutations of the C source caught by these tests: `pick_one` preferring the 1 branch, the borrow of the big-number subtraction in `count` (only the 150-level test), a collector that keeps cache entries whose result was reclaimed, and a wrong cofactor in `simplify`.
+`python -m pytest tests/symbolic -q` (37 tests, slow states included) passes in 305 s under C and in 544 s under `WAVEFRONT_BDD=python`; most of either figure is the explicit engine's side of the WW2 comparisons. The existing hypothesis cross-checks (`test_symbolic_crosscheck.py`, 400 examples) run on whichever core is selected, so they cover C by default and Python under `WAVEFRONT_BDD=python`. Mutations of the C source caught by these tests: `pick_one` preferring the 1 branch, the borrow of the big-number subtraction in `count` (only the 150-level test), a collector that keeps cache entries whose result was reclaimed, and a wrong cofactor in `simplify`.
 
 ### 7.4 Benchmark: Python and C side by side
 
@@ -339,15 +339,24 @@ The T8(b) rows use the snapshot files as they were for section 4, before the clo
 | encoding | 18 s, 6.0 M nodes | 2.3 s, 6,000,059 nodes | 3.6 s, 7,033,896 nodes |
 | forward reachability from tick 22 (`check=False`) | did not finish: killed after about 19 min past iteration 15 of 17, 2.7 GB | **fits**: 279 s (238 s CPU), 4,464,563,333 states in 17 steps, BDD 1,970,838 nodes, peak 27,934,406 nodes, 3.0 GB | **fits**: 210 s (187 s CPU), 2,235,910,445 states in 17 steps, BDD 1,295,216 nodes, peak 21,858,154 nodes, 1.9 GB |
 | `safe({WEST}, balance_asia)`, whole domain | abandoned at layer 36 of 39 after 72 s, 18.5 M live nodes, 5.5 GB | **fits**: 696 s (611 s CPU), peak 47,950,386 nodes, kernel BDD 231,805 nodes, 4.7 GB (16-byte unique slots) | **fits**: 782 s (655 s CPU), peak 49,955,433 nodes, kernel BDD 233,174 nodes, 3.1 GB |
-| WEST's kernel for `balance_europe`, whole domain | not attempted | **does not fit**: layer 3 (tick 36) reached 149,308,338 live nodes in 120 s at 8.3 GB; killed at 13.9 GB in layer 4 (16-byte unique slots) | PLACEHOLDER_EUROPE |
-| `safe({GER}, undefeated)`, whole domain | not attempted | **does not fit**: layer 4 (tick 35) reached 95,801,978 live nodes in 103 s at 5.2 GB; killed at 11.7 GB in layer 5 (16-byte slots, other jobs holding about 2.5 GB) | PLACEHOLDER_UNDEFEATED |
+| WEST's kernel for `balance_europe`, whole domain | not attempted | **does not fit**: layer 3 (tick 36) reached 149,308,338 live nodes in 120 s at 8.3 GB; killed at 13.9 GB in layer 4 (16-byte unique slots) | **does not fit**: layer 3 (tick 36) reached 153,881,335 live nodes in 124 s at 5.2 GB; killed at 11.8 GB in layer 4 after 499 s |
+| `safe({GER}, undefeated)`, whole domain | not attempted | **does not fit**: layer 4 (tick 35) reached 95,801,978 live nodes in 103 s at 5.2 GB; killed at 11.7 GB in layer 5 (16-byte slots, other jobs holding about 2.5 GB) | **does not fit**: layer 4 (tick 35) reached 96,902,266 live nodes in 107 s at 5.2 GB; killed at 11.9 GB in layer 5 after 624 s |
 
-What fits now on v1:
+Restricted to the states reachable from the tick-22 state (`--within`, current model):
 
-- Forward reachability from the tick-22 state, in under 5 minutes. The explicit checks of `reachable(check=True)` were not timed.
-- The whole-domain kernel for `balance_asia`, in about 13 minutes.
+| Computation | C |
+|---|---|
+| WEST's kernel for `balance_europe` inside the reachable set | **fits**: reachable set 206 s, then the kernel in 0.2 s; peak 21,858,154 nodes, 1.9 GB |
+| `safe({GER}, undefeated)` inside the reachable set | **fits**: reachable set 209 s, then the kernel in 40 s; peak 37,120,844 nodes, 2.2 GB |
 
-The whole-domain kernels for `balance_europe` and for GER's `undefeated` do not fit in 14 GB. Their tick layers grow by a factor of 3 to 6 per layer near the horizon, while `balance_asia`'s grow by under 2. So the obstacle is the size of those BDDs, not the speed of the core: 150 million nodes three layers in. The routes left are those of section 6: the kernel restricted to a reachable set (`safe(..., within=R)`), which now fits because the reachable set from tick 22 fits, or a better variable order.
+What fits now on v1, each in under 15 minutes on one core:
+
+- the encoding;
+- forward reachability from the tick-22 state (the explicit checks of `reachable(check=True)` were not timed);
+- the whole-domain kernel for `balance_asia`;
+- the kernels for `balance_europe` and for GER's `undefeated` inside the reachable set.
+
+The whole-domain kernels for `balance_europe` and `undefeated` do not fit in 14 GB on either unique-table layout. Near the horizon their tick layers grow fast: from tick 37 to tick 36, `balance_europe`'s live nodes grow by 9.5 times; from tick 37 to 36 and from 36 to 35, `undefeated`'s grow by 2.7 and 4.1 times. `balance_asia`'s grow by 2.4 and 1.6 times. The obstacle is the size of those BDDs, not the speed of the core. A whole-domain answer for them would need a better variable order; questions about states reachable from a start state are answered inside its reachable set.
 
 **Memory per node.** The reference costs about 285 bytes per live node (section 5). The C core costs, per node:
 
