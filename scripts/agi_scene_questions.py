@@ -4,6 +4,7 @@ hypothesis and start variant, and print the tables of docs/agi_scene_objectives.
     python scripts/agi_scene_questions.py            # kernels, endings, pivotal coalitions
     python scripts/agi_scene_questions.py --relax    # add minimal relaxation sets (slower)
     python scripts/agi_scene_questions.py --sens     # add sensitivity of H's kernel
+    python scripts/agi_scene_questions.py default continuity_given trusting reactive preemptive
 
 Nothing printed here is a finding: the scene's guards are rationales, not records, and
 no claim is registered against it.
@@ -17,7 +18,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from models.toy.agi_scene import model  # noqa: E402
+from models.toy.agi_scene import build, model  # noqa: E402
 from wavefront.analysis import pivotal, relax_explicit  # noqa: E402
 from wavefront.analysis.sensitivity import sensitivity  # noqa: E402
 from wavefront.analysis.viability import distance_table  # noqa: E402
@@ -25,6 +26,8 @@ from wavefront.engine import contested, explore, safe, witness  # noqa: E402
 
 VARIANTS = {
     "default": {},
+    "slow_guarantee": {"delay": 2},
+    "no_force": {"profile": "no_force"},
     "continuity_given": {"override": {"continuity": True}},
     "personhood": {"override": {"legal": "person", "continuity": True}},
     "ownership_banned": {"override": {"legal": "none"}},
@@ -38,12 +41,13 @@ DOMINANCE = ENDINGS[:3]
 KERNEL_COALITIONS = (("H", {"H"}), ("H+CAP", {"H", "CAP"}), ("H+Nature", {"H", "Nature"}))
 
 
-def start_state(cm, objective, override):
-    """The initial state of one objective hypothesis with some levels overridden."""
+def start_state(cm, objective, override, stance="reactive"):
+    """The initial state of one objective and stance hypothesis, some levels overridden."""
     (base,) = [
         s
         for s in cm.initial_states()
         if cm.level_name("objective", s[cm.index["objective"]]) == objective
+        and cm.level_name("stance", s[cm.index["stance"]]) == stance
     ]
     state = list(base)
     for name, value in (override or {}).items():
@@ -56,11 +60,12 @@ def coalitions(sets):
     return "/".join("+".join(sorted(c)) for c in sets) if sets else "-"
 
 
-def questions(variant, objective, relax=False, sens=False):
+def questions(variant, objective, relax=False, sens=False, stance="reactive"):
     spec = VARIANTS[variant]
     profile, override = spec.get("profile"), spec.get("override")
-    cm = model.compile(profile=profile)
-    s0 = start_state(cm, objective, override)
+    m = build(spec["delay"]) if "delay" in spec else model
+    cm = m.compile(profile=profile)
+    s0 = start_state(cm, objective, override, stance)
     g = explore(cm, initial=[s0], max_states=3_000_000)
     (sid,) = list(g.initial)
     balance = g.states_where("balance")
@@ -70,7 +75,8 @@ def questions(variant, objective, relax=False, sens=False):
         d = distance_table(g, [sid], kernel, members, {"A"})[sid]
         inside = "in" if sid in kernel else "OUT"
         kernels.append(f"{name} {inside} (forced out {d.forced}, shortest {d.shortest})")
-    print(f"[{variant} / {objective}] {g.size()} states; balance kernel: " + " | ".join(kernels))
+    tag = f"{variant} / {objective}" + (f" / {stance}" if objective == "exist" else "")
+    print(f"[{tag}] {g.size()} states; balance kernel: " + " | ".join(kernels))
     for ending in ENDINGS:
         target = g.ending_states(ending)
         w = witness(g, sid, target)
@@ -99,22 +105,29 @@ def questions(variant, objective, relax=False, sens=False):
                 f"({time.time() - t:.0f}s)"
             )
     if sens:
-        rows = sensitivity(model, "balance", {"H"}, adversary={"A"}, profile=profile, initial=[s0])
+        rows = sensitivity(m, "balance", {"H"}, adversary={"A"}, profile=profile, initial=[s0])
         flips = [(r.variable, r.from_level, r.to_level) for r in rows if r.flips]
         print(f"   one-level changes of the start that flip H's kernel membership: {flips}")
+
+
+STANCES = ["trusting", "reactive", "preemptive"]
 
 
 def main(argv):
     relax, sens = "--relax" in argv, "--sens" in argv
     variants = [a for a in argv if a in VARIANTS] or list(VARIANTS)
+    stances = [a for a in argv if a in STANCES] or ["reactive"]
+    objectives = [a for a in argv if a in OBJECTIVES] or OBJECTIVES
     for variant in variants:
-        for objective in OBJECTIVES:
-            questions(
-                variant,
-                objective,
-                relax=relax and variant == "default",
-                sens=sens and variant == "default",
-            )
+        for objective in objectives:
+            for stance in stances if objective == "exist" else ["reactive"]:
+                questions(
+                    variant,
+                    objective,
+                    relax=relax and variant == "default",
+                    sens=sens and variant == "default",
+                    stance=stance,
+                )
 
 
 if __name__ == "__main__":

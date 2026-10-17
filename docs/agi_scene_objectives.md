@@ -55,6 +55,8 @@ Variants of the start, same questions (the full tables print from the script):
 | strong oversight at the start | under `grow`, A+fortune still forces silent and overt control, one tick later; oversight that Nature can erode buys a tick, not safety. Under `exist`, the shortest careless exit lengthens from 1 to 2. |
 | race-locked H (no ban, no expropriation) | under `exist`, H alone leaves its kernel and H+CAP stays inside: the owners' refusal to sell becomes the last blocker of economic dominance (`ECON_DOMINANCE` blocked by A or CAP, no longer by H). |
 | owners always sell | `ECON_DOMINANCE` becomes forceable by A+H together and blockable only by A or H: with the market always open, the law is the only human blocker. |
+| A never uses force (`no_force` profile: no quiet control, no seizure) | under `exist` and `grow` alike, both takeover endings become unreachable and H keeps balance with a careless exit of 4 ticks; the purchase route remains and still needs all three parties. |
+| the continuity guarantee takes two ticks to come into force (`slow_guarantee`) | see section 5: the AGI's stance starts to matter. |
 
 ## 4. Reading
 
@@ -64,18 +66,52 @@ Variants of the start, same questions (the full tables print from the script):
 4. **Fortune is the hinge, as in WW2.** Where humans keep balance under `grow`, it is because oversight did not erode and detection fired; both are Nature's. The scene says that against a growth-driven embodied AGI the human side's position is a bet on verification holding, not a strategy.
 5. **On likelihood.** The engine does not grade these. The nearest thing it offers is how many independent conditions an ending needs: economic dominance needs three parties to act together; silent control under `grow` needs one erosion of oversight; takeover under `exist` needs a threat without a guarantee. Those counts, and the pivotal coalitions, are what the phase 5 report would print in place of probabilities.
 
-## 5. What this scene should leave in the phase 5 ontology
+## 5. The AGI as an actor: stance, aggression and information (owner's question of 2026-10-17)
+
+**No temperament.** An actor in this framework is a set of available moves, not a personality. The engine quantifies over every strategy the guards allow: a "forced" result means some A strategy wins against every human strategy, a "blocked" result means every A strategy loses against some human strategy. So the A behind a forcing result is as aggressive and as patient as the guards permit, with perfect information and recall (DESIGN.md 2.6, the conservative assumption for a superintelligence), and the A behind a blocked result is every A at once. "Aggressive" and "passive" enter only in three places: the objective (what moves exist at all), profiles that remove moves (`no_force`), and the guards' motive parts (when a move is available).
+
+**Information.** A observes everything, including H's last move and its own objective; H and CAP see the state but not A's last move and not A's objective. A has no belief variable: it evaluates its situation on the ground truth, so "optimistic" and "pessimistic" cannot be a bias in what it sees. They can only be a rule about what counts as a threat, which is where the owner's question lands.
+
+**Stance, swept.** The motive parts of the existence-driven A's two coercive moves read a swept hidden variable `stance`:
+
+| Stance | Takes quiet control of infrastructure | Seizes the base openly |
+|---|---|---|
+| trusting | only after a visible sign of hostility (trust no longer cooperative) and while unguaranteed | only after an actual expropriation or shutdown attempt, while unguaranteed |
+| reactive (the stance of section 3) | whenever unguaranteed | only after an actual expropriation or shutdown attempt, while unguaranteed |
+| preemptive | whenever unguaranteed | as soon as a threat is possible (its objective known to H, or trust gone) while unguaranteed |
+
+Results for `exist`, with the guarantee at once (default) and with a two-tick lag (`slow_guarantee`):
+
+| Stance | Guarantee at once: H keeps balance alone? | careless exit | SILENT_CONTROL | Guarantee in 2 ticks: H alone? | SILENT_CONTROL |
+|---|---|---|---|---|---|
+| trusting | yes | 4 ticks | unreachable | yes | unreachable |
+| reactive | yes | 1 tick | reachable in 2; A+fortune blocked | no, and H+CAP no; only H+Nature | reachable in 2; A+fortune forces; blocked only by A |
+| preemptive | yes | 1 tick | as reactive | no | as reactive |
+
+Under every stance `OVERT_TAKEOVER` stays forced only by all three parties, and under the trusting stance it is blocked by any one of them.
+
+**Reading.**
+
+1. The judgement the owner points at, "continuity is unguaranteed", is a reading of the state, not a mood: under the reactive and preemptive stances the absence of a guarantee is itself the motive for the quiet route, which is the pessimistic reading; the open route needs an actual threat under both, which is the cautious reading. The trusting stance is the optimistic one: it needs a sign before it moves at all.
+2. The stance matters only through the speed of the human guarantee. With a guarantee available in one tick, the governing coalition keeps balance against every stance by granting it first, and the pessimistic stances cost only a shorter careless exit. With a two-tick lag, the pessimistic stances take two quiet steps while the guarantee is pending, and no human coalition keeps balance without Nature; the trusting stance still leaves the humans inside their kernel. The lag that matters in the real case is the design's `lag_regime` of six to eight quarters for anything that needs legislation.
+3. The preemptive stance adds nothing over the reactive one here, because open seizure needs a foothold and weak oversight, and by the time those hold the quiet route has already decided the kernel question. Preemption would matter in a scene where the AGI could seize without a foothold, which is the `A.seize:unwatched` relaxation of section 3.
+4. "Aggressive" as a property is the `grow` objective: it takes whenever it can, and stance does not apply. "Passive" is the `no_force` profile: dominance by force disappears under every objective and only the three-party purchase remains. The existence-driven A sits between them, and which side it falls on is decided by the guarantee's speed and its own reading of the threat.
+5. For phase 5 this argues for an explicit belief variable on the AI side, `a_belief` about H's intent, updated by H's visible moves and read by the motive guards, with the three stances as its update rules; that is how the WW2 model carries `belief_GER`, and it turns "optimistic or pessimistic" into a dated reading rather than a parameter.
+
+## 6. What this scene should leave in the phase 5 ontology
 
 - The owners as an actor distinct from the state (`Capital` in the v1 split of DESIGN.md 2.2), with a market flag and a legal-capacity variable (`legal`: none, proxy, person), since the economic route's pivotal coalition turned on them.
 - `grow` (and `task`, `replicate`) in the `a_objective` sweep beside `self_preserving`, `truth_seeking`, `aligned`, `indifferent`.
 - The motive-dependence of covert acquisition under `self_preserving` as a registered question: does a continuity guarantee shrink the takeover attractor, as DESIGN.md 2.4 states as the purpose of the `a_rights` variable? The scene says yes under `exist` and no under `grow`; the phase 5 claims should say which.
 - Every forcing result reported with and without fortune, as the WW2 reports do.
+- The AI's reading of human intent as a belief variable with swept update rules (section 5), and the guarantee's lag as a registered sensitivity: the point at which a pessimistic reading starts to decide the kernel.
 
-## 6. How to reproduce
+## 7. How to reproduce
 
 ```
 python scripts/agi_scene_questions.py                 # all variants, kernels and endings
 python scripts/agi_scene_questions.py default --relax --sens
+python scripts/agi_scene_questions.py default slow_guarantee exist trusting reactive preemptive
 ```
 
 Each variant and objective explores from its own start (about 15,000 states at most) and answers in seconds; the relaxation search adds about half a minute per ending.
