@@ -158,6 +158,11 @@ def replay(year: int) -> dict[str, Any]:
             continue
         series = ("belief",) if name in BELIEFS else ("replay",)
         row = _latest(rows, name, series, tick)
+        if row is not None and name not in BELIEFS:
+            # a contemporaneous reading stands until the record moves past it
+            later = _latest(rows, name, ("record",), tick)
+            if later is not None and int(later["visible_tick"]) > int(row["visible_tick"]):
+                row = None
         if row is not None:
             out[name] = {
                 "level": _flag(row["level"]),

@@ -28,8 +28,8 @@ from .common import HYPS, compiled, flat_of, hindsight, realized
 CM = model.compile()
 
 # The commit at which C1 to C13 were first run, in one go (decisions D9; the first-sight
-# row of docs/guard_changelog_cw.md). None until the first run.
-FIRST_SIGHT_COMMIT = None
+# row of docs/guard_changelog_cw.md).
+FIRST_SIGHT_COMMIT = "6b87af9d5790094c4f2af12bae31a813b03bcc6f"
 
 LEVELS = {
     "aims_USSR": ("status_quo", "opportunist"),

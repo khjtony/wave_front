@@ -21,6 +21,11 @@ Status: committed 2026-10-12 before phase 3. Amendments after phase 3 starts are
 2. After the Cold War tests run, each hypothesis is marked held, failed, or not testable, with the claim that tested it and the numbers.
 3. A hypothesis that fails is examined for the three possible causes in this order: a model-content difference between the episodes, a framework defect, or a wrong hypothesis. Only the second may lead to a framework change, under the phase 3 budget.
 
+## Results on Cold War v0 (2026-10-17)
+
+Tested once at the first sight of C1 to C13 (reports/cw_v0.md section 16). Held: H3 (where tested: C12 (a), C10 (a)) and H6 (C12 (a) and (b) as content controls). Tested: H5 (without the pending programmes only the USSR's own kernel in 1948 and 1949 changes). Not supported or failed: H1 (the lag exists, but belief errors do not move the boundary: C6 (b), C7 (b), C10 (b)), H2 (C8 (b) fails, C9 (b) consistent), H4 (C5 (b), C11), H7 (the balance of 1967 to 1986 is in the USSR's own kernel as well as the joint one: C2). Not tested: H8 (C5 at the bound plus eight exceeded the explicit budget). Every failure is attributed to model content or to the claim's reading, none to a framework defect; the hypotheses above are unchanged.
+
 ## Changelog
 
 - 2026-10-12: H1 to H8 committed at the end of phase 1, before phase 2's Cold War-related work.
+- 2026-10-17: results on Cold War v0 recorded (section above); no hypothesis edited.

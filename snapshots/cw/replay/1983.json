@@ -17,15 +17,15 @@
    ]
   },
   "nuke_USSR": {
-   "level": "few",
-   "confidence": "medium",
+   "level": "overkill",
+   "confidence": "assumed",
    "indicators": [
     {
-     "id": "event_1961_nuke_USSR_replay",
-     "value": "NIE 11-8/1-61 (21 Sep 1961)",
-     "source": "Prados 1982",
-     "observed": "1961-12-31",
-     "rule": "the contemporaneous reading dated before 1 January"
+     "id": "event_1975_nuke_USSR_record",
+     "value": "MIRVed SS-17, SS-18, SS-19 deployed from 1975",
+     "source": "Podvig 2001",
+     "observed": "1975-12-31",
+     "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv)"
     }
    ]
   },
