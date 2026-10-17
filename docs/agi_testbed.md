@@ -10,6 +10,8 @@ The project's rule is tests before guards. The WW2, Cold War, summer-1939 and Ju
 
 The AGI model has no outcome to check against. These claims are therefore not reliability tests of the method (that is what the historical suites are for); they are the hypotheses the design makes about its own model, fixed in advance so that the first report can say which of them the model confirms, which it refutes, and which depend on an untested mechanism. Where the design's prose and the framework's definitions pull apart (an ending is terminal, a delay is not relaxable, a kernel is a set and not a per-start answer, adding moves to a coalition member cannot shrink its kernel), the claims below are written in the framework's terms and the gap is stated. Where a claim would be decided by a guard choice the ontology step makes, the choice is named in section 2 and the claim says what is reported under each.
 
+The owner's placeholder on where the WW2 model and the human-SI relationship differ in kind ([ww2_si_disanalogies.md](ww2_si_disanalogies.md), opened the same day) feeds the same registration: any testable claim it produces is added here as G23 onward, under the same rule, before any AGI guard is written.
+
 ## 1. Scope and time
 
 - One tick is one quarter. v0's horizon is 56 ticks, 2026Q4 to 2040Q4 (DESIGN.md section 2.1). Unbounded fixpoints are used for kernels.
