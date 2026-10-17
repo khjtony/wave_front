@@ -1,8 +1,8 @@
 # Validity argument
 
-This is the assurance case for the `wavefront` framework: a top claim, the sub-claims it rests on, the evidence for each, and the known gaps. It is updated at every phase gate (PHASES.md; PLAN.md steps 0.13, 4.5 and 5.6) and is the front page of every AGI report. Definitions are in [theory.md](theory.md), the contract in [framework_spec.md](framework_spec.md), and the registered tests in [ww2_testbed.md](ww2_testbed.md) §5 and [coldwar_testbed.md](coldwar_testbed.md) §5.
+This is the assurance case for the `wavefront` framework: a top claim, the sub-claims it rests on, the evidence for each, and the known gaps. It is updated at every phase gate (PHASES.md; PLAN.md steps 0.13, 4.5 and 5.6) and is the front page of every AGI report. Definitions are in [theory.md](theory.md), the contract in [framework_spec.md](framework_spec.md), and the registered tests in [ww2_testbed.md](ww2_testbed.md) §5, [coldwar_testbed.md](coldwar_testbed.md) §5 and [agi_testbed.md](agi_testbed.md) §5.
 
-Status as of 2026-10-11: phase 0 in progress. Nothing is implemented, so almost every row in section 8 is `planned`.
+Status as of 2026-10-17: phases 0 to 2 assessed (section 9 has the gate entries); section 8 holds the status of every sub-claim. The AGI claims are registered before any guard ([agi_testbed.md](agi_testbed.md)); no AGI mechanism is validated, and the untested list of section 6 stands.
 
 ---
 
@@ -50,7 +50,7 @@ A alone gives correctness relative to the model. B, C and D together give reliab
 - The proofs in theory.md are sketches. They are not mechanized.
 - Z3 is trusted. A5 and A6 cross-check it against the explicit engine, not against an independent solver.
 
-**Status.** Planned; assessed at the phase 0 gate.
+**Status.** A1 to A7 and A9 met at the phase 0 gate (section 8); A8 waits on the PRISM-games exporter (phase 6).
 
 ---
 
@@ -101,7 +101,7 @@ Every registered test, with the sub-claims it supports:
 - C8 ("the distance to the boundary increases") and DESIGN.md Q6 need a named distance. Against the rest, distance from inside a unilateral kernel is always undefined (theory.md §4.3, Lemma 5).
 - C3 needs nested crisis sub-games (theory.md §7), which are scheduled for phase 2.
 
-**Status.** Planned. WW2 development tests at phase 1, hold-out tests at phase 2, Cold War at phase 3.
+**Status.** WW2 and the two crisis episodes assessed at phases 1 and 2 (section 8): B1, B2, B4 and B11 partial (met for WW2, B4 with one deferral; the Cold War tests at phase 3); B6 met for WW2 and, for 1914, on the lag but not on the kernel tick; B3, B9 and B10 partial (WW2 and 1939 met as amended; 1914 J3 and J6 not met); B8 met as amended for WW2, 1939 and 1914 J2, J7 not met; B5 not met as registered; B7 and B12 planned for phase 3; B13 planned (written, with two historical anchors; tested at phase 3).
 
 ---
 
@@ -111,7 +111,7 @@ Every registered test, with the sub-claims it supports:
 
 | Id | Sub-claim | Evidence |
 |---|---|---|
-| C1 | Tests are registered before any guard is written | ww2_testbed.md §11 and coldwar_testbed.md §8, both dated 2026-10-11; git history; test files with verbatim claims (PLAN.md 0.10) |
+| C1 | Tests are registered before any guard is written | ww2_testbed.md §11 and coldwar_testbed.md §8, both dated 2026-10-11, and agi_testbed.md §9, dated 2026-10-17; git history; test files with verbatim claims (PLAN.md 0.10; tests/agi/test_registration.py) |
 | C2 | Decision spaces come from contemporaneous alternatives | `source=` on every action; `speculative=True` counted in the parameter budget and listed in reports (spec §3.1, §8) |
 | C3 | A hold-out is respected | T6, T7, T11 and T12 run without guard edits after first sight; T3, T9 and T13 run with the contested and window criteria (PHASES.md phase 2) |
 | C4 | Every guard edit after a failing test is logged | `docs/guard_changelog_ww2.md`, `docs/guard_changelog_cw.md` |
@@ -121,7 +121,7 @@ Every registered test, with the sub-claims it supports:
 
 **Gaps.** The protocol constrains fitting but cannot remove hindsight from the people choosing decision spaces and level boundaries; the historian review is the mitigation. The tests and the model are written by the same team. Expected outputs that still say "refine at phase 3" (C13) may be refined only without weakening the claim.
 
-**Status.** C1 partial: the claims are committed in the testbed documents; the test files are pending. The rest is planned.
+**Status.** C1 met (phases 0 and 2, and the AGI registration of 2026-10-17); C3 met for WW2 v1, the 1939 sub-game and July 1914 (phase 2; no AGI run exists yet); C4, C6 and C7 met for phases 1 and 2; C2 partial (historian review pending); C5 planned for phases 3 and 4, with one framework change logged so far in docs/framework_changes.md, whether it counts against the budget being the owner's decision.
 
 ---
 
@@ -138,7 +138,7 @@ Every registered test, with the sub-claims it supports:
 
 **Gaps.** Replay measures estimation of the current state, not prediction. For the AGI model there is no hindsight snapshot, so D3 cannot be measured there; it transfers only as a property of the procedure.
 
-**Status.** D1 planned for phase 0 (PLAN.md 0.11); D2 to D4 planned for phase 2 (WW2) and phase 3 (Cold War).
+**Status.** D1 met (phase 0); D2 met in mechanics on the real FRUS replay; D4 met in mechanics, with no real proposal reviewed yet; D3 not met with the rule backend (the Claude backend waits on a credential on the owner's machine); the Cold War replay at phase 3.
 
 ---
 
@@ -156,11 +156,11 @@ It does **not** establish the content of the AGI model. The AGI model's guards, 
 
 | Untested mechanism | Why no episode covers it | Plan |
 |---|---|---|
-| Recursive capability growth | no historical actor improved its own capability in a loop; T12 and the Cold War jumps are single steps | none; carried as `untested` |
-| A copyable or exfiltrating actor | every historical principal was a single, located entity | none; carried as `untested` |
+| Recursive capability growth | no historical actor improved its own capability in a loop; T12 and the Cold War jumps are single steps | carried as `untested`; every AGI result is reported under the sweep of agi_testbed.md section 6 item 3, which does not validate the mechanism |
+| A copyable or exfiltrating actor | every historical principal was a single, located entity | carried as `untested`; every AGI result is reported under the sweep of agi_testbed.md section 6 item 3, which does not validate the mechanism |
 | Dependence lock-in with no adversary (`DISEMPOWERMENT`) | both episodes end through adversarial or exhaustion dynamics | attention-economy testbed, 2008 to 2020 (PHASES.md phase 6) |
 | Non-state principals (labs) | every principal in both episodes is a state | none yet |
-| Overwhelming speed and information asymmetry | Ultra, Magic and satellite reconnaissance are partial asymmetry only | none; carried as `untested` |
+| Overwhelming speed and information asymmetry | Ultra, Magic and satellite reconnaissance are partial asymmetry only | carried as `untested`; speed is swept (agi_testbed.md section 6 item 3), information asymmetry is fixed by the observation functions and not swept |
 
 Two episodes, or three with 1914, are a small sample. Reliability on them is evidence about the method on similar structures, not a forecast and not a guarantee for structures they lack.
 
@@ -220,13 +220,13 @@ The point of no return is the first state of a trace outside the kernel. The sil
 | B11 | Oversight and capability thresholds | T12 met under every `aims_JPN`: the bomb ends the war whatever Japan's aims, and only for a programme decided at least 13 ticks before the event (the claim's 12 is implied; reports/ww2_v1.md section 10); C8, C10 | partial (WW2 met) | phases 2, 3 |
 | B12 | Exhaustion with no adversarial act | C9, C13 | planned | phase 3 |
 | B13 | Transfer hypotheses hold | `docs/transfer_hypotheses.md` written before any Cold War guard; phase 2 results bear on H3 and H8 (reports/ww2_v1.md section 15); July 1914 J2 and J7 bear on H3 (the point of no return set by a pre-commitment clock; speed asymmetry acting on the response lag, reports/july1914.md section 11); Cold War suite | planned (written; two historical anchors) | phases 2 (written), 3 (tested) |
-| C1 | Tests before guards | testbed changelogs; the skipping test files under `tests/ww2/scenarios` and `tests/coldwar/scenarios` (phase 0); the 1939 sub-game claims K1 to K6 and the July 1914 claims J1 to J7 registered as documents and skipped tests before any guard (commit 7e533d4, 2026-10-15) | met | phases 0, 2 |
+| C1 | Tests before guards | testbed changelogs; the skipping test files under `tests/ww2/scenarios` and `tests/coldwar/scenarios` (phase 0); the 1939 sub-game claims K1 to K6 and the July 1914 claims J1 to J7 registered as documents and skipped tests before any guard (commit 7e533d4, 2026-10-15); the AGI registration (agi_testbed.md claims G1 to G22, an id space distinct from this document's sub-claims) as `docs/agi_testbed.md` and skipped tests under `tests/agi/scenarios` before any AGI guard (2026-10-17), with `tests/agi/test_registration.py` checking that the files carry the section 5 rows verbatim and stay skipped until first sight is recorded | met | phases 0, 2 (the AGI registration of 2026-10-17, ahead of phase 5) |
 | C2 | Contemporaneous decision spaces | every WW2 action carries a dated record as `source=`; one speculative action; historian review pending | partial | phases 1, 3 |
 | C3 | Hold-out respected | WW2 v1: first sight on 2026-10-13 at 3d5c55e, no guard edit after it until the owner's logged decision 1 of 2026-10-15 (the German offer, with sources and a full rerun). 1939 sub-game: K1 to K6 run once at f00e5be, no edit after. July 1914: J1 to J7 run once at f00e5be under a total hold-out, no edit after; the four failures stand. Both single runs reproduced by the architect | met (WW2, 1939, 1914) | phase 2 |
 | C4 | Guard edits logged | docs/guard_changelog_ww2.md (phase 1, the v1 rows before first sight, the 1939 sub-game's model-step and first-run rows, and the owner-directed German offer after first sight with its sources) and docs/guard_changelog_1914.md (the model step and the single-run marker); no edit changed a registered outcome except as logged | met for phases 1 and 2 | phases 1 to 3 |
 | C5 | Framework-change budget kept | `docs/framework_changes.md` | planned | phases 3, 4 |
 | C6 | Budget does not buy fit | v1 budget reported (84 guards, 202 parts, 8 hypothesis gates, 2 speculative actions, 7 delays, 4 fairness constraints, 5 profiles, 1 assume); informativeness over the non-vacuous controls 1 of 1 on v1 (3 of 3 on v0); no parameter was added to pass a test, and three registered claims fail as read | met for phases 1 and 2 | phases 1 to 3 |
-| C7 | Negative controls in CI | T10 runs in the suite on v0 and, as the Japan content control, on v1 (`slow`-marked, 322 s) | met for phases 1 and 2 | phases 1 to 3 |
+| C7 | Negative controls in CI | T10 runs in the suite on v0 and, as the Japan content control, on v1 (`slow`-marked, 322 s); G11 once `models/agi/v0.py` exists (agi_testbed.md section 6 item 6) | met for phases 1 and 2 | phases 1 to 3 |
 | D1 | Snapshot provenance | strict JSON Schema plus hand-written validator cross-checked against `jsonschema` on a 1,715-document mutation corpus; loader refuses missing provenance, unknown levels and unfixed swept variables; 93 tests | met | phase 0 |
 | D2 | Blind replay | FRUS 1936 to 1940 (12 volumes, 10,550 documents from a pinned mirror commit) replayed quarter by quarter with the corpus filtered strictly by dateline; the editors' bracketed insertions, which carry later facts into earlier documents, are stripped (reports/replay_ww2_frus.md; docs/replay_harness.md) | met in mechanics (WW2) | phase 2 |
 | D3 | Replay agreement | rule backend on real FRUS, proposal level, nothing reviewed: text variables 356/500 (71 percent) against 305/500 for reading nothing; the belief and commitment variables below the reading-nothing baseline; 4 of 9 documented belief and commitment flips within a quarter; resource variables come from datasets and are not replayed from text. The registered criterion is not met by the rule backend; the Claude backend needs a credential on the owner's machine (reports/replay_ww2_frus.md) | not met (WW2, rule backend) | phases 2, 3 |
@@ -234,6 +234,7 @@ The point of no return is the first state of a trace outside the kernel. The sil
 
 ## 9. Change log
 
+- 2026-10-17: the review of status and roadmap against the project's goal (docs/review_2026-10-17.md); the AGI claims G1 to G22 registered before any guard (docs/agi_testbed.md; C1); the status line of the preamble and those of sections 2 to 5 aligned with section 8; C1's evidence and assessed-at columns extended to the AGI registration. No status changed.
 - 2026-10-16: the owner's decisions of 2026-10-15 executed: T6, T7, T9, T13 and T8(b) amended and their tests green under the amended wording; the summer-1939 crisis sub-game (K1 to K6) and July 1914 (J1 to J7) each run once under their hold-outs; B3, B8, B10 partial-to-met as amended, B6 met on the lag, B9 partial (two controls at size 1), B13 with two historical anchors for H3; C1, C3, C4 met for the new registrations; framework change 1 (per-actor cadence) logged in docs/framework_changes.md.
 - 2026-10-14: phase 2 (WW2 v1, both theatres to 1945Q3; the symbolic engine; the real FRUS replay; crisis sub-games) assessed under the registered wording: B6 and B11 met for WW2; B3, B9 and B10 partial; B5 and B8 not met as registered (T6's point of no return one quarter before the window; T7's war avoidable; T13 degenerate); C3, C4, C6 and C7 met for phase 2 (no post-hoc guard edit); D2 and D4 met in mechanics, D3 not met with the rule backend. The T8(b) kernel comparison is not met (reports/ww2_v0.md section 14.1). Amendments are proposed for the owner in reports/ww2_v1.md section 13; no claim was edited.
 - 2026-10-12: phase 1 (WW2 v0, Europe 1936 to 1940) assessed under the original wording: B1, C4 and C7 met for WW2; B2, B4 and C2 partial; B9 not met (reports/ww2_v0.md sections 4 to 8).

@@ -1,0 +1,3 @@
+These files are the registered claims G1 to G22 from `docs/agi_testbed.md` section 5, registered 2026-10-17 before any AGI guard.
+They skip with the reason "registered before any guard is written; the model does not exist yet" until `models/agi/v0.py` exists (phase 5); step 5.4 of PLAN.md un-skips the v0 claims (6.2 the v1 claims) and records the commit of first sight in `tests/agi/test_model_agi.py` as `FIRST_SIGHT_COMMIT`.
+Do not edit the claim text without a changelog entry (section 9 of `docs/agi_testbed.md`); `tests/agi/test_registration.py` checks the files against the document and that each stays skipped until first sight is recorded.

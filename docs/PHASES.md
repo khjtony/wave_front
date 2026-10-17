@@ -115,6 +115,7 @@ Rough sizes assume one full-time engineer and a part-time historian reviewer. Th
 **Goal.** Instantiate the AGI domain model in the frozen framework and produce the first inclination report.
 
 **Work.**
+- The claims are registered in [agi_testbed.md](agi_testbed.md) (G1 to G22, 2026-10-17) before any guard, with the scenario tests as skipped files under `tests/agi/scenarios`; the ontology step fixes levels, thresholds and guard gating without editing the claims, every result is reported under the untested-mechanism sweeps, and an amended claim is a new registration (agi_testbed.md section 6).
 - `models/agi/v0.py` as specified in DESIGN.md sections 2 and 3; every mechanism tagged `validated:ww2`, `validated:cw`, or `untested`.
 - The first AGI snapshot with per-variable indicators, sources and mapping rules (DESIGN.md section 5).
 - The brief's three scenarios and COEXIST as tests; the worked example in DESIGN.md section 7 confirmed or refuted.

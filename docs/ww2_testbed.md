@@ -2,7 +2,7 @@
 
 Purpose: build and validate the wave_front framework (DSL, engine, analysis questions, snapshot pipeline, evidence extraction) on a case with a known outcome, dated decision points, documented decision spaces and quantitative resource data, before instantiating it for the AGI case described in [DESIGN.md](DESIGN.md).
 
-Status: proposal. The tests in section 5 are meant to be committed *before* any guard is written; see the anti-hindsight protocol in section 7.
+Status: in force. The tests of section 5 were registered on 2026-10-11 before any WW2 guard was written (`models/ww2/v0.py` dates from 2026-10-12) and committed as test files in phase 0; v0 and v1 are built and run (reports/ww2_v0.md, reports/ww2_v1.md), and section 11 records every clarification, amendment and result. See the anti-hindsight protocol in section 7.
 
 ---
 
