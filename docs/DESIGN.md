@@ -2,7 +2,7 @@
 
 **A reachability-based simulator of the power relationship between AGI/SI and humanity.**
 
-Status: proposal, v0. Nothing here is implemented yet. Section 1 evaluates the idea; sections 2 to 10 are the design. The framework is developed and validated on a Second World War model first (see [ww2_testbed.md](ww2_testbed.md)); the AGI model in sections 2 and 3 is the second instance of the same framework.
+Status: the design of record, written as a proposal on 2026-10-11. The framework of sections 4.1 to 4.5, 5 and 6 is implemented through phase 2, except the quantitative layer of 4.6, the PRISM-games and uniform-strategy rows of 6.4 and the live collection step of 5.3, which are phase 6; the WW2 models (v0, v1 and the summer-1939 sub-game) and the July 1914 model exist, and the Cold War model is phase 3 ([PHASES.md](PHASES.md)); the AGI domain model of sections 2 and 3 is not yet instantiated (phase 5), and its claims are registered before any guard in [agi_testbed.md](agi_testbed.md). Section 1 evaluates the idea; sections 2 to 10 are the design. The framework is developed and validated on a Second World War model first (see [ww2_testbed.md](ww2_testbed.md)); the AGI model in sections 2 and 3 is the second instance of the same framework.
 
 ---
 
@@ -89,7 +89,7 @@ v0 (explicit-state tractable):
 - **A** — one AGI/SI system with a hidden objective.
 - **N** — nature: breakthroughs, accidents, elections, energy shocks, detection events, unknown capabilities.
 
-v1 splits H into US / CN / EU-and-others / Public / Capital, splits L into leader vs. followers plus an open-weights ecosystem, and adds a second AI (A₂) so AI-versus-AI dynamics exist.
+v1 splits H into US / CN / EU-and-others / Public / Capital, splits L into leader vs. followers plus an open-weights ecosystem, and adds a second AI (A₂) so AI-versus-AI dynamics exist. The registration of 2026-10-17 ([agi_testbed.md](agi_testbed.md) section 2) gives A₂ its own hidden objective and takeover ending (G22) and adds an aggregate ecosystem actor E for the population of deployed systems beyond the frontier, with a swept share of unaligned members (G10).
 
 ### 2.3 State variables (v0)
 
@@ -178,7 +178,7 @@ balance := oversight ≥ weak            -- humans can see and can switch off
          ∧ dependence ≠ lock_in        -- humans could still function without it
 ```
 
-Alternatives worth running: a *mutual-benefit* balance (add `trust ≠ hostile`), and a *deterrence* balance (replace the control clause with `h_power ≥ normal`).
+Alternatives worth running: a *mutual-benefit* balance (add `trust ≠ hostile`), and a *deterrence* balance (replace the control clause with `h_power ≥ normal`). A third, `balance_coexist` (`cap ≥ agi ∧ trust ≠ hostile ∧ h_power ≥ normal ∧ dependence ≠ lock_in ∧ a_control ≠ total`), registered in [agi_testbed.md](agi_testbed.md) section 3 on 2026-10-17, drops the autonomy and control clauses so that a state past AGI emergence is not outside every kernel by construction; it is the headline predicate of the registered coexistence question (G5), with the balance above as the fallback measure.
 
 ### 3.2 Viability kernel and point of no return
 
@@ -462,7 +462,7 @@ Removing any one of these blocks the whole cluster. Note what is *not* on the li
 
 Validation is organized around two historical episodes: the WW2 testbed in [ww2_testbed.md](ww2_testbed.md) for development and the Cold War in [coldwar_testbed.md](coldwar_testbed.md) as the validation set. The WW2 testbed provides thirteen pre-registered tests covering reachability of the realized trajectory, documented counterfactuals that must be reachable, debates that must come out `contested`, point-of-no-return windows, pivotal coalitions, negative controls that must require several relaxations, a replay harness for the evidence pipeline on dated documents, and an anti-hindsight protocol (tests before guards, decision spaces from contemporaneous alternatives, a hold-out period, a parameter budget, blind replay).
 
-What remains AGI-specific:
+What remains AGI-specific (registered in [agi_testbed.md](agi_testbed.md) on 2026-10-17, before any AGI guard: the worked example of section 7 is G2 to G4; the scenario tests, narrative reproduction and abstraction robustness are G1, G12 and G13; the negative controls on this section's gates are G11; the policy note's questions are G6 to G8; the questions the goal needs are G5, G9, G10 and G14 to G22; the untested mechanisms other than lock-in and information asymmetry are the sweeps of its protocol, section 6 item 3, lock-in keeping its phase 6 testbed and information asymmetry being fixed by the observation functions; the engine tests are validity.md A1 to A9; red-teaming is a phase 6 process):
 
 - **Scenario tests.** The three scenarios in the brief plus COEXIST are pytest cases: each must be reachable under its stated assumptions and blocked when the named assumption is removed.
 - **Engine tests.** Attractor and fixpoint solvers checked on tiny hand-built games with known answers, independent of either domain model.
