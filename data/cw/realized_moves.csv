@@ -1,0 +1,46 @@
+tick,year,USA,USSR,PRC,Nature,note,source
+0,1947,idle,idle,idle,none,,
+1,1948,idle,blockade,idle,none,The Berlin blockade from 24 Jun 1948; the sub-game models/cw/crises/berlin_1948.py plays the crisis to the lifting of 12 May 1949 and returns to 1 Jan 1949 ([SQR]: the record lifts the blockade inside 1949).,Narinsky 1996; Trachtenberg 1999
+2,1949,idle,idle,idle,none,,
+3,1950,idle,approve_korea,idle,nsc68,"Stalin approves Kim's attack (Apr 1950; attack 25 Jun); NSC-68 (Apr, approved 30 Sep 1950).",Weathersby 1993; FRUS 1950 vol. I
+4,1951,idle,idle,idle,none,,
+5,1952,idle,idle,idle,none,,
+6,1953,armistice,idle,idle,new_look,Korean armistice 27 Jul 1953; NSC 162/2 of 30 Oct 1953.,FRUS 1952-54 vols. II and XV
+7,1954,approve_u2,idle,idle,none,"Eisenhower approves the U-2, 24 Nov 1954.",Pedlow and Welzenbach 1992
+8,1955,idle,idle,idle,none,,
+9,1956,survivable_force,idle,idle,none,"The Polaris programme approved, Dec 1956 (Hungary, 4 Nov 1956, was suppressed within the year: below the threshold of bloc_USSR).",Rosenberg 1983
+10,1957,idle,idle,idle,missile_gap,"Soviet ICBM test 21 Aug 1957, Sputnik 4 Oct; the Gaither report 7 Nov; NIE 11-10-57 of 10 Dec 1957.",Preble 2004; Prados 1982
+11,1958,corona,berlin_ultimatum,idle,none,CORONA approved Feb 1958; Khrushchev's Berlin ultimatum 10 and 27 Nov 1958.,Ruffner 1995; Zubok and Pleshakov 1996
+12,1959,offer_test_ban,idle,idle,none,Western draft test-ban treaty and Eisenhower's proposal of 13 Apr 1959; the Berlin deadline of May 1959 lapses inside the standing crisis (no level change).,Seaborg 1981
+13,1960,idle,withdraw_advisers,idle,none,"Soviet specialists withdrawn from China, notified 16 Jul 1960.",Luthi 2008
+14,1961,strategic_buildup,build_wall,idle,estimate_revised,"Kennedy's buildup (28 Mar, 25 May 1961); the Wall, 13 Aug 1961; NIE 11-8/1-61 of 21 Sep 1961.",Preble 2004; Harrison 2003; Prados 1982
+15,1962,idle,deploy_cuba,idle,none,Operation Anadyr decided 24 May 1962; the crisis of 16 to 28 Oct 1962 is the sub-game models/cw/crises/cuba_1962.py.,Fursenko and Naftali 1997
+16,1963,idle,accept_test_ban,idle,none,Limited Test Ban Treaty signed 5 Aug 1963; hotline agreement 20 Jun 1963.,Seaborg 1981
+17,1964,idle,icbm_buildup,idle,none,The hardened ICBM buildup confirmed under Brezhnev (from Oct 1964; date of the decision not verified).,Podvig 2001
+18,1965,idle,idle,idle,none,,
+19,1966,idle,idle,idle,none,,
+20,1967,offer_limits,idle,idle,none,"Johnson's letter of 27 Jan 1967 and the Glassboro summit, 23 to 25 Jun 1967.",Newhouse 1973
+21,1968,idle,idle,idle,none,,
+22,1969,idle,idle,border_clash,none,"Zhenbao Island, 2 and 15 Mar 1969; Tielieketi 13 Aug 1969 (the Kosygin-Zhou meeting of 11 Sep 1969 eased the crisis without ending the armed confrontation).",Yang Kuisong 2000
+23,1970,idle,mirv,idle,none,Soviet MIRVed ICBM development (date of the decision not verified).,Podvig 2001
+24,1971,open_china,idle,idle,none,Kissinger in Beijing 9 to 11 Jul 1971; Nixon's announcement 15 Jul 1971.,FRUS 1969-76 vol. XVII
+25,1972,idle,accept_limits,rapprochement,none,SALT I signed 26 May 1972; Nixon in Beijing 21 to 28 Feb 1972.,Newhouse 1973; Chen Jian 2001
+26,1973,idle,idle,idle,none,,
+27,1974,idle,idle,idle,none,,
+28,1975,idle,idle,idle,slowdown,Soviet growth below 2 percent a year from the mid-1970s on revised series (dating not verified).,Easterly and Fischer 1995
+29,1976,idle,idle,idle,none,,
+30,1977,idle,idle,idle,none,,
+31,1978,idle,idle,idle,none,,
+32,1979,idle,invade_afghanistan,idle,none,The Politburo decision of 12 Dec 1979; entry 24 to 27 Dec 1979.,CWIHP Bulletin 8-9
+33,1980,idle,idle,idle,opposition,The Gdansk agreement of 31 Aug 1980; Solidarity registered 10 Nov 1980.,Kramer 1999
+34,1981,buildup,idle,idle,martial_law,The Reagan buildup (Mar and 2 Oct 1981); martial law in Poland 13 Dec 1981.,Fischer 1997; Kramer 1999
+35,1982,offer_reductions,idle,idle,war_scare,"START proposal, 9 May 1982 (the zero option of 18 Nov 1981 is the same level); RYAN through 1982 ([NSL]: the Soviet reading formed from May 1981, while Nature's 1981 event is martial law).",Talbott 1984; Andrew and Gordievsky 1991
+36,1983,able_archer,idle,idle,none,"Able Archer 83, 7 to 11 Nov 1983; the sub-game models/cw/crises/able_archer_1983.py.",Jones 2016; PFIAB 1990
+37,1984,idle,idle,idle,none,,
+38,1985,idle,idle,idle,reassurance,Geneva summit 19 to 21 Nov 1985.,Fischer 1997
+39,1986,idle,perestroika,idle,decline,"27th Party Congress (Feb 1986), Law on Individual Labour Activity (19 Nov 1986); the oil price collapse from late 1985 (the Politburo's withdrawal decision of 13 Nov 1986 is placed with the Geneva Accords in 1988: one USSR decision per year).",Brown 1996; Gaidar 2007
+40,1987,idle,accept_reductions,idle,new_thinking,INF Treaty 8 Dec 1987; the Warsaw Pact's defensive doctrine of 29 May 1987.,Garthoff 1994; English 2000
+41,1988,idle,withdraw_afghanistan,idle,opposition,"Geneva Accords 14 Apr 1988, withdrawal from 15 May 1988; the Polish strikes of Apr to Aug 1988.",Kalinovsky 2011; Kramer 2003
+42,1989,idle,idle,normalize,revolution,"Gorbachev in Beijing 15 to 18 May 1989; the revolutions of 1989 ([NSL] none: the Bush administration's reassessment of 1989 to 1990 is not represented, see the notes).",Luthi 2008; Kramer 2003
+43,1990,idle,idle,idle,delegitimation,"Article 6 repealed, Lithuania's declaration (11 Mar 1990), Russian sovereignty (12 Jun 1990) ([NSL]: the fall of output in 1990 is placed in 1991).",Brown 2009
+44,1991,idle,dissolve,idle,collapse,Warsaw Pact dissolved 1 Jul 1991; the Belovezha Accords 8 Dec 1991; output collapse 1990 to 1991.,Kotkin 2001; Miller 2016

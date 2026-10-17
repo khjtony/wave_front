@@ -1,0 +1,31 @@
+year,tick,actor,action,delay_years,source,note
+1945,-2,USSR,build_bomb,4,Stalin's decree of 20 Aug 1945 creating the Special Committee (Holloway 1994),"before tick 0: carried in the 1947 snapshot as pending_USSR_build_bomb = 3; first test 29 Aug 1949, visible 1950"
+1948,1,USSR,blockade,0,The blockade from 24 Jun 1948 (Narinsky 1996),crisis action; the sub-game berlin_1948
+1950,3,USSR,approve_korea,0,"Stalin and Kim, Moscow, Apr 1950 (Weathersby 1993)",attack of 25 Jun 1950
+1953,6,USA,armistice,0,"Panmunjom, 27 Jul 1953 (FRUS 1952-54 vol. XV)",
+1954,7,USA,approve_u2,2,"Eisenhower's approval, 24 Nov 1954 (Pedlow and Welzenbach 1992)",first overflight 4 Jul 1956; visible 1957
+1956,9,USA,survivable_force,4,Polaris approved Dec 1956; Minuteman Feb 1958 (Rosenberg 1983),first Polaris patrol 15 Nov 1960; visible 1961
+1958,11,USA,corona,2,CORONA approved Feb 1958 (Ruffner (ed.) 1995),first recovery 18 Aug 1960; visible 1961
+1958,11,USSR,berlin_ultimatum,0,"Khrushchev, 10 and 27 Nov 1958 (Zubok and Pleshakov 1996)",
+1959,12,USA,offer_test_ban,0,Western draft treaty and Eisenhower's proposal of 13 Apr 1959 (Seaborg 1981),
+1960,13,USSR,withdraw_advisers,0,"Specialists withdrawn, notified 16 Jul 1960 (Luthi 2008)",
+1961,14,USA,strategic_buildup,3,Kennedy's messages of 28 Mar and 25 May 1961 (Ball 1980; Preble 2004),visible 1965
+1961,14,USSR,build_wall,0,13 Aug 1961 (Harrison 2003),
+1962,15,USSR,deploy_cuba,0,"Presidium, 24 May 1962 (Fursenko and Naftali 1997)",crisis action; the sub-game cuba_1962
+1963,16,USSR,accept_test_ban,0,LTBT signed 5 Aug 1963 (Seaborg 1981),
+1964,17,USSR,icbm_buildup,2,Hardened ICBM force (Podvig 2001; date of the decision not verified),SS-9 and SS-11 in silos from 1966; visible 1967
+1967,20,USA,offer_limits,0,Johnson to Kosygin 27 Jan 1967; Glassboro 23 to 25 Jun 1967 (Newhouse 1973),
+1969,22,PRC,border_clash,0,"Zhenbao Island, 2 Mar 1969 (Yang Kuisong 2000)",
+1970,23,USSR,mirv,5,Fourth-generation MIRVed ICBMs (Podvig 2001; date of the decision not verified),deployed from 1975; visible 1976
+1971,24,USA,open_china,0,Kissinger in Beijing 9 to 11 Jul 1971 (FRUS 1969-76 vol. XVII),
+1972,25,USSR,accept_limits,0,"SALT I, 26 May 1972 (Newhouse 1973)",
+1972,25,PRC,rapprochement,0,Nixon in Beijing 21 to 28 Feb 1972 (Chen Jian 2001),
+1979,32,USSR,invade_afghanistan,0,"Politburo, 12 Dec 1979 (CWIHP Bulletin 8-9)",
+1981,34,USA,buildup,0,"FY1982 budget amendment, Mar 1981; NSDD-12, 2 Oct 1981 (Fischer 1997)",
+1982,35,USA,offer_reductions,0,"START proposal, 9 May 1982 (Talbott 1984)","the zero option of 18 Nov 1981 placed here: one US decision per year, 1981 being the buildup"
+1983,36,USA,able_archer,0,"Able Archer 83, 7 to 11 Nov 1983 (Jones 2016)",crisis action; the sub-game able_archer_1983
+1986,39,USSR,perestroika,0,27th Congress Feb 1986; Law on Individual Labour Activity 19 Nov 1986 (Brown 1996),
+1987,40,USSR,accept_reductions,0,"INF Treaty, 8 Dec 1987 (Garthoff 1994)",
+1988,41,USSR,withdraw_afghanistan,0,Geneva Accords 14 Apr 1988 (Kalinovsky 2011),"the Politburo decision of 13 Nov 1986 placed with the Accords: one USSR decision per year, 1986 being perestroika"
+1989,42,PRC,normalize,0,Gorbachev in Beijing 15 to 18 May 1989 (Luthi 2008),
+1991,44,USSR,dissolve,0,Warsaw Pact dissolved 1 Jul 1991; Belovezha Accords 8 Dec 1991 (Kotkin 2001),

@@ -1,0 +1,7 @@
+tick,date,USA,USSR,Nature,note,source
+0,1983-11-07,idle,idle,none,,
+1,1983-11-08,idle,idle,flash_reports,KGB flash telegrams of 8 or 9 Nov reporting alerts at US bases (date not verified).,Andrew and Gordievsky 1991; Jones 2016
+2,1983-11-09,release_phase,ready_forces,none,"Simulated general release, 9 to 10 Nov; 4th Air Army aircraft readied, 8 to 11 Nov.",Jones 2016; PFIAB 1990
+3,1983-11-10,idle,idle,none,,
+4,1983-11-11,end_exercise,idle,none,Exercise ends 11 Nov.,Jones 2016
+5,1983-11-12,idle,stand_down,none,Soviet stand-down from 11 to 12 Nov.,PFIAB 1990
