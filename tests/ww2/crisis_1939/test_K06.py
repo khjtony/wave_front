@@ -20,6 +20,8 @@ Engine: the explicit engine (``attractor``, ``relax_explicit``).
 
 import time
 
+import pytest
+
 from models.ww2.crises import summer_1939 as crisis
 from tests.ww2.crisis_1939 import common
 from wavefront.analysis import relax_explicit
@@ -64,6 +66,7 @@ def test_K6a_both_targets_reachable_to_tick_14(capsys):
     assert all(p and a for t, p, a in rows if t <= 14)
 
 
+@pytest.mark.slow
 def test_K6b_the_pact_needs_the_german_proposal(capsys):
     t0 = time.time()
     cm = common.compiled(inert=False, profile="no_german_proposal")

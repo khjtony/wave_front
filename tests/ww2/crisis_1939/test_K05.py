@@ -15,6 +15,8 @@ Engine: the explicit engine (``relax_explicit``, brute force over the named assu
 
 import time
 
+import pytest
+
 from models.ww2.crises import summer_1939 as crisis
 from tests.ww2.crisis_1939 import common
 from wavefront.analysis import relax_explicit
@@ -33,6 +35,7 @@ CLAIM = {
 }
 
 
+@pytest.mark.slow
 def test_K5(capsys):
     t0 = time.time()
     target = ("EARLY_ATTACK", (V.attack_order == "launched") & (V.tick <= 17))

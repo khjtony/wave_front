@@ -30,6 +30,8 @@ printed as diagnostics.
 import functools
 import time
 
+import pytest
+
 from tests.ww2.crisis_1939 import common
 from wavefront.analysis import pivotal
 from wavefront.engine import attractor, contested
@@ -133,6 +135,7 @@ def table(deterred: bool = True) -> str:
     return "\n".join(lines)
 
 
+@pytest.mark.slow
 def test_K2_grid_printed(capsys):
     """Diagnostics: every cell, with and without ``deterred`` (explicit engine)."""
     t0 = time.time()
