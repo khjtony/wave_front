@@ -44,4 +44,11 @@ Reading:
 
 ## 4. Reproduction
 
-To be filled when the serial run of `tests/coldwar` on the branch checkout finishes (started 2026-10-18).
+On a checkout of the branch at 23c20a6 (4 cores, no pytest-xdist), 2026-10-18:
+
+| Run | Result |
+|---|---|
+| C1 to C11, serial, pure-Python BDD core | C1 passed, C2 to C11 failed, in order, as recorded at first sight; the run reached its two-hour limit inside C12, so its summary line was lost |
+| C12, C13 and tests/coldwar/test_model_cw.py, compiled BDD core (the same C source on both branches, copied in) | 28 passed in 15 min 50 s: C12 and C13 pass as recorded; every model check passes (sources on every action, none speculative; the realized replays of the coarse game and the three sub-games; the snapshots up to date; well-formedness; the hold-out rows after first sight) |
+
+So the first-sight record reproduces: 3 passed (C1, C12, C13), 10 failed (C2 to C11). The failures' detail was not compared line by line with reports/cw_v0_first_sight.log. Note for whoever runs the suite next: without the compiled core (`python -m wavefront.symbolic._core.build`), C12 alone runs past an hour on this machine.
