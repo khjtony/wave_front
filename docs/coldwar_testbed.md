@@ -2,7 +2,7 @@
 
 Purpose: after the framework is developed on the Second World War ([ww2_testbed.md](ww2_testbed.md)), run it on a second episode with a different structure, so that passing both is evidence about the framework rather than about one fit. The Cold War is the validation set; it is not used for development. Framework changes it forces are allowed only under a logged budget (see [PHASES.md](PHASES.md), phase 3 and 4).
 
-Status: claims C1 to C13 are registered now, before any WW2 guard exists, so that the second episode cannot be chosen to fit a framework already tuned. Expected outputs that still need historiographical detail are marked `refine at phase 3`; refinements go in the changelog (section 8) and may not weaken a claim.
+Status: claims C1 to C13 were registered on 2026-10-11, before any WW2 guard existed, so that the second episode cannot be chosen to fit a framework already tuned; they are committed as skipped test files under `tests/coldwar/scenarios`. As of 2026-10-17 no Cold War guard, variable, snapshot or data row exists (phase 3 has not started on the domain side); the transfer hypotheses it tests are in [transfer_hypotheses.md](transfer_hypotheses.md). Expected outputs that still need historiographical detail are marked `refine at phase 3`; refinements go in the changelog (section 8) and may not weaken a claim.
 
 ---
 

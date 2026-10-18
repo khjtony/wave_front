@@ -67,6 +67,8 @@ Rough sizes assume one full-time engineer and a part-time historian reviewer. Th
 
 **Addendum (2026-10-16): the owner's decisions of 2026-10-15 executed.** T6, T7, T9, T13 and T8(b) amended (ww2_testbed.md section 11) and green under the amended wording; the "contested" reading settled (section 4.6); the harness rules adopted and re-measured on the real FRUS proposals (76 percent text agreement, belief flips unchanged at 4 of 9), with the Claude-backend run packaged for the owner's machine; the per-actor cadence added as framework change 1; the summer-1939 crisis sub-game built on the crisis machinery and run once (K2 re-asks T9 at 3-day resolution and holds on its three main clauses; reports/crisis_1939.md); July 1914 built at daily ticks with cadences from the decision record and run once under a total hold-out (J1, J2, J5 met; J3, J4, J6, J7 not; reports/july1914.md); the compiled BDD core delivered (about ten times the pure-Python speed on the v0 benchmark and 4.5 times the nodes per gigabyte; v1's forward reachability and its kernels inside the reachable set now fit; docs/engine_scaling.md section 7); the snapshot convention applied (seven levels moved to the model's own clock, listed in the two snapshot READMEs) and the German offer added as a documented, refused alternative with a speculative Soviet acceptance, both followed by a full rerun on 2026-10-16: 1016 passed, 15 skipped, 7 failed, the seven being the recorded crisis-model claims; no WW2 result moved except T7's option at the start tick, now open because the start state carries the alliance. The replay criterion still waits on the Claude backend. Amendments for the new failures are proposed in the two reports for the owner's decision.
 
+**Open at exit (2026-10-17).** When the WW2 model is finished: work out where it and the human-SI relationship differ in kind (an SI carries no historical burden and may not be bound by the restrictions on human choices), starting from [ww2_si_disanalogies.md](ww2_si_disanalogies.md).
+
 **Risk.** OCR noise and extraction drift in the corpora. Mitigation: resource variables come from datasets, and the extractor is scored only on the text-derived variables.
 
 **Size.** 8 to 12 weeks.
@@ -115,6 +117,7 @@ Rough sizes assume one full-time engineer and a part-time historian reviewer. Th
 **Goal.** Instantiate the AGI domain model in the frozen framework and produce the first inclination report.
 
 **Work.**
+- The claims are registered in [agi_testbed.md](agi_testbed.md) (G1 to G22, 2026-10-17) before any guard, with the scenario tests as skipped files under `tests/agi/scenarios`; the ontology step fixes levels, thresholds and guard gating without editing the claims, every result is reported under the untested-mechanism sweeps, and an amended claim is a new registration (agi_testbed.md section 6).
 - `models/agi/v0.py` as specified in DESIGN.md sections 2 and 3; every mechanism tagged `validated:ww2`, `validated:cw`, or `untested`.
 - The first AGI snapshot with per-variable indicators, sources and mapping rules (DESIGN.md section 5).
 - The brief's three scenarios and COEXIST as tests; the worked example in DESIGN.md section 7 confirmed or refuted.

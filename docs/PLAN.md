@@ -98,12 +98,12 @@ Gate: scenario tests run; the first inclination report exists with its untested-
 
 | Step | Goal | Inputs | Outputs | Acceptance | Owner |
 |---|---|---|---|---|---|
-| 5.1 | AGI ontology | DESIGN.md sections 2 and 3 | `docs/ontology_agi.md` | every variable, level boundary, action, guard and effect with a rationale; each mechanism tagged `validated:ww2`, `validated:cw`, or `untested` | A draft, R |
+| 5.1 | AGI ontology | DESIGN.md sections 2 and 3; agi_testbed.md sections 2 and 3 (the named variables and the three balance predicates) | `docs/ontology_agi.md` | every variable, level boundary, action, guard and effect with a rationale; each mechanism tagged `validated:ww2`, `validated:cw`, or `untested` | A draft, R |
 | 5.2 | Indicators and first snapshot | DESIGN.md section 5.2 | `docs/indicators.md`, `snapshots/agi/<date>.json` | every level has an indicator, a source and a mapping rule; no invented numbers | A draft, R, U for judgment calls |
-| 5.3 | Model code | 5.1 | `models/agi/v0.py` | compiles; budget reported | A, then R |
-| 5.4 | Scenario tests | DESIGN.md section 8 | `tests/agi/scenarios/*` | the brief's three scenarios reachable under stated assumptions and blocked when the named assumption is removed; COEXIST reachable | A, then R |
+| 5.3 | Model code | 5.1 | `models/agi/v0.py` | compiles under the baseline and each sweep setting of agi_testbed.md section 6 item 3; budget and fingerprint reported per setting | A, then R |
+| 5.4 | Scenario tests | agi_testbed.md section 5 (G1 to G22, registered 2026-10-17 as skipped files under `tests/agi/scenarios/`) | the v0 files un-skipped (claims the ontology step places in v1 or phase 6 stay skipped as not yet testable at v0); `docs/guard_changelog_agi.md`; `tests/agi/test_model_agi.py` with `FIRST_SIGHT_COMMIT` | every v0 claim run once at first sight with the commit recorded; the brief's three scenarios reachable under stated assumptions and unreachable when the named assumption is removed; COEXIST reachable; no guard edit after first sight without a logged rationale, the hold-out results standing as first computed (agi_testbed.md section 6) | A, then R |
 | 5.5 | Worked example check | DESIGN.md section 7 | `reports/agi_worked_example.md` | each hypothesis in section 7 marked confirmed or refuted with traces | R |
-| 5.6 | First inclination report | 5.2 to 5.5 | `reports/agi_<date>.md` | front-page caveat and untested list present; no bare reachability result quoted | R, U |
+| 5.6 | First inclination report | 5.2 to 5.5 | `reports/agi_<date>.md` | front-page caveat and untested list present; every result listed under each sweep setting, differing results on the front page; no bare reachability result quoted | R, U |
 
 ---
 
@@ -114,7 +114,7 @@ Gate: ongoing; each quarter's report is the deliverable.
 | Step | Goal | Outputs | Acceptance | Owner |
 |---|---|---|---|---|
 | 6.1 | Live evidence pipeline | quarterly `snapshots/agi/*.json`, drift and sensitivity reports | human review on every level change | A, R, U |
-| 6.2 | AGI v1 | `models/agi/v1.py`: split actors, two AIs; uniform-strategy synthesis | the v0 tests still pass; new mechanisms tagged | A, then R |
+| 6.2 | AGI v1 | `models/agi/v1.py`: split actors, two AIs, the ecosystem actor; uniform-strategy synthesis | the v0 tests still pass; new mechanisms tagged; G10 and G22, and any claim the ontology step deferred to v1, run once at v1's first sight with the commit recorded | A, then R |
 | 6.3 | Quantitative layer | PRISM-games export, interval results; the external cross-check of the explicit solvers against PRISM-games | qualitative results unchanged by the export; cross-check agrees on the toy models | A, then R |
 | 6.4 | Lock-in testbed | `docs/lockin_testbed.md`, `models/lockin/v0.py`, registered tests | moves `DISEMPOWERMENT` from `untested` to validated, or records why not | A, R, H |
 | 6.5 | Red-team cadence | `reports/redteam_<date>.md` | missing actions found are logged and either added with a source or recorded as speculative | A, R |
