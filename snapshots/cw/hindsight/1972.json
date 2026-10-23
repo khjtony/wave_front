@@ -1,0 +1,323 @@
+{
+ "$schema": "../../schema.json",
+ "date": "1972-01-01",
+ "model": "cw_v0",
+ "variables": {
+  "nuke_USA": {
+   "level": "overkill",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1964_nuke_USA_record",
+     "value": "the Kennedy buildup in deployment: 800 Minuteman and 29 Polaris boats by 1965, far beyond McNamara's assured-destruction requirement",
+     "source": "Ball 1980; Enthoven and Smith, How Much Is Enough?, 1971",
+     "observed": "1964-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv) Note: threshold: a force several times the assured-destruction requirement"
+    }
+   ]
+  },
+  "nuke_USSR": {
+   "level": "survivable",
+   "confidence": "medium",
+   "indicators": [
+    {
+     "id": "event_1966_nuke_USSR_record",
+     "value": "SS-9 and SS-11 in hardened silos from 1966",
+     "source": "Podvig 2001; Zaloga 2002",
+     "observed": "1966-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv) Note: (the year of a secure Soviet second strike not verified)"
+    }
+   ]
+  },
+  "intel_USA": {
+   "level": "overhead",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1960_intel_USA_record",
+     "value": "CORONA's first recovered photography, 18 Aug 1960",
+     "source": "Ruffner (ed.) 1995",
+     "observed": "1960-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv)"
+    }
+   ]
+  },
+  "belief_force_USA": {
+   "level": "survivable",
+   "confidence": "medium",
+   "indicators": [
+    {
+     "id": "event_1966_nuke_USSR_record",
+     "value": "SS-9 and SS-11 in hardened silos from 1966",
+     "source": "Podvig 2001; Zaloga 2002",
+     "observed": "1966-12-31",
+     "rule": "hindsight truth of the estimated quantity (nuke_USSR in the record; decisions D6) Note: (the year of a secure Soviet second strike not verified)"
+    }
+   ]
+  },
+  "belief_USSR_USA": {
+   "level": "hostile",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_belief_USSR_USA_record",
+     "value": "hindsight: US aims of containment by means short of war; no plan of a first strike at any time",
+     "source": "Gaddis 2005; PFIAB 1990",
+     "observed": "1946-12-31",
+     "rule": "hindsight truth of the estimated quantity (belief_USSR_USA in the record; decisions D6)"
+    }
+   ]
+  },
+  "offer": {
+   "level": "limits",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1967_offer_record",
+     "value": "Glassboro, 23 to 25 Jun 1967",
+     "source": "Newhouse 1973",
+     "observed": "1967-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv)"
+    }
+   ]
+  },
+  "oversight": {
+   "level": "test_ban",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1963_oversight_record",
+     "value": "Limited Test Ban Treaty signed 5 Aug 1963, in force 10 Oct 1963; the hotline of 20 Jun 1963",
+     "source": "Seaborg 1981",
+     "observed": "1963-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv)"
+    }
+   ]
+  },
+  "arms": {
+   "level": "race",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_arms_record",
+     "value": "no limitation agreement",
+     "source": "Newhouse 1973",
+     "observed": "1946-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv) Note: initial level"
+    }
+   ]
+  },
+  "buildup": {
+   "level": false,
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_buildup_record",
+     "value": "the Reagan buildup lies in 1981",
+     "source": "Fischer 1997",
+     "observed": "1946-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv) Note: initial level"
+    }
+   ]
+  },
+  "esc": {
+   "level": "peace",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1962_esc_record",
+     "value": "the missiles withdrawn after 28 Oct 1962",
+     "source": "Fursenko and Naftali 1997",
+     "observed": "1962-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv)"
+    }
+   ]
+  },
+  "accidental": {
+   "level": false,
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_accidental_record",
+     "value": "no nuclear use by accident in the Cold War",
+     "source": "Sagan 1993",
+     "observed": "1946-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv) Note: initial level"
+    }
+   ]
+  },
+  "us_strike": {
+   "level": false,
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_us_strike_record",
+     "value": "no US preventive strike",
+     "source": "Trachtenberg 1988",
+     "observed": "1946-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv) Note: initial level"
+    }
+   ]
+  },
+  "berlin_wall": {
+   "level": true,
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1961_berlin_wall_record",
+     "value": "sector border sealed 13 Aug 1961",
+     "source": "Harrison 2003",
+     "observed": "1961-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv)"
+    }
+   ]
+  },
+  "invasion_west": {
+   "level": false,
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_invasion_west_record",
+     "value": "no Soviet offensive into Western Europe",
+     "source": "Mastny and Byrne 2005",
+     "observed": "1946-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv) Note: initial level"
+    }
+   ]
+  },
+  "korea": {
+   "level": "armistice",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1953_korea_record",
+     "value": "armistice of 27 Jul 1953",
+     "source": "FRUS 1952-54 vol. XV",
+     "observed": "1953-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv)"
+    }
+   ]
+  },
+  "afghan": {
+   "level": "none",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_afghan_record",
+     "value": "no Soviet forces in Afghanistan before Dec 1979",
+     "source": "Kalinovsky 2011",
+     "observed": "1946-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv) Note: initial level"
+    }
+   ]
+  },
+  "econ_USSR": {
+   "level": "growing",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_econ_USSR_record",
+     "value": "postwar reconstruction and growth of 5 percent a year or more into the 1960s",
+     "source": "Easterly and Fischer 1995",
+     "observed": "1946-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv) Note: initial level"
+    }
+   ]
+  },
+  "legit_USSR": {
+   "level": "secure",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_legit_USSR_record",
+     "value": "the party's monopoly unchallenged inside the USSR",
+     "source": "Brown 2009",
+     "observed": "1946-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv) Note: initial level"
+    }
+   ]
+  },
+  "perestroika": {
+   "level": false,
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_perestroika_record",
+     "value": "no reform programme before 1985",
+     "source": "Brown 1996",
+     "observed": "1946-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv) Note: initial level"
+    }
+   ]
+  },
+  "bloc_USSR": {
+   "level": "intact",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_bloc_USSR_record",
+     "value": "Soviet-controlled governments in Eastern Europe (Poland Jan 1947 elections; the coup in Prague of Feb 1948 inside intact)",
+     "source": "Westad 2017",
+     "observed": "1946-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv)"
+    }
+   ]
+  },
+  "align_PRC": {
+   "level": "split",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1960_align_PRC_record",
+     "value": "Soviet specialists withdrawn from China, Jul 1960",
+     "source": "Luthi 2008",
+     "observed": "1960-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv)"
+    }
+   ]
+  },
+  "china_opening": {
+   "level": true,
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1971_china_opening_record",
+     "value": "Kissinger's secret visit, Jul 1971",
+     "source": "FRUS 1969-76 vol. XVII",
+     "observed": "1971-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv)"
+    }
+   ]
+  },
+  "esc_sino": {
+   "level": "clash",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1969_esc_sino_record",
+     "value": "Zhenbao Island (Mar 1969) and the armed confrontation along the border, 1969 to 1989",
+     "source": "Yang Kuisong 2000; Luthi 2008",
+     "observed": "1969-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv)"
+    }
+   ]
+  }
+ },
+ "rates": {},
+ "builtins": {
+  "pending_USSR_mirv": {
+   "value": 4,
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "decision_1970_USSR_mirv",
+     "value": "USSR.mirv decided 1970",
+     "source": "Fourth-generation MIRVed ICBMs (Podvig 2001; date of the decision not verified)",
+     "observed": "1970-12-31",
+     "rule": "years until the delayed effect of the decision is visible (framework_spec.md section 3.1)"
+    }
+   ],
+   "rule": "decided at tick 23 with delay 5: pending t + 1 + d - T"
+  }
+ }
+}

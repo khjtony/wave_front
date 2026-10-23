@@ -91,6 +91,8 @@ Rough sizes assume one full-time engineer and a part-time historian reviewer. Th
 
 **What it teaches for the AGI model.** Whether a held balance shows up as joint-kernel membership; whether the oversight lever and belief error behave as the AGI model assumes; whether capability stops mattering past a threshold.
 
+**Gate record (2026-10-17): not passed as written; the protocol held.** Cold War v0 built (models/cw/v0.py, three crisis sub-games, hindsight snapshots 1947 to 1992 and a manual replay for C6 and C7; docs/ontology_cw.md, docs/actions_cw.md, docs/cw_v0_decisions.md). C1 to C13 run once at commit 6b87af9 (34 min 50 s): C1, C12, C13 pass; C2 to C11 fail as read (reports/cw_v0.md). Framework changes: 0 of 5. Transfer hypotheses: H3 and H6 held, H5 tested, H8 not tested, H1, H2, H4 and H7 failed or unsupported, each explained as model content or claim reading, none as an engine defect. The WW2 suite is unchanged (no framework change; this session's run: 1059 passed, 40 skipped, 7 failed, the seven the recorded crisis-model claims). The testbed's data hosts are blocked from the development environment, so no level is read from a series and the replay is manual (data/cw/README.md). One early sight close to C2 is disclosed (decisions D9). Proposed amendments and a cw_v1 for the owner's decision: reports/cw_v0.md section 18.
+
 **Size.** 10 to 14 weeks.
 
 ---

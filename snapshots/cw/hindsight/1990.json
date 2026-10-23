@@ -1,0 +1,307 @@
+{
+ "$schema": "../../schema.json",
+ "date": "1990-01-01",
+ "model": "cw_v0",
+ "variables": {
+  "nuke_USA": {
+   "level": "overkill",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1964_nuke_USA_record",
+     "value": "the Kennedy buildup in deployment: 800 Minuteman and 29 Polaris boats by 1965, far beyond McNamara's assured-destruction requirement",
+     "source": "Ball 1980; Enthoven and Smith, How Much Is Enough?, 1971",
+     "observed": "1964-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv) Note: threshold: a force several times the assured-destruction requirement"
+    }
+   ]
+  },
+  "nuke_USSR": {
+   "level": "overkill",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1975_nuke_USSR_record",
+     "value": "MIRVed SS-17, SS-18, SS-19 deployed from 1975",
+     "source": "Podvig 2001",
+     "observed": "1975-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv)"
+    }
+   ]
+  },
+  "intel_USA": {
+   "level": "overhead",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1960_intel_USA_record",
+     "value": "CORONA's first recovered photography, 18 Aug 1960",
+     "source": "Ruffner (ed.) 1995",
+     "observed": "1960-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv)"
+    }
+   ]
+  },
+  "belief_force_USA": {
+   "level": "overkill",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1975_nuke_USSR_record",
+     "value": "MIRVed SS-17, SS-18, SS-19 deployed from 1975",
+     "source": "Podvig 2001",
+     "observed": "1975-12-31",
+     "rule": "hindsight truth of the estimated quantity (nuke_USSR in the record; decisions D6)"
+    }
+   ]
+  },
+  "belief_USSR_USA": {
+   "level": "hostile",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_belief_USSR_USA_record",
+     "value": "hindsight: US aims of containment by means short of war; no plan of a first strike at any time",
+     "source": "Gaddis 2005; PFIAB 1990",
+     "observed": "1946-12-31",
+     "rule": "hindsight truth of the estimated quantity (belief_USSR_USA in the record; decisions D6)"
+    }
+   ]
+  },
+  "offer": {
+   "level": "reductions",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1982_offer_record",
+     "value": "START proposal of 9 May 1982 (with the zero option of 18 Nov 1981)",
+     "source": "Talbott 1984",
+     "observed": "1982-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv)"
+    }
+   ]
+  },
+  "oversight": {
+   "level": "on_site",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1987_oversight_record",
+     "value": "INF Treaty with on-site inspection, 8 Dec 1987",
+     "source": "Garthoff 1994",
+     "observed": "1987-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv)"
+    }
+   ]
+  },
+  "arms": {
+   "level": "reduced",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1987_arms_record",
+     "value": "INF Treaty, 8 Dec 1987",
+     "source": "Garthoff 1994",
+     "observed": "1987-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv)"
+    }
+   ]
+  },
+  "buildup": {
+   "level": true,
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1981_buildup_record",
+     "value": "the Reagan buildup, 1981",
+     "source": "Fischer 1997",
+     "observed": "1981-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv)"
+    }
+   ]
+  },
+  "esc": {
+   "level": "peace",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1962_esc_record",
+     "value": "the missiles withdrawn after 28 Oct 1962",
+     "source": "Fursenko and Naftali 1997",
+     "observed": "1962-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv)"
+    }
+   ]
+  },
+  "accidental": {
+   "level": false,
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_accidental_record",
+     "value": "no nuclear use by accident in the Cold War",
+     "source": "Sagan 1993",
+     "observed": "1946-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv) Note: initial level"
+    }
+   ]
+  },
+  "us_strike": {
+   "level": false,
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_us_strike_record",
+     "value": "no US preventive strike",
+     "source": "Trachtenberg 1988",
+     "observed": "1946-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv) Note: initial level"
+    }
+   ]
+  },
+  "berlin_wall": {
+   "level": true,
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1961_berlin_wall_record",
+     "value": "sector border sealed 13 Aug 1961",
+     "source": "Harrison 2003",
+     "observed": "1961-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv)"
+    }
+   ]
+  },
+  "invasion_west": {
+   "level": false,
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_invasion_west_record",
+     "value": "no Soviet offensive into Western Europe",
+     "source": "Mastny and Byrne 2005",
+     "observed": "1946-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv) Note: initial level"
+    }
+   ]
+  },
+  "korea": {
+   "level": "armistice",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1953_korea_record",
+     "value": "armistice of 27 Jul 1953",
+     "source": "FRUS 1952-54 vol. XV",
+     "observed": "1953-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv)"
+    }
+   ]
+  },
+  "afghan": {
+   "level": "withdrawn",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1988_afghan_record",
+     "value": "Geneva Accords 14 Apr 1988; withdrawal from 15 May 1988",
+     "source": "Kalinovsky 2011",
+     "observed": "1988-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv) Note: completed 15 Feb 1989"
+    }
+   ]
+  },
+  "econ_USSR": {
+   "level": "declining",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1986_econ_USSR_record",
+     "value": "the oil price collapse from late 1985 and near-zero growth",
+     "source": "Gaidar 2007; Miller 2016",
+     "observed": "1986-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv)"
+    }
+   ]
+  },
+  "legit_USSR": {
+   "level": "contested",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1986_legit_USSR_record",
+     "value": "glasnost and the Alma-Ata riots of 17 to 18 Dec 1986",
+     "source": "Brown 1996; Kotkin 2001",
+     "observed": "1986-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv)"
+    }
+   ]
+  },
+  "perestroika": {
+   "level": true,
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1986_perestroika_record",
+     "value": "27th Congress (Feb 1986); Law on Individual Labour Activity (19 Nov 1986)",
+     "source": "Brown 1996",
+     "observed": "1986-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv)"
+    }
+   ]
+  },
+  "bloc_USSR": {
+   "level": "released",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1989_bloc_USSR_record",
+     "value": "the revolutions of 1989",
+     "source": "Kramer 2003",
+     "observed": "1989-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv)"
+    }
+   ]
+  },
+  "align_PRC": {
+   "level": "us_aligned",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1972_align_PRC_record",
+     "value": "the Shanghai Communique, 28 Feb 1972",
+     "source": "Chen Jian 2001",
+     "observed": "1972-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv)"
+    }
+   ]
+  },
+  "china_opening": {
+   "level": true,
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1971_china_opening_record",
+     "value": "Kissinger's secret visit, Jul 1971",
+     "source": "FRUS 1969-76 vol. XVII",
+     "observed": "1971-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv)"
+    }
+   ]
+  },
+  "esc_sino": {
+   "level": "peace",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1989_esc_sino_record",
+     "value": "normalization at the Beijing summit, 15 to 18 May 1989",
+     "source": "Luthi 2008",
+     "observed": "1989-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv)"
+    }
+   ]
+  }
+ },
+ "rates": {}
+}

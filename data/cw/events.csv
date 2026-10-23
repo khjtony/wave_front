@@ -1,0 +1,85 @@
+# Dated events for the Cold War v0 variables (docs/ontology_cw.md). One row per event and variable.
+# year is the year of the decision or event (tick = year - 1947); visible_year is the first 1 January showing the level (visible_tick).
+# series: record = the hindsight record (hindsight snapshots); belief = the contemporaneous belief (the model's realized path, replay snapshots);
+# replay = a contemporaneous reading of a non-belief variable that the record corrects (replay snapshots only). 'not verified' marks a detail recalled, not checked.
+year,tick,visible_year,visible_tick,variable,level,series,event,source,note
+1946,-1,1947,0,accidental,False,record,no nuclear use by accident in the Cold War,Sagan 1993,initial level
+1946,-1,1947,0,afghan,none,record,no Soviet forces in Afghanistan before Dec 1979,Kalinovsky 2011,initial level
+1946,-1,1947,0,align_PRC,soviet_ally,record,"the CCP aligned with Moscow (Mao's 'lean to one side', Jun 1949; the treaty of 14 Feb 1950)",Chen Jian 2001,the PRC is proclaimed 1 Oct 1949; the level reads the CCP's alignment
+1946,-1,1947,0,arms,race,record,no limitation agreement,Newhouse 1973,initial level
+1946,-1,1947,0,belief_USA_USSR,opportunist,belief,"Kennan's Long Telegram (22 Feb 1946) and 'The Sources of Soviet Conduct' (Jul 1947): Soviet expansion by pressure where cheap, retreat before counterforce","Gaddis, Strategies of Containment",
+1946,-1,1947,0,belief_USSR_USA,hostile,belief,Novikov's telegram of 27 Sep 1946: American policy aims at world supremacy by means short of war,"Novikov telegram, Diplomatic History 1991",
+1946,-1,1947,0,belief_USSR_USA,hostile,record,hindsight: US aims of containment by means short of war; no plan of a first strike at any time,Gaddis 2005; PFIAB 1990,
+1946,-1,1947,0,belief_force_USA,none,belief,Washington knows the USSR has no bomb (estimates of 1946 to 1948 expect one by the early 1950s),Prados 1982,
+1946,-1,1947,0,berlin_wall,False,record,the sector border open until 13 Aug 1961,Harrison 2003,initial level
+1946,-1,1947,0,bloc_USSR,intact,record,Soviet-controlled governments in Eastern Europe (Poland Jan 1947 elections; the coup in Prague of Feb 1948 inside intact),Westad 2017,
+1946,-1,1947,0,buildup,False,record,the Reagan buildup lies in 1981,Fischer 1997,initial level
+1946,-1,1947,0,china_opening,False,record,no US opening to the PRC before 1969 to 1971,Chen Jian 2001,initial level
+1946,-1,1947,0,econ_USSR,growing,record,postwar reconstruction and growth of 5 percent a year or more into the 1960s,Easterly and Fischer 1995,initial level
+1946,-1,1947,0,esc,peace,record,no standing confrontation between the principals on 1 Jan 1947,Gaddis 2005,
+1946,-1,1947,0,esc_sino,peace,record,no armed Sino-Soviet confrontation before 1969,Luthi 2008,initial level
+1946,-1,1947,0,intel_USA,low,record,no overflight capability; agents and peripheral flights only,Prados 1982,
+1946,-1,1947,0,invasion_west,False,record,no Soviet offensive into Western Europe,Mastny and Byrne 2005,initial level
+1946,-1,1947,0,korea,peace,record,no war in Korea before 25 Jun 1950,Stueck 1995,initial level
+1946,-1,1947,0,legit_USSR,secure,record,the party's monopoly unchallenged inside the USSR,Brown 2009,initial level
+1946,-1,1947,0,nuke_USA,few,record,"US stockpile of 13 weapons in mid-1947, delivered by SAC's Silverplate B-29s","Rosenberg 1983; Norris and Kristensen, 'Global nuclear weapons inventories', BAS 2010",
+1946,-1,1947,0,nuke_USSR,none,record,no Soviet weapon before the test of 29 Aug 1949,Holloway 1994,
+1946,-1,1947,0,offer,none,record,no standing US arms-control offer the model represents (the Baruch plan of Jun 1946 had lapsed),Seaborg 1981,initial level
+1946,-1,1947,0,oversight,none,record,no verification regime,Hoffman 2009,initial level
+1946,-1,1947,0,perestroika,False,record,no reform programme before 1985,Brown 1996,initial level
+1946,-1,1947,0,us_strike,False,record,no US preventive strike,Trachtenberg 1988,initial level
+1949,2,1950,3,belief_force_USA,few,belief,"the test detected by air sampling, announced by Truman 23 Sep 1949",Holloway 1994,
+1949,2,1950,3,nuke_USSR,few,record,"first Soviet test, 29 Aug 1949 (RDS-1)",Holloway 1994,
+1950,3,1951,4,belief_USA_USSR,expansionist,belief,"NSC-68 (Apr 1950; NSC 68/2, 30 Sep 1950)",FRUS 1950 vol. I,
+1950,3,1951,4,korea,war,record,North Korean attack 25 Jun 1950 with Stalin's approval; US intervention 27 Jun,Weathersby 1993; Stueck 1995,
+1953,6,1954,7,belief_USA_USSR,opportunist,belief,NSC 162/2 of 30 Oct 1953,FRUS 1952-54 vol. II,
+1953,6,1954,7,korea,armistice,record,armistice of 27 Jul 1953,FRUS 1952-54 vol. XV,
+1956,9,1957,10,intel_USA,partial,record,U-2 overflights from 4 Jul 1956,Pedlow and Welzenbach 1992,
+1957,10,1958,11,belief_force_USA,survivable,belief,NIE 11-10-57 (10 Dec 1957) and the Gaither report: a Soviet ICBM force able to threaten SAC by 1959 to 1961,Prados 1982; Preble 2004,
+1957,10,1958,11,nuke_USSR,survivable,replay,contemporaneous reading of the Soviet force from NIE 11-10-57: an ICBM force in being from 1959,Prados 1982,the replay reads the estimate; the hindsight force stays few
+1958,11,1959,12,esc,crisis,record,Khrushchev's Berlin ultimatum of 27 Nov 1958: a standing confrontation into 1959,Zubok and Pleshakov 1996,
+1958,11,1959,12,nuke_USSR,survivable,replay,NIE 11-4-58 and NIE 11-5-58 projections of 100 Soviet ICBMs by 1960 (not verified),Prados 1982,
+1959,12,1960,13,nuke_USSR,survivable,replay,NIE 11-8-59 (Feb 1960): 140 to 200 ICBMs by mid-1961 (not verified),Prados 1982,
+1959,12,1960,13,offer,test_ban,record,the Western draft treaty and Eisenhower's proposal of 13 Apr 1959,Seaborg 1981,
+1960,13,1961,14,align_PRC,split,record,"Soviet specialists withdrawn from China, Jul 1960",Luthi 2008,
+1960,13,1961,14,intel_USA,overhead,record,"CORONA's first recovered photography, 18 Aug 1960",Ruffner (ed.) 1995,
+1960,13,1961,14,nuke_USA,survivable,record,first Polaris patrol 15 Nov 1960; SAC ground alert; Minuteman from Oct 1962,"Rosenberg 1983; Freedman, The Evolution of Nuclear Strategy",
+1960,13,1961,14,nuke_USSR,survivable,replay,NIE 11-8-60 still estimating a substantial Soviet ICBM force (not verified),Prados 1982,
+1961,14,1962,15,belief_force_USA,few,belief,NIE 11-8/1-61 (21 Sep 1961): 10 to 25 Soviet ICBM launchers,Prados 1982; Ruffner (ed.) 1995,
+1961,14,1962,15,berlin_wall,True,record,sector border sealed 13 Aug 1961,Harrison 2003,
+1961,14,1962,15,esc,peace,record,"the Wall, 13 Aug 1961; the confrontation ends after Checkpoint Charlie (27 to 28 Oct 1961)",Harrison 2003,
+1961,14,1962,15,nuke_USSR,few,replay,NIE 11-8/1-61 (21 Sep 1961),Prados 1982,
+1962,15,1963,16,esc,peace,record,the missiles withdrawn after 28 Oct 1962,Fursenko and Naftali 1997,
+1963,16,1964,17,oversight,test_ban,record,"Limited Test Ban Treaty signed 5 Aug 1963, in force 10 Oct 1963; the hotline of 20 Jun 1963",Seaborg 1981,
+1964,17,1965,18,nuke_USA,overkill,record,"the Kennedy buildup in deployment: 800 Minuteman and 29 Polaris boats by 1965, far beyond McNamara's assured-destruction requirement","Ball 1980; Enthoven and Smith, How Much Is Enough?, 1971",threshold: a force several times the assured-destruction requirement
+1966,19,1967,20,belief_force_USA,survivable,belief,the hardened Soviet force seen by satellite,Prados 1982,
+1966,19,1967,20,nuke_USSR,survivable,record,SS-9 and SS-11 in hardened silos from 1966,Podvig 2001; Zaloga 2002,(the year of a secure Soviet second strike not verified)
+1967,20,1968,21,offer,limits,record,"Glassboro, 23 to 25 Jun 1967",Newhouse 1973,
+1969,22,1970,23,esc_sino,clash,record,"Zhenbao Island (Mar 1969) and the armed confrontation along the border, 1969 to 1989",Yang Kuisong 2000; Luthi 2008,
+1971,24,1972,25,china_opening,True,record,"Kissinger's secret visit, Jul 1971",FRUS 1969-76 vol. XVII,
+1972,25,1973,26,align_PRC,us_aligned,record,"the Shanghai Communique, 28 Feb 1972",Chen Jian 2001,
+1972,25,1973,26,arms,capped,record,"the Interim Agreement and the ABM Treaty, 26 May 1972",Newhouse 1973,
+1972,25,1973,26,oversight,ntm,record,"SALT I with non-interference with national technical means, 26 May 1972",Newhouse 1973,
+1975,28,1976,29,belief_force_USA,overkill,belief,the MIRVed deployments seen; the 'window of vulnerability' argument,Garthoff 1994,
+1975,28,1976,29,econ_USSR,stagnant,record,growth under 2 percent a year from the mid-1970s on revised series,Easterly and Fischer 1995; Kotkin 2001,(the dating of the revised series not verified)
+1975,28,1976,29,nuke_USSR,overkill,record,"MIRVed SS-17, SS-18, SS-19 deployed from 1975",Podvig 2001,
+1979,32,1980,33,afghan,war,record,Soviet entry 24 to 27 Dec 1979,CWIHP Bulletin 8-9,
+1980,33,1981,34,bloc_USSR,contested,record,"Solidarity, from the Gdansk agreement of 31 Aug 1980",Kramer 1999,
+1981,34,1982,35,bloc_USSR,intact,record,"martial law, 13 Dec 1981",Kramer 1999,
+1981,34,1982,35,buildup,True,record,"the Reagan buildup, 1981",Fischer 1997,
+1982,35,1983,36,belief_USSR_USA,first_strike_intent,belief,RYAN: Andropov at the KGB conference of May 1981; the residencies' tasking through 1982 and the instructions of Feb 1983,Andrew and Gordievsky (eds.) 1991; PFIAB 1990,
+1982,35,1983,36,offer,reductions,record,START proposal of 9 May 1982 (with the zero option of 18 Nov 1981),Talbott 1984,
+1985,38,1986,39,belief_USSR_USA,hostile,belief,"the Geneva summit, 19 to 21 Nov 1985",Fischer 1997; Jones 2016,
+1986,39,1987,40,econ_USSR,declining,record,the oil price collapse from late 1985 and near-zero growth,Gaidar 2007; Miller 2016,
+1986,39,1987,40,legit_USSR,contested,record,glasnost and the Alma-Ata riots of 17 to 18 Dec 1986,Brown 1996; Kotkin 2001,
+1986,39,1987,40,perestroika,True,record,27th Congress (Feb 1986); Law on Individual Labour Activity (19 Nov 1986),Brown 1996,
+1987,40,1988,41,arms,reduced,record,"INF Treaty, 8 Dec 1987",Garthoff 1994,
+1987,40,1988,41,belief_USSR_USA,status_quo,belief,the Warsaw Pact's defensive doctrine of 29 May 1987; new thinking,English 2000,
+1987,40,1988,41,oversight,on_site,record,"INF Treaty with on-site inspection, 8 Dec 1987",Garthoff 1994,
+1988,41,1989,42,afghan,withdrawn,record,Geneva Accords 14 Apr 1988; withdrawal from 15 May 1988,Kalinovsky 2011,completed 15 Feb 1989
+1988,41,1989,42,bloc_USSR,contested,record,the Polish strikes of Apr to Aug 1988; the Hungarian party's reform of May 1988,Kramer 2003,
+1989,42,1990,43,bloc_USSR,released,record,the revolutions of 1989,Kramer 2003,
+1989,42,1990,43,esc_sino,peace,record,"normalization at the Beijing summit, 15 to 18 May 1989",Luthi 2008,
+1990,43,1991,44,legit_USSR,failing,record,Article 6 repealed; Lithuania 11 Mar 1990; Russian sovereignty 12 Jun 1990,Brown 2009,
+1991,44,1992,45,bloc_USSR,dissolved,record,Warsaw Pact dissolved 1 Jul 1991; the USSR 25 Dec 1991,Kotkin 2001,
+1991,44,1992,45,econ_USSR,failing,record,output collapse of 1990 to 1991,Miller 2016,[NSL]: the record dates the fall of output from 1990; Nature's 1990 event is the delegitimation

@@ -1,0 +1,14 @@
+tick,date,USA,USSR,Nature,note,source
+0,1962-10-16,idle,idle,none,,
+1,1962-10-17,idle,idle,none,,
+2,1962-10-18,idle,idle,none,,
+3,1962-10-19,idle,idle,none,,
+4,1962-10-20,idle,idle,none,,
+5,1962-10-21,idle,idle,none,,
+6,1962-10-22,quarantine,idle,none,"Quarantine decided 20 Oct, announced 22 Oct 19:00 (the level reads the announcement), in force 24 Oct.",May and Zelikow 1997
+7,1962-10-23,idle,turn_back,none,Khrushchev's order in the night of 23 to 24 Oct.,Fursenko and Naftali 1997
+8,1962-10-24,defcon2,idle,none,"SAC to DEFCON 2, 24 Oct.",Sagan 1993
+9,1962-10-25,idle,idle,none,,
+10,1962-10-26,idle,idle,sites_operational,"CIA: MRBM sites operational, 26 Oct.",McAuliffe (ed.) 1992
+11,1962-10-27,trade,idle,shootdown,"Anderson's U-2 shot down; Kennedy's letter and RFK-Dobrynin, evening of 27 Oct ([NSL]: the B-59 incident of the same day is not played).","Fursenko and Naftali 1997; Dobrynin's report, CWIHP Bulletin 5"
+12,1962-10-28,idle,withdraw,none,Khrushchev's broadcast of 28 Oct accepting.,Fursenko and Naftali 1997

@@ -1,0 +1,10 @@
+[C7] engine: explicit on the flattened game from 1 Jan 1983 (Able Archer sub-game)
+[C7] aims_USSR=status_quo: hindsight belief hostile, replay belief first_strike_intent; forces equal True; graph 6593 states
+[C7]   (b) in K_J {'h': True, "h'": True}; shortest out of K_J {'h': 1, "h'": 1}
+[C7]   (c) shortest to GENERAL_WAR: replay 4, hindsight None
+[C7] aims_USSR=status_quo: (a) True, (b) False, (c) True (0.4 s)
+[C7] aims_USSR=opportunist: hindsight belief hostile, replay belief first_strike_intent; forces equal True; graph 4512 states
+[C7]   (b) in K_J {'h': True, "h'": True}; shortest out of K_J {'h': 1, "h'": 1}
+[C7]   (c) shortest to GENERAL_WAR: replay 4, hindsight None
+[C7] aims_USSR=opportunist: (a) True, (b) False, (c) True (0.8 s)
+1 failed in 1.06s
