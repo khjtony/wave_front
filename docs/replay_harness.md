@@ -494,6 +494,26 @@ magnitude: one to a few hundred dollars for the whole corpus, dominated by think
 of step 3 reads 320 of the 10,551 requests: multiply its recorded `usage` by about 33 for the
 whole run, and its wall-clock time by 33 divided by the `--workers` used.
 
+## The DeepSeek backend
+
+`wavefront/evidence/extract/deepseek_backend.py` (`--backend deepseek`, optional `--model`) reads
+documents through DeepSeek's OpenAI-compatible chat API with the standard library; no extra
+dependency. It sends the Claude backend's instructions and threshold rules followed by the
+answer's JSON schema, in JSON mode (the API does not enforce a schema, so the extractor's checks
+discard anything outside it, with the reason). Default model `deepseek-reasoner`
+(`DEFAULT_DEEPSEEK_MODEL`); `--model deepseek-chat` for the non-reasoning model. The key is
+read from `DEEPSEEK_API_KEY`, the base URL from `DEEPSEEK_BASE_URL` (default
+`https://api.deepseek.com`); never put either in a file of the repository. Long documents are
+split as for Claude (parts of at most 120,000 characters; a part whose answer stops on
+`length` is split again); `content_filter` is a refusal; HTTP 429, 5xx and network failures
+are retried three times with a doubling wait, 402 is reported as insufficient balance. Usage
+is recorded per quarter under the API's names (`prompt_tokens`, `completion_tokens`,
+`prompt_cache_hit_tokens`, `prompt_cache_miss_tokens`, `reasoning_tokens`). Answers are
+cached per document like Claude's, under an identity naming the base URL, model, limits, JSON
+mode and system prompt, so the two backends never share cache entries. The same run as for
+Claude, with `--backend deepseek` and a different `--out`, gives comparable metrics; a pilot
+quarter first measures the cost.
+
 ## Open items
 
 - framework_spec.md section 2 (package layout), section 9 (evidence) and section 10 (CLI)

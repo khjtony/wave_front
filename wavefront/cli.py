@@ -552,9 +552,12 @@ def cmd_review(args: argparse.Namespace) -> int:
 def _print_plan(rows, backend) -> None:
     from .evidence.extract import text_variables
     from .evidence.extract.claude_backend import system_prompt
+    from .evidence.extract.deepseek_backend import deepseek_system_prompt
     from .evidence.replay import CHARS_PER_TOKEN
 
-    system_chars = len(system_prompt(text_variables())) if backend.name == "claude" else 0
+    prompts = {"claude": system_prompt, "deepseek": deepseek_system_prompt}
+    prompt = prompts.get(backend.name)
+    system_chars = len(prompt(text_variables())) if prompt else 0
     print("DRY RUN: nothing is sent to the backend and nothing is written")
     print(
         f"{'quarter':8} {'visible':>8} {'to read':>8} {'cached':>7} {'requests':>9} "
@@ -798,8 +801,10 @@ def _add_evidence_commands(sub) -> None:
     p.add_argument("--since", type=_date_arg, help="first document date, YYYY-MM-DD")
     p.add_argument("--out", required=True, metavar="PROPOSALS", help="proposals file to write")
     p.add_argument("--source", help="corpus kind (local, frus, hansard, chronicling, trove)")
-    p.add_argument("--backend", choices=("rules", "claude"), default="rules")
-    p.add_argument("--model", help="model for the claude backend (default: the backend's)")
+    p.add_argument("--backend", choices=("rules", "claude", "deepseek"), default="rules")
+    p.add_argument(
+        "--model", help="model for the claude or deepseek backend (default: the backend's)"
+    )
     p.add_argument(
         "--rules",
         metavar="RULES",
@@ -856,8 +861,10 @@ def _add_evidence_commands(sub) -> None:
         help="accept every proposal without review (synthetic fixture corpus only; flagged)",
     )
     p.add_argument("--source", help="corpus kind (local, frus, hansard, chronicling, trove)")
-    p.add_argument("--backend", choices=("rules", "claude"), default="rules")
-    p.add_argument("--model", help="model for the claude backend (default: the backend's)")
+    p.add_argument("--backend", choices=("rules", "claude", "deepseek"), default="rules")
+    p.add_argument(
+        "--model", help="model for the claude or deepseek backend (default: the backend's)"
+    )
     p.add_argument(
         "--hindsight",
         default=str(Path(__file__).resolve().parents[1] / "snapshots" / "ww2" / "hindsight"),

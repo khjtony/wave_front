@@ -260,6 +260,13 @@ class ClaudeBackend:
             raise ExtractError(f"API error ({exc.status_code}): {exc.message}") from exc
         except sdk.APIConnectionError as exc:
             raise ExtractError("network error reaching the API", retryable=True) from exc
+        except TypeError as exc:
+            # The SDK raises TypeError when the request is built without any credentials.
+            if "authentication" not in str(exc):
+                raise
+            raise ExtractError(
+                "the Claude backend found no API credentials: set ANTHROPIC_API_KEY"
+            ) from exc
 
     def _read_parts(
         self, document: Document, parts: list[str], variables: Sequence[VariableSpec], depth: int

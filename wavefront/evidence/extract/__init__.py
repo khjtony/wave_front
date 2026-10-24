@@ -1,9 +1,11 @@
 """Extraction of level proposals from dated documents into a fixed schema (DESIGN.md
-section 5.3): a backend protocol, a deterministic rule backend and a Claude backend."""
+section 5.3): a backend protocol, a deterministic rule backend, a Claude backend and a
+DeepSeek backend."""
 
 from .backend import Backend, ExtractError, merge_proposals, split_paragraphs
 from .cache import CachedBackend
 from .claude_backend import ClaudeBackend, ExtractionRefused
+from .deepseek_backend import DeepSeekBackend
 from .extractor import Extraction, ProposalsFileError, extract, read_proposals, write_proposals
 from .rules import RuleBackend
 from .schema import (
@@ -24,6 +26,7 @@ __all__ = [
     "Backend",
     "CachedBackend",
     "ClaudeBackend",
+    "DeepSeekBackend",
     "ExtractError",
     "Extraction",
     "ExtractionRefused",
@@ -44,9 +47,11 @@ __all__ = [
 
 
 def make_backend(name: str, model: str | None = None) -> Backend:
-    """``rules`` or ``claude`` (with an optional model)."""
+    """``rules``, ``claude`` or ``deepseek`` (the last two with an optional model)."""
     if name == "rules":
         return RuleBackend()
     if name == "claude":
         return ClaudeBackend(model) if model else ClaudeBackend()
-    raise ValueError(f"unknown backend {name!r} (rules, claude)")
+    if name == "deepseek":
+        return DeepSeekBackend(model) if model else DeepSeekBackend()
+    raise ValueError(f"unknown backend {name!r} (rules, claude, deepseek)")
