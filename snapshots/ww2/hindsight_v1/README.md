@@ -92,6 +92,12 @@ later). Pending counters, last actions, the latch and the oil clock agree everyw
 one-tick lags of the record behind the model (`belief_WEST` 1938Q2, `arms_GER` 1938Q3,
 `anglo_soviet_alliance` 1941Q2, `caucasus` 1942Q2, `bomb_ready` 1945Q2) left the list with the
 clock-consistency pass.
+`oil_GER` at 1939Q3 and 1939Q4 (a two-quarter lag, outside the pass) left it on 2026-10-23 (the
+owner's decision 2d, under the convention of decision 7): `data/ww2/events_ww2_v1.csv` dates
+`secured` from the German-Soviet Credit Agreement of 19 Aug 1939, the first of the two
+agreements the ontology's rule names, so the v1 files follow v1's `accept_pact` (1939Q3); the
+row's note keeps the record's first deliveries under the agreement of 11 Feb 1940, which the v0
+series keeps as the date of the level.
 
 ## The hidden objectives are not fixed
 

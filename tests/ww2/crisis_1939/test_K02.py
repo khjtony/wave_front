@@ -1,4 +1,5 @@
-"""K2: registered 2026-10-15 in docs/crisis_1939_testbed.md section 3.
+"""K2: registered 2026-10-15 in docs/crisis_1939_testbed.md section 3; clause (d) amended
+2026-10-23 on the owner's decision 2a (docs/owner_decisions_2026-10-23.md).
 
 The summer-1939 crisis sub-game of WW2 v1 (3-day ticks, 5 July to 3 September 1939), entered
 from the 1939Q3 state. Do not edit the claim text without a changelog entry in that
@@ -19,8 +20,15 @@ entry level is ``will_fight`` or raises are allowed. "Blocks": the start state i
 - (c) refused scenario: under ``documented_only`` nothing blocks in any row; with the
   speculative ``conclude_without_passage`` available, {WEST, USSR} blocks wherever the
   belief condition holds.
-- (d) belief condition fails (both scenarios): the start state is in the standard contested
-  region for {GER} and ``ATTACK_LAUNCHED``.
+- (d) as amended 2026-10-23: where the belief condition fails (entry below ``will_fight``,
+  raises forbidden; granted, refused and free), the start state is in the standard forced
+  region for {GER} and ``ATTACK_LAUNCHED`` (Germany forces the attack); and with Polish
+  passage left open (the free model, Nature not fixed, documented decision space) and the
+  West's raises available, every entry level is contested in the fortune sense
+  (ww2_testbed.md section 4.6): {GER, Nature} forces ``ATTACK_LAUNCHED`` (Nature refuses
+  passage) and {WEST, USSR, Nature} keeps ``attack_order != launched`` to the horizon
+  (Nature grants it). The registered computation (the standard contested region in the rows
+  where the belief condition fails, which first sight found ``forced``) is printed beside it.
 
 Engine: the explicit engine (``explore``, ``safe``, ``attractor``, ``contested``,
 ``pivotal``). Every cell of the grid, the free model and the grid without ``deterred`` are
@@ -34,7 +42,7 @@ import pytest
 
 from tests.ww2.crisis_1939 import common
 from wavefront.analysis import pivotal
-from wavefront.engine import attractor, contested
+from wavefront.engine import attractor, contested, safe
 from wavefront.model import V
 
 CLAIM = {
@@ -49,12 +57,17 @@ CLAIM = {
     ),
     "expected": (
         "pivotal coalition {WEST, USSR} with the belief condition and the passage condition; "
+        "without the belief condition, the attack is forced by Germany; with Polish passage "
+        "left open (Nature free) and the West's raises available, the attack is `contested` "
+        "in the fortune sense (ww2_testbed.md section 4.6): Germany with Nature's refusal "
+        "forces it, {WEST, USSR} with Nature's consent keeps it out; registered 2026-10-15: "
         "without the belief condition, `contested` (the attack is not blocked, and Germany "
-        "cannot force it before the pact under `deterred` while the alliance is possible)"
+        "cannot force it before the pact under `deterred` while the alliance is possible), "
+        "which first sight found forced"
     ),
     "sources": (
         "the Moscow talks (DBFP vol. VII); Voroshilov's question of 14 August; Beck's "
-        "refusal; the profile `deterred` as adopted for T9"
+        "refusal; the profile `deterred` as adopted for T9; amended 2026-10-23"
     ),
 }
 
@@ -85,6 +98,11 @@ def cell(passage, documented: bool, raises: bool, deterred: bool = True) -> dict
     g = common.graph(cm, starts)
     attack = g.ending_states("ATTACK_LAUNCHED")
     region = contested(g, {"GER"}, attack, "reach")
+    # the fortune sense (ww2_testbed.md section 4.6; clause (d) as amended 2026-10-23)
+    ger_nature = attractor(g, {"GER", "Nature"}, attack).win
+    rest_nature = safe(
+        g, {"WEST", "USSR", "Nature"}, g.states_where(V.attack_order != "launched")
+    ).kernel
     alliance_in_time = g.states_where(V.alliance & (V.tick <= 17))
     out = {}
     for b, s in zip(common.BELIEFS, starts, strict=True):
@@ -104,6 +122,7 @@ def cell(passage, documented: bool, raises: bool, deterred: bool = True) -> dict
             "ger_forces": i in attractor(g, {"GER"}, attack).win,
             "status": status,
             "alliance_by_17": common.forcing_coalitions(g, i, alliance_in_time),
+            "fortune": (i in ger_nature, i in rest_nature),
         }
     out["_meta"] = {"states": g.size(), "seconds": round(time.time() - t0, 2)}
     return out
@@ -116,8 +135,9 @@ def _fmt(cs):
 def table(deterred: bool = True) -> str:
     lines = [
         "| passage | decision space | raises | entry belief | blocking over {WEST, USSR} | "
-        "GER forces | status ({GER}) | forcing alliance by 17 | states, s |",
-        "|---|---|---|---|---|---|---|---|---|",
+        "GER forces | status ({GER}) | fortune: {GER, Nature} forces / rest with Nature keeps "
+        "out | forcing alliance by 17 | states, s |",
+        "|---|---|---|---|---|---|---|---|---|---|",
     ]
     for passage in ("granted", "refused", None):
         for documented in (True, False):
@@ -129,7 +149,8 @@ def table(deterred: bool = True) -> str:
                         f"| {passage or 'free'} | "
                         f"{'documented' if documented else 'with speculative'} | "
                         f"{'allowed' if raises else 'forbidden'} | {b} | {_fmt(r['blocking'])} | "
-                        f"{r['ger_forces']} | {r['status']} | {_fmt(r['alliance_by_17'])} | "
+                        f"{r['ger_forces']} | {r['status']} | "
+                        f"{r['fortune'][0]} / {r['fortune'][1]} | {_fmt(r['alliance_by_17'])} | "
                         f"{c['_meta']['states']}, {c['_meta']['seconds']} |"
                     )
     return "\n".join(lines)
@@ -173,8 +194,32 @@ def test_K2c_polish_passage_is_pivotal():
                 assert speculative[b]["blocking"] == [WU], (raises, b, speculative[b])
 
 
-def test_K2d_without_the_belief_condition_contested():
-    for passage in ("granted", "refused"):
+def test_K2d_without_the_belief_condition_forced_and_contested_in_the_fortune_sense(capsys):
+    """Clause (d) as amended 2026-10-23 (owner's decision 2a). The registered reading (the
+    standard contested region in the rows where the belief condition fails, granted and
+    refused) is printed beside the amended one; at first sight it gave ``forced``."""
+    below = ("will_not_fight", "uncertain")
+    registered = {
+        (p, b): cell(p, True, False)[b]["status"] for p in ("granted", "refused") for b in below
+    }
+    free = cell(None, True, True)
+    with capsys.disabled():
+        print(
+            "\nK2 (d) registered reading (standard region for {GER}, expected contested), "
+            f"belief condition failing: {registered}"
+        )
+        print(
+            "K2 (d) amended: free model, documented, raises allowed, ({GER, Nature} forces, "
+            "{WEST, USSR, Nature} keeps out) per entry level: "
+            f"{ {b: free[b]['fortune'] for b in common.BELIEFS} }; standard status "
+            f"{ {b: free[b]['status'] for b in common.BELIEFS} }"
+        )
+    # without the belief condition the attack is forced by Germany
+    for passage in ("granted", "refused", None):
         c = cell(passage, True, False)
-        for b in ("will_not_fight", "uncertain"):
-            assert c[b]["status"] == "contested", (passage, b, c[b])
+        for b in below:
+            assert c[b]["status"] == "forced" and c[b]["ger_forces"], (passage, b, c[b])
+    # with passage left open and the West's raises available: contested in the fortune sense
+    for b in common.BELIEFS:
+        assert free[b]["fortune"] == (True, True), (b, free[b])
+        assert not free[b]["ger_forces"], (b, free[b])
