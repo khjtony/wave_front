@@ -187,3 +187,66 @@ Proposed, not made, for the owner's decision (decisions section O):
 - The C5 route, read from the attractor of {USSR, PRC, Nature} on the graph from 1950 cut at 1954 (rank 3, United States idle): `USSR.berlin_ultimatum` (1950), `USSR.escalate` (1951), `USSR.nuclear_use` (1952).
 - The engines agree: on the 25,750 states reachable from the 1975 hindsight state, the explicit kernels of `balance_cw` for {USA, USSR}, {USA} and {USSR} equal the symbolic ones state by state.
 - H5: the kernels of section 3 and section 14 recomputed from the hindsight states with every pending counter at zero (section 16).
+
+## 20. Amendments of 2026-10-23
+
+> Every result below is conditional on the model version and its initial state. None is a bare reachability result: each is given as kernel membership and distance, a forcing region, or a minimal set of necessary actions, with its engine.
+
+**What changed.** The owner's decisions 2j, 2k, 2l, 2n and 2o of 2026-10-23 (docs/owner_decisions_2026-10-23.md) amended seven claims:
+
+- C2: the bloc-free predicate.
+- C3: `no_war`, and "contested" in the fortune sense.
+- C4 and C9: "contested" in the fortune sense.
+- C6, C8 and C10: belief and oversight measured on reachability and on the unilateral kernels.
+
+The amended wording is in docs/coldwar_testbed.md, sections 5 and 8. The readings are in docs/cw_v0_decisions.md section A, written before any amended computation. Each test prints the registered computation beside the amended one. The first-sight results of sections 2 to 14 stand as the registered results.
+
+**The guard edit.** One guard was edited after first sight (decision 2l). `USSR.nuclear_use` gains the part `nato_attack`, read from the new flag `us_began_war`. It encodes the Warsaw Pact plans' condition, a war begun by NATO (Mastny and Byrne 2005). The edit is logged in docs/guard_changelog_cw.md and produces model `cw_v0` `527d0f540ac6`.
+
+**Hold-out (decisions D9).** C3 and C6 were computed once on the model of first sight, before the guard edit (reports/cw_v0_amendments_holdout.log, 2026-10-24 02:05 to 02:14 UTC). That computation is their result. The rerun after the edit is a regression run for them, and it gives the same verdicts.
+
+**The rerun.** A run of the whole suite under pytest-xdist (`-n 2`, 02:16 to 04:16 UTC) was stopped at the tool's two-hour limit with no summary. The suite was then rerun file by file, two at a time, with `-s` (from 04:16:52 UTC). The C8 test hit an evaluation error in its new distance code before computing any distance. That test code was corrected (no model change) and C8 rerun alone (04:48:28 to 04:48:43 UTC). Logs are summarised here and in the guard changelog row.
+
+| Claim | Amended result | Engine | Key numbers |
+|---|---|---|---|
+| C2 (bloc-free predicate) | **fail** | symbolic | `balance_nobloc` joint kernel 1967 to 1991 (25 of 27 years). K_USSR the same years. K_USA 1973 to 1991. The registered `balance_cw` gives the same kernels as at first sight (joint and K_USSR 1967 to 1980 and 1982 to 1986, K_USA empty). |
+| C3 (no_war; fortune) | **fail** (hold-out, pre-edit) | explicit sub-game, symbolic coarse kernels | The entry state is outside K_USA of `no_war`. The joint kernel is left 25 to 28 Oct. The way back is `USA.pledge`, `USSR.withdraw`, without the trade. War endings: forced for the USA, blocked for the USSR, with or without Nature. |
+| C4 (c), fortune | **fail** on (c) | explicit, cut at 1950 | (a) and (b) hold. `GENERAL_WAR` by 1950 is blocked for each side with Nature joined: neither side joined by Nature can force it. |
+| C5 (guard edit) | **fail** on (b) | explicit, cut at 1954 | (a) holds (288,918 states). The United States alone still cannot keep `GENERAL_WAR` away to 1954. |
+| C6 (b), reachability and unilateral kernels | **fail** on (b) (hold-out, pre-edit) | explicit, cut at 1963 | All four distances are equal from replay and hindsight in 1958 to 1961: adverse endings 2, 1, 1, 1 ticks; out of K_USA 0; out of K_USSR 1 in 1958, 0 after. (a) and (c) hold. |
+| C8 (b), reachability and unilateral kernels | **fail** on (b) | symbolic | All three distances are identical with and without the regime's oversight in 1964, 1973 and 1988 (adverse 7, none, none; out of K_USA 0; out of K_USSR 0, 2, 0). (a) and (c) hold. |
+| C9 (c), fortune | **fail** on (c) | explicit from 1985 | (a) and (b) as at first sight. `CHALLENGER_EXHAUSTION` is blocked for the United States with Nature joined. |
+| C10 (b), unilateral kernels and reachability | **fail** on (b) | symbolic | (a) holds. No belief variable and not `oversight` changes K_USA or K_USSR membership, or the shortest trace to the adverse endings, in any year (score 0). `nuke` scores 0 to 2. |
+
+The claims not amended were rerun after the edit with the same verdicts as at first sight:
+
+- C1 passes.
+- C7 fails on (b); (c) holds: replay 4 ticks to `GENERAL_WAR`, hindsight unreachable.
+- C11 fails.
+- C12: passes (3630 s on the shared machine; 04:16:52 to 05:17 UTC).
+- C13 passes: departure 1980, driving variable `afghan`.
+- tests/coldwar/test_model_cw.py: 26 passed.
+
+**What the failures are.**
+
+- **C2: model content, now on both sides.** Without the bloc clause each principal can keep the peace alone from 1973, and the USSR from 1967. The state is inside both unilateral kernels, so H7's "outside each unilateral kernel" fails more strongly than under the registered predicate. This is the review's prediction (review of 2026-10-18, section 2). Before 1973 the United States is outside its kernel because the USSR, joined by Nature, can strike China (`USSR.strike_china`, 1970). The cause is the v0 decision space: neither side has a war-forcing option against the other's restraint after the Wall. A cw_v1 with the American crisis-initiating options (decision 2m) is the test of it.
+- **C3: the registered expectation, not the predicate.** With `no_war` the question is no longer degenerate, and it still fails on three counts:
+  - the United States alone cannot keep the peace through the horizon from 1962, because the USSR with Nature breaks it later;
+  - v0's withdrawal needs only the pledge, so the Jupiter trade is never on a shortest way back;
+  - the United States can always choose war (`air_strike`), so war is forced for it in any sense.
+- **C4 (c), C9 (c): the fortune reading does not rescue them.** In 1948 to 1949 the USSR has no bomb, so a general war over Berlin needs American nuclear use. The United States can therefore keep general war away, and the USSR, even joined by Nature, cannot force it. In 1985 the exhaustion runs through Soviet reform, which the USSR alone can decline.
+- **C5: the guard closed the route of section 19, and the attractor found another.** The route of section 19 was Berlin ultimatum, escalation, Soviet nuclear use. The new route, read from the attractor of {USSR, PRC, Nature} with the United States idle, is:
+  1. `USSR.icbm_buildup` (1950), visible in 1953;
+  2. `USSR.berlin_ultimatum` (1951);
+  3. `USSR.approve_korea`;
+  4. open Soviet entry into Korea (`USSR.enter_korea`, escalation +2) while the Berlin crisis stands, which reaches `tactical_nuclear` (1953).
+
+  Two facts of v0 make this possible: `USSR.icbm_buildup` has no dated occasion (the record puts the decision in 1964), and escalations compose by addition (decisions D4). Closing it would be a further guard edit after sight, which needs the owner's decision.
+- **C6 (b), C8 (b), C10 (b): beliefs and oversight act on options, not on distances.** Measured on reachability and on the unilateral kernels, belief and oversight still move nothing in v0:
+  - the missile-gap estimate only enables the American buildup;
+  - oversight only gates the treaties;
+  - neither shortens a way to war or moves a unilateral kernel's boundary.
+
+  What v0 does show is C7 (c) (war reachable only under the war scare) and C8 (c) (the drawdown reachable only with oversight). Both are reachability of a specific outcome, not distance to the boundary.
+
+**Framework changes:** 0 of the budget of 5. **Gate (PHASES.md):** still not passed. C1, C12 and C13 pass; C2 to C11 fail as amended, each for the model-content or claim-reading reason given above.

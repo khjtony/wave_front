@@ -38,6 +38,24 @@ bracketed insertions in the running text (summaries of omitted passages, cross-r
 narrative bridges that quote later telegrams; `frus.strip_editorial`); a document is filtered
 on its index date before it is parsed.
 
+**CIA estimates (`crest`, Cold War).** `data/cw/corpora/raw/crest/` holds the Steury (1996)
+volume of 41 estimates on Soviet strategic forces (whole and in parts) and estimates fetched
+one by one from the CIA reading room, as PDFs with a hand-written manifest; there is no fetch
+step: `python3 scripts/fetch_corpora.py crest` indexes the files on disk (it needs `pdftotext`)
+and `--check crest` validates the index. The volume is split into one document per estimate by
+its table of contents (`crest.STEURY_1996`) and the printed page numbers; the editor's
+introductions and section essays, the headings and running heads the editor set on the
+estimates' pages, the 1996 front matter and afterword, and every declassification stamp
+("APPROVED FOR RELEASE", "RELEASE DATE: 16-Jul-2011") are left out of the text. Each document
+is dated by its estimate's own date, never by 1996: a separately fetched file by the date in its
+name, an estimate of the volume by the date `STEURY_1996` records with where it is printed;
+the volume prints no date with most of its facsimiles, and an estimate without a recorded date
+is undated and not indexed (listed under `skipped` in `index.json`, as are the PDFs without a
+text layer). The PFIAB report "The Soviet War Scare" is dated 15 February 1990 and is
+invisible to any replay before then. An estimate held twice (the volume's extract and the full
+text, or two parts or copies) is one document per file with the same `work`, the estimate's
+number, and the two-document rule counts it once (see Harness rules).
+
 ### Extraction
 
 The fixed proposal schema (`extract/schema.py`): `indicator_id`, `variable`, `level`, `date`,
@@ -187,9 +205,10 @@ snapshots are for, so a change in the model is caught): the pacts and structural
 `italy_estranged`, a flag that is not monotone), the regions except `rhineland`,
 `war_west_ger` and `oil_GER`. Not under the rule: `treaty`, `rhineland`, and the four belief
 and commitment variables. A flip is a proposal whose level differs from the variable's current
-level in the replay; "independent" means a different document id, so a document printed in two
-FRUS volumes under two ids counts twice (the baseline report lists such near-duplicates). Both
-documents are dated at or before the quarter, because a quarter's proposals come only from
+level in the replay; "independent" means a different document id, or a different `work` where
+the corpus records one (`crest`: one estimate in the volume and as a full text is one work), so
+a document printed in two FRUS volumes under two ids still counts twice (the baseline report
+lists such near-duplicates). Both documents are dated at or before the quarter, because a quarter's proposals come only from
 documents dated up to its end. The first proposal is *held*: not shown for review, not
 acceptable, not counted. The proposal of the second document carries the flip, so the flip
 enters the quarter of that document and is dated by it; the first is then shown with it as
@@ -484,7 +503,14 @@ whole run, and its wall-clock time by 33 divided by the `--workers` used.
   the framework step and should gain a paragraph for each.
 - The two-document rule counts document ids, so a document printed in two FRUS volumes under
   two ids corroborates itself; a near-duplicate check (same date, same sender, most of the
-  text in common) would close that.
+  text in common) would close that. Where a corpus knows the duplication it says so: a
+  document's `work` (set by `crest` for an estimate held twice) is counted instead of its id.
+- `crest`: Part III of the Steury volume (estimates 27 to 41, 1972 to 1983, among them NIE
+  11-4-82, 11-3/8-82 and 11-3/8-83), the whole-volume PDF, the two Memoranda to Holders (NIE
+  11-5-58, NIE 11-8-62) and SNIE 11-9-84 have no text layer and enter no index until they are
+  OCRed outside the harness; twelve estimates of Parts I and II have no recorded date (among
+  them SNIE 11-6-57, SNIE 11-7-58, NIE 11-4-60 and NIE 11-8-62) and wait for one, with its
+  source, in `crest.STEURY_1996`.
 - A document the Claude backend refuses stops its quarter on every run; a way to record it and
   go on (with the quarter marked incomplete in the report) is not built.
 - Chronicling America's move to the loc.gov API (snippets only in search results) needs a

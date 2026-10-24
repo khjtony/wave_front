@@ -1,4 +1,5 @@
-"""K3: registered 2026-10-15 in docs/crisis_1939_testbed.md section 3.
+"""K3: registered 2026-10-15 in docs/crisis_1939_testbed.md section 3; the driving-variable
+clause amended 2026-10-23 on the owner's decision 2b (docs/owner_decisions_2026-10-23.md).
 
 The summer-1939 crisis sub-game of WW2 v1 (3-day ticks, 5 July to 3 September 1939), entered
 from the 1939Q3 state. Do not edit the claim text without a changelog entry in that
@@ -12,8 +13,11 @@ exists only in the free model). The departure tick d is the last realized tick i
 kernel followed by a realized state outside it; t_K = d + 1 (``point_of_no_return``). The
 claim holds for the tick when the realized states 0 to d are inside and 13 <= d <= 15. The
 driving variables are those of the top-ranked rows of ``sensitivity`` from the realized
-state at d (coalition {WEST, USSR, Nature}, adversary {GER}); the claim holds for the
-variable when every top-ranked variable is ``passage`` or ``talks``. Diagnostics: the
+state at d (coalition {WEST, USSR, Nature}, adversary {GER}). As amended 2026-10-23, the
+claim holds for the variables when the top-ranked variables are exactly ``passage``,
+``talks`` and ``german_approach`` (the three the record places in 19 to 21 August); the
+registered test (every top-ranked variable ``passage`` or ``talks``, which first sight found
+false: a three-way tie) is printed beside it. Diagnostics: the
 standard kernel of {WEST, USSR} (Nature adversarial), documented and with the speculative
 action.
 
@@ -33,12 +37,18 @@ CLAIM = {
     "claim": (
         'the tick at which {WEST, USSR} leave the kernel for "no pact and the alliance still '
         "possible\" falls between 14 August (Voroshilov's question, tick 13) and 21 August "
-        "(the Soviet break-off, tick 15), and the driving variable is Polish passage or the "
-        "pace of the talks"
+        "(the Soviet break-off, tick 15), and the driving variables are Polish passage, the "
+        "state of the talks and the German approach (the pact decision), which the record "
+        "places in the same days (19 to 21 August)"
     ),
-    "expected": "point of no return inside ticks 13 to 15, with the driving variable named",
+    "expected": (
+        "point of no return inside ticks 13 to 15, with the driving variables named; "
+        "registered 2026-10-15: the driving variable is Polish passage or the pace of the "
+        "talks, which first sight found a three-way tie with the German approach"
+    ),
     "sources": (
-        "the military missions' record; the Schulenburg-Molotov exchanges of 15 to 19 August"
+        "the military missions' record; the Schulenburg-Molotov exchanges of 15 to 19 August; "
+        "amended 2026-10-23"
     ),
 }
 
@@ -120,4 +130,9 @@ def test_K3_driving_variable(capsys):
                 f"{row.new_in_kernel} | {row.flips} | {row.base_shortest} | {row.new_shortest} |"
             )
         print(f"K3 top-ranked (driving) variables: {top}")
-    assert top and set(top) <= {"passage", "talks"}
+        print(
+            "K3 registered clause (every top-ranked variable passage or talks): "
+            f"{bool(top) and set(top) <= {'passage', 'talks'}}"
+        )
+    # amended 2026-10-23: the three variables the record places in 19 to 21 August
+    assert set(top) == {"passage", "talks", "german_approach"}

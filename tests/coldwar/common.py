@@ -278,6 +278,60 @@ def outside(res) -> int:
     return enc.mgr.DIFF(enc.dom, res.kernel)
 
 
+ALL_ACTORS = (*PRINCIPALS, "Nature")
+
+
+@lru_cache(maxsize=None)
+def reach_all(aims: str, what: str, invariant: str = "balance_cw"):
+    """The attractor of every actor, Nature included (so a state's rank is its shortest
+    trace), over the whole coarse domain, to ``what``: ``"adverse"`` (the states of
+    GENERAL_WAR or ACCIDENTAL_WAR) or ``"out:<coalition>"`` (the outside of that
+    coalition's kernel of ``invariant``, coalition members joined by '+')."""
+    from wavefront.model import V
+    from wavefront.symbolic import attractor
+
+    enc = encoding(aims)
+    if what == "adverse":
+        target = enc.predicate(~V.invariant("no_general_war"))
+    else:
+        coalition = tuple(what.split(":", 1)[1].split("+"))
+        target = outside(kernel(aims, coalition, invariant))
+    return attractor(enc, list(ALL_ACTORS), target)
+
+
+def far(d: int | None) -> float:
+    """A shortest trace as a comparable distance (unreachable is infinitely far)."""
+    return float("inf") if d is None else float(d)
+
+
+def compare(near: dict, far_: dict) -> tuple[bool, bool]:
+    """``(some, none_reverse)`` for two dicts of distances to the adverse side (smaller is
+    nearer; None is unreachable): ``some`` iff some measure is smaller in ``near``,
+    ``none_reverse`` iff no measure is smaller in ``far_``."""
+    some = any(far(near[k]) < far(far_[k]) for k in near)
+    reverse = any(far(far_[k]) < far(near[k]) for k in near)
+    return some, not reverse
+
+
+def fortune(g, sides: Sequence[str], target: set[int], start: int) -> tuple[bool, dict]:
+    """Contested in the fortune sense (ww2_testbed.md section 4.6), for each side P of
+    ``sides``: P joined by Nature forces ``target`` against the others' best play, and the
+    others joined by Nature keep it away against P's best play. Returns the verdict and,
+    per side, the standard region and the region with Nature joined."""
+    from wavefront.engine import contested
+
+    def region(r):
+        return "forced" if start in r.forced else "blocked" if start in r.blocked else "contested"
+
+    ok, table = True, {}
+    for side in sides:
+        alone = contested(g, [side], target, "reach")
+        joined = contested(g, [side, "Nature"], target, "reach")
+        table[side] = (region(alone), region(joined))
+        ok = ok and start in joined.forced and start in alone.blocked
+    return ok, table
+
+
 def shortest_out(res, state, max_depth: int | None = None) -> int | None:
     """Fewest transitions of arbitrary play from ``state`` out of the kernel ``res``."""
     from wavefront.symbolic import shortest

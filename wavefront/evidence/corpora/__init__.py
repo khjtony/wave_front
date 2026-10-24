@@ -16,6 +16,7 @@ from .base import (
     default_fetcher,
 )
 from .chronicling import ChroniclingCorpus
+from .crest import CrestCorpus
 from .frus import FrusCorpus
 from .hansard import HansardCorpus
 from .local import SYNTHETIC_HEADER, LocalCorpus
@@ -28,6 +29,7 @@ __all__ = [
     "ChroniclingCorpus",
     "Corpus",
     "CorpusError",
+    "CrestCorpus",
     "Document",
     "FrusCorpus",
     "HansardCorpus",
@@ -44,6 +46,7 @@ SOURCES: dict[str, type[IndexedCorpus]] = {
     "hansard": HansardCorpus,
     "chronicling": ChroniclingCorpus,
     "trove": TroveCorpus,
+    "crest": CrestCorpus,
 }
 
 

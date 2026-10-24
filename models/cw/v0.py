@@ -131,6 +131,9 @@ def build(prc_principal: bool = True, frozen_oversight: bool = False) -> Model:
     m.flag("us_strike", init=False, monotone=True)
     m.flag("berlin_wall", init=False, monotone=True)
     m.flag("invasion_west", init=False, monotone=True)
+    # Added 2026-10-23 on the owner's decision 2l (docs/guard_changelog_cw.md): a war between
+    # the principals begun by the United States (NATO), the condition of Soviet nuclear use.
+    m.flag("us_began_war", init=False, monotone=True)
 
     # -- peripheral wars (ontology section 6) ------------------------------------------------
     m.var("korea", levels=["peace", "war", "armistice"], init="peace", monotone=True)
@@ -327,12 +330,14 @@ def build(prc_principal: bool = True, frozen_oversight: bool = False) -> Model:
     usa.action(
         "escalate",
         guard={"crisis": V.esc == "crisis"},
-        effect=Bump("esc", 1),
+        effect=[Bump("esc", 1), Set("us_began_war", True)],
         source=(
             "The military options of a standing Berlin crisis: Clay's armed convoy proposal "
             "of Jul 1948, the Live Oak contingency plans of 1959 to 1961 for probes along the "
             "access routes, and Kennedy's buildup of 25 Jul 1961 (Trachtenberg, A Constructed "
-            "Peace, 1999; FRUS 1961-63 vol. XIV)."
+            "Peace, 1999; FRUS 1961-63 vol. XIV). Effect us_began_war (added 2026-10-23, "
+            "decision 2l): combat opened by the United States from a standing crisis is the "
+            "war begun by NATO that the Warsaw Pact plans assumed (USSR.nuclear_use)."
         ),
     )
     usa.action(
@@ -574,12 +579,21 @@ def build(prc_principal: bool = True, frozen_oversight: bool = False) -> Model:
     )
     ussr.action(
         "nuclear_use",
-        guard={"war": V.esc == "conventional", "means": V.nuke_USSR >= "few"},
+        guard={
+            "war": V.esc == "conventional",
+            "means": V.nuke_USSR >= "few",
+            "nato_attack": V.us_began_war,
+        },
         effect=Bump("esc", 1),
         source=(
             "Warsaw Pact war plans with early nuclear strikes in a European war: the 'Seven "
             "Days to the Rhine' exercise of 1979 and the Czechoslovak plan of 1964 (Mastny and "
-            "Byrne (eds.), A Cardboard Castle?, 2005)."
+            "Byrne (eds.), A Cardboard Castle?, 2005). Part nato_attack (added 2026-10-23 on "
+            "the owner's decision 2l, a guard edit after first sight): the plans and "
+            "exercises the collection prints, from the Czechoslovak plan of 1964 to the "
+            "exercises of the 1980s, open with a NATO attack, and their nuclear strikes "
+            "belong to a war so begun (Mastny and Byrne 2005, the editors' introduction; the "
+            "first-use conditions of each plan not verified against the documents)."
         ),
     )
     ussr.action(

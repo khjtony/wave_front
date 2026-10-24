@@ -48,6 +48,7 @@ LEVELS = {
     "us_strike": (False, True),
     "berlin_wall": (False, True),
     "invasion_west": (False, True),
+    "us_began_war": (False, True),  # added 2026-10-23, decision 2l
     "korea": ("peace", "war", "armistice"),
     "afghan": ("none", "war", "withdrawn"),
     "econ_USSR": ("growing", "stagnant", "declining", "failing"),
@@ -117,12 +118,12 @@ def test_the_prc_is_a_principal_from_1969_and_nature_carries_it_in_the_scripted_
 def test_budget_and_fingerprints_as_catalogued():
     b = CM.budget()
     expected = {
-        "variables": 25,
-        "levels": 76,
+        "variables": 26,
+        "levels": 78,
         "actors": 4,
         "actions": 58,
         "guards": 58,
-        "guard_parts": 110,
+        "guard_parts": 111,
         "speculative_actions": 0,
         "fairness_constraints": 0,
         "delays": 7,
@@ -131,9 +132,11 @@ def test_budget_and_fingerprints_as_catalogued():
         "endings": 5,
     }
     assert {k: b[k] for k in expected} == expected
-    assert fingerprint(model) == "430d7ac3cdbb"
-    assert fingerprint(build(prc_principal=False)) == "29bf5b8cf12d"
-    assert fingerprint(build(frozen_oversight=True)) == "d68077ee7e9e"
+    # After the guard edit of 2026-10-23 (decision 2l; docs/guard_changelog_cw.md); at first
+    # sight 430d7ac3cdbb, 29bf5b8cf12d and d68077ee7e9e.
+    assert fingerprint(model) == "527d0f540ac6"
+    assert fingerprint(build(prc_principal=False)) == "08da3b3a28da"
+    assert fingerprint(build(frozen_oversight=True)) == "424bd3cc6e65"
     subs = {n: fingerprint(s.model) for n, s in crises.SUBGAMES.items()}
     assert subs == {
         "berlin_1948": "c7b956d15290",

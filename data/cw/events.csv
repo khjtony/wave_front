@@ -28,6 +28,7 @@ year,tick,visible_year,visible_tick,variable,level,series,event,source,note
 1946,-1,1947,0,oversight,none,record,no verification regime,Hoffman 2009,initial level
 1946,-1,1947,0,perestroika,False,record,no reform programme before 1985,Brown 1996,initial level
 1946,-1,1947,0,us_strike,False,record,no US preventive strike,Trachtenberg 1988,initial level
+1946,-1,1947,0,us_began_war,False,record,no war between the principals begun by the United States in the Cold War,Gaddis 2005,initial level (added 2026-10-23 on the owner's decision 2l)
 1949,2,1950,3,belief_force_USA,few,belief,"the test detected by air sampling, announced by Truman 23 Sep 1949",Holloway 1994,
 1949,2,1950,3,nuke_USSR,few,record,"first Soviet test, 29 Aug 1949 (RDS-1)",Holloway 1994,
 1950,3,1951,4,belief_USA_USSR,expansionist,belief,"NSC-68 (Apr 1950; NSC 68/2, 30 Sep 1950)",FRUS 1950 vol. I,

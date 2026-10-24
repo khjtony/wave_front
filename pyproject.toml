@@ -12,10 +12,10 @@ dependencies = []
 
 [project.optional-dependencies]
 bmc = ["z3-solver"]
-data = ["pyreadr"]
+data = ["pyreadr", "pandas"]
 extract = ["anthropic"]
 # The compiled BDD core: pip install -e '.[fast]' && python -m wavefront.symbolic._core.build
-fast = ["cffi>=1.15"]
+fast = ["cffi>=1.15", "setuptools"]
 dev = ["pytest", "hypothesis", "ruff", "jsonschema", "playwright"]
 
 [project.scripts]

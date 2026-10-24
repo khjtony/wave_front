@@ -1,4 +1,5 @@
-"""K4: registered 2026-10-15 in docs/crisis_1939_testbed.md section 3.
+"""K4: registered 2026-10-15 in docs/crisis_1939_testbed.md section 3; clause (g) amended
+2026-10-23 on the owner's decision 2c (docs/owner_decisions_2026-10-23.md).
 
 The summer-1939 crisis sub-game of WW2 v1 (3-day ticks, 5 July to 3 September 1939), entered
 from the 1939Q3 state. Do not edit the claim text without a changelog entry in that
@@ -17,8 +18,13 @@ without a profile; reduced build.
 - (e) and (f) the realized state at tick 18 (after the halt) is in GER's attractor of
   ``launched`` with rank <= 2 in every row, and the realized attack is two ticks after the
   first feasible one;
-- (g) the engine's shortest trace (``witness``) from the tick-17 state to a launched state
-  contains ``cancel_attack`` followed by ``attack_poland``.
+- (g) as amended 2026-10-23: the shortest trace through the realized cancellation of 25
+  August (the realized joint move of tick 17, GER's ``cancel_attack``, then the engine's
+  shortest trace (``witness``) from the realized state of tick 18 to a launched state)
+  contains ``attack_poland`` decided by tick 19, within two ticks of the cancellation. The
+  registered reading (the shortest trace from the tick-17 state contains ``cancel_attack``
+  followed by ``attack_poland``; at first sight it was the attack of tick 17 itself) is
+  printed beside it.
 
 Engine: the explicit engine (``attractor``, ``safe``, ``witness``).
 """
@@ -46,11 +52,14 @@ CLAIM = {
     ),
     "expected": (
         "from the state of 25 August the attack is forced by Germany by tick 19 under every "
-        "belief; the shortest trace shows the cancellation and the re-order"
+        "belief; the shortest trace through the realized cancellation of 25 August shows "
+        "the re-order and the attack within two ticks; registered 2026-10-15: the shortest "
+        "trace shows the cancellation and the re-order, which first sight found to be the "
+        "attack of 26 August without a cancellation"
     ),
     "sources": (
         "DGFP Series D vol. VII (the order of 25 August, 15:02; the cancellation; the order "
-        "of 31 August); Halder's diary 25 to 31 August; Ciano's diary"
+        "of 31 August); Halder's diary 25 to 31 August; Ciano's diary; amended 2026-10-23"
     ),
 }
 
@@ -121,7 +130,7 @@ def test_K4e_f_re_ordered_within_two_ticks_whatever_west_does(profile):
     assert realized_attack - 17 == 2
 
 
-def test_K4g_the_shortest_trace_shows_the_cancellation_and_the_re_order(capsys):
+def test_K4g_the_shortest_trace_through_the_cancellation_shows_the_re_order(capsys):
     r = analysis("deterred")
     g, path = r["g"], r["path"]
     trace = witness(g, common.sid(g, path[17]), r["launched"])
@@ -137,5 +146,19 @@ def test_K4g_the_shortest_trace_shows_the_cancellation_and_the_re_order(capsys):
         )
     ger = [a.name for a in g.model.actors].index("GER")
     names = [g.model.actors[ger].actions[m[ger]].name for m in trace.joint_moves]
-    assert "cancel_attack" in names
-    assert "attack_poland" in names[names.index("cancel_attack") + 1 :]
+    registered = (
+        "cancel_attack" in names and "attack_poland" in names[names.index("cancel_attack") + 1 :]
+    )
+    # amended 2026-10-23: through the realized cancellation (tick 17), then the shortest trace
+    rows = crisis.realized_rows()
+    through = [rows[17]["GER"]]  # the realized move of tick 17 leads to path[18]
+    through += [g.model.actors[ger].actions[m[ger]].name for m in after.joint_moves]
+    with capsys.disabled():
+        print(
+            "K4 (g) registered reading (shortest trace from tick 17 shows the cancellation "
+            f"and the re-order): {registered}; GER moves {names}"
+        )
+        print(f"K4 (g) amended: GER moves through the realized cancellation from tick 17 {through}")
+    assert rows[17]["GER"] == "cancel_attack"
+    assert "attack_poland" in through[1:]
+    assert 17 + through.index("attack_poland") <= 19  # decided by tick 19 (1 September)

@@ -12,7 +12,7 @@ Working pattern so far: the session acts as architect and reviewer, delegates im
 
 ```
 git clone https://github.com/khjtony/wave_front && cd wave_front
-python -m venv .venv && . .venv/bin/activate          # Python 3.11 or later (developed on 3.13)
+python -m venv .venv && . .venv/bin/activate          # Python 3.11 or later (developed on 3.13); without ensurepip: uv venv --python 3.13 .venv
 pip install -e '.[dev,bmc,data]'
 pip install -e '.[fast]' && python -m wavefront.symbolic._core.build   # the compiled BDD core
 pytest -q -m "not slow"                                # the default selection
@@ -22,7 +22,7 @@ ruff check . && ruff format --check .
 - **Build the compiled core.** Without it the symbolic engine runs in pure Python and is about ten times slower; the Cold War claim C12 alone runs past an hour. Both cores give identical results (`tests/symbolic/test_bdd_differential.py`).
 - **Test times.** The default selection takes tens of minutes on four cores; the full suite (`pytest -q`) about an hour with three workers (`pip install pytest-xdist`, then `-n 3`). Long tests carry the `slow` marker.
 - **The expected failures are registered claims failing as computed, not bugs.** At 884e17a the full suite gives seventeen: K2d, K3, K4g (summer 1939), J3, J4, J6, J7 (July 1914), and C2 to C11 (Cold War). Anything else failing is new.
-- **Git-ignored data.** `data/ww2/raw/`, `data/cw/raw/` and `data/ww2/corpora/raw/` are git-ignored. On a fresh clone the WW2 datasets come from `python scripts/fetch_ww2_data.py` and the FRUS corpus from `scripts/fetch_corpora.py` (commands in docs/replay_harness.md). The tests do not need them.
+- **Git-ignored data.** `data/ww2/raw/`, `data/cw/raw/`, `data/cw/corpora/raw/` and `data/ww2/corpora/raw/` are git-ignored. On a fresh clone the WW2 datasets come from `python scripts/fetch_ww2_data.py --mirror --extract both` and the FRUS corpus from `scripts/fetch_corpora.py` (commands in docs/replay_harness.md). The tests do not need them.
 
 ## 3. The rules (CLAUDE.md, binding)
 

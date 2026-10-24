@@ -1,0 +1,48 @@
+# The owner's decisions of 2026-10-23
+
+Status: recorded 2026-10-23 at `main` a1bf705, on the branch `owner-decisions-2026-10-23`. Answers the open items of docs/HANDOFF.md section 5. Where a proposal offered alternatives, the first-listed one is taken (the owner accepted "the proposals"; the choices below were stated to the owner before execution).
+
+## 1. The Claude-backend replay (phase 2)
+
+Not yet decided: who runs it (the owner with the commands of docs/replay_harness.md, or a session on the owner's machine with the key in its environment). The replay criterion of phase 2 stays open until then.
+
+## 2. Amendments: all proposals accepted
+
+**Summer 1939** (reports/crisis_1939.md section 11):
+- 2a. K2 (d): amended as proposed (forced by Germany without the belief condition; contested in the fortune sense with Polish passage left open).
+- 2b. K3: the driving-variable clause amended as proposed (the three variables the record places in 19 to 21 Aug); the daily re-ask is not taken.
+- 2c. K4 (g): amended as proposed (the shortest trace through the realized cancellation of 25 Aug).
+- 2d. K1: the reading "the exit state equals v1's realized transition of 1939Q3, differences from the hindsight snapshot tabulated" is adopted; the `oil_GER` disagreement between v1's snapshots and `accept_pact` is resolved under the snapshot convention of 2026-10-15 (decision 7) and logged.
+
+**July 1914** (reports/july1914.md section 12):
+- 2e. J2: the departure from tick 0 is recorded beside the result, and the point of no return is restated as Russia's last exit (30 July).
+- 2f. J3 (a): restated as forceability; (b) and (c): "localized" read with the declaration of war required by 3 August, and GBR's non-pivotality registered as the model's result.
+- 2g. J4 (d): restated as "the point of no return precedes the belief change".
+- 2h. J6: a 1914 v1 with `GER.mobilize`'s own Russian-measures and [H] parts and Tisza's consent as a decision, run as a new registration under the total hold-out.
+- 2i. J7: re-registered on the response lag rather than on the point of no return.
+
+**Cold War** (reports/cw_v0.md section 18; docs/review_phase3_2026-10-18.md section 2):
+- 2j. C3: asked with `no_war` in place of `balance_cw`.
+- 2k. C3 (c), C4 (c), C9 (c): "contested" read in the fortune sense (ww2_testbed.md section 4.6), as for T6 and T9.
+- 2l. C5: `USSR.nuclear_use` gains the Warsaw Pact plans' condition (a war begun by NATO; Mastny and Byrne 2005), a guard edit after first sight, logged with a full rerun of the Cold War and WW2 suites.
+- 2m. C2 and C11: a cw_v1 with the American crisis-initiating options of the 1970s and 1980s (the 1973 alert as a sub-game) and the Sino-Soviet confrontation of 1969 as a sub-game, run as a new registration. Its PRC scope follows item 3.
+- 2n. C6 (b), C8 (b), C10 (b): belief and oversight measured by their effect on reachability and on unilateral kernels, not on the joint kernel's distance.
+- 2o. C2: also asked with a balance predicate without the opponent's-bloc clause (review section 2, the T13 precedent), beside the registered one.
+- 2p. Data: supplied from the owner's machine, which reaches the testbed's hosts (docs/HANDOFF.md section 6).
+
+## 3. Cold War scope
+
+- 3a. The PRC: the owner asks whether the PRC's behaviour differs in kind from the USSR's, the United States' and the West's, and directs a research note and an experimental run to decide whether cw_v1 makes the PRC a principal (and from when) beside the USA, the USSR and Nature. The experiment runs analysis builds of v0, registers no claim, and is disclosed as an early sight in cw_v1's registration.
+- 3b. The hindsight convention for beliefs (decisions D6): kept.
+- 3c. The manual replay for C6 and C7 stands until the blind replay on the CIA estimates runs; then the blind result replaces it and both are reported.
+
+## 4. Framework-change budget
+
+The owner allows a larger budget. The cadence change (framework change 1) is counted as 1 of the phase 3 budget. The size of the increase is to be confirmed by the owner; until then the budget stays at five, and no Cold War framework change has been made.
+
+## 5. Follow-up decisions (2026-10-24, after the amended runs)
+
+- 5a. C5: v0 stays as recorded after the guard edit of 2l (C5 fails by a new route: the Soviet ICBM decision of 1950, Berlin, Korea, escalations adding up). No second guard edit; the route is a cw_v1 matter.
+- 5b. J3: stays failing as amended; no further rewording.
+- 5c. `oil_GER`: the German-Soviet Credit Agreement of 19 Aug 1939 is not used as a source. The snapshot change made under 2d is withdrawn; the difference stays tabulated (docs/guard_changelog_ww2.md, row of 2026-10-23).
+- 5d. The branch is pushed and a pull request opened.

@@ -10,7 +10,6 @@ import sys
 
 sys.path.insert(0, ".")
 from tests.coldwar.common import encoding, hindsight  # noqa: E402
-
 from wavefront.model import V  # noqa: E402
 from wavefront.symbolic import safe  # noqa: E402
 
