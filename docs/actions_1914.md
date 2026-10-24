@@ -149,3 +149,25 @@ The model has one `delay` (the ultimatum's); the timetable's other steps are obl
 | Constant-false parts | 1 (`GER.mobilize_east:coupling`) |
 | Invariants / endings | 2 / 4 |
 | Reachable states from tick 0 (four pairs, explicit) | 181,913 (J7 build: 73,937) |
+
+## v1 additions (2026-10-24)
+
+Written for the v1 model step (`models/july1914/v1.py`) after the v1 registration ([july1914_testbed.md](july1914_testbed.md) section 8, owner's decision 2h of 2026-10-23) and before any of J1v1 to J9v1 was run; decisions in [july1914_v1_decisions.md](july1914_v1_decisions.md). Every action above holds for v1 unchanged except the three rows below, and v1 adds one action. v0 is not changed by this section.
+
+| Action (v1) | Guard (parts) | Effect | Delay | Realized |
+|---|---|---|---|---|
+| AUH `tisza_consent` (new) | `council: ultimatum == resolved`; `once: tisza == opposed` | `tisza := consented` | 0 | tick 16 (14 Jul) |
+| AUH `ultimatum` | `resolved: ultimatum == resolved`; `tisza: tisza == consented` (replaces `council: tick >= 16`) | `ultimatum := delivered` | 4 | tick 21 (19 Jul) |
+| GER `mobilize` | [H] `hypothesis: aims_GER == continental or mob_RUS == general`; `russian_measures: mob_RUS >= partial`; `sequence: mob_GER == kriegsgefahr` | `mob_GER := general; war_GER_RUS := war` | 0 | tick 34 (1 Aug) |
+| GER `mobilize_east` | [H] `hypothesis` and `russian_measures` as `mobilize`; `sequence`; `coupling: FALSE` | `mob_GER := general` | 0 | never |
+
+- **`tisza_consent`** (v1). Source: "Tisza's consent to an ultimatum, given in conference with Berchtold on 14 Jul (Berchtold's report to Franz Joseph of 14 Jul), with the condition of territorial disinterest adopted by the Council of 19 Jul. The documented alternative, withholding consent (AUH idle), is Tisza's course of 1 to 8 Jul: the memorandum of 1 Jul; the dissent at the Council of 7 Jul; the memorandum of 8 Jul (Geiss, documents of 1, 7, 8 and 14 Jul, numbers not verified; Albertini vol. II ch. 4; Clark ch. 9; Otte ch. 3; McMeekin, *July 1914*, 2013)." Not speculative: the alternative is documented. `council`: the consent was to the course the Council of 7 July had decided. Tisza is not a principal (testbed 8.2 item 2); the action is under AUH's cadence (3), which the record's gaps (7 and 5) satisfy.
+- **`ultimatum`** (v1). Source as v0, with part `tisza` read from the decision (`AUH.tisza_consent`) instead of from its date. The part is renamed so that `AUH.ultimatum:council` keeps one meaning (v0's date part) across the two models.
+- **`mobilize`** (v1). Source as v0, plus: "the order was given at the expiry of the twelve-hour ultimatum of 31 Jul demanding that Russia demobilize (Geiss; Mombauer (ed.), *The Origins of the First World War: Diplomatic and Military Documents*, 2013). [H]: under localize only after a Russian general mobilization order (Bethmann's insistence that Russia be seen to move first: his statement to the Prussian State Ministry of 30 Jul; Müller's diary of 1 Aug; Mombauer 2001; Clark ch. 11); under continental the Russian partial measures suffice (Moltke's memorandum of 28 to 29 Jul and his telegram to Conrad of 30 Jul; Mombauer 2001 and 2013; Otte)." `russian_measures` as for the Kriegsgefahr.
+- **`mobilize_east`** (v1). Source as v0; the two new parts as `mobilize`, so that relaxing `GER.mobilize_east:coupling` still relaxes the war effect only (J2v1).
+
+Not added (testbed 8.5, open for the owner): a part by which a Russian mobilization step answers a measure of another power.
+
+Data: `data/july1914/v1/realized_moves.csv` and `decisions.csv` (v0's, with AUH `tisza_consent` at tick 16), `data/july1914/v1/events.csv` (the dated observations of `tisza`).
+
+Parameter budget (v1, `CompiledModel.budget()`): declared variables / levels 16 / 44; built-in variables 8; actions 23 (AUH 7, GER 7, RUS 4, FRA 2, GBR 3) and Nature events 4; guards / guard parts 27 / 60; hypothesis gates [H] 4 (`GER.kriegsgefahr`, `GER.mobilize`, `GER.mobilize_east`, `RUS.mobilize_general`); speculative 0; delayed actions 1; fairness / profiles / `assume` 4 / 0 / 0; cadence 2 (AUH 3, FRA 2); date-coded parts 3 (`AUH.mobilize_partial:harvest_leave`, `FRA.covering_troops:in_paris`, `FRA.mobilize:in_paris`); constant-false parts 1; invariants / endings 2 / 4; reachable states from tick 0 (four pairs, explicit) 193,721 (J7v1 build: 83,829); fingerprints `836afdb695b7` (daily build `3b23e6bec46e`).

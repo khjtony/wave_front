@@ -85,3 +85,13 @@ The endings are mutually exclusive by construction. Only `GENERAL_WAR` can end t
 | The Austro-Hungarian declaration on Russia (6 Aug), the British declaration on Austria-Hungary (12 Aug) | After the horizon. |
 | The pre-mobilization measures of 26 to 29 Jul in Germany and France (officers recalled from leave, troops from Morocco) | Below the thresholds of section 3. |
 | Domestic opinion (the SPD, the Liberal majority, the Russian press) | Inside the guards where the record makes it a constraint (`GBR.ultimatum_GER:parliament`); otherwise not represented. |
+
+## 8. v1 additions (2026-10-24)
+
+Written for the v1 model step (`models/july1914/v1.py`) after the v1 registration ([july1914_testbed.md](july1914_testbed.md) section 8) and before any of J1v1 to J9v1 was run; decisions in [july1914_v1_decisions.md](july1914_v1_decisions.md). Sections 0 to 7 hold for v1 unchanged except as below; v0 does not have this variable.
+
+| Variable | Levels | Init | Threshold rule | Dated indicator |
+|---|---|---|---|---|
+| `tisza` (v1) | opposed, consented | opposed | Monotone. **opposed**: the Hungarian premier withholds his consent to an ultimatum to Serbia (his memorandum to Franz Joseph of 1 Jul against using the assassination as the occasion for war; his dissent at the Common Ministerial Council of 7 Jul, the only member to oppose; his memorandum of 8 Jul for an acceptable note). **consented**: he has consented to an ultimatum, in conference with Berchtold (14 Jul), with the condition of territorial disinterest adopted on 19 Jul. Without it the joint government could not approve the note (`AUH.ultimatum:tisza`). | Berchtold's report to Franz Joseph of 14 Jul; the Council minutes of 7 and 19 Jul; Tisza's memoranda of 1 and 8 Jul (Geiss; document numbers not verified); Albertini vol. II ch. 4; Clark ch. 9; Otte ch. 3. Visible at tick 17. Data: `data/july1914/v1/events.csv`. |
+
+The hidden objectives are as section 1, except that in v1 `aims_GER` enters three guards as a part named `hypothesis` (`GER.kriegsgefahr`, `GER.mobilize`, `GER.mobilize_east`; july1914_v1_decisions.md V3). Endings and invariants as section 6. The date code of 14 July (section 2's `ultimatum` row reads Tisza dissenting until 14 Jul) is replaced in v1 by this variable.

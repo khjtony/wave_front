@@ -1,0 +1,8 @@
+# Dated structural events for the variable added in July 1914 v1 (docs/ontology_1914.md section 8). v0's rows (../events.csv) hold for v1 unchanged.
+# tick is the day's tick (the decision or event day); visible_tick = tick + 1 is the first state showing the level. Rows whose
+# level equals the level in force are confirming observations. 'not verified' in the note marks a detail recalled, not checked.
+date,tick,visible_tick,variable,level,event,source,note
+1914-07-01,3,4,tisza,opposed,"Tisza's memorandum to Franz Joseph against using the assassination as the occasion for war, for a diplomatic course first (confirming the initial level)",Geiss (ed.); Albertini vol. II ch. 4,document number not verified
+1914-07-07,9,10,tisza,opposed,"Tisza's dissent at the Common Ministerial Council: demands hard but not impossible to accept, mobilization only after a refusal, no annexation; the only member to oppose (confirming observation)",Council minutes of 7 Jul 1914 (Geiss (ed.)),
+1914-07-08,10,11,tisza,opposed,Tisza's memorandum to Franz Joseph repeating the alternative of an acceptable note (confirming observation),Geiss (ed.); Clark 2012 ch. 9,document number not verified
+1914-07-14,16,17,tisza,consented,"Tisza consents to an ultimatum in conference with Berchtold, with the condition of territorial disinterest",Berchtold's report to Franz Joseph of 14 Jul 1914 (Geiss (ed.)); Otte 2014 ch. 3,condition adopted by the Council of 19 Jul

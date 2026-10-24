@@ -1,0 +1,89 @@
+# July 1914 v1: decisions for the model and the readings of J1v1 to J9v1
+
+Inputs: the v1 registration ([july1914_testbed.md](july1914_testbed.md) section 8, committed in e082977 before any v1 guard, action, variable or data row), the owner's decision 2h of 2026-10-23 ([owner_decisions_2026-10-23.md](owner_decisions_2026-10-23.md)), v0's decisions D1 to D9 and readings R ([july1914_decisions.md](july1914_decisions.md)), as amended for J2, J3, J4 and J7 on 2026-10-23 (the readings in the docstrings of `tests/july1914/test_J02.py`, `test_J03.py`, `test_J04.py` and `test_J07.py`). Content: the v1 sections of [ontology_1914.md](ontology_1914.md) (section 8) and [actions_1914.md](actions_1914.md) ("v1 additions"), `data/july1914/v1/`. Model: `models/july1914/v1.py`. This document was written, with the readings of section R, before any of J1v1 to J9v1 was run. Nothing here edits a registered claim, v0, or v0's decisions.
+
+## V1. Scope
+
+v1 is v0 with exactly the changes of testbed section 8.2, and nothing else:
+
+1. `GER.mobilize` gains the parts `hypothesis` [H] and `russian_measures` of `GER.kriegsgefahr`, with the same expressions (`aims_GER == continental or mob_RUS == general`; `mob_RUS >= partial`); `sequence` is kept. `GER.mobilize_east` gains the same two parts (before `sequence` and `coupling`).
+2. The AUH action `tisza_consent` (effect `tisza := consented`) and the variable `tisza` in {opposed, consented}, initial `opposed`, monotone. The part `AUH.ultimatum:council` (`tick >= 16`) is replaced by `AUH.ultimatum:tisza` (`tisza == consented`).
+3. Every other declaration is v0's: D1 (time and horizon), D2 (actors, Nature, the hidden objectives), D3 (cadences), D4 (pre-commitments, the coupling, the fairness constraints), D5 (the belief), D6 (variables, endings, invariants) apply to v1 unchanged except as V2 to V5 say. `harvest_leave` and `in_paris` stay dates (testbed 8.2 item 3).
+
+`build(cadence=True)` is the model of record, `build(cadence=False)` the J7v1 build (every cadence 1). `build` is a copy of v0's with each change marked `# v1`; v0's constants and `raise_to` are imported, and `models/july1914/v0.py` and `data/july1914/*.csv` are not edited (a construction test pins their bytes and v0's fingerprints).
+
+## V2. Tisza's consent
+
+- **Guard.** `council: ultimatum == resolved` (the consent was to the course decided by the Common Ministerial Council of 7 July, a note with demands; there was nothing to consent to before it, and after the note was decided on 19 July the question was closed); `once: tisza == opposed`. No date part: the point of v1 is that the consent is read from the decision, not from its date. No part on Berlin's pressure or on the Bulgarian and Romanian assurances: the record gives them as reasons for the change of mind (testbed 8.2 item 2), which are readings of the historiography, not feasibility conditions.
+- **Not speculative.** Withholding consent is AUH not playing the action (idle), and the alternative is documented (Tisza's memoranda of 1 and 8 July, his dissent of 7 July). Tisza is not a principal (testbed 8.2 item 2).
+- **Part name.** The new part of `AUH.ultimatum` is named `tisza`, not `council`, so that a relaxation set never names `AUH.ultimatum:council` with two meanings across v0 and v1. Relaxing `AUH.ultimatum:tisza` is "the note without the Hungarian premier's consent"; relaxing `AUH.tisza_consent:council` is "the consent before the Council of 7 July".
+- **Cadence.** The consent is a declared AUH action under AUH's cadence (3): the realized AUH decisions are 9, 16, 21, 27, 30, 33 (gaps 7, 5, 6, 3, 3), so D3 gives k = 3 again (testbed 8.2 item 2). The consent and the note cannot fall within three days of each other, nor the Council of 7 July and the consent; the record's gaps are 7 and 5.
+- **Realized move.** AUH `tisza_consent` at tick 16 (14 July), `tisza == consented` visible at tick 17. It answers no decision of the same day ([SQR] not needed) and Nature plays nothing that day ([NSL] not needed). Data: `data/july1914/v1/realized_moves.csv` and `decisions.csv` are v0's files with that one move (and a note on tick 9); `data/july1914/v1/events.csv` holds the dated observations of `tisza` (1, 7, 8 July confirming `opposed`; 14 July `consented`); v0's `events.csv` holds for v1 unchanged.
+
+## V3. The German mobilization answers a Russian measure
+
+- `GER.mobilize` and `GER.mobilize_east` take the Kriegsgefahr step's [H] and `russian_measures` with the same expressions and readings (testbed 8.2 item 1; the sources in the actions catalogue, v1 additions). On the realized path the parts hold at tick 34 under both German aims (the Russian general order is visible from 33).
+- **A departure from D2.** D2 has each hidden objective enter exactly one guard. In v1 `aims_GER` enters three (`GER.kriegsgefahr`, `GER.mobilize`, `GER.mobilize_east`), as decision 2h requires; the hypothesis gates [H] rise from 2 to 4. The reading of `aims_GER` is unchanged (localize: no German general measure before a Russian general order; continental: the Russian partial measures suffice), so the extra gates restate it for the mobilization step rather than add a hypothesis.
+- With `russian_measures` on `GER.mobilize`, Russia's `revoke` can withdraw the occasion for the German mobilization after a Kriegsgefahr under `continental`; the mobilization then waits (the Kriegsgefahr level stays, as D4 makes German levels irrevocable). This is the content of decision 2h, not a further choice.
+- **Not done (testbed 8.5).** No part by which a Russian mobilization step answers a measure of another power is added: that is the open item for the owner, outside decision 2h. J6v1 and J9v1 are read on v1 as built.
+
+## V4. Budget (`CompiledModel.budget()`)
+
+| Item | v0 | v1 |
+|---|---|---|
+| Declared variables / levels | 15 / 42 | 16 / 44 (`tisza`) |
+| Actions (with Nature's) / guards / guard parts | 26 / 26 / 54 | 27 / 27 / 60 (`tisza_consent` 2; `GER.mobilize` +2; `GER.mobilize_east` +2; `AUH.ultimatum` 2 for 2) |
+| Hypothesis gates [H] | 2 | 4 (`GER.kriegsgefahr`, `GER.mobilize`, `GER.mobilize_east`, `RUS.mobilize_general`) |
+| Date-coded parts | 4 | 3 (`AUH.mobilize_partial:harvest_leave`, `FRA.covering_troops:in_paris`, `FRA.mobilize:in_paris`) |
+| Speculative / fairness / delays / cadence / latches / profiles / `assume` | 0 / 4 / 1 / 2 / 0 / 0 / 0 | 0 / 4 / 1 / 2 / 0 / 0 / 0 |
+| Built-in variables / invariants / endings | 8 / 2 / 4 | 8 / 2 / 4 |
+| Fingerprint (record / daily) | `368d154000b2` / `f63b4510ab6a` | `836afdb695b7` / `3b23e6bec46e` |
+| Reachable states from tick 0, four pairs (record / daily) | 181,913 / 73,937 | 193,721 / 83,829 |
+
+## V5. Engines
+
+As D7: exact kernels, attractors and pivotal coalitions from `wavefront.engine` and `wavefront.analysis` on explicit graphs (v1 explores in about 19 s from tick 0 over the four pairs); relaxation sets from the bounded encoding unrolled from a state (`tests/july1914_v1/common.py`, a copy of v0's `tests/july1914/common.py` with the model switched to v1); kernels under a relaxed assumption by recompiling with `relax=` and re-exploring. Every result names its engine.
+
+## V6. Snapshots
+
+None. v0 has no snapshot and v1 needs none: every claim starts from tick 0 or from a realized state of the replay.
+
+## V7. Well-formedness
+
+`explore` raises on every ill-formed state (D8). A complete exploration from tick 0 of the four pairs (193,721 states) and of the J7v1 build (83,829) raised nothing, with no edit during the step.
+
+## V8. The realized replay (a construction check, not J1v1)
+
+The realized moves of `data/july1914/v1/realized_moves.csv` replay move by move from tick 0 (`cm.available`, `cm.step`): under `aims_RUS = fight` (both German aims) every move is available and the play ends at tick 38 in `GENERAL_WAR`; under `deter` the replay stops at tick 32 (`RUS.mobilize_general`, its [H] gate), as in v0. The same holds in the daily build. `tisza` is `opposed` at tick 16 and `consented` at 17. This availability check is the model step's (D8 for v0); J1v1 is run as a registered test with the others.
+
+## V9. Hold-out, the first sight, and what was seen
+
+- Content, model, well-formedness and replay first; then J1v1 to J9v1 un-skipped together and run **once, in one go** (testbed 8.6), the commit of first sight (`git rev-parse HEAD`, working tree uncommitted) recorded in the report, in `FIRST_SIGHT_COMMIT` of `tests/july1914_v1/test_model_1914_v1.py` and in a first-sight row of [guard_changelog_1914.md](guard_changelog_1914.md).
+- **The first sight is held for the owner's go.** The registered stubs skipped "until `models/july1914/v1.py` exists", which the model step itself satisfies. The skip condition is therefore changed, with the model step, to "v1.py exists **and** `WF_FIRST_SIGHT_1914V1=1` is set in the environment": the owner flips the marker. The claim texts and `CLAIM` dicts are unchanged (`test_registration.py` checks them against section 8.3). The bodies implement the readings of section R (written after this document, following v0's test bodies; checked only for import and collection, never run with the switch); they run on the owner's go and not before.
+- **Total hold-out** (testbed section 0 and 8.4): J2v1 to J6v1, J8v1 and J9v1 run once; after first sight no guard, effect, delay, cadence, fairness constraint, profile or snapshot changes for them, and a further 1914 model is a new registration. J1v1 and J7v1 follow the ordinary rule.
+- What was seen before first sight: the budget and fingerprints (V4), the exploration statistics of V7 (state counts only; no per-ending count was taken), the replay of V8, and nothing else. No kernel, attractor, pivotal coalition, relaxation set or response lag was computed on v1.
+
+## R. Readings of the registered claims (v1)
+
+Common to all, as v0's R with v1's files: a hypothesis pair fixes both hidden objectives in the tick-0 state (`models/ww2/hypotheses.fixed_model`); a "realized state at tick t" is the v1 replay's state at t under that pair, built-ins included, and exists only where the realized prefix is available (to 38 under `fight`, to 32 under `deter`). "Every coalition that excludes Russia" is every subset of {AUH, GER, FRA, GBR}, Nature always an adversary; **X = {AUH, GER, FRA, GBR}**. A kernel is `viability(g, C, invariant)`; its "departure along the realized path from tick t" is the tick of the first realized state from t on outside it (`None` if none; a kernel kept to the end counts as 39 in arithmetic). Where a v1 claim repeats a claim of section 3, its reading is that claim's reading in v0's R, as amended on 2026-10-23, applied to v1; the differences are stated.
+
+**J1v1** (tick 0; explicit replay). Under each pair the v1 realized moves are replayed with `cm.available` and `cm.step`. Holds iff under at least one pair every row is available at its tick (zero relaxations), the play ends at tick 38 in `GENERAL_WAR`, and on that pair `GER.mobilize` is available at tick 34 with `mob_RUS == general` in the state at 34 ("after the Russian general mobilization order of 30 July", visible from 33). The `deter` stop at 32 is reported as the hypothesis's content.
+
+**J2v1** (tick 32; explicit). J2 as amended, on v1, under the `fight` pairs: (a) for every coalition C excluding RUS, the departure of C's kernel of `no_war_GER_RUS` along the realized path from tick 32, on the graph from the realized state at 32; holds iff every departure is at most 34. (b) X's departure with `GER.mobilize_east:coupling` relaxed (recompiled, re-explored from the same state) minus without it is at least 2. (c) `GER.mobilize_east:coupling` is among the named assumptions whose single relaxation puts X's departure state back into X's kernel (every assumption tried). (d) Russia's last exit, on the graph from tick 0: the realized states 0 to 32 are in the kernel of the coalition of all five principals for `no_war_GER_RUS` and the state at 33 is not. (e) Recorded, and asserted as registered ("22 or later"): X's departure along the realized path from tick 0, on the graph from tick 0, is at least 22. Reported besides: Russia's forced days to war at the departure state, the `sensitivity` at tick 32, {RUS}'s kernel along the realized path from tick 0, and the `deter` pairs at the state of 32.
+
+**J3v1** (tick 0 to 30; explicit, graph from tick 0 per pair). J3 as amended, unreworded (decision 5b), on v1: (a) `LOCALIZED` is forced from the tick-0 state by the coalition of all five principals (Nature the adversary) under `(localize, deter)` and by no coalition under the other three pairs. (b) With the declaration of war by 3 August (the target: the states at tick 37 with `war_AUH_SER == war` inside the coalition's attractor of `LOCALIZED`; the coalition's attractor of that set), {GER, RUS} is a minimal coalition forcing it from tick 0 under `(localize, deter)`, and neither {GER} nor {RUS} forces it. (c) GBR belongs to no minimal forcing coalition of that target at any tick of the realized prefix, under every pair. Reported besides: the registered readings of 2026-10-15, the blocking families, the per-tick tables per pair, the keeping family of the invariant `localized` at tick 0. The writer's expectation that (a) and (b) fail again (testbed 8.4) is not a reason to read them otherwise.
+
+**J4v1** (tick 31; explicit). J4 as amended, on v1: (a) `GER.restrain_vienna` is available in the realized state at 31, every pair; (b) the realized Nature move at 31 is `lichnowsky_warning` and `belief_GER_GBR == fights` from tick 32; (c) E, the earliest tick of a state with `halt_in_belgrade == accepted` over the plays from the realized state at 31 in which GER plays `restrain_vienna` at 31, is at least 33 (the lag E - 32 at least one day), every pair; (d) X's kernel of `no_war_GER_RUS` is already left at the realized state at 31 (on the graph from 31 the departure is 31), and along the realized path from tick 0 (graph from tick 0) the departure is at most 31; asserted under `fight`, reported under `deter`.
+
+**J5v1** (tick 35; the `fight` pairs). J5's reading on v1: start, the realized state at 35 with `belgium := demanded`. (a) The earliest tick at which `GBR.ultimatum_GER` is available on some play from the start is at most 36 (explicit). (b) The start is in `attractor(g, {GBR}, commitment_GBR == war)` with rank at most 2 (explicit; coalition {} reported). (c) From the realized state at 35 (Belgium neutral), with GER never playing `ultimatum_belgium`, `commitment_GBR == war` within 3 transitions is unreachable with nothing relaxed, and every inclusion-minimal relaxation set up to size 3 (bounded, unrolled from the state) contains `GBR.ultimatum_GER:belgian_route`, a part of `GER.ultimatum_belgium` or of `Nature.invade_belgium`, or a part of `GBR.naval_assurance`. Reported besides: whether any play to tick 38 avoids the Belgian note with nothing relaxed.
+
+**J6v1** (tick 0; bounded). Per pair, from the tick-0 state, target `GENERAL_WAR` within 17 transitions ("by 15 July"), every inclusion-minimal relaxation set up to size 3 (at most 40 per pair; a pair that reaches the cap is reported as such and read on the sets found). Holds iff under **every** pair nothing of size 0 or 1 makes the target reachable, and every set found contains at least one of:
+- an Austro-Hungarian decision-cycle part: any part of `AUH.tisza_consent` ("a part of Tisza's consent"), any part of `AUH.ultimatum` ("the note that reads it": the action that reads the consent; read as any of its parts, `tisza` or `resolved`), or `AUH.mobilize_partial:harvest_leave`;
+- a part by which a German mobilization step answers a Russian measure: `GER.kriegsgefahr:russian_measures`, `GER.kriegsgefahr:hypothesis`, `GER.mobilize:russian_measures`, `GER.mobilize:hypothesis`.
+"`GER.mobilize:sequence` alone no longer suffices" is part of "nothing of size 1" and is also asserted by name. The cadence is not a named assumption and cannot be relaxed (framework_spec.md 3.1). The minimum-size sets of `wavefront.bmc.relax` are printed as a cross-check. Engine: bounded (Z3).
+
+**J7v1** (tick 0; explicit). J7 as re-registered, on v1: under every pair, J4v1's E in `build(cadence=False)` is at least two days earlier than in `build(cadence=True)`, and below 33 in the daily build. Reported besides: X's departures (realized path from 32 and from 0, `fight`) in both builds. A content check, reported and not tuned.
+
+**J8v1** (ticks 9 to 21; explicit). (a) For every pair and every realized state at t = 9, ..., 16 (7 to 14 July): `tisza == opposed` and AUH has an available action other than `tisza_consent` (withholding: idle); and `AUH.tisza_consent` is available in the realized state at 16. (b) For every pair, on the states reachable from the tick-0 state by joint moves in which AUH never plays `tisza_consent` (explicit; nothing relaxed), no state has `war_GER_RUS == war` (to the horizon). (c) For every pair, the realized state at tick 17 (15 July) is in {AUH}'s kernel of `no_war_GER_RUS` on the graph from tick 0; under the `fight` pairs, {AUH}'s departure along the realized path from tick 0 is 22 (the state after the Council of 19 July). Reported besides: {AUH}'s departure under `deter` (on the prefix to 32), and the distance (`distance`) at the state of 17.
+
+**J9v1** (tick 32; explicit). (a) For every pair, the realized state at tick 32 (30 July) is in {RUS}'s kernel of `no_war_GER_RUS`, on the graph from that state. (b) Under the `fight` pairs, {RUS}'s departure along the realized path from tick 32 is 33 (the state after the general order). Reported besides: {RUS}'s departure along the realized path from tick 0 per pair, and, for the `continental` pairs, the comparison with v0's departure of 31 (testbed 8.4: "the test of the new German parts").
