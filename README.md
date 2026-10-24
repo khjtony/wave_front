@@ -22,6 +22,7 @@ wf report models/toy/two_power.py --out reports/toy_report.md
 wf viz models/toy/two_power.py --out reports/toy_viz.html   # open in a browser
 ```
 
+- [docs/HANDOFF.md](docs/HANDOFF.md): start here in a new session: setup, rules, where things stand, what waits on the owner.
 - [docs/DESIGN.md](docs/DESIGN.md): evaluation of the idea, the framework, and the AGI domain model.
 - [docs/ww2_testbed.md](docs/ww2_testbed.md): the WW2 model, pre-registered tests, data sources, anti-hindsight protocol.
 - [docs/coldwar_testbed.md](docs/coldwar_testbed.md): the Cold War as the validation episode, with its own pre-registered claims.
