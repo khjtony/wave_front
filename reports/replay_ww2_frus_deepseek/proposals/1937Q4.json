@@ -1,0 +1,4762 @@
+{
+ "kind": "wave_front proposals",
+ "format": 1,
+ "label": "1937Q4",
+ "until": "1937-12-31",
+ "since": null,
+ "corpus": {
+  "source": "frus",
+  "synthetic": false,
+  "root": "data/ww2/corpora/raw/frus"
+ },
+ "backend": {
+  "name": "deepseek",
+  "model": "deepseek-flash",
+  "usage": {
+   "prompt_tokens": 1941375,
+   "completion_tokens": 275993,
+   "prompt_cache_hit_tokens": 1591296,
+   "prompt_cache_miss_tokens": 350079,
+   "reasoning_tokens": 259600
+  },
+  "cache": {
+   "hits": 0,
+   "misses": 444
+  }
+ },
+ "harness_rules": [
+  "two-document",
+  "no-retrospective"
+ ],
+ "documents": [
+  {
+   "id": "frus:frus1933-39/d422",
+   "date": "1937-10-01",
+   "source": "FRUS frus1933-39",
+   "title": "The Secretary of State to the Carp Export and Import Corporation, New York, N. Y.",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d422"
+  },
+  {
+   "id": "frus:frus1937v01/d322",
+   "date": "1937-10-01",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d322"
+  },
+  {
+   "id": "frus:frus1937v01/d620",
+   "date": "1937-10-01",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Japan (Grew) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d620"
+  },
+  {
+   "id": "frus:frus1937v01/d950",
+   "date": "1937-10-01",
+   "source": "FRUS frus1937v01",
+   "title": "The Secretary of State to the Chargé in the United Kingdom (Johnson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d950"
+  },
+  {
+   "id": "frus:frus1937v02/d285",
+   "date": "1937-10-01",
+   "source": "FRUS frus1937v02",
+   "title": "Memorandum by the Under Secretary of State (Welles)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d285"
+  },
+  {
+   "id": "frus:frus1937v02/d721",
+   "date": "1937-10-01",
+   "source": "FRUS frus1937v02",
+   "title": "Memorandum by the Assistant Chief of the Division of Near Eastern Affairs (Alling)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d721"
+  },
+  {
+   "id": "frus:frus1937v01/d323",
+   "date": "1937-10-02",
+   "source": "FRUS frus1937v01",
+   "title": "Memorandum by the Under Secretary of State (Welles)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d323"
+  },
+  {
+   "id": "frus:frus1937v01/d951",
+   "date": "1937-10-02",
+   "source": "FRUS frus1937v01",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d951"
+  },
+  {
+   "id": "frus:frus1937v01/d952",
+   "date": "1937-10-02",
+   "source": "FRUS frus1937v01",
+   "title": "The Secretary of State to the Chargé in the United Kingdom (Johnson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d952"
+  },
+  {
+   "id": "frus:frus1937v01/d953",
+   "date": "1937-10-02",
+   "source": "FRUS frus1937v01",
+   "title": "The Secretary of State to the Chargé in the United Kingdom (Johnson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d953"
+  },
+  {
+   "id": "frus:frus1937v02/d706",
+   "date": "1937-10-02",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Consul General at Jerusalem (Wadsworth)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d706"
+  },
+  {
+   "id": "frus:frus1937v02/d707",
+   "date": "1937-10-02",
+   "source": "FRUS frus1937v02",
+   "title": "The Consul General at Jerusalem (Wadsworth) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d707"
+  },
+  {
+   "id": "frus:frus1937v01/d954",
+   "date": "1937-10-04",
+   "source": "FRUS frus1937v01",
+   "title": "The Secretary of State to the Chargé in the United Kingdom (Johnson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d954"
+  },
+  {
+   "id": "frus:frus1937v01/d955",
+   "date": "1937-10-04",
+   "source": "FRUS frus1937v01",
+   "title": "The Secretary of State to the Chargé in the United Kingdom (Johnson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d955"
+  },
+  {
+   "id": "frus:frus1937v02/d311",
+   "date": "1937-10-04",
+   "source": "FRUS frus1937v02",
+   "title": "The Chargé in Greece (Shantz) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d311"
+  },
+  {
+   "id": "frus:frus1937v02/d708",
+   "date": "1937-10-04",
+   "source": "FRUS frus1937v02",
+   "title": "The Consul General at Jerusalem (Wadsworth) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d708"
+  },
+  {
+   "id": "frus:frus1937v02/d722",
+   "date": "1937-10-04",
+   "source": "FRUS frus1937v02",
+   "title": "Memorandum by the Assistant Chief of the Division of Near Eastern Affairs (Alling) to the Assistant to the Legal Adviser (Flournoy)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d722"
+  },
+  {
+   "id": "frus:frus1938v02/d153",
+   "date": "1937-10-04",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Minister in the Irish Free State (Cudahy)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d153"
+  },
+  {
+   "id": "frus:frus1937v01/d324",
+   "date": "1937-10-05",
+   "source": "FRUS frus1937v01",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d324"
+  },
+  {
+   "id": "frus:frus1937v01/d542",
+   "date": "1937-10-05",
+   "source": "FRUS frus1937v01",
+   "title": "The Consul at Seville (Bay) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d542"
+  },
+  {
+   "id": "frus:frus1937v01/d956",
+   "date": "1937-10-05",
+   "source": "FRUS frus1937v01",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d956"
+  },
+  {
+   "id": "frus:frus1937v01/d957",
+   "date": "1937-10-05",
+   "source": "FRUS frus1937v01",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d957"
+  },
+  {
+   "id": "frus:frus1937v01/d958",
+   "date": "1937-10-05",
+   "source": "FRUS frus1937v01",
+   "title": "The Secretary of State to the Chargé in the United Kingdom (Johnson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d958"
+  },
+  {
+   "id": "frus:frus1937v02/d494",
+   "date": "1937-10-05",
+   "source": "FRUS frus1937v02",
+   "title": "The Chargé in Egypt (Allen) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d494"
+  },
+  {
+   "id": "frus:frus1937v02/d723",
+   "date": "1937-10-05",
+   "source": "FRUS frus1937v02",
+   "title": "The Consul General at Beirut (Marriner) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d723"
+  },
+  {
+   "id": "frus:frus1938v02/d623",
+   "date": "1937-10-05",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Chargé in Iran (Engert)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d623"
+  },
+  {
+   "id": "frus:frus1937v01/d325",
+   "date": "1937-10-06",
+   "source": "FRUS frus1937v01",
+   "title": "The Chargé in Italy (Reed) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d325"
+  },
+  {
+   "id": "frus:frus1937v01/d685",
+   "date": "1937-10-06",
+   "source": "FRUS frus1937v01",
+   "title": "Memorandum by the Under Secretary of State (Welles)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d685"
+  },
+  {
+   "id": "frus:frus1937v01/d82",
+   "date": "1937-10-06",
+   "source": "FRUS frus1937v01",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d82"
+  },
+  {
+   "id": "frus:frus1937v01/d83",
+   "date": "1937-10-07",
+   "source": "FRUS frus1937v01",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d83"
+  },
+  {
+   "id": "frus:frus1937v01/d959",
+   "date": "1937-10-07",
+   "source": "FRUS frus1937v01",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d959"
+  },
+  {
+   "id": "frus:frus1937v02/d432",
+   "date": "1937-10-07",
+   "source": "FRUS frus1937v02",
+   "title": "The Ambassador in Poland (Biddle) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d432"
+  },
+  {
+   "id": "frus:frus1937v02/d724",
+   "date": "1937-10-07",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Consul General at Beirut (Marriner)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d724"
+  },
+  {
+   "id": "frus:frus1937v01/d326",
+   "date": "1937-10-08",
+   "source": "FRUS frus1937v01",
+   "title": "Memorandum by the Assistant Secretary of State (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d326"
+  },
+  {
+   "id": "frus:frus1937v01/d327",
+   "date": "1937-10-08",
+   "source": "FRUS frus1937v01",
+   "title": "The Spanish Ambassador (De los Rios) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d327"
+  },
+  {
+   "id": "frus:frus1937v01/d328",
+   "date": "1937-10-08",
+   "source": "FRUS frus1937v01",
+   "title": "The Secretary of State to the Ambassador in Spain (Bowers), Then in France",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d328"
+  },
+  {
+   "id": "frus:frus1937v01/d543",
+   "date": "1937-10-08",
+   "source": "FRUS frus1937v01",
+   "title": "The Consul at Vigo (Graves) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d543"
+  },
+  {
+   "id": "frus:frus1937v01/d84",
+   "date": "1937-10-08",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Belgium (Gibson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d84"
+  },
+  {
+   "id": "frus:frus1937v02/d149",
+   "date": "1937-10-08",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the British Chargé (Mallet)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d149"
+  },
+  {
+   "id": "frus:frus1937v01/d686",
+   "date": "1937-10-09",
+   "source": "FRUS frus1937v01",
+   "title": "Memorandum by the Under Secretary of State (Welles)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d686"
+  },
+  {
+   "id": "frus:frus1937v01/d85",
+   "date": "1937-10-09",
+   "source": "FRUS frus1937v01",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d85"
+  },
+  {
+   "id": "frus:frus1937v01/d86",
+   "date": "1937-10-09",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Poland (Biddle) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d86"
+  },
+  {
+   "id": "frus:frus1937v02/d312",
+   "date": "1937-10-09",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Chargé in Greece (Shantz)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d312"
+  },
+  {
+   "id": "frus:frus1937v02/d709",
+   "date": "1937-10-09",
+   "source": "FRUS frus1937v02",
+   "title": "The Consul General at Jerusalem (Wadsworth) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d709"
+  },
+  {
+   "id": "frus:frus1937v01/d329",
+   "date": "1937-10-10",
+   "source": "FRUS frus1937v01",
+   "title": "The Chargé in Italy (Reed) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d329"
+  },
+  {
+   "id": "frus:frus1933-39/d423",
+   "date": "1937-10-11",
+   "source": "FRUS frus1933-39",
+   "title": "Memorandum by the Chief of the Office of Arms and Munitions Control (Green)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d423"
+  },
+  {
+   "id": "frus:frus1937v01/d330",
+   "date": "1937-10-11",
+   "source": "FRUS frus1937v01",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d330"
+  },
+  {
+   "id": "frus:frus1937v01/d544",
+   "date": "1937-10-11",
+   "source": "FRUS frus1937v01",
+   "title": "The Consul at Seville (Bay) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d544"
+  },
+  {
+   "id": "frus:frus1937v01/d545",
+   "date": "1937-10-11",
+   "source": "FRUS frus1937v01",
+   "title": "The Counselor of Embassy in Spain (Thurston) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d545"
+  },
+  {
+   "id": "frus:frus1937v01/d87",
+   "date": "1937-10-11",
+   "source": "FRUS frus1937v01",
+   "title": "Memorandum by the Under Secretary of State (Welles) of a Conversation With the German Ambassador (Dieckoff)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d87"
+  },
+  {
+   "id": "frus:frus1937v01/d88",
+   "date": "1937-10-11",
+   "source": "FRUS frus1937v01",
+   "title": "The Assistant Secretary of State (Messersmith) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d88"
+  },
+  {
+   "id": "frus:frus1937v02/d495",
+   "date": "1937-10-11",
+   "source": "FRUS frus1937v02",
+   "title": "The Chargé in Egypt (Allen) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d495"
+  },
+  {
+   "id": "frus:frus1937v02/d496",
+   "date": "1937-10-11",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Minister in Egypt (Fish)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d496"
+  },
+  {
+   "id": "frus:frus1937v02/d498",
+   "date": "1937-10-11",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Minister in Egypt (Fish)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d498"
+  },
+  {
+   "id": "frus:frus1937v01/d331",
+   "date": "1937-10-12",
+   "source": "FRUS frus1937v01",
+   "title": "The Counselor of Embassy in Spain (Thurston) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d331"
+  },
+  {
+   "id": "frus:frus1937v02/d397",
+   "date": "1937-10-12",
+   "source": "FRUS frus1937v02",
+   "title": "Memorandum by the Assistant Secretary of State (Sayre)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d397"
+  },
+  {
+   "id": "frus:frus1937v01/d332",
+   "date": "1937-10-13",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d332"
+  },
+  {
+   "id": "frus:frus1937v01/d333",
+   "date": "1937-10-13",
+   "source": "FRUS frus1937v01",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d333"
+  },
+  {
+   "id": "frus:frus1937v01/d89",
+   "date": "1937-10-13",
+   "source": "FRUS frus1937v01",
+   "title": "Memorandum by the Assistant Secretary of State (Wilson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d89"
+  },
+  {
+   "id": "frus:frus1937v02/d415",
+   "date": "1937-10-13",
+   "source": "FRUS frus1937v02",
+   "title": "Memorandum by the Assistant Adviser on International Economic Affairs (Livesey)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d415"
+  },
+  {
+   "id": "frus:frus1937v02/d632",
+   "date": "1937-10-13",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Minister in Liberia (Walton)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d632"
+  },
+  {
+   "id": "frus:frus1937v01/d334",
+   "date": "1937-10-14",
+   "source": "FRUS frus1937v01",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d334"
+  },
+  {
+   "id": "frus:frus1937v01/d335",
+   "date": "1937-10-14",
+   "source": "FRUS frus1937v01",
+   "title": "The Secretary of State to the Ambassador in Spain (Bowers), Then in France",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d335"
+  },
+  {
+   "id": "frus:frus1937v02/d121",
+   "date": "1937-10-14",
+   "source": "FRUS frus1937v02",
+   "title": "The Minister in Canada (Armour) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d121"
+  },
+  {
+   "id": "frus:frus1937v02/d398",
+   "date": "1937-10-14",
+   "source": "FRUS frus1937v02",
+   "title": "Memorandum by the Assistant Secretary of State (Sayre)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d398"
+  },
+  {
+   "id": "frus:frus1937v01/d968",
+   "date": "1937-10-15",
+   "source": "FRUS frus1937v01",
+   "title": "The Consul at Geneva (Bucknell) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d968"
+  },
+  {
+   "id": "frus:frus1937v02/d752",
+   "date": "1937-10-15",
+   "source": "FRUS frus1937v02",
+   "title": "The Turkish Acting Minister for Foreign Affairs (Menemencioglu) to the American Chargé in Turkey (Kelley)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d752"
+  },
+  {
+   "id": "frus:frus1937v01/d336",
+   "date": "1937-10-16",
+   "source": "FRUS frus1937v01",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d336"
+  },
+  {
+   "id": "frus:frus1937v01/d90",
+   "date": "1937-10-16",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Poland (Biddle) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d90"
+  },
+  {
+   "id": "frus:frus1937v02/d605",
+   "date": "1937-10-16",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Minister in Liberia (Walton)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d605"
+  },
+  {
+   "id": "frus:frus1937v02/d710",
+   "date": "1937-10-16",
+   "source": "FRUS frus1937v02",
+   "title": "The Consul at Jerusalem (Scott) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d710"
+  },
+  {
+   "id": "frus:frus1937v01/d337",
+   "date": "1937-10-17",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d337"
+  },
+  {
+   "id": "frus:frus1937v02/d610",
+   "date": "1937-10-17",
+   "source": "FRUS frus1937v02",
+   "title": "The Minister in Liberia (Walton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d610"
+  },
+  {
+   "id": "frus:frus1933-39/d431",
+   "date": "1937-10-18",
+   "source": "FRUS frus1933-39",
+   "title": "The Ambassador in the Soviet Union (Davies) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d431"
+  },
+  {
+   "id": "frus:frus1937v01/d338",
+   "date": "1937-10-18",
+   "source": "FRUS frus1937v01",
+   "title": "Memorandum by the Under Secretary of State (Welles)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d338"
+  },
+  {
+   "id": "frus:frus1937v01/d339",
+   "date": "1937-10-18",
+   "source": "FRUS frus1937v01",
+   "title": "The Chargé in Italy (Reed) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d339"
+  },
+  {
+   "id": "frus:frus1937v01/d613",
+   "date": "1937-10-18",
+   "source": "FRUS frus1937v01",
+   "title": "The Secretary of State to the Mexican Ambassador (Castillo Nájera)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d613"
+  },
+  {
+   "id": "frus:frus1937v02/d110",
+   "date": "1937-10-18",
+   "source": "FRUS frus1937v02",
+   "title": "Memorandum by the Chief of the Division of European Affairs (Moffat)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d110"
+  },
+  {
+   "id": "frus:frus1937v02/d134",
+   "date": "1937-10-18",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Canadian Minister (Marler)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d134"
+  },
+  {
+   "id": "frus:frus1937v02/d633",
+   "date": "1937-10-18",
+   "source": "FRUS frus1937v02",
+   "title": "The Minister in Liberia (Walton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d633"
+  },
+  {
+   "id": "frus:frus1937v01/d340",
+   "date": "1937-10-19",
+   "source": "FRUS frus1937v01",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d340"
+  },
+  {
+   "id": "frus:frus1937v02/d339",
+   "date": "1937-10-19",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Ambassador in Italy (Phillips)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d339"
+  },
+  {
+   "id": "frus:frus1937v02/d660",
+   "date": "1937-10-19",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the French Chargé (Henry)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d660"
+  },
+  {
+   "id": "frus:frus1937v01/d341",
+   "date": "1937-10-20",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Cuba (Wright) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d341"
+  },
+  {
+   "id": "frus:frus1937v01/d342",
+   "date": "1937-10-20",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d342"
+  },
+  {
+   "id": "frus:frus1937v01/d343",
+   "date": "1937-10-20",
+   "source": "FRUS frus1937v01",
+   "title": "The Acting Secretary of State to the Counselor of Embassy in Spain (Thurston)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d343"
+  },
+  {
+   "id": "frus:frus1937v02/d189",
+   "date": "1937-10-20",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Minister in Czechoslovakia (Carr)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d189"
+  },
+  {
+   "id": "frus:frus1937v02/d433",
+   "date": "1937-10-20",
+   "source": "FRUS frus1937v02",
+   "title": "The Ambassador in Poland (Biddle) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d433"
+  },
+  {
+   "id": "frus:frus1937v02/d732",
+   "date": "1937-10-20",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the British Chargé (Mallet)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d732"
+  },
+  {
+   "id": "frus:frus1937v02/d733",
+   "date": "1937-10-20",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Belgian Ambassador (Van der Straten-Ponthoz)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d733"
+  },
+  {
+   "id": "frus:frus1937v02/d95",
+   "date": "1937-10-20",
+   "source": "FRUS frus1937v02",
+   "title": "The British Chargé (Mallet) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d95"
+  },
+  {
+   "id": "frus:frus1933-39/d432",
+   "date": "1937-10-21",
+   "source": "FRUS frus1933-39",
+   "title": "The Ambassador in the Soviet Union (Davies) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d432"
+  },
+  {
+   "id": "frus:frus1937v01/d344",
+   "date": "1937-10-21",
+   "source": "FRUS frus1937v01",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d344"
+  },
+  {
+   "id": "frus:frus1937v01/d345",
+   "date": "1937-10-21",
+   "source": "FRUS frus1937v01",
+   "title": "The Counselor of Embassy in Spain (Thurston) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d345"
+  },
+  {
+   "id": "frus:frus1937v02/d243",
+   "date": "1937-10-21",
+   "source": "FRUS frus1937v02",
+   "title": "The Acting Secretary of State to the Chargé in Germany (Gilbert)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d243"
+  },
+  {
+   "id": "frus:frus1937v02/d254",
+   "date": "1937-10-21",
+   "source": "FRUS frus1937v02",
+   "title": "Memorandum by the Under Secretary of State (Welles)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d254"
+  },
+  {
+   "id": "frus:frus1937v02/d255",
+   "date": "1937-10-21",
+   "source": "FRUS frus1937v02",
+   "title": "The German Embassy to the Department of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d255"
+  },
+  {
+   "id": "frus:frus1937v02/d394",
+   "date": "1937-10-21",
+   "source": "FRUS frus1937v02",
+   "title": "The Chargé in Lithuania (Kuykendall) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d394"
+  },
+  {
+   "id": "frus:frus1937v02/d466",
+   "date": "1937-10-21",
+   "source": "FRUS frus1937v02",
+   "title": "Memorandum by the Chief of the Division of Near Eastern Affairs (Murray) to the Under Secretary of State (Welles)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d466"
+  },
+  {
+   "id": "frus:frus1937v02/d711",
+   "date": "1937-10-21",
+   "source": "FRUS frus1937v02",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d711"
+  },
+  {
+   "id": "frus:frus1937v01/d546",
+   "date": "1937-10-22",
+   "source": "FRUS frus1937v01",
+   "title": "The Vice Consul at Gibraltar (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d546"
+  },
+  {
+   "id": "frus:frus1937v01/d91",
+   "date": "1937-10-22",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d91"
+  },
+  {
+   "id": "frus:frus1937v02/d215",
+   "date": "1937-10-22",
+   "source": "FRUS frus1937v02",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d215"
+  },
+  {
+   "id": "frus:frus1937v02/d440",
+   "date": "1937-10-22",
+   "source": "FRUS frus1937v02",
+   "title": "The Minister in Switzerland (Harrison) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d440"
+  },
+  {
+   "id": "frus:frus1937v02/d96",
+   "date": "1937-10-22",
+   "source": "FRUS frus1937v02",
+   "title": "Memorandum by the Counselor of the Department of State (Moore)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d96"
+  },
+  {
+   "id": "frus:frus1933-39/d433",
+   "date": "1937-10-23",
+   "source": "FRUS frus1933-39",
+   "title": "The Secretary of State to the Ambassador in the Soviet Union (Davies)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d433"
+  },
+  {
+   "id": "frus:frus1937v01/d346",
+   "date": "1937-10-23",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d346"
+  },
+  {
+   "id": "frus:frus1937v01/d347",
+   "date": "1937-10-23",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d347"
+  },
+  {
+   "id": "frus:frus1937v01/d348",
+   "date": "1937-10-23",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d348"
+  },
+  {
+   "id": "frus:frus1937v02/d634",
+   "date": "1937-10-23",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Minister in Liberia (Walton)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d634"
+  },
+  {
+   "id": "frus:frus1937v02/d635",
+   "date": "1937-10-24",
+   "source": "FRUS frus1937v02",
+   "title": "The Minister in Liberia (Walton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d635"
+  },
+  {
+   "id": "frus:frus1933-39/d424",
+   "date": "1937-10-25",
+   "source": "FRUS frus1933-39",
+   "title": "Memorandum by the Chief of the Office of Arms and Munitions Control (Green)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d424"
+  },
+  {
+   "id": "frus:frus1937v01/d547",
+   "date": "1937-10-25",
+   "source": "FRUS frus1937v01",
+   "title": "The Secretary of State to the Consul at Seville (Bay)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d547"
+  },
+  {
+   "id": "frus:frus1937v01/d92",
+   "date": "1937-10-25",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d92"
+  },
+  {
+   "id": "frus:frus1937v02/d126",
+   "date": "1937-10-25",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Minister in Canada (Armour)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d126"
+  },
+  {
+   "id": "frus:frus1937v02/d244",
+   "date": "1937-10-25",
+   "source": "FRUS frus1937v02",
+   "title": "The Chargé in Germany (Gilbert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d244"
+  },
+  {
+   "id": "frus:frus1937v02/d434",
+   "date": "1937-10-25",
+   "source": "FRUS frus1937v02",
+   "title": "Memorandum by the Under Secretary of State (Welles)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d434"
+  },
+  {
+   "id": "frus:frus1937v02/d497",
+   "date": "1937-10-25",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Chargé in Egypt (Morris)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d497"
+  },
+  {
+   "id": "frus:frus1933-39/d352",
+   "date": "1937-10-26",
+   "source": "FRUS frus1933-39",
+   "title": "Memorandum by the Secretary of State of a Conversation With the Ambassador of the Soviet Union (Troyanovsky)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d352"
+  },
+  {
+   "id": "frus:frus1937v01/d349",
+   "date": "1937-10-26",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in the United Kingdom (Bingham) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d349"
+  },
+  {
+   "id": "frus:frus1937v01/d350",
+   "date": "1937-10-26",
+   "source": "FRUS frus1937v01",
+   "title": "The Counselor of Embassy in Spain (Thurston) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d350"
+  },
+  {
+   "id": "frus:frus1937v01/d687",
+   "date": "1937-10-26",
+   "source": "FRUS frus1937v01",
+   "title": "The Under Secretary of State (Welles) to President Roosevelt",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d687"
+  },
+  {
+   "id": "frus:frus1937v01/d878",
+   "date": "1937-10-26",
+   "source": "FRUS frus1937v01",
+   "title": "The Director of the Registration Division, Securities and Exchange Commission (Bane), to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d878"
+  },
+  {
+   "id": "frus:frus1937v02/d636",
+   "date": "1937-10-26",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Minister in Liberia (Walton)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d636"
+  },
+  {
+   "id": "frus:frus1937v02/d661",
+   "date": "1937-10-26",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Diplomatic Agent and Consul General at Tangier (Blake)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d661"
+  },
+  {
+   "id": "frus:frus1937v02/d712",
+   "date": "1937-10-26",
+   "source": "FRUS frus1937v02",
+   "title": "The Consul General at Jerusalem (Wadsworth) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d712"
+  },
+  {
+   "id": "frus:frus1937v02/d746",
+   "date": "1937-10-26",
+   "source": "FRUS frus1937v02",
+   "title": "The Chargé in Turkey (Kelley) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d746"
+  },
+  {
+   "id": "frus:frus1933-39/d353",
+   "date": "1937-10-27",
+   "source": "FRUS frus1933-39",
+   "title": "The Secretary of State to the Ambassador in the Soviet Union (Davies)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d353"
+  },
+  {
+   "id": "frus:frus1937v01/d351",
+   "date": "1937-10-27",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in the United Kingdom (Bingham) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d351"
+  },
+  {
+   "id": "frus:frus1937v01/d93",
+   "date": "1937-10-27",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Poland (Biddle) to President Roosevelt",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d93"
+  },
+  {
+   "id": "frus:frus1937v02/d382",
+   "date": "1937-10-27",
+   "source": "FRUS frus1937v02",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d382"
+  },
+  {
+   "id": "frus:frus1937v02/d50",
+   "date": "1937-10-27",
+   "source": "FRUS frus1937v02",
+   "title": "The Ambassador in the United Kingdom (Bingham) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d50"
+  },
+  {
+   "id": "frus:frus1937v02/d637",
+   "date": "1937-10-27",
+   "source": "FRUS frus1937v02",
+   "title": "The Minister in Liberia (Walton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d637"
+  },
+  {
+   "id": "frus:frus1938v02/d154",
+   "date": "1937-10-27",
+   "source": "FRUS frus1938v02",
+   "title": "The Minister in the Irish Free State (Cudahy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d154"
+  },
+  {
+   "id": "frus:frus1937v01/d352",
+   "date": "1937-10-28",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d352"
+  },
+  {
+   "id": "frus:frus1937v01/d621",
+   "date": "1937-10-28",
+   "source": "FRUS frus1937v01",
+   "title": "Memorandum by the Chief of the Division of Far Eastern Affairs (Hamilton)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d621"
+  },
+  {
+   "id": "frus:frus1937v02/d245",
+   "date": "1937-10-28",
+   "source": "FRUS frus1937v02",
+   "title": "The Chargé in Germany (Gilbert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d245"
+  },
+  {
+   "id": "frus:frus1937v02/d399",
+   "date": "1937-10-28",
+   "source": "FRUS frus1937v02",
+   "title": "Memorandum of Conversation, by Mr. John C. Ross of the Division of Trade Agreements",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d399"
+  },
+  {
+   "id": "frus:frus1937v02/d400",
+   "date": "1937-10-28",
+   "source": "FRUS frus1937v02",
+   "title": "Memorandum by Mr. John C. Ross of the Division of Trade Agreements",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d400"
+  },
+  {
+   "id": "frus:frus1933-39/d434",
+   "date": "1937-10-29",
+   "source": "FRUS frus1933-39",
+   "title": "The Ambassador in the Soviet Union (Davies) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d434"
+  },
+  {
+   "id": "frus:frus1937v01/d353",
+   "date": "1937-10-29",
+   "source": "FRUS frus1937v01",
+   "title": "The Acting Secretary of State to the Counselor of Embassy in Spain (Thurston)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d353"
+  },
+  {
+   "id": "frus:frus1937v01/d622",
+   "date": "1937-10-29",
+   "source": "FRUS frus1937v01",
+   "title": "The Chargé in Germany (Gilbert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d622"
+  },
+  {
+   "id": "frus:frus1937v02/d51",
+   "date": "1937-10-29",
+   "source": "FRUS frus1937v02",
+   "title": "The British Commercial Counselor (Chalkley) to the Chief of the Division of Trade Agreements (Hawkins)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d51"
+  },
+  {
+   "id": "frus:frus1937v02/d52",
+   "date": "1937-10-29",
+   "source": "FRUS frus1937v02",
+   "title": "The Acting Secretary of State to the Ambassador in the United Kingdom (Bingham)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d52"
+  },
+  {
+   "id": "frus:frus1937v02/d53",
+   "date": "1937-10-29",
+   "source": "FRUS frus1937v02",
+   "title": "The Ambassador in the United Kingdom (Bingham) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d53"
+  },
+  {
+   "id": "frus:frus1937v02/d747",
+   "date": "1937-10-29",
+   "source": "FRUS frus1937v02",
+   "title": "The Acting Secretary of State to the Chargé in Turkey (Kelley)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d747"
+  },
+  {
+   "id": "frus:frus1937v01/d354",
+   "date": "1937-10-30",
+   "source": "FRUS frus1937v01",
+   "title": "The Acting Secretary of State to the Ambassador in Cuba (Wright)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d354"
+  },
+  {
+   "id": "frus:frus1937v01/d355",
+   "date": "1937-10-30",
+   "source": "FRUS frus1937v01",
+   "title": "The Counselor of Embassy in Spain (Thurston) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d355"
+  },
+  {
+   "id": "frus:frus1937v01/d623",
+   "date": "1937-10-30",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in the United Kingdom (Bingham) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d623"
+  },
+  {
+   "id": "frus:frus1937v02/d401",
+   "date": "1937-10-30",
+   "source": "FRUS frus1937v02",
+   "title": "Memorandum by the Assistant Secretary of State (Sayre)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d401"
+  },
+  {
+   "id": "frus:frus1937v02/d135",
+   "date": "1937-11-01",
+   "source": "FRUS frus1937v02",
+   "title": "The Canadian Minister (Marler) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d135"
+  },
+  {
+   "id": "frus:frus1937v02/d246",
+   "date": "1937-11-01",
+   "source": "FRUS frus1937v02",
+   "title": "The Acting Secretary of State to the Chargé in Germany (Gilbert)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d246"
+  },
+  {
+   "id": "frus:frus1937v02/d638",
+   "date": "1937-11-01",
+   "source": "FRUS frus1937v02",
+   "title": "The Acting Secretary of State to the Minister in Liberia (Walton)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d638"
+  },
+  {
+   "id": "frus:frus1937v02/d725",
+   "date": "1937-11-01",
+   "source": "FRUS frus1937v02",
+   "title": "The Acting Secretary of State to the Consul at Beirut (Steger)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d725"
+  },
+  {
+   "id": "frus:frus1937v01/d624",
+   "date": "1937-11-02",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d624"
+  },
+  {
+   "id": "frus:frus1937v01/d625",
+   "date": "1937-11-02",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Japan (Grew) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d625"
+  },
+  {
+   "id": "frus:frus1937v02/d127",
+   "date": "1937-11-02",
+   "source": "FRUS frus1937v02",
+   "title": "The Minister in Canada (Armour) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d127"
+  },
+  {
+   "id": "frus:frus1937v02/d164",
+   "date": "1937-11-02",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Ambassador in Belgium (Gibson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d164"
+  },
+  {
+   "id": "frus:frus1937v02/d54",
+   "date": "1937-11-02",
+   "source": "FRUS frus1937v02",
+   "title": "Memorandum by the Acting Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d54"
+  },
+  {
+   "id": "frus:frus1937v02/d726",
+   "date": "1937-11-02",
+   "source": "FRUS frus1937v02",
+   "title": "The Consul at Beirut (Steger) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d726"
+  },
+  {
+   "id": "frus:frus1937v01/d356",
+   "date": "1937-11-03",
+   "source": "FRUS frus1937v01",
+   "title": "The Acting Secretary of State to the Counselor of Embassy in Spain (Thurston)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d356"
+  },
+  {
+   "id": "frus:frus1937v02/d727",
+   "date": "1937-11-03",
+   "source": "FRUS frus1937v02",
+   "title": "The Consul at Beirut (Steger) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d727"
+  },
+  {
+   "id": "frus:frus1937v02/d728",
+   "date": "1937-11-03",
+   "source": "FRUS frus1937v02",
+   "title": "The Consul at Beirut (Steger) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d728"
+  },
+  {
+   "id": "frus:frus1937v02/d729",
+   "date": "1937-11-03",
+   "source": "FRUS frus1937v02",
+   "title": "Memorandum by the Chief of the Division of Near Eastern Affairs (Murray) to the Assistant to the Legal Adviser (Flournoy)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d729"
+  },
+  {
+   "id": "frus:frus1937v01/d357",
+   "date": "1937-11-04",
+   "source": "FRUS frus1937v01",
+   "title": "The Acting Secretary of State to the Counselor of Embassy in Spain (Thurston)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d357"
+  },
+  {
+   "id": "frus:frus1937v02/d639",
+   "date": "1937-11-04",
+   "source": "FRUS frus1937v02",
+   "title": "The Minister in Liberia (Walton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d639"
+  },
+  {
+   "id": "frus:frus1937v02/d713",
+   "date": "1937-11-04",
+   "source": "FRUS frus1937v02",
+   "title": "The Ambassador in the United Kingdom (Bingham) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d713"
+  },
+  {
+   "id": "frus:frus1937v02/d97",
+   "date": "1937-11-04",
+   "source": "FRUS frus1937v02",
+   "title": "Memorandum by the Counselor of the Department of State (Moore)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d97"
+  },
+  {
+   "id": "frus:frus1937v01/d626",
+   "date": "1937-11-05",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Japan (Grew) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d626"
+  },
+  {
+   "id": "frus:frus1937v02/d55",
+   "date": "1937-11-05",
+   "source": "FRUS frus1937v02",
+   "title": "The British Embassy to the Department of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d55"
+  },
+  {
+   "id": "frus:frus1937v02/d56",
+   "date": "1937-11-05",
+   "source": "FRUS frus1937v02",
+   "title": "The Ambassador in the United Kingdom (Bingham) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d56"
+  },
+  {
+   "id": "frus:frus1937v01/d358",
+   "date": "1937-11-06",
+   "source": "FRUS frus1937v01",
+   "title": "The Acting Secretary of State to the Ambassador in Spain (Bowers), Then in France",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d358"
+  },
+  {
+   "id": "frus:frus1937v01/d548",
+   "date": "1937-11-06",
+   "source": "FRUS frus1937v01",
+   "title": "The Acting Secretary of State to the Consul at Seville (Bay)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d548"
+  },
+  {
+   "id": "frus:frus1937v01/d873",
+   "date": "1937-11-06",
+   "source": "FRUS frus1937v01",
+   "title": "The Acting Secretary of State to the Chairman of the Senate Committee on Finance (Harrison)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d873"
+  },
+  {
+   "id": "frus:frus1937v01/d94",
+   "date": "1937-11-06",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d94"
+  },
+  {
+   "id": "frus:frus1937v01/d627",
+   "date": "1937-11-08",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d627"
+  },
+  {
+   "id": "frus:frus1937v01/d628",
+   "date": "1937-11-08",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Japan (Grew) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d628"
+  },
+  {
+   "id": "frus:frus1937v02/d340",
+   "date": "1937-11-08",
+   "source": "FRUS frus1937v02",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d340"
+  },
+  {
+   "id": "frus:frus1937v01/d359",
+   "date": "1937-11-09",
+   "source": "FRUS frus1937v01",
+   "title": "The Consul at Milan (Sholes) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d359"
+  },
+  {
+   "id": "frus:frus1937v01/d549",
+   "date": "1937-11-09",
+   "source": "FRUS frus1937v01",
+   "title": "The Consul at Seville (Bay) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d549"
+  },
+  {
+   "id": "frus:frus1937v01/d629",
+   "date": "1937-11-09",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d629"
+  },
+  {
+   "id": "frus:frus1937v01/d847",
+   "date": "1937-11-09",
+   "source": "FRUS frus1937v01",
+   "title": "The Consul at Geneva (Bucknell) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d847"
+  },
+  {
+   "id": "frus:frus1937v02/d730",
+   "date": "1937-11-09",
+   "source": "FRUS frus1937v02",
+   "title": "Memorandum by the Assistant to the Legal Adviser (Flournoy) to the Chief of the Division of Near Eastern Affairs (Murray)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d730"
+  },
+  {
+   "id": "frus:frus1937v02/d731",
+   "date": "1937-11-09",
+   "source": "FRUS frus1937v02",
+   "title": "The Consul at Beirut (Steger) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d731"
+  },
+  {
+   "id": "frus:frus1937v01/d360",
+   "date": "1937-11-10",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Argentina (Weddell) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d360"
+  },
+  {
+   "id": "frus:frus1937v01/d95",
+   "date": "1937-11-10",
+   "source": "FRUS frus1937v01",
+   "title": "President Roosevelt to the Ambassador in Poland (Biddle)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d95"
+  },
+  {
+   "id": "frus:frus1937v02/d714",
+   "date": "1937-11-10",
+   "source": "FRUS frus1937v02",
+   "title": "The Consul General at Jerusalem (Wadsworth) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d714"
+  },
+  {
+   "id": "frus:frus1933-39/d435",
+   "date": "1937-11-11",
+   "source": "FRUS frus1933-39",
+   "title": "The Ambassador in the Soviet Union (Davies) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d435"
+  },
+  {
+   "id": "frus:frus1937v01/d361",
+   "date": "1937-11-11",
+   "source": "FRUS frus1937v01",
+   "title": "The Acting Secretary of State to the Consul at Seville (Bay)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d361"
+  },
+  {
+   "id": "frus:frus1937v01/d362",
+   "date": "1937-11-11",
+   "source": "FRUS frus1937v01",
+   "title": "The Counselor of Embassy in Spain (Thurston) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d362"
+  },
+  {
+   "id": "frus:frus1937v01/d550",
+   "date": "1937-11-11",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d550"
+  },
+  {
+   "id": "frus:frus1937v02/d441",
+   "date": "1937-11-11",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Minister in Switzerland (Harrison)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d441"
+  },
+  {
+   "id": "frus:frus1937v02/d455",
+   "date": "1937-11-11",
+   "source": "FRUS frus1937v02",
+   "title": "The Yugoslav Minister (Fotitch) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d455"
+  },
+  {
+   "id": "frus:frus1937v02/d57",
+   "date": "1937-11-11",
+   "source": "FRUS frus1937v02",
+   "title": "The Ambassador in the United Kingdom (Bingham) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d57"
+  },
+  {
+   "id": "frus:frus1937v01/d363",
+   "date": "1937-11-12",
+   "source": "FRUS frus1937v01",
+   "title": "The Secretary of State to the Ambassador in Spain (Bowers), Then in France",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d363"
+  },
+  {
+   "id": "frus:frus1937v01/d364",
+   "date": "1937-11-12",
+   "source": "FRUS frus1937v01",
+   "title": "The Consul at Seville (Bay) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d364"
+  },
+  {
+   "id": "frus:frus1937v01/d365",
+   "date": "1937-11-12",
+   "source": "FRUS frus1937v01",
+   "title": "The Secretary of State to the Ambassador in Argentina (Weddell)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d365"
+  },
+  {
+   "id": "frus:frus1937v01/d366",
+   "date": "1937-11-12",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d366"
+  },
+  {
+   "id": "frus:frus1937v01/d367",
+   "date": "1937-11-13",
+   "source": "FRUS frus1937v01",
+   "title": "The Consul at Seville (Bay) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d367"
+  },
+  {
+   "id": "frus:frus1937v01/d630",
+   "date": "1937-11-13",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Japan (Grew) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d630"
+  },
+  {
+   "id": "frus:frus1937v01/d631",
+   "date": "1937-11-13",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d631"
+  },
+  {
+   "id": "frus:frus1933-39/d425",
+   "date": "1937-11-15",
+   "source": "FRUS frus1933-39",
+   "title": "Memorandum by the Chief of the Office of Arms and Munitions Control (Green) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d425"
+  },
+  {
+   "id": "frus:frus1937v01/d368",
+   "date": "1937-11-15",
+   "source": "FRUS frus1937v01",
+   "title": "The Secretary of State to the Ambassador in Spain (Bowers), Then in France",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d368"
+  },
+  {
+   "id": "frus:frus1937v02/d504",
+   "date": "1937-11-15",
+   "source": "FRUS frus1937v02",
+   "title": "The Chargé in Egypt (Morris) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d504"
+  },
+  {
+   "id": "frus:frus1937v02/d606",
+   "date": "1937-11-15",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Minister in Liberia (Walton)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d606"
+  },
+  {
+   "id": "frus:frus1937v02/d662",
+   "date": "1937-11-15",
+   "source": "FRUS frus1937v02",
+   "title": "The Diplomatic Agent and Consul General at Tangier (Blake) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d662"
+  },
+  {
+   "id": "frus:frus1933-39/d436",
+   "date": "1937-11-16",
+   "source": "FRUS frus1933-39",
+   "title": "The Ambassador in the Soviet Union (Davies) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d436"
+  },
+  {
+   "id": "frus:frus1937v02/d313",
+   "date": "1937-11-16",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Minister in Greece (MacVeagh)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d313"
+  },
+  {
+   "id": "frus:frus1937v02/d58",
+   "date": "1937-11-16",
+   "source": "FRUS frus1937v02",
+   "title": "Memorandum of Conversation, by the Assistant Secretary of State (Sayre)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d58"
+  },
+  {
+   "id": "frus:frus1937v02/d59",
+   "date": "1937-11-16",
+   "source": "FRUS frus1937v02",
+   "title": "The Department of State to the British Embassy",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d59"
+  },
+  {
+   "id": "frus:frus1937v02/d60",
+   "date": "1937-11-16",
+   "source": "FRUS frus1937v02",
+   "title": "Memorandum of Conversation, by the Assistant Secretary of State (Sayre)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d60"
+  },
+  {
+   "id": "frus:frus1937v02/d627",
+   "date": "1937-11-16",
+   "source": "FRUS frus1937v02",
+   "title": "Memorandum by the Assistant Chief of the Division of European Affairs (Nielsen)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d627"
+  },
+  {
+   "id": "frus:frus1937v01/d369",
+   "date": "1937-11-17",
+   "source": "FRUS frus1937v01",
+   "title": "The Counselor of Embassy in Spain (Thurston) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d369"
+  },
+  {
+   "id": "frus:frus1937v02/d122",
+   "date": "1937-11-17",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Minister in Canada (Armour)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d122"
+  },
+  {
+   "id": "frus:frus1937v02/d442",
+   "date": "1937-11-17",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Minister in Switzerland (Harrison)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d442"
+  },
+  {
+   "id": "frus:frus1937v02/d570",
+   "date": "1937-11-17",
+   "source": "FRUS frus1937v02",
+   "title": "The Chargé in Iran (Engert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d570"
+  },
+  {
+   "id": "frus:frus1937v02/d61",
+   "date": "1937-11-17",
+   "source": "FRUS frus1937v02",
+   "title": "Memorandum by the Chief of the Division of Trade Agreements (Hawkins)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d61"
+  },
+  {
+   "id": "frus:frus1937v02/d618",
+   "date": "1937-11-17",
+   "source": "FRUS frus1937v02",
+   "title": "The Minister in Liberia (Walton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d618"
+  },
+  {
+   "id": "frus:frus1937v02/d715",
+   "date": "1937-11-17",
+   "source": "FRUS frus1937v02",
+   "title": "The Consul General at Jerusalem (Wadsworth) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d715"
+  },
+  {
+   "id": "frus:frus1937v02/d82",
+   "date": "1937-11-17",
+   "source": "FRUS frus1937v02",
+   "title": "The British Ambassador (Lindsay) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d82"
+  },
+  {
+   "id": "frus:frus1937v02/d83",
+   "date": "1937-11-17",
+   "source": "FRUS frus1937v02",
+   "title": "The British Embassy to the Department of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d83"
+  },
+  {
+   "id": "frus:frus1937v01/d632",
+   "date": "1937-11-18",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Japan (Grew) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d632"
+  },
+  {
+   "id": "frus:frus1937v01/d848",
+   "date": "1937-11-18",
+   "source": "FRUS frus1937v01",
+   "title": "The Secretary of State to the Consul at Geneva (Bucknell)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d848"
+  },
+  {
+   "id": "frus:frus1937v01/d96",
+   "date": "1937-11-18",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Germany (Dodd) to the Assistant Secretary of State (Wilson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d96"
+  },
+  {
+   "id": "frus:frus1937v02/d123",
+   "date": "1937-11-18",
+   "source": "FRUS frus1937v02",
+   "title": "The Minister in Canada (Armour) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d123"
+  },
+  {
+   "id": "frus:frus1937v02/d611",
+   "date": "1937-11-18",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Minister in Liberia (Walton)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d611"
+  },
+  {
+   "id": "frus:frus1938v02/d374",
+   "date": "1937-11-18",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d374"
+  },
+  {
+   "id": "frus:frus1937v01/d370",
+   "date": "1937-11-19",
+   "source": "FRUS frus1937v01",
+   "title": "The Spanish Ambassador (De los Ríos) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d370"
+  },
+  {
+   "id": "frus:frus1937v01/d371",
+   "date": "1937-11-19",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d371"
+  },
+  {
+   "id": "frus:frus1937v01/d372",
+   "date": "1937-11-19",
+   "source": "FRUS frus1937v01",
+   "title": "The Secretary of State to the Ambassador in Spain (Bowers), in France",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d372"
+  },
+  {
+   "id": "frus:frus1937v01/d614",
+   "date": "1937-11-19",
+   "source": "FRUS frus1937v01",
+   "title": "The Spanish Ambassador (De los Rios) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d614"
+  },
+  {
+   "id": "frus:frus1937v01/d97",
+   "date": "1937-11-19",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Italy (Phillips) to President Roosevelt",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d97"
+  },
+  {
+   "id": "frus:frus1937v02/d341",
+   "date": "1937-11-19",
+   "source": "FRUS frus1937v02",
+   "title": "The Assistant Secretary of State (Sayre) to the Ambassador in Italy (Phillips)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d341"
+  },
+  {
+   "id": "frus:frus1937v02/d62",
+   "date": "1937-11-19",
+   "source": "FRUS frus1937v02",
+   "title": "Memorandum by the Chief of the Division of Trade Agreements (Hawkins)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d62"
+  },
+  {
+   "id": "frus:frus1937v02/d63",
+   "date": "1937-11-19",
+   "source": "FRUS frus1937v02",
+   "title": "Memorandum by the Chief of the Division of Trade Agreements (Hawkins)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d63"
+  },
+  {
+   "id": "frus:frus1937v02/d640",
+   "date": "1937-11-19",
+   "source": "FRUS frus1937v02",
+   "title": "The Minister in Liberia (Walton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d640"
+  },
+  {
+   "id": "frus:frus1937v02/d663",
+   "date": "1937-11-19",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Diplomatic Agent and Consul General at Tangier (Blake)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d663"
+  },
+  {
+   "id": "frus:frus1937v01/d373",
+   "date": "1937-11-20",
+   "source": "FRUS frus1937v01",
+   "title": "The Consul at Seville (Bay) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d373"
+  },
+  {
+   "id": "frus:frus1937v01/d374",
+   "date": "1937-11-20",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d374"
+  },
+  {
+   "id": "frus:frus1937v02/d342",
+   "date": "1937-11-20",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Ambassador in Italy (Phillips)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d342"
+  },
+  {
+   "id": "frus:frus1937v02/d64",
+   "date": "1937-11-20",
+   "source": "FRUS frus1937v02",
+   "title": "Memorandum by the Assistant Chief of the Division of European Affairs (Culbertson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d64"
+  },
+  {
+   "id": "frus:frus1937v01/d551",
+   "date": "1937-11-21",
+   "source": "FRUS frus1937v01",
+   "title": "The Consul at Gibraltar (Williams) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d551"
+  },
+  {
+   "id": "frus:frus1937v01/d375",
+   "date": "1937-11-22",
+   "source": "FRUS frus1937v01",
+   "title": "The Secretary of State to the Ambassador in Spain (Bowers), Then in France",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d375"
+  },
+  {
+   "id": "frus:frus1937v01/d552",
+   "date": "1937-11-22",
+   "source": "FRUS frus1937v01",
+   "title": "The Vice Consul at Valencia (Worley) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d552"
+  },
+  {
+   "id": "frus:frus1937v01/d553",
+   "date": "1937-11-22",
+   "source": "FRUS frus1937v01",
+   "title": "The Secretary of State to the Counselor of Embassy in Spain (Thurston)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d553"
+  },
+  {
+   "id": "frus:frus1937v01/d98",
+   "date": "1937-11-22",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d98"
+  },
+  {
+   "id": "frus:frus1937v02/d286",
+   "date": "1937-11-22",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Ambassador in Germany (Dodd)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d286"
+  },
+  {
+   "id": "frus:frus1937v02/d343",
+   "date": "1937-11-22",
+   "source": "FRUS frus1937v02",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d343"
+  },
+  {
+   "id": "frus:frus1937v02/d344",
+   "date": "1937-11-22",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Ambassador in Italy (Phillips)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d344"
+  },
+  {
+   "id": "frus:frus1937v01/d100",
+   "date": "1937-11-23",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d100"
+  },
+  {
+   "id": "frus:frus1937v01/d376",
+   "date": "1937-11-23",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d376"
+  },
+  {
+   "id": "frus:frus1937v01/d377",
+   "date": "1937-11-23",
+   "source": "FRUS frus1937v01",
+   "title": "The Counselor of Embassy in Spain (Thurston) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d377"
+  },
+  {
+   "id": "frus:frus1937v01/d849",
+   "date": "1937-11-23",
+   "source": "FRUS frus1937v01",
+   "title": "The Consul at Geneva (Bucknell) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d849"
+  },
+  {
+   "id": "frus:frus1937v01/d99",
+   "date": "1937-11-23",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d99"
+  },
+  {
+   "id": "frus:frus1937v02/d345",
+   "date": "1937-11-23",
+   "source": "FRUS frus1937v02",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d345"
+  },
+  {
+   "id": "frus:frus1937v02/d383",
+   "date": "1937-11-23",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Ambassador in Italy (Phillips)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d383"
+  },
+  {
+   "id": "frus:frus1933-39/d354",
+   "date": "1937-11-24",
+   "source": "FRUS frus1933-39",
+   "title": "Memorandum by Mr. George F. Kennan of the Division of European Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d354"
+  },
+  {
+   "id": "frus:frus1933-39/d393",
+   "date": "1937-11-24",
+   "source": "FRUS frus1933-39",
+   "title": "Memorandum by Mr. George F. Kennan of the Division of European Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d393"
+  },
+  {
+   "id": "frus:frus1937v01/d101",
+   "date": "1937-11-24",
+   "source": "FRUS frus1937v01",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d101"
+  },
+  {
+   "id": "frus:frus1937v01/d378",
+   "date": "1937-11-24",
+   "source": "FRUS frus1937v01",
+   "title": "Memorandum by Mr. Erie C. Wendelin of the Division of European Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d378"
+  },
+  {
+   "id": "frus:frus1937v01/d554",
+   "date": "1937-11-24",
+   "source": "FRUS frus1937v01",
+   "title": "The Secretary of State to the Ambassador in Spain (Bowers), Then in France",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d554"
+  },
+  {
+   "id": "frus:frus1937v02/d346",
+   "date": "1937-11-24",
+   "source": "FRUS frus1937v02",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d346"
+  },
+  {
+   "id": "frus:frus1937v02/d347",
+   "date": "1937-11-24",
+   "source": "FRUS frus1937v02",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d347"
+  },
+  {
+   "id": "frus:frus1937v01/d634",
+   "date": "1937-11-25",
+   "source": "FRUS frus1937v01",
+   "title": "The British Embassy to the Department of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d634"
+  },
+  {
+   "id": "frus:frus1933-39/d437",
+   "date": "1937-11-26",
+   "source": "FRUS frus1933-39",
+   "title": "The Secretary of State to the Chargé in the Soviet Union (Henderson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d437"
+  },
+  {
+   "id": "frus:frus1937v01/d615",
+   "date": "1937-11-26",
+   "source": "FRUS frus1937v01",
+   "title": "The Secretary of State to the Spanish Ambassador (De los Rios)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d615"
+  },
+  {
+   "id": "frus:frus1937v02/d348",
+   "date": "1937-11-26",
+   "source": "FRUS frus1937v02",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d348"
+  },
+  {
+   "id": "frus:frus1937v02/d349",
+   "date": "1937-11-26",
+   "source": "FRUS frus1937v02",
+   "title": "Memorandum by the Adviser on Political Relations (Dunn)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d349"
+  },
+  {
+   "id": "frus:frus1937v02/d350",
+   "date": "1937-11-26",
+   "source": "FRUS frus1937v02",
+   "title": "Memorandum by the Under Secretary of State (Welles)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d350"
+  },
+  {
+   "id": "frus:frus1937v02/d351",
+   "date": "1937-11-26",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Ambassador in Italy (Phillips)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d351"
+  },
+  {
+   "id": "frus:frus1937v02/d560",
+   "date": "1937-11-26",
+   "source": "FRUS frus1937v02",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d560"
+  },
+  {
+   "id": "frus:frus1933-39/d426",
+   "date": "1937-11-27",
+   "source": "FRUS frus1933-39",
+   "title": "Memorandum, by the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d426"
+  },
+  {
+   "id": "frus:frus1937v01/d633",
+   "date": "1937-11-27",
+   "source": "FRUS frus1937v01",
+   "title": "Memorandum by the Under Secretary of State (Welles)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d633"
+  },
+  {
+   "id": "frus:frus1937v02/d128",
+   "date": "1937-11-27",
+   "source": "FRUS frus1937v02",
+   "title": "The Minister in Canada (Armour) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d128"
+  },
+  {
+   "id": "frus:frus1937v02/d352",
+   "date": "1937-11-27",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Ambassador in Italy (Phillips)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d352"
+  },
+  {
+   "id": "frus:frus1937v02/d425",
+   "date": "1937-11-27",
+   "source": "FRUS frus1937v02",
+   "title": "The Ambassador in Poland (Biddle) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d425"
+  },
+  {
+   "id": "frus:frus1937v02/d641",
+   "date": "1937-11-27",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Minister in Liberia (Walton)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d641"
+  },
+  {
+   "id": "frus:frus1937v01/d110",
+   "date": "1937-11-29",
+   "source": "FRUS frus1937v01",
+   "title": "The British Embassy to the Department of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d110"
+  },
+  {
+   "id": "frus:frus1937v02/d353",
+   "date": "1937-11-29",
+   "source": "FRUS frus1937v02",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d353"
+  },
+  {
+   "id": "frus:frus1937v02/d416",
+   "date": "1937-11-29",
+   "source": "FRUS frus1937v02",
+   "title": "Memorandum by the Assistant Adviser on International Economic Affairs (Livesey)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d416"
+  },
+  {
+   "id": "frus:frus1937v02/d65",
+   "date": "1937-11-29",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Chargé in the United Kingdom (Johnson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d65"
+  },
+  {
+   "id": "frus:frus1933-39/d394",
+   "date": "1937-11-30",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Henderson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d394"
+  },
+  {
+   "id": "frus:frus1933-39/d438",
+   "date": "1937-11-30",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Henderson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d438"
+  },
+  {
+   "id": "frus:frus1937v01/d102",
+   "date": "1937-11-30",
+   "source": "FRUS frus1937v01",
+   "title": "The Minister in Greece (MacVeagh) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d102"
+  },
+  {
+   "id": "frus:frus1937v01/d379",
+   "date": "1937-11-30",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d379"
+  },
+  {
+   "id": "frus:frus1937v01/d879",
+   "date": "1937-11-30",
+   "source": "FRUS frus1937v01",
+   "title": "The Secretary of State to the Chairman of the Securities and Exchange Commission (Douglas)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d879"
+  },
+  {
+   "id": "frus:frus1937v02/d354",
+   "date": "1937-11-30",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Ambassador in Italy (Phillips)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d354"
+  },
+  {
+   "id": "frus:frus1937v02/d642",
+   "date": "1937-11-30",
+   "source": "FRUS frus1937v02",
+   "title": "The Minister in Liberia (Walton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d642"
+  },
+  {
+   "id": "frus:frus1937v01/d103",
+   "date": "1937-12-01",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d103"
+  },
+  {
+   "id": "frus:frus1937v01/d380",
+   "date": "1937-12-01",
+   "source": "FRUS frus1937v01",
+   "title": "The Secretary of State to the Consul at Seville (Bay)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d380"
+  },
+  {
+   "id": "frus:frus1937v01/d381",
+   "date": "1937-12-02",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d381"
+  },
+  {
+   "id": "frus:frus1937v02/d355",
+   "date": "1937-12-02",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Ambassador in Italy (Phillips)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d355"
+  },
+  {
+   "id": "frus:frus1937v02/d356",
+   "date": "1937-12-02",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Ambassador in Italy (Phillips)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d356"
+  },
+  {
+   "id": "frus:frus1937v02/d384",
+   "date": "1937-12-02",
+   "source": "FRUS frus1937v02",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d384"
+  },
+  {
+   "id": "frus:frus1937v02/d716",
+   "date": "1937-12-02",
+   "source": "FRUS frus1937v02",
+   "title": "Memorandum by the Chief of the Division of Near Eastern Affairs (Murray)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d716"
+  },
+  {
+   "id": "frus:frus1933-39/d439",
+   "date": "1937-12-03",
+   "source": "FRUS frus1933-39",
+   "title": "The Secretary of State to the Chargé in the Soviet Union (Henderson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d439"
+  },
+  {
+   "id": "frus:frus1937v01/d104",
+   "date": "1937-12-03",
+   "source": "FRUS frus1937v01",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d104"
+  },
+  {
+   "id": "frus:frus1937v01/d850",
+   "date": "1937-12-03",
+   "source": "FRUS frus1937v01",
+   "title": "The Secretary of State to the Consul at Geneva (Bucknell)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d850"
+  },
+  {
+   "id": "frus:frus1937v02/d357",
+   "date": "1937-12-03",
+   "source": "FRUS frus1937v02",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d357"
+  },
+  {
+   "id": "frus:frus1937v02/d643",
+   "date": "1937-12-03",
+   "source": "FRUS frus1937v02",
+   "title": "The Minister in Liberia (Walton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d643"
+  },
+  {
+   "id": "frus:frus1937v02/d644",
+   "date": "1937-12-03",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Minister in Liberia (Walton)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d644"
+  },
+  {
+   "id": "frus:frus1933-39/d395",
+   "date": "1937-12-04",
+   "source": "FRUS frus1933-39",
+   "title": "The Secretary of State to the Chargé in the Soviet Union (Henderson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d395"
+  },
+  {
+   "id": "frus:frus1937v01/d105",
+   "date": "1937-12-04",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d105"
+  },
+  {
+   "id": "frus:frus1937v02/d358",
+   "date": "1937-12-04",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Ambassador in Italy (Phillips)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d358"
+  },
+  {
+   "id": "frus:frus1937v01/d382",
+   "date": "1937-12-06",
+   "source": "FRUS frus1937v01",
+   "title": "The Consul at Seville (Bay) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d382"
+  },
+  {
+   "id": "frus:frus1937v01/d555",
+   "date": "1937-12-06",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d555"
+  },
+  {
+   "id": "frus:frus1937v01/d960",
+   "date": "1937-12-06",
+   "source": "FRUS frus1937v01",
+   "title": "The Secretary of State to the Ambassador in Peru (Steinhardt)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d960"
+  },
+  {
+   "id": "frus:frus1937v01/d961",
+   "date": "1937-12-06",
+   "source": "FRUS frus1937v01",
+   "title": "The Secretary of State to the Minister in the Dominican Republic (Norweb)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d961"
+  },
+  {
+   "id": "frus:frus1937v02/d359",
+   "date": "1937-12-06",
+   "source": "FRUS frus1937v02",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d359"
+  },
+  {
+   "id": "frus:frus1937v02/d360",
+   "date": "1937-12-06",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Ambassador in Italy (Phillips)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d360"
+  },
+  {
+   "id": "frus:frus1937v02/d645",
+   "date": "1937-12-06",
+   "source": "FRUS frus1937v02",
+   "title": "The Minister in Liberia (Walton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d645"
+  },
+  {
+   "id": "frus:frus1938v02/d822",
+   "date": "1937-12-06",
+   "source": "FRUS frus1938v02",
+   "title": "The Consul at Beirut (Steger) to the Chief of the Division of Near Eastern Affairs (Murray)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d822"
+  },
+  {
+   "id": "frus:frus1937v01/d383",
+   "date": "1937-12-07",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d383"
+  },
+  {
+   "id": "frus:frus1937v01/d384",
+   "date": "1937-12-07",
+   "source": "FRUS frus1937v01",
+   "title": "The Secretary of State to the Ambassador in Spain (Bowers), Then in France",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d384"
+  },
+  {
+   "id": "frus:frus1937v02/d664",
+   "date": "1937-12-07",
+   "source": "FRUS frus1937v02",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d664"
+  },
+  {
+   "id": "frus:frus1937v01/d106",
+   "date": "1937-12-08",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Poland (Biddle) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d106"
+  },
+  {
+   "id": "frus:frus1937v01/d107",
+   "date": "1937-12-08",
+   "source": "FRUS frus1937v01",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d107"
+  },
+  {
+   "id": "frus:frus1937v01/d385",
+   "date": "1937-12-08",
+   "source": "FRUS frus1937v01",
+   "title": "Memorandum by the Assistant Secretary of State (Wilson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d385"
+  },
+  {
+   "id": "frus:frus1937v01/d386",
+   "date": "1937-12-08",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d386"
+  },
+  {
+   "id": "frus:frus1937v02/d113",
+   "date": "1937-12-08",
+   "source": "FRUS frus1937v02",
+   "title": "The Consul General at Sydney (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d113"
+  },
+  {
+   "id": "frus:frus1937v02/d361",
+   "date": "1937-12-08",
+   "source": "FRUS frus1937v02",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d361"
+  },
+  {
+   "id": "frus:frus1937v02/d435",
+   "date": "1937-12-08",
+   "source": "FRUS frus1937v02",
+   "title": "Memorandum by the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d435"
+  },
+  {
+   "id": "frus:frus1937v02/d443",
+   "date": "1937-12-08",
+   "source": "FRUS frus1937v02",
+   "title": "The Minister in Switzerland (Harrison) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d443"
+  },
+  {
+   "id": "frus:frus1937v02/d499",
+   "date": "1937-12-08",
+   "source": "FRUS frus1937v02",
+   "title": "The Chargé in Egypt (Morris) to the Chief of the Division of Near Eastern Affairs (Murray)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d499"
+  },
+  {
+   "id": "frus:frus1937v02/d601",
+   "date": "1937-12-08",
+   "source": "FRUS frus1937v02",
+   "title": "The Minister Resident in Iraq (Knabenshue) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d601"
+  },
+  {
+   "id": "frus:frus1937v02/d646",
+   "date": "1937-12-08",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Minister in Liberia (Walton)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d646"
+  },
+  {
+   "id": "frus:frus1937v02/d647",
+   "date": "1937-12-08",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Minister in the Netherlands (Gordon)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d647"
+  },
+  {
+   "id": "frus:frus1938v02/d269",
+   "date": "1937-12-08",
+   "source": "FRUS frus1938v02",
+   "title": "The Adviser on Political Relations (Dunn) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d269"
+  },
+  {
+   "id": "frus:frus1933-39/d440",
+   "date": "1937-12-09",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Henderson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d440"
+  },
+  {
+   "id": "frus:frus1937v01/d871",
+   "date": "1937-12-09",
+   "source": "FRUS frus1937v01",
+   "title": "Memorandum by the Assistant Adviser on International Economic Affairs (Livesey)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d871"
+  },
+  {
+   "id": "frus:frus1937v02/d111",
+   "date": "1937-12-09",
+   "source": "FRUS frus1937v02",
+   "title": "Memorandum by the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d111"
+  },
+  {
+   "id": "frus:frus1937v02/d112",
+   "date": "1937-12-09",
+   "source": "FRUS frus1937v02",
+   "title": "The British Embassy to the Department of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d112"
+  },
+  {
+   "id": "frus:frus1937v02/d362",
+   "date": "1937-12-09",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Ambassador in Italy (Phillips)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d362"
+  },
+  {
+   "id": "frus:frus1937v02/d66",
+   "date": "1937-12-09",
+   "source": "FRUS frus1937v02",
+   "title": "The British Embassy to the Department of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d66"
+  },
+  {
+   "id": "frus:frus1937v02/d67",
+   "date": "1937-12-09",
+   "source": "FRUS frus1937v02",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d67"
+  },
+  {
+   "id": "frus:frus1938v02/d893",
+   "date": "1937-12-09",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum of Conversation by the Chief of the Division of Near Eastern Affairs (Murray)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d893"
+  },
+  {
+   "id": "frus:frus1937v01/d108",
+   "date": "1937-12-10",
+   "source": "FRUS frus1937v01",
+   "title": "The Consul at Geneva (Bucknell) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d108"
+  },
+  {
+   "id": "frus:frus1937v02/d114",
+   "date": "1937-12-10",
+   "source": "FRUS frus1937v02",
+   "title": "Memorandum of Conversation, by the Assistant Chief of the Division of European Affairs (Hickerson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d114"
+  },
+  {
+   "id": "frus:frus1937v02/d178",
+   "date": "1937-12-10",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Minister in Czechoslovakia (Carr)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d178"
+  },
+  {
+   "id": "frus:frus1937v02/d363",
+   "date": "1937-12-10",
+   "source": "FRUS frus1937v02",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d363"
+  },
+  {
+   "id": "frus:frus1937v02/d619",
+   "date": "1937-12-10",
+   "source": "FRUS frus1937v02",
+   "title": "The Minister in Liberia (Walton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d619"
+  },
+  {
+   "id": "frus:frus1937v02/d68",
+   "date": "1937-12-10",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Chargé in the United Kingdom (Johnson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d68"
+  },
+  {
+   "id": "frus:frus1938v02/d375",
+   "date": "1937-12-10",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Ambassador in Germany (Dodd)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d375"
+  },
+  {
+   "id": "frus:frus1933-39/d441",
+   "date": "1937-12-11",
+   "source": "FRUS frus1933-39",
+   "title": "Memorandum by the Secretary of State of a Conversation With the Ambassador of the Soviet Union (Troyanovsky)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d441"
+  },
+  {
+   "id": "frus:frus1933-39/d442",
+   "date": "1937-12-11",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Henderson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d442"
+  },
+  {
+   "id": "frus:frus1937v01/d387",
+   "date": "1937-12-11",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d387"
+  },
+  {
+   "id": "frus:frus1937v02/d179",
+   "date": "1937-12-11",
+   "source": "FRUS frus1937v02",
+   "title": "The Department of State to the Czechoslovak Legation",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d179"
+  },
+  {
+   "id": "frus:frus1937v02/d364",
+   "date": "1937-12-11",
+   "source": "FRUS frus1937v02",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d364"
+  },
+  {
+   "id": "frus:frus1937v02/d665",
+   "date": "1937-12-11",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Chargé in the United Kingdom (Johnson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d665"
+  },
+  {
+   "id": "frus:frus1937v02/d69",
+   "date": "1937-12-11",
+   "source": "FRUS frus1937v02",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d69"
+  },
+  {
+   "id": "frus:frus1937v01/d704",
+   "date": "1937-12-12",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Belgium (Gibson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d704"
+  },
+  {
+   "id": "frus:frus1937v02/d180",
+   "date": "1937-12-12",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Minister in Czechoslovakia (Carr)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d180"
+  },
+  {
+   "id": "frus:frus1937v02/d612",
+   "date": "1937-12-12",
+   "source": "FRUS frus1937v02",
+   "title": "The Minister in Liberia (Walton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d612"
+  },
+  {
+   "id": "frus:frus1937v01/d388",
+   "date": "1937-12-13",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d388"
+  },
+  {
+   "id": "frus:frus1937v01/d556",
+   "date": "1937-12-13",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d556"
+  },
+  {
+   "id": "frus:frus1937v01/d557",
+   "date": "1937-12-13",
+   "source": "FRUS frus1937v01",
+   "title": "The Secretary of State to the Ambassador in Spain (Bowers), Then in France",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d557"
+  },
+  {
+   "id": "frus:frus1937v02/d165",
+   "date": "1937-12-13",
+   "source": "FRUS frus1937v02",
+   "title": "The Ambassador in Belgium (Gibson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d165"
+  },
+  {
+   "id": "frus:frus1937v02/d389",
+   "date": "1937-12-13",
+   "source": "FRUS frus1937v02",
+   "title": "The Minister in Lithuania (Norem) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d389"
+  },
+  {
+   "id": "frus:frus1937v02/d561",
+   "date": "1937-12-13",
+   "source": "FRUS frus1937v02",
+   "title": "The Vice Consul at Aden (Chiperfield) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d561"
+  },
+  {
+   "id": "frus:frus1937v02/d70",
+   "date": "1937-12-13",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Chargé in the United Kingdom (Johnson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d70"
+  },
+  {
+   "id": "frus:frus1937v01/d705",
+   "date": "1937-12-14",
+   "source": "FRUS frus1937v01",
+   "title": "The Secretary of State to the Ambassador in Belgium (Gibson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d705"
+  },
+  {
+   "id": "frus:frus1937v01/d962",
+   "date": "1937-12-14",
+   "source": "FRUS frus1937v01",
+   "title": "The Secretary of State to the American Delegates to the Provisional International Sugar Council",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d962"
+  },
+  {
+   "id": "frus:frus1937v02/d181",
+   "date": "1937-12-14",
+   "source": "FRUS frus1937v02",
+   "title": "The Minister in Czechoslovakia (Carr) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d181"
+  },
+  {
+   "id": "frus:frus1937v02/d270",
+   "date": "1937-12-14",
+   "source": "FRUS frus1937v02",
+   "title": "Memorandum by the Legal Adviser (Haekworth)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d270"
+  },
+  {
+   "id": "frus:frus1937v02/d365",
+   "date": "1937-12-14",
+   "source": "FRUS frus1937v02",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d365"
+  },
+  {
+   "id": "frus:frus1937v02/d366",
+   "date": "1937-12-14",
+   "source": "FRUS frus1937v02",
+   "title": "Memorandum of Conversation, by Mr. Melvin L. Leap of the Treaty Division",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d366"
+  },
+  {
+   "id": "frus:frus1937v02/d367",
+   "date": "1937-12-14",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Ambassador in Italy (Phillips)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d367"
+  },
+  {
+   "id": "frus:frus1937v02/d368",
+   "date": "1937-12-14",
+   "source": "FRUS frus1937v02",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d368"
+  },
+  {
+   "id": "frus:frus1937v02/d666",
+   "date": "1937-12-14",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Chargé in the United Kingdom (Johnson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d666"
+  },
+  {
+   "id": "frus:frus1937v02/d71",
+   "date": "1937-12-14",
+   "source": "FRUS frus1937v02",
+   "title": "The British Commercial Counselor (Chalkley) to the Chief of the Division of Trade Agreements (Hawkins)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d71"
+  },
+  {
+   "id": "frus:frus1933-39/d443",
+   "date": "1937-12-15",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Henderson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d443"
+  },
+  {
+   "id": "frus:frus1937v01/d109",
+   "date": "1937-12-15",
+   "source": "FRUS frus1937v01",
+   "title": "Memorandum by the Under Secretary of State (Welles)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d109"
+  },
+  {
+   "id": "frus:frus1937v01/d867",
+   "date": "1937-12-15",
+   "source": "FRUS frus1937v01",
+   "title": "Memorandum by the Under Secretary of State (Welles)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d867"
+  },
+  {
+   "id": "frus:frus1937v02/d256",
+   "date": "1937-12-15",
+   "source": "FRUS frus1937v02",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d256"
+  },
+  {
+   "id": "frus:frus1937v02/d369",
+   "date": "1937-12-15",
+   "source": "FRUS frus1937v02",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d369"
+  },
+  {
+   "id": "frus:frus1937v02/d456",
+   "date": "1937-12-15",
+   "source": "FRUS frus1937v02",
+   "title": "The Department of State to the Yugoslav Legation",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d456"
+  },
+  {
+   "id": "frus:frus1937v02/d648",
+   "date": "1937-12-15",
+   "source": "FRUS frus1937v02",
+   "title": "The Minister in the Netherlands (Gordon) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d648"
+  },
+  {
+   "id": "frus:frus1937v02/d370",
+   "date": "1937-12-16",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Ambassador in Italy (Phillips)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d370"
+  },
+  {
+   "id": "frus:frus1937v02/d390",
+   "date": "1937-12-16",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Minister in Lithuania (Norem)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d390"
+  },
+  {
+   "id": "frus:frus1937v02/d607",
+   "date": "1937-12-16",
+   "source": "FRUS frus1937v02",
+   "title": "The Minister in Liberia (Walton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d607"
+  },
+  {
+   "id": "frus:frus1937v02/d667",
+   "date": "1937-12-16",
+   "source": "FRUS frus1937v02",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d667"
+  },
+  {
+   "id": "frus:frus1937v01/d880",
+   "date": "1937-12-17",
+   "source": "FRUS frus1937v01",
+   "title": "The Secretary of State to Diplomatic and Consular Officers in the American Republics",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d880"
+  },
+  {
+   "id": "frus:frus1937v02/d115",
+   "date": "1937-12-17",
+   "source": "FRUS frus1937v02",
+   "title": "The Consul General at Sydney (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d115"
+  },
+  {
+   "id": "frus:frus1937v02/d116",
+   "date": "1937-12-17",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Consul General at Sydney (Wilson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d116"
+  },
+  {
+   "id": "frus:frus1933-39/d427",
+   "date": "1937-12-18",
+   "source": "FRUS frus1933-39",
+   "title": "Memorandum by the Legal Adviser (Hackworth)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d427"
+  },
+  {
+   "id": "frus:frus1937v01/d111",
+   "date": "1937-12-18",
+   "source": "FRUS frus1937v01",
+   "title": "The Consul at Geneva (Bucknell) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d111"
+  },
+  {
+   "id": "frus:frus1937v01/d963",
+   "date": "1937-12-18",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Peru (Steinhardt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d963"
+  },
+  {
+   "id": "frus:frus1937v02/d182",
+   "date": "1937-12-18",
+   "source": "FRUS frus1937v02",
+   "title": "The Minister in Czechoslovakia (Carr) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d182"
+  },
+  {
+   "id": "frus:frus1937v02/d314",
+   "date": "1937-12-18",
+   "source": "FRUS frus1937v02",
+   "title": "The Greek Minister for Foreign Affairs (Metaxas) to the American, Minister in Greece (MacVeagh)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d314"
+  },
+  {
+   "id": "frus:frus1937v02/d371",
+   "date": "1937-12-18",
+   "source": "FRUS frus1937v02",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d371"
+  },
+  {
+   "id": "frus:frus1937v02/d372",
+   "date": "1937-12-18",
+   "source": "FRUS frus1937v02",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d372"
+  },
+  {
+   "id": "frus:frus1937v02/d373",
+   "date": "1937-12-18",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Ambassador in Italy (Phillips)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d373"
+  },
+  {
+   "id": "frus:frus1937v02/d374",
+   "date": "1937-12-18",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Ambassador in Italy (Phillips)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d374"
+  },
+  {
+   "id": "frus:frus1937v02/d608",
+   "date": "1937-12-18",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Minister in Liberia (Walton)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d608"
+  },
+  {
+   "id": "frus:frus1937v02/d649",
+   "date": "1937-12-18",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Minister in the Netherlands (Gordon)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d649"
+  },
+  {
+   "id": "frus:frus1937v02/d668",
+   "date": "1937-12-18",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Chargé in the United Kingdom (Johnson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d668"
+  },
+  {
+   "id": "frus:frus1933-39/d355",
+   "date": "1937-12-20",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Henderson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d355"
+  },
+  {
+   "id": "frus:frus1937v01/d389",
+   "date": "1937-12-20",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Cuba (Wright) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d389"
+  },
+  {
+   "id": "frus:frus1937v01/d390",
+   "date": "1937-12-20",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d390"
+  },
+  {
+   "id": "frus:frus1937v01/d616",
+   "date": "1937-12-20",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Mexico (Daniels) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d616"
+  },
+  {
+   "id": "frus:frus1937v02/d183",
+   "date": "1937-12-20",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Minister in Czechoslovakia (Carr)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d183"
+  },
+  {
+   "id": "frus:frus1937v02/d505",
+   "date": "1937-12-20",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Chargé in Egypt (Morris)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d505"
+  },
+  {
+   "id": "frus:frus1937v02/d571",
+   "date": "1937-12-20",
+   "source": "FRUS frus1937v02",
+   "title": "The Chargé in Iran (Engert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d571"
+  },
+  {
+   "id": "frus:frus1937v02/d669",
+   "date": "1937-12-20",
+   "source": "FRUS frus1937v02",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d669"
+  },
+  {
+   "id": "frus:frus1933-39/d428",
+   "date": "1937-12-21",
+   "source": "FRUS frus1933-39",
+   "title": "Memorandum by the Chief of the Office of Arms and Munitions Control (Green)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d428"
+  },
+  {
+   "id": "frus:frus1937v01/d391",
+   "date": "1937-12-21",
+   "source": "FRUS frus1937v01",
+   "title": "The Secretary of State to the Spanish Ambassador (De los Ríos)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d391"
+  },
+  {
+   "id": "frus:frus1937v01/d558",
+   "date": "1937-12-21",
+   "source": "FRUS frus1937v01",
+   "title": "The Secretary of State to All Consular Officers in Spain",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d558"
+  },
+  {
+   "id": "frus:frus1937v01/d617",
+   "date": "1937-12-21",
+   "source": "FRUS frus1937v01",
+   "title": "The Secretary of State to the Ambassador in Mexico (Daniels)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d617"
+  },
+  {
+   "id": "frus:frus1937v01/d872",
+   "date": "1937-12-21",
+   "source": "FRUS frus1937v01",
+   "title": "Memorandum by the Adviser on International Economic Affairs (Feis)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d872"
+  },
+  {
+   "id": "frus:frus1937v01/d885",
+   "date": "1937-12-21",
+   "source": "FRUS frus1937v01",
+   "title": "The Secretary of State to the Chairman of the Senate Committee on Foreign Relations (Pittman)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d885"
+  },
+  {
+   "id": "frus:frus1937v02/d444",
+   "date": "1937-12-21",
+   "source": "FRUS frus1937v02",
+   "title": "The Minister in Switzerland (Harrison) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d444"
+  },
+  {
+   "id": "frus:frus1937v02/d445",
+   "date": "1937-12-21",
+   "source": "FRUS frus1937v02",
+   "title": "The Minister in Switzerland (Harrison) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d445"
+  },
+  {
+   "id": "frus:frus1937v02/d451",
+   "date": "1937-12-21",
+   "source": "FRUS frus1937v02",
+   "title": "The Chargé in Yugoslavia (Reed) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d451"
+  },
+  {
+   "id": "frus:frus1937v02/d670",
+   "date": "1937-12-21",
+   "source": "FRUS frus1937v02",
+   "title": "The Chargé in the United, Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d670"
+  },
+  {
+   "id": "frus:frus1937v02/d84",
+   "date": "1937-12-21",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the British Ambassador (Lindsay)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d84"
+  },
+  {
+   "id": "frus:frus1933-39/d356",
+   "date": "1937-12-22",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Henderson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d356"
+  },
+  {
+   "id": "frus:frus1937v01/d618",
+   "date": "1937-12-22",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Mexico (Daniels) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d618"
+  },
+  {
+   "id": "frus:frus1937v01/d706",
+   "date": "1937-12-22",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Belgium (Gibson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d706"
+  },
+  {
+   "id": "frus:frus1937v02/d203",
+   "date": "1937-12-22",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Chargé in Estonia (Leonard)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d203"
+  },
+  {
+   "id": "frus:frus1937v01/d112",
+   "date": "1937-12-23",
+   "source": "FRUS frus1937v01",
+   "title": "The Minister in Czechoslovakia (Carr) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d112"
+  },
+  {
+   "id": "frus:frus1937v01/d113",
+   "date": "1937-12-23",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d113"
+  },
+  {
+   "id": "frus:frus1937v01/d114",
+   "date": "1937-12-23",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d114"
+  },
+  {
+   "id": "frus:frus1937v01/d115",
+   "date": "1937-12-23",
+   "source": "FRUS frus1937v01",
+   "title": "The Minister in Albania (Grant) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d115"
+  },
+  {
+   "id": "frus:frus1937v02/d117",
+   "date": "1937-12-23",
+   "source": "FRUS frus1937v02",
+   "title": "The Consul General at Sydney (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d117"
+  },
+  {
+   "id": "frus:frus1937v02/d500",
+   "date": "1937-12-23",
+   "source": "FRUS frus1937v02",
+   "title": "The Chargé in Egypt (Morris) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d500"
+  },
+  {
+   "id": "frus:frus1937v02/d572",
+   "date": "1937-12-23",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Chargé in Iran (Engert)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d572"
+  },
+  {
+   "id": "frus:frus1937v02/d748",
+   "date": "1937-12-23",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Chargé in Turkey (Kelley)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d748"
+  },
+  {
+   "id": "frus:frus1937v02/d593",
+   "date": "1937-12-24",
+   "source": "FRUS frus1937v02",
+   "title": "The Chargé in Iran (Engert) to the Chief of the Division of Near Eastern Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d593"
+  },
+  {
+   "id": "frus:frus1933-39/d444",
+   "date": "1937-12-27",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Henderson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d444"
+  },
+  {
+   "id": "frus:frus1937v02/d467",
+   "date": "1937-12-27",
+   "source": "FRUS frus1937v02",
+   "title": "The Chargé in Iran (Engert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d467"
+  },
+  {
+   "id": "frus:frus1937v01/d707",
+   "date": "1937-12-28",
+   "source": "FRUS frus1937v01",
+   "title": "The Secretary of State to the Ambassador in the United Kingdom (Bingham)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d707"
+  },
+  {
+   "id": "frus:frus1937v01/d559",
+   "date": "1937-12-29",
+   "source": "FRUS frus1937v01",
+   "title": "The Counselor of Embassy in Spain (Thurston) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d559"
+  },
+  {
+   "id": "frus:frus1937v01/d708",
+   "date": "1937-12-29",
+   "source": "FRUS frus1937v01",
+   "title": "The Secretary of State to the Ambassador in Belgium (Gibson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d708"
+  },
+  {
+   "id": "frus:frus1937v02/d118",
+   "date": "1937-12-29",
+   "source": "FRUS frus1937v02",
+   "title": "The Consul General at Sydney (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d118"
+  },
+  {
+   "id": "frus:frus1937v02/d671",
+   "date": "1937-12-29",
+   "source": "FRUS frus1937v02",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d671"
+  },
+  {
+   "id": "frus:frus1937v02/d98",
+   "date": "1937-12-29",
+   "source": "FRUS frus1937v02",
+   "title": "Memorandum of Conversation, by the Chief of the Division of European Affairs (Moffat)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d98"
+  },
+  {
+   "id": "frus:frus1933-39/d396",
+   "date": "1937-12-30",
+   "source": "FRUS frus1933-39",
+   "title": "Memorandum by the Assistant Secretary of State (Messersmith)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d396"
+  },
+  {
+   "id": "frus:frus1933-39/d397",
+   "date": "1937-12-30",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Henderson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d397"
+  },
+  {
+   "id": "frus:frus1937v01/d116",
+   "date": "1937-12-30",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Poland (Biddle) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d116"
+  },
+  {
+   "id": "frus:frus1937v01/d964",
+   "date": "1937-12-30",
+   "source": "FRUS frus1937v01",
+   "title": "The Secretary of State to the Ambassador in Peru (Steinhardt)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d964"
+  },
+  {
+   "id": "frus:frus1938v01/d350",
+   "date": "1937-12-30",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Minister in Greece (MacVeagh)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d350"
+  },
+  {
+   "id": "frus:frus1937v01/d709",
+   "date": "1937-12-31",
+   "source": "FRUS frus1937v01",
+   "title": "The Ambassador in Belgium (Gibson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d709"
+  },
+  {
+   "id": "frus:frus1937v01/d710",
+   "date": "1937-12-31",
+   "source": "FRUS frus1937v01",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v01/d710"
+  },
+  {
+   "id": "frus:frus1937v02/d315",
+   "date": "1937-12-31",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Minister in Greece (MacVeagh)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d315"
+  }
+ ],
+ "proposals": [
+  {
+   "id": "1937Q4-001",
+   "document": "frus:frus1933-39/d422",
+   "proposal": {
+    "indicator_id": "frus:frus1933-39/d422:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1937-10-01",
+    "quote": "the President’s Proclamation of May 1, 1937",
+    "url": "https://history.state.gov/historicaldocuments/frus1933-39/d422",
+    "rule": "deepseek backend: The letter administers arms exports under the President's Proclamation of May 1, 1937, the proclamation issued under the Neutrality Act regime of 1 May 1937, indicating that regime is in force.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-002",
+   "document": "frus:frus1937v01/d620",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d620:anticomintern=true",
+    "variable": "anticomintern",
+    "level": true,
+    "date": "1937-10-01",
+    "quote": "the German-Japanese anti-comintern pact of November, 1936",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d620",
+    "rule": "deepseek backend: The passage names the German-Japanese anti-Comintern pact of November 1936, reporting the pact as in existence.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-003",
+   "document": "frus:frus1937v01/d620",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d620:china_war=true",
+    "variable": "china_war",
+    "level": true,
+    "date": "1937-10-01",
+    "quote": "Japan is locked in a bitter military struggle with Russia’s virtual ally, China",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d620",
+    "rule": "deepseek backend: The passage explicitly reports Japan as engaged in a bitter military struggle with China, meeting the threshold of general war in China.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-004",
+   "document": "frus:frus1937v01/d620",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d620:axis=true",
+    "variable": "axis",
+    "level": true,
+    "date": "1937-10-01",
+    "quote": "the recent visit of Mussolini to Berlin, on which occasion the heads of the two outstanding anti-Communist states assailed communism and reasserted their common determination to save Europe and the world from the menace of bolshevism",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d620",
+    "rule": "deepseek backend: The passage reports Mussolini’s Berlin visit and a joint German-Italian determination against bolshevism, an explicit statement of Rome-Berlin alignment.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-005",
+   "document": "frus:frus1937v01/d324",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d324:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1937-10-05",
+    "quote": "I remarked that in the last few weeks there had seemed to be a stiffening of the Franco-British attitude vis-à-vis Italy in the Spanish and Mediterranean questions. Rochat said that this was true and that it could not be otherwise.",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d324",
+    "rule": "deepseek backend: The passage reports a hardening of Franco-British policy toward Italy over Spain and the Mediterranean, meeting the threshold for Italy being estranged from the West.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-006",
+   "document": "frus:frus1937v01/d82",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d82:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1937-10-06",
+    "quote": "England and France had taken the initiative of making this proposal to Italy and they could not in the event of a negative reply by their inaction seem to say to the Italians “all right go ahead and dig yourselves in in the Balearics, cut off our communications in the Mediterranean, we will do nothing about it.”",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d82",
+    "rule": "deepseek backend: The passage reports France and Britain confronting Italian hostile pressure (Balearics, Mediterranean communications) over Spain, i.e. Italy estranged from the West, meeting the estrangement threshold.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-007",
+   "document": "frus:frus1937v01/d326",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d326:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1937-10-08",
+    "quote": "It appeared that Italy was about to reject the French-British offer and, in view of information respecting the landing of Italian troops in Cadiz and Italian air reinforcements in Majorca, he thought the French Government would be constrained to speak firmly.",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d326",
+    "rule": "deepseek backend: The passage reports Italy rejecting a French-British offer while landing troops and air reinforcements in Spain against Western interests, i.e. estranged from the West (threshold: estrangement after Ethiopia).",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-008",
+   "document": "frus:frus1937v01/d85",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d85:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1937-10-09",
+    "quote": "Since the Rhineland reoccupation in March 1936",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d85",
+    "rule": "deepseek backend: The passage reports the Rhineland reoccupation, which meets the threshold for remilitarized because the demilitarized zone had been reoccupied by German forces.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-009",
+   "document": "frus:frus1937v01/d86",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d86:axis=true",
+    "variable": "axis",
+    "level": true,
+    "date": "1937-10-09",
+    "quote": "Smaller countries now flirting with Rome–Berlin Axis may reconsider position in light of President’s speech.",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d86",
+    "rule": "deepseek backend: The passage names the Rome–Berlin Axis as an existing alignment that smaller states are flirting with, meeting the threshold for the Rome-Berlin alignment being in force.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-010",
+   "document": "frus:frus1937v01/d329",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d329:axis=true",
+    "variable": "axis",
+    "level": true,
+    "date": "1937-10-10",
+    "quote": "the Fascist Government will not in any event participate in conversations, meetings or conferences to which the German Government is not also formally invited and in which that Government does not participate",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d329",
+    "rule": "deepseek backend: The Italian Government states it will act only jointly with Germany in the Spanish non-intervention question, reporting the Rome-Berlin alignment in operation (the threshold rule's October Protocols alignment).",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-011",
+   "document": "frus:frus1937v01/d330",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d330:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1937-10-11",
+    "quote": "their impression of the Italian reply is distinctly unfavorable ... it had become impossible for the French Government to continue longer to sit back and allow the Italians to have their own way completely in Spain",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d330",
+    "rule": "deepseek backend: The passage reports the French Foreign Office's unfavorable view of Italy's negative reply and that France and Britain could no longer let Italy have its own way in Spain, showing Italy estranged from the Western powers.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-012",
+   "document": "frus:frus1937v01/d87",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d87:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1937-10-11",
+    "quote": "the reply of Italy to Great Britain and France, refusing to discuss a solution of the Spanish problem unless Germany took part in these conversations",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d87",
+    "rule": "deepseek backend: Italy's reported refusal to deal with Britain and France on Spain unless Germany participates is an explicit statement of Italy's estrangement from the Western powers (the threshold level, already true since the Ethiopian crisis).",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-013",
+   "document": "frus:frus1937v01/d88",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d88:china_war=true",
+    "variable": "china_war",
+    "level": true,
+    "date": "1937-10-11",
+    "quote": "the conflict in the Far East provoked by Japan in China now has the front center of the stage",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d88",
+    "rule": "deepseek backend: The passage reports an ongoing conflict in China provoked by Japan, meeting the threshold for Japan's army engaged in a general war in China from July 1937.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-014",
+   "document": "frus:frus1937v01/d333",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d333:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1937-10-13",
+    "quote": "the Italian refusal to attend a three-power discussion of intervention in Spain",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d333",
+    "rule": "deepseek backend: The passage reports Italy refusing to join Britain and France in a three-power discussion, with the British anxious to avoid any move Mussolini could take as an affront, a fact of Italian estrangement from the Western powers meeting the estranged threshold.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-015",
+   "document": "frus:frus1937v01/d336",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d336:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1937-10-16",
+    "quote": "Italy was violating the traditional intervention obligations while France and England were living up to them",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d336",
+    "rule": "deepseek backend: The passage reports Italy acting in conflict with France and Britain over intervention, an explicit state of estrangement from the Western powers; the threshold is met by that adversarial relation.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-016",
+   "document": "frus:frus1937v01/d90",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d90:axis=true",
+    "variable": "axis",
+    "level": true,
+    "date": "1937-10-16",
+    "quote": "the Rome-Berlin axis is still artificial as to basis",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d90",
+    "rule": "deepseek backend: The passage explicitly refers to the existing Rome-Berlin axis and German-Italian solidarity, meeting the threshold for the Rome-Berlin alignment being true.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-017",
+   "document": "frus:frus1937v01/d338",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d338:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1937-10-18",
+    "quote": "the Congress of the United States in representation of the people had made it clear that it desired the Government of the United States to adopt an attitude of strict neutrality as between the contending parties in Spain and that it was determined to avoid, in so far as the United States was concerned, any involvement or entanglement which might create a situation where the United States might be drawn into hostilities.",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d338",
+    "rule": "deepseek backend: This explicit statement that Congress imposed strict neutrality between the Spanish parties and sought to avoid entanglement matches the isolationist level's neutrality-and-no-involvement posture.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-018",
+   "document": "frus:frus1937v01/d613",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d613:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1937-10-18",
+    "quote": "the law requiring that a license be obtained for the export of all arms, ammunition and implements of war ... the United States neutrality laws",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d613",
+    "rule": "deepseek backend: The passage reports US neutrality-law controls in force requiring an export license for all arms and measures to prevent transshipment to Spain, consistent with the isolationist Neutrality Act regime; the mandatory all-belligerents embargo is not stated explicitly, so confidence is low.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-019",
+   "document": "frus:frus1937v01/d340",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d340:italy_estranged=false",
+    "variable": "italy_estranged",
+    "level": false,
+    "date": "1937-10-19",
+    "quote": "there will be a meeting of French, British and Italian naval commanders about October 22 or 23, probably at Malta",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d340",
+    "rule": "deepseek backend: The threshold for italy_estranged is estrangement from the West; the report of Italian naval commanders joining French and British commanders to put a naval agreement into effect and begin joint patrol operations reports cooperation indicating Italy is no longer estranged.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-020",
+   "document": "frus:frus1937v01/d342",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d342:axis=true",
+    "variable": "axis",
+    "level": true,
+    "date": "1937-10-20",
+    "quote": "Germany and Italy are in agreement as to the manner in which Italy will represent their joint views at Brussels.",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d342",
+    "rule": "deepseek backend: The passage explicitly reports Germany and Italy holding joint views and acting in agreement, meeting the Rome-Berlin alignment threshold; confidence is low because it is a second-hand Foreign Office characterization rather than a formal protocol.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-021",
+   "document": "frus:frus1937v01/d91",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d91:belief_WEST=limited",
+    "variable": "belief_WEST",
+    "level": "limited",
+    "date": "1937-10-22",
+    "quote": "he had suggested to the German Ambassador here that the time might be ripe for serious discussions between France and Germany",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d91",
+    "rule": "deepseek backend: The French Premier's reported policy of seeking serious discussions for reconciliation with Germany treats German aims as open to a negotiated settlement, meeting the limited threshold.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-022",
+   "document": "frus:frus1937v01/d91",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d91:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1937-10-22",
+    "quote": "the tension with Italy was so great",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d91",
+    "rule": "deepseek backend: The passage reports serious tension with Italy and a Western desire to get the Italians out of the Balearics, which meets the threshold for Italy estranged from the West.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-023",
+   "document": "frus:frus1937v01/d687",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d687:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1937-10-26",
+    "quote": "The traditional policy of freedom from political involvement which the Government of the United States has maintained and will maintain is well known. In the determination of political adjustments the Government of the United States can play no part.",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d687",
+    "rule": "deepseek backend: The Under Secretary's draft, approved as 'entirely sound' by the Secretary of State, states outright that the United States maintains and will maintain freedom from political involvement and will take no part in political adjustments, the no-commitment stance the isolationist level describes; the passage does not itself mention the Neutrality Act's arms embargo, so the reading is partial.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-024",
+   "document": "frus:frus1937v01/d621",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d621:anticomintern=true",
+    "variable": "anticomintern",
+    "level": true,
+    "date": "1937-10-28",
+    "quote": "Italy had agreed to become a party to the German-Japanese agreement against the Comintern.",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d621",
+    "rule": "deepseek backend: The passage reports as existing the German-Japanese agreement against the Comintern (the Anti-Comintern Pact of 25 Nov 1936), and that Italy had agreed to become a party to it, which meets the rule that the pact exists; Italy's accession is not a separate flag.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-025",
+   "document": "frus:frus1937v01/d622",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d622:anticomintern=true",
+    "variable": "anticomintern",
+    "level": true,
+    "date": "1937-10-29",
+    "quote": "an anti-Communist pact with Japan ... the existing German-Japanese agreement",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d622",
+    "rule": "deepseek backend: The anticomintern flag is set by the Germany-Japan Anti-Comintern Pact; the passage reports an existing German-Japanese anti-Communist agreement, so the pact is in force.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-026",
+   "document": "frus:frus1937v01/d623",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d623:anticomintern=true",
+    "variable": "anticomintern",
+    "level": true,
+    "date": "1937-10-30",
+    "quote": "according to the information of the Foreign Office, Germany was making an effort to secure an enlargement of the anti-Soviet Pact with Japan",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d623",
+    "rule": "deepseek backend: The passage reports the German-Japanese anti-Soviet Pact as an existing agreement (with Germany seeking adhesions and Poland twice refusing to join), which meets the rule that the Anti-Comintern Pact sets the flag true.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-027",
+   "document": "frus:frus1937v01/d623",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d623:china_war=true",
+    "variable": "china_war",
+    "level": true,
+    "date": "1937-10-30",
+    "quote": "ought to win in the fight with China",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d623",
+    "rule": "deepseek backend: The reported remark refers to an ongoing fight with China, indicating a war in China is in progress, though the reference is oblique and not a direct report of Japan's army engaged.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-028",
+   "document": "frus:frus1937v01/d94",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d94:belief_WEST=uncertain",
+    "variable": "belief_WEST",
+    "level": "uncertain",
+    "date": "1937-11-06",
+    "quote": "He said that Von Papen had been informed with complete honesty that France would fulfill to the limit her treaty obligations to Czechoslovakia and that she would view with disfavor any change in the status of Austria. He, Delbos, believed that if Hitler should decide to make any move in Central Europe at the present time it would be directed against Austria and not Czechoslovakia.",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d94",
+    "rule": "deepseek backend: Delbos, a responsible minister, treats a German move against Austria as possible and reports that France warned Berlin it would view any change in Austria's status with disfavor, meeting the uncertain threshold of warnings while German aims may go beyond revision.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-029",
+   "document": "frus:frus1937v01/d627",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d627:anticomintern=true",
+    "variable": "anticomintern",
+    "level": true,
+    "date": "1937-11-08",
+    "quote": "Italian adherence to the German-Japanese Anti-Comintern Pact",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d627",
+    "rule": "deepseek backend: The passage names the German-Japanese Anti-Comintern Pact as an existing agreement with Italian adherence, meeting the threshold for the Anti-Comintern flag; Italy's accession does not create a separate flag.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-030",
+   "document": "frus:frus1937v01/d628",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d628:anticomintern=true",
+    "variable": "anticomintern",
+    "level": true,
+    "date": "1937-11-08",
+    "quote": "The news of the adherence of Italy to the Anti-Communist Pact is being enthusiastically received in Japan.",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d628",
+    "rule": "deepseek backend: The passage reports Italy's adherence to the Anti-Communist Pact, confirming the German-Japanese Anti-Comintern Pact is in force; Italy's accession does not create a separate flag.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-031",
+   "document": "frus:frus1937v01/d628",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d628:axis=true",
+    "variable": "axis",
+    "level": true,
+    "date": "1937-11-08",
+    "quote": "The so-called Rome-Berlin Axis boldly challenges the fictitious peace maintained in Europe",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d628",
+    "rule": "deepseek backend: The passage explicitly names the existing Rome-Berlin Axis as an alignment in international politics, meeting the axis flag; the reference is in a press editorial, so confidence is low.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-032",
+   "document": "frus:frus1937v01/d628",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d628:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1937-11-08",
+    "quote": "Italy, though still nominally a League member since the Ethiopian affair, is no longer bound by the League",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d628",
+    "rule": "deepseek backend: The passage states Italy has been outside the League's obligations since the Ethiopian affair, meeting the estrangement-from-the-West condition; it is an editorial characterization, so confidence is low.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-033",
+   "document": "frus:frus1937v01/d629",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d629:anticomintern=true",
+    "variable": "anticomintern",
+    "level": true,
+    "date": "1937-11-09",
+    "quote": "the conclusion of the Tripartite Anti-Communist Pact",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d629",
+    "rule": "deepseek backend: The document reports as an accomplished fact the conclusion of the Tripartite Anti-Communist Pact (Italy's accession to the Anti-Comintern Pact), which meets the threshold of the pact being in force.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-034",
+   "document": "frus:frus1937v01/d95",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d95:axis=true",
+    "variable": "axis",
+    "level": true,
+    "date": "1937-11-10",
+    "quote": "the German-Italian-Japanese combination is being amazingly successful",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d95",
+    "rule": "deepseek backend: The passage explicitly reports a German-Italian-Japanese combination, meeting the Rome-Berlin alignment threshold for the axis flag.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-035",
+   "document": "frus:frus1937v01/d550",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d550:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1937-11-11",
+    "quote": "Salamanca is convinced our neutrality is sincere and there is no desire to embarrass us because of violators of our laws",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d550",
+    "rule": "deepseek backend: The isolationist level requires the Neutrality Act regime with a mandatory arms embargo; the passage reports American neutrality as an operating policy with laws whose violators are a recognized category, but names no statute or embargo, so the threshold judgment is doubtful.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-036",
+   "document": "frus:frus1937v01/d365",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d365:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1937-11-12",
+    "quote": "In accordance with our well-established policy of non-interference in the internal affairs of another country, we have consistently refrained from intervening in any way in the unfortunate conflict in Spain.",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d365",
+    "rule": "deepseek backend: The Secretary of State states outright a standing policy of non-interference and refusal of joint action in a foreign war, matching the isolationist level, though the passage names the policy rather than the Neutrality Act itself.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-037",
+   "document": "frus:frus1937v01/d631",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d631:anticomintern=true",
+    "variable": "anticomintern",
+    "level": true,
+    "date": "1937-11-13",
+    "quote": "there were no secret undertaking[s] whatsoever connected with the Tripartite Anti-Communist Pact and that it was nothing more than a three-cornered recognition of attitude of the three Governments in their opposition to the spread of communism",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d631",
+    "rule": "deepseek backend: The Italian Foreign Minister reports a three-party Anti-Communist Pact in existence, which meets the threshold of the Anti-Comintern Pact joined by Italy (acceded 6 Nov 1937).",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-038",
+   "document": "frus:frus1937v01/d631",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d631:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1937-11-13",
+    "quote": "Ciano admitted quite frankly that there was mutual distrust between Italy and Great Britain and that this was the material cause of divergence between the two countries. ... there was of course the question of the recognition of the Empire before the Italians and the British could make much progress",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d631",
+    "rule": "deepseek backend: The passage states outright that Italy and Britain are estranged, mutual distrust being the cause of divergence and colonial recognition an unresolved precondition, meeting the estrangement level.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-039",
+   "document": "frus:frus1937v02/d58",
+   "proposal": {
+    "indicator_id": "frus:frus1937v02/d58:china_war=true",
+    "variable": "china_war",
+    "level": true,
+    "date": "1937-11-16",
+    "quote": "such acts of aggression, as Japan’s invasion of China",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v02/d58",
+    "rule": "deepseek backend: The Secretary of State reports Japan's invasion of China as an ongoing act of aggression, which meets the threshold of Japan's army being engaged in a general war in China from July 1937.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-040",
+   "document": "frus:frus1937v01/d370",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d370:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1937-05-01",
+    "quote": "the “Joint Resolution and Proclamation” of May 1, last ... it remains in force as regards Spain",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d370",
+    "rule": "deepseek backend: The isolationist threshold is the Neutrality Act regime with a mandatory arms embargo on belligerents; the document reports the Joint Resolution and Proclamation of 1 May 1937 as in force and prohibiting arms exports to Spain.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-041",
+   "document": "frus:frus1937v01/d614",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d614:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1937-05-01",
+    "quote": "The Proclamation is issued pursuant to a Joint Resolution of Congress, approved May 1, 1937, which prohibits, under certain circumstances, the export of “arms, ammunition, and implements of war”.",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d614",
+    "rule": "deepseek backend: The passage reports the 1 May 1937 neutrality legislation imposing an arms export embargo, meeting the isolationist threshold for the Neutrality Act regime.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-042",
+   "document": "frus:frus1937v01/d97",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d97:axis=true",
+    "variable": "axis",
+    "level": true,
+    "date": "1937-11-19",
+    "quote": "The Rome-Berlin axis began in the same way, with the repeated assurances in similar vein, but nevertheless it has grown into a strong alliance between the two Governments.",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d97",
+    "rule": "deepseek backend: The passage reports the Rome-Berlin axis as having grown into a strong alliance, meeting the Rome-Berlin alignment threshold.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-043",
+   "document": "frus:frus1937v01/d97",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d97:anticomintern=true",
+    "variable": "anticomintern",
+    "level": true,
+    "date": "1937-11-19",
+    "quote": "the three-cornered Anti-Comintern Pact. For days after its signature by Italy",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d97",
+    "rule": "deepseek backend: The passage reports Italy's signature making the Anti-Comintern Pact three-cornered, meeting the pact/accession threshold.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-044",
+   "document": "frus:frus1937v01/d97",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d97:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1937-11-19",
+    "quote": "the press campaign against England and France was being resumed with all its customary vituperation",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d97",
+    "rule": "deepseek backend: The passage reports a resumed hostile Italian press campaign against Britain and France, meeting the estrangement-from-the-West threshold.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-045",
+   "document": "frus:frus1937v02/d341",
+   "proposal": {
+    "indicator_id": "frus:frus1937v02/d341:axis=true",
+    "variable": "axis",
+    "level": true,
+    "date": "1937-11-19",
+    "quote": "we believe that these three countries are even now tied together as closely as possible",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v02/d341",
+    "rule": "deepseek backend: The passage states outright that Germany, Italy and Japan are already tied together, i.e. the Rome-Berlin alignment exists, though it is given as the Department's assessment rather than as a report of the October Protocols.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-046",
+   "document": "frus:frus1937v01/d98",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d98:belief_WEST=limited",
+    "variable": "belief_WEST",
+    "level": "limited",
+    "date": "1937-11-22",
+    "quote": "the best chance of beginning negotiations which might lead to a peaceful settlement of the situation in Europe or at least postponement of war would be in the colonial domain",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d98",
+    "rule": "deepseek backend: A ministerial statement by the French Foreign Minister treats German aims as revision that a negotiated general settlement — colonial concessions, a new Locarno — can satisfy, which is the limited level rather than the uncertain one.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-047",
+   "document": "frus:frus1937v01/d98",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d98:commit_WEST=appease",
+    "variable": "commit_WEST",
+    "level": "appease",
+    "date": "1937-11-22",
+    "quote": "he favored making concessions to Germany piecemeal in order to stave off war",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d98",
+    "rule": "deepseek backend: The responsible French minister reports a policy of seeking a settlement through concessions, with no new commitment to fight for a third state and no warlike preparation, which is the appease level.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-048",
+   "document": "frus:frus1937v01/d98",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d98:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1937-11-22",
+    "quote": "neither he nor Chautemps would object to accrediting an Ambassador to the King of Italy, Emperor of Ethiopia ... the Italians were conducting the most furious campaigns by radio and other sorts of propaganda against France in the French colonies in North Africa and in the Near East",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d98",
+    "rule": "deepseek backend: The passage reports continued Italo-French hostility rooted in the Ethiopian affair (the title dispute) and Italian propaganda warfare against France, which is the estrangement from the West the rule records.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-049",
+   "document": "frus:frus1937v01/d100",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d100:anticomintern=true",
+    "variable": "anticomintern",
+    "level": true,
+    "date": "1937-11-18",
+    "quote": "Germany’s relations with Japan ... the Anti-Comintern Pact was a large façade behind which there was no building.",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d100",
+    "rule": "deepseek backend: The passage explicitly reports the Anti-Comintern Pact in the context of Germany's relations with Japan, so it states the pact exists; the denial of secret clauses concerns its content, not its existence.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-050",
+   "document": "frus:frus1937v01/d100",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d100:china_war=true",
+    "variable": "china_war",
+    "level": true,
+    "date": "1937-11-23",
+    "quote": "the position of Germany vis-à-vis the Sino-Japanese conflict ... the Japanese Army had shown itself to be considerably weaker than expected and that the Chinese, with totally inadequate weapons, had made a very fine defense",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d100",
+    "rule": "deepseek backend: The passage reports the ongoing Sino-Japanese conflict and Japanese army engagement with Chinese forces, meeting the threshold for a general war in China.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-051",
+   "document": "frus:frus1937v01/d99",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d99:anticomintern=true",
+    "variable": "anticomintern",
+    "level": true,
+    "date": "1937-11-23",
+    "quote": "her anti-Communist agreement with Japan",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d99",
+    "rule": "deepseek backend: The passage reports a German anti-Communist agreement with Japan in force, meeting the Anti-Comintern Pact threshold.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-052",
+   "document": "frus:frus1937v01/d99",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d99:china_war=true",
+    "variable": "china_war",
+    "level": true,
+    "date": "1937-11-23",
+    "quote": "Sino-Japanese conflict",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d99",
+    "rule": "deepseek backend: The passage reports an ongoing Sino-Japanese conflict, meeting the threshold of Japan's army engaged in war in China.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-053",
+   "document": "frus:frus1937v01/d99",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d99:commit_WEST=appease",
+    "variable": "commit_WEST",
+    "level": "appease",
+    "date": "1937-11-23",
+    "quote": "she must choose at least one of these with which to come to terms",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d99",
+    "rule": "deepseek backend: A British Embassy official describes London as needing to come to terms with one of its enemies, with Germany most expedient, meeting the appease threshold of a policy seeking settlement.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-054",
+   "document": "frus:frus1937v01/d99",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d99:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1937-11-23",
+    "quote": "the current enmity of Germany, Italy, and Japan",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d99",
+    "rule": "deepseek backend: The passage reports Italy among the powers currently hostile to Britain, meeting the estranged-from-the-West threshold.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-055",
+   "document": "frus:frus1937v01/d99",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d99:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1937-11-23",
+    "quote": "Germany’s Rhineland fortifications",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d99",
+    "rule": "deepseek backend: The passage reports German military fortifications in the Rhineland, indicating the zone is no longer demilitarized, though troops are not explicitly mentioned.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-056",
+   "document": "frus:frus1937v01/d101",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d101:belief_WEST=limited",
+    "variable": "belief_WEST",
+    "level": "limited",
+    "date": "1937-11-24",
+    "quote": "I am satisfied, however, that the visit has been valuable in furthering the desire, which I feel to be generally felt in both countries, for the establishment of closer mutual understanding",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d101",
+    "rule": "deepseek backend: The Prime Minister's Commons statement treats the Halifax visit as furthering a negotiated closer understanding, meeting the limited threshold for ministerial statements premised on a general settlement.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-057",
+   "document": "frus:frus1937v01/d101",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d101:commit_WEST=appease",
+    "variable": "commit_WEST",
+    "level": "appease",
+    "date": "1937-11-24",
+    "quote": "the bases of the policy Great Britain is to pursue in the endeavor to reach an agreement with Germany",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d101",
+    "rule": "deepseek backend: The passage reports Cabinet policy as seeking an agreement with Germany, matching appease's settlement-seeking policy with no public military commitment reported.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-058",
+   "document": "frus:frus1937v01/d101",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d101:axis=true",
+    "variable": "axis",
+    "level": true,
+    "date": "1937-11-24",
+    "quote": "While the Berlin–Rome Axis has been somewhat strengthened in recent months",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d101",
+    "rule": "deepseek backend: The passage explicitly identifies the Berlin–Rome Axis as existing and strengthened, meeting the Rome-Berlin alignment threshold.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-059",
+   "document": "frus:frus1937v01/d101",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d101:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1937-11-24",
+    "quote": "the tactics of Italy in the Mediterranean created a situation of danger which at one moment was acute",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d101",
+    "rule": "deepseek backend: The passage reports Italian Mediterranean tactics creating danger and places Italy within the Berlin–Rome Axis, meeting the estrangement-from-the-West threshold.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-060",
+   "document": "frus:frus1937v01/d634",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d634:axis=true",
+    "variable": "axis",
+    "level": true,
+    "date": "1937-11-25",
+    "quote": "no diplomatic document has for some time been dealt with by either Italy or Germany without consultation with the other, and the collaboration between the two has been of the closest",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d634",
+    "rule": "deepseek backend: The passage reports as a state of affairs that Italy and Germany consult on every diplomatic document and collaborate closely (with Italian naval facilities afforded to the German fleet), which meets the Rome-Berlin alignment threshold.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-061",
+   "document": "frus:frus1937v01/d615",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d615:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1937-11-26",
+    "quote": "the Secretary of State is obliged to refuse permission for the export to such countries of armored vehicles of any sort",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d615",
+    "rule": "deepseek backend: The threshold rule for isolationist is the Neutrality Act regime with a mandatory arms embargo; the passage reports the mandatory embargo under the President's Proclamation of May 1, 1937, being applied to refuse an export licence, so the regime is in force.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-062",
+   "document": "frus:frus1937v01/d110",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d110:belief_WEST=limited",
+    "variable": "belief_WEST",
+    "level": "limited",
+    "date": "1937-11-29",
+    "quote": "If there were to be any solution, it could only be as part of a general settlement, based on contributions from everyone concerned in the interest of European appeasement.",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d110",
+    "rule": "deepseek backend: Halifax, a Cabinet minister, states that any colonial solution must come through a general settlement for European appeasement, which meets the limited threshold of treating German aims as revision satisfiable by negotiated general settlement.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-063",
+   "document": "frus:frus1937v01/d110",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d110:commit_WEST=appease",
+    "variable": "commit_WEST",
+    "level": "appease",
+    "date": "1937-11-29",
+    "quote": "If there were to be any solution, it could only be as part of a general settlement, based on contributions from everyone concerned in the interest of European appeasement.",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d110",
+    "rule": "deepseek backend: Halifax states British policy seeks a general settlement and European appeasement rather than standing rigidly on the status quo, meeting the appease threshold of a policy seeking settlement.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-064",
+   "document": "frus:frus1937v01/d103",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d103:belief_WEST=limited",
+    "variable": "belief_WEST",
+    "level": "limited",
+    "date": "1937-12-01",
+    "quote": "the British and French Governments should say to the Germans that they were ready to examine the question of colonies but that it was an extremely complicated question which would require prolonged study and that it could be settled only within the framework of a general agreement which might make it possible to preserve peace in Europe.",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d103",
+    "rule": "deepseek backend: The passage reports London and Paris agreeing to examine German colonial claims within a general settlement to preserve peace, treating German aims as revision satisfiable by negotiation.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-065",
+   "document": "frus:frus1937v01/d103",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d103:commit_WEST=appease",
+    "variable": "commit_WEST",
+    "level": "appease",
+    "date": "1937-12-01",
+    "quote": "we agreed to remain for the moment completely in our present positions, making no concessions whatsoever but informing the Germans we were ready to discuss constructive proposals for the maintenance of peace.",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d103",
+    "rule": "deepseek backend: The passage reports the agreed Western position of making no new concessions while offering constructive proposals for peace, with no new standing commitment to fight for Austria, meeting appease.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-066",
+   "document": "frus:frus1937v01/d103",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d103:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1937-12-01",
+    "quote": "there could be no question of having any conversations until Mussolini should stop his present daily press attacks and radio attacks against France and England.",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d103",
+    "rule": "deepseek backend: The passage reports Britain and France refusing conversations with Italy until Mussolini stops attacks on them, showing Italy estranged from the West.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-067",
+   "document": "frus:frus1937v02/d355",
+   "proposal": {
+    "indicator_id": "frus:frus1937v02/d355:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1937-12-02",
+    "quote": "The Department has now formulated treaty provisions to conform with new legislation respecting neutrality. ... the provisions of the Neutrality Act of May 1, 1937 would not be adequately safeguarded without it.",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v02/d355",
+    "rule": "deepseek backend: The passage reports the Neutrality Act of May 1, 1937 as legislation in force, which the threshold rule treats as the isolationist regime with a mandatory arms embargo.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-068",
+   "document": "frus:frus1937v01/d104",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d104:belief_WEST=limited",
+    "variable": "belief_WEST",
+    "level": "limited",
+    "date": "1937-12-03",
+    "quote": "the British Government was not disposed to exclude consideration of this subject in favor of Germany but that if it were ever to be considered it must be as a part of a general settlement of European difficulties to which Germany must make an effective contribution.",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d104",
+    "rule": "deepseek backend: Eden's statement of the Cabinet position after Halifax's visit treats German aims (colonies) as revision that a negotiated general settlement can satisfy, which is the limited level and the very premise named in the rule.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-069",
+   "document": "frus:frus1937v01/d104",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d104:commit_WEST=appease",
+    "variable": "commit_WEST",
+    "level": "appease",
+    "date": "1937-12-03",
+    "quote": "the British and French reached an agreement that consideration should be seriously given to a colonial settlement in favor of Germany ... their only course stood on the condition that it should be a part of a general settlement of European difficulties",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d104",
+    "rule": "deepseek backend: The reported Anglo-French policy of preparing colonial concessions to Germany as part of a general settlement, with no commitment to fight for a third state, meets the appease level.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-070",
+   "document": "frus:frus1937v01/d104",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d104:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1937-12-03",
+    "quote": "the widespread Italian anti-British propaganda throughout the Near East",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d104",
+    "rule": "deepseek backend: The document reports ongoing Italian anti-British propaganda as an obstacle that must be settled before any friendly conversations with Italy can begin, showing Italy estranged from the West.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-071",
+   "document": "frus:frus1937v01/d105",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d105:belief_WEST=limited",
+    "variable": "belief_WEST",
+    "level": "limited",
+    "date": "1937-12-04",
+    "quote": "when the Germans should become convinced that they could not obtain by force what they want they might be ready to agree to have peace on the basis of such real concessions as the French and British might be ready to make to them.",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d105",
+    "rule": "deepseek backend: Chautemps's statement treats German aims as revision that a negotiated general settlement of real concessions could satisfy, which is the limited level.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-072",
+   "document": "frus:frus1937v01/d105",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d105:commit_WEST=appease",
+    "variable": "commit_WEST",
+    "level": "appease",
+    "date": "1937-12-04",
+    "quote": "To make no concessions except in the framework of a general settlement.",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d105",
+    "rule": "deepseek backend: The French Premier states a policy of seeking a general settlement with Germany and making no concessions outside it, matching appease's settlement-seeking posture.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-073",
+   "document": "frus:frus1937v01/d105",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d105:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1937-12-04",
+    "quote": "he could see no basis at the moment for any rapprochement with Italy.",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d105",
+    "rule": "deepseek backend: The French Premier states there is no basis for rapprochement with Italy, showing Italy is estranged from the West.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-074",
+   "document": "frus:frus1937v01/d106",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d106:belief_WEST=limited",
+    "variable": "belief_WEST",
+    "level": "limited",
+    "date": "1937-12-08",
+    "quote": "Delbos moreover remarked to Soviet Chargé d’Affaires that he dreaded his forthcoming mission to Praha for in representing both France and Great Britain he had to ask Czechoslovak Government to consider granting Sudeten Deutsch autonomous administration providing Germany eventually guaranteed among other things Czech territorial integrity.",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d106",
+    "rule": "deepseek backend: Delbos, as French Foreign Minister speaking for France and Britain, treats German revision over the Sudeten Germans as satisfiable by a negotiated settlement conditioned on a German guarantee of Czech territorial integrity, which meets the limited threshold.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-075",
+   "document": "frus:frus1937v01/d106",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d106:commit_WEST=appease",
+    "variable": "commit_WEST",
+    "level": "appease",
+    "date": "1937-12-08",
+    "quote": "Delbos moreover remarked to Soviet Chargé d’Affaires that he dreaded his forthcoming mission to Praha for in representing both France and Great Britain he had to ask Czechoslovak Government to consider granting Sudeten Deutsch autonomous administration providing Germany eventually guaranteed among other things Czech territorial integrity.",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d106",
+    "rule": "deepseek backend: The passage reports that France and Britain would ask Czechoslovakia to grant Sudeten German autonomy conditional on a German guarantee, a policy of negotiated settlement rather than a standing military commitment, meeting the appease threshold.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-076",
+   "document": "frus:frus1937v01/d107",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d107:belief_WEST=limited",
+    "variable": "belief_WEST",
+    "level": "limited",
+    "date": "1937-12-08",
+    "quote": "the ultimate hope we have in view is what he has described as a general settlement",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d107",
+    "rule": "deepseek backend: The Prime Minister's statement in the Commons treats German aims as revision that a negotiated general settlement can satisfy, meeting the 'limited' threshold.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-077",
+   "document": "frus:frus1937v01/d107",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d107:commit_WEST=appease",
+    "variable": "commit_WEST",
+    "level": "appease",
+    "date": "1937-12-08",
+    "quote": "they reaffirmed the desire of their Governments to co-operate with all countries in the common task of promoting international appeasement by the methods of free and peaceful negotiation",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d107",
+    "rule": "deepseek backend: The joint communiqué states that British and French policy seeks a settlement by negotiation with no commitment to fight, meeting the 'appease' threshold.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-078",
+   "document": "frus:frus1937v01/d107",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d107:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-03-01",
+    "quote": "Re-occupation by Germany of Rhineland in violation of Treaty of Locarno (Repudiation of Articles 42 and 43 of Versailles Treaty) March, 1936",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d107",
+    "rule": "deepseek backend: The chronology reports German re-occupation of the Rhineland in March 1936, i.e. German troops in the zone, meeting the 'remilitarized' threshold.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-079",
+   "document": "frus:frus1937v01/d107",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d107:treaty=dead",
+    "variable": "treaty",
+    "level": "dead",
+    "date": "1936-03-01",
+    "quote": "Re-occupation by Germany of Rhineland in violation of Treaty of Locarno (Repudiation of Articles 42 and 43 of Versailles Treaty) March, 1936 ... Abortive negotiations for new Locarno Pact terminating in unanswered British questionnaire May, 1936",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d107",
+    "rule": "deepseek backend: The zone is reported reoccupied in violation of Locarno and the subsequent Locarno negotiations are reported abortive with no enforcement, meeting the 'dead' threshold.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-080",
+   "document": "frus:frus1937v01/d107",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d107:axis=true",
+    "variable": "axis",
+    "level": true,
+    "date": "1936-10-01",
+    "quote": "Rome–Berlin Axis called into being October, 1936",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d107",
+    "rule": "deepseek backend: The chronology reports the Rome-Berlin Axis as brought into being in October 1936, meeting the 'true' threshold.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-081",
+   "document": "frus:frus1937v01/d107",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d107:anticomintern=true",
+    "variable": "anticomintern",
+    "level": true,
+    "date": "1936-11-01",
+    "quote": "Anti-Comintern Pact between Germany and Japan November, 1936",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d107",
+    "rule": "deepseek backend: The chronology reports the German-Japanese Anti-Comintern Pact of November 1936, meeting the 'true' threshold.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-082",
+   "document": "frus:frus1937v01/d107",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d107:china_war=true",
+    "variable": "china_war",
+    "level": true,
+    "date": "1937-07-01",
+    "quote": "Outbreak of Sino-Japanese conflict July, 1937",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d107",
+    "rule": "deepseek backend: The chronology reports the outbreak of the Sino-Japanese conflict in July 1937, meeting the 'true' threshold for a general war in China.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-083",
+   "document": "frus:frus1937v01/d107",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d107:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1935-10-01",
+    "quote": "Sanctions against Italy invoked October, 1935",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d107",
+    "rule": "deepseek backend: The chronology reports League sanctions invoked against Italy over Ethiopia, the precondition for Italy's estrangement from the West, meeting the 'true' threshold.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-084",
+   "document": "frus:frus1937v01/d385",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d385:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1937-12-08",
+    "quote": "the law in respect to Spain had gone through Congress with unusual rapidity ... the prevention of the shipment of arms in case of hostilities",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d385",
+    "rule": "deepseek backend: The passage reports a congressional arms-embargo law applied to Spain to prevent arms shipments in hostilities, fitting the Neutrality Act mandatory-embargo regime that defines isolationist.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-085",
+   "document": "frus:frus1933-39/d427",
+   "proposal": {
+    "indicator_id": "frus:frus1933-39/d427:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1937-12-18",
+    "quote": "I told him that I did not think that the vessel could be delivered, if at that time his country should be at war and the President had issued a proclamation under the Joint Resolution of May 1, 1937.",
+    "url": "https://history.state.gov/historicaldocuments/frus1933-39/d427",
+    "rule": "deepseek backend: The passage reports that under the Joint Resolution of May 1, 1937, a vessel of war could not be delivered to a country at war, matching the isolationist Neutrality Act regime with a mandatory arms embargo on belligerents.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-086",
+   "document": "frus:frus1937v01/d111",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d111:anticomintern=true",
+    "variable": "anticomintern",
+    "level": true,
+    "date": "1937-12-18",
+    "quote": "the adhesion of Japan to the three-power anti-Communist pact",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d111",
+    "rule": "deepseek backend: The Anti-Comintern Pact is reported in force with Japanese participation (the three-power pact), meeting the rule for the Germany-Japan pact flag.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-087",
+   "document": "frus:frus1937v01/d111",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d111:axis=true",
+    "variable": "axis",
+    "level": true,
+    "date": "1937-12-18",
+    "quote": "Italy in formally severing relations with the League did so in understanding with Germany ... the next step for the Berlin–Rome–Tokyo axis",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d111",
+    "rule": "deepseek backend: The document treats the Rome-Berlin alignment as an existing grouping acting in concert, meeting the rule for the Rome-Berlin alignment, though the report is second-hand observers' opinion.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-088",
+   "document": "frus:frus1937v01/d111",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d111:belief_WEST=limited",
+    "variable": "belief_WEST",
+    "level": "limited",
+    "date": "1937-12-18",
+    "quote": "the return of Germany to the League within the framework of a general European settlement has been the cardinal objective of British policy",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d111",
+    "rule": "deepseek backend: It reports British policy as seeking a negotiated general settlement with Germany, which meets the limited level, though it is a diplomat's characterization rather than a Cabinet record.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-089",
+   "document": "frus:frus1937v01/d111",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d111:commit_WEST=appease",
+    "variable": "commit_WEST",
+    "level": "appease",
+    "date": "1937-12-18",
+    "quote": "the return of Germany to the League within the framework of a general European settlement has been the cardinal objective of British policy",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d111",
+    "rule": "deepseek backend: The cardinal objective of British policy being a general settlement with Germany fits the appease level (policy seeks a settlement), read from a second-hand report.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-090",
+   "document": "frus:frus1937v01/d111",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d111:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1937-12-18",
+    "quote": "Italy in formally severing relations with the League did so in understanding with Germany",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d111",
+    "rule": "deepseek backend: Italy's formal severance from the League coupled with acting in understanding with Germany reports estrangement from the Western powers, though the reading comes from observers' inference.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-091",
+   "document": "frus:frus1937v01/d391",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d391:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1937-12-21",
+    "quote": "this Government has in the past two years, under specific provisions of law enacted by the Congress, pursued a policy of refusing to permit the export of arms, ammunition, and implements of war to warring nations.",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d391",
+    "rule": "deepseek backend: The passage states that the statutory Neutrality Act regime imposed a mandatory arms embargo on warring nations, which meets the isolationist threshold.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-092",
+   "document": "frus:frus1937v01/d113",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d113:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1937-12-23",
+    "quote": "My British colleague is pessimistic about present prospects of improving relations between Italy and Great Britain.",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d113",
+    "rule": "deepseek backend: The report states that British-Italian relations are poor and unlikely to improve, with Italy pressing Britain over recognition of the Ethiopian Empire and an end to hostile propaganda, meeting the threshold for Italy estranged from the West after Ethiopia.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-093",
+   "document": "frus:frus1937v01/d114",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d114:commit_WEST=appease",
+    "variable": "commit_WEST",
+    "level": "appease",
+    "date": "1937-12-23",
+    "quote": "France would be glad to enter into conversations immediately for the “humanization of warfare,” ... He had no constructive plans for the future but felt compelled to follow a policy of wait and see.",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d114",
+    "rule": "deepseek backend: Meets the appease rule: the French foreign minister reports seeking talks with Berlin while stating no plans and a wait-and-see policy, i.e. no standing commitment to fight for a third state and a policy of settlement rather than action, with Britain unable to act either.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-094",
+   "document": "frus:frus1937v01/d114",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d114:belief_WEST=limited",
+    "variable": "belief_WEST",
+    "level": "limited",
+    "date": "1937-12-23",
+    "quote": "France would be glad to enter into conversations immediately for the “humanization of warfare,”",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d114",
+    "rule": "deepseek backend: Meets the limited rule: the responsible French minister treats German aims as matters to be handled through immediate negotiation with Berlin rather than as a threat requiring force.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-095",
+   "document": "frus:frus1937v01/d114",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d114:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1937-12-23",
+    "quote": "an Italian reinforcement of Franco on a great scale",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d114",
+    "rule": "deepseek backend: Meets the estrangement rule: the French foreign minister reports Italian large-scale support for Franco in Spain, i.e. Italy acting against the Western position, consistent with estrangement after Ethiopia.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-096",
+   "document": "frus:frus1937v01/d115",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d115:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1937-12-17",
+    "quote": "In order to forestall Great Britain, Mussolini has quit the League.",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d115",
+    "rule": "deepseek backend: The passage states that Mussolini quit the League to forestall Great Britain, an explicit adversarial move away from the Western powers meeting the estrangement threshold.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-097",
+   "document": "frus:frus1937v01/d116",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d116:belief_WEST=limited",
+    "variable": "belief_WEST",
+    "level": "limited",
+    "date": "1937-12-17",
+    "quote": "Lord Halifax’s visit to Berlin—they had apparently assumed the form of a search for a compromise between the Führer’s doctrine of force and the doctrine of unalterable Treaties",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d116",
+    "rule": "deepseek backend: The passage describes the Halifax visit to Berlin as a search for compromise with Germany, matching the threshold’s example of Halifax’s visit as evidence of a limited view of German aims.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-098",
+   "document": "frus:frus1937v01/d116",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d116:commit_WEST=appease",
+    "variable": "commit_WEST",
+    "level": "appease",
+    "date": "1937-12-30",
+    "quote": "The joint effort of Britain and France to bring about a general appeasement and pacification settlement",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d116",
+    "rule": "deepseek backend: The passage reports London and Paris pursuing a general appeasement and pacification settlement, which meets the appease threshold’s requirement that policy seek a settlement.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-099",
+   "document": "frus:frus1937v01/d116",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d116:axis=true",
+    "variable": "axis",
+    "level": true,
+    "date": "1937-12-17",
+    "quote": "Paris believed it possible to wean Rome from the Rome-Berlin-Tokyo axis",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d116",
+    "rule": "deepseek backend: The passage names the Rome-Berlin-Tokyo axis as an existing alignment from which Paris hopes to detach Rome, meeting the Rome-Berlin alignment threshold.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1937Q4-100",
+   "document": "frus:frus1937v01/d116",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d116:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1937-12-17",
+    "quote": "Paris believed it possible to wean Rome from the Rome-Berlin-Tokyo axis",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d116",
+    "rule": "deepseek backend: The passage places Rome within the Rome-Berlin-Tokyo axis rather than with the Western powers, meeting the estranged-from-the-West condition.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  }
+ ],
+ "discarded": [
+  {
+   "document": "frus:frus1937v01/d115",
+   "proposal": {
+    "indicator_id": "frus:frus1937v01/d115:axis=true",
+    "variable": "axis",
+    "level": true,
+    "date": "1937-12-17",
+    "quote": "the Rome-Berlin Axis ... Italo-German cooperation has been formulated",
+    "url": "https://history.state.gov/historicaldocuments/frus1937v01/d115",
+    "rule": "deepseek backend: The passage names the Rome-Berlin Axis and reports that Italo-German cooperation has been formulated, an explicit statement of the alignment in force under the October Protocols/Milan threshold.",
+    "confidence": "medium"
+   },
+   "reasons": [
+    "the quote is not in the document"
+   ]
+  }
+ ],
+ "errors": []
+}

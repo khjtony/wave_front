@@ -1,0 +1,4868 @@
+{
+ "kind": "wave_front proposals",
+ "format": 1,
+ "label": "1938Q2",
+ "until": "1938-06-30",
+ "since": null,
+ "corpus": {
+  "source": "frus",
+  "synthetic": false,
+  "root": "data/ww2/corpora/raw/frus"
+ },
+ "backend": {
+  "name": "deepseek",
+  "model": "deepseek-flash",
+  "usage": {
+   "prompt_tokens": 2209628,
+   "completion_tokens": 311761,
+   "prompt_cache_hit_tokens": 1820672,
+   "prompt_cache_miss_tokens": 388956,
+   "reasoning_tokens": 297153
+  },
+  "cache": {
+   "hits": 0,
+   "misses": 505
+  }
+ },
+ "harness_rules": [
+  "two-document",
+  "no-retrospective"
+ ],
+ "documents": [
+  {
+   "id": "frus:frus1933-39/d460",
+   "date": "1938-04-01",
+   "source": "FRUS frus1933-39",
+   "title": "The Ambassador in the Soviet Union (Davies) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d460"
+  },
+  {
+   "id": "frus:frus1938v01/d122",
+   "date": "1938-04-01",
+   "source": "FRUS frus1938v01",
+   "title": "The Consul at Seville (Bay) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d122"
+  },
+  {
+   "id": "frus:frus1938v01/d256",
+   "date": "1938-04-01",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Counselor of Embassy in Spain (Thurston)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d256"
+  },
+  {
+   "id": "frus:frus1938v01/d257",
+   "date": "1938-04-01",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Vice Consul at Barcelona (Flood)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d257"
+  },
+  {
+   "id": "frus:frus1938v01/d880",
+   "date": "1938-04-01",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d880"
+  },
+  {
+   "id": "frus:frus1938v02/d163",
+   "date": "1938-04-01",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Ambassador in Belgium (Gibson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d163"
+  },
+  {
+   "id": "frus:frus1938v02/d418",
+   "date": "1938-04-01",
+   "source": "FRUS frus1938v02",
+   "title": "The Minister in Greece (MacVeagh) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d418"
+  },
+  {
+   "id": "frus:frus1938v01/d123",
+   "date": "1938-04-02",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Consul at Seville (Bay)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d123"
+  },
+  {
+   "id": "frus:frus1938v01/d18",
+   "date": "1938-04-02",
+   "source": "FRUS frus1938v01",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d18"
+  },
+  {
+   "id": "frus:frus1938v01/d258",
+   "date": "1938-04-02",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d258"
+  },
+  {
+   "id": "frus:frus1938v01/d881",
+   "date": "1938-04-02",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Ambassador in the United Kingdom (Kennedy)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d881"
+  },
+  {
+   "id": "frus:frus1938v01/d124",
+   "date": "1938-04-03",
+   "source": "FRUS frus1938v01",
+   "title": "The Counselor of Embassy in Spain (Thurston) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d124"
+  },
+  {
+   "id": "frus:frus1938v01/d125",
+   "date": "1938-04-05",
+   "source": "FRUS frus1938v01",
+   "title": "The Counselor of Embassy in Spain (Thurston) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d125"
+  },
+  {
+   "id": "frus:frus1938v01/d484",
+   "date": "1938-04-05",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Ambassador in Germany (Wilson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d484"
+  },
+  {
+   "id": "frus:frus1938v01/d908",
+   "date": "1938-04-05",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d908"
+  },
+  {
+   "id": "frus:frus1938v02/d282",
+   "date": "1938-04-05",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Germany (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d282"
+  },
+  {
+   "id": "frus:frus1938v02/d382",
+   "date": "1938-04-05",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Ambassador in Germany (Wilson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d382"
+  },
+  {
+   "id": "frus:frus1938v02/d654",
+   "date": "1938-04-05",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in Liberia (Wharton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d654"
+  },
+  {
+   "id": "frus:frus1938v01/d126",
+   "date": "1938-04-06",
+   "source": "FRUS frus1938v01",
+   "title": "The Counselor of Embassy in Spain (Thurston) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d126"
+  },
+  {
+   "id": "frus:frus1938v01/d127",
+   "date": "1938-04-06",
+   "source": "FRUS frus1938v01",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d127"
+  },
+  {
+   "id": "frus:frus1938v01/d259",
+   "date": "1938-04-06",
+   "source": "FRUS frus1938v01",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d259"
+  },
+  {
+   "id": "frus:frus1938v01/d948",
+   "date": "1938-04-06",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in Peru (Steinhardt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d948"
+  },
+  {
+   "id": "frus:frus1938v02/d182",
+   "date": "1938-04-06",
+   "source": "FRUS frus1938v02",
+   "title": "The Minister in Czechoslovakia (Carr) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d182"
+  },
+  {
+   "id": "frus:frus1938v02/d419",
+   "date": "1938-04-06",
+   "source": "FRUS frus1938v02",
+   "title": "The Minister in Greece (MacVeagh) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d419"
+  },
+  {
+   "id": "frus:frus1938v02/d508",
+   "date": "1938-04-06",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Ambassador in Poland (Biddle)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d508"
+  },
+  {
+   "id": "frus:frus1938v02/d518",
+   "date": "1938-04-06",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Poland (Biddle) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d518"
+  },
+  {
+   "id": "frus:frus1938v02/d633",
+   "date": "1938-04-06",
+   "source": "FRUS frus1938v02",
+   "title": "The Minister Resident in Iraq (Knabenshue) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d633"
+  },
+  {
+   "id": "frus:frus1938v02/d74",
+   "date": "1938-04-06",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum of Conversation, by the Chief of the Division of European Affairs (Moffat)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d74"
+  },
+  {
+   "id": "frus:frus1938v02/d75",
+   "date": "1938-04-06",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d75"
+  },
+  {
+   "id": "frus:frus1938v02/d865",
+   "date": "1938-04-06",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Chargé in Turkey (Kelley)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d865"
+  },
+  {
+   "id": "frus:frus1938v01/d128",
+   "date": "1938-04-07",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Counselor of Embassy in Spain (Thurston)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d128"
+  },
+  {
+   "id": "frus:frus1938v01/d129",
+   "date": "1938-04-07",
+   "source": "FRUS frus1938v01",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d129"
+  },
+  {
+   "id": "frus:frus1938v02/d76",
+   "date": "1938-04-07",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Ambassador in the United Kingdom (Kennedy)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d76"
+  },
+  {
+   "id": "frus:frus1933-39/d526",
+   "date": "1938-04-08",
+   "source": "FRUS frus1933-39",
+   "title": "Memoranda by the Chief of the Office of Arms and Munitions Control (Green)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d526"
+  },
+  {
+   "id": "frus:frus1938v02/d829",
+   "date": "1938-04-08",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d829"
+  },
+  {
+   "id": "frus:frus1938v01/d130",
+   "date": "1938-04-09",
+   "source": "FRUS frus1938v01",
+   "title": "The Counselor of Embassy in Spain (Thurston) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d130"
+  },
+  {
+   "id": "frus:frus1938v01/d19",
+   "date": "1938-04-09",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in Belgium (Gibson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d19"
+  },
+  {
+   "id": "frus:frus1938v01/d260",
+   "date": "1938-04-09",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Chargé in France (Wilson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d260"
+  },
+  {
+   "id": "frus:frus1938v02/d21",
+   "date": "1938-04-09",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Ambassador in the United Kingdom (Kennedy)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d21"
+  },
+  {
+   "id": "frus:frus1938v01/d20",
+   "date": "1938-04-11",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d20"
+  },
+  {
+   "id": "frus:frus1938v01/d486",
+   "date": "1938-04-11",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in Germany (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d486"
+  },
+  {
+   "id": "frus:frus1938v01/d949",
+   "date": "1938-04-11",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in Argentina (Weddell) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d949"
+  },
+  {
+   "id": "frus:frus1938v02/d183",
+   "date": "1938-04-11",
+   "source": "FRUS frus1938v02",
+   "title": "The Minister in Czechoslovakia (Carr) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d183"
+  },
+  {
+   "id": "frus:frus1938v02/d22",
+   "date": "1938-04-11",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d22"
+  },
+  {
+   "id": "frus:frus1938v02/d509",
+   "date": "1938-04-11",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Poland (Biddle) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d509"
+  },
+  {
+   "id": "frus:frus1938v02/d77",
+   "date": "1938-04-11",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum of Conversation, by the Chief of the Division of European Affairs (Moffat)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d77"
+  },
+  {
+   "id": "frus:frus1938v02/d78",
+   "date": "1938-04-11",
+   "source": "FRUS frus1938v02",
+   "title": "The British Embassy to the Department of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d78"
+  },
+  {
+   "id": "frus:frus1933-39/d527",
+   "date": "1938-04-12",
+   "source": "FRUS frus1933-39",
+   "title": "Memorandum by the Chief of the Office of Arms and Munitions Control (Green)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d527"
+  },
+  {
+   "id": "frus:frus1938v01/d882",
+   "date": "1938-04-12",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d882"
+  },
+  {
+   "id": "frus:frus1938v02/d283",
+   "date": "1938-04-12",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Germany (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d283"
+  },
+  {
+   "id": "frus:frus1938v02/d510",
+   "date": "1938-04-12",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Ambassador in Poland (Biddle)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d510"
+  },
+  {
+   "id": "frus:frus1938v02/d655",
+   "date": "1938-04-12",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Chargé in Liberia (Wharton)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d655"
+  },
+  {
+   "id": "frus:frus1938v02/d79",
+   "date": "1938-04-12",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum by President Roosevelt to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d79"
+  },
+  {
+   "id": "frus:frus1938v01/d131",
+   "date": "1938-04-13",
+   "source": "FRUS frus1938v01",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d131"
+  },
+  {
+   "id": "frus:frus1938v01/d495",
+   "date": "1938-04-13",
+   "source": "FRUS frus1938v01",
+   "title": "The British Ambassador (Lindsay) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d495"
+  },
+  {
+   "id": "frus:frus1938v01/d716",
+   "date": "1938-04-13",
+   "source": "FRUS frus1938v01",
+   "title": "The Minister in Rumania (Gunther) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d716"
+  },
+  {
+   "id": "frus:frus1938v02/d195",
+   "date": "1938-04-13",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in Estonia (Leonard) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d195"
+  },
+  {
+   "id": "frus:frus1938v02/d244",
+   "date": "1938-04-13",
+   "source": "FRUS frus1938v02",
+   "title": "The Chief of the Office of Arms and Munitions Control (Green) to Baron Amaury de La Grange",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d244"
+  },
+  {
+   "id": "frus:frus1938v02/d365",
+   "date": "1938-04-13",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Germany (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d365"
+  },
+  {
+   "id": "frus:frus1938v02/d420",
+   "date": "1938-04-13",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Minister in Greece (MacVeagh)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d420"
+  },
+  {
+   "id": "frus:frus1938v02/d511",
+   "date": "1938-04-13",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Poland (Biddle) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d511"
+  },
+  {
+   "id": "frus:frus1938v02/d656",
+   "date": "1938-04-13",
+   "source": "FRUS frus1938v02",
+   "title": "The Minister in the Netherlands (Gordon) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d656"
+  },
+  {
+   "id": "frus:frus1938v02/d80",
+   "date": "1938-04-13",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum by the Chief of the Division of European Affairs (Moffat) to the Counselor of the Department of State (Moore)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d80"
+  },
+  {
+   "id": "frus:frus1938v02/d895",
+   "date": "1938-04-13",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in Turkey (Kelley) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d895"
+  },
+  {
+   "id": "frus:frus1938v02/d401",
+   "date": "1938-04-14",
+   "source": "FRUS frus1938v02",
+   "title": "The German Embassy to the Department of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d401"
+  },
+  {
+   "id": "frus:frus1938v02/d81",
+   "date": "1938-04-14",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d81"
+  },
+  {
+   "id": "frus:frus1938v01/d132",
+   "date": "1938-04-15",
+   "source": "FRUS frus1938v01",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d132"
+  },
+  {
+   "id": "frus:frus1938v01/d133",
+   "date": "1938-04-15",
+   "source": "FRUS frus1938v01",
+   "title": "The Consul at Seville (Bay) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d133"
+  },
+  {
+   "id": "frus:frus1938v01/d89",
+   "date": "1938-04-15",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d89"
+  },
+  {
+   "id": "frus:frus1938v01/d950",
+   "date": "1938-04-15",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d950"
+  },
+  {
+   "id": "frus:frus1938v02/d184",
+   "date": "1938-04-15",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Minister in Czechoslovakia (Carr)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d184"
+  },
+  {
+   "id": "frus:frus1938v02/d82",
+   "date": "1938-04-15",
+   "source": "FRUS frus1938v02",
+   "title": "The British Embassy to the Department of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d82"
+  },
+  {
+   "id": "frus:frus1938v02/d855",
+   "date": "1938-04-15",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Ambassador in the United Kingdom (Kennedy)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d855"
+  },
+  {
+   "id": "frus:frus1933-39/d505",
+   "date": "1938-04-16",
+   "source": "FRUS frus1933-39",
+   "title": "Memorandum by the Chief of the Division of European Affairs (Moffat)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d505"
+  },
+  {
+   "id": "frus:frus1938v01/d261",
+   "date": "1938-04-16",
+   "source": "FRUS frus1938v01",
+   "title": "The Counselor of Embassy in Spain (Thurston) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d261"
+  },
+  {
+   "id": "frus:frus1938v01/d951",
+   "date": "1938-04-16",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in Mexico (Daniels) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d951"
+  },
+  {
+   "id": "frus:frus1938v01/d952",
+   "date": "1938-04-16",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in the Soviet Union (Davies) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d952"
+  },
+  {
+   "id": "frus:frus1938v02/d757",
+   "date": "1938-04-16",
+   "source": "FRUS frus1938v02",
+   "title": "The Consul General at Jerusalem (Wadsworth) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d757"
+  },
+  {
+   "id": "frus:frus1938v01/d90",
+   "date": "1938-04-18",
+   "source": "FRUS frus1938v01",
+   "title": "Memorandum of Conversation, by the Under Secretary of State (Welles)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d90"
+  },
+  {
+   "id": "frus:frus1938v01/d91",
+   "date": "1938-04-18",
+   "source": "FRUS frus1938v01",
+   "title": "President Roosevelt to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d91"
+  },
+  {
+   "id": "frus:frus1938v01/d92",
+   "date": "1938-04-18",
+   "source": "FRUS frus1938v01",
+   "title": "The Acting Secretary of State to President Roosevelt",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d92"
+  },
+  {
+   "id": "frus:frus1938v02/d83",
+   "date": "1938-04-18",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum of Conversation, by the Chief of the Division of European Affairs (Moffat)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d83"
+  },
+  {
+   "id": "frus:frus1938v01/d485",
+   "date": "1938-04-19",
+   "source": "FRUS frus1938v01",
+   "title": "Memorandum by the Vatican Secretary of State (Cardinal Pacelli) to the American Ambassador in the United Kingdom (Kennedy)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d485"
+  },
+  {
+   "id": "frus:frus1938v01/d93",
+   "date": "1938-04-19",
+   "source": "FRUS frus1938v01",
+   "title": "The Acting Secretary of State to the Ambassador in the United Kingdom (Kennedy)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d93"
+  },
+  {
+   "id": "frus:frus1938v02/d136",
+   "date": "1938-04-19",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum of Conversation, by Mr. Constant Southworth of the Division of Trade Agreements",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d136"
+  },
+  {
+   "id": "frus:frus1938v02/d156",
+   "date": "1938-04-19",
+   "source": "FRUS frus1938v02",
+   "title": "The Minister in Ireland (Cudahy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d156"
+  },
+  {
+   "id": "frus:frus1938v02/d585",
+   "date": "1938-04-19",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in Iran (Engert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d585"
+  },
+  {
+   "id": "frus:frus1938v01/d135",
+   "date": "1938-04-20",
+   "source": "FRUS frus1938v01",
+   "title": "The Spanish Ambassador (De los Rios) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d135"
+  },
+  {
+   "id": "frus:frus1938v01/d94",
+   "date": "1938-04-20",
+   "source": "FRUS frus1938v01",
+   "title": "Memorandum of Conversation, by the Under Secretary of State (Welles)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d94"
+  },
+  {
+   "id": "frus:frus1938v02/d121",
+   "date": "1938-04-20",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum of Conversation, by Mr. John R. Minter of the Division of European Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d121"
+  },
+  {
+   "id": "frus:frus1938v02/d366",
+   "date": "1938-04-20",
+   "source": "FRUS frus1938v02",
+   "title": "The Acting Secretary of State to the Ambassador in Germany (Wilson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d366"
+  },
+  {
+   "id": "frus:frus1938v01/d134",
+   "date": "1938-04-21",
+   "source": "FRUS frus1938v01",
+   "title": "Memorandum of Conversation, by the Chief of the Division of European Affairs (Moffat)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d134"
+  },
+  {
+   "id": "frus:frus1938v01/d717",
+   "date": "1938-04-21",
+   "source": "FRUS frus1938v01",
+   "title": "The Acting Secretary of State to the Minuter in Rumania (Gunther)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d717"
+  },
+  {
+   "id": "frus:frus1938v02/d367",
+   "date": "1938-04-21",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Germany (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d367"
+  },
+  {
+   "id": "frus:frus1938v02/d657",
+   "date": "1938-04-21",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in Liberia (Wharton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d657"
+  },
+  {
+   "id": "frus:frus1938v01/d496",
+   "date": "1938-04-22",
+   "source": "FRUS frus1938v01",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d496"
+  },
+  {
+   "id": "frus:frus1938v01/d883",
+   "date": "1938-04-22",
+   "source": "FRUS frus1938v01",
+   "title": "The British Embassy to the Department of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d883"
+  },
+  {
+   "id": "frus:frus1938v02/d146",
+   "date": "1938-04-22",
+   "source": "FRUS frus1938v02",
+   "title": "The Acting Secretary of State to the Minister in Ireland (Cudahy)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d146"
+  },
+  {
+   "id": "frus:frus1938v02/d586",
+   "date": "1938-04-22",
+   "source": "FRUS frus1938v02",
+   "title": "The Acting Secretary of State to the Chargé in Iran (Engert)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d586"
+  },
+  {
+   "id": "frus:frus1938v02/d658",
+   "date": "1938-04-22",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum by Mr. Henry S. Villard of the Division of Near Eastern Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d658"
+  },
+  {
+   "id": "frus:frus1938v02/d701",
+   "date": "1938-04-22",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum by Mr. H. S. Villard of the Division of Near Eastern Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d701"
+  },
+  {
+   "id": "frus:frus1938v02/d157",
+   "date": "1938-04-23",
+   "source": "FRUS frus1938v02",
+   "title": "The Minister in Ireland (Cudahy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d157"
+  },
+  {
+   "id": "frus:frus1938v02/d218",
+   "date": "1938-04-23",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d218"
+  },
+  {
+   "id": "frus:frus1938v02/d433",
+   "date": "1938-04-23",
+   "source": "FRUS frus1938v02",
+   "title": "The Acting Secretary of State to the Ambassador in Italy (Phillips)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d433"
+  },
+  {
+   "id": "frus:frus1938v01/d21",
+   "date": "1938-04-25",
+   "source": "FRUS frus1938v01",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d21"
+  },
+  {
+   "id": "frus:frus1938v01/d917",
+   "date": "1938-04-25",
+   "source": "FRUS frus1938v01",
+   "title": "The Norwegian Minister (Morgenstierne) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d917"
+  },
+  {
+   "id": "frus:frus1938v01/d918",
+   "date": "1938-04-25",
+   "source": "FRUS frus1938v01",
+   "title": "The Chargé in Norway (Patterson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d918"
+  },
+  {
+   "id": "frus:frus1938v02/d185",
+   "date": "1938-04-25",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum of Conversation, by Mr. Leander B. Lovell of the Division of Trade Agreements",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d185"
+  },
+  {
+   "id": "frus:frus1938v02/d196",
+   "date": "1938-04-25",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in Estonia (Leonard) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d196"
+  },
+  {
+   "id": "frus:frus1938v02/d23",
+   "date": "1938-04-25",
+   "source": "FRUS frus1938v02",
+   "title": "The Acting Secretary of State to the Ambassador in the United Kingdom (Kennedy)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d23"
+  },
+  {
+   "id": "frus:frus1938v02/d405",
+   "date": "1938-04-25",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in Austria (Wiley) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d405"
+  },
+  {
+   "id": "frus:frus1938v01/d22",
+   "date": "1938-04-26",
+   "source": "FRUS frus1938v01",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d22"
+  },
+  {
+   "id": "frus:frus1938v01/d23",
+   "date": "1938-04-26",
+   "source": "FRUS frus1938v01",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d23"
+  },
+  {
+   "id": "frus:frus1938v01/d909",
+   "date": "1938-04-26",
+   "source": "FRUS frus1938v01",
+   "title": "The British Secretary of State for Foreign Affairs (Halifax) to the American Chargé in the United Kingdom (Johnson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d909"
+  },
+  {
+   "id": "frus:frus1938v02/d24",
+   "date": "1938-04-26",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d24"
+  },
+  {
+   "id": "frus:frus1938v02/d25",
+   "date": "1938-04-26",
+   "source": "FRUS frus1938v02",
+   "title": "The Department of State to the British Trade Delegation",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d25"
+  },
+  {
+   "id": "frus:frus1938v02/d406",
+   "date": "1938-04-26",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in Austria (Wiley) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d406"
+  },
+  {
+   "id": "frus:frus1938v02/d634",
+   "date": "1938-04-26",
+   "source": "FRUS frus1938v02",
+   "title": "The Acting Secretary of State to the Minister Resident in Iraq (Knabenshue)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d634"
+  },
+  {
+   "id": "frus:frus1939v02/d424",
+   "date": "1938-04-26",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Minister in Finland (Schoenfeld)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d424"
+  },
+  {
+   "id": "frus:frus1933-39/d528",
+   "date": "1938-04-27",
+   "source": "FRUS frus1933-39",
+   "title": "The Acting Secretary of State to President Roosevelt",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d528"
+  },
+  {
+   "id": "frus:frus1933-39/d529",
+   "date": "1938-04-27",
+   "source": "FRUS frus1933-39",
+   "title": "The Secretary of State to E. W. Bliss Company, Brooklyn, New York",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d529"
+  },
+  {
+   "id": "frus:frus1938v02/d164",
+   "date": "1938-04-27",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Belgium (Gibson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d164"
+  },
+  {
+   "id": "frus:frus1938v02/d407",
+   "date": "1938-04-27",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Germany (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d407"
+  },
+  {
+   "id": "frus:frus1938v02/d408",
+   "date": "1938-04-27",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in Austria (Wiley) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d408"
+  },
+  {
+   "id": "frus:frus1938v02/d409",
+   "date": "1938-04-27",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Germany (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d409"
+  },
+  {
+   "id": "frus:frus1938v02/d410",
+   "date": "1938-04-27",
+   "source": "FRUS frus1938v02",
+   "title": "The Acting Secretary of State to the Ambassador in Germany (Wilson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d410"
+  },
+  {
+   "id": "frus:frus1938v02/d499",
+   "date": "1938-04-27",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum of Conversation, by Mr. Hugh S. Cumming, Jr., of the Division of European Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d499"
+  },
+  {
+   "id": "frus:frus1938v02/d500",
+   "date": "1938-04-27",
+   "source": "FRUS frus1938v02",
+   "title": "The Norwegian Legation to the Department of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d500"
+  },
+  {
+   "id": "frus:frus1938v02/d612",
+   "date": "1938-04-27",
+   "source": "FRUS frus1938v02",
+   "title": "The Acting Secretary of State to the Chargé in Iran (Engert)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d612"
+  },
+  {
+   "id": "frus:frus1933-39/d506",
+   "date": "1938-04-28",
+   "source": "FRUS frus1933-39",
+   "title": "The Embassy of the Soviet Union to the Department of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d506"
+  },
+  {
+   "id": "frus:frus1938v01/d487",
+   "date": "1938-04-28",
+   "source": "FRUS frus1938v01",
+   "title": "The Chargé in Austria (Wiley) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d487"
+  },
+  {
+   "id": "frus:frus1938v01/d497",
+   "date": "1938-04-28",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in Germany (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d497"
+  },
+  {
+   "id": "frus:frus1938v02/d165",
+   "date": "1938-04-28",
+   "source": "FRUS frus1938v02",
+   "title": "The Acting Secretary of State to the Ambassador in Belgium (Gibson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d165"
+  },
+  {
+   "id": "frus:frus1938v02/d346",
+   "date": "1938-04-28",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Ambassador in Germany (Wilson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d346"
+  },
+  {
+   "id": "frus:frus1938v02/d421",
+   "date": "1938-04-28",
+   "source": "FRUS frus1938v02",
+   "title": "The Minister in Greece (MacVeagh) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d421"
+  },
+  {
+   "id": "frus:frus1938v02/d659",
+   "date": "1938-04-28",
+   "source": "FRUS frus1938v02",
+   "title": "The Minister in the Netherlands (Gordon) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d659"
+  },
+  {
+   "id": "frus:frus1938v02/d84",
+   "date": "1938-04-28",
+   "source": "FRUS frus1938v02",
+   "title": "The Department of State to the British Embassy",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d84"
+  },
+  {
+   "id": "frus:frus1933-39/d507",
+   "date": "1938-04-29",
+   "source": "FRUS frus1933-39",
+   "title": "The Acting Secretary of State to the Ambassador in the Soviet Union (Davies)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d507"
+  },
+  {
+   "id": "frus:frus1938v02/d197",
+   "date": "1938-04-29",
+   "source": "FRUS frus1938v02",
+   "title": "The Acting Secretary of State to the Chargé in Estonia (Leonard)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d197"
+  },
+  {
+   "id": "frus:frus1938v02/d284",
+   "date": "1938-04-29",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in Austria (Wiley) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d284"
+  },
+  {
+   "id": "frus:frus1938v02/d368",
+   "date": "1938-04-29",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Germany (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d368"
+  },
+  {
+   "id": "frus:frus1938v02/d402",
+   "date": "1938-04-29",
+   "source": "FRUS frus1938v02",
+   "title": "The Department of State to the German Embassy",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d402"
+  },
+  {
+   "id": "frus:frus1938v02/d411",
+   "date": "1938-04-29",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Germany (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d411"
+  },
+  {
+   "id": "frus:frus1938v02/d412",
+   "date": "1938-04-29",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Germany (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d412"
+  },
+  {
+   "id": "frus:frus1938v02/d734",
+   "date": "1938-04-29",
+   "source": "FRUS frus1938v02",
+   "title": "The Acting Secretary of State to the Chargé in France (Wilson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d734"
+  },
+  {
+   "id": "frus:frus1938v02/d85",
+   "date": "1938-04-29",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum of Conversation, by the Chief of the Division of International Conferences (Southgate)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d85"
+  },
+  {
+   "id": "frus:frus1933-39/d508",
+   "date": "1938-04-30",
+   "source": "FRUS frus1933-39",
+   "title": "The Ambassador in the Soviet Union (Davies) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d508"
+  },
+  {
+   "id": "frus:frus1938v02/d285",
+   "date": "1938-04-30",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Germany (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d285"
+  },
+  {
+   "id": "frus:frus1938v02/d286",
+   "date": "1938-04-30",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Germany (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d286"
+  },
+  {
+   "id": "frus:frus1938v02/d357",
+   "date": "1938-04-30",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum by the Ambassador in Germany (Wilson) of a Conversation With the German Minister for Foreign Affairs (Ribbentrop)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d357"
+  },
+  {
+   "id": "frus:frus1938v02/d376",
+   "date": "1938-04-30",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Germany (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d376"
+  },
+  {
+   "id": "frus:frus1938v02/d660",
+   "date": "1938-04-30",
+   "source": "FRUS frus1938v02",
+   "title": "The Under Secretary of State (Welles) to President Roosevelt",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d660"
+  },
+  {
+   "id": "frus:frus1938v02/d219",
+   "date": "1938-05-02",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d219"
+  },
+  {
+   "id": "frus:frus1938v02/d735",
+   "date": "1938-05-02",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d735"
+  },
+  {
+   "id": "frus:frus1938v01/d24",
+   "date": "1938-05-03",
+   "source": "FRUS frus1938v01",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d24"
+  },
+  {
+   "id": "frus:frus1938v01/d884",
+   "date": "1938-05-03",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Ambassador in the United Kingdom (Kennedy)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d884"
+  },
+  {
+   "id": "frus:frus1938v01/d919",
+   "date": "1938-05-03",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the American Delegates to the Whaling Conferences at Oslo and London",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d919"
+  },
+  {
+   "id": "frus:frus1938v02/d258",
+   "date": "1938-05-03",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Chargé in France (Wilson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d258"
+  },
+  {
+   "id": "frus:frus1938v02/d26",
+   "date": "1938-05-03",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Ambassador in the United Kingdom (Kennedy)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d26"
+  },
+  {
+   "id": "frus:frus1938v02/d287",
+   "date": "1938-05-03",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Chargé in France (Wilson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d287"
+  },
+  {
+   "id": "frus:frus1938v02/d413",
+   "date": "1938-05-03",
+   "source": "FRUS frus1938v02",
+   "title": "The Consul General at Vienna (Wiley) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d413"
+  },
+  {
+   "id": "frus:frus1939v02/d311",
+   "date": "1938-05-03",
+   "source": "FRUS frus1939v02",
+   "title": "The British Ambassador (Lindsay) to the Chief of the Division of European Affairs (Moffat)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d311"
+  },
+  {
+   "id": "frus:frus1938v01/d885",
+   "date": "1938-05-04",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the British Ambassador (Lindsay)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d885"
+  },
+  {
+   "id": "frus:frus1938v02/d166",
+   "date": "1938-05-04",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Belgium (Gibson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d166"
+  },
+  {
+   "id": "frus:frus1938v02/d220",
+   "date": "1938-05-04",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum by the Adviser on International Economic Affairs (Feis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d220"
+  },
+  {
+   "id": "frus:frus1938v02/d221",
+   "date": "1938-05-04",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d221"
+  },
+  {
+   "id": "frus:frus1938v02/d288",
+   "date": "1938-05-04",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d288"
+  },
+  {
+   "id": "frus:frus1938v02/d414",
+   "date": "1938-05-04",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Ambassador in Germany (Wilson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d414"
+  },
+  {
+   "id": "frus:frus1938v02/d661",
+   "date": "1938-05-04",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Chargé in Liberia (Wharton)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d661"
+  },
+  {
+   "id": "frus:frus1938v01/d136",
+   "date": "1938-05-05",
+   "source": "FRUS frus1938v01",
+   "title": "The Spanish Chargé (De la Casa) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d136"
+  },
+  {
+   "id": "frus:frus1938v01/d137",
+   "date": "1938-05-05",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Ambassador in the United Kingdom (Kennedy)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d137"
+  },
+  {
+   "id": "frus:frus1938v01/d25",
+   "date": "1938-05-05",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d25"
+  },
+  {
+   "id": "frus:frus1938v01/d920",
+   "date": "1938-05-05",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Norwegian Minister (Morgenstierne)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d920"
+  },
+  {
+   "id": "frus:frus1938v02/d186",
+   "date": "1938-05-05",
+   "source": "FRUS frus1938v02",
+   "title": "The Minister in Czechoslovakia (Carr) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d186"
+  },
+  {
+   "id": "frus:frus1938v02/d222",
+   "date": "1938-05-05",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d222"
+  },
+  {
+   "id": "frus:frus1938v02/d223",
+   "date": "1938-05-05",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum by the Adviser on International Economic Affairs (Feis)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d223"
+  },
+  {
+   "id": "frus:frus1938v02/d27",
+   "date": "1938-05-05",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d27"
+  },
+  {
+   "id": "frus:frus1938v02/d270",
+   "date": "1938-05-05",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Secretary of the Treasury (Morgenthau)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d270"
+  },
+  {
+   "id": "frus:frus1938v02/d275",
+   "date": "1938-05-05",
+   "source": "FRUS frus1938v02",
+   "title": "The French Ambassador (Saint-Quentin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d275"
+  },
+  {
+   "id": "frus:frus1938v01/d138",
+   "date": "1938-05-06",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Ambassador in France (Bullitt)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d138"
+  },
+  {
+   "id": "frus:frus1938v01/d498",
+   "date": "1938-05-06",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in Germany (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d498"
+  },
+  {
+   "id": "frus:frus1938v01/d499",
+   "date": "1938-05-06",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in Germany (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d499"
+  },
+  {
+   "id": "frus:frus1938v02/d224",
+   "date": "1938-05-06",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d224"
+  },
+  {
+   "id": "frus:frus1938v02/d225",
+   "date": "1938-05-06",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of the Treasury (Morgenthau) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d225"
+  },
+  {
+   "id": "frus:frus1938v02/d28",
+   "date": "1938-05-06",
+   "source": "FRUS frus1938v02",
+   "title": "The British Trade Delegation to the Department of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d28"
+  },
+  {
+   "id": "frus:frus1938v02/d289",
+   "date": "1938-05-06",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d289"
+  },
+  {
+   "id": "frus:frus1938v02/d736",
+   "date": "1938-05-06",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum of Conversation, by Mr. J. Rives Childs of the Division of Near Eastern Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d736"
+  },
+  {
+   "id": "frus:frus1938v01/d139",
+   "date": "1938-05-07",
+   "source": "FRUS frus1938v01",
+   "title": "Memorandum of Conversation, by the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d139"
+  },
+  {
+   "id": "frus:frus1938v01/d140",
+   "date": "1938-05-07",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d140"
+  },
+  {
+   "id": "frus:frus1938v01/d718",
+   "date": "1938-05-07",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to Certain American Diplomatic Representatives",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d718"
+  },
+  {
+   "id": "frus:frus1938v01/d886",
+   "date": "1938-05-07",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d886"
+  },
+  {
+   "id": "frus:frus1938v02/d187",
+   "date": "1938-05-07",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Minister in Czechoslovakia (Carr)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d187"
+  },
+  {
+   "id": "frus:frus1938v02/d226",
+   "date": "1938-05-07",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Secretary of the Treasury (Morgenthau)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d226"
+  },
+  {
+   "id": "frus:frus1938v02/d290",
+   "date": "1938-05-07",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Ambassador in Germany (Wilson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d290"
+  },
+  {
+   "id": "frus:frus1938v02/d291",
+   "date": "1938-05-07",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Ambassador in Germany (Wilson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d291"
+  },
+  {
+   "id": "frus:frus1938v02/d383",
+   "date": "1938-05-07",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Ambassador in Germany (Wilson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d383"
+  },
+  {
+   "id": "frus:frus1938v02/d415",
+   "date": "1938-05-07",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Germany (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d415"
+  },
+  {
+   "id": "frus:frus1938v02/d613",
+   "date": "1938-05-07",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum by the Chief of the Division of Near Eastern Affairs (Murray)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d613"
+  },
+  {
+   "id": "frus:frus1938v01/d141",
+   "date": "1938-05-09",
+   "source": "FRUS frus1938v01",
+   "title": "Memorandum of Conversation, by the Under Secretary of State (Welles)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d141"
+  },
+  {
+   "id": "frus:frus1938v01/d142",
+   "date": "1938-05-09",
+   "source": "FRUS frus1938v01",
+   "title": "The French Embassy to the Department of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d142"
+  },
+  {
+   "id": "frus:frus1938v01/d143",
+   "date": "1938-05-09",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d143"
+  },
+  {
+   "id": "frus:frus1938v01/d144",
+   "date": "1938-05-09",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Consul at Seville (Bay)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d144"
+  },
+  {
+   "id": "frus:frus1938v01/d145",
+   "date": "1938-05-09",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d145"
+  },
+  {
+   "id": "frus:frus1938v01/d146",
+   "date": "1938-05-09",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d146"
+  },
+  {
+   "id": "frus:frus1938v01/d262",
+   "date": "1938-05-09",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Consul at Seville (Bay)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d262"
+  },
+  {
+   "id": "frus:frus1938v01/d500",
+   "date": "1938-05-09",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d500"
+  },
+  {
+   "id": "frus:frus1938v01/d887",
+   "date": "1938-05-10",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Ambassador in the United Kingdom (Kennedy)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d887"
+  },
+  {
+   "id": "frus:frus1938v02/d292",
+   "date": "1938-05-10",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Germany (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d292"
+  },
+  {
+   "id": "frus:frus1938v02/d384",
+   "date": "1938-05-10",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Germany (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d384"
+  },
+  {
+   "id": "frus:frus1938v02/d526",
+   "date": "1938-05-10",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum of Conversation, by Mr. Laurence J. de Rycke of the Division of Trade Agreements",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d526"
+  },
+  {
+   "id": "frus:frus1938v02/d866",
+   "date": "1938-05-10",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in Turkey (Kelley) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d866"
+  },
+  {
+   "id": "frus:frus1933-39/d477",
+   "date": "1938-05-11",
+   "source": "FRUS frus1933-39",
+   "title": "Memorandum by Mr. George F. Kennan of the Division of European Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d477"
+  },
+  {
+   "id": "frus:frus1933-39/d556",
+   "date": "1938-05-11",
+   "source": "FRUS frus1933-39",
+   "title": "The Ambassador in the Soviet Union (Davies) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d556"
+  },
+  {
+   "id": "frus:frus1938v01/d501",
+   "date": "1938-05-11",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d501"
+  },
+  {
+   "id": "frus:frus1938v01/d719",
+   "date": "1938-05-11",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d719"
+  },
+  {
+   "id": "frus:frus1938v01/d859",
+   "date": "1938-05-11",
+   "source": "FRUS frus1938v01",
+   "title": "The Minister in Switzerland (Harrison) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d859"
+  },
+  {
+   "id": "frus:frus1938v02/d567",
+   "date": "1938-05-11",
+   "source": "FRUS frus1938v02",
+   "title": "The Consul at Nairobi (Smith) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d567"
+  },
+  {
+   "id": "frus:frus1933-39/d509",
+   "date": "1938-05-12",
+   "source": "FRUS frus1933-39",
+   "title": "The Ambassador in the Soviet Union (Davies) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d509"
+  },
+  {
+   "id": "frus:frus1938v01/d147",
+   "date": "1938-05-12",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to Senator Key Pittman",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d147"
+  },
+  {
+   "id": "frus:frus1938v01/d720",
+   "date": "1938-05-12",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Ambassador in Italy (Phillips)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d720"
+  },
+  {
+   "id": "frus:frus1938v02/d369",
+   "date": "1938-05-12",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Ambassador in Germany (Wilson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d369"
+  },
+  {
+   "id": "frus:frus1938v02/d758",
+   "date": "1938-05-12",
+   "source": "FRUS frus1938v02",
+   "title": "The Consul General at Jerusalem (Wadsworth) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d758"
+  },
+  {
+   "id": "frus:frus1939v02/d312",
+   "date": "1938-05-12",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the British Ambassador (Lindsay)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d312"
+  },
+  {
+   "id": "frus:frus1938v01/d26",
+   "date": "1938-05-13",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d26"
+  },
+  {
+   "id": "frus:frus1938v01/d263",
+   "date": "1938-05-13",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d263"
+  },
+  {
+   "id": "frus:frus1938v01/d502",
+   "date": "1938-05-13",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in Poland (Biddle) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d502"
+  },
+  {
+   "id": "frus:frus1938v01/d888",
+   "date": "1938-05-13",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d888"
+  },
+  {
+   "id": "frus:frus1938v02/d262",
+   "date": "1938-05-13",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Ambassador in France (Bullitt)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d262"
+  },
+  {
+   "id": "frus:frus1938v02/d547",
+   "date": "1938-05-13",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Minister in Yugoslavia (Lane)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d547"
+  },
+  {
+   "id": "frus:frus1938v02/d759",
+   "date": "1938-05-13",
+   "source": "FRUS frus1938v02",
+   "title": "The Chief of the Division of Near Eastern Affairs (Murray) to the Minister Resident in Iraq (Knabenshue)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d759"
+  },
+  {
+   "id": "frus:frus1938v02/d760",
+   "date": "1938-05-13",
+   "source": "FRUS frus1938v02",
+   "title": "The Chief of the Division of Near Eastern Affairs (Murray) to the Consul General at Jerusalem (Wadsworth)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d760"
+  },
+  {
+   "id": "frus:frus1938v01/d503",
+   "date": "1938-05-14",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d503"
+  },
+  {
+   "id": "frus:frus1938v02/d198",
+   "date": "1938-05-14",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in Estonia (Leonard) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d198"
+  },
+  {
+   "id": "frus:frus1938v02/d370",
+   "date": "1938-05-14",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Germany (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d370"
+  },
+  {
+   "id": "frus:frus1938v02/d385",
+   "date": "1938-05-14",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Ambassador in Germany (Wilson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d385"
+  },
+  {
+   "id": "frus:frus1938v02/d422",
+   "date": "1938-05-14",
+   "source": "FRUS frus1938v02",
+   "title": "The Minister in Greece (MacVeagh) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d422"
+  },
+  {
+   "id": "frus:frus1938v02/d702",
+   "date": "1938-05-14",
+   "source": "FRUS frus1938v02",
+   "title": "The Chief of the Division of Near Eastern Affairs (Murray) to the Minister in Liberia (Walton), Temporarily in the United States",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d702"
+  },
+  {
+   "id": "frus:frus1938v01/d264",
+   "date": "1938-05-16",
+   "source": "FRUS frus1938v01",
+   "title": "The Vice Consul at Barcelona (Flood) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d264"
+  },
+  {
+   "id": "frus:frus1938v01/d27",
+   "date": "1938-05-16",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d27"
+  },
+  {
+   "id": "frus:frus1938v01/d504",
+   "date": "1938-05-16",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d504"
+  },
+  {
+   "id": "frus:frus1938v01/d505",
+   "date": "1938-05-16",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d505"
+  },
+  {
+   "id": "frus:frus1938v02/d293",
+   "date": "1938-05-16",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in Germany (Gilbert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d293"
+  },
+  {
+   "id": "frus:frus1938v02/d386",
+   "date": "1938-05-16",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in Germany (Gilbert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d386"
+  },
+  {
+   "id": "frus:frus1938v01/d265",
+   "date": "1938-05-17",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Counselor of Embassy in Spain (Thurston)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d265"
+  },
+  {
+   "id": "frus:frus1938v01/d506",
+   "date": "1938-05-17",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d506"
+  },
+  {
+   "id": "frus:frus1938v02/d245",
+   "date": "1938-05-17",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d245"
+  },
+  {
+   "id": "frus:frus1938v02/d246",
+   "date": "1938-05-17",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d246"
+  },
+  {
+   "id": "frus:frus1938v02/d830",
+   "date": "1938-05-17",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d830"
+  },
+  {
+   "id": "frus:frus1933-39/d530",
+   "date": "1938-05-18",
+   "source": "FRUS frus1933-39",
+   "title": "Memorandum by the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d530"
+  },
+  {
+   "id": "frus:frus1933-39/d531",
+   "date": "1938-05-18",
+   "source": "FRUS frus1933-39",
+   "title": "Memorandum by the Chief of the Division of European Affairs (Moffat)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d531"
+  },
+  {
+   "id": "frus:frus1938v01/d507",
+   "date": "1938-05-18",
+   "source": "FRUS frus1938v01",
+   "title": "The Minister in Czechoslovakia (Carr) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d507"
+  },
+  {
+   "id": "frus:frus1938v02/d247",
+   "date": "1938-05-18",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Ambassador in France (Bullitt)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d247"
+  },
+  {
+   "id": "frus:frus1938v02/d248",
+   "date": "1938-05-18",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Ambassador in France (Bullitt)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d248"
+  },
+  {
+   "id": "frus:frus1938v02/d662",
+   "date": "1938-05-18",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum by the Assistant Secretary of State (Messersmith)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d662"
+  },
+  {
+   "id": "frus:frus1938v02/d663",
+   "date": "1938-05-18",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Chargé in Liberia (Wharton)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d663"
+  },
+  {
+   "id": "frus:frus1938v01/d148",
+   "date": "1938-05-19",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d148"
+  },
+  {
+   "id": "frus:frus1938v01/d266",
+   "date": "1938-05-19",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d266"
+  },
+  {
+   "id": "frus:frus1938v01/d149",
+   "date": "1938-05-20",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Spanish Chargé (De la Casa)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d149"
+  },
+  {
+   "id": "frus:frus1938v01/d267",
+   "date": "1938-05-20",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Ambassador in Spain (Bowers), Then in France",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d267"
+  },
+  {
+   "id": "frus:frus1938v02/d199",
+   "date": "1938-05-20",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Chargé in Estonia (Leonard)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d199"
+  },
+  {
+   "id": "frus:frus1938v02/d664",
+   "date": "1938-05-20",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum of Conversation, by Mr. Henry S. Villard of the Division of Near Eastern Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d664"
+  },
+  {
+   "id": "frus:frus1938v02/d86",
+   "date": "1938-05-20",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum by the Counselor of the Department of State (Moore) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d86"
+  },
+  {
+   "id": "frus:frus1933-39/d532",
+   "date": "1938-05-21",
+   "source": "FRUS frus1933-39",
+   "title": "Memorandum by the Chief of the Office of Arms and Munitions Control (Green)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d532"
+  },
+  {
+   "id": "frus:frus1938v01/d150",
+   "date": "1938-05-21",
+   "source": "FRUS frus1938v01",
+   "title": "The Consul at Seville (Bay) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d150"
+  },
+  {
+   "id": "frus:frus1938v01/d508",
+   "date": "1938-05-21",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in Germany (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d508"
+  },
+  {
+   "id": "frus:frus1938v01/d509",
+   "date": "1938-05-21",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d509"
+  },
+  {
+   "id": "frus:frus1938v01/d510",
+   "date": "1938-05-21",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d510"
+  },
+  {
+   "id": "frus:frus1938v02/d614",
+   "date": "1938-05-21",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in Iran (Engert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d614"
+  },
+  {
+   "id": "frus:frus1938v02/d87",
+   "date": "1938-05-21",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum of Conversation, by the Counselor of the Department of State (Moore)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d87"
+  },
+  {
+   "id": "frus:frus1938v01/d511",
+   "date": "1938-05-22",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d511"
+  },
+  {
+   "id": "frus:frus1938v01/d512",
+   "date": "1938-05-22",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d512"
+  },
+  {
+   "id": "frus:frus1938v02/d665",
+   "date": "1938-05-22",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in Liberia (Wharton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d665"
+  },
+  {
+   "id": "frus:frus1938v01/d513",
+   "date": "1938-05-23",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Ambassador in Germany (Wilson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d513"
+  },
+  {
+   "id": "frus:frus1938v01/d514",
+   "date": "1938-05-23",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d514"
+  },
+  {
+   "id": "frus:frus1938v02/d434",
+   "date": "1938-05-23",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d434"
+  },
+  {
+   "id": "frus:frus1938v02/d88",
+   "date": "1938-05-23",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum of Conversation, by the Chief of the Division of European Affairs (Moffat)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d88"
+  },
+  {
+   "id": "frus:frus1938v02/d89",
+   "date": "1938-05-23",
+   "source": "FRUS frus1938v02",
+   "title": "The British Embassy to the Department of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d89"
+  },
+  {
+   "id": "frus:frus1938v02/d90",
+   "date": "1938-05-23",
+   "source": "FRUS frus1938v02",
+   "title": "The British Embassy to the Department of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d90"
+  },
+  {
+   "id": "frus:frus1933-39/d533",
+   "date": "1938-05-24",
+   "source": "FRUS frus1933-39",
+   "title": "Memorandum by the Chief of the Office of Arms and Munitions Control (Green)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d533"
+  },
+  {
+   "id": "frus:frus1938v01/d515",
+   "date": "1938-05-24",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in Germany (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d515"
+  },
+  {
+   "id": "frus:frus1938v01/d516",
+   "date": "1938-05-24",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d516"
+  },
+  {
+   "id": "frus:frus1938v01/d517",
+   "date": "1938-05-24",
+   "source": "FRUS frus1938v01",
+   "title": "Memorandum of Conversation, by the Chief of the Division of European Affairs (Moffat)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d517"
+  },
+  {
+   "id": "frus:frus1938v02/d568",
+   "date": "1938-05-24",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d568"
+  },
+  {
+   "id": "frus:frus1938v02/d666",
+   "date": "1938-05-24",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Chargé in the Netherlands (Benton)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d666"
+  },
+  {
+   "id": "frus:frus1938v01/d518",
+   "date": "1938-05-25",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Ambassador in France (Bullitt)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d518"
+  },
+  {
+   "id": "frus:frus1938v02/d147",
+   "date": "1938-05-25",
+   "source": "FRUS frus1938v02",
+   "title": "The Minister in Ireland (Cudahy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d147"
+  },
+  {
+   "id": "frus:frus1938v02/d276",
+   "date": "1938-05-25",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the French Ambassador (Saint-Quentin)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d276"
+  },
+  {
+   "id": "frus:frus1938v02/d587",
+   "date": "1938-05-25",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in Iran (Engert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d587"
+  },
+  {
+   "id": "frus:frus1938v01/d268",
+   "date": "1938-05-26",
+   "source": "FRUS frus1938v01",
+   "title": "The Counselor of Embassy in Spain (Thurston) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d268"
+  },
+  {
+   "id": "frus:frus1938v01/d269",
+   "date": "1938-05-26",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d269"
+  },
+  {
+   "id": "frus:frus1938v02/d271",
+   "date": "1938-05-26",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Secretary of the Treasury (Morgenthau)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d271"
+  },
+  {
+   "id": "frus:frus1938v01/d151",
+   "date": "1938-05-27",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d151"
+  },
+  {
+   "id": "frus:frus1938v01/d270",
+   "date": "1938-05-27",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Ambassador in France (Bullitt)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d270"
+  },
+  {
+   "id": "frus:frus1938v02/d667",
+   "date": "1938-05-27",
+   "source": "FRUS frus1938v02",
+   "title": "The Chief of the Division of Near Eastern Affairs (Murray) to the Minister of Liberia (Walton)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d667"
+  },
+  {
+   "id": "frus:frus1938v01/d152",
+   "date": "1938-05-28",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d152"
+  },
+  {
+   "id": "frus:frus1938v01/d519",
+   "date": "1938-05-28",
+   "source": "FRUS frus1938v01",
+   "title": "Statement to the Press by the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d519"
+  },
+  {
+   "id": "frus:frus1938v02/d141",
+   "date": "1938-05-28",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Canadian Minister (Marler)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d141"
+  },
+  {
+   "id": "frus:frus1938v02/d148",
+   "date": "1938-05-28",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Minister in Ireland (Cudahy)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d148"
+  },
+  {
+   "id": "frus:frus1938v02/d189",
+   "date": "1938-05-28",
+   "source": "FRUS frus1938v02",
+   "title": "The Minister in Denmark (Owsley) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d189"
+  },
+  {
+   "id": "frus:frus1938v02/d387",
+   "date": "1938-05-28",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Ambassador in Germany (Wilson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d387"
+  },
+  {
+   "id": "frus:frus1938v02/d388",
+   "date": "1938-05-28",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Germany (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d388"
+  },
+  {
+   "id": "frus:frus1938v02/d668",
+   "date": "1938-05-28",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Chargé in Liberia (Wharton)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d668"
+  },
+  {
+   "id": "frus:frus1938v02/d615",
+   "date": "1938-05-29",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in Iran (Engert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d615"
+  },
+  {
+   "id": "frus:frus1938v01/d520",
+   "date": "1938-05-30",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d520"
+  },
+  {
+   "id": "frus:frus1938v02/d149",
+   "date": "1938-05-30",
+   "source": "FRUS frus1938v02",
+   "title": "The Minister in Ireland (Cudahy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d149"
+  },
+  {
+   "id": "frus:frus1938v01/d521",
+   "date": "1938-05-31",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d521"
+  },
+  {
+   "id": "frus:frus1938v02/d249",
+   "date": "1938-05-31",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum of Conversation, by the Chief of the Office of Arms and Munitions Control (Green)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d249"
+  },
+  {
+   "id": "frus:frus1938v02/d294",
+   "date": "1938-05-31",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in Austria (Wiley) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d294"
+  },
+  {
+   "id": "frus:frus1938v02/d389",
+   "date": "1938-05-31",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Germany (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d389"
+  },
+  {
+   "id": "frus:frus1938v02/d390",
+   "date": "1938-05-31",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Germany (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d390"
+  },
+  {
+   "id": "frus:frus1938v02/d489",
+   "date": "1938-05-31",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Netherlands Minister (Van Haersma de With)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d489"
+  },
+  {
+   "id": "frus:frus1938v02/d512",
+   "date": "1938-05-31",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum of Conversation, by the Adviser on International Economic Affairs (Feis)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d512"
+  },
+  {
+   "id": "frus:frus1938v02/d838",
+   "date": "1938-05-31",
+   "source": "FRUS frus1938v02",
+   "title": "The Consul General at Beirut (Palmer) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d838"
+  },
+  {
+   "id": "frus:frus1933-39/d534",
+   "date": "1938-06-01",
+   "source": "FRUS frus1933-39",
+   "title": "Memorandum by the Chief of the Office of Arms and Munitions Control (Green)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d534"
+  },
+  {
+   "id": "frus:frus1938v01/d153",
+   "date": "1938-06-01",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d153"
+  },
+  {
+   "id": "frus:frus1938v01/d271",
+   "date": "1938-06-01",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Ambassador in France (Bullitt)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d271"
+  },
+  {
+   "id": "frus:frus1938v01/d721",
+   "date": "1938-06-01",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d721"
+  },
+  {
+   "id": "frus:frus1938v02/d669",
+   "date": "1938-06-01",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum of Conversation, by Mr. Henry S. Villard of the Division of Near Eastern Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d669"
+  },
+  {
+   "id": "frus:frus1938v02/d670",
+   "date": "1938-06-01",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum of Conversation, by Mr. Henry S. Villard of the Division of Near Eastern Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d670"
+  },
+  {
+   "id": "frus:frus1938v02/d671",
+   "date": "1938-06-01",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in Liberia (Wharton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d671"
+  },
+  {
+   "id": "frus:frus1938v02/d737",
+   "date": "1938-06-01",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum of Conversation, by the Assistant Chief of the Division of Near Eastern Affairs (Alling)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d737"
+  },
+  {
+   "id": "frus:frus1938v02/d852",
+   "date": "1938-06-01",
+   "source": "FRUS frus1938v02",
+   "title": "The Consul General at Beirut (Palmer) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d852"
+  },
+  {
+   "id": "frus:frus1938v01/d154",
+   "date": "1938-06-02",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d154"
+  },
+  {
+   "id": "frus:frus1938v01/d28",
+   "date": "1938-06-02",
+   "source": "FRUS frus1938v01",
+   "title": "The Minister in Hungary (Montgomery) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d28"
+  },
+  {
+   "id": "frus:frus1938v01/d722",
+   "date": "1938-06-02",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Ambassador in the United Kingdom (Kennedy)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d722"
+  },
+  {
+   "id": "frus:frus1938v01/d889",
+   "date": "1938-06-02",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d889"
+  },
+  {
+   "id": "frus:frus1938v01/d921",
+   "date": "1938-06-02",
+   "source": "FRUS frus1938v01",
+   "title": "The Consul General at Oslo (Beck) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d921"
+  },
+  {
+   "id": "frus:frus1938v01/d922",
+   "date": "1938-06-02",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the British Ambassador (Lindsay)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d922"
+  },
+  {
+   "id": "frus:frus1938v02/d122",
+   "date": "1938-06-02",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum of Conversation, by the Chief of the Division of European Affairs (Moffat)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d122"
+  },
+  {
+   "id": "frus:frus1938v02/d200",
+   "date": "1938-06-02",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in Estonia (Leonard) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d200"
+  },
+  {
+   "id": "frus:frus1938v02/d29",
+   "date": "1938-06-02",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d29"
+  },
+  {
+   "id": "frus:frus1938v02/d295",
+   "date": "1938-06-02",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Germany (Wilson) to President Roosevelt",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d295"
+  },
+  {
+   "id": "frus:frus1938v02/d839",
+   "date": "1938-06-02",
+   "source": "FRUS frus1938v02",
+   "title": "The Consul General at Beirut (Palmer) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d839"
+  },
+  {
+   "id": "frus:frus1938v02/d896",
+   "date": "1938-06-02",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum of Conversation, by the Chief of the Division of Near Eastern Affairs (Murray)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d896"
+  },
+  {
+   "id": "frus:frus1938v01/d155",
+   "date": "1938-06-03",
+   "source": "FRUS frus1938v01",
+   "title": "Memorandum of a Press Conference, Held at the Department of State June 3, 1938",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d155"
+  },
+  {
+   "id": "frus:frus1938v01/d156",
+   "date": "1938-06-03",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d156"
+  },
+  {
+   "id": "frus:frus1938v01/d157",
+   "date": "1938-06-03",
+   "source": "FRUS frus1938v01",
+   "title": "The British Embassy to the Department of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d157"
+  },
+  {
+   "id": "frus:frus1938v02/d416",
+   "date": "1938-06-03",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Germany (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d416"
+  },
+  {
+   "id": "frus:frus1938v02/d672",
+   "date": "1938-06-03",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in Liberia (Wharton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d672"
+  },
+  {
+   "id": "frus:frus1938v02/d840",
+   "date": "1938-06-03",
+   "source": "FRUS frus1938v02",
+   "title": "The Consul General at Beirut (Palmer) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d840"
+  },
+  {
+   "id": "frus:frus1938v02/d841",
+   "date": "1938-06-03",
+   "source": "FRUS frus1938v02",
+   "title": "The Acting Secretary of State to the Consul General at Beirut (Palmer)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d841"
+  },
+  {
+   "id": "frus:frus1938v01/d272",
+   "date": "1938-06-04",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d272"
+  },
+  {
+   "id": "frus:frus1938v01/d273",
+   "date": "1938-06-04",
+   "source": "FRUS frus1938v01",
+   "title": "The Acting Secretary of State to the Ambassador in France (Bullitt)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d273"
+  },
+  {
+   "id": "frus:frus1938v01/d274",
+   "date": "1938-06-04",
+   "source": "FRUS frus1938v01",
+   "title": "The Counselor of Embassy in Spain (Thurston) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d274"
+  },
+  {
+   "id": "frus:frus1938v02/d250",
+   "date": "1938-06-04",
+   "source": "FRUS frus1938v02",
+   "title": "The French Ambassador (Saint-Quentin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d250"
+  },
+  {
+   "id": "frus:frus1938v02/d842",
+   "date": "1938-06-04",
+   "source": "FRUS frus1938v02",
+   "title": "The Consul General at Beirut (Palmer) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d842"
+  },
+  {
+   "id": "frus:frus1933-39/d461",
+   "date": "1938-06-06",
+   "source": "FRUS frus1933-39",
+   "title": "The Ambassador in the Soviet Union (Davies) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d461"
+  },
+  {
+   "id": "frus:frus1933-39/d462",
+   "date": "1938-06-06",
+   "source": "FRUS frus1933-39",
+   "title": "The Ambassador in the Soviet Union (Davies) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d462"
+  },
+  {
+   "id": "frus:frus1933-39/d463",
+   "date": "1938-06-06",
+   "source": "FRUS frus1933-39",
+   "title": "The Ambassador in the Soviet Union (Davies) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d463"
+  },
+  {
+   "id": "frus:frus1938v01/d158",
+   "date": "1938-06-06",
+   "source": "FRUS frus1938v01",
+   "title": "Memorandum of Conversation, by the Under Secretary of State (Welles)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d158"
+  },
+  {
+   "id": "frus:frus1938v01/d159",
+   "date": "1938-06-06",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d159"
+  },
+  {
+   "id": "frus:frus1938v01/d160",
+   "date": "1938-06-06",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d160"
+  },
+  {
+   "id": "frus:frus1938v01/d161",
+   "date": "1938-06-06",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d161"
+  },
+  {
+   "id": "frus:frus1938v02/d251",
+   "date": "1938-06-06",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum of Conversation, by the Chief of the Office of Arms and Munitions Control (Green)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d251"
+  },
+  {
+   "id": "frus:frus1938v02/d616",
+   "date": "1938-06-06",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in Iran (Engert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d616"
+  },
+  {
+   "id": "frus:frus1938v02/d843",
+   "date": "1938-06-06",
+   "source": "FRUS frus1938v02",
+   "title": "The Consul General at Beirut (Palmer) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d843"
+  },
+  {
+   "id": "frus:frus1933-39/d464",
+   "date": "1938-06-07",
+   "source": "FRUS frus1933-39",
+   "title": "Memorandum by the Secretary of State of a Conversation With the Ambassador of the Soviet Union (Troyanovsky)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d464"
+  },
+  {
+   "id": "frus:frus1938v02/d391",
+   "date": "1938-06-07",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Ambassador in Germany (Wilson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d391"
+  },
+  {
+   "id": "frus:frus1938v02/d617",
+   "date": "1938-06-07",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in Iran (Engert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d617"
+  },
+  {
+   "id": "frus:frus1938v02/d831",
+   "date": "1938-06-07",
+   "source": "FRUS frus1938v02",
+   "title": "The Chief of the Division of Near Eastern Affairs (Murray) to the Counselor of Embassy in France (Wilson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d831"
+  },
+  {
+   "id": "frus:frus1933-39/d535",
+   "date": "1938-06-08",
+   "source": "FRUS frus1933-39",
+   "title": "The Secretary of State and the Acting Secretary of the Navy (Edison) to President Roosevelt",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d535"
+  },
+  {
+   "id": "frus:frus1938v01/d275",
+   "date": "1938-06-08",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d275"
+  },
+  {
+   "id": "frus:frus1938v01/d522",
+   "date": "1938-06-08",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d522"
+  },
+  {
+   "id": "frus:frus1938v02/d296",
+   "date": "1938-06-08",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Germany (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d296"
+  },
+  {
+   "id": "frus:frus1938v02/d844",
+   "date": "1938-06-08",
+   "source": "FRUS frus1938v02",
+   "title": "The Consul General at Beirut (Palmer) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d844"
+  },
+  {
+   "id": "frus:frus1938v02/d867",
+   "date": "1938-06-08",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Turkey (MacMurray) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d867"
+  },
+  {
+   "id": "frus:frus1933-39/d465",
+   "date": "1938-06-09",
+   "source": "FRUS frus1933-39",
+   "title": "The Ambassador in the Soviet Union (Davies) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d465"
+  },
+  {
+   "id": "frus:frus1933-39/d478",
+   "date": "1938-06-09",
+   "source": "FRUS frus1933-39",
+   "title": "The Secretary of State to the Chargé in the Soviet Union (Kirk)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d478"
+  },
+  {
+   "id": "frus:frus1938v01/d162",
+   "date": "1938-06-09",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d162"
+  },
+  {
+   "id": "frus:frus1938v01/d163",
+   "date": "1938-06-09",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d163"
+  },
+  {
+   "id": "frus:frus1938v01/d276",
+   "date": "1938-06-09",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Ambassador in France (Bullitt)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d276"
+  },
+  {
+   "id": "frus:frus1938v02/d761",
+   "date": "1938-06-09",
+   "source": "FRUS frus1938v02",
+   "title": "The Consul General at Jerusalem (Wadsworth) to the Chief of the Division of Near Eastern Affairs (Murray)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d761"
+  },
+  {
+   "id": "frus:frus1938v02/d845",
+   "date": "1938-06-09",
+   "source": "FRUS frus1938v02",
+   "title": "The Consul General at Beirut (Palmer) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d845"
+  },
+  {
+   "id": "frus:frus1938v01/d164",
+   "date": "1938-06-10",
+   "source": "FRUS frus1938v01",
+   "title": "Memorandum of Conversation, by the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d164"
+  },
+  {
+   "id": "frus:frus1938v01/d165",
+   "date": "1938-06-10",
+   "source": "FRUS frus1938v01",
+   "title": "The British Embassy to the Department of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d165"
+  },
+  {
+   "id": "frus:frus1938v01/d166",
+   "date": "1938-06-10",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d166"
+  },
+  {
+   "id": "frus:frus1938v01/d277",
+   "date": "1938-06-10",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d277"
+  },
+  {
+   "id": "frus:frus1938v01/d356",
+   "date": "1938-06-10",
+   "source": "FRUS frus1938v01",
+   "title": "Memorandum by the Chief of the Office of Arms and Munitions Control (Green)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d356"
+  },
+  {
+   "id": "frus:frus1938v01/d894",
+   "date": "1938-06-10",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Minister in Switzerland (Harrison)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d894"
+  },
+  {
+   "id": "frus:frus1938v02/d423",
+   "date": "1938-06-10",
+   "source": "FRUS frus1938v02",
+   "title": "The Minister in Greece (MacVeagh) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d423"
+  },
+  {
+   "id": "frus:frus1938v01/d890",
+   "date": "1938-06-11",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to President Roosevelt",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d890"
+  },
+  {
+   "id": "frus:frus1938v02/d297",
+   "date": "1938-06-11",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d297"
+  },
+  {
+   "id": "frus:frus1938v02/d618",
+   "date": "1938-06-12",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in Iran (Engert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d618"
+  },
+  {
+   "id": "frus:frus1938v01/d167",
+   "date": "1938-06-13",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d167"
+  },
+  {
+   "id": "frus:frus1938v01/d278",
+   "date": "1938-06-13",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Counselor of Embassy in Spain (Thurston)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d278"
+  },
+  {
+   "id": "frus:frus1938v01/d723",
+   "date": "1938-06-13",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d723"
+  },
+  {
+   "id": "frus:frus1938v01/d953",
+   "date": "1938-06-13",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d953"
+  },
+  {
+   "id": "frus:frus1938v02/d123",
+   "date": "1938-06-13",
+   "source": "FRUS frus1938v02",
+   "title": "The Department of State to the British Embassy",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d123"
+  },
+  {
+   "id": "frus:frus1938v02/d158",
+   "date": "1938-06-13",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Chargé in Ireland (MacVeagh)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d158"
+  },
+  {
+   "id": "frus:frus1933-39/d479",
+   "date": "1938-06-14",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d479"
+  },
+  {
+   "id": "frus:frus1938v01/d279",
+   "date": "1938-06-14",
+   "source": "FRUS frus1938v01",
+   "title": "The Consul at Seville (Bay) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d279"
+  },
+  {
+   "id": "frus:frus1938v01/d724",
+   "date": "1938-06-14",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Ambassador in Italy (Phillips)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d724"
+  },
+  {
+   "id": "frus:frus1938v01/d725",
+   "date": "1938-06-14",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Ambassador in the United Kingdom (Kennedy)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d725"
+  },
+  {
+   "id": "frus:frus1938v01/d726",
+   "date": "1938-06-14",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Minister in Switzerland (Harrison)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d726"
+  },
+  {
+   "id": "frus:frus1938v02/d30",
+   "date": "1938-06-14",
+   "source": "FRUS frus1938v02",
+   "title": "The Department of State to the British Trade Delegation",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d30"
+  },
+  {
+   "id": "frus:frus1938v02/d691",
+   "date": "1938-06-14",
+   "source": "FRUS frus1938v02",
+   "title": "The Chief of the Division of Near Eastern Affairs (Murray) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d691"
+  },
+  {
+   "id": "frus:frus1938v02/d846",
+   "date": "1938-06-14",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Ambassador in France (Bullitt)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d846"
+  },
+  {
+   "id": "frus:frus1938v01/d280",
+   "date": "1938-06-15",
+   "source": "FRUS frus1938v01",
+   "title": "The Counselor of Embassy in Spain (Thurston) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d280"
+  },
+  {
+   "id": "frus:frus1938v01/d357",
+   "date": "1938-06-15",
+   "source": "FRUS frus1938v01",
+   "title": "Memorandum by the Chief of the Office of Arms and Munitions Control (Green)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d357"
+  },
+  {
+   "id": "frus:frus1938v02/d454",
+   "date": "1938-06-15",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum by the Under Secretary of State (Welles) of a Conversation With the Italian Ambassador (Suvich)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d454"
+  },
+  {
+   "id": "frus:frus1938v02/d619",
+   "date": "1938-06-15",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in Iran (Engert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d619"
+  },
+  {
+   "id": "frus:frus1938v02/d868",
+   "date": "1938-06-15",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Ambassador in Turkey (MacMurray)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d868"
+  },
+  {
+   "id": "frus:frus1938v02/d897",
+   "date": "1938-06-15",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Turkey (MacMurray) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d897"
+  },
+  {
+   "id": "frus:frus1938v01/d168",
+   "date": "1938-06-16",
+   "source": "FRUS frus1938v01",
+   "title": "Memorandum of Conversation, by the Chief of the Division of European Affairs (Moffat)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d168"
+  },
+  {
+   "id": "frus:frus1938v01/d169",
+   "date": "1938-06-16",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Consul at Seville (Bay)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d169"
+  },
+  {
+   "id": "frus:frus1938v01/d281",
+   "date": "1938-06-16",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Counselor of Embassy in Spain (Thurston)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d281"
+  },
+  {
+   "id": "frus:frus1938v01/d282",
+   "date": "1938-06-16",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Consul at Seville (Bay)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d282"
+  },
+  {
+   "id": "frus:frus1938v01/d911",
+   "date": "1938-06-16",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Ambassador in the United Kingdom (Kennedy)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d911"
+  },
+  {
+   "id": "frus:frus1938v01/d923",
+   "date": "1938-06-16",
+   "source": "FRUS frus1938v01",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d923"
+  },
+  {
+   "id": "frus:frus1938v01/d924",
+   "date": "1938-06-16",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Chargé in the United Kingdom (Johnson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d924"
+  },
+  {
+   "id": "frus:frus1938v02/d263",
+   "date": "1938-06-16",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d263"
+  },
+  {
+   "id": "frus:frus1938v02/d298",
+   "date": "1938-06-16",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Germany (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d298"
+  },
+  {
+   "id": "frus:frus1933-39/d536",
+   "date": "1938-06-17",
+   "source": "FRUS frus1933-39",
+   "title": "The Secretary of State to the Vice President of Gibbs and Cox, Inc. (William Francis Gibbs)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d536"
+  },
+  {
+   "id": "frus:frus1933-39/d537",
+   "date": "1938-06-17",
+   "source": "FRUS frus1933-39",
+   "title": "The Secretary of State to the Ambassador of the Soviet Union (Troyanovsky)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d537"
+  },
+  {
+   "id": "frus:frus1938v01/d283",
+   "date": "1938-06-17",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Counselor of Embassy in Spain (Thurston)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d283"
+  },
+  {
+   "id": "frus:frus1938v02/d435",
+   "date": "1938-06-17",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d435"
+  },
+  {
+   "id": "frus:frus1938v02/d490",
+   "date": "1938-06-17",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum by Mr. Horace G. White, Jr., of the Office of the Adviser on International Economic Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d490"
+  },
+  {
+   "id": "frus:frus1938v02/d762",
+   "date": "1938-06-17",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum by the Chief of the Division of Near Eastern Affairs (Murray) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d762"
+  },
+  {
+   "id": "frus:frus1938v02/d763",
+   "date": "1938-06-17",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum of the Press Conference, June 17, 1938",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d763"
+  },
+  {
+   "id": "frus:frus1938v02/d847",
+   "date": "1938-06-17",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d847"
+  },
+  {
+   "id": "frus:frus1938v02/d869",
+   "date": "1938-06-17",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Turkey (MacMurray) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d869"
+  },
+  {
+   "id": "frus:frus1933-39/d466",
+   "date": "1938-06-18",
+   "source": "FRUS frus1933-39",
+   "title": "Memorandum by the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d466"
+  },
+  {
+   "id": "frus:frus1938v02/d299",
+   "date": "1938-06-18",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Germany (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d299"
+  },
+  {
+   "id": "frus:frus1933-39/d538",
+   "date": "1938-06-20",
+   "source": "FRUS frus1933-39",
+   "title": "Memorandum by the Chief of the Office of Arms and Munitions Control (Green)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d538"
+  },
+  {
+   "id": "frus:frus1938v01/d170",
+   "date": "1938-06-20",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d170"
+  },
+  {
+   "id": "frus:frus1938v01/d284",
+   "date": "1938-06-20",
+   "source": "FRUS frus1938v01",
+   "title": "The Counselor of Embassy in Spain (Thurston) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d284"
+  },
+  {
+   "id": "frus:frus1938v01/d285",
+   "date": "1938-06-20",
+   "source": "FRUS frus1938v01",
+   "title": "The Acting Secretary of State to the Counselor of Embassy in Spain (Thurston)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d285"
+  },
+  {
+   "id": "frus:frus1938v01/d358",
+   "date": "1938-06-20",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in Turkey (MacMurray) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d358"
+  },
+  {
+   "id": "frus:frus1938v01/d912",
+   "date": "1938-06-20",
+   "source": "FRUS frus1938v01",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d912"
+  },
+  {
+   "id": "frus:frus1938v02/d167",
+   "date": "1938-06-20",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in Belgium (Tuck) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d167"
+  },
+  {
+   "id": "frus:frus1938v02/d252",
+   "date": "1938-06-20",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum of Conversation, by the Adviser on International Economic Affairs (Feis)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d252"
+  },
+  {
+   "id": "frus:frus1938v02/d436",
+   "date": "1938-06-20",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d436"
+  },
+  {
+   "id": "frus:frus1938v02/d898",
+   "date": "1938-06-20",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum of Conversation, by Mr. George V. Allen of the Division of Near Eastern Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d898"
+  },
+  {
+   "id": "frus:frus1938v01/d286",
+   "date": "1938-06-21",
+   "source": "FRUS frus1938v01",
+   "title": "The Counselor of Embassy in Spain (Thurston) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d286"
+  },
+  {
+   "id": "frus:frus1938v01/d359",
+   "date": "1938-06-21",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d359"
+  },
+  {
+   "id": "frus:frus1938v01/d360",
+   "date": "1938-06-21",
+   "source": "FRUS frus1938v01",
+   "title": "The Acting Secretary of State to the Ambassador in France (Bullitt)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d360"
+  },
+  {
+   "id": "frus:frus1938v02/d300",
+   "date": "1938-06-21",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Germany (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d300"
+  },
+  {
+   "id": "frus:frus1938v02/d491",
+   "date": "1938-06-21",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum by Mr. Horace G. White, Jr., of the Office of the Adviser on International Economic Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d491"
+  },
+  {
+   "id": "frus:frus1938v02/d620",
+   "date": "1938-06-21",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in Iran (Engert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d620"
+  },
+  {
+   "id": "frus:frus1933-39/d467",
+   "date": "1938-06-22",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d467"
+  },
+  {
+   "id": "frus:frus1933-39/d468",
+   "date": "1938-06-22",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d468"
+  },
+  {
+   "id": "frus:frus1938v01/d171",
+   "date": "1938-06-22",
+   "source": "FRUS frus1938v01",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d171"
+  },
+  {
+   "id": "frus:frus1938v01/d287",
+   "date": "1938-06-22",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d287"
+  },
+  {
+   "id": "frus:frus1938v01/d925",
+   "date": "1938-06-22",
+   "source": "FRUS frus1938v01",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d925"
+  },
+  {
+   "id": "frus:frus1938v02/d301",
+   "date": "1938-06-22",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Germany (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d301"
+  },
+  {
+   "id": "frus:frus1938v02/d302",
+   "date": "1938-06-22",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Germany (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d302"
+  },
+  {
+   "id": "frus:frus1938v02/d621",
+   "date": "1938-06-22",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in Iran (Engert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d621"
+  },
+  {
+   "id": "frus:frus1938v02/d710",
+   "date": "1938-06-22",
+   "source": "FRUS frus1938v02",
+   "title": "The Minister in Liberia (Walton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d710"
+  },
+  {
+   "id": "frus:frus1938v01/d288",
+   "date": "1938-06-23",
+   "source": "FRUS frus1938v01",
+   "title": "The Counselor of Embassy in Spain (Thurston) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d288"
+  },
+  {
+   "id": "frus:frus1938v01/d289",
+   "date": "1938-06-23",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d289"
+  },
+  {
+   "id": "frus:frus1938v01/d361",
+   "date": "1938-06-23",
+   "source": "FRUS frus1938v01",
+   "title": "The Counselor of Embassy in Spain (Thurston) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d361"
+  },
+  {
+   "id": "frus:frus1938v01/d362",
+   "date": "1938-06-23",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Minister in Turkey (MacMurray)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d362"
+  },
+  {
+   "id": "frus:frus1938v01/d523",
+   "date": "1938-06-23",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d523"
+  },
+  {
+   "id": "frus:frus1938v02/d588",
+   "date": "1938-06-23",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in Iran (Engert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d588"
+  },
+  {
+   "id": "frus:frus1933-39/d480",
+   "date": "1938-06-24",
+   "source": "FRUS frus1933-39",
+   "title": "The Secretary of State to the Chargé in the Soviet Union (Kirk)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d480"
+  },
+  {
+   "id": "frus:frus1933-39/d539",
+   "date": "1938-06-24",
+   "source": "FRUS frus1933-39",
+   "title": "Memorandum by the Chief of the Office of Arms and Munitions Control (Green)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d539"
+  },
+  {
+   "id": "frus:frus1938v01/d363",
+   "date": "1938-06-24",
+   "source": "FRUS frus1938v01",
+   "title": "The Chargé in Canada (Simmons) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d363"
+  },
+  {
+   "id": "frus:frus1938v01/d913",
+   "date": "1938-06-24",
+   "source": "FRUS frus1938v01",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d913"
+  },
+  {
+   "id": "frus:frus1938v02/d303",
+   "date": "1938-06-24",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Germany (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d303"
+  },
+  {
+   "id": "frus:frus1938v02/d548",
+   "date": "1938-06-24",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Minister in Yugoslavia (Lane)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d548"
+  },
+  {
+   "id": "frus:frus1938v02/d738",
+   "date": "1938-06-24",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Diplomatic Agent at Tangier (Blake)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d738"
+  },
+  {
+   "id": "frus:frus1938v01/d364",
+   "date": "1938-06-25",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Counselor of Embassy in Spain (Thurston)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d364"
+  },
+  {
+   "id": "frus:frus1938v02/d304",
+   "date": "1938-06-25",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Germany (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d304"
+  },
+  {
+   "id": "frus:frus1938v02/d870",
+   "date": "1938-06-25",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Ambassador in Turkey (MacMurray)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d870"
+  },
+  {
+   "id": "frus:frus1938v02/d871",
+   "date": "1938-06-25",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Ambassador in Turkey (MacMurray)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d871"
+  },
+  {
+   "id": "frus:frus1938v01/d172",
+   "date": "1938-06-26",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d172"
+  },
+  {
+   "id": "frus:frus1938v01/d173",
+   "date": "1938-06-27",
+   "source": "FRUS frus1938v01",
+   "title": "The Consul at Seville (Bay) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d173"
+  },
+  {
+   "id": "frus:frus1938v01/d290",
+   "date": "1938-06-27",
+   "source": "FRUS frus1938v01",
+   "title": "The Consul at Seville (Bay) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d290"
+  },
+  {
+   "id": "frus:frus1938v01/d291",
+   "date": "1938-06-27",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d291"
+  },
+  {
+   "id": "frus:frus1938v01/d365",
+   "date": "1938-06-27",
+   "source": "FRUS frus1938v01",
+   "title": "Memorandum of Conversation, by the Chief of the Office of Arms and Munitions Control (Green)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d365"
+  },
+  {
+   "id": "frus:frus1938v01/d727",
+   "date": "1938-06-27",
+   "source": "FRUS frus1938v01",
+   "title": "The Chargé in Luxemburg (Waller) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d727"
+  },
+  {
+   "id": "frus:frus1938v01/d728",
+   "date": "1938-06-27",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d728"
+  },
+  {
+   "id": "frus:frus1938v01/d891",
+   "date": "1938-06-27",
+   "source": "FRUS frus1938v01",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d891"
+  },
+  {
+   "id": "frus:frus1938v02/d264",
+   "date": "1938-06-27",
+   "source": "FRUS frus1938v02",
+   "title": "The Acting Secretary of State to the Ambassador in France (Bullitt)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d264"
+  },
+  {
+   "id": "frus:frus1938v02/d673",
+   "date": "1938-06-27",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum of Conversation, by Mr. Henry S. Villard of the Division of Near Eastern Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d673"
+  },
+  {
+   "id": "frus:frus1938v01/d174",
+   "date": "1938-06-28",
+   "source": "FRUS frus1938v01",
+   "title": "The Counselor of Embassy in Spain (Thurston) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d174"
+  },
+  {
+   "id": "frus:frus1938v01/d175",
+   "date": "1938-06-28",
+   "source": "FRUS frus1938v01",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d175"
+  },
+  {
+   "id": "frus:frus1938v01/d366",
+   "date": "1938-06-28",
+   "source": "FRUS frus1938v01",
+   "title": "The Counselor of Embassy in Spain (Thurston) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d366"
+  },
+  {
+   "id": "frus:frus1938v01/d729",
+   "date": "1938-06-28",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Chargé in Luxemburg (Waller)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d729"
+  },
+  {
+   "id": "frus:frus1938v01/d892",
+   "date": "1938-06-28",
+   "source": "FRUS frus1938v01",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d892"
+  },
+  {
+   "id": "frus:frus1938v01/d926",
+   "date": "1938-06-28",
+   "source": "FRUS frus1938v01",
+   "title": "The American Delegates to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d926"
+  },
+  {
+   "id": "frus:frus1938v02/d124",
+   "date": "1938-06-28",
+   "source": "FRUS frus1938v02",
+   "title": "The British Embassy to the Department of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d124"
+  },
+  {
+   "id": "frus:frus1938v02/d265",
+   "date": "1938-06-28",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d265"
+  },
+  {
+   "id": "frus:frus1938v02/d305",
+   "date": "1938-06-28",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Germany (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d305"
+  },
+  {
+   "id": "frus:frus1938v02/d347",
+   "date": "1938-06-28",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Germany (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d347"
+  },
+  {
+   "id": "frus:frus1938v02/d692",
+   "date": "1938-06-28",
+   "source": "FRUS frus1938v02",
+   "title": "The Acting Secretary of the Navy (Leahy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d692"
+  },
+  {
+   "id": "frus:frus1938v02/d91",
+   "date": "1938-06-28",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum by President Roosevelt to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d91"
+  },
+  {
+   "id": "frus:frus1938v01/d176",
+   "date": "1938-06-29",
+   "source": "FRUS frus1938v01",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d176"
+  },
+  {
+   "id": "frus:frus1938v02/d125",
+   "date": "1938-06-29",
+   "source": "FRUS frus1938v02",
+   "title": "The Department of State to the British Embassy",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d125"
+  },
+  {
+   "id": "frus:frus1938v02/d306",
+   "date": "1938-06-29",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Ambassador in Germany (Wilson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d306"
+  },
+  {
+   "id": "frus:frus1938v02/d348",
+   "date": "1938-06-29",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Ambassador in Germany (Wilson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d348"
+  },
+  {
+   "id": "frus:frus1938v02/d501",
+   "date": "1938-06-29",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum of Conversation, by Mr. Hugh S. Cumming, Jr., of the Division of European Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d501"
+  },
+  {
+   "id": "frus:frus1938v02/d502",
+   "date": "1938-06-29",
+   "source": "FRUS frus1938v02",
+   "title": "The Department of State to the Norwegian Legation",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d502"
+  },
+  {
+   "id": "frus:frus1938v02/d711",
+   "date": "1938-06-29",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Minister in Liberia (Walton)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d711"
+  },
+  {
+   "id": "frus:frus1938v02/d848",
+   "date": "1938-06-29",
+   "source": "FRUS frus1938v02",
+   "title": "The Consul General at Beirut (Palmer) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d848"
+  },
+  {
+   "id": "frus:frus1938v02/d849",
+   "date": "1938-06-29",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Consul General at Beirut (Palmer)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d849"
+  },
+  {
+   "id": "frus:frus1938v01/d292",
+   "date": "1938-06-30",
+   "source": "FRUS frus1938v01",
+   "title": "The Vice Consul at Barcelona (Flood) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d292"
+  },
+  {
+   "id": "frus:frus1938v01/d367",
+   "date": "1938-06-30",
+   "source": "FRUS frus1938v01",
+   "title": "The Secretary of State to the Counselor of Embassy in Spain (Thurston)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d367"
+  },
+  {
+   "id": "frus:frus1938v01/d895",
+   "date": "1938-06-30",
+   "source": "FRUS frus1938v01",
+   "title": "The Consul at Geneva (Bucknell) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d895"
+  },
+  {
+   "id": "frus:frus1938v02/d307",
+   "date": "1938-06-30",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Germany (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d307"
+  },
+  {
+   "id": "frus:frus1938v02/d349",
+   "date": "1938-06-30",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Germany (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d349"
+  },
+  {
+   "id": "frus:frus1938v02/d674",
+   "date": "1938-06-30",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Executive Secretary of the American Iron and Steel Institute (Tower)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d674"
+  },
+  {
+   "id": "frus:frus1938v02/d850",
+   "date": "1938-06-30",
+   "source": "FRUS frus1938v02",
+   "title": "The Consul General at Beirut (Palmer) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d850"
+  },
+  {
+   "id": "frus:frus1938v02/d872",
+   "date": "1938-06-30",
+   "source": "FRUS frus1938v02",
+   "title": "The Ambassador in Turkey (MacMurray) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d872"
+  },
+  {
+   "id": "frus:frus1938v02/d92",
+   "date": "1938-06-30",
+   "source": "FRUS frus1938v02",
+   "title": "The Department of State to the British Embassy",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d92"
+  }
+ ],
+ "proposals": [
+  {
+   "id": "1938Q2-001",
+   "document": "frus:frus1933-39/d460",
+   "proposal": {
+    "indicator_id": "frus:frus1933-39/d460:china_war=true",
+    "variable": "china_war",
+    "level": true,
+    "date": "1938-04-01",
+    "quote": "Japan is having a hard time of it in China ... it has maintained the burden of the war for almost a year now",
+    "url": "https://history.state.gov/historicaldocuments/frus1933-39/d460",
+    "rule": "deepseek backend: The passage reports Japan engaged in a general war in China with sustained Chinese resistance, meeting the china_war true threshold.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-002",
+   "document": "frus:frus1938v01/d124",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d124:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1938-04-03",
+    "quote": "the movement now under way in the United States for the abolition of our neutrality law ... Should we abandon our present position of neutrality",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d124",
+    "rule": "deepseek backend: The passage reports that a neutrality law is in force and that the present position is one of neutrality (with war material not flowing), which meets the isolationist level defined by the Neutrality Act regime with its mandatory arms embargo.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-003",
+   "document": "frus:frus1938v01/d484",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d484:austria=annexed",
+    "variable": "austria",
+    "level": "annexed",
+    "date": "1938-03-13",
+    "quote": "a German law of March 13, 1938 ... that country had ceased to exist as an independent nation and had been incorporated in the German Reich",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d484",
+    "rule": "deepseek backend: The passage reports that Austria had ceased to exist as an independent nation and had been incorporated in the German Reich under a German law of March 13, 1938, meeting the annexed threshold.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-004",
+   "document": "frus:frus1938v02/d382",
+   "proposal": {
+    "indicator_id": "frus:frus1938v02/d382:austria=annexed",
+    "variable": "austria",
+    "level": "annexed",
+    "date": "1938-04-05",
+    "quote": "the change of status of Austria ... German authorities which have succeeded in control of the means and machinery of payment in Austria",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v02/d382",
+    "rule": "deepseek backend: The note reports Austria's changed status and German authorities in control in Austria, which meets the annexed threshold by showing German control after the Anschluss, though it does not separately mention troops or the reunification law.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-005",
+   "document": "frus:frus1938v01/d128",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d128:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1938-04-07",
+    "quote": "We know of no steps under consideration to repeal or amend legislation prohibiting exportation of arms, ammunition and implements of war to Spain.",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d128",
+    "rule": "deepseek backend: The passage reports mandatory arms-embargo legislation in force with no prospect of repeal or amendment, which meets the isolationist rule of the Neutrality Act regime with a mandatory arms embargo.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-006",
+   "document": "frus:frus1938v01/d19",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d19:belief_WEST=uncertain",
+    "variable": "belief_WEST",
+    "level": "uncertain",
+    "date": "1938-04-09",
+    "quote": "said that the desired assurances could be given only if Luxemburg recognized the right of France to enter the territory of the Grand Duchy to protect it against German invasion.",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d19",
+    "rule": "deepseek backend: The French Foreign Minister's demand for a right to enter Luxembourg to protect against German invasion is a contingency measure treating German aims as possibly beyond revision while a draft is still being negotiated, meeting the uncertain threshold.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-007",
+   "document": "frus:frus1938v01/d20",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d20:belief_WEST=limited",
+    "variable": "belief_WEST",
+    "level": "limited",
+    "date": "1938-04-11",
+    "quote": "he found it impossible to come to grips with them and have them state what they want. For instance, he said he had asked them what they wanted with regard to colonies and they tossed the question off by saying that was something that could be settled in the next 6 or 10 years.",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d20",
+    "rule": "deepseek backend: Chamberlain's effort to reach a German agreement and his acceptance that colonial demands could be settled over years treat German aims as revision negotiable in a general settlement, meeting the limited threshold.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-008",
+   "document": "frus:frus1938v01/d20",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d20:commit_WEST=appease",
+    "variable": "commit_WEST",
+    "level": "appease",
+    "date": "1938-04-11",
+    "quote": "He told me that the Italian agreement was in fine shape; that the German agreement was not doing so well; he found it impossible to come to grips with them and have them state what they want.",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d20",
+    "rule": "deepseek backend: Chamberlain reports pursuing agreements with Italy and Germany rather than a military commitment, meeting appease's policy of seeking a settlement.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-009",
+   "document": "frus:frus1938v01/d486",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d486:austria=annexed",
+    "variable": "austria",
+    "level": "annexed",
+    "date": "1938-04-10",
+    "quote": "plebiscite and Reichstag election on the issue of Austria’s union with Germany",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d486",
+    "rule": "deepseek backend: The document reports the vote held on Austria's union with Germany and refers to 'former Austrian territory', i.e. the incorporation of Austria into the Reich is treated as in being; the specific facts of the threshold rule (troops, reunification law) are not stated, so the reading is partial.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-010",
+   "document": "frus:frus1938v01/d495",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d495:austria=annexed",
+    "variable": "austria",
+    "level": "annexed",
+    "date": "1938-04-13",
+    "quote": "following upon the incorporation of Austria in the Reich",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d495",
+    "rule": "deepseek backend: The passage reports Austria's incorporation into the Reich, the annexation that meets the threshold for the annexed level.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-011",
+   "document": "frus:frus1938v01/d495",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d495:commit_WEST=appease",
+    "variable": "commit_WEST",
+    "level": "appease",
+    "date": "1938-04-13",
+    "quote": "should make every effort to reach a settlement of the German minority problem by negotiations with representatives of that minority",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d495",
+    "rule": "deepseek backend: The British government's instruction is to press Prague for a negotiated settlement rather than a commitment to fight, which meets the appease level's settlement-seeking policy.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-012",
+   "document": "frus:frus1938v01/d495",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d495:belief_WEST=uncertain",
+    "variable": "belief_WEST",
+    "level": "uncertain",
+    "date": "1938-04-13",
+    "quote": "may well carry the German Government forward to further operations with a much greater risk of disturbance of the peace",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d495",
+    "rule": "deepseek backend: The British government records that German momentum may lead to further operations beyond the present settlement while still urging negotiation, meeting the uncertain threshold.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-013",
+   "document": "frus:frus1938v02/d244",
+   "proposal": {
+    "indicator_id": "frus:frus1938v02/d244:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1938-04-13",
+    "quote": "the export of arms, ammunition, and implements of war to belligerents being totally prohibited as soon as the President issues a proclamation finding that a state of war exists",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v02/d244",
+    "rule": "deepseek backend: The passage states outright that the Neutrality Act of May 1, 1937 imposes a mandatory arms embargo on all belligerents, meeting the isolationist level's threshold.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-014",
+   "document": "frus:frus1938v02/d401",
+   "proposal": {
+    "indicator_id": "frus:frus1938v02/d401:austria=annexed",
+    "variable": "austria",
+    "level": "annexed",
+    "date": "1938-04-14",
+    "quote": "Despite reunion with the Reich ... according to Article 2 of the Law on the Reunion",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v02/d401",
+    "rule": "deepseek backend: The note reports Austria's reunion with the Reich and cites the Law on the Reunion in application, meeting the annexed threshold's reunification-law element; the passage does not mention troops.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-015",
+   "document": "frus:frus1938v01/d89",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d89:commit_WEST=appease",
+    "variable": "commit_WEST",
+    "level": "appease",
+    "date": "1938-04-15",
+    "quote": "it was in fact our object to try and dispose of all questions outstanding between the two Governments.",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d89",
+    "rule": "deepseek backend: The passage states that the British Government's object was to settle all outstanding questions, meeting the appease rule's criterion of a policy seeking a settlement.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-016",
+   "document": "frus:frus1938v01/d90",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d90:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1938-04-18",
+    "quote": "the initiative taken by the Government of Great Britain in assembling a meeting of the Council of the League of Nations to take up the consideration of the recognition of the conquest of Ethiopia by Italy",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d90",
+    "rule": "deepseek backend: The passage reports that Italy's conquest of Ethiopia is still unrecognized and only now being taken up by the League Council, showing the estrangement from the West produced by the Ethiopian episode (1935-1936) still in force.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-017",
+   "document": "frus:frus1938v01/d135",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d135:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1938-04-20",
+    "quote": "will not continue to maintain the arms embargo against the people which suffer",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d135",
+    "rule": "deepseek backend: The note reports that a US arms embargo is in force against a belligerent, consistent with the isolationist Neutrality Act regime, although it does not name the Act or state that the embargo covers all belligerents.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-018",
+   "document": "frus:frus1938v01/d134",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d134:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1938-04-21",
+    "quote": "the application of our neutrality law which allowed Germany and Italy to buy munitions while loyalist Spain was excluded",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d134",
+    "rule": "deepseek backend: The passage reports that the neutrality law is in force and is being applied to exclude a belligerent (loyalist Spain) from buying munitions, i.e. the mandatory arms-embargo regime, which is the isolationist level.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-019",
+   "document": "frus:frus1938v01/d21",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d21:belief_WEST=limited",
+    "variable": "belief_WEST",
+    "level": "limited",
+    "date": "1938-04-24",
+    "quote": "he had urged that the French be as reasonable as the British in forthcoming negotiations and that he had in mind particularly negotiations with Germany",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d21",
+    "rule": "deepseek backend: The reported ministerial statement treats German aims as revision to be met by a negotiated general settlement (reasonableness in forthcoming negotiations with Germany), which is the limited threshold rather than the uncertain or hegemonic one.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-020",
+   "document": "frus:frus1938v01/d21",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d21:commit_WEST=appease",
+    "variable": "commit_WEST",
+    "level": "appease",
+    "date": "1938-04-24",
+    "quote": "in his talk with Daladier last night he had urged that the French be as reasonable as the British in forthcoming negotiations",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d21",
+    "rule": "deepseek backend: The British minister's reported urging of reasonableness in forthcoming negotiations shows a policy seeking a settlement, meeting the appease criterion as against wary or resolved, though only this one element of the rule is visible.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-021",
+   "document": "frus:frus1938v02/d408",
+   "proposal": {
+    "indicator_id": "frus:frus1938v02/d408:austria=annexed",
+    "variable": "austria",
+    "level": "annexed",
+    "date": "1938-04-27",
+    "quote": "Newly appointed Reichs Kommissar for Austria Bürckel has returned to Vienna and ex-German Legation hopes that his authority may put an end to present “irregular situation”.",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v02/d408",
+    "rule": "deepseek backend: The document reports a German Reich Commissioner exercising authority in Vienna and refers to the German mission there as the 'ex-German Legation', showing German rule in force in Austria after the March 1938 annexation; the specific elements of the threshold (troops and reunification law) are not stated, so the reading is indirect.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-022",
+   "document": "frus:frus1938v01/d497",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d497:commit_WEST=appease",
+    "variable": "commit_WEST",
+    "level": "appease",
+    "date": "1938-04-28",
+    "quote": "the general thought is to reach such an understanding with Berlin, with the assistance of an understanding with Rome, that German desires or even German unshakable intentions may be so to speak “canalized” in a manner to maintain the general peace.",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d497",
+    "rule": "deepseek backend: The passage reports a British/French policy of reaching an understanding with Berlin to preserve peace, meeting the appease threshold of a policy that seeks a settlement; confidence is low because it is attributed to the two embassies and the ambassador doubts it reflects London or Paris.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-023",
+   "document": "frus:frus1938v01/d497",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d497:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1938-04-28",
+    "quote": "unusual activity among the Rhineland units of the army",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d497",
+    "rule": "deepseek backend: The passage reports army units in the Rhineland active there, meeting the threshold of German troops garrisoned in the zone; confidence is low because it is a second-hand consul report of activity rather than a direct statement of garrison.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-024",
+   "document": "frus:frus1938v02/d402",
+   "proposal": {
+    "indicator_id": "frus:frus1938v02/d402:austria=annexed",
+    "variable": "austria",
+    "level": "annexed",
+    "date": "1938-03-13",
+    "quote": "the Reich law of March 13, 1938, concerning the union of Austria with the German Reich, which provided in part that “Austria is a State of the German Reich”",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v02/d402",
+    "rule": "deepseek backend: The passage reports the Reich law of 13 March 1938 in force incorporating Austria into the German Reich, which meets the annexation threshold by stating the union law and Austria's incorporation.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-025",
+   "document": "frus:frus1938v02/d285",
+   "proposal": {
+    "indicator_id": "frus:frus1938v02/d285:austria=annexed",
+    "variable": "austria",
+    "level": "annexed",
+    "date": "1938-04-30",
+    "quote": "Issuance of decree was precipitated by union with Austria",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v02/d285",
+    "rule": "deepseek backend: The passage reports Austria's union with Germany as an accomplished fact (later treating Austrian property as within Germany), meeting the annexed threshold insofar as the annexation is in force, though it does not itself describe troops or the reunification law.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-026",
+   "document": "frus:frus1938v02/d357",
+   "proposal": {
+    "indicator_id": "frus:frus1938v02/d357:austria=annexed",
+    "variable": "austria",
+    "level": "annexed",
+    "date": "1938-04-30",
+    "quote": "this feeling had been particularly bitter since the “anschluss,” ... the sending of armed forces across the frontier in a sudden and violent manner, which not only prevented any real decision from Austria",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v02/d357",
+    "rule": "deepseek backend: The passage reports the Anschluss and German armed forces sent across the Austrian frontier, meeting the rule that Austria is annexed once German troops are in the country.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-027",
+   "document": "frus:frus1938v02/d357",
+   "proposal": {
+    "indicator_id": "frus:frus1938v02/d357:china_war=true",
+    "variable": "china_war",
+    "level": true,
+    "date": "1938-04-30",
+    "quote": "Japan was waging what the American people thought was an unprovoked war in China",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v02/d357",
+    "rule": "deepseek backend: The Ambassador states as fact that Japan was waging war in China, meeting the rule for a general war in China from July 1937.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-028",
+   "document": "frus:frus1938v01/d24",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d24:belief_WEST=limited",
+    "variable": "belief_WEST",
+    "level": "limited",
+    "date": "1938-05-03",
+    "quote": "Chamberlain had begun by saying that the Czechs must be pressed to make every possible concession to avoid a situation which might result in war ... Chamberlain would of course pursue this idea whenever the moment was opportune",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d24",
+    "rule": "deepseek backend: Bonnet reports Chamberlain's ministerial statements treating German aims as revision to be met by Czech concessions and by a general settlement to be pursued when opportune, which fits the limited level (settlement still regarded as attainable); the reading is second-hand, hence low.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-029",
+   "document": "frus:frus1938v01/d24",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d24:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1938-05-03",
+    "quote": "any efforts on our part to mediate in the Spanish conflict would be inconsistent with our policy of non-intervention in European affairs",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d24",
+    "rule": "deepseek backend: The American Chargé states outright that Washington's standing policy is non-intervention in European affairs and refusal to mediate, the isolationist posture of the Neutrality Act regime, though the Act itself is not cited; hence low.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-030",
+   "document": "frus:frus1938v01/d25",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d25:commit_WEST=appease",
+    "variable": "commit_WEST",
+    "level": "appease",
+    "date": "1938-05-05",
+    "quote": "the British made no commitment whatever to action in Czechoslovakia if war should break ... the profound desire of Great Britain for a peaceful solution of European difficulties",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d25",
+    "rule": "deepseek backend: The passage states no commitment to fight for Czechoslovakia and a desire for a peaceful settlement, meeting the appease rule of no standing commitment to a third state and a policy seeking settlement.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-031",
+   "document": "frus:frus1938v01/d25",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d25:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1938-05-05",
+    "quote": "after German reoccupation of the Rhineland",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d25",
+    "rule": "deepseek backend: The passage reports German reoccupation of the Rhineland, meeting the remilitarized threshold of German troops garrisoned in the zone.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-032",
+   "document": "frus:frus1938v01/d138",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d138:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1938-05-06",
+    "quote": "existing statutes prohibiting shipment of arms, ammunition and implements of war from this country to Spain",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d138",
+    "rule": "deepseek backend: The passage reports mandatory arms-embargo statutes in force against a belligerent (Spain), the isolationist Neutrality Act regime, with repeal only proposed and not enacted.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-033",
+   "document": "frus:frus1938v01/d499",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d499:commit_WEST=appease",
+    "variable": "commit_WEST",
+    "level": "appease",
+    "date": "1938-05-06",
+    "quote": "France cannot give blanket guarantees of assistance to Czechoslovakia to be operative under all conditions ... the cardinal policy of the British both in Praha and in Berlin is the employment of every effort and device to avoid a general war",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d499",
+    "rule": "deepseek backend: The passage reports that France refuses an unconditional guarantee to fight for Czechoslovakia and that Britain's cardinal policy toward Berlin is to avoid a general war, i.e. no standing commitment to fight for a third state and a policy of seeking a settlement — the appease level, not yet wary, resolved or at war.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-034",
+   "document": "frus:frus1938v01/d146",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d146:austria=annexed",
+    "variable": "austria",
+    "level": "annexed",
+    "date": "1938-05-09",
+    "quote": "the arrival of German troops on the Brenner Pass",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d146",
+    "rule": "deepseek backend: The dispatch reports as fact that German troops had arrived on the Brenner Pass, i.e. German forces garrisoned in Austrian territory after the March 1938 annexation (the reunification law itself is not mentioned, so the reading is partial).",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-035",
+   "document": "frus:frus1938v01/d146",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d146:italy_estranged=false",
+    "variable": "italy_estranged",
+    "level": false,
+    "date": "1938-05-09",
+    "quote": "there was unquestionably a change in Italy’s attitude toward France",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d146",
+    "rule": "deepseek backend: The ambassador reports as fact a change of Italian attitude toward France, satisfactory Franco-Italian conversations, and a near-complete agreement, which negates the estrangement-from-the-West condition that the true level rests on.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-036",
+   "document": "frus:frus1938v01/d500",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d500:commit_WEST=appease",
+    "variable": "commit_WEST",
+    "level": "appease",
+    "date": "1938-05-09",
+    "quote": "it was impossible for France to go to war to protect Czechoslovakia",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d500",
+    "rule": "deepseek backend: The French Premier states outright that France will not fight for a third state, which meets the appease clause of no standing commitment to fight for a third state beyond Locarno.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-037",
+   "document": "frus:frus1938v01/d500",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d500:belief_WEST=uncertain",
+    "variable": "belief_WEST",
+    "level": "uncertain",
+    "date": "1938-05-09",
+    "quote": "he had considered the position of Czechoslovakia entirely hopeless since the annexation of Austria by Germany ... Germany would not need to take any military action against Czechoslovakia in order to get anything she might desire. Economic pressure would be sufficient.",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d500",
+    "rule": "deepseek backend: Daladier, a responsible minister, treats German aims as reaching beyond a negotiable settlement to the dissolution of Czechoslovakia, which fits the uncertain level treating German aims as possibly beyond revision, though no contingency measures are recorded.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-038",
+   "document": "frus:frus1938v01/d500",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d500:austria=annexed",
+    "variable": "austria",
+    "level": "annexed",
+    "date": "1938-05-09",
+    "quote": "since the annexation of Austria by Germany",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d500",
+    "rule": "deepseek backend: The passage reports the annexation of Austria by Germany as an accomplished fact, the state the annexed level records, though it does not itself describe troops or the reunification law.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-039",
+   "document": "frus:frus1938v01/d147",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d147:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1938-05-12",
+    "quote": "the embargo, which is now being applied against both parties to the conflict in Spain",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d147",
+    "rule": "deepseek backend: The passage reports an arms embargo in force against both parties, fitting the isolationist threshold of the Neutrality Act regime with a mandatory arms embargo.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-040",
+   "document": "frus:frus1938v01/d26",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d26:axis=true",
+    "variable": "axis",
+    "level": true,
+    "date": "1938-05-13",
+    "quote": "the Rome–Berlin Axis had been fortified by the visit",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d26",
+    "rule": "deepseek backend: The passage explicitly reports the Rome–Berlin Axis as an existing alignment strengthened by the Hitler visit, meeting the threshold for axis true.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-041",
+   "document": "frus:frus1938v01/d502",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d502:commit_WEST=appease",
+    "variable": "commit_WEST",
+    "level": "appease",
+    "date": "1938-05-13",
+    "quote": "Britain and France would be willing to put up with almost any arrangement in respect to a settlement of the Sudeten question providing it did not drag them into a war",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d502",
+    "rule": "deepseek backend: The passage reports London and Paris seeking a Sudeten settlement while avoiding a war commitment, which meets the appease threshold of a policy seeking settlement with no standing commitment to fight for a third state.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-042",
+   "document": "frus:frus1938v01/d502",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d502:belief_WEST=limited",
+    "variable": "belief_WEST",
+    "level": "limited",
+    "date": "1938-05-13",
+    "quote": "Britain had come to accept Berlin’s insistence that settlement of the Sudeten question was a matter outside the domain of a general settlement of European grievances",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d502",
+    "rule": "deepseek backend: The passage reports London as accepting a negotiated separate settlement of the Sudeten question, which meets the limited threshold that German aims are treated as revision a settlement can satisfy; it is not a Cabinet record, so confidence is low.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-043",
+   "document": "frus:frus1938v01/d503",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d503:austria=annexed",
+    "variable": "austria",
+    "level": "annexed",
+    "date": "1938-05-14",
+    "quote": "the German annexation of Austria",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d503",
+    "rule": "deepseek backend: The passage reports Austria's annexation by Germany, meeting the annexed level for Austria.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-044",
+   "document": "frus:frus1938v01/d504",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d504:belief_WEST=uncertain",
+    "variable": "belief_WEST",
+    "level": "uncertain",
+    "date": "1938-05-16",
+    "quote": "The British had agreed finally to intervene both in Berlin and in Praha—on the other hand to inform the Germans that they were certain that France would march in case Czechoslovakia should be invaded by the German Army and that England would be drawn into the war; on the other hand to press the Czechs to make concessions to the Sudeten Germans sufficient to satisfy both the Sudeten Germans and Hitler.",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d504",
+    "rule": "deepseek backend: The reported British decision to warn Berlin that France and England would go to war if Czechoslovakia were invaded, while still pressing the Czechs to satisfy Hitler by concessions, meets the uncertain threshold of contingency warning alongside negotiation.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-045",
+   "document": "frus:frus1938v01/d504",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d504:commit_WEST=appease",
+    "variable": "commit_WEST",
+    "level": "appease",
+    "date": "1938-05-16",
+    "quote": "The British had agreed finally to intervene both in Berlin and in Praha—on the other hand to inform the Germans that they were certain that France would march in case Czechoslovakia should be invaded by the German Army and that England would be drawn into the war; on the other hand to press the Czechs to make concessions to the Sudeten Germans sufficient to satisfy both the Sudeten Germans and Hitler.",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d504",
+    "rule": "deepseek backend: The reported British policy of pressing the Czechs to concede to the Sudeten Germans and Hitler, without a standing guarantee to fight for Czechoslovakia, is a policy seeking settlement and meets appease.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-046",
+   "document": "frus:frus1938v01/d504",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d504:belief_WEST=limited",
+    "variable": "belief_WEST",
+    "level": "limited",
+    "date": "1938-05-16",
+    "quote": "he would rigorously refrain from expressing to Osusky or to the Czechoslovak Government any opinion as to the concessions until he had learned from the British that these concessions would prove to be satisfactory to the Sudeten Germans and to the German Government.",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d504",
+    "rule": "deepseek backend: Bonnet, the French Foreign Minister, treats German aims as revision that a negotiated settlement can satisfy by insisting that concessions be made satisfactory to the German Government, meeting the limited threshold.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-047",
+   "document": "frus:frus1938v01/d505",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d505:belief_WEST=limited",
+    "variable": "belief_WEST",
+    "level": "limited",
+    "date": "1938-05-16",
+    "quote": "Hitler reserved to himself the right to expand in Eastern and Central Europe among his own people but that he does not want to go to war. So Halifax says that the British are trying to keep to the attitude of saying to Germany, “Now we are urging Beneš to make a reasonable and sensible deal”",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d505",
+    "rule": "deepseek backend: Halifax, a responsible minister, treats German aims as expansion that can be met by a negotiated settlement, since he says Hitler does not want war and Britain is urging Beneš to make a reasonable deal.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-048",
+   "document": "frus:frus1938v01/d505",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d505:commit_WEST=appease",
+    "variable": "commit_WEST",
+    "level": "appease",
+    "date": "1938-05-16",
+    "quote": "the British are trying to keep to the attitude of saying to Germany, “Now we are urging Beneš to make a reasonable and sensible deal”",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d505",
+    "rule": "deepseek backend: The reported British policy is to press Prague for a settlement with Germany, which fits appease as a policy seeking settlement rather than a standing commitment to fight for the third state.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-049",
+   "document": "frus:frus1938v02/d386",
+   "proposal": {
+    "indicator_id": "frus:frus1938v02/d386:austria=annexed",
+    "variable": "austria",
+    "level": "annexed",
+    "date": "1938-05-16",
+    "quote": "the indebtedness of the former central Government of Austria was now a debt of the Austrian Province of the German Reich",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v02/d386",
+    "rule": "deepseek backend: The document treats the former Austrian Federal Government as superseded and Austria as a province of the German Reich, indicating the annexation is in force; the passage does not itself mention troops or the reunification law, so the threshold judgment is needed.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-050",
+   "document": "frus:frus1938v02/d245",
+   "proposal": {
+    "indicator_id": "frus:frus1938v02/d245:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1938-05-17",
+    "quote": "he should not count on receiving a single American plane after a declaration of war",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v02/d245",
+    "rule": "deepseek backend: The Ambassador states that no American planes would reach France after a declaration of war, i.e. the mandatory arms embargo on belligerents under the Neutrality Act regime is in force, meeting the isolationist threshold.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-051",
+   "document": "frus:frus1938v01/d507",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d507:commit_WEST=resolved",
+    "variable": "commit_WEST",
+    "level": "resolved",
+    "date": "1938-05-18",
+    "quote": "the positive declaration of France of her intention to come to the aid of Czechoslovakia if attacked",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d507",
+    "rule": "deepseek backend: The rule for resolved is a standing commitment to fight for a third state that Germany threatens; the passage reports France's declared intention to come to Czechoslovakia's aid if it is attacked, a commitment to fight for a threatened third state.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-052",
+   "document": "frus:frus1938v02/d247",
+   "proposal": {
+    "indicator_id": "frus:frus1938v02/d247:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1938-05-18",
+    "quote": "that the company would strictly adhere to the letter and spirit of all provisions of the Neutrality Act.",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v02/d247",
+    "rule": "deepseek backend: The passage reports that the Neutrality Act's provisions governed a proposed aircraft purchase and were to be strictly adhered to, which is read as the isolationist Neutrality Act regime in force, though the embargo itself is not stated.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-053",
+   "document": "frus:frus1938v02/d248",
+   "proposal": {
+    "indicator_id": "frus:frus1938v02/d248:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1938-05-18",
+    "quote": "The pertinent provisions of the Neutrality Act ... the possibility of the delivery of airplanes to France in case that country should become involved in a European war.",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v02/d248",
+    "rule": "deepseek backend: The Secretary of State reports the Neutrality Act's mandatory embargo as governing and precluding arms deliveries to a belligerent, which meets the isolationist level of the Neutrality Act regime.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-054",
+   "document": "frus:frus1938v01/d148",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d148:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1938-05-19",
+    "quote": "The French Embassy admits a definite tension in Franco-Italian relations as a result of the speech ... The Italian press, however, is displaying considerable hostility toward France",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d148",
+    "rule": "deepseek backend: The dispatch reports a continuing state of estrangement between Italy and a Western power (France): open tension after the Duce's speech, no resumption of negotiations, and press hostility, which meets the estranged level of the threshold rule.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-055",
+   "document": "frus:frus1938v01/d149",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d149:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1938-05-20",
+    "quote": "The policy of the Government of the United States is actuated by the desire to keep this country out of war and to avoid interference of any kind in the internal affairs of another country. ... the export of arms from this country to Spain would be contrary to such policy ... prohibiting the exportation of arms, ammunition, and implements of war to Spain",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d149",
+    "rule": "deepseek backend: The document reports a congressional arms embargo against Spain and a policy of strict noninterference, matching the isolationist level, though the embargo is Spain-specific rather than the general Neutrality Act regime.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-056",
+   "document": "frus:frus1938v01/d508",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d508:commit_WEST=appease",
+    "variable": "commit_WEST",
+    "level": "appease",
+    "date": "1938-05-21",
+    "quote": "Henderson has obtained instructions from his Government to keep in close touch with Ribbentrop and to persist in his advice for moderation.",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d508",
+    "rule": "deepseek backend: Appease requires that British policy seeks a settlement rather than a military answer, and the passage reports the British Government instructing its ambassador to press advice of moderation on Ribbentrop rather than any commitment to act militarily.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-057",
+   "document": "frus:frus1938v01/d508",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d508:sudeten=czech",
+    "variable": "sudeten",
+    "level": "czech",
+    "date": "1938-05-21",
+    "quote": "further reports have been received of the shooting of two Sudeten Deutsche by Czech troops",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d508",
+    "rule": "deepseek backend: The Sudeten areas are German only once ceded under Munich; here the document reports Czech troops acting there, i.e. the area still under Czechoslovak control.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-058",
+   "document": "frus:frus1938v01/d511",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d511:commit_WEST=resolved",
+    "variable": "commit_WEST",
+    "level": "resolved",
+    "date": "1938-05-22",
+    "quote": "The chances are today that the French will carry out their pledge to Czechoslovakia as a matter of honor—whatever the cost.",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d511",
+    "rule": "deepseek backend: The passage reports a standing French commitment to fight for Czechoslovakia, a third state Germany is threatening, which meets the 'resolved' threshold, though it is the ambassador's second-hand assessment of French intentions rather than a formal government declaration.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-059",
+   "document": "frus:frus1938v01/d512",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d512:belief_WEST=uncertain",
+    "variable": "belief_WEST",
+    "level": "uncertain",
+    "date": "1938-05-22",
+    "quote": "a memorandum which the British Ambassador in Berlin presented to Ribbentrop last night ... if France should be drawn into war by Germany attacking Czechoslovakia Great Britain would be obliged to support France",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d512",
+    "rule": "deepseek backend: The document reports the British warning to Berlin of 21 May 1938 (contingency commitment to support France) delivered while the British Government 'had been urging moderation on the Czech Government', which is the threshold marker for uncertain in this rule.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-060",
+   "document": "frus:frus1938v01/d512",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d512:belief_GER=will_fight",
+    "variable": "belief_GER",
+    "level": "will_fight",
+    "date": "1938-05-22",
+    "quote": "even though England were to take the course outlined in the British Government’s memorandum, Germany would not hesitate to make war any more than she had hesitated in 1914",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d512",
+    "rule": "deepseek backend: The German Foreign Minister's reported reply treats war with Britain as a contemplated consequence of the German course over Czechoslovakia rather than a deterrent, meeting the will_fight threshold.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-061",
+   "document": "frus:frus1938v01/d516",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d516:belief_WEST=limited",
+    "variable": "belief_WEST",
+    "level": "limited",
+    "date": "1938-05-24",
+    "quote": "both the British and French Governments were convinced that Germany would not strike now but would wait to see whether or not the Czechs would make real concessions to the Sudeten",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d516",
+    "rule": "deepseek backend: The French Foreign Minister's reported statement treats German aims as revision that a negotiated settlement (Sudeten concessions) can satisfy and that a strike will be averted by it, matching the limited level.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-062",
+   "document": "frus:frus1938v01/d516",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d516:commit_WEST=appease",
+    "variable": "commit_WEST",
+    "level": "appease",
+    "date": "1938-05-24",
+    "quote": "France would know who was attempting to set fire to Europe and would not be driven into war to please Beneš",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d516",
+    "rule": "deepseek backend: Bonnet's reported statement shows France refusing to fight for Czechoslovakia while pressing Prague to concede for a settlement, i.e. no standing commitment to fight for a third state and a policy seeking settlement, the appease level.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-063",
+   "document": "frus:frus1938v02/d389",
+   "proposal": {
+    "indicator_id": "frus:frus1938v02/d389:austria=annexed",
+    "variable": "austria",
+    "level": "annexed",
+    "date": "1938-05-31",
+    "quote": "the German Government in a formal note addressed to him, as President of the Committee of the Guarantor States of the Austrian Loans, refused to recognize any legal obligation to assume Austrian foreign indebtedness",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v02/d389",
+    "rule": "deepseek backend: The passage reports Berlin answering as the sovereign successor responsible for Austrian state obligations, which reads as the annexation of Austria; it does not state troops or the reunification law, so the threshold is met only indirectly.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-064",
+   "document": "frus:frus1938v02/d389",
+   "proposal": {
+    "indicator_id": "frus:frus1938v02/d389:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1938-05-31",
+    "quote": "he was greatly disappointed that Italy had retired from the Committee of the Guarantor States",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v02/d389",
+    "rule": "deepseek backend: Italy withdrawing from a Western-organized committee of guarantor creditor states, with talk of a private understanding with the Reich, reports estrangement from the Western powers.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-065",
+   "document": "frus:frus1938v01/d158",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d158:china_war=true",
+    "variable": "china_war",
+    "level": true,
+    "date": "1938-06-06",
+    "quote": "the recent bombing of Canton",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d158",
+    "rule": "deepseek backend: The passage reports Japanese bombing of Canton as fact and a British protest to the Japanese Government about it, showing Japan's army engaged in war in China beyond the July 1937 opening, so the threshold for china_war true is met.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-066",
+   "document": "frus:frus1938v01/d159",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d159:axis=true",
+    "variable": "axis",
+    "level": true,
+    "date": "1938-06-06",
+    "quote": "the restraining influence which he was confident Italy had exerted on Germany in the Czechoslovak aggressions",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d159",
+    "rule": "deepseek backend: The British Ambassador reports Italy acting in close concert with Germany on the Czechoslovak question ('Italy was closely in touch with the situation'), an explicit statement of the Rome-Berlin alignment in force, though only through a second-hand account of his belief.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-067",
+   "document": "frus:frus1938v02/d391",
+   "proposal": {
+    "indicator_id": "frus:frus1938v02/d391:austria=annexed",
+    "variable": "austria",
+    "level": "annexed",
+    "date": "1938-06-07",
+    "quote": "the absorption of Austria by Germany",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v02/d391",
+    "rule": "deepseek backend: The passage explicitly reports Austria's absorption by Germany as an accomplished fact, with Austria's assets and revenues taken over by the German Government, meeting the annexed state of affairs.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-068",
+   "document": "frus:frus1938v01/d163",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d163:commit_WEST=appease",
+    "variable": "commit_WEST",
+    "level": "appease",
+    "date": "1938-06-09",
+    "quote": "the British Government had been casting about for some other scheme which might hasten a settlement and relieve the present tension",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d163",
+    "rule": "deepseek backend: The passage reports the British Government pursuing a diplomatic settlement to relieve tension, meeting the appease threshold's policy of seeking a settlement rather than a military commitment.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-069",
+   "document": "frus:frus1938v01/d163",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d163:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1938-06-09",
+    "quote": "made it impossible to put the Anglo-Italian agreement into effect. This was holding up appeasement among the Mediterranean Powers generally ... the cause for the break in the Franco-Italian conversations",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d163",
+    "rule": "deepseek backend: The passage reports the Anglo-Italian agreement blocked and a break in Franco-Italian conversations, an explicit state of estrangement from the Western powers.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-070",
+   "document": "frus:frus1938v01/d164",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d164:china_war=true",
+    "variable": "china_war",
+    "level": true,
+    "date": "1938-06-10",
+    "quote": "With American educational buildings being razed by Japanese bombings",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d164",
+    "rule": "deepseek backend: Reports Japanese bombing operations in China as an ongoing fact, showing Japan's army engaged in war in China under the general-war threshold.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-071",
+   "document": "frus:frus1938v01/d166",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d166:commit_WEST=appease",
+    "variable": "commit_WEST",
+    "level": "appease",
+    "date": "1938-06-10",
+    "quote": "there is a feeling that they will try any idea that anybody suggests which still adheres to the principle of not going to war",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d166",
+    "rule": "deepseek backend: The passage reports the British government's policy of avoiding war and trying any proposed settlement, fitting the appease threshold of no commitment to fight and a search for settlement.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-072",
+   "document": "frus:frus1938v01/d725",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d725:austria=annexed",
+    "variable": "austria",
+    "level": "annexed",
+    "date": "1938-06-14",
+    "quote": "political refugees from Germany (including Austria)",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d725",
+    "rule": "deepseek backend: The document treats Austria as comprised within Germany when describing refugees 'from Germany (including Austria)', the state of affairs established by the March 1938 annexation, though it reports no troops or law directly.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-073",
+   "document": "frus:frus1938v02/d454",
+   "proposal": {
+    "indicator_id": "frus:frus1938v02/d454:axis=true",
+    "variable": "axis",
+    "level": true,
+    "date": "1938-06-15",
+    "quote": "this close identification in international policy between Germany and Italy persisted",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v02/d454",
+    "rule": "deepseek backend: The passage explicitly reports a close identification in international policy between Germany and Italy, meeting the Rome-Berlin alignment threshold for axis true.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-074",
+   "document": "frus:frus1938v01/d359",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d359:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1938-06-21",
+    "quote": "our Government had altered its policy of refusing export licenses for planes and munitions to Spain",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d359",
+    "rule": "deepseek backend: The isolationist level is met because the passage reports a US policy of refusing export licenses (an arms embargo) for planes and munitions to a belligerent, Spain, still in force.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-075",
+   "document": "frus:frus1938v01/d360",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d360:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1938-06-21",
+    "quote": "We are expecting to receive applications for export licenses falsely indicating France as the ultimate destination. Licenses will not be issued.",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d360",
+    "rule": "deepseek backend: The Department reports that arms export licenses for aircraft destined to a belligerent (Spain) will be refused, i.e. the mandatory arms-embargo regime is being applied, meeting the isolationist threshold.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-076",
+   "document": "frus:frus1938v01/d523",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d523:commit_WEST=resolved",
+    "variable": "commit_WEST",
+    "level": "resolved",
+    "date": "1938-06-22",
+    "quote": "attempt to use force against Czechoslovakia, France would go to war immediately whether England liked it or not.",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d523",
+    "rule": "deepseek backend: Daladier states that France would immediately go to war if Germany used force against Czechoslovakia after a reasonable Czech offer, which is a standing commitment to fight for a third state Germany threatens, although the statement is conditional and private.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-077",
+   "document": "frus:frus1938v01/d523",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d523:belief_WEST=uncertain",
+    "variable": "belief_WEST",
+    "level": "uncertain",
+    "date": "1938-06-22",
+    "quote": "He believed that the Czechs would make a reasonable offer to the Sudeten but he had no confidence that this offer would be accepted either by the Sudeten or by Hitler.",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d523",
+    "rule": "deepseek backend: Daladier treats a reasonable Czech offer as unlikely to satisfy Hitler, indicating German aims may be beyond a negotiated settlement while France still presses concessions and contemplates war.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-078",
+   "document": "frus:frus1938v01/d172",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d172:commit_WEST=appease",
+    "variable": "commit_WEST",
+    "level": "appease",
+    "date": "1938-06-26",
+    "quote": "neither the French nor the British Government would intervene to save the Spanish Government from destruction",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d172",
+    "rule": "deepseek backend: The reported statement by the British and French Governments that they will not intervene on behalf of a threatened third state shows no standing commitment to fight for a third state, meeting the appease threshold (second-hand report, so low confidence).",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-079",
+   "document": "frus:frus1938v01/d365",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d365:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1938-06-27",
+    "quote": "attempts had recently been made to export arms to Spain in violation of the law by means of false statements that Turkey was the country of destination",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d365",
+    "rule": "deepseek backend: The passage reports that exporting arms to Spain is prohibited by law, i.e. the mandatory arms embargo of the Neutrality Act regime is in force, meeting the isolationist threshold.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-080",
+   "document": "frus:frus1938v02/d348",
+   "proposal": {
+    "indicator_id": "frus:frus1938v02/d348:austria=annexed",
+    "variable": "austria",
+    "level": "annexed",
+    "date": "1938-06-29",
+    "quote": "the absorption of Austria into Germany",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v02/d348",
+    "rule": "deepseek backend: The document explicitly refers to Austria's absorption into Germany, which meets the annexed threshold by reporting that Austria is no longer independent.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1938Q2-081",
+   "document": "frus:frus1938v01/d367",
+   "proposal": {
+    "indicator_id": "frus:frus1938v01/d367:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1938-06-30",
+    "quote": "The laws prohibiting the exportation of arms to Spain contain no provisions under which exceptions to the prohibition could be granted.",
+    "url": "https://history.state.gov/historicaldocuments/frus1938v01/d367",
+    "rule": "deepseek backend: The Secretary of State reports a mandatory statutory arms embargo with no provision for exceptions, which meets the isolationist rule of the Neutrality Act regime with a mandatory arms embargo.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  }
+ ],
+ "discarded": [],
+ "errors": []
+}
