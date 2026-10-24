@@ -1,0 +1,99 @@
+# The amended hold-out claims C3 and C6 (the owner's decisions 2j, 2k, 2n of 2026-10-23), computed on the
+# model of first sight (models/cw, snapshots/cw and data/cw identical to HEAD a1bf705d3d274125e2bd5197511b695ae2b9b5f3),
+# before the guard edit of 2026-10-23 (docs/guard_changelog_cw.md). Working tree dirty: the amended test files and
+# docs of this step, and files of other work in progress outside the Cold War model (WW2 v1, 1914, crisis 1939).
+# Command: python -m pytest tests/coldwar/scenarios/test_C03.py tests/coldwar/scenarios/test_C06.py -q -s -p no:cacheprovider
+# Run 2026-10-24 02:05:18 to 02:14:31 UTC (2 failed, 551.6 s). A run under pytest-xdist immediately before it
+# (01:59:49 to 02:05:00 UTC, -n 2, same tree) gave the same verdicts but dropped the printed output; this serial run
+# repeats it on the same tree to record the numbers. Assertion tracebacks are omitted.
+
+[C3] engine: explicit sub-game with symbolic coarse kernels (lifting, decisions D5)
+[C3] aims_USSR=status_quo [registered: balance_cw]: fine graph 2869 states; realized days 14
+[C3]   K_USA: realized days inside [False, False, False, False, False, False, False, False, False, False, False, False, False, False]
+[C3]   K_USSR: realized days inside [False, False, False, False, False, False, False, False, False, False, False, False, False, False]
+[C3]   K_USA+USSR: realized days inside [False, False, False, False, False, False, False, False, False, False, False, False, False, False]
+[C3]   entered-from 1962 state in K_USA, K_USSR: {('USA',): False, ('USSR',): False}
+[C3]   (b) USA: first day outside 0; shortest way back: none
+[C3]   (b) USSR: first day outside 0; shortest way back: none
+[C3] aims_USSR=status_quo [amended: no_war, unbounded]: fine graph 2869 states; realized days 14
+[C3]   K_USA: realized days inside [False, False, False, False, False, False, False, False, False, False, False, False, False, False]
+[C3]   K_USSR: realized days inside [False, False, False, False, False, False, False, False, False, False, False, False, False, True]
+[C3]   K_USA+USSR: realized days inside [True, True, True, True, True, True, True, True, True, False, False, False, False, True]
+[C3]   entered-from 1962 state in K_USA, K_USSR: {('USA',): False, ('USSR',): True}
+[C3]   (b) USA: first day outside 0; shortest way back: none
+[C3]   (b) USSR: first day outside 0; shortest way back: ['USA.pledge', 'USSR.withdraw']
+[C3] aims_USSR=status_quo [variant: no_war at the return (1963)]: fine graph 2869 states; realized days 14
+[C3]   K_USA: realized days inside [True, True, True, True, True, True, True, False, True, False, False, False, False, True]
+[C3]   K_USSR: realized days inside [False, False, False, False, False, False, False, False, False, False, False, False, False, True]
+[C3]   K_USA+USSR: realized days inside [True, True, True, True, True, True, True, True, True, False, False, False, False, True]
+[C3]   entered-from 1962 state in K_USA, K_USSR: {('USA',): True, ('USSR',): True}
+[C3]   (b) USA: first day outside 7; shortest way back: ['USSR.turn_back']
+[C3]   (b) USSR: first day outside 0; shortest way back: ['USA.pledge', 'USSR.withdraw']
+[C3]   (c) war endings for USA: forced (with Nature: forced)
+[C3]   (c) war endings for USSR: blocked (with Nature: blocked)
+[C3]   (c) registered (standard region for both): False
+[C3]   (c) amended (fortune sense for both): False
+[C3] aims_USSR=status_quo registered: (a) False, (b) False, (c) False
+[C3] aims_USSR=status_quo amended: (a) False, (b) False, (c) False (6.1 s)
+[C3] aims_USSR=opportunist [registered: balance_cw]: fine graph 2869 states; realized days 14
+[C3]   K_USA: realized days inside [False, False, False, False, False, False, False, False, False, False, False, False, False, False]
+[C3]   K_USSR: realized days inside [False, False, False, False, False, False, False, False, False, False, False, False, False, False]
+[C3]   K_USA+USSR: realized days inside [False, False, False, False, False, False, False, False, False, False, False, False, False, False]
+[C3]   entered-from 1962 state in K_USA, K_USSR: {('USA',): False, ('USSR',): False}
+[C3]   (b) USA: first day outside 0; shortest way back: none
+[C3]   (b) USSR: first day outside 0; shortest way back: none
+[C3] aims_USSR=opportunist [amended: no_war, unbounded]: fine graph 2869 states; realized days 14
+[C3]   K_USA: realized days inside [False, False, False, False, False, False, False, False, False, False, False, False, False, False]
+[C3]   K_USSR: realized days inside [False, False, False, False, False, False, False, False, False, False, False, False, False, True]
+[C3]   K_USA+USSR: realized days inside [True, True, True, True, True, True, True, True, True, False, False, False, False, True]
+[C3]   entered-from 1962 state in K_USA, K_USSR: {('USA',): False, ('USSR',): True}
+[C3]   (b) USA: first day outside 0; shortest way back: none
+[C3]   (b) USSR: first day outside 0; shortest way back: ['USA.pledge', 'USSR.withdraw']
+[C3] aims_USSR=opportunist [variant: no_war at the return (1963)]: fine graph 2869 states; realized days 14
+[C3]   K_USA: realized days inside [True, True, True, True, True, True, True, False, True, False, False, False, False, True]
+[C3]   K_USSR: realized days inside [False, False, False, False, False, False, False, False, False, False, False, False, False, True]
+[C3]   K_USA+USSR: realized days inside [True, True, True, True, True, True, True, True, True, False, False, False, False, True]
+[C3]   entered-from 1962 state in K_USA, K_USSR: {('USA',): True, ('USSR',): True}
+[C3]   (b) USA: first day outside 7; shortest way back: ['USSR.turn_back']
+[C3]   (b) USSR: first day outside 0; shortest way back: ['USA.pledge', 'USSR.withdraw']
+[C3]   (c) war endings for USA: forced (with Nature: forced)
+[C3]   (c) war endings for USSR: blocked (with Nature: blocked)
+[C3]   (c) registered (standard region for both): False
+[C3]   (c) amended (fortune sense for both): False
+[C3] aims_USSR=opportunist registered: (a) False, (b) False, (c) False
+[C3] aims_USSR=opportunist amended: (a) False, (b) False, (c) False (11.2 s)
+F
+[C6] engine: replay against hindsight snapshots; explicit coarse game cut at 1963
+[C6]   1957: replayed belief few, hindsight nuke_USSR few: exceeds False
+[C6]   1958: replayed belief survivable, hindsight nuke_USSR few: exceeds True
+[C6]   1959: replayed belief survivable, hindsight nuke_USSR few: exceeds True
+[C6]   1960: replayed belief survivable, hindsight nuke_USSR few: exceeds True
+[C6]   1961: replayed belief survivable, hindsight nuke_USSR few: exceeds True
+[C6]   1962: replayed belief few, hindsight nuke_USSR few: exceeds False
+[C6]   aims_USSR=status_quo 1958: replay {'GENERAL_WAR': 2, 'ACCIDENTAL_WAR': 2, 'K_USA': 0, 'K_USSR': 1} (1681600); hindsight {'GENERAL_WAR': 2, 'ACCIDENTAL_WAR': 2, 'K_USA': 0, 'K_USSR': 1} (116868): registered False, amended False
+[C6]   aims_USSR=status_quo 1959: replay {'GENERAL_WAR': 1, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (230632); hindsight {'GENERAL_WAR': 1, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (12047): registered False, amended False
+[C6]   aims_USSR=status_quo 1960: replay {'GENERAL_WAR': 1, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (49471); hindsight {'GENERAL_WAR': 1, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (3721): registered False, amended False
+[C6]   aims_USSR=status_quo 1961: replay {'GENERAL_WAR': 1, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (4004); hindsight {'GENERAL_WAR': 1, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (262): registered False, amended False
+[C6]   aims_USSR=status_quo: (b) registered False, amended False
+[C6]   aims_USSR=opportunist 1958: replay {'GENERAL_WAR': 2, 'ACCIDENTAL_WAR': 2, 'K_USA': 0, 'K_USSR': 1} (1681600); hindsight {'GENERAL_WAR': 2, 'ACCIDENTAL_WAR': 2, 'K_USA': 0, 'K_USSR': 1} (245845): registered False, amended False
+[C6]   aims_USSR=opportunist 1959: replay {'GENERAL_WAR': 1, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (230632); hindsight {'GENERAL_WAR': 1, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (24764): registered False, amended False
+[C6]   aims_USSR=opportunist 1960: replay {'GENERAL_WAR': 1, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (49471); hindsight {'GENERAL_WAR': 1, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (7124): registered False, amended False
+[C6]   aims_USSR=opportunist 1961: replay {'GENERAL_WAR': 1, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (4004); hindsight {'GENERAL_WAR': 1, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (563): registered False, amended False
+[C6]   aims_USSR=opportunist: (b) registered False, amended False
+[C6]   (c) intel overhead from 1961; gap closed in 1962; hindsight force {1957: 'few', 1958: 'few', 1959: 'few', 1960: 'few', 1961: 'few', 1962: 'few'}
+[C6]   (c) events with an effect on belief_force_USA (guard parts): {'USSR.build_bomb': ['level'], 'USSR.icbm_buildup': ['level'], 'USSR.mirv': ['level'], 'Nature.missile_gap': ['blind', 'soviet_force'], 'Nature.estimate_revised': ['overhead', 'gap']}
+[C6] (a) True, (b) {'status_quo': False, 'opportunist': False}, (c) True (540.1 s)
+F
+=================================== FAILURES ===================================
+___________________________________ test_C03 ___________________________________
+
+
+tests/coldwar/scenarios/test_C03.py:143: AssertionError
+___________________________________ test_C06 ___________________________________
+
+
+tests/coldwar/scenarios/test_C06.py:154: AssertionError
+=========================== short test summary info ============================
+FAILED tests/coldwar/scenarios/test_C03.py::test_C03 - AssertionError: {'stat...
+FAILED tests/coldwar/scenarios/test_C06.py::test_C06 - AssertionError: (True,...
+2 failed in 551.64s (0:09:11)

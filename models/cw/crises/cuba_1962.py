@@ -12,7 +12,8 @@ Actors: ``USA`` (Kennedy and the ExComm), ``USSR`` (Khrushchev and the Presidium
 missile sites, accidents).
 
 ``entry`` starts every variable at its declared value. ``exit`` maps the endings to the
-coarse game: the withdrawal returns ``esc = peace``, a war ``conventional``, nuclear use
+coarse game: the withdrawal returns ``esc = peace``, a war ``conventional`` (begun by the
+United States: ``us_began_war``, added 2026-10-23), nuclear use
 ``tactical_nuclear`` (with ``accidental`` when Nature's accident was the cause), an
 unresolved crisis at the horizon ``crisis``.
 """
@@ -211,7 +212,9 @@ def exit_map(day: dict[str, str], year: dict[str, str]) -> dict[str, object]:
     if day["nuclear"] == "True":
         return {"esc": "tactical_nuclear", "accidental": day["accident"] == "True"}
     if day["fighting"] == "True":
-        return {"esc": "conventional"}
+        # Only the United States opens fighting in the sub-game (air_strike, invade): a war
+        # begun by the United States (us_began_war, added 2026-10-23, decision 2l).
+        return {"esc": "conventional", "us_began_war": True}
     if day["missiles"] == "withdrawn":
         return {"esc": "peace"}
     return {"esc": "crisis"}

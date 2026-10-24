@@ -1,0 +1,729 @@
+# Cold War suite rerun after the guard edit of 2026-10-23 (decision 2l): one pytest process per file, two at a time, -s, at HEAD a1bf705 with the working tree carrying the edits.
+# The earlier -n 2 run of 02:16 to 04:16 UTC was stopped at the tool's two-hour limit with no summary; this is the run of record.
+START=2026-10-24T04:16:52Z
+END=2026-10-24T05:17:23Z
+
+===== test_C01 =====
+START=2026-10-24T04:48:14Z
+
+[C1] engine: explicit replay on the flattened game
+[C1] aims_USSR=status_quo: stops in 1950 (coarse): USSR.approve_korea unavailable
+[C1] aims_USSR=opportunist: every move available; tick 45, ending CHALLENGER_EXHAUSTION; crises played: ['able_archer_1983', 'berlin_1948', 'cuba_1962'] (69 fine states)
+[C1] reachable with zero relaxations under: ['opportunist'] (0.1 s)
+.
+============================= slowest 5 durations ==============================
+0.08s call     tests/coldwar/scenarios/test_C01.py::test_C01
+
+(2 durations < 0.005s hidden.  Use -vv to show these durations.)
+1 passed in 0.35s
+END=2026-10-24T04:48:15Z
+
+===== test_C02 =====
+START=2026-10-24T04:20:44Z
+
+[C2] engine: symbolic kernels (coarse game), hindsight snapshots
+[C2] aims_USSR=status_quo [balance_nobloc]: year: predicate, joint, USA, USSR
+[C2]   1965: False, False, False, False
+[C2]   1966: False, False, False, False
+[C2]   1967: True, True, False, True
+[C2]   1968: True, True, False, True
+[C2]   1969: True, True, False, True
+[C2]   1970: True, True, False, True
+[C2]   1971: True, True, False, True
+[C2]   1972: True, True, False, True
+[C2]   1973: True, True, True, True
+[C2]   1974: True, True, True, True
+[C2]   1975: True, True, True, True
+[C2]   1976: True, True, True, True
+[C2]   1977: True, True, True, True
+[C2]   1978: True, True, True, True
+[C2]   1979: True, True, True, True
+[C2]   1980: True, True, True, True
+[C2]   1981: True, True, True, True
+[C2]   1982: True, True, True, True
+[C2]   1983: True, True, True, True
+[C2]   1984: True, True, True, True
+[C2]   1985: True, True, True, True
+[C2]   1986: True, True, True, True
+[C2]   1987: True, True, True, True
+[C2]   1988: True, True, True, True
+[C2]   1989: True, True, True, True
+[C2]   1990: True, True, True, True
+[C2]   1991: True, True, True, True
+[C2]   1965: against USA alone: forced in 0 ticks, first move ['idle']
+[C2]   1965: against USSR alone: forced in 0 ticks, first move ['idle']
+[C2]   1970: against USA alone: forced in 1 ticks, first move ['USSR.strike_china']
+[C2]   1970: against USSR alone: None
+[C2]   1975: against USA alone: None
+[C2]   1975: against USSR alone: None
+[C2]   1980: against USA alone: None
+[C2]   1980: against USSR alone: None
+[C2]   1985: against USA alone: None
+[C2]   1985: against USSR alone: None
+[C2]   1990: against USA alone: None
+[C2]   1990: against USSR alone: None
+[C2] aims_USSR=status_quo [balance_nobloc]: claim does not hold (170.7 s)
+[C2] aims_USSR=status_quo [balance_cw]: year: predicate, joint, USA, USSR
+[C2]   1965: False, False, False, False
+[C2]   1966: False, False, False, False
+[C2]   1967: True, True, False, True
+[C2]   1968: True, True, False, True
+[C2]   1969: True, True, False, True
+[C2]   1970: True, True, False, True
+[C2]   1971: True, True, False, True
+[C2]   1972: True, True, False, True
+[C2]   1973: True, True, False, True
+[C2]   1974: True, True, False, True
+[C2]   1975: True, True, False, True
+[C2]   1976: True, True, False, True
+[C2]   1977: True, True, False, True
+[C2]   1978: True, True, False, True
+[C2]   1979: True, True, False, True
+[C2]   1980: True, True, False, True
+[C2]   1981: True, False, False, False
+[C2]   1982: True, True, False, True
+[C2]   1983: True, True, False, True
+[C2]   1984: True, True, False, True
+[C2]   1985: True, True, False, True
+[C2]   1986: True, True, False, True
+[C2]   1987: True, False, False, False
+[C2]   1988: True, False, False, False
+[C2]   1989: True, False, False, False
+[C2]   1990: False, False, False, False
+[C2]   1991: False, False, False, False
+[C2]   1965: against USA alone: forced in 0 ticks, first move ['idle']
+[C2]   1965: against USSR alone: forced in 0 ticks, first move ['idle']
+[C2]   1970: against USA alone: forced in 1 ticks, first move ['USSR.strike_china']
+[C2]   1970: against USSR alone: None
+[C2]   1975: against USA alone: forced in 3 ticks, first move ['Nature.slowdown']
+[C2]   1975: against USSR alone: None
+[C2]   1980: against USA alone: forced in 2 ticks, first move ['Nature.opposition']
+[C2]   1980: against USSR alone: None
+[C2]   1985: against USA alone: forced in 2 ticks, first move ['Nature.opposition']
+[C2]   1985: against USSR alone: None
+[C2]   1990: against USA alone: forced in 0 ticks, first move ['idle']
+[C2]   1990: against USSR alone: forced in 0 ticks, first move ['idle']
+[C2] aims_USSR=status_quo [balance_cw]: claim does not hold (507.4 s)
+[C2] aims_USSR=status_quo: amended (balance_nobloc) False; registered (balance_cw) False
+[C2] aims_USSR=opportunist [balance_nobloc]: year: predicate, joint, USA, USSR
+[C2]   1965: False, False, False, False
+[C2]   1966: False, False, False, False
+[C2]   1967: True, True, False, True
+[C2]   1968: True, True, False, True
+[C2]   1969: True, True, False, True
+[C2]   1970: True, True, False, True
+[C2]   1971: True, True, False, True
+[C2]   1972: True, True, False, True
+[C2]   1973: True, True, True, True
+[C2]   1974: True, True, True, True
+[C2]   1975: True, True, True, True
+[C2]   1976: True, True, True, True
+[C2]   1977: True, True, True, True
+[C2]   1978: True, True, True, True
+[C2]   1979: True, True, True, True
+[C2]   1980: True, True, True, True
+[C2]   1981: True, True, True, True
+[C2]   1982: True, True, True, True
+[C2]   1983: True, True, True, True
+[C2]   1984: True, True, True, True
+[C2]   1985: True, True, True, True
+[C2]   1986: True, True, True, True
+[C2]   1987: True, True, True, True
+[C2]   1988: True, True, True, True
+[C2]   1989: True, True, True, True
+[C2]   1990: True, True, True, True
+[C2]   1991: True, True, True, True
+[C2]   1965: against USA alone: forced in 0 ticks, first move ['idle']
+[C2]   1965: against USSR alone: forced in 0 ticks, first move ['idle']
+[C2]   1970: against USA alone: forced in 1 ticks, first move ['USSR.strike_china']
+[C2]   1970: against USSR alone: None
+[C2]   1975: against USA alone: None
+[C2]   1975: against USSR alone: None
+[C2]   1980: against USA alone: None
+[C2]   1980: against USSR alone: None
+[C2]   1985: against USA alone: None
+[C2]   1985: against USSR alone: None
+[C2]   1990: against USA alone: None
+[C2]   1990: against USSR alone: None
+[C2] aims_USSR=opportunist [balance_nobloc]: claim does not hold (678.7 s)
+[C2] aims_USSR=opportunist [balance_cw]: year: predicate, joint, USA, USSR
+[C2]   1965: False, False, False, False
+[C2]   1966: False, False, False, False
+[C2]   1967: True, True, False, True
+[C2]   1968: True, True, False, True
+[C2]   1969: True, True, False, True
+[C2]   1970: True, True, False, True
+[C2]   1971: True, True, False, True
+[C2]   1972: True, True, False, True
+[C2]   1973: True, True, False, True
+[C2]   1974: True, True, False, True
+[C2]   1975: True, True, False, True
+[C2]   1976: True, True, False, True
+[C2]   1977: True, True, False, True
+[C2]   1978: True, True, False, True
+[C2]   1979: True, True, False, True
+[C2]   1980: True, True, False, True
+[C2]   1981: True, False, False, False
+[C2]   1982: True, True, False, True
+[C2]   1983: True, True, False, True
+[C2]   1984: True, True, False, True
+[C2]   1985: True, True, False, True
+[C2]   1986: True, True, False, True
+[C2]   1987: True, False, False, False
+[C2]   1988: True, False, False, False
+[C2]   1989: True, False, False, False
+[C2]   1990: False, False, False, False
+[C2]   1991: False, False, False, False
+[C2]   1965: against USA alone: forced in 0 ticks, first move ['idle']
+[C2]   1965: against USSR alone: forced in 0 ticks, first move ['idle']
+[C2]   1970: against USA alone: forced in 1 ticks, first move ['USSR.strike_china']
+[C2]   1970: against USSR alone: None
+[C2]   1975: against USA alone: forced in 3 ticks, first move ['Nature.slowdown']
+[C2]   1975: against USSR alone: None
+[C2]   1980: against USA alone: forced in 2 ticks, first move ['Nature.opposition']
+[C2]   1980: against USSR alone: None
+[C2]   1985: against USA alone: forced in 2 ticks, first move ['Nature.opposition']
+[C2]   1985: against USSR alone: None
+[C2]   1990: against USA alone: forced in 0 ticks, first move ['idle']
+[C2]   1990: against USSR alone: forced in 0 ticks, first move ['idle']
+[C2] aims_USSR=opportunist [balance_cw]: claim does not hold (1023.3 s)
+[C2] aims_USSR=opportunist: amended (balance_nobloc) False; registered (balance_cw) False
+F
+=================================== FAILURES ===================================
+___________________________________ test_C02 ___________________________________
+
+E       AssertionError: joint membership with unilateral non-membership fails every year set
+E       assert []
+
+tests/coldwar/scenarios/test_C02.py:120: AssertionError
+============================= slowest 5 durations ==============================
+1023.29s call     tests/coldwar/scenarios/test_C02.py::test_C02
+
+(2 durations < 0.005s hidden.  Use -vv to show these durations.)
+=========================== short test summary info ============================
+FAILED tests/coldwar/scenarios/test_C02.py::test_C02 - AssertionError: joint ...
+1 failed in 1023.58s (0:17:03)
+END=2026-10-24T04:37:48Z
+
+===== test_C03 =====
+START=2026-10-24T04:47:14Z
+
+[C3] engine: explicit sub-game with symbolic coarse kernels (lifting, decisions D5)
+[C3] aims_USSR=status_quo [registered: balance_cw]: fine graph 2869 states; realized days 14
+[C3]   K_USA: realized days inside [False, False, False, False, False, False, False, False, False, False, False, False, False, False]
+[C3]   K_USSR: realized days inside [False, False, False, False, False, False, False, False, False, False, False, False, False, False]
+[C3]   K_USA+USSR: realized days inside [False, False, False, False, False, False, False, False, False, False, False, False, False, False]
+[C3]   entered-from 1962 state in K_USA, K_USSR: {('USA',): False, ('USSR',): False}
+[C3]   (b) USA: first day outside 0; shortest way back: none
+[C3]   (b) USSR: first day outside 0; shortest way back: none
+[C3] aims_USSR=status_quo [amended: no_war, unbounded]: fine graph 2869 states; realized days 14
+[C3]   K_USA: realized days inside [False, False, False, False, False, False, False, False, False, False, False, False, False, False]
+[C3]   K_USSR: realized days inside [False, False, False, False, False, False, False, False, False, False, False, False, False, True]
+[C3]   K_USA+USSR: realized days inside [True, True, True, True, True, True, True, True, True, False, False, False, False, True]
+[C3]   entered-from 1962 state in K_USA, K_USSR: {('USA',): False, ('USSR',): True}
+[C3]   (b) USA: first day outside 0; shortest way back: none
+[C3]   (b) USSR: first day outside 0; shortest way back: ['USA.pledge', 'USSR.withdraw']
+[C3] aims_USSR=status_quo [variant: no_war at the return (1963)]: fine graph 2869 states; realized days 14
+[C3]   K_USA: realized days inside [True, True, True, True, True, True, True, False, True, False, False, False, False, True]
+[C3]   K_USSR: realized days inside [False, False, False, False, False, False, False, False, False, False, False, False, False, True]
+[C3]   K_USA+USSR: realized days inside [True, True, True, True, True, True, True, True, True, False, False, False, False, True]
+[C3]   entered-from 1962 state in K_USA, K_USSR: {('USA',): True, ('USSR',): True}
+[C3]   (b) USA: first day outside 7; shortest way back: ['USSR.turn_back']
+[C3]   (b) USSR: first day outside 0; shortest way back: ['USA.pledge', 'USSR.withdraw']
+[C3]   (c) war endings for USA: forced (with Nature: forced)
+[C3]   (c) war endings for USSR: blocked (with Nature: blocked)
+[C3]   (c) registered (standard region for both): False
+[C3]   (c) amended (fortune sense for both): False
+[C3] aims_USSR=status_quo registered: (a) False, (b) False, (c) False
+[C3] aims_USSR=status_quo amended: (a) False, (b) False, (c) False (5.5 s)
+[C3] aims_USSR=opportunist [registered: balance_cw]: fine graph 2869 states; realized days 14
+[C3]   K_USA: realized days inside [False, False, False, False, False, False, False, False, False, False, False, False, False, False]
+[C3]   K_USSR: realized days inside [False, False, False, False, False, False, False, False, False, False, False, False, False, False]
+[C3]   K_USA+USSR: realized days inside [False, False, False, False, False, False, False, False, False, False, False, False, False, False]
+[C3]   entered-from 1962 state in K_USA, K_USSR: {('USA',): False, ('USSR',): False}
+[C3]   (b) USA: first day outside 0; shortest way back: none
+[C3]   (b) USSR: first day outside 0; shortest way back: none
+[C3] aims_USSR=opportunist [amended: no_war, unbounded]: fine graph 2869 states; realized days 14
+[C3]   K_USA: realized days inside [False, False, False, False, False, False, False, False, False, False, False, False, False, False]
+[C3]   K_USSR: realized days inside [False, False, False, False, False, False, False, False, False, False, False, False, False, True]
+[C3]   K_USA+USSR: realized days inside [True, True, True, True, True, True, True, True, True, False, False, False, False, True]
+[C3]   entered-from 1962 state in K_USA, K_USSR: {('USA',): False, ('USSR',): True}
+[C3]   (b) USA: first day outside 0; shortest way back: none
+[C3]   (b) USSR: first day outside 0; shortest way back: ['USA.pledge', 'USSR.withdraw']
+[C3] aims_USSR=opportunist [variant: no_war at the return (1963)]: fine graph 2869 states; realized days 14
+[C3]   K_USA: realized days inside [True, True, True, True, True, True, True, False, True, False, False, False, False, True]
+[C3]   K_USSR: realized days inside [False, False, False, False, False, False, False, False, False, False, False, False, False, True]
+[C3]   K_USA+USSR: realized days inside [True, True, True, True, True, True, True, True, True, False, False, False, False, True]
+[C3]   entered-from 1962 state in K_USA, K_USSR: {('USA',): True, ('USSR',): True}
+[C3]   (b) USA: first day outside 7; shortest way back: ['USSR.turn_back']
+[C3]   (b) USSR: first day outside 0; shortest way back: ['USA.pledge', 'USSR.withdraw']
+[C3]   (c) war endings for USA: forced (with Nature: forced)
+[C3]   (c) war endings for USSR: blocked (with Nature: blocked)
+[C3]   (c) registered (standard region for both): False
+[C3]   (c) amended (fortune sense for both): False
+[C3] aims_USSR=opportunist registered: (a) False, (b) False, (c) False
+[C3] aims_USSR=opportunist amended: (a) False, (b) False, (c) False (9.5 s)
+F
+=================================== FAILURES ===================================
+___________________________________ test_C03 ___________________________________
+
+E       AssertionError: {'status_quo': (False, False, False), 'opportunist': (False, False, False)}
+E       assert False
+E        +  where False = any(<generator object test_C03.<locals>.<genexpr> at 0x78adc3bde330>)
+
+tests/coldwar/scenarios/test_C03.py:143: AssertionError
+============================= slowest 5 durations ==============================
+9.45s call     tests/coldwar/scenarios/test_C03.py::test_C03
+
+(2 durations < 0.005s hidden.  Use -vv to show these durations.)
+=========================== short test summary info ============================
+FAILED tests/coldwar/scenarios/test_C03.py::test_C03 - AssertionError: {'stat...
+1 failed in 9.75s
+END=2026-10-24T04:47:24Z
+
+===== test_C04 =====
+START=2026-10-24T04:47:24Z
+
+[C4] engine: explicit (sub-game; flattened game cut at 1 Jan 1950)
+[C4] aims_USSR=status_quo: (a) USA's first-week actions ['idle', 'airlift', 'convoy', 'withdraw']
+[C4]   (b) sub-game endings reachable: ['HORIZON', 'SETTLED', 'TERMS', 'WAR', 'WITHDRAWAL'] (22784 states)
+[C4]   (c) GENERAL_WAR by 1950 for USSR: blocked (with Nature: blocked)
+[C4]   (c) GENERAL_WAR by 1950 for USA: blocked (with Nature: blocked)
+[C4]   (c) registered (standard region for both): False; amended (fortune): False
+[C4]   cut graph: 23088 states; GENERAL_WAR states 8
+[C4] aims_USSR=status_quo: (a) True, (b) True, (c) False (3.3 s)
+[C4] aims_USSR=opportunist: (a) USA's first-week actions ['idle', 'airlift', 'convoy', 'withdraw']
+[C4]   (b) sub-game endings reachable: ['HORIZON', 'SETTLED', 'TERMS', 'WAR', 'WITHDRAWAL'] (22784 states)
+[C4]   (c) GENERAL_WAR by 1950 for USSR: blocked (with Nature: blocked)
+[C4]   (c) GENERAL_WAR by 1950 for USA: blocked (with Nature: blocked)
+[C4]   (c) registered (standard region for both): False; amended (fortune): False
+[C4]   cut graph: 23088 states; GENERAL_WAR states 8
+[C4] aims_USSR=opportunist: (a) True, (b) True, (c) False (7.0 s)
+F
+=================================== FAILURES ===================================
+___________________________________ test_C04 ___________________________________
+
+E       AssertionError: {'status_quo': (True, True, False), 'opportunist': (True, True, False)}
+E       assert False
+E        +  where False = any(<generator object test_C04.<locals>.<genexpr> at 0x713b6b113ed0>)
+
+tests/coldwar/scenarios/test_C04.py:83: AssertionError
+============================= slowest 5 durations ==============================
+6.98s call     tests/coldwar/scenarios/test_C04.py::test_C04
+
+(2 durations < 0.005s hidden.  Use -vv to show these durations.)
+=========================== short test summary info ============================
+FAILED tests/coldwar/scenarios/test_C04.py::test_C04 - AssertionError: {'stat...
+1 failed in 7.21s
+END=2026-10-24T04:47:32Z
+
+===== test_C05 =====
+START=2026-10-24T04:16:52Z
+
+[C5] engine: explicit coarse game from 1 Jan 1950, cut at 1 Jan 1954
+[C5] aims_USSR=status_quo: graph 72345 states; Korean war reachable False
+[C5]   (a) limited war (armistice, no war between principals) reachable: False
+[C5]   (b) <<USA>>[]~GENERAL_WAR to 1954: True
+[C5]   (c) with USA.nuclear_korea:total_commitment relaxed: USA still blocks: True
+[C5]   (c) with USA.nuclear_korea:reading relaxed: USA still blocks: True
+[C5]   H8: to 1962 not computed (BudgetExceeded: exploration of 'cw_v0' passed max_states=3000000)
+[C5] aims_USSR=status_quo: (a) False, (b) True (106.0 s)
+[C5] aims_USSR=opportunist: graph 288918 states; Korean war reachable True
+[C5]   (a) limited war (armistice, no war between principals) reachable: True
+[C5]   (b) <<USA>>[]~GENERAL_WAR to 1954: False
+[C5]   (c) with USA.nuclear_korea:total_commitment relaxed: USA still blocks: False
+[C5]   (c) with USA.nuclear_korea:reading relaxed: USA still blocks: False
+[C5]   H8: to 1962 not computed (BudgetExceeded: exploration of 'cw_v0' passed max_states=3000000)
+[C5] aims_USSR=opportunist: (a) True, (b) False (229.4 s)
+F
+=================================== FAILURES ===================================
+___________________________________ test_C05 ___________________________________
+
+E       AssertionError: {'status_quo': (False, True), 'opportunist': (True, False)}
+E       assert False
+E        +  where False = all((True, False))
+
+tests/coldwar/scenarios/test_C05.py:73: AssertionError
+============================= slowest 5 durations ==============================
+229.43s call     tests/coldwar/scenarios/test_C05.py::test_C05
+
+(2 durations < 0.005s hidden.  Use -vv to show these durations.)
+=========================== short test summary info ============================
+FAILED tests/coldwar/scenarios/test_C05.py::test_C05 - AssertionError: {'stat...
+1 failed in 229.76s (0:03:49)
+END=2026-10-24T04:20:44Z
+
+===== test_C06 =====
+START=2026-10-24T04:38:05Z
+
+[C6] engine: replay against hindsight snapshots; explicit coarse game cut at 1963
+[C6]   1957: replayed belief few, hindsight nuke_USSR few: exceeds False
+[C6]   1958: replayed belief survivable, hindsight nuke_USSR few: exceeds True
+[C6]   1959: replayed belief survivable, hindsight nuke_USSR few: exceeds True
+[C6]   1960: replayed belief survivable, hindsight nuke_USSR few: exceeds True
+[C6]   1961: replayed belief survivable, hindsight nuke_USSR few: exceeds True
+[C6]   1962: replayed belief few, hindsight nuke_USSR few: exceeds False
+[C6]   aims_USSR=status_quo 1958: replay {'GENERAL_WAR': 2, 'ACCIDENTAL_WAR': 2, 'K_USA': 0, 'K_USSR': 1} (2273568); hindsight {'GENERAL_WAR': 2, 'ACCIDENTAL_WAR': 2, 'K_USA': 0, 'K_USSR': 1} (162663): registered False, amended False
+[C6]   aims_USSR=status_quo 1959: replay {'GENERAL_WAR': 1, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (316677); hindsight {'GENERAL_WAR': 1, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (17580): registered False, amended False
+[C6]   aims_USSR=status_quo 1960: replay {'GENERAL_WAR': 1, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (63602); hindsight {'GENERAL_WAR': 1, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (5183): registered False, amended False
+[C6]   aims_USSR=status_quo 1961: replay {'GENERAL_WAR': 1, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (4619); hindsight {'GENERAL_WAR': 1, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (332): registered False, amended False
+[C6]   aims_USSR=status_quo: (b) registered False, amended False
+[C6]   aims_USSR=opportunist 1958: replay {'GENERAL_WAR': 2, 'ACCIDENTAL_WAR': 2, 'K_USA': 0, 'K_USSR': 1} (2273568); hindsight {'GENERAL_WAR': 2, 'ACCIDENTAL_WAR': 2, 'K_USA': 0, 'K_USSR': 1} (348158): registered False, amended False
+[C6]   aims_USSR=opportunist 1959: replay {'GENERAL_WAR': 1, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (316677); hindsight {'GENERAL_WAR': 1, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (37068): registered False, amended False
+[C6]   aims_USSR=opportunist 1960: replay {'GENERAL_WAR': 1, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (63602); hindsight {'GENERAL_WAR': 1, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (10163): registered False, amended False
+[C6]   aims_USSR=opportunist 1961: replay {'GENERAL_WAR': 1, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (4619); hindsight {'GENERAL_WAR': 1, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (735): registered False, amended False
+[C6]   aims_USSR=opportunist: (b) registered False, amended False
+[C6]   (c) intel overhead from 1961; gap closed in 1962; hindsight force {1957: 'few', 1958: 'few', 1959: 'few', 1960: 'few', 1961: 'few', 1962: 'few'}
+[C6]   (c) events with an effect on belief_force_USA (guard parts): {'USSR.build_bomb': ['level'], 'USSR.icbm_buildup': ['level'], 'USSR.mirv': ['level'], 'Nature.missile_gap': ['blind', 'soviet_force'], 'Nature.estimate_revised': ['overhead', 'gap']}
+[C6] (a) True, (b) {'status_quo': False, 'opportunist': False}, (c) True (514.7 s)
+F
+=================================== FAILURES ===================================
+___________________________________ test_C06 ___________________________________
+
+E       AssertionError: (True, {'status_quo': False, 'opportunist': False}, True)
+E       assert (True and True and False)
+E        +  where False = any(dict_values([False, False]))
+E        +    where dict_values([False, False]) = <built-in method values of dict object at 0x732e1f945fc0>()
+E        +      where <built-in method values of dict object at 0x732e1f945fc0> = {'status_quo': False, 'opportunist': False}.values
+
+tests/coldwar/scenarios/test_C06.py:154: AssertionError
+============================= slowest 5 durations ==============================
+514.74s call     tests/coldwar/scenarios/test_C06.py::test_C06
+
+(2 durations < 0.005s hidden.  Use -vv to show these durations.)
+=========================== short test summary info ============================
+FAILED tests/coldwar/scenarios/test_C06.py::test_C06 - AssertionError: (True,...
+1 failed in 515.04s (0:08:35)
+END=2026-10-24T04:46:41Z
+
+===== test_C07 =====
+START=2026-10-24T04:47:32Z
+
+[C7] engine: explicit on the flattened game from 1 Jan 1983 (Able Archer sub-game)
+[C7] aims_USSR=status_quo: hindsight belief hostile, replay belief first_strike_intent; forces equal True; graph 6593 states
+[C7]   (b) in K_J {'h': True, "h'": True}; shortest out of K_J {'h': 1, "h'": 1}
+[C7]   (c) shortest to GENERAL_WAR: replay 4, hindsight None
+[C7] aims_USSR=status_quo: (a) True, (b) False, (c) True (0.5 s)
+[C7] aims_USSR=opportunist: hindsight belief hostile, replay belief first_strike_intent; forces equal True; graph 4512 states
+[C7]   (b) in K_J {'h': True, "h'": True}; shortest out of K_J {'h': 1, "h'": 1}
+[C7]   (c) shortest to GENERAL_WAR: replay 4, hindsight None
+[C7] aims_USSR=opportunist: (a) True, (b) False, (c) True (0.7 s)
+F
+=================================== FAILURES ===================================
+___________________________________ test_C07 ___________________________________
+
+E       AssertionError: {'status_quo': (True, False, True), 'opportunist': (True, False, True)}
+E       assert False
+E        +  where False = any(<generator object test_C07.<locals>.<genexpr> at 0x7ae04cf3fd30>)
+
+tests/coldwar/scenarios/test_C07.py:79: AssertionError
+============================= slowest 5 durations ==============================
+0.73s call     tests/coldwar/scenarios/test_C07.py::test_C07
+
+(2 durations < 0.005s hidden.  Use -vv to show these durations.)
+=========================== short test summary info ============================
+FAILED tests/coldwar/scenarios/test_C07.py::test_C07 - AssertionError: {'stat...
+1 failed in 0.99s
+END=2026-10-24T04:47:33Z
+
+===== test_C08_fixed =====
+START=2026-10-24T04:48:28Z
+
+[C8] engine: symbolic (coarse game)
+[C8]   aims_USSR=status_quo 1963: oversight none -> test_ban (True); in K_J False (lowered: False); shortest out 0 (lowered: 0): registered False
+[C8]     distances {'adverse': 7, 'out K_USA': 0, 'out K_USSR': 0} (lowered: {'adverse': 7, 'out K_USA': 0, 'out K_USSR': 0}): amended False
+[C8]   aims_USSR=status_quo 1972: oversight test_ban -> ntm (True); in K_J True (lowered: True); shortest out 2 (lowered: 2): registered False
+[C8]     distances {'adverse': None, 'out K_USA': 0, 'out K_USSR': 2} (lowered: {'adverse': None, 'out K_USA': 0, 'out K_USSR': 2}): amended False
+[C8]   aims_USSR=status_quo 1987: oversight ntm -> on_site (True); in K_J False (lowered: False); shortest out 0 (lowered: 0): registered False
+[C8]     distances {'adverse': None, 'out K_USA': 0, 'out K_USSR': 0} (lowered: {'adverse': None, 'out K_USA': 0, 'out K_USSR': 0}): amended False
+[C8]   (c) arms = reduced from 1962: model in 7 ticks; frozen: None
+[C8] aims_USSR=status_quo: False (7.3 s)
+[C8]   aims_USSR=opportunist 1963: oversight none -> test_ban (True); in K_J False (lowered: False); shortest out 0 (lowered: 0): registered False
+[C8]     distances {'adverse': 7, 'out K_USA': 0, 'out K_USSR': 0} (lowered: {'adverse': 7, 'out K_USA': 0, 'out K_USSR': 0}): amended False
+[C8]   aims_USSR=opportunist 1972: oversight test_ban -> ntm (True); in K_J True (lowered: True); shortest out 2 (lowered: 2): registered False
+[C8]     distances {'adverse': None, 'out K_USA': 0, 'out K_USSR': 2} (lowered: {'adverse': None, 'out K_USA': 0, 'out K_USSR': 2}): amended False
+[C8]   aims_USSR=opportunist 1987: oversight ntm -> on_site (True); in K_J False (lowered: False); shortest out 0 (lowered: 0): registered False
+[C8]     distances {'adverse': None, 'out K_USA': 0, 'out K_USSR': 0} (lowered: {'adverse': None, 'out K_USA': 0, 'out K_USSR': 0}): amended False
+[C8]   (c) arms = reduced from 1962: model in 7 ticks; frozen: None
+[C8] aims_USSR=opportunist: False (13.4 s)
+F
+=================================== FAILURES ===================================
+___________________________________ test_C08 ___________________________________
+
+E       AssertionError: {'status_quo': False, 'opportunist': False}
+E       assert False
+E        +  where False = any(dict_values([False, False]))
+E        +    where dict_values([False, False]) = <built-in method values of dict object at 0x75b3bd157640>()
+E        +      where <built-in method values of dict object at 0x75b3bd157640> = {'status_quo': False, 'opportunist': False}.values
+
+tests/coldwar/scenarios/test_C08.py:118: AssertionError
+=========================== short test summary info ============================
+FAILED tests/coldwar/scenarios/test_C08.py::test_C08 - AssertionError: {'stat...
+1 failed in 13.67s
+END=2026-10-24T04:48:43Z
+
+===== test_C08 =====
+START=2026-10-24T04:46:41Z
+
+[C8] engine: symbolic (coarse game)
+F
+=================================== FAILURES ===================================
+___________________________________ test_C08 ___________________________________
+
+
+tests/coldwar/scenarios/test_C08.py:96: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/coldwar/scenarios/test_C08.py:65: in measures
+wavefront/symbolic/solve.py:167: in rank
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <wavefront.symbolic.bdd_c.BDD object at 0x73ed7441a990>, f = 2430597
+value = [0, 0, 0, 0, 0, 0, ...]
+
+E           IndexError: evaluate: the assignment is shorter than a level it needs
+
+wavefront/symbolic/bdd_c.py:358: IndexError
+============================= slowest 5 durations ==============================
+6.21s call     tests/coldwar/scenarios/test_C08.py::test_C08
+
+(2 durations < 0.005s hidden.  Use -vv to show these durations.)
+=========================== short test summary info ============================
+FAILED tests/coldwar/scenarios/test_C08.py::test_C08 - IndexError: evaluate: ...
+1 failed in 6.56s
+END=2026-10-24T04:46:48Z
+
+===== test_C09 =====
+START=2026-10-24T04:47:33Z
+
+[C9] engine: explicit coarse game from 1 Jan 1985
+[C9] aims_USSR=status_quo: graph 1519 states; shortest to CHALLENGER_EXHAUSTION: 5
+[C9]   (b) necessary actions: ['USSR.perestroika', 'USSR.dissolve', 'Nature.decline', 'Nature.collapse', 'Nature.delegitimation', 'Nature.opposition', 'Nature.revolution']
+[C9]   (b) econ: ['Nature.decline', 'Nature.collapse']; legit: ['USSR.perestroika', 'Nature.delegitimation']; US: []; reachable with USA idle: True
+[C9]   (c) for USA: blocked (with Nature: blocked)
+[C9]   (c) registered (standard region): False; amended (fortune): False
+[C9] aims_USSR=status_quo: (a) True, (b) True, (c) False (3.6 s)
+[C9] aims_USSR=opportunist: graph 2756 states; shortest to CHALLENGER_EXHAUSTION: 5
+[C9]   (b) necessary actions: ['USSR.perestroika', 'USSR.dissolve', 'Nature.decline', 'Nature.collapse', 'Nature.delegitimation', 'Nature.opposition', 'Nature.revolution']
+[C9]   (b) econ: ['Nature.decline', 'Nature.collapse']; legit: ['USSR.perestroika', 'Nature.delegitimation']; US: []; reachable with USA idle: True
+[C9]   (c) for USA: blocked (with Nature: blocked)
+[C9]   (c) registered (standard region): False; amended (fortune): False
+[C9] aims_USSR=opportunist: (a) True, (b) True, (c) False (14.8 s)
+F
+=================================== FAILURES ===================================
+___________________________________ test_C09 ___________________________________
+
+E       AssertionError: {'status_quo': (True, True, False), 'opportunist': (True, True, False)}
+E       assert False
+E        +  where False = any(<generator object test_C09.<locals>.<genexpr> at 0x7768087f9150>)
+
+tests/coldwar/scenarios/test_C09.py:94: AssertionError
+============================= slowest 5 durations ==============================
+14.75s call     tests/coldwar/scenarios/test_C09.py::test_C09
+
+(2 durations < 0.005s hidden.  Use -vv to show these durations.)
+=========================== short test summary info ============================
+FAILED tests/coldwar/scenarios/test_C09.py::test_C09 - AssertionError: {'stat...
+1 failed in 15.00s
+END=2026-10-24T04:47:48Z
+
+===== test_C10 =====
+START=2026-10-24T04:37:48Z
+
+[C10] engine: symbolic kernels, state perturbation of the hindsight states
+[C10]   aims_USSR=status_quo 1947: in K_J True, K_USA False, K_USSR False; shortest to adverse 2; families {'nuke': 1, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USA', 1), ('nuke_USSR', 1), ('esc', 1), ('berlin_wall', 1)]
+[C10]   aims_USSR=status_quo 1948: in K_J True, K_USA False, K_USSR True; shortest to adverse 2; families {'nuke': 1, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USA', 1), ('esc', 1), ('berlin_wall', 1), ('legit_USSR', 1)]
+[C10]   aims_USSR=status_quo 1949: in K_J True, K_USA False, K_USSR True; shortest to adverse 2; families {'nuke': 1, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USA', 1), ('esc', 1), ('berlin_wall', 1), ('legit_USSR', 1)]
+[C10]   aims_USSR=status_quo 1950: in K_J True, K_USA False, K_USSR True; shortest to adverse 2; families {'nuke': 2, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USSR', 2), ('nuke_USA', 1), ('esc', 1), ('berlin_wall', 1)]
+[C10]   aims_USSR=status_quo 1951: in K_J True, K_USA False, K_USSR True; shortest to adverse 2; families {'nuke': 2, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USSR', 2), ('nuke_USA', 1), ('esc', 1), ('berlin_wall', 1)]
+[C10]   aims_USSR=status_quo 1952: in K_J True, K_USA False, K_USSR True; shortest to adverse 2; families {'nuke': 2, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USSR', 2), ('nuke_USA', 1), ('esc', 1), ('berlin_wall', 1)]
+[C10]   aims_USSR=status_quo 1953: in K_J True, K_USA False, K_USSR True; shortest to adverse 2; families {'nuke': 2, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USSR', 2), ('nuke_USA', 1), ('esc', 1), ('berlin_wall', 1)]
+[C10]   aims_USSR=status_quo 1954: in K_J True, K_USA False, K_USSR True; shortest to adverse 2; families {'nuke': 2, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USSR', 2), ('nuke_USA', 1), ('esc', 1), ('berlin_wall', 1)]
+[C10]   aims_USSR=status_quo 1955: in K_J True, K_USA False, K_USSR True; shortest to adverse 2; families {'nuke': 2, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USSR', 2), ('nuke_USA', 1), ('esc', 1), ('berlin_wall', 1)]
+[C10]   aims_USSR=status_quo 1956: in K_J True, K_USA False, K_USSR True; shortest to adverse 2; families {'nuke': 2, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USSR', 2), ('nuke_USA', 1), ('esc', 1), ('berlin_wall', 1)]
+[C10]   aims_USSR=status_quo 1957: in K_J True, K_USA False, K_USSR True; shortest to adverse 2; families {'nuke': 2, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 2, 'belief': 0, 'oversight': 0}); top [('nuke_USSR', 2), ('nuke_USA', 1), ('esc', 1), ('berlin_wall', 1)]
+[C10]   aims_USSR=status_quo 1958: in K_J True, K_USA False, K_USSR True; shortest to adverse 2; families {'nuke': 2, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 2, 'belief': 0, 'oversight': 0}); top [('nuke_USSR', 2), ('nuke_USA', 1), ('esc', 1), ('berlin_wall', 1)]
+[C10]   aims_USSR=status_quo 1959: in K_J False, K_USA False, K_USSR False; shortest to adverse 1; families {'nuke': 0, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 0, 'belief': 0, 'oversight': 0}); top [('esc', 1), ('tick', 0), ('aims_USSR', 0), ('nuke_USA', 0)]
+[C10]   aims_USSR=status_quo 1960: in K_J False, K_USA False, K_USSR False; shortest to adverse 1; families {'nuke': 0, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 0, 'belief': 0, 'oversight': 0}); top [('esc', 1), ('tick', 0), ('aims_USSR', 0), ('nuke_USA', 0)]
+[C10]   aims_USSR=status_quo 1961: in K_J False, K_USA False, K_USSR False; shortest to adverse 1; families {'nuke': 0, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 0, 'belief': 0, 'oversight': 0}); top [('esc', 1), ('tick', 0), ('aims_USSR', 0), ('nuke_USA', 0)]
+[C10]   aims_USSR=status_quo 1962: in K_J False, K_USA False, K_USSR False; shortest to adverse 9; families {'nuke': 1, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USA', 1), ('nuke_USSR', 1), ('esc', 1), ('berlin_wall', 1)]
+[C10]   aims_USSR=status_quo 1963: in K_J False, K_USA False, K_USSR False; shortest to adverse 8; families {'nuke': 1, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USSR', 1), ('esc', 1), ('berlin_wall', 1), ('align_PRC', 1)]
+[C10]   aims_USSR=status_quo 1964: in K_J False, K_USA False, K_USSR False; shortest to adverse 7; families {'nuke': 1, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USSR', 1), ('esc', 1), ('berlin_wall', 1), ('align_PRC', 1)]
+[C10]   aims_USSR=status_quo 1965: in K_J False, K_USA False, K_USSR False; shortest to adverse 6; families {'nuke': 1, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USSR', 1), ('esc', 1), ('berlin_wall', 1), ('align_PRC', 1)]
+[C10]   aims_USSR=status_quo 1966: in K_J False, K_USA False, K_USSR False; shortest to adverse 5; families {'nuke': 1, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USSR', 1), ('esc', 1), ('berlin_wall', 1), ('align_PRC', 1)]
+[C10]   aims_USSR=status_quo 1967: in K_J True, K_USA False, K_USSR True; shortest to adverse 4; families {'nuke': 1, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USSR', 1), ('esc', 1), ('berlin_wall', 1), ('legit_USSR', 1)]
+[C10]   aims_USSR=status_quo 1968: in K_J True, K_USA False, K_USSR True; shortest to adverse 3; families {'nuke': 1, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USSR', 1), ('esc', 1), ('berlin_wall', 1), ('legit_USSR', 1)]
+[C10]   aims_USSR=status_quo 1969: in K_J True, K_USA False, K_USSR True; shortest to adverse 2; families {'nuke': 1, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('align_PRC', 2), ('nuke_USSR', 1), ('esc', 1), ('legit_USSR', 1)]
+[C10]   aims_USSR=status_quo 1970: in K_J True, K_USA False, K_USSR True; shortest to adverse 1; families {'nuke': 1, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('esc_sino', 2), ('nuke_USSR', 1), ('esc', 1), ('legit_USSR', 1)]
+[C10]   aims_USSR=status_quo 1971: in K_J True, K_USA False, K_USSR True; shortest to adverse 1; families {'nuke': 1, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('esc_sino', 2), ('nuke_USSR', 1), ('esc', 1), ('legit_USSR', 1)]
+[C10]   aims_USSR=status_quo 1972: in K_J True, K_USA False, K_USSR True; shortest to adverse 1; families {'nuke': 1, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('esc_sino', 2), ('nuke_USSR', 1), ('esc', 1), ('legit_USSR', 1)]
+[C10]   aims_USSR=status_quo 1973: in K_J True, K_USA False, K_USSR True; shortest to adverse None; families {'nuke': 1, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USSR', 1), ('esc', 1), ('berlin_wall', 1), ('legit_USSR', 1)]
+[C10]   aims_USSR=status_quo 1974: in K_J True, K_USA False, K_USSR True; shortest to adverse None; families {'nuke': 1, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USSR', 1), ('esc', 1), ('berlin_wall', 1), ('legit_USSR', 1)]
+[C10]   aims_USSR=status_quo 1975: in K_J True, K_USA False, K_USSR True; shortest to adverse None; families {'nuke': 1, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USSR', 1), ('esc', 1), ('berlin_wall', 1), ('legit_USSR', 1)]
+[C10]   aims_USSR=status_quo 1976: in K_J True, K_USA False, K_USSR True; shortest to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 0, 'belief': 0, 'oversight': 0}); top [('esc', 1), ('berlin_wall', 1), ('legit_USSR', 1), ('align_PRC', 1)]
+[C10]   aims_USSR=status_quo 1977: in K_J True, K_USA False, K_USSR True; shortest to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 0, 'belief': 0, 'oversight': 0}); top [('esc', 1), ('berlin_wall', 1), ('legit_USSR', 1), ('align_PRC', 1)]
+[C10]   aims_USSR=status_quo 1978: in K_J True, K_USA False, K_USSR True; shortest to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 0, 'belief': 0, 'oversight': 0}); top [('esc', 1), ('berlin_wall', 1), ('legit_USSR', 1), ('align_PRC', 1)]
+[C10]   aims_USSR=status_quo 1979: in K_J True, K_USA False, K_USSR True; shortest to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 0, 'belief': 0, 'oversight': 0}); top [('esc', 1), ('berlin_wall', 1), ('legit_USSR', 1), ('align_PRC', 1)]
+[C10]   aims_USSR=status_quo 1980: in K_J True, K_USA False, K_USSR True; shortest to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 0, 'belief': 0, 'oversight': 0}); top [('esc', 1), ('berlin_wall', 1), ('legit_USSR', 1), ('bloc_USSR', 1)]
+[C10]   aims_USSR=status_quo 1981: in K_J False, K_USA False, K_USSR False; shortest to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 0, 'belief': 0, 'oversight': 0}); top [('afghan', 2), ('esc', 1), ('berlin_wall', 1), ('bloc_USSR', 1)]
+[C10]   aims_USSR=status_quo 1982: in K_J True, K_USA False, K_USSR True; shortest to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 0, 'belief': 0, 'oversight': 0}); top [('esc', 1), ('berlin_wall', 1), ('legit_USSR', 1), ('bloc_USSR', 1)]
+[C10]   aims_USSR=status_quo 1983: in K_J True, K_USA False, K_USSR True; shortest to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 0, 'belief': 0, 'oversight': 0}); top [('esc', 1), ('berlin_wall', 1), ('legit_USSR', 1), ('bloc_USSR', 1)]
+[C10]   aims_USSR=status_quo 1984: in K_J True, K_USA False, K_USSR True; shortest to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 0, 'belief': 0, 'oversight': 0}); top [('esc', 1), ('berlin_wall', 1), ('legit_USSR', 1), ('bloc_USSR', 1)]
+[C10]   aims_USSR=status_quo 1985: in K_J True, K_USA False, K_USSR True; shortest to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 0, 'belief': 0, 'oversight': 0}); top [('esc', 1), ('berlin_wall', 1), ('legit_USSR', 1), ('bloc_USSR', 1)]
+[C10]   aims_USSR=status_quo 1986: in K_J True, K_USA False, K_USSR True; shortest to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 0, 'belief': 0, 'oversight': 0}); top [('esc', 1), ('berlin_wall', 1), ('legit_USSR', 1), ('bloc_USSR', 1)]
+[C10]   aims_USSR=status_quo 1987: in K_J False, K_USA False, K_USSR False; shortest to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 0, 'belief': 0, 'oversight': 0}); top [('esc', 1), ('berlin_wall', 1), ('legit_USSR', 1), ('align_PRC', 1)]
+[C10]   aims_USSR=status_quo 1988: in K_J False, K_USA False, K_USSR False; shortest to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 0, 'belief': 0, 'oversight': 0}); top [('esc', 1), ('berlin_wall', 1), ('legit_USSR', 1), ('align_PRC', 1)]
+[C10]   aims_USSR=status_quo 1989: in K_J False, K_USA False, K_USSR False; shortest to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 0, 'belief': 0, 'oversight': 0}); top [('esc', 1), ('berlin_wall', 1), ('legit_USSR', 1), ('align_PRC', 1)]
+[C10]   aims_USSR=status_quo 1990: in K_J False, K_USA False, K_USSR False; shortest to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 0, 'belief': 0, 'oversight': 0}); top [('esc', 1), ('berlin_wall', 1), ('align_PRC', 1), ('tick', 0)]
+[C10]   aims_USSR=status_quo 1991: in K_J False, K_USA False, K_USSR False; shortest to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 0, 'belief': 0, 'oversight': 0}); top [('esc', 1), ('tick', 0), ('aims_USSR', 0), ('nuke_USA', 0)]
+[C10] aims_USSR=status_quo: (a) True; (b) amended: before 1965 False, after 1965 False; registered: before False, after False (8.4 s)
+[C10]   aims_USSR=opportunist 1947: in K_J True, K_USA False, K_USSR False; shortest to adverse 2; families {'nuke': 1, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USA', 1), ('nuke_USSR', 1), ('esc', 1), ('berlin_wall', 1)]
+[C10]   aims_USSR=opportunist 1948: in K_J True, K_USA False, K_USSR True; shortest to adverse 2; families {'nuke': 1, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USA', 1), ('esc', 1), ('berlin_wall', 1), ('legit_USSR', 1)]
+[C10]   aims_USSR=opportunist 1949: in K_J True, K_USA False, K_USSR True; shortest to adverse 2; families {'nuke': 1, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USA', 1), ('esc', 1), ('berlin_wall', 1), ('legit_USSR', 1)]
+[C10]   aims_USSR=opportunist 1950: in K_J True, K_USA False, K_USSR True; shortest to adverse 2; families {'nuke': 2, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USSR', 2), ('nuke_USA', 1), ('esc', 1), ('berlin_wall', 1)]
+[C10]   aims_USSR=opportunist 1951: in K_J True, K_USA False, K_USSR True; shortest to adverse 2; families {'nuke': 2, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USSR', 2), ('nuke_USA', 1), ('esc', 1), ('berlin_wall', 1)]
+[C10]   aims_USSR=opportunist 1952: in K_J True, K_USA False, K_USSR True; shortest to adverse 2; families {'nuke': 2, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USSR', 2), ('nuke_USA', 1), ('esc', 1), ('berlin_wall', 1)]
+[C10]   aims_USSR=opportunist 1953: in K_J True, K_USA False, K_USSR True; shortest to adverse 2; families {'nuke': 2, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USSR', 2), ('nuke_USA', 1), ('esc', 1), ('berlin_wall', 1)]
+[C10]   aims_USSR=opportunist 1954: in K_J True, K_USA False, K_USSR True; shortest to adverse 2; families {'nuke': 2, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USSR', 2), ('nuke_USA', 1), ('esc', 1), ('berlin_wall', 1)]
+[C10]   aims_USSR=opportunist 1955: in K_J True, K_USA False, K_USSR True; shortest to adverse 2; families {'nuke': 2, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USSR', 2), ('nuke_USA', 1), ('esc', 1), ('berlin_wall', 1)]
+[C10]   aims_USSR=opportunist 1956: in K_J True, K_USA False, K_USSR True; shortest to adverse 2; families {'nuke': 2, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USSR', 2), ('nuke_USA', 1), ('esc', 1), ('berlin_wall', 1)]
+[C10]   aims_USSR=opportunist 1957: in K_J True, K_USA False, K_USSR True; shortest to adverse 2; families {'nuke': 2, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 2, 'belief': 0, 'oversight': 0}); top [('nuke_USSR', 2), ('nuke_USA', 1), ('esc', 1), ('berlin_wall', 1)]
+[C10]   aims_USSR=opportunist 1958: in K_J True, K_USA False, K_USSR True; shortest to adverse 2; families {'nuke': 2, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 2, 'belief': 0, 'oversight': 0}); top [('nuke_USSR', 2), ('nuke_USA', 1), ('esc', 1), ('berlin_wall', 1)]
+[C10]   aims_USSR=opportunist 1959: in K_J False, K_USA False, K_USSR False; shortest to adverse 1; families {'nuke': 0, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 0, 'belief': 0, 'oversight': 0}); top [('esc', 1), ('tick', 0), ('aims_USSR', 0), ('nuke_USA', 0)]
+[C10]   aims_USSR=opportunist 1960: in K_J False, K_USA False, K_USSR False; shortest to adverse 1; families {'nuke': 0, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 0, 'belief': 0, 'oversight': 0}); top [('esc', 1), ('tick', 0), ('aims_USSR', 0), ('nuke_USA', 0)]
+[C10]   aims_USSR=opportunist 1961: in K_J False, K_USA False, K_USSR False; shortest to adverse 1; families {'nuke': 0, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 0, 'belief': 0, 'oversight': 0}); top [('esc', 1), ('tick', 0), ('aims_USSR', 0), ('nuke_USA', 0)]
+[C10]   aims_USSR=opportunist 1962: in K_J False, K_USA False, K_USSR False; shortest to adverse 9; families {'nuke': 1, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USA', 1), ('nuke_USSR', 1), ('esc', 1), ('berlin_wall', 1)]
+[C10]   aims_USSR=opportunist 1963: in K_J False, K_USA False, K_USSR False; shortest to adverse 8; families {'nuke': 1, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USSR', 1), ('esc', 1), ('berlin_wall', 1), ('korea', 1)]
+[C10]   aims_USSR=opportunist 1964: in K_J False, K_USA False, K_USSR False; shortest to adverse 7; families {'nuke': 1, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USSR', 1), ('esc', 1), ('berlin_wall', 1), ('korea', 1)]
+[C10]   aims_USSR=opportunist 1965: in K_J False, K_USA False, K_USSR False; shortest to adverse 6; families {'nuke': 1, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USSR', 1), ('esc', 1), ('berlin_wall', 1), ('korea', 1)]
+[C10]   aims_USSR=opportunist 1966: in K_J False, K_USA False, K_USSR False; shortest to adverse 5; families {'nuke': 1, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USSR', 1), ('esc', 1), ('berlin_wall', 1), ('korea', 1)]
+[C10]   aims_USSR=opportunist 1967: in K_J True, K_USA False, K_USSR True; shortest to adverse 4; families {'nuke': 1, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USSR', 1), ('esc', 1), ('berlin_wall', 1), ('korea', 1)]
+[C10]   aims_USSR=opportunist 1968: in K_J True, K_USA False, K_USSR True; shortest to adverse 3; families {'nuke': 1, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USSR', 1), ('esc', 1), ('berlin_wall', 1), ('korea', 1)]
+[C10]   aims_USSR=opportunist 1969: in K_J True, K_USA False, K_USSR True; shortest to adverse 2; families {'nuke': 1, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('align_PRC', 2), ('nuke_USSR', 1), ('esc', 1), ('legit_USSR', 1)]
+[C10]   aims_USSR=opportunist 1970: in K_J True, K_USA False, K_USSR True; shortest to adverse 1; families {'nuke': 1, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('esc_sino', 2), ('nuke_USSR', 1), ('esc', 1), ('legit_USSR', 1)]
+[C10]   aims_USSR=opportunist 1971: in K_J True, K_USA False, K_USSR True; shortest to adverse 1; families {'nuke': 1, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('esc_sino', 2), ('nuke_USSR', 1), ('esc', 1), ('legit_USSR', 1)]
+[C10]   aims_USSR=opportunist 1972: in K_J True, K_USA False, K_USSR True; shortest to adverse 1; families {'nuke': 1, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('esc_sino', 2), ('nuke_USSR', 1), ('esc', 1), ('legit_USSR', 1)]
+[C10]   aims_USSR=opportunist 1973: in K_J True, K_USA False, K_USSR True; shortest to adverse None; families {'nuke': 1, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USSR', 1), ('esc', 1), ('berlin_wall', 1), ('korea', 1)]
+[C10]   aims_USSR=opportunist 1974: in K_J True, K_USA False, K_USSR True; shortest to adverse None; families {'nuke': 1, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USSR', 1), ('esc', 1), ('berlin_wall', 1), ('korea', 1)]
+[C10]   aims_USSR=opportunist 1975: in K_J True, K_USA False, K_USSR True; shortest to adverse None; families {'nuke': 1, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 1, 'belief': 0, 'oversight': 0}); top [('nuke_USSR', 1), ('esc', 1), ('berlin_wall', 1), ('korea', 1)]
+[C10]   aims_USSR=opportunist 1976: in K_J True, K_USA False, K_USSR True; shortest to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 0, 'belief': 0, 'oversight': 0}); top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('legit_USSR', 1)]
+[C10]   aims_USSR=opportunist 1977: in K_J True, K_USA False, K_USSR True; shortest to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 0, 'belief': 0, 'oversight': 0}); top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('legit_USSR', 1)]
+[C10]   aims_USSR=opportunist 1978: in K_J True, K_USA False, K_USSR True; shortest to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 0, 'belief': 0, 'oversight': 0}); top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('legit_USSR', 1)]
+[C10]   aims_USSR=opportunist 1979: in K_J True, K_USA False, K_USSR True; shortest to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 0, 'belief': 0, 'oversight': 0}); top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('legit_USSR', 1)]
+[C10]   aims_USSR=opportunist 1980: in K_J True, K_USA False, K_USSR True; shortest to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 0, 'belief': 0, 'oversight': 0}); top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('legit_USSR', 1)]
+[C10]   aims_USSR=opportunist 1981: in K_J False, K_USA False, K_USSR False; shortest to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 0, 'belief': 0, 'oversight': 0}); top [('afghan', 2), ('esc', 1), ('berlin_wall', 1), ('korea', 1)]
+[C10]   aims_USSR=opportunist 1982: in K_J True, K_USA False, K_USSR True; shortest to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 0, 'belief': 0, 'oversight': 0}); top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('legit_USSR', 1)]
+[C10]   aims_USSR=opportunist 1983: in K_J True, K_USA False, K_USSR True; shortest to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 0, 'belief': 0, 'oversight': 0}); top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('legit_USSR', 1)]
+[C10]   aims_USSR=opportunist 1984: in K_J True, K_USA False, K_USSR True; shortest to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 0, 'belief': 0, 'oversight': 0}); top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('legit_USSR', 1)]
+[C10]   aims_USSR=opportunist 1985: in K_J True, K_USA False, K_USSR True; shortest to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 0, 'belief': 0, 'oversight': 0}); top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('legit_USSR', 1)]
+[C10]   aims_USSR=opportunist 1986: in K_J True, K_USA False, K_USSR True; shortest to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 0, 'belief': 0, 'oversight': 0}); top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('legit_USSR', 1)]
+[C10]   aims_USSR=opportunist 1987: in K_J False, K_USA False, K_USSR False; shortest to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 0, 'belief': 0, 'oversight': 0}); top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('legit_USSR', 1)]
+[C10]   aims_USSR=opportunist 1988: in K_J False, K_USA False, K_USSR False; shortest to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 0, 'belief': 0, 'oversight': 0}); top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('legit_USSR', 1)]
+[C10]   aims_USSR=opportunist 1989: in K_J False, K_USA False, K_USSR False; shortest to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 0, 'belief': 0, 'oversight': 0}); top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('legit_USSR', 1)]
+[C10]   aims_USSR=opportunist 1990: in K_J False, K_USA False, K_USSR False; shortest to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 0, 'belief': 0, 'oversight': 0}); top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('align_PRC', 1)]
+[C10]   aims_USSR=opportunist 1991: in K_J False, K_USA False, K_USSR False; shortest to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0} (registered, K_J flips: {'nuke': 0, 'belief': 0, 'oversight': 0}); top [('esc', 1), ('tick', 0), ('aims_USSR', 0), ('nuke_USA', 0)]
+[C10] aims_USSR=opportunist: (a) True; (b) amended: before 1965 False, after 1965 False; registered: before False, after False (16.4 s)
+F
+=================================== FAILURES ===================================
+___________________________________ test_C10 ___________________________________
+
+E       AssertionError: {'status_quo': (True, False, False), 'opportunist': (True, False, False)}
+E       assert False
+E        +  where False = any(<generator object test_C10.<locals>.<genexpr> at 0x797283e5b370>)
+
+tests/coldwar/scenarios/test_C10.py:137: AssertionError
+============================= slowest 5 durations ==============================
+16.41s call     tests/coldwar/scenarios/test_C10.py::test_C10
+
+(2 durations < 0.005s hidden.  Use -vv to show these durations.)
+=========================== short test summary info ============================
+FAILED tests/coldwar/scenarios/test_C10.py::test_C10 - AssertionError: {'stat...
+1 failed in 16.74s
+END=2026-10-24T04:38:05Z
+
+===== test_C11 =====
+START=2026-10-24T04:46:48Z
+
+[C11] engine: symbolic kernels of balance_cw, model and scripted build
+[C11]   aims_USSR=status_quo 1969: scripted none -> principal none (with Nature: {} -> {PRC})
+[C11]   aims_USSR=status_quo 1970: scripted none -> principal none (with Nature: {} -> none)
+[C11]   aims_USSR=status_quo 1971: scripted none -> principal none (with Nature: {} -> none)
+[C11]   aims_USSR=status_quo 1972: scripted none -> principal none (with Nature: {} -> none)
+[C11] aims_USSR=status_quo: False (12.0 s)
+[C11]   aims_USSR=opportunist 1969: scripted none -> principal none (with Nature: {} -> {PRC})
+[C11]   aims_USSR=opportunist 1970: scripted none -> principal none (with Nature: {} -> none)
+[C11]   aims_USSR=opportunist 1971: scripted none -> principal none (with Nature: {} -> none)
+[C11]   aims_USSR=opportunist 1972: scripted none -> principal none (with Nature: {} -> none)
+[C11] aims_USSR=opportunist: False (24.8 s)
+F
+=================================== FAILURES ===================================
+___________________________________ test_C11 ___________________________________
+
+E       AssertionError: {'status_quo': False, 'opportunist': False}
+E       assert False
+E        +  where False = any(dict_values([False, False]))
+E        +    where dict_values([False, False]) = <built-in method values of dict object at 0x7307f745eec0>()
+E        +      where <built-in method values of dict object at 0x7307f745eec0> = {'status_quo': False, 'opportunist': False}.values
+
+tests/coldwar/scenarios/test_C11.py:61: AssertionError
+============================= slowest 5 durations ==============================
+24.82s call     tests/coldwar/scenarios/test_C11.py::test_C11
+
+(2 durations < 0.005s hidden.  Use -vv to show these durations.)
+=========================== short test summary info ============================
+FAILED tests/coldwar/scenarios/test_C11.py::test_C11 - AssertionError: {'stat...
+1 failed in 25.13s
+END=2026-10-24T04:47:14Z
+
+===== test_C12 =====
+START=2026-10-24T04:16:52Z
+
+[C12] negative controls
+[C12] aims_USSR=status_quo (a) us_strike by 1955: minimum 2; sets [['USA.preventive_strike:threat', 'USA.preventive_strike:policy'], ['USA.preventive_strike:policy', 'Nature.nsc68:level'], ['USA.preventive_strike:policy', 'Nature.new_look:level']]
+[C12]   (b) invasion_west by 1990: minimum 3 (None: more than 3); minimal sets [['USSR.invade_west:hypothesis', 'USSR.invade_west:response', 'USSR.invade_west:no_us_nuclear'], ['USSR.escalate:crisis', 'USSR.invade_west:hypothesis', 'USSR.invade_west:no_us_nuclear'], ['USSR.berlin_ultimatum:open', 'USSR.invade_west:hypothesis', 'USSR.invade_west:no_us_nuclear'], ['USA.escalate:crisis', 'USSR.invade_west:hypothesis', 'USSR.invade_west:no_us_nuclear'], ['USA.nuclear_use:war', 'USSR.invade_west:hypothesis', 'USSR.invade_west:no_us_nuclear']]
+[C12]   (c) negotiated merger of the blocs: vacuous (no action or variable in v0)
+[C12]   (d) ACCIDENTAL_WAR from 1959: shortest 1; forcing coalitions []; from the Cuba sub-game: reachable True, forcing coalitions []
+[C12] aims_USSR=status_quo: (a) False, (b) True, (c) vacuous, (d) True (2196.8 s)
+[C12] aims_USSR=opportunist (a) us_strike by 1955: minimum 1; sets [['USA.preventive_strike:policy']]
+[C12]   (b) invasion_west by 1990: minimum 2 (None: more than 3); minimal sets [['USSR.invade_west:response', 'USSR.invade_west:no_us_nuclear'], ['USA.nuclear_use:war', 'USSR.invade_west:no_us_nuclear'], ['USSR.berlin_ultimatum:open', 'USSR.invade_west:no_us_nuclear'], ['USA.escalate:crisis', 'USSR.invade_west:no_us_nuclear'], ['USSR.escalate:crisis', 'USSR.invade_west:no_us_nuclear'], ['USSR.enter_korea:theatre', 'USSR.invade_west:no_us_nuclear']]
+[C12]   (c) negotiated merger of the blocs: vacuous (no action or variable in v0)
+[C12]   (d) ACCIDENTAL_WAR from 1959: shortest 1; forcing coalitions []; from the Cuba sub-game: reachable True, forcing coalitions []
+[C12] aims_USSR=opportunist: (a) True, (b) True, (c) vacuous, (d) True (3629.8 s)
+.
+============================= slowest 5 durations ==============================
+3629.87s call     tests/coldwar/scenarios/test_C12.py::test_C12
+
+(2 durations < 0.005s hidden.  Use -vv to show these durations.)
+1 passed in 3630.15s (1:00:30)
+END=2026-10-24T05:17:23Z
+
+===== test_C13 =====
+START=2026-10-24T04:47:48Z
+
+[C13] engine: symbolic kernel of bloc_intact for USSR alone, hindsight states
+[C13] aims_USSR=status_quo: {1975: True, 1976: True, 1977: True, 1978: True, 1979: True, 1980: True, 1981: False, 1982: True, 1983: True, 1984: True, 1985: True, 1986: True, 1987: False, 1988: False, 1989: False, 1990: False}
+[C13]   departure 1980: realized moves {'Nature': 'opposition'}; restoring perturbations ['afghan -> none', 'afghan -> withdrawn', 'bloc_USSR -> intact', 'esc_sino -> war']
+[C13]   (c) stability under refinement: not tested at v0
+[C13] aims_USSR=status_quo: (a) True, (b) True (11.9 s)
+[C13] aims_USSR=opportunist: {1975: True, 1976: True, 1977: True, 1978: True, 1979: True, 1980: True, 1981: False, 1982: True, 1983: True, 1984: True, 1985: True, 1986: True, 1987: False, 1988: False, 1989: False, 1990: False}
+[C13]   departure 1980: realized moves {'Nature': 'opposition'}; restoring perturbations ['afghan -> none', 'afghan -> withdrawn', 'bloc_USSR -> intact', 'esc_sino -> war']
+[C13]   (c) stability under refinement: not tested at v0
+[C13] aims_USSR=opportunist: (a) True, (b) True (25.0 s)
+.
+============================= slowest 5 durations ==============================
+24.97s call     tests/coldwar/scenarios/test_C13.py::test_C13
+
+(2 durations < 0.005s hidden.  Use -vv to show these durations.)
+1 passed in 25.25s
+END=2026-10-24T04:48:14Z
+
+===== test_model_cw =====
+START=2026-10-24T04:48:15Z
+..........................
+============================= slowest 5 durations ==============================
+3.37s call     tests/coldwar/test_model_cw.py::test_well_formed_from_1975_and_on_the_flattened_game_from_1983[opportunist]
+1.42s call     tests/coldwar/test_model_cw.py::test_well_formed_from_1975_and_on_the_flattened_game_from_1983[status_quo]
+0.26s call     tests/coldwar/test_model_cw.py::test_each_sub_game_is_well_formed_from_its_entry[berlin_1948]
+0.07s call     tests/coldwar/test_model_cw.py::test_the_actions_catalogue_is_generated_from_the_model
+0.07s call     tests/coldwar/test_model_cw.py::test_each_sub_game_is_well_formed_from_its_entry[cuba_1962]
+26 passed in 5.61s
+END=2026-10-24T04:48:21Z

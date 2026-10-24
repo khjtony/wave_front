@@ -185,6 +185,19 @@
     }
    ]
   },
+  "us_began_war": {
+   "level": false,
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_us_began_war_record",
+     "value": "no war between the principals begun by the United States in the Cold War",
+     "source": "Gaddis 2005",
+     "observed": "1946-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv) Note: initial level (added 2026-10-23 on the owner's decision 2l)"
+    }
+   ]
+  },
   "korea": {
    "level": "armistice",
    "confidence": "high",

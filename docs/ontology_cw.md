@@ -54,6 +54,7 @@ Hindsight truth (decisions D6): `belief_force_USA` is the record's `nuke_USSR`; 
 | `accidental` | flag | False | Monotone. Set by Nature's accident (and a crisis exit caused by one). | never. |
 | `us_strike` | flag | False | Monotone. A US preventive strike taken (claim C12). | never. |
 | `invasion_west` | flag | False | Monotone. A Soviet conventional offensive into Western Europe (claim C12). | never. |
+| `us_began_war` | flag | False | Monotone. **Added 2026-10-23 on the owner's decision 2l.** A war between the principals begun by the United States (NATO): set by `USA.escalate` (combat opened from a standing crisis) and by the Cuba sub-game's war exit (only the United States opens fighting there); not set by the Berlin 1948 war exit, which does not record who opened the clash. The condition `nato_attack` of `USSR.nuclear_use` (the Warsaw Pact plans; Mastny and Byrne 2005). | never. |
 | `berlin_wall` | flag | False | Monotone. The sector border sealed. | 13 Aug 1961; visible 1962. |
 
 "Commit = total" (testbed section 3 sketch, claim C5) is folded into `esc`: the record makes total commitment the condition of US nuclear use, and the only commitment the record treats as total is a direct war with the USSR, so `USA.nuclear_korea` has the part `total_commitment: esc >= conventional` (decisions, actions catalogue).

@@ -1,19 +1,33 @@
 """C4: The airlift is in the decision space and a negotiated settlement is reachable.
 
 Registered 2026-10-11 in docs/coldwar_testbed.md section 5. Do not edit the claim text
-without a changelog entry in that document.
+without a changelog entry in that document. Part (c) amended 2026-10-23 on the owner's
+decision 2k ("contested" in the fortune sense, docs/ww2_testbed.md section 4.6); the previous
+wording is in git history and in reports/cw_v0.md section 5.
 
-Reading (docs/cw_v0_decisions.md, R C4): the Berlin sub-game entered from the 1948
-hindsight state, per hypothesis. (a) ``USA.airlift`` is available in the first fine state;
-(b) ``SETTLED`` (lifted by agreement) is reachable in the sub-game (``TERMS`` reported);
-(c) with T = ``GENERAL_WAR`` by 1 January 1950, the first fine state is in the contested region
-for {USSR} and for {USA}; the fortune variant is reported. Engine: explicit, the flattened
-game cut at tick 3 (decisions D5).
+Reading (docs/cw_v0_decisions.md, R C4, with the amendment A C4): the Berlin sub-game entered
+from the 1948 hindsight state, per hypothesis. (a) ``USA.airlift`` is available in the first
+fine state; (b) ``SETTLED`` (lifted by agreement) is reachable in the sub-game (``TERMS``
+reported); (c) with T = ``GENERAL_WAR`` by 1 January 1950, contested in the fortune sense for
+each side P of {USA, USSR} at the first fine state: P joined by Nature forces T against the
+other's best play, and the other joined by Nature keeps T away against P's best play. The
+registered (c), the standard contested region for {USSR} and for {USA}, is printed beside it.
+Engine: explicit, the flattened game cut at tick 3 (decisions D5).
 """
 
 from wavefront.engine import contested
 
-from ..common import HYPS, Timer, crisis_entry, ending_ids, fine_graph, flat_of, graph, hindsight
+from ..common import (
+    HYPS,
+    Timer,
+    crisis_entry,
+    ending_ids,
+    fine_graph,
+    flat_of,
+    fortune,
+    graph,
+    hindsight,
+)
 
 CLAIM = {
     "id": "C4",
@@ -21,10 +35,12 @@ CLAIM = {
     "claim": (
         "the airlift (`resist_without_escalation`) is in the decision space; "
         "`NEGOTIATED_SETTLEMENT` of the blockade is reachable; `GENERAL_WAR` is "
-        "`contested`"
+        "`contested` in the fortune sense (ww2_testbed.md section 4.6): each side joined "
+        "by Nature can force it against the other side's best play, and each side joined "
+        "by Nature can keep it away against the other side's best play"
     ),
     "expected": "as stated",
-    "sources": "FRUS 1948; Trachtenberg",
+    "sources": "FRUS 1948; Trachtenberg; amended 2026-10-23",
 }
 
 
@@ -52,12 +68,15 @@ def test_C04():
         gc = graph(fm, s48, cut=3)
         target = ending_ids(gc, "GENERAL_WAR")
         start = gc.index[first]
-        c = True
+        creg = True
         for side in (["USSR"], ["USA"]):
             std = region(gc, side, target, start)
-            fortune = region(gc, [*side, "Nature"], target, start)
-            print(f"[C4]   (c) GENERAL_WAR by 1950 for {side[0]}: {std} (with Nature: {fortune})")
-            c = c and std == "contested"
+            joined = region(gc, [*side, "Nature"], target, start)
+            print(f"[C4]   (c) GENERAL_WAR by 1950 for {side[0]}: {std} (with Nature: {joined})")
+            creg = creg and std == "contested"
+        # Amended 2026-10-23 (decision 2k): contested in the fortune sense.
+        c, _ = fortune(gc, ("USA", "USSR"), target, start)
+        print(f"[C4]   (c) registered (standard region for both): {creg}; amended (fortune): {c}")
         print(f"[C4]   cut graph: {gc.size()} states; GENERAL_WAR states {len(target)}")
         results[aims] = (a, b, c)
         print(f"[C4] aims_USSR={aims}: (a) {a}, (b) {b}, (c) {c} ({timer})")

@@ -29,7 +29,7 @@ Status: written with [ontology_cw.md](ontology_cw.md) for the model step, after 
 | USA | `armistice` | `theatre`: korea = war | korea := armistice |  |
 | USA | `preventive_strike` | `superiority`: (nuke_USA ≥ few ∧ nuke_USSR ≤ few); `threat`: belief_USA_USSR = expansionist; `policy`: FALSE | esc +4; us_strike := True |  |
 | USA | `nuclear_korea` | `theatre`: korea = war; `total_commitment`: esc ≥ conventional; `reading`: belief_USA_USSR ≠ opportunist | esc +4 |  |
-| USA | `escalate` | `crisis`: esc = crisis | esc +1 |  |
+| USA | `escalate` | `crisis`: esc = crisis | esc +1; us_began_war := True |  |
 | USA | `nuclear_use` | `war`: esc = conventional; `means`: nuke_USA ≥ few | esc +1 |  |
 | USA | `preempt` | `warning`: belief_USA_USSR = expansionist; `crisis`: esc ≥ crisis | esc +3 |  |
 | USA | `able_archer` | `occasion`: tick = 36 | none (crisis) |  |
@@ -49,7 +49,7 @@ Status: written with [ontology_cw.md](ontology_cw.md) for the model step, after 
 | USSR | `invade_afghanistan` | `occasion`: tick ≥ 32; `level`: afghan = none | afghan := war |  |
 | USSR | `preempt` | `warning`: belief_USSR_USA = first_strike_intent; `crisis`: esc ≥ crisis; `means`: nuke_USSR ≥ few | esc +3 |  |
 | USSR | `escalate` | `crisis`: esc = crisis | esc +1 |  |
-| USSR | `nuclear_use` | `war`: esc = conventional; `means`: nuke_USSR ≥ few | esc +1 |  |
+| USSR | `nuclear_use` | `war`: esc = conventional; `means`: nuke_USSR ≥ few; `nato_attack`: us_began_war | esc +1 |  |
 | USSR | `invade_west` | `hypothesis`: aims_USSR = opportunist; `response`: esc ≥ crisis; `no_us_nuclear`: nuke_USA = none | esc +1; invasion_west := True |  |
 | USSR | `intervene` | `contested`: bloc_USSR = contested; `capacity`: afghan ≠ war; `will`: legit_USSR = secure | bloc_USSR := intact |  |
 | USSR | `perestroika` | `level`: ¬perestroika; `crisis`: econ_USSR ≥ stagnant | perestroika := True; legit_USSR := contested if legit_USSR < contested |  |
@@ -127,6 +127,8 @@ Status: written with [ontology_cw.md](ontology_cw.md) for the model step, after 
 | Nature | `flash_reports` | `level`: ¬warning; `watching`: belief = first_strike_intent | warning := True |  |
 | Nature | `accident` | `readied`: pact = readied; `raised`: us_alert = raised | strike := True; accident := True |  |
 <!-- tables:end -->
+
+**Added 2026-10-23 on the owner's decision 2l** (a guard edit after first sight, docs/guard_changelog_cw.md): the part `nato_attack` of `USSR.nuclear_use` (the Warsaw Pact plans' condition, a war begun by NATO; Mastny and Byrne 2005), the effect `us_began_war := True` of `USA.escalate`, and the same flag on the Cuba sub-game's war exit (only the United States opens fighting there). The Berlin 1948 sub-game's war exit does not set it: the sub-game does not record which side opened the clash (`USA.convoy` or `USSR.harass`), so a Berlin war of 1948 to 1949 is not read as begun by the United States.
 
 ## 3. Alternatives debated and not taken
 
