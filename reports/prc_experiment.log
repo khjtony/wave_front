@@ -1,0 +1,1489 @@
+
+===== aims_USSR = status_quo =====
+
+--- S: model 08da3b3a28da, 26 declared variables, actions {'USA': 17, 'USSR': 25, 'Nature': 19}, 34.3 s (kernels and traces 33.4 s)
+  no_war_core: holds 1950-1991
+    K[{}]: 1962-1991
+    K[Nature]: 1962-1991
+    K[USA]: 1962-1991
+    K[USA+Nature]: 1962-1991
+    K[USSR]: 1950-1958, 1962-1991
+    K[USSR+Nature]: 1950-1991
+    K[USA+USSR]: 1950-1958, 1962-1991
+    K[USA+USSR+Nature]: 1950-1991
+  balance_nobloc_core: holds 1950-1960, 1967-1991
+    K[{}]: 1967-1991
+    K[Nature]: 1967-1991
+    K[USA]: 1967-1991
+    K[USA+Nature]: 1967-1991
+    K[USSR]: 1950-1958, 1967-1991
+    K[USSR+Nature]: 1950-1958, 1967-1991
+    K[USA+USSR]: 1950-1958, 1967-1991
+    K[USA+USSR+Nature]: 1950-1958, 1967-1991
+  balance_cw_core: holds 1950-1960, 1967-1989
+    K[{}]: none
+    K[Nature]: 1967-1989
+    K[USA]: none
+    K[USA+Nature]: 1967-1989
+    K[USSR]: 1950-1958, 1967-1980, 1982-1986
+    K[USSR+Nature]: 1950-1958, 1967-1989
+    K[USA+USSR]: 1950-1958, 1967-1980, 1982-1986
+    K[USA+USSR+Nature]: 1950-1958, 1967-1989
+  no_war_tri: holds 1950-1991
+    K[{}]: 1973-1991
+    K[Nature]: 1962-1969, 1973-1991
+    K[USA]: 1973-1991
+    K[USA+Nature]: 1962-1969, 1973-1991
+    K[USSR]: 1950-1958, 1962-1991
+    K[USSR+Nature]: 1950-1991
+    K[USA+USSR]: 1950-1958, 1962-1991
+    K[USA+USSR+Nature]: 1950-1991
+  balance_nobloc_tri: holds 1950-1960, 1967-1991
+    K[{}]: 1973-1991
+    K[Nature]: 1967-1969, 1973-1991
+    K[USA]: 1973-1991
+    K[USA+Nature]: 1967-1969, 1973-1991
+    K[USSR]: 1950-1958, 1967-1991
+    K[USSR+Nature]: 1950-1958, 1967-1991
+    K[USA+USSR]: 1950-1958, 1967-1991
+    K[USA+USSR+Nature]: 1950-1958, 1967-1991
+  balance_cw_tri: holds 1950-1960, 1967-1989
+    K[{}]: none
+    K[Nature]: 1967-1969, 1973-1989
+    K[USA]: none
+    K[USA+Nature]: 1967-1969, 1973-1989
+    K[USSR]: 1950-1958, 1967-1980, 1982-1986
+    K[USSR+Nature]: 1950-1958, 1967-1989
+    K[USA+USSR]: 1950-1958, 1967-1980, 1982-1986
+    K[USA+USSR+Nature]: 1950-1958, 1967-1989
+
+--- P69: model 527d0f540ac6, 26 declared variables, actions {'USA': 17, 'USSR': 25, 'PRC': 4, 'Nature': 16}, 277.0 s (kernels and traces 272.7 s)
+  no_war_core: holds 1950-1991
+    K[{}]: 1962-1991
+    K[Nature]: 1962-1991
+    K[USA]: 1962-1991
+    K[USA+Nature]: 1962-1991
+    K[USSR]: 1950-1958, 1962-1991
+    K[USSR+Nature]: 1950-1991
+    K[PRC]: 1962-1991
+    K[PRC+Nature]: 1962-1991
+    K[USA+USSR]: 1950-1958, 1962-1991
+    K[USA+USSR+Nature]: 1950-1991
+    K[USA+PRC]: 1962-1991
+    K[USA+PRC+Nature]: 1962-1991
+    K[USSR+PRC]: 1950-1958, 1962-1991
+    K[USSR+PRC+Nature]: 1950-1991
+    K[USA+USSR+PRC]: 1950-1958, 1962-1991
+    K[USA+USSR+PRC+Nature]: 1950-1991
+  balance_nobloc_core: holds 1950-1960, 1967-1991
+    K[{}]: 1967-1991
+    K[Nature]: 1967-1991
+    K[USA]: 1967-1991
+    K[USA+Nature]: 1967-1991
+    K[USSR]: 1950-1958, 1967-1991
+    K[USSR+Nature]: 1950-1958, 1967-1991
+    K[PRC]: 1967-1991
+    K[PRC+Nature]: 1967-1991
+    K[USA+USSR]: 1950-1958, 1967-1991
+    K[USA+USSR+Nature]: 1950-1958, 1967-1991
+    K[USA+PRC]: 1967-1991
+    K[USA+PRC+Nature]: 1967-1991
+    K[USSR+PRC]: 1950-1958, 1967-1991
+    K[USSR+PRC+Nature]: 1950-1958, 1967-1991
+    K[USA+USSR+PRC]: 1950-1958, 1967-1991
+    K[USA+USSR+PRC+Nature]: 1950-1958, 1967-1991
+  balance_cw_core: holds 1950-1960, 1967-1989
+    K[{}]: none
+    K[Nature]: 1967-1989
+    K[USA]: none
+    K[USA+Nature]: 1967-1989
+    K[USSR]: 1950-1958, 1967-1980, 1982-1986
+    K[USSR+Nature]: 1950-1958, 1967-1989
+    K[PRC]: none
+    K[PRC+Nature]: 1967-1989
+    K[USA+USSR]: 1950-1958, 1967-1980, 1982-1986
+    K[USA+USSR+Nature]: 1950-1958, 1967-1989
+    K[USA+PRC]: none
+    K[USA+PRC+Nature]: 1967-1989
+    K[USSR+PRC]: 1950-1958, 1967-1980, 1982-1986
+    K[USSR+PRC+Nature]: 1950-1958, 1967-1989
+    K[USA+USSR+PRC]: 1950-1958, 1967-1980, 1982-1986
+    K[USA+USSR+PRC+Nature]: 1950-1958, 1967-1989
+  no_war_tri: holds 1950-1991
+    K[{}]: 1973-1991
+    K[Nature]: 1973-1991
+    K[USA]: 1973-1991
+    K[USA+Nature]: 1973-1991
+    K[USSR]: 1950-1958, 1962-1991
+    K[USSR+Nature]: 1950-1991
+    K[PRC]: 1962-1969, 1973-1991
+    K[PRC+Nature]: 1962-1969, 1973-1991
+    K[USA+USSR]: 1950-1958, 1962-1991
+    K[USA+USSR+Nature]: 1950-1991
+    K[USA+PRC]: 1962-1969, 1973-1991
+    K[USA+PRC+Nature]: 1962-1969, 1973-1991
+    K[USSR+PRC]: 1950-1958, 1962-1991
+    K[USSR+PRC+Nature]: 1950-1991
+    K[USA+USSR+PRC]: 1950-1958, 1962-1991
+    K[USA+USSR+PRC+Nature]: 1950-1991
+  balance_nobloc_tri: holds 1950-1960, 1967-1991
+    K[{}]: 1973-1991
+    K[Nature]: 1973-1991
+    K[USA]: 1973-1991
+    K[USA+Nature]: 1973-1991
+    K[USSR]: 1950-1958, 1967-1991
+    K[USSR+Nature]: 1950-1958, 1967-1991
+    K[PRC]: 1967-1969, 1973-1991
+    K[PRC+Nature]: 1967-1969, 1973-1991
+    K[USA+USSR]: 1950-1958, 1967-1991
+    K[USA+USSR+Nature]: 1950-1958, 1967-1991
+    K[USA+PRC]: 1967-1969, 1973-1991
+    K[USA+PRC+Nature]: 1967-1969, 1973-1991
+    K[USSR+PRC]: 1950-1958, 1967-1991
+    K[USSR+PRC+Nature]: 1950-1958, 1967-1991
+    K[USA+USSR+PRC]: 1950-1958, 1967-1991
+    K[USA+USSR+PRC+Nature]: 1950-1958, 1967-1991
+  balance_cw_tri: holds 1950-1960, 1967-1989
+    K[{}]: none
+    K[Nature]: 1973-1989
+    K[USA]: none
+    K[USA+Nature]: 1973-1989
+    K[USSR]: 1950-1958, 1967-1980, 1982-1986
+    K[USSR+Nature]: 1950-1958, 1967-1989
+    K[PRC]: none
+    K[PRC+Nature]: 1967-1969, 1973-1989
+    K[USA+USSR]: 1950-1958, 1967-1980, 1982-1986
+    K[USA+USSR+Nature]: 1950-1958, 1967-1989
+    K[USA+PRC]: none
+    K[USA+PRC+Nature]: 1967-1969, 1973-1989
+    K[USSR+PRC]: 1950-1958, 1967-1980, 1982-1986
+    K[USSR+PRC+Nature]: 1950-1958, 1967-1989
+    K[USA+USSR+PRC]: 1950-1958, 1967-1980, 1982-1986
+    K[USA+USSR+PRC+Nature]: 1950-1958, 1967-1989
+
+--- P50: model d1fc1abd2f34, 29 declared variables, actions {'USA': 17, 'USSR': 25, 'PRC': 11, 'Nature': 17}, 2138.5 s (kernels and traces 2121.6 s)
+  no_war_core: holds 1950-1991
+    K[{}]: 1962-1991
+    K[Nature]: 1962-1991
+    K[USA]: 1962-1991
+    K[USA+Nature]: 1962-1991
+    K[USSR]: 1950, 1954-1958, 1962-1991
+    K[USSR+Nature]: 1950, 1954-1991
+    K[PRC]: 1962-1991
+    K[PRC+Nature]: 1962-1991
+    K[USA+USSR]: 1950-1958, 1962-1991
+    K[USA+USSR+Nature]: 1950-1991
+    K[USA+PRC]: 1962-1991
+    K[USA+PRC+Nature]: 1962-1991
+    K[USSR+PRC]: 1950-1951, 1954-1958, 1962-1991
+    K[USSR+PRC+Nature]: 1950-1951, 1954-1991
+    K[USA+USSR+PRC]: 1950-1958, 1962-1991
+    K[USA+USSR+PRC+Nature]: 1950-1991
+  balance_nobloc_core: holds 1950-1960, 1967-1991
+    K[{}]: 1967-1991
+    K[Nature]: 1967-1991
+    K[USA]: 1967-1991
+    K[USA+Nature]: 1967-1991
+    K[USSR]: 1950, 1954-1958, 1967-1991
+    K[USSR+Nature]: 1950, 1954-1958, 1967-1991
+    K[PRC]: 1967-1991
+    K[PRC+Nature]: 1967-1991
+    K[USA+USSR]: 1950-1958, 1967-1991
+    K[USA+USSR+Nature]: 1950-1958, 1967-1991
+    K[USA+PRC]: 1967-1991
+    K[USA+PRC+Nature]: 1967-1991
+    K[USSR+PRC]: 1950-1951, 1954-1958, 1967-1991
+    K[USSR+PRC+Nature]: 1950-1951, 1954-1958, 1967-1991
+    K[USA+USSR+PRC]: 1950-1958, 1967-1991
+    K[USA+USSR+PRC+Nature]: 1950-1958, 1967-1991
+  balance_cw_core: holds 1950-1960, 1967-1989
+    K[{}]: none
+    K[Nature]: 1967-1989
+    K[USA]: none
+    K[USA+Nature]: 1967-1989
+    K[USSR]: 1950, 1954-1958, 1967-1980, 1982-1986
+    K[USSR+Nature]: 1950, 1954-1958, 1967-1989
+    K[PRC]: none
+    K[PRC+Nature]: 1967-1989
+    K[USA+USSR]: 1950-1958, 1967-1980, 1982-1986
+    K[USA+USSR+Nature]: 1950-1958, 1967-1989
+    K[USA+PRC]: none
+    K[USA+PRC+Nature]: 1967-1989
+    K[USSR+PRC]: 1950-1951, 1954-1958, 1967-1980, 1982-1986
+    K[USSR+PRC+Nature]: 1950-1951, 1954-1958, 1967-1989
+    K[USA+USSR+PRC]: 1950-1958, 1967-1980, 1982-1986
+    K[USA+USSR+PRC+Nature]: 1950-1958, 1967-1989
+  no_war_tri: holds 1950-1951, 1954-1991
+    K[{}]: 1973-1991
+    K[Nature]: 1962-1964, 1973-1991
+    K[USA]: 1973-1991
+    K[USA+Nature]: 1962-1964, 1973-1991
+    K[USSR]: 1950, 1954-1958, 1962-1991
+    K[USSR+Nature]: 1950, 1954-1991
+    K[PRC]: 1962-1969, 1973-1991
+    K[PRC+Nature]: 1962-1969, 1973-1991
+    K[USA+USSR]: 1950, 1954-1958, 1962-1991
+    K[USA+USSR+Nature]: 1950, 1954-1991
+    K[USA+PRC]: 1962-1969, 1973-1991
+    K[USA+PRC+Nature]: 1962-1969, 1973-1991
+    K[USSR+PRC]: 1950-1951, 1954-1958, 1962-1991
+    K[USSR+PRC+Nature]: 1950-1951, 1954-1991
+    K[USA+USSR+PRC]: 1950-1951, 1954-1958, 1962-1991
+    K[USA+USSR+PRC+Nature]: 1950-1951, 1954-1991
+  balance_nobloc_tri: holds 1950-1951, 1954-1960, 1967-1991
+    K[{}]: 1973-1991
+    K[Nature]: 1973-1991
+    K[USA]: 1973-1991
+    K[USA+Nature]: 1973-1991
+    K[USSR]: 1950, 1954-1958, 1967-1991
+    K[USSR+Nature]: 1950, 1954-1958, 1967-1991
+    K[PRC]: 1967-1969, 1973-1991
+    K[PRC+Nature]: 1967-1969, 1973-1991
+    K[USA+USSR]: 1950, 1954-1958, 1967-1991
+    K[USA+USSR+Nature]: 1950, 1954-1958, 1967-1991
+    K[USA+PRC]: 1967-1969, 1973-1991
+    K[USA+PRC+Nature]: 1967-1969, 1973-1991
+    K[USSR+PRC]: 1950-1951, 1954-1958, 1967-1991
+    K[USSR+PRC+Nature]: 1950-1951, 1954-1958, 1967-1991
+    K[USA+USSR+PRC]: 1950-1951, 1954-1958, 1967-1991
+    K[USA+USSR+PRC+Nature]: 1950-1951, 1954-1958, 1967-1991
+  balance_cw_tri: holds 1950-1951, 1954-1960, 1967-1989
+    K[{}]: none
+    K[Nature]: 1973-1989
+    K[USA]: none
+    K[USA+Nature]: 1973-1989
+    K[USSR]: 1950, 1954-1958, 1967-1980, 1982-1986
+    K[USSR+Nature]: 1950, 1954-1958, 1967-1989
+    K[PRC]: none
+    K[PRC+Nature]: 1967-1969, 1973-1989
+    K[USA+USSR]: 1950, 1954-1958, 1967-1980, 1982-1986
+    K[USA+USSR+Nature]: 1950, 1954-1958, 1967-1989
+    K[USA+PRC]: none
+    K[USA+PRC+Nature]: 1967-1969, 1973-1989
+    K[USSR+PRC]: 1950-1951, 1954-1958, 1967-1980, 1982-1986
+    K[USSR+PRC+Nature]: 1950-1951, 1954-1958, 1967-1989
+    K[USA+USSR+PRC]: 1950-1951, 1954-1958, 1967-1980, 1982-1986
+    K[USA+USSR+PRC+Nature]: 1950-1951, 1954-1958, 1967-1989
+
+--- N50: model 18bfcf582b18, 29 declared variables, actions {'USA': 17, 'USSR': 25, 'Nature': 27}, 41.5 s (kernels and traces 40.6 s)
+  no_war_core: holds 1950-1991
+    K[{}]: 1962-1991
+    K[Nature]: 1962-1991
+    K[USA]: 1962-1991
+    K[USA+Nature]: 1962-1991
+    K[USSR]: 1950, 1954-1958, 1962-1991
+    K[USSR+Nature]: 1950-1951, 1954-1991
+    K[USA+USSR]: 1950-1958, 1962-1991
+    K[USA+USSR+Nature]: 1950-1991
+  balance_nobloc_core: holds 1950-1960, 1967-1991
+    K[{}]: 1967-1991
+    K[Nature]: 1967-1991
+    K[USA]: 1967-1991
+    K[USA+Nature]: 1967-1991
+    K[USSR]: 1950, 1954-1958, 1967-1991
+    K[USSR+Nature]: 1950-1951, 1954-1958, 1967-1991
+    K[USA+USSR]: 1950-1958, 1967-1991
+    K[USA+USSR+Nature]: 1950-1958, 1967-1991
+  balance_cw_core: holds 1950-1960, 1967-1989
+    K[{}]: none
+    K[Nature]: 1967-1989
+    K[USA]: none
+    K[USA+Nature]: 1967-1989
+    K[USSR]: 1950, 1954-1958, 1967-1980, 1982-1986
+    K[USSR+Nature]: 1950-1951, 1954-1958, 1967-1989
+    K[USA+USSR]: 1950-1958, 1967-1980, 1982-1986
+    K[USA+USSR+Nature]: 1950-1958, 1967-1989
+  no_war_tri: holds 1950-1951, 1954-1991
+    K[{}]: 1973-1991
+    K[Nature]: 1962-1969, 1973-1991
+    K[USA]: 1973-1991
+    K[USA+Nature]: 1962-1969, 1973-1991
+    K[USSR]: 1950, 1954-1958, 1962-1991
+    K[USSR+Nature]: 1950-1951, 1954-1991
+    K[USA+USSR]: 1950, 1954-1958, 1962-1991
+    K[USA+USSR+Nature]: 1950-1951, 1954-1991
+  balance_nobloc_tri: holds 1950-1951, 1954-1960, 1967-1991
+    K[{}]: 1973-1991
+    K[Nature]: 1967-1969, 1973-1991
+    K[USA]: 1973-1991
+    K[USA+Nature]: 1967-1969, 1973-1991
+    K[USSR]: 1950, 1954-1958, 1967-1991
+    K[USSR+Nature]: 1950-1951, 1954-1958, 1967-1991
+    K[USA+USSR]: 1950, 1954-1958, 1967-1991
+    K[USA+USSR+Nature]: 1950-1951, 1954-1958, 1967-1991
+  balance_cw_tri: holds 1950-1951, 1954-1960, 1967-1989
+    K[{}]: none
+    K[Nature]: 1967-1969, 1973-1989
+    K[USA]: none
+    K[USA+Nature]: 1967-1969, 1973-1989
+    K[USSR]: 1950, 1954-1958, 1967-1980, 1982-1986
+    K[USSR+Nature]: 1950-1951, 1954-1958, 1967-1989
+    K[USA+USSR]: 1950, 1954-1958, 1967-1980, 1982-1986
+    K[USA+USSR+Nature]: 1950-1951, 1954-1958, 1967-1989
+
+--- B: model 2455f8da8a76, 29 declared variables, actions {'USA': 17, 'USSR': 35, 'Nature': 17}, 29.2 s (kernels and traces 28.1 s)
+  no_war_core: holds 1950-1991
+    K[{}]: 1962-1991
+    K[Nature]: 1962-1991
+    K[USA]: 1962-1991
+    K[USA+Nature]: 1962-1991
+    K[USSR]: 1950-1951, 1954-1958, 1962-1991
+    K[USSR+Nature]: 1950-1951, 1954-1991
+    K[USA+USSR]: 1950-1958, 1962-1991
+    K[USA+USSR+Nature]: 1950-1991
+  balance_nobloc_core: holds 1950-1960, 1967-1991
+    K[{}]: 1967-1991
+    K[Nature]: 1967-1991
+    K[USA]: 1967-1991
+    K[USA+Nature]: 1967-1991
+    K[USSR]: 1950-1951, 1954-1958, 1967-1991
+    K[USSR+Nature]: 1950-1951, 1954-1958, 1967-1991
+    K[USA+USSR]: 1950-1958, 1967-1991
+    K[USA+USSR+Nature]: 1950-1958, 1967-1991
+  balance_cw_core: holds 1950-1960, 1967-1989
+    K[{}]: none
+    K[Nature]: 1967-1989
+    K[USA]: none
+    K[USA+Nature]: 1967-1989
+    K[USSR]: 1950-1951, 1954-1958, 1967-1980, 1982-1986
+    K[USSR+Nature]: 1950-1951, 1954-1958, 1967-1989
+    K[USA+USSR]: 1950-1958, 1967-1980, 1982-1986
+    K[USA+USSR+Nature]: 1950-1958, 1967-1989
+  no_war_tri: holds 1950-1951, 1954-1991
+    K[{}]: 1973-1991
+    K[Nature]: 1962-1964, 1973-1991
+    K[USA]: 1973-1991
+    K[USA+Nature]: 1962-1964, 1973-1991
+    K[USSR]: 1950-1951, 1954-1958, 1962-1991
+    K[USSR+Nature]: 1950-1951, 1954-1991
+    K[USA+USSR]: 1950-1951, 1954-1958, 1962-1991
+    K[USA+USSR+Nature]: 1950-1951, 1954-1991
+  balance_nobloc_tri: holds 1950-1951, 1954-1960, 1967-1991
+    K[{}]: 1973-1991
+    K[Nature]: 1973-1991
+    K[USA]: 1973-1991
+    K[USA+Nature]: 1973-1991
+    K[USSR]: 1950-1951, 1954-1958, 1967-1991
+    K[USSR+Nature]: 1950-1951, 1954-1958, 1967-1991
+    K[USA+USSR]: 1950-1951, 1954-1958, 1967-1991
+    K[USA+USSR+Nature]: 1950-1951, 1954-1958, 1967-1991
+  balance_cw_tri: holds 1950-1951, 1954-1960, 1967-1989
+    K[{}]: none
+    K[Nature]: 1973-1989
+    K[USA]: none
+    K[USA+Nature]: 1973-1989
+    K[USSR]: 1950-1951, 1954-1958, 1967-1980, 1982-1986
+    K[USSR+Nature]: 1950-1951, 1954-1958, 1967-1989
+    K[USA+USSR]: 1950-1951, 1954-1958, 1967-1980, 1982-1986
+    K[USA+USSR+Nature]: 1950-1951, 1954-1958, 1967-1989
+
+(2) pivotal coalitions per year (against the USSR | general), +N with Nature
+  no_war_core
+    S    1950-1958                    vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    S    1959-1961                    vs USSR: none | +N none || general: none | +N {USSR}
+    S    1962-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    P69  1950-1958                    vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    P69  1959-1961                    vs USSR: none | +N none || general: none | +N {USSR}
+    P69  1962-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    P50  1950, 1954-1958              vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    P50  1951                         vs USSR: none | +N none || general: {USA,USSR} {USSR,PRC} | +N {USA,USSR} {USSR,PRC}
+    P50  1952-1953                    vs USSR: none | +N none || general: {USA,USSR} | +N {USA,USSR}
+    P50  1959-1961                    vs USSR: none | +N none || general: none | +N {USSR}
+    P50  1962-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    P50b 1950-1951, 1954-1958         vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    P50b 1952-1953                    vs USSR: none | +N none || general: {USA,USSR} | +N {USA,USSR}
+    P50b 1959-1961                    vs USSR: none | +N none || general: none | +N {USSR}
+    P50b 1962-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    N50  1950, 1954-1958              vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    N50  1951                         vs USSR: none | +N none || general: {USA,USSR} | +N {USSR}
+    N50  1952-1953                    vs USSR: none | +N none || general: {USA,USSR} | +N {USA,USSR}
+    N50  1959-1961                    vs USSR: none | +N none || general: none | +N {USSR}
+    N50  1962-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    B    1950-1951, 1954-1958         vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    B    1952-1953                    vs USSR: none | +N none || general: {USA,USSR} | +N {USA,USSR}
+    B    1959-1961                    vs USSR: none | +N none || general: none | +N {USSR}
+    B    1962-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+  balance_nobloc_core
+    S    1950-1958                    vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    S    1959-1966                    vs USSR: none | +N none || general: none | +N none
+    S    1967-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    P69  1950-1958                    vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    P69  1959-1966                    vs USSR: none | +N none || general: none | +N none
+    P69  1967-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    P50  1950, 1954-1958              vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    P50  1951                         vs USSR: none | +N none || general: {USA,USSR} {USSR,PRC} | +N {USA,USSR} {USSR,PRC}
+    P50  1952-1953                    vs USSR: none | +N none || general: {USA,USSR} | +N {USA,USSR}
+    P50  1959-1966                    vs USSR: none | +N none || general: none | +N none
+    P50  1967-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    P50b 1950-1951, 1954-1958         vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    P50b 1952-1953                    vs USSR: none | +N none || general: {USA,USSR} | +N {USA,USSR}
+    P50b 1959-1966                    vs USSR: none | +N none || general: none | +N none
+    P50b 1967-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    N50  1950, 1954-1958              vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    N50  1951                         vs USSR: none | +N none || general: {USA,USSR} | +N {USSR}
+    N50  1952-1953                    vs USSR: none | +N none || general: {USA,USSR} | +N {USA,USSR}
+    N50  1959-1966                    vs USSR: none | +N none || general: none | +N none
+    N50  1967-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    B    1950-1951, 1954-1958         vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    B    1952-1953                    vs USSR: none | +N none || general: {USA,USSR} | +N {USA,USSR}
+    B    1959-1966                    vs USSR: none | +N none || general: none | +N none
+    B    1967-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+  balance_cw_core
+    S    1950-1958                    vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    S    1959-1966, 1990-1991         vs USSR: none | +N none || general: none | +N none
+    S    1967-1980, 1982-1986         vs USSR: none | +N {} || general: {USSR} | +N {}
+    S    1981, 1987-1989              vs USSR: none | +N {} || general: none | +N {}
+    P69  1950-1958                    vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    P69  1959-1966, 1990-1991         vs USSR: none | +N none || general: none | +N none
+    P69  1967-1980, 1982-1986         vs USSR: none | +N {} || general: {USSR} | +N {}
+    P69  1981, 1987-1989              vs USSR: none | +N {} || general: none | +N {}
+    P50  1950, 1954-1958              vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    P50  1951                         vs USSR: none | +N none || general: {USA,USSR} {USSR,PRC} | +N {USA,USSR} {USSR,PRC}
+    P50  1952-1953                    vs USSR: none | +N none || general: {USA,USSR} | +N {USA,USSR}
+    P50  1959-1966, 1990-1991         vs USSR: none | +N none || general: none | +N none
+    P50  1967-1980, 1982-1986         vs USSR: none | +N {} || general: {USSR} | +N {}
+    P50  1981, 1987-1989              vs USSR: none | +N {} || general: none | +N {}
+    P50b 1950-1951, 1954-1958         vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    P50b 1952-1953                    vs USSR: none | +N none || general: {USA,USSR} | +N {USA,USSR}
+    P50b 1959-1966, 1990-1991         vs USSR: none | +N none || general: none | +N none
+    P50b 1967-1980, 1982-1986         vs USSR: none | +N {} || general: {USSR} | +N {}
+    P50b 1981, 1987-1989              vs USSR: none | +N {} || general: none | +N {}
+    N50  1950, 1954-1958              vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    N50  1951                         vs USSR: none | +N none || general: {USA,USSR} | +N {USSR}
+    N50  1952-1953                    vs USSR: none | +N none || general: {USA,USSR} | +N {USA,USSR}
+    N50  1959-1966, 1990-1991         vs USSR: none | +N none || general: none | +N none
+    N50  1967-1980, 1982-1986         vs USSR: none | +N {} || general: {USSR} | +N {}
+    N50  1981, 1987-1989              vs USSR: none | +N {} || general: none | +N {}
+    B    1950-1951, 1954-1958         vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    B    1952-1953                    vs USSR: none | +N none || general: {USA,USSR} | +N {USA,USSR}
+    B    1959-1966, 1990-1991         vs USSR: none | +N none || general: none | +N none
+    B    1967-1980, 1982-1986         vs USSR: none | +N {} || general: {USSR} | +N {}
+    B    1981, 1987-1989              vs USSR: none | +N {} || general: none | +N {}
+  no_war_tri
+    S    1950-1958, 1970-1972         vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    S    1959-1961                    vs USSR: none | +N none || general: none | +N {USSR}
+    S    1962-1969                    vs USSR: none | +N {} || general: {USSR} | +N {}
+    S    1973-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    P69  1950-1958, 1970-1972         vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    P69  1959-1961                    vs USSR: none | +N none || general: none | +N {USSR}
+    P69  1962-1969                    vs USSR: {PRC} | +N {PRC} || general: {USSR} {PRC} | +N {USSR} {PRC}
+    P69  1973-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    P50  1950, 1954-1958, 1970-1972   vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    P50  1951                         vs USSR: none | +N none || general: {USSR,PRC} | +N {USSR,PRC}
+    P50  1952-1953                    vs USSR: none | +N none || general: none | +N none
+    P50  1959-1961                    vs USSR: none | +N none || general: none | +N {USSR}
+    P50  1962-1964                    vs USSR: {PRC} | +N {} || general: {USSR} {PRC} | +N {}
+    P50  1965-1969                    vs USSR: {PRC} | +N {PRC} || general: {USSR} {PRC} | +N {USSR} {PRC}
+    P50  1973-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    P50b 1950-1951, 1954-1958, 1965-1972 vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    P50b 1952-1953                    vs USSR: none | +N none || general: none | +N none
+    P50b 1959-1961                    vs USSR: none | +N none || general: none | +N {USSR}
+    P50b 1962-1964                    vs USSR: none | +N {} || general: {USSR} | +N {}
+    P50b 1973-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    N50  1950, 1954-1958, 1970-1972   vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    N50  1951, 1959-1961              vs USSR: none | +N none || general: none | +N {USSR}
+    N50  1952-1953                    vs USSR: none | +N none || general: none | +N none
+    N50  1962-1969                    vs USSR: none | +N {} || general: {USSR} | +N {}
+    N50  1973-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    B    1950-1951, 1954-1958, 1965-1972 vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    B    1952-1953                    vs USSR: none | +N none || general: none | +N none
+    B    1959-1961                    vs USSR: none | +N none || general: none | +N {USSR}
+    B    1962-1964                    vs USSR: none | +N {} || general: {USSR} | +N {}
+    B    1973-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+  balance_nobloc_tri
+    S    1950-1958, 1970-1972         vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    S    1959-1966                    vs USSR: none | +N none || general: none | +N none
+    S    1967-1969                    vs USSR: none | +N {} || general: {USSR} | +N {}
+    S    1973-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    P69  1950-1958, 1970-1972         vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    P69  1959-1966                    vs USSR: none | +N none || general: none | +N none
+    P69  1967-1969                    vs USSR: {PRC} | +N {PRC} || general: {USSR} {PRC} | +N {USSR} {PRC}
+    P69  1973-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    P50  1950, 1954-1958, 1970-1972   vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    P50  1951                         vs USSR: none | +N none || general: {USSR,PRC} | +N {USSR,PRC}
+    P50  1952-1953, 1959-1966         vs USSR: none | +N none || general: none | +N none
+    P50  1967-1969                    vs USSR: {PRC} | +N {PRC} || general: {USSR} {PRC} | +N {USSR} {PRC}
+    P50  1973-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    P50b 1950-1951, 1954-1958, 1967-1972 vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    P50b 1952-1953, 1959-1966         vs USSR: none | +N none || general: none | +N none
+    P50b 1973-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    N50  1950, 1954-1958, 1970-1972   vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    N50  1951                         vs USSR: none | +N none || general: none | +N {USSR}
+    N50  1952-1953, 1959-1966         vs USSR: none | +N none || general: none | +N none
+    N50  1967-1969                    vs USSR: none | +N {} || general: {USSR} | +N {}
+    N50  1973-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    B    1950-1951, 1954-1958, 1967-1972 vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    B    1952-1953, 1959-1966         vs USSR: none | +N none || general: none | +N none
+    B    1973-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+  balance_cw_tri
+    S    1950-1958, 1970-1972         vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    S    1959-1966, 1990-1991         vs USSR: none | +N none || general: none | +N none
+    S    1967-1969, 1973-1980, 1982-1986 vs USSR: none | +N {} || general: {USSR} | +N {}
+    S    1981, 1987-1989              vs USSR: none | +N {} || general: none | +N {}
+    P69  1950-1958, 1970-1972         vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    P69  1959-1966, 1990-1991         vs USSR: none | +N none || general: none | +N none
+    P69  1967-1969                    vs USSR: none | +N {PRC} || general: {USSR} | +N {USSR} {PRC}
+    P69  1973-1980, 1982-1986         vs USSR: none | +N {} || general: {USSR} | +N {}
+    P69  1981, 1987-1989              vs USSR: none | +N {} || general: none | +N {}
+    P50  1950, 1954-1958, 1970-1972   vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    P50  1951                         vs USSR: none | +N none || general: {USSR,PRC} | +N {USSR,PRC}
+    P50  1952-1953, 1959-1966, 1990-1991 vs USSR: none | +N none || general: none | +N none
+    P50  1967-1969                    vs USSR: none | +N {PRC} || general: {USSR} | +N {USSR} {PRC}
+    P50  1973-1980, 1982-1986         vs USSR: none | +N {} || general: {USSR} | +N {}
+    P50  1981, 1987-1989              vs USSR: none | +N {} || general: none | +N {}
+    P50b 1950-1951, 1954-1958, 1967-1972 vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    P50b 1952-1953, 1959-1966, 1990-1991 vs USSR: none | +N none || general: none | +N none
+    P50b 1973-1980, 1982-1986         vs USSR: none | +N {} || general: {USSR} | +N {}
+    P50b 1981, 1987-1989              vs USSR: none | +N {} || general: none | +N {}
+    N50  1950, 1954-1958, 1970-1972   vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    N50  1951                         vs USSR: none | +N none || general: none | +N {USSR}
+    N50  1952-1953, 1959-1966, 1990-1991 vs USSR: none | +N none || general: none | +N none
+    N50  1967-1969, 1973-1980, 1982-1986 vs USSR: none | +N {} || general: {USSR} | +N {}
+    N50  1981, 1987-1989              vs USSR: none | +N {} || general: none | +N {}
+    B    1950-1951, 1954-1958, 1967-1972 vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    B    1952-1953, 1959-1966, 1990-1991 vs USSR: none | +N none || general: none | +N none
+    B    1973-1980, 1982-1986         vs USSR: none | +N {} || general: {USSR} | +N {}
+    B    1981, 1987-1989              vs USSR: none | +N {} || general: none | +N {}
+
+(3) shortest trace (all actors) to the target, by year; who must move
+  general_war_us
+    S    1950-1958: 2; 1959-1961: 1; 1962-1991: -
+         without USSR: 1950-1958: -
+    P69  1950-1958: 2; 1959-1961: 1; 1962-1991: -
+         without USSR: 1950-1958: -
+    P50  1950-1951, 1954-1958: 2; 1952-1953, 1959-1961: 1; 1962-1991: -
+         without USA: 1952-1953: 2
+         without USSR: 1950, 1954-1958: -
+    N50  1950-1951, 1954-1958: 2; 1952-1953, 1959-1961: 1; 1962-1991: -
+         without USA: 1952-1953: 2
+         without USSR: 1950, 1954-1958: -
+    B    1950-1951, 1954-1958: 2; 1952-1953, 1959-1961: 1; 1962-1991: -
+         without USA: 1952-1953: 2
+         without USSR: 1950-1951, 1954-1958: -
+  sino_war
+    S    1950: 16; 1951: 15; 1952: 14; 1953: 13; 1954: 12; 1955: 11; 1956: 10; 1957: 9; 1958: 8; 1959: 7; 1960: 6; 1961: 5; 1962: 4; 1963: 3; 1964-1969: 2; 1970-1972: 1; 1973-1991: -
+         without USSR: 1950-1972: -
+         without Nature: 1950-1969: -
+    P69  1950: 21; 1951: 20; 1952: 19; 1953: 18; 1954: 17; 1955: 16; 1956: 15; 1957: 14; 1958: 13; 1959: 12; 1960: 11; 1961: 10; 1962: 9; 1963: 8; 1964: 7; 1965: 6; 1966: 5; 1967: 4; 1968: 3; 1969: 2; 1970-1972: 1; 1973-1991: -
+         without USSR: 1950-1972: -
+         without PRC: 1950-1969: -
+    P50  1950, 1973-1991: -; 1951: 15; 1952: 14; 1953: 13; 1954: 12; 1955: 11; 1956: 10; 1957: 9; 1958: 8; 1959: 7; 1960: 6; 1961: 5; 1962: 4; 1963: 3; 1964-1969: 2; 1970-1972: 1
+         without USSR: 1951-1972: -
+         without PRC: 1951-1969: -
+         without Nature: 1951-1964: -
+    N50  1950, 1973-1991: -; 1951: 15; 1952: 14; 1953: 13; 1954: 12; 1955: 11; 1956: 10; 1957: 9; 1958: 8; 1959: 7; 1960: 6; 1961: 5; 1962: 4; 1963-1964: 3; 1965-1969: 2; 1970-1972: 1
+         without USSR: 1951-1972: -
+         without Nature: 1951-1969: -
+    B    1950, 1973-1991: -; 1951: 15; 1952: 14; 1953: 13; 1954: 12; 1955: 11; 1956: 10; 1957: 9; 1958: 8; 1959: 7; 1960: 6; 1961: 5; 1962: 4; 1963: 3; 1964-1969: 2; 1970-1972: 1
+         without USSR: 1951-1972: -
+         without Nature: 1951-1964: -
+
+(4) differences in kernel membership (years where the pair disagrees)
+  S vs P69
+    no_war_tri           K[Nature]: only S 1962-1969; only P69 none
+    no_war_tri           K[USA+Nature]: only S 1962-1969; only P69 none
+    balance_nobloc_tri   K[Nature]: only S 1967-1969; only P69 none
+    balance_nobloc_tri   K[USA+Nature]: only S 1967-1969; only P69 none
+    balance_cw_tri       K[Nature]: only S 1967-1969; only P69 none
+    balance_cw_tri       K[USA+Nature]: only S 1967-1969; only P69 none
+  S vs N50
+    no_war_core          K[USSR]: only S 1951-1953; only N50 none
+    no_war_core          K[USSR+Nature]: only S 1952-1953; only N50 none
+    balance_nobloc_core  K[USSR]: only S 1951-1953; only N50 none
+    balance_nobloc_core  K[USSR+Nature]: only S 1952-1953; only N50 none
+    balance_cw_core      K[USSR]: only S 1951-1953; only N50 none
+    balance_cw_core      K[USSR+Nature]: only S 1952-1953; only N50 none
+    no_war_tri           K[USSR]: only S 1951-1953; only N50 none
+    no_war_tri           K[USSR+Nature]: only S 1952-1953; only N50 none
+    no_war_tri           K[USA+USSR]: only S 1951-1953; only N50 none
+    no_war_tri           K[USA+USSR+Nature]: only S 1952-1953; only N50 none
+    balance_nobloc_tri   K[USSR]: only S 1951-1953; only N50 none
+    balance_nobloc_tri   K[USSR+Nature]: only S 1952-1953; only N50 none
+    balance_nobloc_tri   K[USA+USSR]: only S 1951-1953; only N50 none
+    balance_nobloc_tri   K[USA+USSR+Nature]: only S 1952-1953; only N50 none
+    balance_cw_tri       K[USSR]: only S 1951-1953; only N50 none
+    balance_cw_tri       K[USSR+Nature]: only S 1952-1953; only N50 none
+    balance_cw_tri       K[USA+USSR]: only S 1951-1953; only N50 none
+    balance_cw_tri       K[USA+USSR+Nature]: only S 1952-1953; only N50 none
+  N50 vs P50
+    no_war_core          K[USSR+Nature]: only N50 1951; only P50 none
+    balance_nobloc_core  K[USSR+Nature]: only N50 1951; only P50 none
+    balance_cw_core      K[USSR+Nature]: only N50 1951; only P50 none
+    no_war_tri           K[Nature]: only N50 1965-1969; only P50 none
+    no_war_tri           K[USA+Nature]: only N50 1965-1969; only P50 none
+    no_war_tri           K[USSR+Nature]: only N50 1951; only P50 none
+    no_war_tri           K[USA+USSR+Nature]: only N50 1951; only P50 none
+    balance_nobloc_tri   K[Nature]: only N50 1967-1969; only P50 none
+    balance_nobloc_tri   K[USA+Nature]: only N50 1967-1969; only P50 none
+    balance_nobloc_tri   K[USSR+Nature]: only N50 1951; only P50 none
+    balance_nobloc_tri   K[USA+USSR+Nature]: only N50 1951; only P50 none
+    balance_cw_tri       K[Nature]: only N50 1967-1969; only P50 none
+    balance_cw_tri       K[USA+Nature]: only N50 1967-1969; only P50 none
+    balance_cw_tri       K[USSR+Nature]: only N50 1951; only P50 none
+    balance_cw_tri       K[USA+USSR+Nature]: only N50 1951; only P50 none
+  B vs P50
+    no_war_core          K[USSR]: only B 1951; only P50 none
+    no_war_core          K[USSR+Nature]: only B 1951; only P50 none
+    balance_nobloc_core  K[USSR]: only B 1951; only P50 none
+    balance_nobloc_core  K[USSR+Nature]: only B 1951; only P50 none
+    balance_cw_core      K[USSR]: only B 1951; only P50 none
+    balance_cw_core      K[USSR+Nature]: only B 1951; only P50 none
+    no_war_tri           K[USSR]: only B 1951; only P50 none
+    no_war_tri           K[USSR+Nature]: only B 1951; only P50 none
+    no_war_tri           K[USA+USSR]: only B 1951; only P50 none
+    no_war_tri           K[USA+USSR+Nature]: only B 1951; only P50 none
+    balance_nobloc_tri   K[USSR]: only B 1951; only P50 none
+    balance_nobloc_tri   K[USSR+Nature]: only B 1951; only P50 none
+    balance_nobloc_tri   K[USA+USSR]: only B 1951; only P50 none
+    balance_nobloc_tri   K[USA+USSR+Nature]: only B 1951; only P50 none
+    balance_cw_tri       K[USSR]: only B 1951; only P50 none
+    balance_cw_tri       K[USSR+Nature]: only B 1951; only P50 none
+    balance_cw_tri       K[USA+USSR]: only B 1951; only P50 none
+    balance_cw_tri       K[USA+USSR+Nature]: only B 1951; only P50 none
+  P69 vs P50
+    no_war_core          K[USSR]: only P69 1951-1953; only P50 none
+    no_war_core          K[USSR+Nature]: only P69 1951-1953; only P50 none
+    no_war_core          K[USSR+PRC]: only P69 1952-1953; only P50 none
+    no_war_core          K[USSR+PRC+Nature]: only P69 1952-1953; only P50 none
+    balance_nobloc_core  K[USSR]: only P69 1951-1953; only P50 none
+    balance_nobloc_core  K[USSR+Nature]: only P69 1951-1953; only P50 none
+    balance_nobloc_core  K[USSR+PRC]: only P69 1952-1953; only P50 none
+    balance_nobloc_core  K[USSR+PRC+Nature]: only P69 1952-1953; only P50 none
+    balance_cw_core      K[USSR]: only P69 1951-1953; only P50 none
+    balance_cw_core      K[USSR+Nature]: only P69 1951-1953; only P50 none
+    balance_cw_core      K[USSR+PRC]: only P69 1952-1953; only P50 none
+    balance_cw_core      K[USSR+PRC+Nature]: only P69 1952-1953; only P50 none
+    no_war_tri           K[Nature]: only P69 none; only P50 1962-1964
+    no_war_tri           K[USA+Nature]: only P69 none; only P50 1962-1964
+    no_war_tri           K[USSR]: only P69 1951-1953; only P50 none
+    no_war_tri           K[USSR+Nature]: only P69 1951-1953; only P50 none
+    no_war_tri           K[USA+USSR]: only P69 1951-1953; only P50 none
+    no_war_tri           K[USA+USSR+Nature]: only P69 1951-1953; only P50 none
+    no_war_tri           K[USSR+PRC]: only P69 1952-1953; only P50 none
+    no_war_tri           K[USSR+PRC+Nature]: only P69 1952-1953; only P50 none
+    no_war_tri           K[USA+USSR+PRC]: only P69 1952-1953; only P50 none
+    no_war_tri           K[USA+USSR+PRC+Nature]: only P69 1952-1953; only P50 none
+    balance_nobloc_tri   K[USSR]: only P69 1951-1953; only P50 none
+    balance_nobloc_tri   K[USSR+Nature]: only P69 1951-1953; only P50 none
+    balance_nobloc_tri   K[USA+USSR]: only P69 1951-1953; only P50 none
+    balance_nobloc_tri   K[USA+USSR+Nature]: only P69 1951-1953; only P50 none
+    balance_nobloc_tri   K[USSR+PRC]: only P69 1952-1953; only P50 none
+    balance_nobloc_tri   K[USSR+PRC+Nature]: only P69 1952-1953; only P50 none
+    balance_nobloc_tri   K[USA+USSR+PRC]: only P69 1952-1953; only P50 none
+    balance_nobloc_tri   K[USA+USSR+PRC+Nature]: only P69 1952-1953; only P50 none
+    balance_cw_tri       K[USSR]: only P69 1951-1953; only P50 none
+    balance_cw_tri       K[USSR+Nature]: only P69 1951-1953; only P50 none
+    balance_cw_tri       K[USA+USSR]: only P69 1951-1953; only P50 none
+    balance_cw_tri       K[USA+USSR+Nature]: only P69 1951-1953; only P50 none
+    balance_cw_tri       K[USSR+PRC]: only P69 1952-1953; only P50 none
+    balance_cw_tri       K[USSR+PRC+Nature]: only P69 1952-1953; only P50 none
+    balance_cw_tri       K[USA+USSR+PRC]: only P69 1952-1953; only P50 none
+    balance_cw_tri       K[USA+USSR+PRC+Nature]: only P69 1952-1953; only P50 none
+
+(5) behaviour-model check
+  1951 PRC.intervene_korea (others realized: {'USA': 'idle', 'USSR': 'idle', 'PRC': 'idle', 'Nature': 'none'})
+    B   prc_decision: safe=[] dist={'general_war_us': 1, 'sino_war': 14}
+    B   idle: safe=[nw_core,bnobloc_core,bcw_core,nw_tri,bnobloc_tri,bcw_tri] dist={'general_war_us': 2, 'sino_war': 14}
+    B   in_kernel: no_war_core:True balance_nobloc_core:True balance_cw_core:True no_war_tri:True balance_nobloc_tri:True balance_cw_tri:True
+    P50 prc_decision: safe_bundled=[] safe_prc=[] dist={'general_war_us': 1, 'sino_war': 14}
+    P50 idle: safe_bundled=[nw_core,bnobloc_core,bcw_core,nw_tri,bnobloc_tri,bcw_tri] safe_prc=[] dist={'general_war_us': 2, 'sino_war': 14}
+    P50 in_kernel: no_war_core:{'USSR': False, 'USSR+PRC': True, 'PRC': False} balance_nobloc_core:{'USSR': False, 'USSR+PRC': True, 'PRC': False} balance_cw_core:{'USSR': False, 'USSR+PRC': True, 'PRC': False} no_war_tri:{'USSR': False, 'USSR+PRC': True, 'PRC': False} balance_nobloc_tri:{'USSR': False, 'USSR+PRC': True, 'PRC': False} balance_cw_tri:{'USSR': False, 'USSR+PRC': True, 'PRC': False}
+  1954 PRC.strait_pressure (others realized: {'USA': 'approve_u2', 'USSR': 'idle', 'PRC': 'idle', 'Nature': 'none'})
+    B   prc_decision: safe=[nw_core,bnobloc_core,bcw_core,nw_tri,bnobloc_tri,bcw_tri] dist={'general_war_us': 2, 'sino_war': 11}
+    B   idle: safe=[nw_core,bnobloc_core,bcw_core,nw_tri,bnobloc_tri,bcw_tri] dist={'general_war_us': 2, 'sino_war': 11}
+    B   in_kernel: no_war_core:True balance_nobloc_core:True balance_cw_core:True no_war_tri:True balance_nobloc_tri:True balance_cw_tri:True
+    P50 prc_decision: safe_bundled=[nw_core,bnobloc_core,bcw_core,nw_tri,bnobloc_tri,bcw_tri] safe_prc=[] dist={'general_war_us': 2, 'sino_war': 11}
+    P50 idle: safe_bundled=[nw_core,bnobloc_core,bcw_core,nw_tri,bnobloc_tri,bcw_tri] safe_prc=[] dist={'general_war_us': 2, 'sino_war': 11}
+    P50 in_kernel: no_war_core:{'USSR': True, 'USSR+PRC': True, 'PRC': False} balance_nobloc_core:{'USSR': True, 'USSR+PRC': True, 'PRC': False} balance_cw_core:{'USSR': True, 'USSR+PRC': True, 'PRC': False} no_war_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': False} balance_nobloc_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': False} balance_cw_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': False}
+  1955 PRC.bomb_programme (others realized: {'USA': 'idle', 'USSR': 'idle', 'PRC': 'idle', 'Nature': 'none'})
+    B   prc_decision: safe=[nw_core,bnobloc_core,bcw_core,nw_tri,bnobloc_tri,bcw_tri] dist={'general_war_us': 2, 'sino_war': 10}
+    B   idle: safe=[nw_core,bnobloc_core,bcw_core,nw_tri,bnobloc_tri,bcw_tri] dist={'general_war_us': 2, 'sino_war': 10}
+    B   in_kernel: no_war_core:True balance_nobloc_core:True balance_cw_core:True no_war_tri:True balance_nobloc_tri:True balance_cw_tri:True
+    P50 prc_decision: safe_bundled=[nw_core,bnobloc_core,bcw_core,nw_tri,bnobloc_tri,bcw_tri] safe_prc=[] dist={'general_war_us': 2, 'sino_war': 10}
+    P50 idle: safe_bundled=[nw_core,bnobloc_core,bcw_core,nw_tri,bnobloc_tri,bcw_tri] safe_prc=[] dist={'general_war_us': 2, 'sino_war': 10}
+    P50 in_kernel: no_war_core:{'USSR': True, 'USSR+PRC': True, 'PRC': False} balance_nobloc_core:{'USSR': True, 'USSR+PRC': True, 'PRC': False} balance_cw_core:{'USSR': True, 'USSR+PRC': True, 'PRC': False} no_war_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': False} balance_nobloc_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': False} balance_cw_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': False}
+  1958 PRC.strait_pressure (others realized: {'USA': 'corona', 'USSR': 'berlin_ultimatum', 'PRC': 'idle', 'Nature': 'none'})
+    B   prc_decision: safe=[nw_core,nw_tri] dist={'general_war_us': 2, 'sino_war': 7}
+    B   idle: safe=[nw_core,nw_tri] dist={'general_war_us': 2, 'sino_war': 7}
+    B   own_move: safe=[] dist={'general_war_us': 1, 'sino_war': 7}
+    B   in_kernel: no_war_core:True balance_nobloc_core:True balance_cw_core:True no_war_tri:True balance_nobloc_tri:True balance_cw_tri:True
+    P50 prc_decision: safe_bundled=[] safe_prc=[] dist={'general_war_us': 1, 'sino_war': 7}
+    P50 idle: safe_bundled=[] safe_prc=[] dist={'general_war_us': 1, 'sino_war': 7}
+    P50 in_kernel: no_war_core:{'USSR': True, 'USSR+PRC': True, 'PRC': False} balance_nobloc_core:{'USSR': True, 'USSR+PRC': True, 'PRC': False} balance_cw_core:{'USSR': True, 'USSR+PRC': True, 'PRC': False} no_war_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': False} balance_nobloc_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': False} balance_cw_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': False}
+  1959 PRC.challenge_moscow (others realized: {'USA': 'offer_test_ban', 'USSR': 'idle', 'PRC': 'idle', 'Nature': 'none'})
+    B   prc_decision: safe=[] dist={'general_war_us': 1, 'sino_war': 6}
+    B   idle: safe=[] dist={'general_war_us': 1, 'sino_war': 6}
+    B   in_kernel: no_war_core:False balance_nobloc_core:False balance_cw_core:False no_war_tri:False balance_nobloc_tri:False balance_cw_tri:False
+    P50 prc_decision: safe_bundled=[] safe_prc=[] dist={'general_war_us': 1, 'sino_war': 6}
+    P50 idle: safe_bundled=[] safe_prc=[] dist={'general_war_us': 1, 'sino_war': 6}
+    P50 in_kernel: no_war_core:{'USSR': False, 'USSR+PRC': False, 'PRC': False} balance_nobloc_core:{'USSR': False, 'USSR+PRC': False, 'PRC': False} balance_cw_core:{'USSR': False, 'USSR+PRC': False, 'PRC': False} no_war_tri:{'USSR': False, 'USSR+PRC': False, 'PRC': False} balance_nobloc_tri:{'USSR': False, 'USSR+PRC': False, 'PRC': False} balance_cw_tri:{'USSR': False, 'USSR+PRC': False, 'PRC': False}
+  1965 PRC.deter_in_vietnam (others realized: {'USA': 'idle', 'USSR': 'idle', 'PRC': 'idle', 'Nature': 'none'})
+    B   prc_decision: safe=[nw_core,nw_tri] dist={'general_war_us': None, 'sino_war': 2}
+    B   idle: safe=[nw_core,nw_tri] dist={'general_war_us': None, 'sino_war': 2}
+    B   in_kernel: no_war_core:True balance_nobloc_core:False balance_cw_core:False no_war_tri:True balance_nobloc_tri:False balance_cw_tri:False
+    P50 prc_decision: safe_bundled=[nw_core,nw_tri] safe_prc=[nw_core,nw_tri] dist={'general_war_us': None, 'sino_war': 2}
+    P50 idle: safe_bundled=[nw_core,nw_tri] safe_prc=[nw_core,nw_tri] dist={'general_war_us': None, 'sino_war': 2}
+    P50 in_kernel: no_war_core:{'USSR': True, 'USSR+PRC': True, 'PRC': True} balance_nobloc_core:{'USSR': False, 'USSR+PRC': False, 'PRC': False} balance_cw_core:{'USSR': False, 'USSR+PRC': False, 'PRC': False} no_war_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': True} balance_nobloc_tri:{'USSR': False, 'USSR+PRC': False, 'PRC': False} balance_cw_tri:{'USSR': False, 'USSR+PRC': False, 'PRC': False}
+  1969 PRC.border_clash (others realized: {'USA': 'idle', 'USSR': 'idle', 'PRC': 'border_clash', 'Nature': 'none'})
+    B   prc_decision: safe=[nw_core,bnobloc_core,bcw_core,nw_tri,bnobloc_tri,bcw_tri] dist={'general_war_us': None, 'sino_war': 1}
+    B   idle: safe=[nw_core,bnobloc_core,bcw_core,nw_tri,bnobloc_tri,bcw_tri] dist={'general_war_us': None, 'sino_war': 2}
+    B   in_kernel: no_war_core:True balance_nobloc_core:True balance_cw_core:True no_war_tri:True balance_nobloc_tri:True balance_cw_tri:True
+    P50 prc_decision: safe_bundled=[nw_core,bnobloc_core,bcw_core,nw_tri,bnobloc_tri,bcw_tri] safe_prc=[nw_core,bnobloc_core] dist={'general_war_us': None, 'sino_war': 1}
+    P50 idle: safe_bundled=[nw_core,bnobloc_core,bcw_core,nw_tri,bnobloc_tri,bcw_tri] safe_prc=[nw_core,bnobloc_core,nw_tri,bnobloc_tri] dist={'general_war_us': None, 'sino_war': 2}
+    P50 in_kernel: no_war_core:{'USSR': True, 'USSR+PRC': True, 'PRC': True} balance_nobloc_core:{'USSR': True, 'USSR+PRC': True, 'PRC': True} balance_cw_core:{'USSR': True, 'USSR+PRC': True, 'PRC': False} no_war_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': True} balance_nobloc_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': True} balance_cw_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': False}
+  1972 PRC.rapprochement (others realized: {'USA': 'idle', 'USSR': 'accept_limits', 'PRC': 'rapprochement', 'Nature': 'none'})
+    B   prc_decision: safe=[nw_core,bnobloc_core,bcw_core,nw_tri,bnobloc_tri,bcw_tri] dist={'general_war_us': None, 'sino_war': None}
+    B   idle: safe=[nw_core,bnobloc_core,bcw_core,nw_tri,bnobloc_tri,bcw_tri] dist={'general_war_us': None, 'sino_war': 1}
+    B   own_move: safe=[nw_core,bnobloc_core,bcw_core,nw_tri,bnobloc_tri,bcw_tri] dist={'general_war_us': None, 'sino_war': 1}
+    B   in_kernel: no_war_core:True balance_nobloc_core:True balance_cw_core:True no_war_tri:True balance_nobloc_tri:True balance_cw_tri:True
+    P50 prc_decision: safe_bundled=[nw_core,bnobloc_core,bcw_core,nw_tri,bnobloc_tri,bcw_tri] safe_prc=[nw_core,bnobloc_core] dist={'general_war_us': None, 'sino_war': None}
+    P50 idle: safe_bundled=[nw_core,bnobloc_core,bcw_core,nw_tri,bnobloc_tri,bcw_tri] safe_prc=[nw_core,bnobloc_core] dist={'general_war_us': None, 'sino_war': 1}
+    P50 in_kernel: no_war_core:{'USSR': True, 'USSR+PRC': True, 'PRC': True} balance_nobloc_core:{'USSR': True, 'USSR+PRC': True, 'PRC': True} balance_cw_core:{'USSR': True, 'USSR+PRC': True, 'PRC': False} no_war_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': False} balance_nobloc_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': False} balance_cw_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': False}
+  1982 PRC.independent_line (others realized: {'USA': 'offer_reductions', 'USSR': 'idle', 'PRC': 'idle', 'Nature': 'war_scare'})
+    B   prc_decision: safe=[nw_core,bnobloc_core,nw_tri,bnobloc_tri] dist={'general_war_us': None, 'sino_war': None}
+    B   idle: safe=[nw_core,bnobloc_core,nw_tri,bnobloc_tri] dist={'general_war_us': None, 'sino_war': None}
+    B   in_kernel: no_war_core:True balance_nobloc_core:True balance_cw_core:True no_war_tri:True balance_nobloc_tri:True balance_cw_tri:True
+    P50 prc_decision: safe_bundled=[nw_core,bnobloc_core,nw_tri,bnobloc_tri] safe_prc=[nw_core,bnobloc_core,nw_tri,bnobloc_tri] dist={'general_war_us': None, 'sino_war': None}
+    P50 idle: safe_bundled=[nw_core,bnobloc_core,nw_tri,bnobloc_tri] safe_prc=[nw_core,bnobloc_core,nw_tri,bnobloc_tri] dist={'general_war_us': None, 'sino_war': None}
+    P50 in_kernel: no_war_core:{'USSR': True, 'USSR+PRC': True, 'PRC': True} balance_nobloc_core:{'USSR': True, 'USSR+PRC': True, 'PRC': True} balance_cw_core:{'USSR': True, 'USSR+PRC': True, 'PRC': False} no_war_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': True} balance_nobloc_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': True} balance_cw_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': False}
+  1989 PRC.normalize (others realized: {'USA': 'idle', 'USSR': 'idle', 'PRC': 'normalize', 'Nature': 'revolution'})
+    B   prc_decision: safe=[nw_core,bnobloc_core,nw_tri,bnobloc_tri] dist={'general_war_us': None, 'sino_war': None}
+    B   idle: safe=[nw_core,bnobloc_core,nw_tri,bnobloc_tri] dist={'general_war_us': None, 'sino_war': None}
+    B   in_kernel: no_war_core:True balance_nobloc_core:True balance_cw_core:False no_war_tri:True balance_nobloc_tri:True balance_cw_tri:False
+    P50 prc_decision: safe_bundled=[nw_core,bnobloc_core,nw_tri,bnobloc_tri] safe_prc=[nw_core,bnobloc_core,nw_tri,bnobloc_tri] dist={'general_war_us': None, 'sino_war': None}
+    P50 idle: safe_bundled=[nw_core,bnobloc_core,nw_tri,bnobloc_tri] safe_prc=[nw_core,bnobloc_core,nw_tri,bnobloc_tri] dist={'general_war_us': None, 'sino_war': None}
+    P50 in_kernel: no_war_core:{'USSR': True, 'USSR+PRC': True, 'PRC': True} balance_nobloc_core:{'USSR': True, 'USSR+PRC': True, 'PRC': True} balance_cw_core:{'USSR': False, 'USSR+PRC': False, 'PRC': False} no_war_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': True} balance_nobloc_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': True} balance_cw_tri:{'USSR': False, 'USSR+PRC': False, 'PRC': False}
+
+===== aims_USSR = opportunist =====
+
+--- S: model 08da3b3a28da, 26 declared variables, actions {'USA': 17, 'USSR': 25, 'Nature': 19}, 33.5 s (kernels and traces 32.8 s)
+  no_war_core: holds 1950-1991
+    K[{}]: 1962-1991
+    K[Nature]: 1962-1991
+    K[USA]: 1962-1991
+    K[USA+Nature]: 1962-1991
+    K[USSR]: 1950-1958, 1962-1991
+    K[USSR+Nature]: 1950-1991
+    K[USA+USSR]: 1950-1958, 1962-1991
+    K[USA+USSR+Nature]: 1950-1991
+  balance_nobloc_core: holds 1950-1960, 1967-1991
+    K[{}]: 1967-1991
+    K[Nature]: 1967-1991
+    K[USA]: 1967-1991
+    K[USA+Nature]: 1967-1991
+    K[USSR]: 1950-1958, 1967-1991
+    K[USSR+Nature]: 1950-1958, 1967-1991
+    K[USA+USSR]: 1950-1958, 1967-1991
+    K[USA+USSR+Nature]: 1950-1958, 1967-1991
+  balance_cw_core: holds 1950-1960, 1967-1989
+    K[{}]: none
+    K[Nature]: 1967-1989
+    K[USA]: none
+    K[USA+Nature]: 1967-1989
+    K[USSR]: 1950-1958, 1967-1980, 1982-1986
+    K[USSR+Nature]: 1950-1958, 1967-1989
+    K[USA+USSR]: 1950-1958, 1967-1980, 1982-1986
+    K[USA+USSR+Nature]: 1950-1958, 1967-1989
+  no_war_tri: holds 1950-1991
+    K[{}]: 1973-1991
+    K[Nature]: 1962-1969, 1973-1991
+    K[USA]: 1973-1991
+    K[USA+Nature]: 1962-1969, 1973-1991
+    K[USSR]: 1950-1958, 1962-1991
+    K[USSR+Nature]: 1950-1991
+    K[USA+USSR]: 1950-1958, 1962-1991
+    K[USA+USSR+Nature]: 1950-1991
+  balance_nobloc_tri: holds 1950-1960, 1967-1991
+    K[{}]: 1973-1991
+    K[Nature]: 1967-1969, 1973-1991
+    K[USA]: 1973-1991
+    K[USA+Nature]: 1967-1969, 1973-1991
+    K[USSR]: 1950-1958, 1967-1991
+    K[USSR+Nature]: 1950-1958, 1967-1991
+    K[USA+USSR]: 1950-1958, 1967-1991
+    K[USA+USSR+Nature]: 1950-1958, 1967-1991
+  balance_cw_tri: holds 1950-1960, 1967-1989
+    K[{}]: none
+    K[Nature]: 1967-1969, 1973-1989
+    K[USA]: none
+    K[USA+Nature]: 1967-1969, 1973-1989
+    K[USSR]: 1950-1958, 1967-1980, 1982-1986
+    K[USSR+Nature]: 1950-1958, 1967-1989
+    K[USA+USSR]: 1950-1958, 1967-1980, 1982-1986
+    K[USA+USSR+Nature]: 1950-1958, 1967-1989
+
+--- P69: model 527d0f540ac6, 26 declared variables, actions {'USA': 17, 'USSR': 25, 'PRC': 4, 'Nature': 16}, 232.9 s (kernels and traces 230.1 s)
+  no_war_core: holds 1950-1991
+    K[{}]: 1962-1991
+    K[Nature]: 1962-1991
+    K[USA]: 1962-1991
+    K[USA+Nature]: 1962-1991
+    K[USSR]: 1950-1958, 1962-1991
+    K[USSR+Nature]: 1950-1991
+    K[PRC]: 1962-1991
+    K[PRC+Nature]: 1962-1991
+    K[USA+USSR]: 1950-1958, 1962-1991
+    K[USA+USSR+Nature]: 1950-1991
+    K[USA+PRC]: 1962-1991
+    K[USA+PRC+Nature]: 1962-1991
+    K[USSR+PRC]: 1950-1958, 1962-1991
+    K[USSR+PRC+Nature]: 1950-1991
+    K[USA+USSR+PRC]: 1950-1958, 1962-1991
+    K[USA+USSR+PRC+Nature]: 1950-1991
+  balance_nobloc_core: holds 1950-1960, 1967-1991
+    K[{}]: 1967-1991
+    K[Nature]: 1967-1991
+    K[USA]: 1967-1991
+    K[USA+Nature]: 1967-1991
+    K[USSR]: 1950-1958, 1967-1991
+    K[USSR+Nature]: 1950-1958, 1967-1991
+    K[PRC]: 1967-1991
+    K[PRC+Nature]: 1967-1991
+    K[USA+USSR]: 1950-1958, 1967-1991
+    K[USA+USSR+Nature]: 1950-1958, 1967-1991
+    K[USA+PRC]: 1967-1991
+    K[USA+PRC+Nature]: 1967-1991
+    K[USSR+PRC]: 1950-1958, 1967-1991
+    K[USSR+PRC+Nature]: 1950-1958, 1967-1991
+    K[USA+USSR+PRC]: 1950-1958, 1967-1991
+    K[USA+USSR+PRC+Nature]: 1950-1958, 1967-1991
+  balance_cw_core: holds 1950-1960, 1967-1989
+    K[{}]: none
+    K[Nature]: 1967-1989
+    K[USA]: none
+    K[USA+Nature]: 1967-1989
+    K[USSR]: 1950-1958, 1967-1980, 1982-1986
+    K[USSR+Nature]: 1950-1958, 1967-1989
+    K[PRC]: none
+    K[PRC+Nature]: 1967-1989
+    K[USA+USSR]: 1950-1958, 1967-1980, 1982-1986
+    K[USA+USSR+Nature]: 1950-1958, 1967-1989
+    K[USA+PRC]: none
+    K[USA+PRC+Nature]: 1967-1989
+    K[USSR+PRC]: 1950-1958, 1967-1980, 1982-1986
+    K[USSR+PRC+Nature]: 1950-1958, 1967-1989
+    K[USA+USSR+PRC]: 1950-1958, 1967-1980, 1982-1986
+    K[USA+USSR+PRC+Nature]: 1950-1958, 1967-1989
+  no_war_tri: holds 1950-1991
+    K[{}]: 1973-1991
+    K[Nature]: 1973-1991
+    K[USA]: 1973-1991
+    K[USA+Nature]: 1973-1991
+    K[USSR]: 1950-1958, 1962-1991
+    K[USSR+Nature]: 1950-1991
+    K[PRC]: 1962-1969, 1973-1991
+    K[PRC+Nature]: 1962-1969, 1973-1991
+    K[USA+USSR]: 1950-1958, 1962-1991
+    K[USA+USSR+Nature]: 1950-1991
+    K[USA+PRC]: 1962-1969, 1973-1991
+    K[USA+PRC+Nature]: 1962-1969, 1973-1991
+    K[USSR+PRC]: 1950-1958, 1962-1991
+    K[USSR+PRC+Nature]: 1950-1991
+    K[USA+USSR+PRC]: 1950-1958, 1962-1991
+    K[USA+USSR+PRC+Nature]: 1950-1991
+  balance_nobloc_tri: holds 1950-1960, 1967-1991
+    K[{}]: 1973-1991
+    K[Nature]: 1973-1991
+    K[USA]: 1973-1991
+    K[USA+Nature]: 1973-1991
+    K[USSR]: 1950-1958, 1967-1991
+    K[USSR+Nature]: 1950-1958, 1967-1991
+    K[PRC]: 1967-1969, 1973-1991
+    K[PRC+Nature]: 1967-1969, 1973-1991
+    K[USA+USSR]: 1950-1958, 1967-1991
+    K[USA+USSR+Nature]: 1950-1958, 1967-1991
+    K[USA+PRC]: 1967-1969, 1973-1991
+    K[USA+PRC+Nature]: 1967-1969, 1973-1991
+    K[USSR+PRC]: 1950-1958, 1967-1991
+    K[USSR+PRC+Nature]: 1950-1958, 1967-1991
+    K[USA+USSR+PRC]: 1950-1958, 1967-1991
+    K[USA+USSR+PRC+Nature]: 1950-1958, 1967-1991
+  balance_cw_tri: holds 1950-1960, 1967-1989
+    K[{}]: none
+    K[Nature]: 1973-1989
+    K[USA]: none
+    K[USA+Nature]: 1973-1989
+    K[USSR]: 1950-1958, 1967-1980, 1982-1986
+    K[USSR+Nature]: 1950-1958, 1967-1989
+    K[PRC]: none
+    K[PRC+Nature]: 1967-1969, 1973-1989
+    K[USA+USSR]: 1950-1958, 1967-1980, 1982-1986
+    K[USA+USSR+Nature]: 1950-1958, 1967-1989
+    K[USA+PRC]: none
+    K[USA+PRC+Nature]: 1967-1969, 1973-1989
+    K[USSR+PRC]: 1950-1958, 1967-1980, 1982-1986
+    K[USSR+PRC+Nature]: 1950-1958, 1967-1989
+    K[USA+USSR+PRC]: 1950-1958, 1967-1980, 1982-1986
+    K[USA+USSR+PRC+Nature]: 1950-1958, 1967-1989
+
+--- P50: model d1fc1abd2f34, 29 declared variables, actions {'USA': 17, 'USSR': 25, 'PRC': 11, 'Nature': 17}, 2166.2 s (kernels and traces 2151.4 s)
+  no_war_core: holds 1950-1991
+    K[{}]: 1962-1991
+    K[Nature]: 1962-1991
+    K[USA]: 1962-1991
+    K[USA+Nature]: 1962-1991
+    K[USSR]: 1950, 1954-1958, 1962-1991
+    K[USSR+Nature]: 1950-1991
+    K[PRC]: 1962-1991
+    K[PRC+Nature]: 1962-1991
+    K[USA+USSR]: 1950-1958, 1962-1991
+    K[USA+USSR+Nature]: 1950-1991
+    K[USA+PRC]: 1962-1991
+    K[USA+PRC+Nature]: 1962-1991
+    K[USSR+PRC]: 1950-1951, 1954-1958, 1962-1991
+    K[USSR+PRC+Nature]: 1950-1991
+    K[USA+USSR+PRC]: 1950-1958, 1962-1991
+    K[USA+USSR+PRC+Nature]: 1950-1991
+  balance_nobloc_core: holds 1950-1960, 1967-1991
+    K[{}]: 1967-1991
+    K[Nature]: 1967-1991
+    K[USA]: 1967-1991
+    K[USA+Nature]: 1967-1991
+    K[USSR]: 1950, 1954-1958, 1967-1991
+    K[USSR+Nature]: 1950-1958, 1967-1991
+    K[PRC]: 1967-1991
+    K[PRC+Nature]: 1967-1991
+    K[USA+USSR]: 1950-1958, 1967-1991
+    K[USA+USSR+Nature]: 1950-1958, 1967-1991
+    K[USA+PRC]: 1967-1991
+    K[USA+PRC+Nature]: 1967-1991
+    K[USSR+PRC]: 1950-1951, 1954-1958, 1967-1991
+    K[USSR+PRC+Nature]: 1950-1958, 1967-1991
+    K[USA+USSR+PRC]: 1950-1958, 1967-1991
+    K[USA+USSR+PRC+Nature]: 1950-1958, 1967-1991
+  balance_cw_core: holds 1950-1960, 1967-1989
+    K[{}]: none
+    K[Nature]: 1967-1989
+    K[USA]: none
+    K[USA+Nature]: 1967-1989
+    K[USSR]: 1950, 1954-1958, 1967-1980, 1982-1986
+    K[USSR+Nature]: 1950-1958, 1967-1989
+    K[PRC]: none
+    K[PRC+Nature]: 1967-1989
+    K[USA+USSR]: 1950-1958, 1967-1980, 1982-1986
+    K[USA+USSR+Nature]: 1950-1958, 1967-1989
+    K[USA+PRC]: none
+    K[USA+PRC+Nature]: 1967-1989
+    K[USSR+PRC]: 1950-1951, 1954-1958, 1967-1980, 1982-1986
+    K[USSR+PRC+Nature]: 1950-1958, 1967-1989
+    K[USA+USSR+PRC]: 1950-1958, 1967-1980, 1982-1986
+    K[USA+USSR+PRC+Nature]: 1950-1958, 1967-1989
+  no_war_tri: holds 1950-1951, 1954-1991
+    K[{}]: 1973-1991
+    K[Nature]: 1962-1964, 1973-1991
+    K[USA]: 1973-1991
+    K[USA+Nature]: 1962-1964, 1973-1991
+    K[USSR]: 1950, 1954-1958, 1962-1991
+    K[USSR+Nature]: 1950, 1954-1991
+    K[PRC]: 1962-1969, 1973-1991
+    K[PRC+Nature]: 1962-1969, 1973-1991
+    K[USA+USSR]: 1950, 1954-1958, 1962-1991
+    K[USA+USSR+Nature]: 1950, 1954-1991
+    K[USA+PRC]: 1962-1969, 1973-1991
+    K[USA+PRC+Nature]: 1962-1969, 1973-1991
+    K[USSR+PRC]: 1950-1951, 1954-1958, 1962-1991
+    K[USSR+PRC+Nature]: 1950-1951, 1954-1991
+    K[USA+USSR+PRC]: 1950-1951, 1954-1958, 1962-1991
+    K[USA+USSR+PRC+Nature]: 1950-1951, 1954-1991
+  balance_nobloc_tri: holds 1950-1951, 1954-1960, 1967-1991
+    K[{}]: 1973-1991
+    K[Nature]: 1973-1991
+    K[USA]: 1973-1991
+    K[USA+Nature]: 1973-1991
+    K[USSR]: 1950, 1954-1958, 1967-1991
+    K[USSR+Nature]: 1950, 1954-1958, 1967-1991
+    K[PRC]: 1967-1969, 1973-1991
+    K[PRC+Nature]: 1967-1969, 1973-1991
+    K[USA+USSR]: 1950, 1954-1958, 1967-1991
+    K[USA+USSR+Nature]: 1950, 1954-1958, 1967-1991
+    K[USA+PRC]: 1967-1969, 1973-1991
+    K[USA+PRC+Nature]: 1967-1969, 1973-1991
+    K[USSR+PRC]: 1950-1951, 1954-1958, 1967-1991
+    K[USSR+PRC+Nature]: 1950-1951, 1954-1958, 1967-1991
+    K[USA+USSR+PRC]: 1950-1951, 1954-1958, 1967-1991
+    K[USA+USSR+PRC+Nature]: 1950-1951, 1954-1958, 1967-1991
+  balance_cw_tri: holds 1950-1951, 1954-1960, 1967-1989
+    K[{}]: none
+    K[Nature]: 1973-1989
+    K[USA]: none
+    K[USA+Nature]: 1973-1989
+    K[USSR]: 1950, 1954-1958, 1967-1980, 1982-1986
+    K[USSR+Nature]: 1950, 1954-1958, 1967-1989
+    K[PRC]: none
+    K[PRC+Nature]: 1967-1969, 1973-1989
+    K[USA+USSR]: 1950, 1954-1958, 1967-1980, 1982-1986
+    K[USA+USSR+Nature]: 1950, 1954-1958, 1967-1989
+    K[USA+PRC]: none
+    K[USA+PRC+Nature]: 1967-1969, 1973-1989
+    K[USSR+PRC]: 1950-1951, 1954-1958, 1967-1980, 1982-1986
+    K[USSR+PRC+Nature]: 1950-1951, 1954-1958, 1967-1989
+    K[USA+USSR+PRC]: 1950-1951, 1954-1958, 1967-1980, 1982-1986
+    K[USA+USSR+PRC+Nature]: 1950-1951, 1954-1958, 1967-1989
+
+--- N50: model 18bfcf582b18, 29 declared variables, actions {'USA': 17, 'USSR': 25, 'Nature': 27}, 45.8 s (kernels and traces 44.9 s)
+  no_war_core: holds 1950-1991
+    K[{}]: 1962-1991
+    K[Nature]: 1962-1991
+    K[USA]: 1962-1991
+    K[USA+Nature]: 1962-1991
+    K[USSR]: 1950, 1954-1958, 1962-1991
+    K[USSR+Nature]: 1950-1991
+    K[USA+USSR]: 1950-1958, 1962-1991
+    K[USA+USSR+Nature]: 1950-1991
+  balance_nobloc_core: holds 1950-1960, 1967-1991
+    K[{}]: 1967-1991
+    K[Nature]: 1967-1991
+    K[USA]: 1967-1991
+    K[USA+Nature]: 1967-1991
+    K[USSR]: 1950, 1954-1958, 1967-1991
+    K[USSR+Nature]: 1950-1958, 1967-1991
+    K[USA+USSR]: 1950-1958, 1967-1991
+    K[USA+USSR+Nature]: 1950-1958, 1967-1991
+  balance_cw_core: holds 1950-1960, 1967-1989
+    K[{}]: none
+    K[Nature]: 1967-1989
+    K[USA]: none
+    K[USA+Nature]: 1967-1989
+    K[USSR]: 1950, 1954-1958, 1967-1980, 1982-1986
+    K[USSR+Nature]: 1950-1958, 1967-1989
+    K[USA+USSR]: 1950-1958, 1967-1980, 1982-1986
+    K[USA+USSR+Nature]: 1950-1958, 1967-1989
+  no_war_tri: holds 1950-1951, 1954-1991
+    K[{}]: 1973-1991
+    K[Nature]: 1962-1969, 1973-1991
+    K[USA]: 1973-1991
+    K[USA+Nature]: 1962-1969, 1973-1991
+    K[USSR]: 1950, 1954-1958, 1962-1991
+    K[USSR+Nature]: 1950-1951, 1954-1991
+    K[USA+USSR]: 1950, 1954-1958, 1962-1991
+    K[USA+USSR+Nature]: 1950-1951, 1954-1991
+  balance_nobloc_tri: holds 1950-1951, 1954-1960, 1967-1991
+    K[{}]: 1973-1991
+    K[Nature]: 1967-1969, 1973-1991
+    K[USA]: 1973-1991
+    K[USA+Nature]: 1967-1969, 1973-1991
+    K[USSR]: 1950, 1954-1958, 1967-1991
+    K[USSR+Nature]: 1950-1951, 1954-1958, 1967-1991
+    K[USA+USSR]: 1950, 1954-1958, 1967-1991
+    K[USA+USSR+Nature]: 1950-1951, 1954-1958, 1967-1991
+  balance_cw_tri: holds 1950-1951, 1954-1960, 1967-1989
+    K[{}]: none
+    K[Nature]: 1967-1969, 1973-1989
+    K[USA]: none
+    K[USA+Nature]: 1967-1969, 1973-1989
+    K[USSR]: 1950, 1954-1958, 1967-1980, 1982-1986
+    K[USSR+Nature]: 1950-1951, 1954-1958, 1967-1989
+    K[USA+USSR]: 1950, 1954-1958, 1967-1980, 1982-1986
+    K[USA+USSR+Nature]: 1950-1951, 1954-1958, 1967-1989
+
+--- B: model 2455f8da8a76, 29 declared variables, actions {'USA': 17, 'USSR': 35, 'Nature': 17}, 29.1 s (kernels and traces 28.3 s)
+  no_war_core: holds 1950-1991
+    K[{}]: 1962-1991
+    K[Nature]: 1962-1991
+    K[USA]: 1962-1991
+    K[USA+Nature]: 1962-1991
+    K[USSR]: 1950-1951, 1954-1958, 1962-1991
+    K[USSR+Nature]: 1950-1991
+    K[USA+USSR]: 1950-1958, 1962-1991
+    K[USA+USSR+Nature]: 1950-1991
+  balance_nobloc_core: holds 1950-1960, 1967-1991
+    K[{}]: 1967-1991
+    K[Nature]: 1967-1991
+    K[USA]: 1967-1991
+    K[USA+Nature]: 1967-1991
+    K[USSR]: 1950-1951, 1954-1958, 1967-1991
+    K[USSR+Nature]: 1950-1958, 1967-1991
+    K[USA+USSR]: 1950-1958, 1967-1991
+    K[USA+USSR+Nature]: 1950-1958, 1967-1991
+  balance_cw_core: holds 1950-1960, 1967-1989
+    K[{}]: none
+    K[Nature]: 1967-1989
+    K[USA]: none
+    K[USA+Nature]: 1967-1989
+    K[USSR]: 1950-1951, 1954-1958, 1967-1980, 1982-1986
+    K[USSR+Nature]: 1950-1958, 1967-1989
+    K[USA+USSR]: 1950-1958, 1967-1980, 1982-1986
+    K[USA+USSR+Nature]: 1950-1958, 1967-1989
+  no_war_tri: holds 1950-1951, 1954-1991
+    K[{}]: 1973-1991
+    K[Nature]: 1962-1964, 1973-1991
+    K[USA]: 1973-1991
+    K[USA+Nature]: 1962-1964, 1973-1991
+    K[USSR]: 1950-1951, 1954-1958, 1962-1991
+    K[USSR+Nature]: 1950-1951, 1954-1991
+    K[USA+USSR]: 1950-1951, 1954-1958, 1962-1991
+    K[USA+USSR+Nature]: 1950-1951, 1954-1991
+  balance_nobloc_tri: holds 1950-1951, 1954-1960, 1967-1991
+    K[{}]: 1973-1991
+    K[Nature]: 1973-1991
+    K[USA]: 1973-1991
+    K[USA+Nature]: 1973-1991
+    K[USSR]: 1950-1951, 1954-1958, 1967-1991
+    K[USSR+Nature]: 1950-1951, 1954-1958, 1967-1991
+    K[USA+USSR]: 1950-1951, 1954-1958, 1967-1991
+    K[USA+USSR+Nature]: 1950-1951, 1954-1958, 1967-1991
+  balance_cw_tri: holds 1950-1951, 1954-1960, 1967-1989
+    K[{}]: none
+    K[Nature]: 1973-1989
+    K[USA]: none
+    K[USA+Nature]: 1973-1989
+    K[USSR]: 1950-1951, 1954-1958, 1967-1980, 1982-1986
+    K[USSR+Nature]: 1950-1951, 1954-1958, 1967-1989
+    K[USA+USSR]: 1950-1951, 1954-1958, 1967-1980, 1982-1986
+    K[USA+USSR+Nature]: 1950-1951, 1954-1958, 1967-1989
+
+(2) pivotal coalitions per year (against the USSR | general), +N with Nature
+  no_war_core
+    S    1950-1958                    vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    S    1959-1961                    vs USSR: none | +N none || general: none | +N {USSR}
+    S    1962-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    P69  1950-1958                    vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    P69  1959-1961                    vs USSR: none | +N none || general: none | +N {USSR}
+    P69  1962-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    P50  1950, 1954-1958              vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    P50  1951                         vs USSR: none | +N none || general: {USA,USSR} {USSR,PRC} | +N {USSR}
+    P50  1952-1953                    vs USSR: none | +N none || general: {USA,USSR} | +N {USSR}
+    P50  1959-1961                    vs USSR: none | +N none || general: none | +N {USSR}
+    P50  1962-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    P50b 1950-1951, 1954-1958         vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    P50b 1952-1953                    vs USSR: none | +N none || general: {USA,USSR} | +N {USSR}
+    P50b 1959-1961                    vs USSR: none | +N none || general: none | +N {USSR}
+    P50b 1962-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    N50  1950, 1954-1958              vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    N50  1951-1953                    vs USSR: none | +N none || general: {USA,USSR} | +N {USSR}
+    N50  1959-1961                    vs USSR: none | +N none || general: none | +N {USSR}
+    N50  1962-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    B    1950-1951, 1954-1958         vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    B    1952-1953                    vs USSR: none | +N none || general: {USA,USSR} | +N {USSR}
+    B    1959-1961                    vs USSR: none | +N none || general: none | +N {USSR}
+    B    1962-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+  balance_nobloc_core
+    S    1950-1958                    vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    S    1959-1966                    vs USSR: none | +N none || general: none | +N none
+    S    1967-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    P69  1950-1958                    vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    P69  1959-1966                    vs USSR: none | +N none || general: none | +N none
+    P69  1967-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    P50  1950, 1954-1958              vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    P50  1951                         vs USSR: none | +N none || general: {USA,USSR} {USSR,PRC} | +N {USSR}
+    P50  1952-1953                    vs USSR: none | +N none || general: {USA,USSR} | +N {USSR}
+    P50  1959-1966                    vs USSR: none | +N none || general: none | +N none
+    P50  1967-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    P50b 1950-1951, 1954-1958         vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    P50b 1952-1953                    vs USSR: none | +N none || general: {USA,USSR} | +N {USSR}
+    P50b 1959-1966                    vs USSR: none | +N none || general: none | +N none
+    P50b 1967-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    N50  1950, 1954-1958              vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    N50  1951-1953                    vs USSR: none | +N none || general: {USA,USSR} | +N {USSR}
+    N50  1959-1966                    vs USSR: none | +N none || general: none | +N none
+    N50  1967-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    B    1950-1951, 1954-1958         vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    B    1952-1953                    vs USSR: none | +N none || general: {USA,USSR} | +N {USSR}
+    B    1959-1966                    vs USSR: none | +N none || general: none | +N none
+    B    1967-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+  balance_cw_core
+    S    1950-1958                    vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    S    1959-1966, 1990-1991         vs USSR: none | +N none || general: none | +N none
+    S    1967-1980, 1982-1986         vs USSR: none | +N {} || general: {USSR} | +N {}
+    S    1981, 1987-1989              vs USSR: none | +N {} || general: none | +N {}
+    P69  1950-1958                    vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    P69  1959-1966, 1990-1991         vs USSR: none | +N none || general: none | +N none
+    P69  1967-1980, 1982-1986         vs USSR: none | +N {} || general: {USSR} | +N {}
+    P69  1981, 1987-1989              vs USSR: none | +N {} || general: none | +N {}
+    P50  1950, 1954-1958              vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    P50  1951                         vs USSR: none | +N none || general: {USA,USSR} {USSR,PRC} | +N {USSR}
+    P50  1952-1953                    vs USSR: none | +N none || general: {USA,USSR} | +N {USSR}
+    P50  1959-1966, 1990-1991         vs USSR: none | +N none || general: none | +N none
+    P50  1967-1980, 1982-1986         vs USSR: none | +N {} || general: {USSR} | +N {}
+    P50  1981, 1987-1989              vs USSR: none | +N {} || general: none | +N {}
+    P50b 1950-1951, 1954-1958         vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    P50b 1952-1953                    vs USSR: none | +N none || general: {USA,USSR} | +N {USSR}
+    P50b 1959-1966, 1990-1991         vs USSR: none | +N none || general: none | +N none
+    P50b 1967-1980, 1982-1986         vs USSR: none | +N {} || general: {USSR} | +N {}
+    P50b 1981, 1987-1989              vs USSR: none | +N {} || general: none | +N {}
+    N50  1950, 1954-1958              vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    N50  1951-1953                    vs USSR: none | +N none || general: {USA,USSR} | +N {USSR}
+    N50  1959-1966, 1990-1991         vs USSR: none | +N none || general: none | +N none
+    N50  1967-1980, 1982-1986         vs USSR: none | +N {} || general: {USSR} | +N {}
+    N50  1981, 1987-1989              vs USSR: none | +N {} || general: none | +N {}
+    B    1950-1951, 1954-1958         vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    B    1952-1953                    vs USSR: none | +N none || general: {USA,USSR} | +N {USSR}
+    B    1959-1966, 1990-1991         vs USSR: none | +N none || general: none | +N none
+    B    1967-1980, 1982-1986         vs USSR: none | +N {} || general: {USSR} | +N {}
+    B    1981, 1987-1989              vs USSR: none | +N {} || general: none | +N {}
+  no_war_tri
+    S    1950-1958, 1970-1972         vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    S    1959-1961                    vs USSR: none | +N none || general: none | +N {USSR}
+    S    1962-1969                    vs USSR: none | +N {} || general: {USSR} | +N {}
+    S    1973-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    P69  1950-1958, 1970-1972         vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    P69  1959-1961                    vs USSR: none | +N none || general: none | +N {USSR}
+    P69  1962-1969                    vs USSR: {PRC} | +N {PRC} || general: {USSR} {PRC} | +N {USSR} {PRC}
+    P69  1973-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    P50  1950, 1954-1958, 1970-1972   vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    P50  1951                         vs USSR: none | +N none || general: {USSR,PRC} | +N {USSR,PRC}
+    P50  1952-1953                    vs USSR: none | +N none || general: none | +N none
+    P50  1959-1961                    vs USSR: none | +N none || general: none | +N {USSR}
+    P50  1962-1964                    vs USSR: {PRC} | +N {} || general: {USSR} {PRC} | +N {}
+    P50  1965-1969                    vs USSR: {PRC} | +N {PRC} || general: {USSR} {PRC} | +N {USSR} {PRC}
+    P50  1973-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    P50b 1950-1951, 1954-1958, 1965-1972 vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    P50b 1952-1953                    vs USSR: none | +N none || general: none | +N none
+    P50b 1959-1961                    vs USSR: none | +N none || general: none | +N {USSR}
+    P50b 1962-1964                    vs USSR: none | +N {} || general: {USSR} | +N {}
+    P50b 1973-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    N50  1950, 1954-1958, 1970-1972   vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    N50  1951, 1959-1961              vs USSR: none | +N none || general: none | +N {USSR}
+    N50  1952-1953                    vs USSR: none | +N none || general: none | +N none
+    N50  1962-1969                    vs USSR: none | +N {} || general: {USSR} | +N {}
+    N50  1973-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    B    1950-1951, 1954-1958, 1965-1972 vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    B    1952-1953                    vs USSR: none | +N none || general: none | +N none
+    B    1959-1961                    vs USSR: none | +N none || general: none | +N {USSR}
+    B    1962-1964                    vs USSR: none | +N {} || general: {USSR} | +N {}
+    B    1973-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+  balance_nobloc_tri
+    S    1950-1958, 1970-1972         vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    S    1959-1966                    vs USSR: none | +N none || general: none | +N none
+    S    1967-1969                    vs USSR: none | +N {} || general: {USSR} | +N {}
+    S    1973-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    P69  1950-1958, 1970-1972         vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    P69  1959-1966                    vs USSR: none | +N none || general: none | +N none
+    P69  1967-1969                    vs USSR: {PRC} | +N {PRC} || general: {USSR} {PRC} | +N {USSR} {PRC}
+    P69  1973-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    P50  1950, 1954-1958, 1970-1972   vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    P50  1951                         vs USSR: none | +N none || general: {USSR,PRC} | +N {USSR,PRC}
+    P50  1952-1953, 1959-1966         vs USSR: none | +N none || general: none | +N none
+    P50  1967-1969                    vs USSR: {PRC} | +N {PRC} || general: {USSR} {PRC} | +N {USSR} {PRC}
+    P50  1973-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    P50b 1950-1951, 1954-1958, 1967-1972 vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    P50b 1952-1953, 1959-1966         vs USSR: none | +N none || general: none | +N none
+    P50b 1973-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    N50  1950, 1954-1958, 1970-1972   vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    N50  1951                         vs USSR: none | +N none || general: none | +N {USSR}
+    N50  1952-1953, 1959-1966         vs USSR: none | +N none || general: none | +N none
+    N50  1967-1969                    vs USSR: none | +N {} || general: {USSR} | +N {}
+    N50  1973-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+    B    1950-1951, 1954-1958, 1967-1972 vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    B    1952-1953, 1959-1966         vs USSR: none | +N none || general: none | +N none
+    B    1973-1991                    vs USSR: {} | +N {} || general: {} | +N {}
+  balance_cw_tri
+    S    1950-1958, 1970-1972         vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    S    1959-1966, 1990-1991         vs USSR: none | +N none || general: none | +N none
+    S    1967-1969, 1973-1980, 1982-1986 vs USSR: none | +N {} || general: {USSR} | +N {}
+    S    1981, 1987-1989              vs USSR: none | +N {} || general: none | +N {}
+    P69  1950-1958, 1970-1972         vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    P69  1959-1966, 1990-1991         vs USSR: none | +N none || general: none | +N none
+    P69  1967-1969                    vs USSR: none | +N {PRC} || general: {USSR} | +N {USSR} {PRC}
+    P69  1973-1980, 1982-1986         vs USSR: none | +N {} || general: {USSR} | +N {}
+    P69  1981, 1987-1989              vs USSR: none | +N {} || general: none | +N {}
+    P50  1950, 1954-1958, 1970-1972   vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    P50  1951                         vs USSR: none | +N none || general: {USSR,PRC} | +N {USSR,PRC}
+    P50  1952-1953, 1959-1966, 1990-1991 vs USSR: none | +N none || general: none | +N none
+    P50  1967-1969                    vs USSR: none | +N {PRC} || general: {USSR} | +N {USSR} {PRC}
+    P50  1973-1980, 1982-1986         vs USSR: none | +N {} || general: {USSR} | +N {}
+    P50  1981, 1987-1989              vs USSR: none | +N {} || general: none | +N {}
+    P50b 1950-1951, 1954-1958, 1967-1972 vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    P50b 1952-1953, 1959-1966, 1990-1991 vs USSR: none | +N none || general: none | +N none
+    P50b 1973-1980, 1982-1986         vs USSR: none | +N {} || general: {USSR} | +N {}
+    P50b 1981, 1987-1989              vs USSR: none | +N {} || general: none | +N {}
+    N50  1950, 1954-1958, 1970-1972   vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    N50  1951                         vs USSR: none | +N none || general: none | +N {USSR}
+    N50  1952-1953, 1959-1966, 1990-1991 vs USSR: none | +N none || general: none | +N none
+    N50  1967-1969, 1973-1980, 1982-1986 vs USSR: none | +N {} || general: {USSR} | +N {}
+    N50  1981, 1987-1989              vs USSR: none | +N {} || general: none | +N {}
+    B    1950-1951, 1954-1958, 1967-1972 vs USSR: none | +N none || general: {USSR} | +N {USSR}
+    B    1952-1953, 1959-1966, 1990-1991 vs USSR: none | +N none || general: none | +N none
+    B    1973-1980, 1982-1986         vs USSR: none | +N {} || general: {USSR} | +N {}
+    B    1981, 1987-1989              vs USSR: none | +N {} || general: none | +N {}
+
+(3) shortest trace (all actors) to the target, by year; who must move
+  general_war_us
+    S    1950-1958: 2; 1959-1961: 1; 1962-1991: -
+         without USSR: 1950-1958: -
+    P69  1950-1958: 2; 1959-1961: 1; 1962-1991: -
+         without USSR: 1950-1958: -
+    P50  1950-1958: 2; 1959-1961: 1; 1962-1991: -
+         without USSR: 1950, 1954-1958: -
+    N50  1950-1958: 2; 1959-1961: 1; 1962-1991: -
+         without USSR: 1950, 1954-1958: -; 1951: 3
+    B    1950-1958: 2; 1959-1961: 1; 1962-1991: -
+         without USSR: 1950-1951, 1954-1958: -
+  sino_war
+    S    1950: 16; 1951: 15; 1952: 14; 1953: 13; 1954: 12; 1955: 11; 1956: 10; 1957: 9; 1958: 8; 1959: 7; 1960: 6; 1961: 5; 1962: 4; 1963: 3; 1964-1969: 2; 1970-1972: 1; 1973-1991: -
+         without USSR: 1950-1972: -
+         without Nature: 1950-1969: -
+    P69  1950: 21; 1951: 20; 1952: 19; 1953: 18; 1954: 17; 1955: 16; 1956: 15; 1957: 14; 1958: 13; 1959: 12; 1960: 11; 1961: 10; 1962: 9; 1963: 8; 1964: 7; 1965: 6; 1966: 5; 1967: 4; 1968: 3; 1969: 2; 1970-1972: 1; 1973-1991: -
+         without USSR: 1950-1972: -
+         without PRC: 1950-1969: -
+    P50  1950: 16; 1951: 15; 1952: 14; 1953: 13; 1954: 12; 1955: 11; 1956: 10; 1957: 9; 1958: 8; 1959: 7; 1960: 6; 1961: 5; 1962: 4; 1963: 3; 1964-1969: 2; 1970-1972: 1; 1973-1991: -
+         without USSR: 1950-1972: -
+         without PRC: 1950-1969: -
+         without Nature: 1950-1964: -
+    N50  1950: 16; 1951: 15; 1952: 14; 1953: 13; 1954: 12; 1955: 11; 1956: 10; 1957: 9; 1958: 8; 1959: 7; 1960: 6; 1961: 5; 1962: 4; 1963-1964: 3; 1965-1969: 2; 1970-1972: 1; 1973-1991: -
+         without USSR: 1950-1972: -
+         without Nature: 1950-1969: -
+    B    1950: 16; 1951: 15; 1952: 14; 1953: 13; 1954: 12; 1955: 11; 1956: 10; 1957: 9; 1958: 8; 1959: 7; 1960: 6; 1961: 5; 1962: 4; 1963: 3; 1964-1969: 2; 1970-1972: 1; 1973-1991: -
+         without USSR: 1950-1972: -
+         without Nature: 1950-1964: -
+
+(4) differences in kernel membership (years where the pair disagrees)
+  S vs P69
+    no_war_tri           K[Nature]: only S 1962-1969; only P69 none
+    no_war_tri           K[USA+Nature]: only S 1962-1969; only P69 none
+    balance_nobloc_tri   K[Nature]: only S 1967-1969; only P69 none
+    balance_nobloc_tri   K[USA+Nature]: only S 1967-1969; only P69 none
+    balance_cw_tri       K[Nature]: only S 1967-1969; only P69 none
+    balance_cw_tri       K[USA+Nature]: only S 1967-1969; only P69 none
+  S vs N50
+    no_war_core          K[USSR]: only S 1951-1953; only N50 none
+    balance_nobloc_core  K[USSR]: only S 1951-1953; only N50 none
+    balance_cw_core      K[USSR]: only S 1951-1953; only N50 none
+    no_war_tri           K[USSR]: only S 1951-1953; only N50 none
+    no_war_tri           K[USSR+Nature]: only S 1952-1953; only N50 none
+    no_war_tri           K[USA+USSR]: only S 1951-1953; only N50 none
+    no_war_tri           K[USA+USSR+Nature]: only S 1952-1953; only N50 none
+    balance_nobloc_tri   K[USSR]: only S 1951-1953; only N50 none
+    balance_nobloc_tri   K[USSR+Nature]: only S 1952-1953; only N50 none
+    balance_nobloc_tri   K[USA+USSR]: only S 1951-1953; only N50 none
+    balance_nobloc_tri   K[USA+USSR+Nature]: only S 1952-1953; only N50 none
+    balance_cw_tri       K[USSR]: only S 1951-1953; only N50 none
+    balance_cw_tri       K[USSR+Nature]: only S 1952-1953; only N50 none
+    balance_cw_tri       K[USA+USSR]: only S 1951-1953; only N50 none
+    balance_cw_tri       K[USA+USSR+Nature]: only S 1952-1953; only N50 none
+  N50 vs P50
+    no_war_tri           K[Nature]: only N50 1965-1969; only P50 none
+    no_war_tri           K[USA+Nature]: only N50 1965-1969; only P50 none
+    no_war_tri           K[USSR+Nature]: only N50 1951; only P50 none
+    no_war_tri           K[USA+USSR+Nature]: only N50 1951; only P50 none
+    balance_nobloc_tri   K[Nature]: only N50 1967-1969; only P50 none
+    balance_nobloc_tri   K[USA+Nature]: only N50 1967-1969; only P50 none
+    balance_nobloc_tri   K[USSR+Nature]: only N50 1951; only P50 none
+    balance_nobloc_tri   K[USA+USSR+Nature]: only N50 1951; only P50 none
+    balance_cw_tri       K[Nature]: only N50 1967-1969; only P50 none
+    balance_cw_tri       K[USA+Nature]: only N50 1967-1969; only P50 none
+    balance_cw_tri       K[USSR+Nature]: only N50 1951; only P50 none
+    balance_cw_tri       K[USA+USSR+Nature]: only N50 1951; only P50 none
+  B vs P50
+    no_war_core          K[USSR]: only B 1951; only P50 none
+    balance_nobloc_core  K[USSR]: only B 1951; only P50 none
+    balance_cw_core      K[USSR]: only B 1951; only P50 none
+    no_war_tri           K[USSR]: only B 1951; only P50 none
+    no_war_tri           K[USSR+Nature]: only B 1951; only P50 none
+    no_war_tri           K[USA+USSR]: only B 1951; only P50 none
+    no_war_tri           K[USA+USSR+Nature]: only B 1951; only P50 none
+    balance_nobloc_tri   K[USSR]: only B 1951; only P50 none
+    balance_nobloc_tri   K[USSR+Nature]: only B 1951; only P50 none
+    balance_nobloc_tri   K[USA+USSR]: only B 1951; only P50 none
+    balance_nobloc_tri   K[USA+USSR+Nature]: only B 1951; only P50 none
+    balance_cw_tri       K[USSR]: only B 1951; only P50 none
+    balance_cw_tri       K[USSR+Nature]: only B 1951; only P50 none
+    balance_cw_tri       K[USA+USSR]: only B 1951; only P50 none
+    balance_cw_tri       K[USA+USSR+Nature]: only B 1951; only P50 none
+  P69 vs P50
+    no_war_core          K[USSR]: only P69 1951-1953; only P50 none
+    no_war_core          K[USSR+PRC]: only P69 1952-1953; only P50 none
+    balance_nobloc_core  K[USSR]: only P69 1951-1953; only P50 none
+    balance_nobloc_core  K[USSR+PRC]: only P69 1952-1953; only P50 none
+    balance_cw_core      K[USSR]: only P69 1951-1953; only P50 none
+    balance_cw_core      K[USSR+PRC]: only P69 1952-1953; only P50 none
+    no_war_tri           K[Nature]: only P69 none; only P50 1962-1964
+    no_war_tri           K[USA+Nature]: only P69 none; only P50 1962-1964
+    no_war_tri           K[USSR]: only P69 1951-1953; only P50 none
+    no_war_tri           K[USSR+Nature]: only P69 1951-1953; only P50 none
+    no_war_tri           K[USA+USSR]: only P69 1951-1953; only P50 none
+    no_war_tri           K[USA+USSR+Nature]: only P69 1951-1953; only P50 none
+    no_war_tri           K[USSR+PRC]: only P69 1952-1953; only P50 none
+    no_war_tri           K[USSR+PRC+Nature]: only P69 1952-1953; only P50 none
+    no_war_tri           K[USA+USSR+PRC]: only P69 1952-1953; only P50 none
+    no_war_tri           K[USA+USSR+PRC+Nature]: only P69 1952-1953; only P50 none
+    balance_nobloc_tri   K[USSR]: only P69 1951-1953; only P50 none
+    balance_nobloc_tri   K[USSR+Nature]: only P69 1951-1953; only P50 none
+    balance_nobloc_tri   K[USA+USSR]: only P69 1951-1953; only P50 none
+    balance_nobloc_tri   K[USA+USSR+Nature]: only P69 1951-1953; only P50 none
+    balance_nobloc_tri   K[USSR+PRC]: only P69 1952-1953; only P50 none
+    balance_nobloc_tri   K[USSR+PRC+Nature]: only P69 1952-1953; only P50 none
+    balance_nobloc_tri   K[USA+USSR+PRC]: only P69 1952-1953; only P50 none
+    balance_nobloc_tri   K[USA+USSR+PRC+Nature]: only P69 1952-1953; only P50 none
+    balance_cw_tri       K[USSR]: only P69 1951-1953; only P50 none
+    balance_cw_tri       K[USSR+Nature]: only P69 1951-1953; only P50 none
+    balance_cw_tri       K[USA+USSR]: only P69 1951-1953; only P50 none
+    balance_cw_tri       K[USA+USSR+Nature]: only P69 1951-1953; only P50 none
+    balance_cw_tri       K[USSR+PRC]: only P69 1952-1953; only P50 none
+    balance_cw_tri       K[USSR+PRC+Nature]: only P69 1952-1953; only P50 none
+    balance_cw_tri       K[USA+USSR+PRC]: only P69 1952-1953; only P50 none
+    balance_cw_tri       K[USA+USSR+PRC+Nature]: only P69 1952-1953; only P50 none
+
+(5) behaviour-model check
+  1951 PRC.intervene_korea (others realized: {'USA': 'idle', 'USSR': 'idle', 'PRC': 'idle', 'Nature': 'none'})
+    B   prc_decision: safe=[] dist={'general_war_us': 2, 'sino_war': 14}
+    B   idle: safe=[nw_core,bnobloc_core,bcw_core,nw_tri,bnobloc_tri,bcw_tri] dist={'general_war_us': 2, 'sino_war': 14}
+    B   in_kernel: no_war_core:True balance_nobloc_core:True balance_cw_core:True no_war_tri:True balance_nobloc_tri:True balance_cw_tri:True
+    P50 prc_decision: safe_bundled=[] safe_prc=[] dist={'general_war_us': 2, 'sino_war': 14}
+    P50 idle: safe_bundled=[nw_core,bnobloc_core,bcw_core,nw_tri,bnobloc_tri,bcw_tri] safe_prc=[] dist={'general_war_us': 2, 'sino_war': 14}
+    P50 in_kernel: no_war_core:{'USSR': False, 'USSR+PRC': True, 'PRC': False} balance_nobloc_core:{'USSR': False, 'USSR+PRC': True, 'PRC': False} balance_cw_core:{'USSR': False, 'USSR+PRC': True, 'PRC': False} no_war_tri:{'USSR': False, 'USSR+PRC': True, 'PRC': False} balance_nobloc_tri:{'USSR': False, 'USSR+PRC': True, 'PRC': False} balance_cw_tri:{'USSR': False, 'USSR+PRC': True, 'PRC': False}
+  1954 PRC.strait_pressure (others realized: {'USA': 'approve_u2', 'USSR': 'idle', 'PRC': 'idle', 'Nature': 'none'})
+    B   prc_decision: safe=[nw_core,bnobloc_core,bcw_core,nw_tri,bnobloc_tri,bcw_tri] dist={'general_war_us': 2, 'sino_war': 11}
+    B   idle: safe=[nw_core,bnobloc_core,bcw_core,nw_tri,bnobloc_tri,bcw_tri] dist={'general_war_us': 2, 'sino_war': 11}
+    B   in_kernel: no_war_core:True balance_nobloc_core:True balance_cw_core:True no_war_tri:True balance_nobloc_tri:True balance_cw_tri:True
+    P50 prc_decision: safe_bundled=[nw_core,bnobloc_core,bcw_core,nw_tri,bnobloc_tri,bcw_tri] safe_prc=[] dist={'general_war_us': 2, 'sino_war': 11}
+    P50 idle: safe_bundled=[nw_core,bnobloc_core,bcw_core,nw_tri,bnobloc_tri,bcw_tri] safe_prc=[] dist={'general_war_us': 2, 'sino_war': 11}
+    P50 in_kernel: no_war_core:{'USSR': True, 'USSR+PRC': True, 'PRC': False} balance_nobloc_core:{'USSR': True, 'USSR+PRC': True, 'PRC': False} balance_cw_core:{'USSR': True, 'USSR+PRC': True, 'PRC': False} no_war_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': False} balance_nobloc_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': False} balance_cw_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': False}
+  1955 PRC.bomb_programme (others realized: {'USA': 'idle', 'USSR': 'idle', 'PRC': 'idle', 'Nature': 'none'})
+    B   prc_decision: safe=[nw_core,bnobloc_core,bcw_core,nw_tri,bnobloc_tri,bcw_tri] dist={'general_war_us': 2, 'sino_war': 10}
+    B   idle: safe=[nw_core,bnobloc_core,bcw_core,nw_tri,bnobloc_tri,bcw_tri] dist={'general_war_us': 2, 'sino_war': 10}
+    B   in_kernel: no_war_core:True balance_nobloc_core:True balance_cw_core:True no_war_tri:True balance_nobloc_tri:True balance_cw_tri:True
+    P50 prc_decision: safe_bundled=[nw_core,bnobloc_core,bcw_core,nw_tri,bnobloc_tri,bcw_tri] safe_prc=[] dist={'general_war_us': 2, 'sino_war': 10}
+    P50 idle: safe_bundled=[nw_core,bnobloc_core,bcw_core,nw_tri,bnobloc_tri,bcw_tri] safe_prc=[] dist={'general_war_us': 2, 'sino_war': 10}
+    P50 in_kernel: no_war_core:{'USSR': True, 'USSR+PRC': True, 'PRC': False} balance_nobloc_core:{'USSR': True, 'USSR+PRC': True, 'PRC': False} balance_cw_core:{'USSR': True, 'USSR+PRC': True, 'PRC': False} no_war_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': False} balance_nobloc_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': False} balance_cw_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': False}
+  1958 PRC.strait_pressure (others realized: {'USA': 'corona', 'USSR': 'berlin_ultimatum', 'PRC': 'idle', 'Nature': 'none'})
+    B   prc_decision: safe=[nw_core,nw_tri] dist={'general_war_us': 2, 'sino_war': 7}
+    B   idle: safe=[nw_core,nw_tri] dist={'general_war_us': 2, 'sino_war': 7}
+    B   own_move: safe=[] dist={'general_war_us': 1, 'sino_war': 7}
+    B   in_kernel: no_war_core:True balance_nobloc_core:True balance_cw_core:True no_war_tri:True balance_nobloc_tri:True balance_cw_tri:True
+    P50 prc_decision: safe_bundled=[] safe_prc=[] dist={'general_war_us': 1, 'sino_war': 7}
+    P50 idle: safe_bundled=[] safe_prc=[] dist={'general_war_us': 1, 'sino_war': 7}
+    P50 in_kernel: no_war_core:{'USSR': True, 'USSR+PRC': True, 'PRC': False} balance_nobloc_core:{'USSR': True, 'USSR+PRC': True, 'PRC': False} balance_cw_core:{'USSR': True, 'USSR+PRC': True, 'PRC': False} no_war_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': False} balance_nobloc_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': False} balance_cw_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': False}
+  1959 PRC.challenge_moscow (others realized: {'USA': 'offer_test_ban', 'USSR': 'idle', 'PRC': 'idle', 'Nature': 'none'})
+    B   prc_decision: safe=[] dist={'general_war_us': 1, 'sino_war': 6}
+    B   idle: safe=[] dist={'general_war_us': 1, 'sino_war': 6}
+    B   in_kernel: no_war_core:False balance_nobloc_core:False balance_cw_core:False no_war_tri:False balance_nobloc_tri:False balance_cw_tri:False
+    P50 prc_decision: safe_bundled=[] safe_prc=[] dist={'general_war_us': 1, 'sino_war': 6}
+    P50 idle: safe_bundled=[] safe_prc=[] dist={'general_war_us': 1, 'sino_war': 6}
+    P50 in_kernel: no_war_core:{'USSR': False, 'USSR+PRC': False, 'PRC': False} balance_nobloc_core:{'USSR': False, 'USSR+PRC': False, 'PRC': False} balance_cw_core:{'USSR': False, 'USSR+PRC': False, 'PRC': False} no_war_tri:{'USSR': False, 'USSR+PRC': False, 'PRC': False} balance_nobloc_tri:{'USSR': False, 'USSR+PRC': False, 'PRC': False} balance_cw_tri:{'USSR': False, 'USSR+PRC': False, 'PRC': False}
+  1965 PRC.deter_in_vietnam (others realized: {'USA': 'idle', 'USSR': 'idle', 'PRC': 'idle', 'Nature': 'none'})
+    B   prc_decision: safe=[nw_core,nw_tri] dist={'general_war_us': None, 'sino_war': 2}
+    B   idle: safe=[nw_core,nw_tri] dist={'general_war_us': None, 'sino_war': 2}
+    B   in_kernel: no_war_core:True balance_nobloc_core:False balance_cw_core:False no_war_tri:True balance_nobloc_tri:False balance_cw_tri:False
+    P50 prc_decision: safe_bundled=[nw_core,nw_tri] safe_prc=[nw_core,nw_tri] dist={'general_war_us': None, 'sino_war': 2}
+    P50 idle: safe_bundled=[nw_core,nw_tri] safe_prc=[nw_core,nw_tri] dist={'general_war_us': None, 'sino_war': 2}
+    P50 in_kernel: no_war_core:{'USSR': True, 'USSR+PRC': True, 'PRC': True} balance_nobloc_core:{'USSR': False, 'USSR+PRC': False, 'PRC': False} balance_cw_core:{'USSR': False, 'USSR+PRC': False, 'PRC': False} no_war_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': True} balance_nobloc_tri:{'USSR': False, 'USSR+PRC': False, 'PRC': False} balance_cw_tri:{'USSR': False, 'USSR+PRC': False, 'PRC': False}
+  1969 PRC.border_clash (others realized: {'USA': 'idle', 'USSR': 'idle', 'PRC': 'border_clash', 'Nature': 'none'})
+    B   prc_decision: safe=[nw_core,bnobloc_core,bcw_core,nw_tri,bnobloc_tri,bcw_tri] dist={'general_war_us': None, 'sino_war': 1}
+    B   idle: safe=[nw_core,bnobloc_core,bcw_core,nw_tri,bnobloc_tri,bcw_tri] dist={'general_war_us': None, 'sino_war': 2}
+    B   in_kernel: no_war_core:True balance_nobloc_core:True balance_cw_core:True no_war_tri:True balance_nobloc_tri:True balance_cw_tri:True
+    P50 prc_decision: safe_bundled=[nw_core,bnobloc_core,bcw_core,nw_tri,bnobloc_tri,bcw_tri] safe_prc=[nw_core,bnobloc_core] dist={'general_war_us': None, 'sino_war': 1}
+    P50 idle: safe_bundled=[nw_core,bnobloc_core,bcw_core,nw_tri,bnobloc_tri,bcw_tri] safe_prc=[nw_core,bnobloc_core,nw_tri,bnobloc_tri] dist={'general_war_us': None, 'sino_war': 2}
+    P50 in_kernel: no_war_core:{'USSR': True, 'USSR+PRC': True, 'PRC': True} balance_nobloc_core:{'USSR': True, 'USSR+PRC': True, 'PRC': True} balance_cw_core:{'USSR': True, 'USSR+PRC': True, 'PRC': False} no_war_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': True} balance_nobloc_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': True} balance_cw_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': False}
+  1972 PRC.rapprochement (others realized: {'USA': 'idle', 'USSR': 'accept_limits', 'PRC': 'rapprochement', 'Nature': 'none'})
+    B   prc_decision: safe=[nw_core,bnobloc_core,bcw_core,nw_tri,bnobloc_tri,bcw_tri] dist={'general_war_us': None, 'sino_war': None}
+    B   idle: safe=[nw_core,bnobloc_core,bcw_core,nw_tri,bnobloc_tri,bcw_tri] dist={'general_war_us': None, 'sino_war': 1}
+    B   own_move: safe=[nw_core,bnobloc_core,bcw_core,nw_tri,bnobloc_tri,bcw_tri] dist={'general_war_us': None, 'sino_war': 1}
+    B   in_kernel: no_war_core:True balance_nobloc_core:True balance_cw_core:True no_war_tri:True balance_nobloc_tri:True balance_cw_tri:True
+    P50 prc_decision: safe_bundled=[nw_core,bnobloc_core,bcw_core,nw_tri,bnobloc_tri,bcw_tri] safe_prc=[nw_core,bnobloc_core] dist={'general_war_us': None, 'sino_war': None}
+    P50 idle: safe_bundled=[nw_core,bnobloc_core,bcw_core,nw_tri,bnobloc_tri,bcw_tri] safe_prc=[nw_core,bnobloc_core] dist={'general_war_us': None, 'sino_war': 1}
+    P50 in_kernel: no_war_core:{'USSR': True, 'USSR+PRC': True, 'PRC': True} balance_nobloc_core:{'USSR': True, 'USSR+PRC': True, 'PRC': True} balance_cw_core:{'USSR': True, 'USSR+PRC': True, 'PRC': False} no_war_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': False} balance_nobloc_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': False} balance_cw_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': False}
+  1982 PRC.independent_line (others realized: {'USA': 'offer_reductions', 'USSR': 'idle', 'PRC': 'idle', 'Nature': 'war_scare'})
+    B   prc_decision: safe=[nw_core,bnobloc_core,nw_tri,bnobloc_tri] dist={'general_war_us': None, 'sino_war': None}
+    B   idle: safe=[nw_core,bnobloc_core,nw_tri,bnobloc_tri] dist={'general_war_us': None, 'sino_war': None}
+    B   in_kernel: no_war_core:True balance_nobloc_core:True balance_cw_core:True no_war_tri:True balance_nobloc_tri:True balance_cw_tri:True
+    P50 prc_decision: safe_bundled=[nw_core,bnobloc_core,nw_tri,bnobloc_tri] safe_prc=[nw_core,bnobloc_core,nw_tri,bnobloc_tri] dist={'general_war_us': None, 'sino_war': None}
+    P50 idle: safe_bundled=[nw_core,bnobloc_core,nw_tri,bnobloc_tri] safe_prc=[nw_core,bnobloc_core,nw_tri,bnobloc_tri] dist={'general_war_us': None, 'sino_war': None}
+    P50 in_kernel: no_war_core:{'USSR': True, 'USSR+PRC': True, 'PRC': True} balance_nobloc_core:{'USSR': True, 'USSR+PRC': True, 'PRC': True} balance_cw_core:{'USSR': True, 'USSR+PRC': True, 'PRC': False} no_war_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': True} balance_nobloc_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': True} balance_cw_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': False}
+  1989 PRC.normalize (others realized: {'USA': 'idle', 'USSR': 'idle', 'PRC': 'normalize', 'Nature': 'revolution'})
+    B   prc_decision: safe=[nw_core,bnobloc_core,nw_tri,bnobloc_tri] dist={'general_war_us': None, 'sino_war': None}
+    B   idle: safe=[nw_core,bnobloc_core,nw_tri,bnobloc_tri] dist={'general_war_us': None, 'sino_war': None}
+    B   in_kernel: no_war_core:True balance_nobloc_core:True balance_cw_core:False no_war_tri:True balance_nobloc_tri:True balance_cw_tri:False
+    P50 prc_decision: safe_bundled=[nw_core,bnobloc_core,nw_tri,bnobloc_tri] safe_prc=[nw_core,bnobloc_core,nw_tri,bnobloc_tri] dist={'general_war_us': None, 'sino_war': None}
+    P50 idle: safe_bundled=[nw_core,bnobloc_core,nw_tri,bnobloc_tri] safe_prc=[nw_core,bnobloc_core,nw_tri,bnobloc_tri] dist={'general_war_us': None, 'sino_war': None}
+    P50 in_kernel: no_war_core:{'USSR': True, 'USSR+PRC': True, 'PRC': True} balance_nobloc_core:{'USSR': True, 'USSR+PRC': True, 'PRC': True} balance_cw_core:{'USSR': False, 'USSR+PRC': False, 'PRC': False} no_war_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': True} balance_nobloc_tri:{'USSR': True, 'USSR+PRC': True, 'PRC': True} balance_cw_tri:{'USSR': False, 'USSR+PRC': False, 'PRC': False}
