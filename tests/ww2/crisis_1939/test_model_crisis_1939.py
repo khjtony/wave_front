@@ -441,12 +441,9 @@ def test_exit_check_against_v1():
     assert out == {k: v1q3[k] for k in crisis.EXIT_VARIABLES}
     diff_snapshot = {k for k in crisis.EXIT_VARIABLES if out[k] != snap[k]}
     diff_v1 = {k for k in crisis.EXIT_VARIABLES if v1q3[k] != snap[k]}
-    # oil_GER left the differences on 2026-10-23: the v1 snapshots date secured from the credit
-    # agreement of 19 Aug 1939, following v1's accept_pact (owner's decision 2d; first run:
-    # {"poland", "oil_GER"}, with the snapshot's oil_GER dependent).
-    assert diff_snapshot == diff_v1 == {"poland"}
+    assert diff_snapshot == diff_v1 == {"poland", "oil_GER"}
     assert (out["poland"], snap["poland"]) == ("german", "partitioned")
-    assert (out["oil_GER"], snap["oil_GER"]) == ("secured", "secured")
+    assert (out["oil_GER"], snap["oil_GER"]) == ("secured", "dependent")
     assert {k: out[k] for k in crisis.EXIT_VARIABLES if k not in diff_v1} == {
         "war_west_ger": "war",
         "france": "at_war",
@@ -455,7 +452,6 @@ def test_exit_check_against_v1():
         "nazi_soviet_pact": "True",
         "anglo_soviet_alliance": "False",
         "belief_GER": "will_fight",
-        "oil_GER": "secured",
     }
 
 

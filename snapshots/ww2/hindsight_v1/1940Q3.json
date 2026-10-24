@@ -143,11 +143,11 @@
       "confidence": "medium",
       "indicators": [
         {
-          "id": "event_1939-08-19_oil_GER",
-          "value": "German-Soviet Credit Agreement: a German credit of 200 million RM against Soviet raw-material deliveries of 180 million RM over two years, signed in Berlin on 19 August 1939, four days before the pact",
-          "source": "German-Soviet Credit Agreement, Berlin, 19 August 1939 (DGFP Series D vol. VII; Nazi-Soviet Relations 1939-1941, Department of State 1948); Ericson 1999, Feeding the German Eagle (chapter not verified)",
-          "observed": "1939-08-19",
-          "rule": "oil_GER takes the level of the latest dated event at or before 1940-09-30 (end of quarter) (oil_GER := secured). Note: v1 only (owner's decision 2d of 2026-10-23, under the snapshot convention of decision 7 of 2026-10-15): the first of the two agreements the ontology's rule for oil_GER names (ontology_ww2.md section 2), dating secured in the quarter of v1's accept_pact, whose effect sets it (tick 15, 1939Q3), so the v1 series follows the model's clock. Disagreement kept: the record's first oil deliveries came under the Commercial Agreement of 11 February 1940 (events_ww2.csv, 1940Q1, which the v0 series keeps as the date of the level); petroleum among the goods of the credit agreement is not verified."
+          "id": "event_1940-02-11_oil_GER",
+          "value": "German-Soviet Commercial Agreement: Soviet oil and grain deliveries against German manufactures",
+          "source": "German-Soviet Commercial Agreement, Moscow, 11 February 1940 (DGFP series D); Tooze 2006, The Wages of Destruction (chapter not verified)",
+          "observed": "1940-02-11",
+          "rule": "oil_GER takes the level of the latest dated event at or before 1940-09-30 (end of quarter) (oil_GER := secured). Note: The ontology rule (deliveries under the 1939 to 1940 agreements) dates the level here; the action catalogue sets oil_GER secured at the August 1939 pact (1939Q3). For the historian."
         },
         {
           "id": "event_1940-05-27_oil_GER",

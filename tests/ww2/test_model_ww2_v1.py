@@ -592,9 +592,7 @@ def test_realized_replay_under_status_quo_stops_at_the_southern_occupation():
 # one-tick lags of the record behind the model's clock (belief_WEST 1938Q2, arms_GER 1938Q3,
 # anglo_soviet_alliance 1941Q2, caucasus 1942Q2, bomb_ready 1945Q2) are gone since the
 # clock-consistency pass of the builder (owner's decision 7 of 2026-10-15); italy at 1940Q1
-# is an [NSL] placement and stays. oil_GER at 1939Q3 and 1939Q4 (accept_pact against the
-# record's deliveries of Feb 1940) left the list on 2026-10-23: the v1 series dates secured from
-# the credit agreement of 19 Aug 1939 (owner's decision 2d; docs/guard_changelog_ww2.md).
+# is an [NSL] placement and stays.
 EXPECTED_DIFFERENCES = {
     "treaty": ({"1936Q1", "1936Q2"}, "[SQR] locarno_lapses at tick 2 (v0)"),
     "arms_WEST": (
@@ -616,6 +614,7 @@ EXPECTED_DIFFERENCES = {
         "E1 counts on the snapshot's levels (commit_WEST resolved, 31 Mar 1939); the replay "
         "has the guarantee one tick later",
     ),
+    "oil_GER": ({"1939Q3", "1939Q4"}, "accept_pact secures oil at once (v0)"),
     "poland": ({"1939Q3"}, "[SQR] occupy_east_poland (v0)"),
     "italy": ({"1940Q1"}, "[NSL] italy_enters at the decision in principle (31 Mar 1940)"),
     "arms_USA": (
