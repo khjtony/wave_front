@@ -10,6 +10,9 @@ Inputs to the Cold War v0 model (`models/cw/v0.py`), its hindsight and replay sn
 | `decisions.csv` | the dated decisions of the realized path with their delays (years), including the Soviet atomic decision of 1945, before tick 0 | the sources in its `source` column |
 | `realized_moves.csv` | the realized joint move of every year, 1947 to 1991 (tick 0 to 44), with the placement notes ([SQR], [NSL], one decision per actor per year) | maintained with the decisions file |
 | `crises/<name>/realized_moves.csv` | the realized moves of the three sub-games (Berlin 1948 by week, Cuba 1962 and Able Archer 1983 by day) | as above |
+| `v1/events.csv`, `v1/decisions.csv` | Cold War v1's additions (`models/cw/v1.py`): the US-PRC war, the 1973 return, the Korean entry and Brezhnev's message of 1973; read together with the v0 files by `models/cw/snapshots_v1.py` | the sources in their `source` columns |
+| `v1/realized_moves.csv` | v1's realized joint moves (v0's with 1951 and 1973 changed) | docs/cw_v1_decisions.md D5 |
+| `crises/sino_soviet_1969/`, `crises/alert_1973/` | the realized moves of v1's two sub-games (by week and by day) | as above |
 
 ## The data sets the testbed names, and why none is read here
 

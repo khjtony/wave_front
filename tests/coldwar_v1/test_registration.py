@@ -80,13 +80,16 @@ def test_claim_text_is_verbatim(cid):
 
 
 @pytest.mark.parametrize("cid", IDS)
-def test_stub_skips_until_cw_v1_is_built(cid):
-    """Each stub is guarded by ``skipif(not BUILT, reason="cw_v1 not built")`` until the model
-    step replaces it with its reading."""
+def test_claim_runs_only_under_the_first_sight_switch(cid):
+    """Each claim test, stub or reading, is guarded by the owner's first-sight switch
+    (``WF_FIRST_SIGHT_CWV1=1``; docs/cw_v1_decisions.md D8), which replaced the guard on the
+    existence of models/cw/v1.py when the model step wrote that file (2026-10-24), so that no
+    claim runs before the recorded first sight."""
     src = file_of(cid).read_text(encoding="utf-8")
     tree = ast.parse(src)
     fn = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == f"test_{cid}")
-    if not any(isinstance(n, ast.Raise) for n in ast.walk(fn)):
-        return  # the model step has written the reading
     decos = [ast.unparse(d) for d in fn.decorator_list]
-    assert "pytest.mark.skipif(not BUILT, reason='cw_v1 not built')" in decos, decos
+    assert (
+        "pytest.mark.skipif(not FIRST_SIGHT, reason='cw_v1 first sight not switched on')" in decos
+    ), decos
+    assert "FIRST_SIGHT = os.environ.get('WF_FIRST_SIGHT_CWV1') == '1'" in ast.unparse(tree)

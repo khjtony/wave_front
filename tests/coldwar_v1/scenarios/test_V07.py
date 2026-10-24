@@ -6,7 +6,7 @@ is a new row V7a. The readings the model step must fix before first sight are li
 section 9.4.
 """
 
-from pathlib import Path
+import os
 
 import pytest
 
@@ -29,9 +29,11 @@ CLAIM = {
     "sources": "the treaty texts; Hoffman 2009; re-asks C8 as amended",
 }
 
-BUILT = (Path(__file__).resolve().parents[3] / "models" / "cw" / "v1.py").exists()
+# The first-sight switch (docs/cw_v1_decisions.md D8): the claim runs only when the owner sets
+# WF_FIRST_SIGHT_CWV1=1 for the one recorded run of V1 to V10.
+FIRST_SIGHT = os.environ.get("WF_FIRST_SIGHT_CWV1") == "1"
 
 
-@pytest.mark.skipif(not BUILT, reason="cw_v1 not built")
+@pytest.mark.skipif(not FIRST_SIGHT, reason="cw_v1 first sight not switched on")
 def test_V7():
     raise NotImplementedError(CLAIM["id"])

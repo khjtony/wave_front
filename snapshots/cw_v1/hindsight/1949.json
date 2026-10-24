@@ -1,0 +1,349 @@
+{
+ "$schema": "../../schema.json",
+ "date": "1949-01-01",
+ "model": "cw_v1",
+ "variables": {
+  "nuke_USA": {
+   "level": "few",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_nuke_USA_record",
+     "value": "US stockpile of 13 weapons in mid-1947, delivered by SAC's Silverplate B-29s",
+     "source": "Rosenberg 1983; Norris and Kristensen, 'Global nuclear weapons inventories', BAS 2010",
+     "observed": "1946-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv)"
+    }
+   ]
+  },
+  "nuke_USSR": {
+   "level": "none",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_nuke_USSR_record",
+     "value": "no Soviet weapon before the test of 29 Aug 1949",
+     "source": "Holloway 1994",
+     "observed": "1946-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv)"
+    }
+   ]
+  },
+  "intel_USA": {
+   "level": "low",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_intel_USA_record",
+     "value": "no overflight capability; agents and peripheral flights only",
+     "source": "Prados 1982",
+     "observed": "1946-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv)"
+    }
+   ]
+  },
+  "belief_force_USA": {
+   "level": "none",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_nuke_USSR_record",
+     "value": "no Soviet weapon before the test of 29 Aug 1949",
+     "source": "Holloway 1994",
+     "observed": "1946-12-31",
+     "rule": "hindsight truth of the estimated quantity (nuke_USSR in the record; decisions D6)"
+    }
+   ]
+  },
+  "belief_USSR_USA": {
+   "level": "hostile",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_belief_USSR_USA_record",
+     "value": "hindsight: US aims of containment by means short of war; no plan of a first strike at any time",
+     "source": "Gaddis 2005; PFIAB 1990",
+     "observed": "1946-12-31",
+     "rule": "hindsight truth of the estimated quantity (belief_USSR_USA in the record; decisions D6)"
+    }
+   ]
+  },
+  "offer": {
+   "level": "none",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_offer_record",
+     "value": "no standing US arms-control offer the model represents (the Baruch plan of Jun 1946 had lapsed)",
+     "source": "Seaborg 1981",
+     "observed": "1946-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level"
+    }
+   ]
+  },
+  "oversight": {
+   "level": "none",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_oversight_record",
+     "value": "no verification regime",
+     "source": "Hoffman 2009",
+     "observed": "1946-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level"
+    }
+   ]
+  },
+  "arms": {
+   "level": "race",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_arms_record",
+     "value": "no limitation agreement",
+     "source": "Newhouse 1973",
+     "observed": "1946-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level"
+    }
+   ]
+  },
+  "buildup": {
+   "level": false,
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_buildup_record",
+     "value": "the Reagan buildup lies in 1981",
+     "source": "Fischer 1997",
+     "observed": "1946-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level"
+    }
+   ]
+  },
+  "esc": {
+   "level": "peace",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_esc_record",
+     "value": "no standing confrontation between the principals on 1 Jan 1947",
+     "source": "Gaddis 2005",
+     "observed": "1946-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv)"
+    }
+   ]
+  },
+  "accidental": {
+   "level": false,
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_accidental_record",
+     "value": "no nuclear use by accident in the Cold War",
+     "source": "Sagan 1993",
+     "observed": "1946-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level"
+    }
+   ]
+  },
+  "us_strike": {
+   "level": false,
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_us_strike_record",
+     "value": "no US preventive strike",
+     "source": "Trachtenberg 1988",
+     "observed": "1946-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level"
+    }
+   ]
+  },
+  "berlin_wall": {
+   "level": false,
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_berlin_wall_record",
+     "value": "the sector border open until 13 Aug 1961",
+     "source": "Harrison 2003",
+     "observed": "1946-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level"
+    }
+   ]
+  },
+  "invasion_west": {
+   "level": false,
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_invasion_west_record",
+     "value": "no Soviet offensive into Western Europe",
+     "source": "Mastny and Byrne 2005",
+     "observed": "1946-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level"
+    }
+   ]
+  },
+  "us_began_war": {
+   "level": false,
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_us_began_war_record",
+     "value": "no war between the principals begun by the United States in the Cold War",
+     "source": "Gaddis 2005",
+     "observed": "1946-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level (added 2026-10-23 on the owner's decision 2l)"
+    }
+   ]
+  },
+  "korea": {
+   "level": "peace",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_korea_record",
+     "value": "no war in Korea before 25 Jun 1950",
+     "source": "Stueck 1995",
+     "observed": "1946-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level"
+    }
+   ]
+  },
+  "afghan": {
+   "level": "none",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_afghan_record",
+     "value": "no Soviet forces in Afghanistan before Dec 1979",
+     "source": "Kalinovsky 2011",
+     "observed": "1946-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level"
+    }
+   ]
+  },
+  "econ_USSR": {
+   "level": "growing",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_econ_USSR_record",
+     "value": "postwar reconstruction and growth of 5 percent a year or more into the 1960s",
+     "source": "Easterly and Fischer 1995",
+     "observed": "1946-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level"
+    }
+   ]
+  },
+  "legit_USSR": {
+   "level": "secure",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_legit_USSR_record",
+     "value": "the party's monopoly unchallenged inside the USSR",
+     "source": "Brown 2009",
+     "observed": "1946-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level"
+    }
+   ]
+  },
+  "perestroika": {
+   "level": false,
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_perestroika_record",
+     "value": "no reform programme before 1985",
+     "source": "Brown 1996",
+     "observed": "1946-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level"
+    }
+   ]
+  },
+  "bloc_USSR": {
+   "level": "intact",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_bloc_USSR_record",
+     "value": "Soviet-controlled governments in Eastern Europe (Poland Jan 1947 elections; the coup in Prague of Feb 1948 inside intact)",
+     "source": "Westad 2017",
+     "observed": "1946-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv)"
+    }
+   ]
+  },
+  "align_PRC": {
+   "level": "soviet_ally",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_align_PRC_record",
+     "value": "the CCP aligned with Moscow (Mao's 'lean to one side', Jun 1949; the treaty of 14 Feb 1950)",
+     "source": "Chen Jian 2001",
+     "observed": "1946-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: the PRC is proclaimed 1 Oct 1949; the level reads the CCP's alignment"
+    }
+   ]
+  },
+  "china_opening": {
+   "level": false,
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_china_opening_record",
+     "value": "no US opening to the PRC before 1969 to 1971",
+     "source": "Chen Jian 2001",
+     "observed": "1946-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level"
+    }
+   ]
+  },
+  "esc_sino": {
+   "level": "peace",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_esc_sino_record",
+     "value": "no armed Sino-Soviet confrontation before 1969",
+     "source": "Luthi 2008",
+     "observed": "1946-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level"
+    }
+   ]
+  },
+  "esc_usprc": {
+   "level": "peace",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_esc_usprc_record",
+     "value": "no war between the United States and the PRC before Oct 1950",
+     "source": "Chen Jian 1994",
+     "observed": "1946-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level"
+    }
+   ]
+  }
+ },
+ "rates": {},
+ "builtins": {
+  "pending_USSR_build_bomb": {
+   "value": 1,
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "decision_1945_USSR_build_bomb",
+     "value": "USSR.build_bomb decided 1945",
+     "source": "Stalin's decree of 20 Aug 1945 creating the Special Committee (Holloway 1994)",
+     "observed": "1945-12-31",
+     "rule": "years until the delayed effect of the decision is visible (framework_spec.md section 3.1)"
+    }
+   ],
+   "rule": "decided at tick -2 with delay 4: pending t + 1 + d - T"
+  }
+ }
+}

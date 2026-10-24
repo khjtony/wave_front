@@ -6,7 +6,7 @@ is a new row V10a. The readings the model step must fix before first sight are l
 section 9.4.
 """
 
-from pathlib import Path
+import os
 
 import pytest
 
@@ -23,9 +23,11 @@ CLAIM = {
     "sources": "Kotkin 2001; Brown 2009; Miller 2016; regression of C13",
 }
 
-BUILT = (Path(__file__).resolve().parents[3] / "models" / "cw" / "v1.py").exists()
+# The first-sight switch (docs/cw_v1_decisions.md D8): the claim runs only when the owner sets
+# WF_FIRST_SIGHT_CWV1=1 for the one recorded run of V1 to V10.
+FIRST_SIGHT = os.environ.get("WF_FIRST_SIGHT_CWV1") == "1"
 
 
-@pytest.mark.skipif(not BUILT, reason="cw_v1 not built")
+@pytest.mark.skipif(not FIRST_SIGHT, reason="cw_v1 first sight not switched on")
 def test_V10():
     raise NotImplementedError(CLAIM["id"])

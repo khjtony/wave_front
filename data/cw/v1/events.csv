@@ -1,0 +1,8 @@
+# Dated events for the variables and levels that Cold War v1 adds to v0 (docs/ontology_cw.md section 12). Columns and conventions as data/cw/events.csv,
+# which the v1 snapshot builder (models/cw/snapshots_v1.py) reads together with this file. A note starting "[SQR]" marks a record level that the model's
+# realized path shows one tick later (a reaction inside the year of what it answers; docs/cw_v1_decisions.md R V1).
+year,tick,visible_year,visible_tick,variable,level,series,event,source,note
+1946,-1,1947,0,esc_usprc,peace,record,no war between the United States and the PRC before Oct 1950,Chen Jian 1994,initial level
+1950,3,1951,4,esc_usprc,war,record,"the Chinese People's Volunteers in Korea from 19 Oct 1950, first engagements with American forces 25 Oct to 1 Nov 1950",Chen Jian 1994; Mansourov 1995/96,"[SQR] on the model's path: PRC.intervene_korea in the 1951 move, visible 1952"
+1953,6,1954,7,esc_usprc,peace,record,"the Armistice Agreement of 27 Jul 1953, signed by the Chinese People's Volunteers",FRUS 1952-54 vol. XV,
+1973,26,1974,27,esc,peace,record,"the alert of 24 to 26 Oct 1973 ended with Resolution 340 (25 Oct) and the second UN Emergency Force; no Soviet landing",Israelyan 1995; Garthoff 1994,

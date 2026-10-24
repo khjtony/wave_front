@@ -155,3 +155,54 @@ Ending: `STRIKE`.
 | Vietnam, the Middle East wars, the Taiwan Strait crises, the 1973 alert | No claim reads them at annual resolution; the 1973 alert is a crisis of days inside one year. |
 | Hungary 1956, Czechoslovakia 1968 | Below the threshold of `bloc_USSR` (suppressed within the year); they are the record behind `USSR.intervene`. |
 | The August coup of 1991, Yeltsin, the republics | Inside `legit_USSR = failing` and `USSR.dissolve`. |
+
+## 12. v1 (Cold War v1, `models/cw/v1.py`)
+
+Status: written for the model step of cw_v1 on 2026-10-24, after the registration of V1 to V10 ([coldwar_testbed.md](coldwar_testbed.md) section 9) and before any of them was run. Sections 0 to 11 are v0's and stand for v1 except as below. The decisions are in [cw_v1_decisions.md](cw_v1_decisions.md); data in `data/cw/v1/` (added rows, read with v0's files) and `data/cw/crises/{sino_soviet_1969,alert_1973}/`; snapshots in `snapshots/cw_v1/` (built by `models/cw/snapshots_v1.py`).
+
+### 12.1 Actors and the added variable
+
+- Actors: `USA`, `USSR`, `PRC` (a principal from 1950, tick 3) and Nature. `build(prc_principal=False)` gives the PRC's decisions to Nature, as in v0.
+
+| Variable | Levels | Init | Threshold rule | Dated indicator |
+|---|---|---|---|---|
+| `esc_usprc` | peace, war | peace | Not monotone. **war**: combat between American and Chinese forces. Set by `PRC.intervene_korea`, ended by `USA.armistice`. No Strait level: the Taiwan Strait crises are out of scope (coldwar_testbed.md section 9.1; docs/prc_experiment.md section 7), so no action sets a crisis level and none is declared. | war from the CPV's crossing of 19 Oct 1950 (first engagements 25 Oct to 1 Nov 1950), visible 1951 in the record and 1952 on the model's path ([SQR]; decisions R V1); peace from the armistice of 27 Jul 1953, visible 1954 (Chen Jian 1994; FRUS 1952-54 vol. XV). |
+
+The PRC's nuclear force enters only as the dated target part of `USSR.strike_china` (`tick >= 1965`, v0's), as section 9.1 of the registration says; no `nuke_PRC` variable.
+
+### 12.2 The October 1973 alert (`models/cw/crises/alert_1973.py`; daily; tick 0 is 24 Oct 1973; horizon 5)
+
+Entered by `USSR.warn_unilateral` (Brezhnev's message of 24 Oct 1973) in 1973.
+
+| Variable | Levels | Rule |
+|---|---|---|
+| `soviet_forces` | alerted, landed | **alerted** at entry: the seven airborne divisions on alert and the Mediterranean squadron at readiness (Blechman and Hart 1982; Israelyan 1995). **landed**: Soviet troops sent to Egypt (not taken). |
+| `us_alert` | normal, defcon3 | DEFCON 3 ordered 23:41 EDT 24 Oct |
+| `reply` | flag | Nixon's letter of 25 Oct, 05:40 EDT |
+| `ceasefire` | violated, holding | **violated** at entry (the Third Army encircled after the ceasefire of 22 Oct); **holding**: supplies let through, 26 to 28 Oct |
+| `un_force` | flag | Resolution 340, 25 Oct 1973 |
+| `fighting` | flag | US-Soviet combat (not taken) |
+
+Endings: `WAR` (fighting), `CEASEFIRE` (a UN force voted, the ceasefire holding, no landing, no fighting). Exit: fighting → `esc = conventional`; landed without fighting → `crisis`; a UN force voted → no change; otherwise → `crisis`. Nature carries the belligerents (the Israeli advance) and the forces at sea (an incident under the alert).
+
+### 12.3 The Sino-Soviet confrontation of 1969 (`models/cw/crises/sino_soviet_1969.py`; weekly; tick 0 is the week of 17 Mar 1969; horizon 31, the week of 20 Oct 1969)
+
+Entered by `PRC.border_clash` (the clashes of 2 and 15 Mar 1969) in 1969; in the PRC-to-Nature build by Nature's `border_clash`, with `accept_talks` Nature's.
+
+| Variable | Levels | Rule |
+|---|---|---|
+| `border` | clash, escalated | **clash** at entry (Zhenbao); **escalated**: a Soviet-initiated attack beyond the March clashes (Tielieketi, 13 Aug) |
+| `talks` | none, proposed, agreed | the Soviet statement of 29 Mar (proposed); Kosygin and Zhou, 11 Sep (agreed) |
+| `soundings` | flag | the Soviet soundings on a strike, from 18 Aug |
+| `us_signal` | flag | the American signal of non-indifference (NSC of 14 Aug; Richardson, 5 Sep) |
+| `strike` | flag | a Soviet strike on Lop Nur (not taken) |
+
+Ending: `STRIKE`. Exit: strike → `esc_sino = war`; otherwise `esc_sino = clash` (the talks did not end the armed confrontation; v0's level to 1989).
+
+### 12.4 Invariants and endings of v1
+
+v0's section 9 with a US-PRC war counted as a war between principals (`no_war` excludes `esc_usprc = war` when the PRC is a principal), and the predicates of coldwar_testbed.md section 9.2 declared as invariants: `no_war_core` (`esc < conventional`), `both_or_neither`, `balance_core` (`no_war_core ∧ both_or_neither`), `balance_tri` (`no_war_core ∧ esc_sino < war ∧ esc_usprc < war ∧ both_or_neither`), `no_general_war_core` (¬(`esc ≥ tactical_nuclear` ∧ ¬`accidental`)). A US-PRC war is not an ending; a Sino-Soviet war is `GENERAL_WAR` as in v0.
+
+### 12.5 Not modeled in v1 (declared scope cuts)
+
+The United Kingdom and France (coldwar_testbed.md section 9.1); the PRC's Strait crises, bomb programme, polemic of 1959 to 1960, Vietnam signals and independent line of 1982 (docs/prc_experiment.md section 7: indifferent in every measure on v0's decision space); Lin Biao's Order No. 1 of 18 Oct 1969 and Grechko's mobilization proposal of 25 Oct 1973 (they change no variable of their sub-game); the dating of `USSR.mirv` and `USSR.berlin_ultimatum` (decisions D3).
