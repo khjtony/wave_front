@@ -1,0 +1,3493 @@
+{
+ "kind": "wave_front proposals",
+ "format": 1,
+ "label": "1936Q1",
+ "until": "1936-03-31",
+ "since": null,
+ "corpus": {
+  "source": "frus",
+  "synthetic": false,
+  "root": "data/ww2/corpora/raw/frus"
+ },
+ "backend": {
+  "name": "claude",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "usage": {
+   "input_tokens": 307985,
+   "output_tokens": 41419,
+   "cache_creation_input_tokens": 20472,
+   "cache_read_input_tokens": 1617288
+  },
+  "cache": {
+   "hits": 0,
+   "misses": 320
+  }
+ },
+ "harness_rules": [
+  "two-document",
+  "no-retrospective"
+ ],
+ "documents": [
+  {
+   "id": "frus:frus1936v01/d156",
+   "date": "1936-01-02",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in Italy (Long) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d156"
+  },
+  {
+   "id": "frus:frus1936v01/d157",
+   "date": "1936-01-02",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in the United Kingdom (Bingham) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d157"
+  },
+  {
+   "id": "frus:frus1936v01/d158",
+   "date": "1936-01-02",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in France (Straus) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d158"
+  },
+  {
+   "id": "frus:frus1936v02/d843",
+   "date": "1936-01-02",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Spain (Bowers) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d843"
+  },
+  {
+   "id": "frus:frus1936v01/d159",
+   "date": "1936-01-03",
+   "source": "FRUS frus1936v01",
+   "title": "The Minister in Switzerland (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d159"
+  },
+  {
+   "id": "frus:frus1936v01/d166",
+   "date": "1936-01-03",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d166"
+  },
+  {
+   "id": "frus:frus1936v01/d430",
+   "date": "1936-01-03",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in the United Kingdom (Bingham) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d430"
+  },
+  {
+   "id": "frus:frus1936v02/d351",
+   "date": "1936-01-03",
+   "source": "FRUS frus1936v02",
+   "title": "The Minister in Rumania (Harrison) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d351"
+  },
+  {
+   "id": "frus:frus1936v02/d272",
+   "date": "1936-01-04",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Ambassador in Italy (Long)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d272"
+  },
+  {
+   "id": "frus:frus1936v02/d845",
+   "date": "1936-01-04",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Ambassador in Spain (Bowers)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d845"
+  },
+  {
+   "id": "frus:frus1936v02/d273",
+   "date": "1936-01-06",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Italy (Long) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d273"
+  },
+  {
+   "id": "frus:frus1936v01/d15",
+   "date": "1936-01-07",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to President Roosevelt",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d15"
+  },
+  {
+   "id": "frus:frus1936v01/d16",
+   "date": "1936-01-07",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chairman of the American Delegation (Davis)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d16"
+  },
+  {
+   "id": "frus:frus1936v01/d17",
+   "date": "1936-01-08",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d17"
+  },
+  {
+   "id": "frus:frus1936v02/d846",
+   "date": "1936-01-08",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Spain (Bowers) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d846"
+  },
+  {
+   "id": "frus:frus1933-39/d292",
+   "date": "1936-01-09",
+   "source": "FRUS frus1933-39",
+   "title": "Memorandum by the Chief of the Division of Eastern Europem Affairs (Kelley)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d292"
+  },
+  {
+   "id": "frus:frus1936v01/d160",
+   "date": "1936-01-09",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by the Chief of the Office of Arms and Munitions Control (Green)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d160"
+  },
+  {
+   "id": "frus:frus1936v01/d18",
+   "date": "1936-01-09",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d18"
+  },
+  {
+   "id": "frus:frus1936v01/d19",
+   "date": "1936-01-09",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chairman of the American Delegation (Davis)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d19"
+  },
+  {
+   "id": "frus:frus1936v02/d71",
+   "date": "1936-01-09",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in France (Straus) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d71"
+  },
+  {
+   "id": "frus:frus1936v02/d855",
+   "date": "1936-01-09",
+   "source": "FRUS frus1936v02",
+   "title": "The Swiss Minister (Peter) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d855"
+  },
+  {
+   "id": "frus:frus1936v02/d856",
+   "date": "1936-01-09",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Swiss Minister (Peter)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d856"
+  },
+  {
+   "id": "frus:frus1936v02/d857",
+   "date": "1936-01-09",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Swiss Minister (Peter)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d857"
+  },
+  {
+   "id": "frus:frus1936v02/d858",
+   "date": "1936-01-09",
+   "source": "FRUS frus1936v02",
+   "title": "The Swiss Minister (Peter) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d858"
+  },
+  {
+   "id": "frus:frus1936v01/d20",
+   "date": "1936-01-10",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d20"
+  },
+  {
+   "id": "frus:frus1936v01/d21",
+   "date": "1936-01-10",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d21"
+  },
+  {
+   "id": "frus:frus1936v01/d22",
+   "date": "1936-01-10",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chairman of the American Delegation (Davis)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d22"
+  },
+  {
+   "id": "frus:frus1936v01/d431",
+   "date": "1936-01-10",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Ambassador in the United Kingdom (Bingham)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d431"
+  },
+  {
+   "id": "frus:frus1933-39/d293",
+   "date": "1936-01-11",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Henderson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d293"
+  },
+  {
+   "id": "frus:frus1936v01/d23",
+   "date": "1936-01-11",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d23"
+  },
+  {
+   "id": "frus:frus1936v01/d24",
+   "date": "1936-01-11",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chairman of the American Delegation (Davis)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d24"
+  },
+  {
+   "id": "frus:frus1936v01/d25",
+   "date": "1936-01-12",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in Japan (Grew) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d25"
+  },
+  {
+   "id": "frus:frus1933-39/d294",
+   "date": "1936-01-13",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Henderson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d294"
+  },
+  {
+   "id": "frus:frus1936v01/d26",
+   "date": "1936-01-13",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in Japan (Grew) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d26"
+  },
+  {
+   "id": "frus:frus1936v01/d631",
+   "date": "1936-01-13",
+   "source": "FRUS frus1936v01",
+   "title": "The Assistant Secretary of State (Moore) to the Secretary of the Treasury (Morgenthau)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d631"
+  },
+  {
+   "id": "frus:frus1933-39/d313",
+   "date": "1936-01-14",
+   "source": "FRUS frus1933-39",
+   "title": "Memorandum by the Assistant Secretary of State (Sayre)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d313"
+  },
+  {
+   "id": "frus:frus1936v01/d27",
+   "date": "1936-01-14",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d27"
+  },
+  {
+   "id": "frus:frus1936v01/d28",
+   "date": "1936-01-14",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d28"
+  },
+  {
+   "id": "frus:frus1936v02/d259",
+   "date": "1936-01-14",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Minister in Greece (MacVeagh)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d259"
+  },
+  {
+   "id": "frus:frus1933-39/d295",
+   "date": "1936-01-15",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Henderson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d295"
+  },
+  {
+   "id": "frus:frus1936v02/d119",
+   "date": "1936-01-15",
+   "source": "FRUS frus1936v02",
+   "title": "Extract From Political Report of the Ambassador in Germany (Dodd)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d119"
+  },
+  {
+   "id": "frus:frus1936v02/d129",
+   "date": "1936-01-15",
+   "source": "FRUS frus1936v02",
+   "title": "Extract From Political Report of the Ambassador in Germany (Dodd)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d129"
+  },
+  {
+   "id": "frus:frus1936v02/d274",
+   "date": "1936-01-15",
+   "source": "FRUS frus1936v02",
+   "title": "Memorandum by the Special Assistant to the Secretary of State and Chief of the Division of Western European Affairs (Dunn)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d274"
+  },
+  {
+   "id": "frus:frus1936v02/d275",
+   "date": "1936-01-15",
+   "source": "FRUS frus1936v02",
+   "title": "The Assistant Secretary of State (Sayre) to the Italian Ambassador (Rosso)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d275"
+  },
+  {
+   "id": "frus:frus1933-39/d296",
+   "date": "1936-01-16",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Henderson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d296"
+  },
+  {
+   "id": "frus:frus1933-39/d297",
+   "date": "1936-01-16",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Henderson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d297"
+  },
+  {
+   "id": "frus:frus1936v01/d29",
+   "date": "1936-01-16",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d29"
+  },
+  {
+   "id": "frus:frus1936v01/d30",
+   "date": "1936-01-16",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by the Chief of the Division of Far Eastern Affairs (Hornbeck)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d30"
+  },
+  {
+   "id": "frus:frus1936v02/d254",
+   "date": "1936-01-16",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Minister in Greece (MacVeagh)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d254"
+  },
+  {
+   "id": "frus:frus1936v02/d255",
+   "date": "1936-01-16",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Consul General at Athens (Morris)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d255"
+  },
+  {
+   "id": "frus:frus1933-39/d298",
+   "date": "1936-01-17",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Henderson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d298"
+  },
+  {
+   "id": "frus:frus1936v02/d41",
+   "date": "1936-01-17",
+   "source": "FRUS frus1936v02",
+   "title": "Memorandum by Mr. Landreth M. Harrison of the Division of Eastern European Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d41"
+  },
+  {
+   "id": "frus:frus1936v01/d31",
+   "date": "1936-01-18",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chairman of the American Delegation (Davis)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d31"
+  },
+  {
+   "id": "frus:frus1936v01/d632",
+   "date": "1936-01-18",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by Mr. James C. H. Bonbright of the Division of Western European Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d632"
+  },
+  {
+   "id": "frus:frus1936v01/d167",
+   "date": "1936-01-19",
+   "source": "FRUS frus1936v01",
+   "title": "The Minister in Czechoslovakia (Wright) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d167"
+  },
+  {
+   "id": "frus:frus1936v01/d32",
+   "date": "1936-01-20",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chairman of the American Delegation (Davis)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d32"
+  },
+  {
+   "id": "frus:frus1936v01/d633",
+   "date": "1936-01-20",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of the Treasury (Morgenthau) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d633"
+  },
+  {
+   "id": "frus:frus1936v01/d634",
+   "date": "1936-01-20",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by the Economic Adviser (Feis)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d634"
+  },
+  {
+   "id": "frus:frus1936v01/d665",
+   "date": "1936-01-20",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Minister in Canada (Armour)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d665"
+  },
+  {
+   "id": "frus:frus1936v02/d847",
+   "date": "1936-01-20",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Spain (Bowers) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d847"
+  },
+  {
+   "id": "frus:frus1936v01/d33",
+   "date": "1936-01-21",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d33"
+  },
+  {
+   "id": "frus:frus1936v02/d130",
+   "date": "1936-01-21",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Ambassador in Germany (Dodd)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d130"
+  },
+  {
+   "id": "frus:frus1936v02/d56",
+   "date": "1936-01-21",
+   "source": "FRUS frus1936v02",
+   "title": "Memorandum by the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d56"
+  },
+  {
+   "id": "frus:frus1936v01/d161",
+   "date": "1936-01-22",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of War (Dern) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d161"
+  },
+  {
+   "id": "frus:frus1936v01/d513",
+   "date": "1936-01-22",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d513"
+  },
+  {
+   "id": "frus:frus1936v02/d848",
+   "date": "1936-01-22",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Ambassador in Spain (Bowers)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d848"
+  },
+  {
+   "id": "frus:frus1936v01/d34",
+   "date": "1936-01-23",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d34"
+  },
+  {
+   "id": "frus:frus1936v01/d35",
+   "date": "1936-01-23",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d35"
+  },
+  {
+   "id": "frus:frus1936v02/d111",
+   "date": "1936-01-23",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d111"
+  },
+  {
+   "id": "frus:frus1936v02/d238",
+   "date": "1936-01-23",
+   "source": "FRUS frus1936v02",
+   "title": "The Minister in Greece (MacVeagh) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d238"
+  },
+  {
+   "id": "frus:frus1936v01/d349",
+   "date": "1936-01-24",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in Mexico (Daniels) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d349"
+  },
+  {
+   "id": "frus:frus1936v01/d355",
+   "date": "1936-01-24",
+   "source": "FRUS frus1936v01",
+   "title": "The Minister in Norway (Biddle) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d355"
+  },
+  {
+   "id": "frus:frus1936v01/d36",
+   "date": "1936-01-24",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d36"
+  },
+  {
+   "id": "frus:frus1936v02/d14",
+   "date": "1936-01-24",
+   "source": "FRUS frus1936v02",
+   "title": "The Minister in Czechoslovakia (Wright) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d14"
+  },
+  {
+   "id": "frus:frus1936v01/d318",
+   "date": "1936-01-25",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d318"
+  },
+  {
+   "id": "frus:frus1936v01/d37",
+   "date": "1936-01-26",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d37"
+  },
+  {
+   "id": "frus:frus1936v01/d168",
+   "date": "1936-01-27",
+   "source": "FRUS frus1936v01",
+   "title": "The Minister in Switzerland (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d168"
+  },
+  {
+   "id": "frus:frus1936v01/d564",
+   "date": "1936-01-27",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in the United Kingdom (Atherton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d564"
+  },
+  {
+   "id": "frus:frus1936v02/d131",
+   "date": "1936-01-27",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d131"
+  },
+  {
+   "id": "frus:frus1936v02/d146",
+   "date": "1936-01-28",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Germany (Dodd) to the German Minister for Foreign Affairs (Von Neurath)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d146"
+  },
+  {
+   "id": "frus:frus1936v01/d38",
+   "date": "1936-01-29",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chairman of the American Delegation (Davis)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d38"
+  },
+  {
+   "id": "frus:frus1936v01/d39",
+   "date": "1936-01-29",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chairman of the American Delegation (Davis)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d39"
+  },
+  {
+   "id": "frus:frus1936v02/d849",
+   "date": "1936-01-29",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Spain (Bowers) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d849"
+  },
+  {
+   "id": "frus:frus1936v02/d850",
+   "date": "1936-01-29",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Spain (Bowers) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d850"
+  },
+  {
+   "id": "frus:frus1936v01/d40",
+   "date": "1936-01-30",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d40"
+  },
+  {
+   "id": "frus:frus1936v01/d41",
+   "date": "1936-01-30",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d41"
+  },
+  {
+   "id": "frus:frus1936v02/d112",
+   "date": "1936-01-30",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d112"
+  },
+  {
+   "id": "frus:frus1936v02/d132",
+   "date": "1936-01-30",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d132"
+  },
+  {
+   "id": "frus:frus1936v02/d241",
+   "date": "1936-01-30",
+   "source": "FRUS frus1936v02",
+   "title": "The Greek Minister (Sicilianos) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d241"
+  },
+  {
+   "id": "frus:frus1936v02/d57",
+   "date": "1936-01-30",
+   "source": "FRUS frus1936v02",
+   "title": "Memorandum by the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d57"
+  },
+  {
+   "id": "frus:frus1936v02/d58",
+   "date": "1936-01-30",
+   "source": "FRUS frus1936v02",
+   "title": "The Department of State to the French Embassy",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d58"
+  },
+  {
+   "id": "frus:frus1937v02/d143",
+   "date": "1936-01-30",
+   "source": "FRUS frus1937v02",
+   "title": "The Secretary of State to the Minister in Canada (Armour)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d143"
+  },
+  {
+   "id": "frus:frus1936v01/d42",
+   "date": "1936-01-31",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chairman of the American Delegation (Davis)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d42"
+  },
+  {
+   "id": "frus:frus1936v01/d477",
+   "date": "1936-01-31",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in Italy (Long) to President Roosevelt",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d477"
+  },
+  {
+   "id": "frus:frus1936v01/d162",
+   "date": "1936-02-01",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chairman of the American Delegation to the London Naval Conference (Davis)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d162"
+  },
+  {
+   "id": "frus:frus1936v01/d43",
+   "date": "1936-02-01",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d43"
+  },
+  {
+   "id": "frus:frus1936v01/d618",
+   "date": "1936-02-01",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Consul General at Sydney (Moffat)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d618"
+  },
+  {
+   "id": "frus:frus1936v01/d44",
+   "date": "1936-02-03",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d44"
+  },
+  {
+   "id": "frus:frus1936v01/d45",
+   "date": "1936-02-03",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d45"
+  },
+  {
+   "id": "frus:frus1936v02/d147",
+   "date": "1936-02-03",
+   "source": "FRUS frus1936v02",
+   "title": "Memorandum by Mr. Rudolf E. Schoenfeld of the Division of Western European Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d147"
+  },
+  {
+   "id": "frus:frus1936v02/d242",
+   "date": "1936-02-03",
+   "source": "FRUS frus1936v02",
+   "title": "The Under Secretary of State (Phillips) to the Secretary of the Treasury (Morgenthau)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d242"
+  },
+  {
+   "id": "frus:frus1936v01/d163",
+   "date": "1936-02-04",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation to the London Naval Conference (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d163"
+  },
+  {
+   "id": "frus:frus1936v01/d46",
+   "date": "1936-02-04",
+   "source": "FRUS frus1936v01",
+   "title": "The Consul General at Beirut (Marriner), Temporarily at Paris, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d46"
+  },
+  {
+   "id": "frus:frus1936v02/d882",
+   "date": "1936-02-04",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Minister in Yugoslavia (Wilson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d882"
+  },
+  {
+   "id": "frus:frus1936v01/d514",
+   "date": "1936-02-05",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d514"
+  },
+  {
+   "id": "frus:frus1936v01/d169",
+   "date": "1936-02-06",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d169"
+  },
+  {
+   "id": "frus:frus1936v01/d432",
+   "date": "1936-02-06",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Ambassador in the United Kingdom (Bingham)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d432"
+  },
+  {
+   "id": "frus:frus1936v01/d47",
+   "date": "1936-02-06",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chairman of the American Delegation (Davis)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d47"
+  },
+  {
+   "id": "frus:frus1936v02/d243",
+   "date": "1936-02-06",
+   "source": "FRUS frus1936v02",
+   "title": "The Acting Secretary of the Treasury (Coolidge) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d243"
+  },
+  {
+   "id": "frus:frus1933-39/d314",
+   "date": "1936-02-07",
+   "source": "FRUS frus1933-39",
+   "title": "Memorandum by the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d314"
+  },
+  {
+   "id": "frus:frus1936v01/d319",
+   "date": "1936-02-07",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by the Consul General at Antwerp (Wiley), Temporarily in the United States",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d319"
+  },
+  {
+   "id": "frus:frus1936v01/d170",
+   "date": "1936-02-08",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d170"
+  },
+  {
+   "id": "frus:frus1936v01/d433",
+   "date": "1936-02-08",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in the United Kingdom (Atherton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d433"
+  },
+  {
+   "id": "frus:frus1936v02/d244",
+   "date": "1936-02-08",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Greek Minister (Sicilianos)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d244"
+  },
+  {
+   "id": "frus:frus1936v01/d556",
+   "date": "1936-02-10",
+   "source": "FRUS frus1936v01",
+   "title": "The Consul General at Sydney (Moffat) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d556"
+  },
+  {
+   "id": "frus:frus1936v01/d619",
+   "date": "1936-02-10",
+   "source": "FRUS frus1936v01",
+   "title": "The Consul General at Sydney (Moffat) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d619"
+  },
+  {
+   "id": "frus:frus1936v01/d171",
+   "date": "1936-02-12",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d171"
+  },
+  {
+   "id": "frus:frus1936v01/d48",
+   "date": "1936-02-12",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d48"
+  },
+  {
+   "id": "frus:frus1936v01/d620",
+   "date": "1936-02-12",
+   "source": "FRUS frus1936v01",
+   "title": "The Consul General at Sydney (Moffat) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d620"
+  },
+  {
+   "id": "frus:frus1936v01/d172",
+   "date": "1936-02-13",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in the United Kingdom (Atherton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d172"
+  },
+  {
+   "id": "frus:frus1936v01/d515",
+   "date": "1936-02-13",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chargé in the United Kingdom (Atherton)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d515"
+  },
+  {
+   "id": "frus:frus1936v02/d208",
+   "date": "1936-02-13",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul General at Munich (Hathaway) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d208"
+  },
+  {
+   "id": "frus:frus1936v01/d49",
+   "date": "1936-02-14",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d49"
+  },
+  {
+   "id": "frus:frus1936v01/d173",
+   "date": "1936-02-15",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d173"
+  },
+  {
+   "id": "frus:frus1936v01/d565",
+   "date": "1936-02-15",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chargé in the United Kingdom (Atherton)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d565"
+  },
+  {
+   "id": "frus:frus1936v02/d113",
+   "date": "1936-02-15",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d113"
+  },
+  {
+   "id": "frus:frus1936v02/d133",
+   "date": "1936-02-15",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Ambassador in Germany (Dodd)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d133"
+  },
+  {
+   "id": "frus:frus1936v01/d174",
+   "date": "1936-02-17",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in the Soviet Union (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d174"
+  },
+  {
+   "id": "frus:frus1936v01/d50",
+   "date": "1936-02-17",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in France (Straus) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d50"
+  },
+  {
+   "id": "frus:frus1936v01/d51",
+   "date": "1936-02-18",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d51"
+  },
+  {
+   "id": "frus:frus1936v01/d52",
+   "date": "1936-02-19",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d52"
+  },
+  {
+   "id": "frus:frus1936v01/d339",
+   "date": "1936-02-20",
+   "source": "FRUS frus1936v01",
+   "title": "The Department of State to the French Embassy",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d339"
+  },
+  {
+   "id": "frus:frus1936v01/d516",
+   "date": "1936-02-20",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in the United Kingdom (Atherton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d516"
+  },
+  {
+   "id": "frus:frus1936v01/d53",
+   "date": "1936-02-20",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in Italy (Long) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d53"
+  },
+  {
+   "id": "frus:frus1936v01/d54",
+   "date": "1936-02-20",
+   "source": "FRUS frus1936v01",
+   "title": "The Under Secretary of State (Phillips) to President Roosevelt",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d54"
+  },
+  {
+   "id": "frus:frus1936v01/d55",
+   "date": "1936-02-20",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chairman of the American Delegation (Davis)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d55"
+  },
+  {
+   "id": "frus:frus1936v01/d56",
+   "date": "1936-02-20",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chairman of the American Delegation (Davis)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d56"
+  },
+  {
+   "id": "frus:frus1936v01/d175",
+   "date": "1936-02-21",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in France (Straus) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d175"
+  },
+  {
+   "id": "frus:frus1936v01/d57",
+   "date": "1936-02-21",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d57"
+  },
+  {
+   "id": "frus:frus1936v01/d58",
+   "date": "1936-02-21",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chairman of the American Delegation (Davis)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d58"
+  },
+  {
+   "id": "frus:frus1936v01/d59",
+   "date": "1936-02-21",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d59"
+  },
+  {
+   "id": "frus:frus1936v01/d176",
+   "date": "1936-02-22",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in Italy (Long) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d176"
+  },
+  {
+   "id": "frus:frus1936v02/d352",
+   "date": "1936-02-22",
+   "source": "FRUS frus1936v02",
+   "title": "The Minister in Rumania (Harrison) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d352"
+  },
+  {
+   "id": "frus:frus1936v01/d557",
+   "date": "1936-02-24",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum of Conversation, by Mr. John R. Minter of the Division of Western European Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d557"
+  },
+  {
+   "id": "frus:frus1936v02/d42",
+   "date": "1936-02-24",
+   "source": "FRUS frus1936v02",
+   "title": "Memorandum by Mr. Landreth M. Harrison of the Division of Eastern European Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d42"
+  },
+  {
+   "id": "frus:frus1936v01/d60",
+   "date": "1936-02-25",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chairman of the American Delegation (Davis)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d60"
+  },
+  {
+   "id": "frus:frus1936v01/d61",
+   "date": "1936-02-25",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d61"
+  },
+  {
+   "id": "frus:frus1936v01/d62",
+   "date": "1936-02-25",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chairman of the American Delegation (Davis)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d62"
+  },
+  {
+   "id": "frus:frus1936v01/d63",
+   "date": "1936-02-25",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d63"
+  },
+  {
+   "id": "frus:frus1936v01/d64",
+   "date": "1936-02-25",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d64"
+  },
+  {
+   "id": "frus:frus1936v01/d666",
+   "date": "1936-02-25",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Minister in Canada (Armour)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d666"
+  },
+  {
+   "id": "frus:frus1936v02/d134",
+   "date": "1936-02-25",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d134"
+  },
+  {
+   "id": "frus:frus1936v01/d65",
+   "date": "1936-02-26",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chairman of the American Delegation (Davis)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d65"
+  },
+  {
+   "id": "frus:frus1936v01/d66",
+   "date": "1936-02-26",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d66"
+  },
+  {
+   "id": "frus:frus1936v01/d667",
+   "date": "1936-02-26",
+   "source": "FRUS frus1936v01",
+   "title": "The Minister in Canada (Armour) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d667"
+  },
+  {
+   "id": "frus:frus1936v01/d67",
+   "date": "1936-02-26",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d67"
+  },
+  {
+   "id": "frus:frus1936v01/d478",
+   "date": "1936-02-27",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Ambassador in Italy (Long)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d478"
+  },
+  {
+   "id": "frus:frus1936v01/d68",
+   "date": "1936-02-27",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d68"
+  },
+  {
+   "id": "frus:frus1936v01/d69",
+   "date": "1936-02-27",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chairman of the American Delegation (Davis)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d69"
+  },
+  {
+   "id": "frus:frus1936v01/d164",
+   "date": "1936-02-28",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Secretary of War (Dern)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d164"
+  },
+  {
+   "id": "frus:frus1936v01/d517",
+   "date": "1936-02-28",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in the United Kingdom (Atherton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d517"
+  },
+  {
+   "id": "frus:frus1936v01/d518",
+   "date": "1936-02-28",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chargé in the United Kingdom (Atherton)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d518"
+  },
+  {
+   "id": "frus:frus1936v01/d70",
+   "date": "1936-02-28",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d70"
+  },
+  {
+   "id": "frus:frus1936v01/d71",
+   "date": "1936-02-28",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chairman of the American Delegation (Davis)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d71"
+  },
+  {
+   "id": "frus:frus1936v01/d72",
+   "date": "1936-02-28",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chairman of the American Delegation (Davis)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d72"
+  },
+  {
+   "id": "frus:frus1936v01/d73",
+   "date": "1936-02-28",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d73"
+  },
+  {
+   "id": "frus:frus1936v01/d350",
+   "date": "1936-02-29",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in Mexico (Daniels) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d350"
+  },
+  {
+   "id": "frus:frus1936v01/d519",
+   "date": "1936-02-29",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in the United Kingdom (Atherton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d519"
+  },
+  {
+   "id": "frus:frus1936v01/d74",
+   "date": "1936-02-29",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d74"
+  },
+  {
+   "id": "frus:frus1936v01/d75",
+   "date": "1936-02-29",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chairman of the American Delegation (Davis)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d75"
+  },
+  {
+   "id": "frus:frus1933-39/d299",
+   "date": "1936-03-02",
+   "source": "FRUS frus1933-39",
+   "title": "The Ambassador in the Soviet Union (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d299"
+  },
+  {
+   "id": "frus:frus1936v01/d479",
+   "date": "1936-03-02",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in Italy (Long) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d479"
+  },
+  {
+   "id": "frus:frus1936v01/d76",
+   "date": "1936-03-03",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d76"
+  },
+  {
+   "id": "frus:frus1936v02/d114",
+   "date": "1936-03-03",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d114"
+  },
+  {
+   "id": "frus:frus1933-39/d300",
+   "date": "1936-03-04",
+   "source": "FRUS frus1933-39",
+   "title": "The Ambassador in the Soviet Union (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d300"
+  },
+  {
+   "id": "frus:frus1936v01/d582",
+   "date": "1936-03-04",
+   "source": "FRUS frus1936v01",
+   "title": "The Consul General at Sydney (Moffat) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d582"
+  },
+  {
+   "id": "frus:frus1936v01/d77",
+   "date": "1936-03-04",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d77"
+  },
+  {
+   "id": "frus:frus1936v01/d658",
+   "date": "1936-03-05",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Minister in Canada (Armour)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d658"
+  },
+  {
+   "id": "frus:frus1936v01/d78",
+   "date": "1936-03-05",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chairman of the American Delegation (Davis)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d78"
+  },
+  {
+   "id": "frus:frus1936v01/d583",
+   "date": "1936-03-06",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Consul General at Sydney (Moffat)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d583"
+  },
+  {
+   "id": "frus:frus1936v02/d263",
+   "date": "1936-03-06",
+   "source": "FRUS frus1936v02",
+   "title": "The Greek Minister (Sicilianos) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d263"
+  },
+  {
+   "id": "frus:frus1936v01/d177",
+   "date": "1936-03-07",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in France (Straus) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d177"
+  },
+  {
+   "id": "frus:frus1936v01/d178",
+   "date": "1936-03-07",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Ambassador in France (Straus)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d178"
+  },
+  {
+   "id": "frus:frus1936v01/d179",
+   "date": "1936-03-07",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d179"
+  },
+  {
+   "id": "frus:frus1936v01/d180",
+   "date": "1936-03-07",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in Italy (Long) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d180"
+  },
+  {
+   "id": "frus:frus1936v01/d181",
+   "date": "1936-03-07",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in the Soviet Union (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d181"
+  },
+  {
+   "id": "frus:frus1936v01/d182",
+   "date": "1936-03-08",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in the United Kingdom (Atherton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d182"
+  },
+  {
+   "id": "frus:frus1936v01/d183",
+   "date": "1936-03-08",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d183"
+  },
+  {
+   "id": "frus:frus1936v01/d184",
+   "date": "1936-03-08",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in France (Straus) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d184"
+  },
+  {
+   "id": "frus:frus1936v02/d98",
+   "date": "1936-03-08",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d98"
+  },
+  {
+   "id": "frus:frus1936v01/d185",
+   "date": "1936-03-09",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to President Roosevelt",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d185"
+  },
+  {
+   "id": "frus:frus1936v01/d186",
+   "date": "1936-03-09",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d186"
+  },
+  {
+   "id": "frus:frus1936v01/d187",
+   "date": "1936-03-09",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in Mexico (Daniels) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d187"
+  },
+  {
+   "id": "frus:frus1936v01/d188",
+   "date": "1936-03-09",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by the Minister in Austria (Messersmith)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d188"
+  },
+  {
+   "id": "frus:frus1936v01/d189",
+   "date": "1936-03-09",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by the American Minister in Rumania (Harrison) of a Conversation With the Rumanian Minister for Foreign Affairs (Titulescu), March 9, 1936",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d189"
+  },
+  {
+   "id": "frus:frus1936v01/d79",
+   "date": "1936-03-09",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chairman of the American Delegation (Davis)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d79"
+  },
+  {
+   "id": "frus:frus1936v01/d80",
+   "date": "1936-03-09",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d80"
+  },
+  {
+   "id": "frus:frus1936v02/d139",
+   "date": "1936-03-09",
+   "source": "FRUS frus1936v02",
+   "title": "The Minister in Switzerland (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d139"
+  },
+  {
+   "id": "frus:frus1936v02/d90",
+   "date": "1936-03-09",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in France (Straus) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d90"
+  },
+  {
+   "id": "frus:frus1936v01/d146",
+   "date": "1936-03-10",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation to the London Naval Conference (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d146"
+  },
+  {
+   "id": "frus:frus1936v01/d190",
+   "date": "1936-03-10",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Ambassador in France (Straus)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d190"
+  },
+  {
+   "id": "frus:frus1936v01/d191",
+   "date": "1936-03-10",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in France (Straus) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d191"
+  },
+  {
+   "id": "frus:frus1936v01/d192",
+   "date": "1936-03-10",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in the United Kingdom (Atherton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d192"
+  },
+  {
+   "id": "frus:frus1936v01/d320",
+   "date": "1936-03-10",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Ambassador in Belgium (Morris)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d320"
+  },
+  {
+   "id": "frus:frus1936v01/d321",
+   "date": "1936-03-10",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Ambassador in Belgium (Morris)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d321"
+  },
+  {
+   "id": "frus:frus1936v01/d668",
+   "date": "1936-03-10",
+   "source": "FRUS frus1936v01",
+   "title": "The Minister in Canada (Armour) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d668"
+  },
+  {
+   "id": "frus:frus1936v01/d81",
+   "date": "1936-03-10",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d81"
+  },
+  {
+   "id": "frus:frus1936v01/d193",
+   "date": "1936-03-11",
+   "source": "FRUS frus1936v01",
+   "title": "The Consul at Geneva (Gilbert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d193"
+  },
+  {
+   "id": "frus:frus1936v01/d194",
+   "date": "1936-03-11",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in the United Kingdom (Atherton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d194"
+  },
+  {
+   "id": "frus:frus1936v01/d195",
+   "date": "1936-03-11",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d195"
+  },
+  {
+   "id": "frus:frus1936v01/d196",
+   "date": "1936-03-11",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in France (Straus) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d196"
+  },
+  {
+   "id": "frus:frus1936v01/d197",
+   "date": "1936-03-11",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d197"
+  },
+  {
+   "id": "frus:frus1936v01/d406",
+   "date": "1936-03-11",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Ambassador in France (Straus)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d406"
+  },
+  {
+   "id": "frus:frus1936v01/d669",
+   "date": "1936-03-11",
+   "source": "FRUS frus1936v01",
+   "title": "The Minister in Canada (Armour) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d669"
+  },
+  {
+   "id": "frus:frus1936v01/d82",
+   "date": "1936-03-11",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chairman of the American Delegation (Davis)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d82"
+  },
+  {
+   "id": "frus:frus1936v01/d198",
+   "date": "1936-03-12",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in the United Kingdom (Atherton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d198"
+  },
+  {
+   "id": "frus:frus1936v01/d199",
+   "date": "1936-03-12",
+   "source": "FRUS frus1936v01",
+   "title": "The Acting Secretary of State to the Ambassador in Mexico (Daniels)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d199"
+  },
+  {
+   "id": "frus:frus1936v01/d200",
+   "date": "1936-03-12",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d200"
+  },
+  {
+   "id": "frus:frus1936v01/d201",
+   "date": "1936-03-12",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in the United Kingdom (Atherton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d201"
+  },
+  {
+   "id": "frus:frus1936v01/d202",
+   "date": "1936-03-12",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in Poland (Cudahy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d202"
+  },
+  {
+   "id": "frus:frus1936v01/d635",
+   "date": "1936-03-12",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by Mr. James C. H. Bonbright of the Division of Western European Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d635"
+  },
+  {
+   "id": "frus:frus1936v01/d636",
+   "date": "1936-03-12",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by the Under Secretary of State (Phillips)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d636"
+  },
+  {
+   "id": "frus:frus1936v01/d203",
+   "date": "1936-03-13",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in the United Kingdom (Atherton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d203"
+  },
+  {
+   "id": "frus:frus1936v01/d204",
+   "date": "1936-03-13",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in the United Kingdom (Atherton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d204"
+  },
+  {
+   "id": "frus:frus1936v01/d205",
+   "date": "1936-03-13",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in the United Kingdom (Atherton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d205"
+  },
+  {
+   "id": "frus:frus1936v01/d206",
+   "date": "1936-03-13",
+   "source": "FRUS frus1936v01",
+   "title": "The Acting Secretary of State to the Chargé in the United Kingdom (Atherton)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d206"
+  },
+  {
+   "id": "frus:frus1936v01/d621",
+   "date": "1936-03-13",
+   "source": "FRUS frus1936v01",
+   "title": "The Consul General at Sydney (Moffat) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d621"
+  },
+  {
+   "id": "frus:frus1936v01/d83",
+   "date": "1936-03-13",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d83"
+  },
+  {
+   "id": "frus:frus1936v01/d207",
+   "date": "1936-03-14",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by the Under Secretary of State (Phillips)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d207"
+  },
+  {
+   "id": "frus:frus1936v01/d208",
+   "date": "1936-03-14",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d208"
+  },
+  {
+   "id": "frus:frus1936v01/d209",
+   "date": "1936-03-14",
+   "source": "FRUS frus1936v01",
+   "title": "The Minister in Czechoslovakia (Wright) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d209"
+  },
+  {
+   "id": "frus:frus1936v01/d210",
+   "date": "1936-03-14",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in Belgium (Morris) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d210"
+  },
+  {
+   "id": "frus:frus1936v01/d480",
+   "date": "1936-03-14",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in Italy (Long) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d480"
+  },
+  {
+   "id": "frus:frus1936v01/d84",
+   "date": "1936-03-14",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d84"
+  },
+  {
+   "id": "frus:frus1936v01/d85",
+   "date": "1936-03-14",
+   "source": "FRUS frus1936v01",
+   "title": "The Acting Secretary of State to the Chairman of the American Delegation (Davis)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d85"
+  },
+  {
+   "id": "frus:frus1936v02/d182",
+   "date": "1936-03-14",
+   "source": "FRUS frus1936v02",
+   "title": "The Acting Secretary of State to the Ambassador in Germany (Dodd)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d182"
+  },
+  {
+   "id": "frus:frus1936v01/d211",
+   "date": "1936-03-16",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d211"
+  },
+  {
+   "id": "frus:frus1936v01/d212",
+   "date": "1936-03-16",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d212"
+  },
+  {
+   "id": "frus:frus1936v01/d584",
+   "date": "1936-03-16",
+   "source": "FRUS frus1936v01",
+   "title": "The Consul General at Sydney (Moffat) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d584"
+  },
+  {
+   "id": "frus:frus1936v01/d86",
+   "date": "1936-03-16",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d86"
+  },
+  {
+   "id": "frus:frus1936v01/d213",
+   "date": "1936-03-17",
+   "source": "FRUS frus1936v01",
+   "title": "The Minister in Yugoslavia (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d213"
+  },
+  {
+   "id": "frus:frus1936v01/d214",
+   "date": "1936-03-17",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d214"
+  },
+  {
+   "id": "frus:frus1936v01/d215",
+   "date": "1936-03-17",
+   "source": "FRUS frus1936v01",
+   "title": "The Minister in Norway (Biddle) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d215"
+  },
+  {
+   "id": "frus:frus1936v01/d494",
+   "date": "1936-03-17",
+   "source": "FRUS frus1936v01",
+   "title": "The Canadian Legation to the Department of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d494"
+  },
+  {
+   "id": "frus:frus1936v01/d495",
+   "date": "1936-03-17",
+   "source": "FRUS frus1936v01",
+   "title": "The French Ambassador (Laboulaye) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d495"
+  },
+  {
+   "id": "frus:frus1936v01/d216",
+   "date": "1936-03-18",
+   "source": "FRUS frus1936v01",
+   "title": "The Minister in Norway (Biddle) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d216"
+  },
+  {
+   "id": "frus:frus1936v01/d217",
+   "date": "1936-03-18",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d217"
+  },
+  {
+   "id": "frus:frus1936v01/d218",
+   "date": "1936-03-18",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by the Minister in Switzerland (Wilson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d218"
+  },
+  {
+   "id": "frus:frus1936v01/d356",
+   "date": "1936-03-18",
+   "source": "FRUS frus1936v01",
+   "title": "The Norwegian Minister (Morgenstierne) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d356"
+  },
+  {
+   "id": "frus:frus1936v01/d496",
+   "date": "1936-03-18",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by the Under Secretary of State (Phillips)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d496"
+  },
+  {
+   "id": "frus:frus1936v01/d520",
+   "date": "1936-03-18",
+   "source": "FRUS frus1936v01",
+   "title": "The Acting Secretary of State to the Chargé in the United Kingdom (Atherton)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d520"
+  },
+  {
+   "id": "frus:frus1936v01/d637",
+   "date": "1936-03-18",
+   "source": "FRUS frus1936v01",
+   "title": "The Acting Secretary of State to the Assistant Secretary to the President (McIntyre)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d637"
+  },
+  {
+   "id": "frus:frus1936v01/d492",
+   "date": "1936-03-19",
+   "source": "FRUS frus1936v01",
+   "title": "The Acting Director of the Budget (Bell) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d492"
+  },
+  {
+   "id": "frus:frus1936v01/d497",
+   "date": "1936-03-19",
+   "source": "FRUS frus1936v01",
+   "title": "The German Embassy to the Department of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d497"
+  },
+  {
+   "id": "frus:frus1936v01/d521",
+   "date": "1936-03-19",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in the United Kingdom (Atherton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d521"
+  },
+  {
+   "id": "frus:frus1936v01/d638",
+   "date": "1936-03-19",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by the Under Secretary of State (Phillips)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d638"
+  },
+  {
+   "id": "frus:frus1936v01/d87",
+   "date": "1936-03-19",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d87"
+  },
+  {
+   "id": "frus:frus1936v01/d88",
+   "date": "1936-03-19",
+   "source": "FRUS frus1936v01",
+   "title": "The Chairman of the American Delegation (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d88"
+  },
+  {
+   "id": "frus:frus1936v02/d140",
+   "date": "1936-03-19",
+   "source": "FRUS frus1936v02",
+   "title": "The Minister in Switzerland (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d140"
+  },
+  {
+   "id": "frus:frus1936v02/d148",
+   "date": "1936-03-19",
+   "source": "FRUS frus1936v02",
+   "title": "The Acting Secretary of State to the Ambassador in Germany (Dodd)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d148"
+  },
+  {
+   "id": "frus:frus1936v01/d147",
+   "date": "1936-03-20",
+   "source": "FRUS frus1936v01",
+   "title": "The Acting Secretary of State to President Roosevelt",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d147"
+  },
+  {
+   "id": "frus:frus1936v01/d148",
+   "date": "1936-03-20",
+   "source": "FRUS frus1936v01",
+   "title": "The Acting Secrtary of State to the Chairman of the American Delegation to the London Naval Conference (Davis)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d148"
+  },
+  {
+   "id": "frus:frus1936v01/d219",
+   "date": "1936-03-20",
+   "source": "FRUS frus1936v01",
+   "title": "Report by the Military Attaché in Germany (Smith)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d219"
+  },
+  {
+   "id": "frus:frus1936v01/d220",
+   "date": "1936-03-20",
+   "source": "FRUS frus1936v01",
+   "title": "The Minister in the Netherlands (Emmet) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d220"
+  },
+  {
+   "id": "frus:frus1936v01/d221",
+   "date": "1936-03-20",
+   "source": "FRUS frus1936v01",
+   "title": "The Minister in Norway (Biddle) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d221"
+  },
+  {
+   "id": "frus:frus1936v01/d498",
+   "date": "1936-03-20",
+   "source": "FRUS frus1936v01",
+   "title": "The Netherland Minister (Van Haersma de With) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d498"
+  },
+  {
+   "id": "frus:frus1936v02/d149",
+   "date": "1936-03-20",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d149"
+  },
+  {
+   "id": "frus:frus1936v02/d43",
+   "date": "1936-03-20",
+   "source": "FRUS frus1936v02",
+   "title": "The Acting Secretary of State to President Roosevelt",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d43"
+  },
+  {
+   "id": "frus:frus1936v01/d222",
+   "date": "1936-03-21",
+   "source": "FRUS frus1936v01",
+   "title": "The Acting Secretary of State to the Minister in Norway (Biddle)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d222"
+  },
+  {
+   "id": "frus:frus1936v01/d223",
+   "date": "1936-03-21",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d223"
+  },
+  {
+   "id": "frus:frus1936v01/d89",
+   "date": "1936-03-21",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by President Roosevelt to the Under Secretary of State (Phillips)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d89"
+  },
+  {
+   "id": "frus:frus1936v01/d224",
+   "date": "1936-03-23",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by the Chargé in Belgium (Sussdorff)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d224"
+  },
+  {
+   "id": "frus:frus1936v01/d225",
+   "date": "1936-03-23",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chargé in the United Kingdom (Atherton)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d225"
+  },
+  {
+   "id": "frus:frus1936v01/d499",
+   "date": "1936-03-23",
+   "source": "FRUS frus1936v01",
+   "title": "The Polish Embassy to the Department of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d499"
+  },
+  {
+   "id": "frus:frus1936v01/d500",
+   "date": "1936-03-23",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to Representative Schuyler O. Bland",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d500"
+  },
+  {
+   "id": "frus:frus1936v01/d501",
+   "date": "1936-03-23",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the French Ambassador (Laboulaye)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d501"
+  },
+  {
+   "id": "frus:frus1936v01/d502",
+   "date": "1936-03-23",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to Representative Schuyler O. Bland",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d502"
+  },
+  {
+   "id": "frus:frus1936v01/d639",
+   "date": "1936-03-23",
+   "source": "FRUS frus1936v01",
+   "title": "President Roosevelt to the Under Secretary of State (Phillips)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d639"
+  },
+  {
+   "id": "frus:frus1936v01/d90",
+   "date": "1936-03-23",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chairman of the American Delegation (Davis)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d90"
+  },
+  {
+   "id": "frus:frus1936v01/d91",
+   "date": "1936-03-23",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chairman of the American, Delegation (Davis)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d91"
+  },
+  {
+   "id": "frus:frus1936v01/d92",
+   "date": "1936-03-23",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chairman of the American Delegation (Davis)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d92"
+  },
+  {
+   "id": "frus:frus1936v02/d10",
+   "date": "1936-03-23",
+   "source": "FRUS frus1936v02",
+   "title": "The Belgian Ambassador (Van der Straten-Ponthoz) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d10"
+  },
+  {
+   "id": "frus:frus1936v02/d150",
+   "date": "1936-03-23",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d150"
+  },
+  {
+   "id": "frus:frus1936v02/d266",
+   "date": "1936-03-23",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Minister in Hungary (Montgomery)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d266"
+  },
+  {
+   "id": "frus:frus1936v02/d44",
+   "date": "1936-03-23",
+   "source": "FRUS frus1936v02",
+   "title": "Memorandum by Mr. Landreth M. Harrison of the Division of Eastern European Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d44"
+  },
+  {
+   "id": "frus:frus1936v01/d226",
+   "date": "1936-03-24",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by the Chargé in Lithuania (Kuykendall)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d226"
+  },
+  {
+   "id": "frus:frus1936v01/d640",
+   "date": "1936-03-24",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by the Under Secretary of State (Phillips)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d640"
+  },
+  {
+   "id": "frus:frus1936v02/d151",
+   "date": "1936-03-24",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d151"
+  },
+  {
+   "id": "frus:frus1936v02/d260",
+   "date": "1936-03-24",
+   "source": "FRUS frus1936v02",
+   "title": "The Minister in Greece (MacVeagh) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d260"
+  },
+  {
+   "id": "frus:frus1936v02/d45",
+   "date": "1936-03-24",
+   "source": "FRUS frus1936v02",
+   "title": "Memorandum by Mr. Landreth M. Harrison of the Division of Eastern European Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d45"
+  },
+  {
+   "id": "frus:frus1936v02/d72",
+   "date": "1936-03-24",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in France (Straus) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d72"
+  },
+  {
+   "id": "frus:frus1936v01/d227",
+   "date": "1936-03-25",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in France (Straus) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d227"
+  },
+  {
+   "id": "frus:frus1936v01/d641",
+   "date": "1936-03-25",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by the Under Secretary of State (Phillips)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d641"
+  },
+  {
+   "id": "frus:frus1936v01/d642",
+   "date": "1936-03-25",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by the Under Secretary of State (Phillips) to the Assistant Chief of the Division of Western European Affairs (Hickerson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d642"
+  },
+  {
+   "id": "frus:frus1936v02/d851",
+   "date": "1936-03-25",
+   "source": "FRUS frus1936v02",
+   "title": "Memorandum by the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d851"
+  },
+  {
+   "id": "frus:frus1936v01/d228",
+   "date": "1936-03-26",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in the United Kingdom (Atherton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d228"
+  },
+  {
+   "id": "frus:frus1936v01/d357",
+   "date": "1936-03-26",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Minister in Norway (Biddle)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d357"
+  },
+  {
+   "id": "frus:frus1936v01/d643",
+   "date": "1936-03-26",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by the Assistant Chief of the Division of Western European Affairs (Hickerson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d643"
+  },
+  {
+   "id": "frus:frus1936v02/d324",
+   "date": "1936-03-26",
+   "source": "FRUS frus1936v02",
+   "title": "Memorandum by the Assistant Secretary of State (Sayre)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d324"
+  },
+  {
+   "id": "frus:frus1936v02/d52",
+   "date": "1936-03-26",
+   "source": "FRUS frus1936v02",
+   "title": "The Finnish Minister (Järnefelt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d52"
+  },
+  {
+   "id": "frus:frus1936v01/d644",
+   "date": "1936-03-27",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d644"
+  },
+  {
+   "id": "frus:frus1936v02/d267",
+   "date": "1936-03-27",
+   "source": "FRUS frus1936v02",
+   "title": "The Minister in Hungary (Montgomery) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d267"
+  },
+  {
+   "id": "frus:frus1936v01/d149",
+   "date": "1936-03-28",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chargé in the United Kingdom (Atherton)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d149"
+  },
+  {
+   "id": "frus:frus1936v01/d229",
+   "date": "1936-03-28",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in France (Straus) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d229"
+  },
+  {
+   "id": "frus:frus1936v01/d230",
+   "date": "1936-03-28",
+   "source": "FRUS frus1936v01",
+   "title": "The Minister in Switzerland (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d230"
+  },
+  {
+   "id": "frus:frus1936v01/d522",
+   "date": "1936-03-28",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chargé in the United Kingdom (Atherton)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d522"
+  },
+  {
+   "id": "frus:frus1936v01/d645",
+   "date": "1936-03-28",
+   "source": "FRUS frus1936v01",
+   "title": "The Acting Secretary of the Treasury (Taylor) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d645"
+  },
+  {
+   "id": "frus:frus1936v01/d646",
+   "date": "1936-03-28",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by the Under Secretary of State (Phillips)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d646"
+  },
+  {
+   "id": "frus:frus1936v01/d93",
+   "date": "1936-03-28",
+   "source": "FRUS frus1936v01",
+   "title": "The Under Secretary of State (Phillips) to the Secretary of the Navy (Swanson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d93"
+  },
+  {
+   "id": "frus:frus1936v02/d245",
+   "date": "1936-03-28",
+   "source": "FRUS frus1936v02",
+   "title": "The Assistant Secretary of State (Carr) to the Secretary of the Treasury (Morgenthau)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d245"
+  },
+  {
+   "id": "frus:frus1936v01/d523",
+   "date": "1936-03-30",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by the Special Assistant to the Secretary of State and Chief of the Division of Western European Affairs (Dunn)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d523"
+  },
+  {
+   "id": "frus:frus1936v01/d622",
+   "date": "1936-03-30",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Consul General at Sydney (Moffat)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d622"
+  },
+  {
+   "id": "frus:frus1936v01/d94",
+   "date": "1936-03-30",
+   "source": "FRUS frus1936v01",
+   "title": "The Under Secretary of State (Phillips) to President Roosevelt",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d94"
+  },
+  {
+   "id": "frus:frus1936v02/d152",
+   "date": "1936-03-30",
+   "source": "FRUS frus1936v02",
+   "title": "Memorandum by the Chief of the Division of Trade Agreements (Grady)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d152"
+  },
+  {
+   "id": "frus:frus1936v02/d46",
+   "date": "1936-03-30",
+   "source": "FRUS frus1936v02",
+   "title": "Memorandum by the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d46"
+  },
+  {
+   "id": "frus:frus1936v02/d53",
+   "date": "1936-03-30",
+   "source": "FRUS frus1936v02",
+   "title": "Memorandum by the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d53"
+  },
+  {
+   "id": "frus:frus1936v02/d99",
+   "date": "1936-03-30",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d99"
+  },
+  {
+   "id": "frus:frus1936v01/d647",
+   "date": "1936-03-31",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by the Assistant Chief of the Division of Western European Affairs (Hickerson) of a Conference at the Treasury Department on March 30, 1936",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d647"
+  },
+  {
+   "id": "frus:frus1936v02/d268",
+   "date": "1936-03-31",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Minister in Hungary (Montgomery)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d268"
+  },
+  {
+   "id": "frus:frus1936v02/d59",
+   "date": "1936-03-31",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Ambassador in France (Straus)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d59"
+  }
+ ],
+ "proposals": [
+  {
+   "id": "1936Q1-001",
+   "document": "frus:frus1936v01/d158",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d158:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1936-01-02",
+    "quote": "they would be happier to see us maintain the strict position of neutrality called for by the letter of existing law",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d158",
+    "rule": "claude backend: Isolationist covers the Neutrality Act regime with a mandatory arms embargo; the passage shows the existing neutrality law still in force, while the embargo itself is only implied and the rest of the document discusses recommendations.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-002",
+   "document": "frus:frus1936v01/d158",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d158:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1936-01-02",
+    "quote": "the belligerent, designated by the League as the aggressor",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d158",
+    "rule": "claude backend: Italy is estranged from the West after Ethiopia; the passage shows the League naming Italy, a belligerent in the Italo-Ethiopian conflict, as the aggressor, with sanctions under discussion elsewhere in the document.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-003",
+   "document": "frus:frus1936v01/d34",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d34:treaty=eroded",
+    "variable": "treaty",
+    "level": "eroded",
+    "date": "1936-01-23",
+    "quote": "sitting in conference with Germany to negotiate a new naval agreement would be construed as a condonement of Germany’s violation of the Treaty of Versailles",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d34",
+    "rule": "claude backend: Eroded: the passage treats a German violation of Versailles as standing and protested, and the Anglo-German naval accord in force, with no enforcement by force, which matches the eroded level.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-004",
+   "document": "frus:frus1936v01/d168",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d168:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1936-01-27",
+    "quote": "the sanctions already in effect are rapidly curtailing Italy’s resources",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d168",
+    "rule": "claude backend: italy_estranged is true while League sanctions against Italy over Ethiopia are in force, and the passage reports those sanctions as in effect.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-005",
+   "document": "frus:frus1936v01/d45",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d45:treaty=eroded",
+    "variable": "treaty",
+    "level": "eroded",
+    "date": "1936-02-03",
+    "quote": "Under the Anglo-German agreement giving Germany a 35 per cent ratio with the British fleet",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d45",
+    "rule": "claude backend: The eroded level cites the Anglo-German Naval Agreement, which accepted German naval rearmament beyond Part V, and the passage shows it in force; the document says nothing about the Rhineland zone.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-006",
+   "document": "frus:frus1936v01/d48",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d48:treaty=eroded",
+    "variable": "treaty",
+    "level": "eroded",
+    "date": "1936-02-12",
+    "quote": "French acquiescence in German participation would, in a measure, condone the violation of the military clauses of the Treaty of Versailles ... a further violation of the treaty through the military occupation of the Rhineland",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d48",
+    "rule": "claude backend: eroded: Versailles military-clause violations are treated as having occurred without enforcement, while the Rhineland zone's occupation is still only a feared future violation, so the zone still stands.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-007",
+   "document": "frus:frus1936v01/d48",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d48:rhineland=demilitarized",
+    "variable": "rhineland",
+    "level": "demilitarized",
+    "date": "1936-02-12",
+    "quote": "a step over which the French are very apprehensive, namely, a further violation of the treaty through the military occupation of the Rhineland",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d48",
+    "rule": "claude backend: demilitarized: the military occupation of the Rhineland is described as a feared future step, not as German troops already garrisoned in the zone.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-008",
+   "document": "frus:frus1936v01/d172",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d172:belief_WEST=limited",
+    "variable": "belief_WEST",
+    "level": "limited",
+    "date": "1936-02-13",
+    "quote": "The British continue to favor an approach to Germany whenever it can be determined that a reasonable and promising basis for negotiation has been evolved.",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d172",
+    "rule": "claude backend: limited: British policy, as reported, treats German aims as revision open to a negotiated settlement through concessions, not as a drive for domination.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-009",
+   "document": "frus:frus1936v01/d172",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d172:commit_WEST=appease",
+    "variable": "commit_WEST",
+    "level": "appease",
+    "date": "1936-02-13",
+    "quote": "British foreign policy will be fundamentally based on the idea of temporization",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d172",
+    "rule": "claude backend: appease: policy seeks a settlement and avoids antagonizing Germany, there is no commitment beyond Locarno, and rearmament is described as largely replacement and repair outside the air arm.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-010",
+   "document": "frus:frus1936v01/d172",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d172:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1936-02-13",
+    "quote": "The efficacy of financial and economic sanctions",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d172",
+    "rule": "claude backend: italy_estranged true: League sanctions against Italy are reported as in force and as working, so Italy remains estranged from the West over Ethiopia.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-011",
+   "document": "frus:frus1936v01/d49",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d49:commit_WEST=appease",
+    "variable": "commit_WEST",
+    "level": "appease",
+    "date": "1936-02-14",
+    "quote": "Great Britain would stand by Locarno but would refuse to make more precise the provisions of that pact and particularly in such a way as to alienate Germany and close the door to any possible appeasement with Germany",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d49",
+    "rule": "claude backend: appease: the Foreign Secretary declines any commitment beyond Locarno and keeps policy aimed at a settlement with Germany.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-012",
+   "document": "frus:frus1936v01/d49",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d49:belief_WEST=limited",
+    "variable": "belief_WEST",
+    "level": "limited",
+    "date": "1936-02-14",
+    "quote": "Great Britain considered it of vital importance to get a naval agreement and that in order to get it it was essential that Germany should be brought in",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d49",
+    "rule": "claude backend: limited: a minister treats Germany as a partner to be brought into negotiated agreements and seeks to keep open 'appeasement with Germany', implying German aims can be satisfied by settlement; this is a second-hand private remark, not a Cabinet record.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-013",
+   "document": "frus:frus1936v01/d175",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d175:belief_WEST=limited",
+    "variable": "belief_WEST",
+    "level": "limited",
+    "date": "1936-02-20",
+    "quote": "it was unlikely that the Germans had at the moment any warlike intentions, provided something could be done to satisfy her needs for raw materials and some territorial expansion for her excess population",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d175",
+    "rule": "claude backend: The 'limited' rule applies: the French Prime Minister treats German aims as needs that a negotiated general settlement could satisfy, and proposes an international conference to that end.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-014",
+   "document": "frus:frus1936v01/d57",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d57:belief_WEST=limited",
+    "variable": "belief_WEST",
+    "level": "limited",
+    "date": "1936-02-21",
+    "quote": "if such an agreement is to be satisfactory and effective it is essential that Germany be a party",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d57",
+    "rule": "claude backend: Under the limited rule, the Foreign Secretary seeks an unconditional naval agreement with Germany as a party, which treats German aims as open to negotiated settlement; but it is a single ministerial line on arms limitation, not a Cabinet conclusion.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-015",
+   "document": "frus:frus1936v01/d59",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d59:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1936-02-21",
+    "quote": "there has been no such settlement and the British fleet was still in the Mediterranean",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d59",
+    "rule": "claude backend: italy_estranged is true while Italy is estranged from the West over Ethiopia and sanctions; the passage reports the Abyssinian question unsettled and the British fleet still in the Mediterranean, with Mussolini reluctant to sign a naval agreement with the Western powers.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-016",
+   "document": "frus:frus1936v01/d176",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d176:axis=false",
+    "variable": "axis",
+    "level": false,
+    "date": "1936-02-22",
+    "quote": "no definite political or military understanding exists between Germany and Italy",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d176",
+    "rule": "claude backend: The axis flag is true only with a Rome-Berlin alignment such as the October Protocols; here the US ambassador judges that no political or military understanding exists, and Suvich denies any alliance plan.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-017",
+   "document": "frus:frus1936v01/d176",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d176:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1936-02-22",
+    "quote": "to continue in the League in spite of existing sanctions ... will not sign nor make this or any other new engagements nor assume any new obligations with any sanctioning government or governments pending the sanctions régime",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d176",
+    "rule": "claude backend: Italy remains estranged from the West: the League sanctions over Ethiopia are still in force, and Italy refuses new engagements with the sanctioning governments.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-018",
+   "document": "frus:frus1936v01/d61",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d61:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1936-02-25",
+    "quote": "the Italians indicated that they would find it difficult to justify signing a naval agreement so long as sanctions are being applied against Italy",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d61",
+    "rule": "claude backend: The rule defends estrangement by League sanctions against Italy remaining in force; the passage reports sanctions still being applied and Italy making its cooperation with the Western powers conditional on them.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-019",
+   "document": "frus:frus1936v01/d67",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d67:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1936-02-26",
+    "quote": "as long as Italy was at war and sanctions are being applied against her with the threat of military measures, it was not possible to find any way to do so which would not have a harmful effect on public opinion",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d67",
+    "rule": "claude backend: Italy estranged from the West after Ethiopia, defended by League sanctions in force; the Italian ambassador reports sanctions still applied and Italy refusing a naval agreement with the Western powers on that account.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-020",
+   "document": "frus:frus1936v01/d164",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d164:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1936-02-28",
+    "quote": "H. J. Res. 491, extending until May 1, 1937, Section 1 of the Joint Resolution (Public Resolution No. 67, 74th Congress), approved August 31, 1935, and making certain other amendments, has recently been passed by Congress and is now awaiting approval by the President.",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d164",
+    "rule": "claude backend: The isolationist level is defined by the Neutrality Act regime of 31 Aug 1935 and its extension of Feb 1936; the passage shows that regime in force and being extended by Congress, though the text does not itself describe Section 1 as the arms embargo.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-021",
+   "document": "frus:frus1936v01/d70",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d70:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1936-02-28",
+    "quote": "the fundamental reason for their inability to commit themselves now on a naval agreement is political ... as long as sanctions are being applied against Italy with the threat of military force",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d70",
+    "rule": "claude backend: The italy_estranged rule treats League sanctions against Italy in force after Ethiopia as the mark of estrangement; this passage reports sanctions still applied and Italy refusing, for political reasons, to join a naval treaty with Britain, France and the United States.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-022",
+   "document": "frus:frus1936v01/d71",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d71:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1936-02-28",
+    "quote": "the Italian Government was unable at this time to enter into a naval treaty ... the sanctions now pending against Italy and the unsatisfactory reply of the British Government to the Italian representations regarding mutual assistance against Italy",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d71",
+    "rule": "claude backend: italy_estranged is true while League sanctions against Italy are in force and Italy is at odds with the West; Italy here refuses a naval treaty, citing the pending sanctions and British mutual-assistance arrangements against it.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-023",
+   "document": "frus:frus1936v01/d179",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d179:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-03-07",
+    "quote": "the symbolical act of the entry into the demilitarized zone this noon of several battalions of the regular army",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d179",
+    "rule": "claude backend: Remilitarized means German troops in the zone; the 4 p.m. telegram reports the German Foreign Office's account of regular army battalions entering the zone at noon, and the memorandum read in the Reichstag states that full sovereignty in the zone has been restored.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-024",
+   "document": "frus:frus1936v01/d180",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d180:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-03-07",
+    "quote": "He thought the act of Germany in actually sending soldiers into the zone was a tactical and psychological error",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d180",
+    "rule": "claude backend: Remilitarized means German troops garrisoned in the zone; the passage reports that Germany has actually sent soldiers into the demilitarized zone.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-025",
+   "document": "frus:frus1936v01/d181",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d181:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1936-03-07",
+    "quote": "the sanctions which now were being applied against Italy",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d181",
+    "rule": "claude backend: The italy_estranged rule rests on League sanctions against Italy being in force, and the passage reports them as still applied on the document's date.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-026",
+   "document": "frus:frus1936v01/d182",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d182:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-03-07",
+    "quote": "should Germany remilitarize the Rhineland zone, yesterday’s news caused great surprise",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d182",
+    "rule": "claude backend: Remilitarized means German troops garrisoned in the zone. The dispatch implies that the news of 7 March was the remilitarization the Cabinet had been considering, but it does not explicitly describe troops in the zone.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-027",
+   "document": "frus:frus1936v01/d183",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d183:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-03-08",
+    "quote": "the drastic action in reoccupying the demilitarized zone ... Major Smith believes the following cities have been garrisoned to date: Dusseldorf, Cologne, Aachen, Coblenz, Mainz, Saarbrucken, Trier, Frankfurt, Mannheim, Karlsruhe.",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d183",
+    "rule": "claude backend: Remilitarized means German troops garrisoned in the zone; the dispatch reports the zone reoccupied and named Rhineland cities garrisoned.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-028",
+   "document": "frus:frus1936v01/d184",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d184:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-03-08",
+    "quote": "the unilateral repudiation of a treaty followed up by military force",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d184",
+    "rule": "claude backend: Remilitarized requires German troops in the zone; the French Foreign Minister refers to the treaty repudiation as already 'followed up by military force', but the document does not state outright that troops are garrisoned there.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-029",
+   "document": "frus:frus1936v01/d184",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d184:commit_WEST=appease",
+    "variable": "commit_WEST",
+    "level": "appease",
+    "date": "1936-03-08",
+    "quote": "France will not mobilize at present and was taking no military measures beyond slightly reinforcing the garrisons of the frontier fortresses",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d184",
+    "rule": "claude backend: Appease holds because France declines a military response to the Rhineland move (no resist_rhineland branch), taking only minor garrison measures.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-030",
+   "document": "frus:frus1936v01/d184",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d184:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1936-03-08",
+    "quote": "the principal desire of our country as recently expressed and frequently reenforced by declarations of the Executive and acts of Congress was to remain neutral",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d184",
+    "rule": "claude backend: Isolationist means the Neutrality Act regime with an arms embargo on belligerents; the ambassador confirms US neutrality legislation and action on arms shipments to belligerents.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-031",
+   "document": "frus:frus1936v01/d184",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d184:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1936-03-08",
+    "quote": "under the régime of sanctions now applying to that country",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d184",
+    "rule": "claude backend: Italy_estranged is defended by League sanctions against Italy remaining in force, which the passage states.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-032",
+   "document": "frus:frus1936v01/d185",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d185:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-03-09",
+    "quote": "the action taken by the German Government in sending troops into that part of the Rhine zone which was demilitarized under the Treaty of Versailles",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d185",
+    "rule": "claude backend: The remilitarized level requires German troops in the zone, and the passage reports that Germany has sent troops into the demilitarized Rhine zone.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-033",
+   "document": "frus:frus1936v01/d188",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d188:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-03-07",
+    "quote": "It is difficult to forecast what the effect of the Rhineland occupation and of the tearing up of Locarno will be",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d188",
+    "rule": "claude backend: Remilitarized means German troops garrisoned in the zone; the memorandum treats the German reoccupation of the Rhineland on March 7 as an accomplished fact.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-034",
+   "document": "frus:frus1936v01/d189",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d189:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-03-09",
+    "quote": "sending their forces into the demilitarized zone. We would then have seen the British get busy in Berlin to have the German troops withdrawn",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d189",
+    "rule": "claude backend: remilitarized means German troops garrisoned in the zone; the passage, following the Hitler speech of 7 March, speaks of German troops in the demilitarized zone that would have to be withdrawn.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-035",
+   "document": "frus:frus1936v01/d79",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d79:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-03-09",
+    "quote": "the entirely new turn of events brought about by the German action in the Rhineland",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d79",
+    "rule": "claude backend: Remilitarized requires German troops garrisoned in the zone; the passage reports a German action in the Rhineland as a new situation but does not say what the action was or that troops are there.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-036",
+   "document": "frus:frus1936v01/d191",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d191:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-03-10",
+    "quote": "as long as German troops remain in the Rhineland",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d191",
+    "rule": "claude backend: Remilitarized means German troops garrisoned in the zone, and the passage reports German troops currently remaining in the Rhineland.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-037",
+   "document": "frus:frus1936v01/d192",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d192:belief_WEST=limited",
+    "variable": "belief_WEST",
+    "level": "limited",
+    "date": "1936-03-09",
+    "quote": "The Cabinet meeting on Monday morning would not accept this premise and instead put in the clause about standing by France in case of attack and the fact that Hitler's proposal should be seriously and objectively considered",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d192",
+    "rule": "claude backend: limited: the British Cabinet itself insisted that Hitler's proposal be seriously and objectively considered, treating German aims as open to a negotiated settlement.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-038",
+   "document": "frus:frus1936v01/d81",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d81:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-03-10",
+    "quote": "in view of the tenseness and uncertainty which will result from the German action in the Rhineland",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d81",
+    "rule": "claude backend: Remilitarized means German troops garrisoned in the zone; the passage refers to a German action in the Rhineland as already taken, but it does not say that troops are there, so the level is inferred.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-039",
+   "document": "frus:frus1936v01/d194",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d194:commit_WEST=appease",
+    "variable": "commit_WEST",
+    "level": "appease",
+    "date": "1936-03-11",
+    "quote": "His instructions were to undertake no binding commitment",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d194",
+    "rule": "claude backend: Appease means no standing commitment to fight for a third state beyond Locarno; the Cabinet instructs Eden to avoid commitments and rejects a lasting promise of support to France and Belgium as a military alliance.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-040",
+   "document": "frus:frus1936v01/d194",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d194:belief_WEST=limited",
+    "variable": "belief_WEST",
+    "level": "limited",
+    "date": "1936-03-11",
+    "quote": "the Cabinet welcomed the changes of venue from Paris and Geneva to London, particularly since this would permit of more direct consultation with the German representative",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d194",
+    "rule": "claude backend: Limited means the Cabinet treats German aims as open to a negotiated settlement; the Cabinet seeks negotiations on the Hitler proposals and direct consultation with Germany.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-041",
+   "document": "frus:frus1936v01/d196",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d196:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-03-11",
+    "quote": "Germany’s continued occupation of the demilitarized zone could not be tolerated.",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d196",
+    "rule": "claude backend: Under the remilitarized rule (German troops in the zone), the French Foreign Minister refers to Germany's continuing occupation of the demilitarized zone as an existing fact.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-042",
+   "document": "frus:frus1936v01/d197",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d197:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-03-07",
+    "quote": "Hitler and his advisers were willing to violate the Locarno pact ... Hitler's fairly safe challenges of March 7.",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d197",
+    "rule": "claude backend: The remilitarized level requires German troops garrisoned in the zone; the passage reports that Germany violated the Locarno pact on 7 March, which implies the zone was entered, though troops are not named.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-043",
+   "document": "frus:frus1936v01/d198",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d198:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-03-12",
+    "quote": "the French, consequently, are insisting that Germany shall withdraw her troops from the Rhineland",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d198",
+    "rule": "claude backend: remilitarized means German troops garrisoned in the zone; the French demand that Germany withdraw her troops from the Rhineland presupposes German troops are there.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-044",
+   "document": "frus:frus1936v01/d201",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d201:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-03-12",
+    "quote": "the present movement of troops into the Rhineland was only symbolical and numbered only 19,000",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d201",
+    "rule": "claude backend: Remilitarized means German troops garrisoned in the zone, and the German Ambassador confirms that 19,000 German troops have moved into the Rhineland.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-045",
+   "document": "frus:frus1936v01/d202",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d202:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-03-10",
+    "quote": "German troops were now in possession of all Rhineland garrisons in “formidable” numbers",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d202",
+    "rule": "claude backend: remilitarized means German troops garrisoned in the zone; the French Ambassador reports German troops holding all Rhineland garrisons, and the Polish Under Secretary refers to 'the occupation of the demilitarized zone by German troops'.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-046",
+   "document": "frus:frus1936v01/d203",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d203:belief_WEST=limited",
+    "variable": "belief_WEST",
+    "level": "limited",
+    "date": "1936-03-13",
+    "quote": "Eden then put forward the British Government’s case and the British suggestion for a reexamination of the situation and the negotiation of a fresh agreement",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d203",
+    "rule": "claude backend: Under the limited rule, the British government's official case treats the German move as something to be met by negotiating a fresh agreement, which presumes German aims a settlement can satisfy.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-047",
+   "document": "frus:frus1936v01/d203",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d203:commit_WEST=appease",
+    "variable": "commit_WEST",
+    "level": "appease",
+    "date": "1936-03-13",
+    "quote": "Britain’s position to date has been more or less to disregard “and to try to solve the present situation by a new rearrangement based on Hitler’s proposals",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d203",
+    "rule": "claude backend: Under the appease rule, Britain refuses the French demand for repressive action and seeks a settlement based on Hitler's proposals, with no military answer.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-048",
+   "document": "frus:frus1936v01/d204",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d204:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-03-13",
+    "quote": "this demanded a symbolic though limited withdrawal by Germany from the Rhineland",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d204",
+    "rule": "claude backend: remilitarized means German troops garrisoned in the zone, and the Locarno Powers discussing a German withdrawal from the Rhineland implies German forces are present there.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-049",
+   "document": "frus:frus1936v01/d207",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d207:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-03-14",
+    "quote": "the recent military occupation of the Rhineland by the Hitler Government",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d207",
+    "rule": "claude backend: The remilitarized level requires German troops garrisoned in the zone, and the passage reports a military occupation of the Rhineland by Germany as an accomplished fact by the document's date.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-050",
+   "document": "frus:frus1936v01/d208",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d208:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-03-14",
+    "quote": "the pressure being put on Germany to make some gesture to France in withdrawing part of the Rhineland zone forces",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d208",
+    "rule": "claude backend: Remilitarized means German troops garrisoned in the zone; the passage reports German forces present in the Rhineland zone, with pressure for only a partial withdrawal.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-051",
+   "document": "frus:frus1936v01/d209",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d209:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-03-07",
+    "quote": "dramatic announcement of last Saturday ... to make a military gesture at an inopportune moment and especially to include a wholly gratuitous gesture of this character toward Belgium",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d209",
+    "rule": "claude backend: The rule for remilitarized requires German troops garrisoned in the zone; the passage refers to a German military move toward Belgium accompanying the denunciation of Locarno, but it does not state that troops are garrisoned in the zone, so the reading is doubtful.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-052",
+   "document": "frus:frus1936v01/d210",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d210:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-03-14",
+    "quote": "the denunciation by Germany of the Locarno Pact and the re-occupation of the Rhineland by German troops",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d210",
+    "rule": "claude backend: Remilitarized means German troops garrisoned in the zone, and the document reports the re-occupation of the Rhineland by German troops as an accomplished fact.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-053",
+   "document": "frus:frus1936v01/d211",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d211:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-03-16",
+    "quote": "challenge France by sending troops into the Rhine zone",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d211",
+    "rule": "claude backend: Remilitarized means German troops garrisoned in the zone; the ambassador recounts, as an accomplished step, Hitler sending troops into the Rhine zone after the generals yielded.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-054",
+   "document": "frus:frus1936v01/d212",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d212:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-03-16",
+    "quote": "it was not practicable to make any gesture of withdrawal of troops as they feel that the present total of 36,000 men in the demilitarized zone should not give offense to the French Government",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d212",
+    "rule": "claude backend: remilitarized means German troops garrisoned in the zone; the passage reports 36,000 German troops present in the demilitarized zone, following the 'action of March 7', with no withdrawal.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-055",
+   "document": "frus:frus1936v01/d86",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d86:belief_WEST=limited",
+    "variable": "belief_WEST",
+    "level": "limited",
+    "date": "1936-03-16",
+    "quote": "at a meeting of the British Cabinet this morning it was decided to sign when necessary the supplemental naval treaty with Germany",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d86",
+    "rule": "claude backend: Under the limited rule, the Cabinet deciding, days after the Rhineland reoccupation, to conclude a further naval limitation agreement with Germany treats German aims as negotiable within agreed limits; this is reported second-hand and the treaty is not yet signed.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-056",
+   "document": "frus:frus1936v01/d213",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d213:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1936-03-17",
+    "quote": "Yugoslav economic life has been seriously disrupted by sanctions against Italy which were adopted most reluctantly",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d213",
+    "rule": "claude backend: The italy_estranged rule rests on the League sanctions against Italy being in force; the passage reports those sanctions as adopted and currently disrupting Yugoslav trade.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-057",
+   "document": "frus:frus1936v01/d214",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d214:commit_WEST=appease",
+    "variable": "commit_WEST",
+    "level": "appease",
+    "date": "1936-03-17",
+    "quote": "a communication from the British Government assuring it of the British Government’s interest in a peaceful solution of the present situation and stating that any proposals made in London either by the German Government or others should be discussed in due course",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d214",
+    "rule": "claude backend: appease: British policy, as relayed by the German Foreign Office, seeks a negotiated settlement of the situation and shows no military answer, though the passage is second-hand and does not name the Rhineland.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-058",
+   "document": "frus:frus1936v01/d215",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d215:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-03-10",
+    "quote": "the action of Germany in establishing a military occupancy of the Rhineland",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d215",
+    "rule": "claude backend: Remilitarized means German troops garrisoned in the zone; the despatch of 10 March 1936 already reported German military occupancy of the Rhineland, and the document refers to troops dispatched into the demilitarized zone.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-059",
+   "document": "frus:frus1936v01/d216",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d216:belief_WEST=limited",
+    "variable": "belief_WEST",
+    "level": "limited",
+    "date": "1936-03-18",
+    "quote": "the British Government will propose at intervals during the next 12 months various portions of a most comprehensive peace plan of realistic character constituting veritable European new deal providing inter alia for equality for Germany and security for France and Belgium",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d216",
+    "rule": "claude backend: The 'limited' level holds when London treats German aims as revision that a negotiated general settlement can satisfy; this report says the British Government (Chamberlain) plans a comprehensive settlement granting Germany equality.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-060",
+   "document": "frus:frus1936v01/d217",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d217:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-03-18",
+    "quote": "The military reoccupation of the Rhineland zone",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d217",
+    "rule": "claude backend: remilitarized means German troops garrisoned in the zone, and the ambassador reports the military reoccupation of the zone as an accomplished fact (only its fortification is described as intended).",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-061",
+   "document": "frus:frus1936v01/d218",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d218:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-03-18",
+    "quote": "The matter of Germany’s occupation of the Rhineland",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d218",
+    "rule": "claude backend: Remilitarized means German troops are in the zone; the memorandum treats Germany's occupation of the Rhineland as an accomplished fact under discussion.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-062",
+   "document": "frus:frus1936v01/d219",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d219:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-03-07",
+    "quote": "The Rhine move is far more than a peaceful reentry of garrisons into a few German cities.",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d219",
+    "rule": "claude backend: The rule sets remilitarized once German troops are garrisoned in the zone; the attaché reports the German reentry of garrisons into Rhineland cities and dates the move to 7 March 1936.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-063",
+   "document": "frus:frus1936v01/d221",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d221:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-03-20",
+    "quote": "German troops will not be withdrawn from the Rhineland",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d221",
+    "rule": "claude backend: Remilitarized means German troops garrisoned in the zone; the passage presupposes German troops are already present in the Rhineland.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-064",
+   "document": "frus:frus1936v01/d221",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d221:treaty=dead",
+    "variable": "treaty",
+    "level": "dead",
+    "date": "1936-03-20",
+    "quote": "France and Great Britain will take no action against Germany and German troops will not be withdrawn from the Rhineland",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d221",
+    "rule": "claude backend: Dead requires the zone reoccupied and the guarantors declining enforcement; the source reports that the guarantors will not act, but this is a forecast rather than a recorded decision.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-065",
+   "document": "frus:frus1936v01/d221",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d221:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1936-03-20",
+    "quote": "Italy's allegation of inability to participate in any Rhineland patrol scheme pending lifting of sanctions",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d221",
+    "rule": "claude backend: Italy remains estranged from the West while League sanctions are in force, and it refuses cooperation with the Locarno powers until they are lifted.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-066",
+   "document": "frus:frus1936v01/d223",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d223:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-03-21",
+    "quote": "the reestablishment of part of the demilitarized zone on a one-sided basis and its occupation by foreign troops",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d223",
+    "rule": "claude backend: The Locarno powers' proposal to 'reestablish' part of the demilitarized zone implies the zone no longer stands, i.e. German troops are in it, which meets the remilitarized rule only by inference.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-067",
+   "document": "frus:frus1936v01/d224",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d224:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-03-07",
+    "quote": "When Germany denounced the Locarno Pact on March 7, 1936 ... found nothing strange about the Germans moving troops into their own territory",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d224",
+    "rule": "claude backend: Remilitarized means German troops garrisoned in the zone; the document reports German troops moved into the Rhineland when Germany denounced Locarno on 7 March 1936.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-068",
+   "document": "frus:frus1936v01/d224",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d224:treaty=dead",
+    "variable": "treaty",
+    "level": "dead",
+    "date": "1936-03-23",
+    "quote": "French insistence on this point was maintained throughout the discussions at Paris and in the London discussions until about Saturday, March 14. ... The Belgian Government was not willing to resort to military measures",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d224",
+    "rule": "claude backend: Dead requires the zone reoccupied and the guarantors declining enforcement; the passage shows France dropped its demand for military measures by about 14 March and Belgium (with Britain of the same view) refused force.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-069",
+   "document": "frus:frus1936v01/d226",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d226:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-03-07",
+    "quote": "the denouncement of the Locarno Treaty and the military reoccupation of the Rhineland",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d226",
+    "rule": "claude backend: The remilitarized level requires German troops garrisoned in the zone, and the document reports the German military reoccupation of the demilitarized Rhineland zone, dated by the text to March 7.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-070",
+   "document": "frus:frus1936v01/d227",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d227:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-03-25",
+    "quote": "the German occupation of the demilitarized Rhineland provinces",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d227",
+    "rule": "claude backend: Remilitarized means German troops garrisoned in the zone, and the passage reports the German occupation of the demilitarized Rhineland as an accomplished fact.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-071",
+   "document": "frus:frus1936v01/d227",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d227:treaty=dead",
+    "variable": "treaty",
+    "level": "dead",
+    "date": "1936-03-25",
+    "quote": "The Council has given its decision that a violation of Locarno treaties exists. It has adjourned.... He did not think that France would under any circumstances ask for military sanctions",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d227",
+    "rule": "claude backend: Dead means the zone is reoccupied and the guarantors decline enforcement; the Council has found a breach, and the French Secretary-General says France will not seek military sanctions.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-072",
+   "document": "frus:frus1936v01/d228",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d228:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-03-07",
+    "quote": "sending only one or two battalions of troops, merely as a gesture, into the Rhineland on March 7th as opposed to the opinion of another political group who favored sending a substantial armed force, and this latter policy was adopted",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d228",
+    "rule": "claude backend: remilitarized means German troops garrisoned in the zone; the passage reports that a substantial German armed force was sent into the Rhineland on 7 March.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-073",
+   "document": "frus:frus1936v01/d229",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d229:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-03-07",
+    "quote": "there was a large part of bluff\" in Hitler’s coup of March 7th",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d229",
+    "rule": "claude backend: The French Foreign Minister refers to Hitler's coup of 7 March as an accomplished fact. That coup is the move into the demilitarized zone, but the troop garrisoning is inferred rather than stated, so the reading needs judgment.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-074",
+   "document": "frus:frus1936v01/d229",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d229:treaty=dead",
+    "variable": "treaty",
+    "level": "dead",
+    "date": "1936-03-28",
+    "quote": "the British Government ... was unwilling to adopt the only attitude which would actually have removed at least for some time the danger of armed conflict",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d229",
+    "rule": "claude backend: Rule for 'dead': the zone has been reoccupied and a Locarno guarantor declined to take a firm stand, so the chance of reversal is described as lost.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-075",
+   "document": "frus:frus1936v01/d230",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d230:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-03-28",
+    "quote": "the situation caused by the military reoccupation of the Rhineland by Germany",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d230",
+    "rule": "claude backend: remilitarized means German troops garrisoned in the zone, and the despatch reports the German military reoccupation of the Rhineland as an accomplished fact.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q1-076",
+   "document": "frus:frus1936v02/d99",
+   "proposal": {
+    "indicator_id": "frus:frus1936v02/d99:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-03-30",
+    "quote": "Hitler's action on March 7 ... the question of an agreement not to fortify the Rhineland zone for a brief definitive period, say for six months, is being seriously considered",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v02/d99",
+    "rule": "claude backend: Remilitarized means German troops garrisoned in the zone. The passage implies German forces are already in the Rhineland, since only fortification is still under discussion, but it never states that troops are garrisoned there.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  }
+ ],
+ "discarded": [],
+ "errors": []
+}

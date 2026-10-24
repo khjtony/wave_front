@@ -1,0 +1,3995 @@
+{
+ "kind": "wave_front proposals",
+ "format": 1,
+ "label": "1939Q1",
+ "until": "1939-03-31",
+ "since": null,
+ "corpus": {
+  "source": "frus",
+  "synthetic": false,
+  "root": "data/ww2/corpora/raw/frus"
+ },
+ "backend": {
+  "name": "claude",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "usage": {
+   "input_tokens": 333052,
+   "output_tokens": 48023,
+   "cache_read_input_tokens": 1970430
+  },
+  "cache": {
+   "hits": 0,
+   "misses": 385
+  }
+ },
+ "harness_rules": [
+  "two-document",
+  "no-retrospective"
+ ],
+ "documents": [
+  {
+   "id": "frus:frus1939v02/d761",
+   "date": "1939-01-02",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d761"
+  },
+  {
+   "id": "frus:frus1933-39/d678",
+   "date": "1939-01-03",
+   "source": "FRUS frus1933-39",
+   "title": "Memorandum by the Chief of the Office of Arms and Munitions Control (Green)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d678"
+  },
+  {
+   "id": "frus:frus1939v02/d37",
+   "date": "1939-01-03",
+   "source": "FRUS frus1939v02",
+   "title": "The Consul General at Shanghai (Gauss) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d37"
+  },
+  {
+   "id": "frus:frus1939v02/d528",
+   "date": "1939-01-03",
+   "source": "FRUS frus1939v02",
+   "title": "The Chargé in Germany (Gilbert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d528"
+  },
+  {
+   "id": "frus:frus1938v02/d381",
+   "date": "1939-01-04",
+   "source": "FRUS frus1938v02",
+   "title": "The Chargé in Germany (Gilbert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d381"
+  },
+  {
+   "id": "frus:frus1939v02/d38",
+   "date": "1939-01-04",
+   "source": "FRUS frus1939v02",
+   "title": "The Minister in Haiti (Mayer) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d38"
+  },
+  {
+   "id": "frus:frus1939v02/d512",
+   "date": "1939-01-04",
+   "source": "FRUS frus1939v02",
+   "title": "The Chargé in Germany (Gilbert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d512"
+  },
+  {
+   "id": "frus:frus1939v02/d529",
+   "date": "1939-01-04",
+   "source": "FRUS frus1939v02",
+   "title": "The Acting Secretary of State to the Chargé in Germany (Gilbert)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d529"
+  },
+  {
+   "id": "frus:frus1938v02/d606",
+   "date": "1939-01-05",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum by the Chief of the Division of Near Eastern Affairs (Murray)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d606"
+  },
+  {
+   "id": "frus:frus1939v02/d169",
+   "date": "1939-01-05",
+   "source": "FRUS frus1939v02",
+   "title": "The Acting Secretary of State to the Ambassador in Japan (Grew)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d169"
+  },
+  {
+   "id": "frus:frus1939v02/d39",
+   "date": "1939-01-05",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d39"
+  },
+  {
+   "id": "frus:frus1939v02/d595",
+   "date": "1939-01-05",
+   "source": "FRUS frus1939v02",
+   "title": "The Acting Secretary of State to the Ambassador in Italy (Phillips)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d595"
+  },
+  {
+   "id": "frus:frus1933-39/d710",
+   "date": "1939-01-06",
+   "source": "FRUS frus1933-39",
+   "title": "The Acting Secretary of State to the Chargé in the Soviet Union (Kirk)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d710"
+  },
+  {
+   "id": "frus:frus1939v02/d1",
+   "date": "1939-01-06",
+   "source": "FRUS frus1939v02",
+   "title": "The Acting Secretary of State to the Chargé in the United Kingdom (Johnson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d1"
+  },
+  {
+   "id": "frus:frus1939v02/d40",
+   "date": "1939-01-06",
+   "source": "FRUS frus1939v02",
+   "title": "The Acting Secretary of State to the Chargé in the United Kingdom (Johnson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d40"
+  },
+  {
+   "id": "frus:frus1939v02/d530",
+   "date": "1939-01-06",
+   "source": "FRUS frus1939v02",
+   "title": "The Acting Secretary of State to the Chargé in Germany (Gilbert)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d530"
+  },
+  {
+   "id": "frus:frus1939v02/d531",
+   "date": "1939-01-06",
+   "source": "FRUS frus1939v02",
+   "title": "The Chargé in Germany (Gilbert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d531"
+  },
+  {
+   "id": "frus:frus1939v02/d41",
+   "date": "1939-01-07",
+   "source": "FRUS frus1939v02",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d41"
+  },
+  {
+   "id": "frus:frus1939v02/d42",
+   "date": "1939-01-07",
+   "source": "FRUS frus1939v02",
+   "title": "The Acting Secretary of State to the Minister in Haiti (Mayer)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d42"
+  },
+  {
+   "id": "frus:frus1939v02/d676",
+   "date": "1939-01-07",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d676"
+  },
+  {
+   "id": "frus:frus1939v02/d2",
+   "date": "1939-01-09",
+   "source": "FRUS frus1939v02",
+   "title": "The Acting Secretary of State to the Chargé in the United Kingdom (Johnson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d2"
+  },
+  {
+   "id": "frus:frus1939v02/d550",
+   "date": "1939-01-09",
+   "source": "FRUS frus1939v02",
+   "title": "The Adviser on Political Relations (Dunn) to the Acting Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d550"
+  },
+  {
+   "id": "frus:frus1939v02/d668",
+   "date": "1939-01-09",
+   "source": "FRUS frus1939v02",
+   "title": "The Acting Secretary of State to the Minister in Portugal (Pell)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d668"
+  },
+  {
+   "id": "frus:frus1939v02/d677",
+   "date": "1939-01-09",
+   "source": "FRUS frus1939v02",
+   "title": "The Spanish Ambassador (De los Bios) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d677"
+  },
+  {
+   "id": "frus:frus1939v01/d1",
+   "date": "1939-01-10",
+   "source": "FRUS frus1939v01",
+   "title": "The Ambassador in Poland (Biddle) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d1"
+  },
+  {
+   "id": "frus:frus1939v02/d293",
+   "date": "1939-01-10",
+   "source": "FRUS frus1939v02",
+   "title": "Memorandum of Conversation, by Mr. John R. Minter of the Division of European Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d293"
+  },
+  {
+   "id": "frus:frus1939v02/d170",
+   "date": "1939-01-11",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in Japan (Grew) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d170"
+  },
+  {
+   "id": "frus:frus1939v02/d314",
+   "date": "1939-01-11",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the British Chargé (Mallet)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d314"
+  },
+  {
+   "id": "frus:frus1939v02/d43",
+   "date": "1939-01-11",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Chargé in the United Kingdom (Johnson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d43"
+  },
+  {
+   "id": "frus:frus1939v02/d44",
+   "date": "1939-01-11",
+   "source": "FRUS frus1939v02",
+   "title": "The Chief of the Italian Government (Mussolini) to President Roosevelt",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d44"
+  },
+  {
+   "id": "frus:frus1939v02/d45",
+   "date": "1939-01-12",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d45"
+  },
+  {
+   "id": "frus:frus1939v02/d46",
+   "date": "1939-01-12",
+   "source": "FRUS frus1939v02",
+   "title": "The Under Secretary of State (Welles) to President Roosevelt",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d46"
+  },
+  {
+   "id": "frus:frus1939v02/d532",
+   "date": "1939-01-12",
+   "source": "FRUS frus1939v02",
+   "title": "The Chargé in Germany (Gilbert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d532"
+  },
+  {
+   "id": "frus:frus1939v02/d678",
+   "date": "1939-01-12",
+   "source": "FRUS frus1939v02",
+   "title": "The Counselor of Embassy in Spain (Thurston) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d678"
+  },
+  {
+   "id": "frus:frus1938v02/d857",
+   "date": "1939-01-13",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Chargé in the United Kingdom (Johnson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d857"
+  },
+  {
+   "id": "frus:frus1939v02/d171",
+   "date": "1939-01-13",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Ambassador in Japan (Grew)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d171"
+  },
+  {
+   "id": "frus:frus1939v02/d271",
+   "date": "1939-01-13",
+   "source": "FRUS frus1939v02",
+   "title": "The British Embassy to the Department of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d271"
+  },
+  {
+   "id": "frus:frus1939v02/d272",
+   "date": "1939-01-13",
+   "source": "FRUS frus1939v02",
+   "title": "Memorandum of Conversation by the Chief of the Division of European Affairs (Moffat)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d272"
+  },
+  {
+   "id": "frus:frus1939v02/d47",
+   "date": "1939-01-13",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Minister in Haiti (Mayer)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d47"
+  },
+  {
+   "id": "frus:frus1938v02/d607",
+   "date": "1939-01-14",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Chargé in Iran (Engert)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d607"
+  },
+  {
+   "id": "frus:frus1939v02/d3",
+   "date": "1939-01-14",
+   "source": "FRUS frus1939v02",
+   "title": "The Norwegian Minister (Morgenstierne) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d3"
+  },
+  {
+   "id": "frus:frus1939v02/d48",
+   "date": "1939-01-14",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Ambassador in the United Kingdom (Kennedy)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d48"
+  },
+  {
+   "id": "frus:frus1939v02/d679",
+   "date": "1939-01-14",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Spanish Ambassador (De los Bios)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d679"
+  },
+  {
+   "id": "frus:frus1939v02/d680",
+   "date": "1939-01-15",
+   "source": "FRUS frus1939v02",
+   "title": "The Counselor of Embassy in Spain (Thurston) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d680"
+  },
+  {
+   "id": "frus:frus1939v01/d2",
+   "date": "1939-01-16",
+   "source": "FRUS frus1939v01",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d2"
+  },
+  {
+   "id": "frus:frus1939v01/d303",
+   "date": "1939-01-16",
+   "source": "FRUS frus1939v01",
+   "title": "The Chargé in the Soviet Union (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d303"
+  },
+  {
+   "id": "frus:frus1939v02/d4",
+   "date": "1939-01-16",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Norwegian Minister (Morgenstierne)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d4"
+  },
+  {
+   "id": "frus:frus1939v02/d551",
+   "date": "1939-01-16",
+   "source": "FRUS frus1939v02",
+   "title": "Memorandum by the Adviser on Political Relations (Dunn)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d551"
+  },
+  {
+   "id": "frus:frus1939v02/d681",
+   "date": "1939-01-16",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Counselor of Embassy in Spain (Thurston)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d681"
+  },
+  {
+   "id": "frus:frus1939v02/d682",
+   "date": "1939-01-16",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d682"
+  },
+  {
+   "id": "frus:frus1933-39/d476",
+   "date": "1939-01-17",
+   "source": "FRUS frus1933-39",
+   "title": "The Ambassador in Belgium (Davies) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d476"
+  },
+  {
+   "id": "frus:frus1939v01/d943",
+   "date": "1939-01-17",
+   "source": "FRUS frus1939v01",
+   "title": "Memorandum of Conversation, by Mr. Boy Veatch of the Office of the Adviser on International Economic Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d943"
+  },
+  {
+   "id": "frus:frus1939v02/d49",
+   "date": "1939-01-17",
+   "source": "FRUS frus1939v02",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d49"
+  },
+  {
+   "id": "frus:frus1939v02/d24",
+   "date": "1939-01-18",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to President Roosevelt",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d24"
+  },
+  {
+   "id": "frus:frus1939v02/d50",
+   "date": "1939-01-18",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Ambassador in France (Bullitt)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d50"
+  },
+  {
+   "id": "frus:frus1939v02/d683",
+   "date": "1939-01-18",
+   "source": "FRUS frus1939v02",
+   "title": "The Counselor of Embassy in Spain (Thurston) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d683"
+  },
+  {
+   "id": "frus:frus1933-39/d567",
+   "date": "1939-01-19",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d567"
+  },
+  {
+   "id": "frus:frus1939v02/d172",
+   "date": "1939-01-19",
+   "source": "FRUS frus1939v02",
+   "title": "Memorandum of Conversation, by Mr. Leo D. Sturgeon of the Division of Far Eastern Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d172"
+  },
+  {
+   "id": "frus:frus1939v02/d304",
+   "date": "1939-01-19",
+   "source": "FRUS frus1939v02",
+   "title": "Memorandum of Conversation, by Mr. Leo D. Sturgeon of the Division of Far Eastern Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d304"
+  },
+  {
+   "id": "frus:frus1939v02/d444",
+   "date": "1939-01-19",
+   "source": "FRUS frus1939v02",
+   "title": "The Acting Secretary of State to President Roosevelt",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d444"
+  },
+  {
+   "id": "frus:frus1939v02/d513",
+   "date": "1939-01-19",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Chargé in Germany (Gilbert)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d513"
+  },
+  {
+   "id": "frus:frus1939v02/d684",
+   "date": "1939-01-19",
+   "source": "FRUS frus1939v02",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d684"
+  },
+  {
+   "id": "frus:frus1933-39/d711",
+   "date": "1939-01-20",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d711"
+  },
+  {
+   "id": "frus:frus1938v02/d608",
+   "date": "1939-01-20",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum by the Chief of the Division of Near Eastern Affairs (Murray)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d608"
+  },
+  {
+   "id": "frus:frus1938v02/d609",
+   "date": "1939-01-20",
+   "source": "FRUS frus1938v02",
+   "title": "The Iranian Chargé (Daftary) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d609"
+  },
+  {
+   "id": "frus:frus1939v01/d304",
+   "date": "1939-01-20",
+   "source": "FRUS frus1939v01",
+   "title": "The Chargé in the Soviet Union (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d304"
+  },
+  {
+   "id": "frus:frus1939v02/d420",
+   "date": "1939-01-20",
+   "source": "FRUS frus1939v02",
+   "title": "The Minister in Estonia (Wiley) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d420"
+  },
+  {
+   "id": "frus:frus1939v02/d51",
+   "date": "1939-01-20",
+   "source": "FRUS frus1939v02",
+   "title": "The Chargé in Germany (Gilbert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d51"
+  },
+  {
+   "id": "frus:frus1939v02/d685",
+   "date": "1939-01-20",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d685"
+  },
+  {
+   "id": "frus:frus1939v02/d686",
+   "date": "1939-01-20",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Counselor of Embassy in Spain (Thurston)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d686"
+  },
+  {
+   "id": "frus:frus1938v02/d610",
+   "date": "1939-01-21",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Iranian Chargé (Daftary)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d610"
+  },
+  {
+   "id": "frus:frus1939v02/d25",
+   "date": "1939-01-21",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Chargé in the United Kingdom (Johnson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d25"
+  },
+  {
+   "id": "frus:frus1939v02/d52",
+   "date": "1939-01-21",
+   "source": "FRUS frus1939v02",
+   "title": "The Chargé in Germany (Gilbert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d52"
+  },
+  {
+   "id": "frus:frus1939v02/d53",
+   "date": "1939-01-21",
+   "source": "FRUS frus1939v02",
+   "title": "The Chargé in Germany (Gilbert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d53"
+  },
+  {
+   "id": "frus:frus1939v02/d687",
+   "date": "1939-01-21",
+   "source": "FRUS frus1939v02",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d687"
+  },
+  {
+   "id": "frus:frus1939v02/d688",
+   "date": "1939-01-23",
+   "source": "FRUS frus1939v02",
+   "title": "The Counselor of Embassy in Spain (Thurston) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d688"
+  },
+  {
+   "id": "frus:frus1939v01/d3",
+   "date": "1939-01-24",
+   "source": "FRUS frus1939v01",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d3"
+  },
+  {
+   "id": "frus:frus1939v02/d689",
+   "date": "1939-01-24",
+   "source": "FRUS frus1939v02",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d689"
+  },
+  {
+   "id": "frus:frus1939v02/d690",
+   "date": "1939-01-24",
+   "source": "FRUS frus1939v02",
+   "title": "The Counselor of Embassy in Spain (Thurston) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d690"
+  },
+  {
+   "id": "frus:frus1938v02/d611",
+   "date": "1939-01-25",
+   "source": "FRUS frus1938v02",
+   "title": "The Secretary of State to the Chargé in Iran (Engert)",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d611"
+  },
+  {
+   "id": "frus:frus1939v02/d445",
+   "date": "1939-01-25",
+   "source": "FRUS frus1939v02",
+   "title": "The Acting Secretary of State to President Roosevelt",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d445"
+  },
+  {
+   "id": "frus:frus1939v02/d514",
+   "date": "1939-01-25",
+   "source": "FRUS frus1939v02",
+   "title": "The Chargé in Germany (Gilbert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d514"
+  },
+  {
+   "id": "frus:frus1939v02/d54",
+   "date": "1939-01-25",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Consul General at Shanghai (Gauss)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d54"
+  },
+  {
+   "id": "frus:frus1939v02/d55",
+   "date": "1939-01-25",
+   "source": "FRUS frus1939v02",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d55"
+  },
+  {
+   "id": "frus:frus1939v02/d56",
+   "date": "1939-01-25",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Ambassador in the United Kingdom (Kennedy)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d56"
+  },
+  {
+   "id": "frus:frus1939v02/d691",
+   "date": "1939-01-25",
+   "source": "FRUS frus1939v02",
+   "title": "The Counselor of Embassy in Spain (Thurston) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d691"
+  },
+  {
+   "id": "frus:frus1938v02/d505",
+   "date": "1939-01-26",
+   "source": "FRUS frus1938v02",
+   "title": "Memorandum of Conversation, by Mr. Hugh S. Cumming, Jr., of the Division of European Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v02/d505"
+  },
+  {
+   "id": "frus:frus1939v01/d25",
+   "date": "1939-01-26",
+   "source": "FRUS frus1939v01",
+   "title": "The Minister in Czechoslovakia (Carr) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d25"
+  },
+  {
+   "id": "frus:frus1939v02/d173",
+   "date": "1939-01-26",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in Japan (Grew) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d173"
+  },
+  {
+   "id": "frus:frus1939v02/d692",
+   "date": "1939-01-26",
+   "source": "FRUS frus1939v02",
+   "title": "Memorandum of Conversation, by the Chief of the Division of European Affairs (Moffat)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d692"
+  },
+  {
+   "id": "frus:frus1939v02/d693",
+   "date": "1939-01-26",
+   "source": "FRUS frus1939v02",
+   "title": "The Spanish Ambassador (De los Rios) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d693"
+  },
+  {
+   "id": "frus:frus1939v02/d694",
+   "date": "1939-01-26",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d694"
+  },
+  {
+   "id": "frus:frus1939v01/d944",
+   "date": "1939-01-27",
+   "source": "FRUS frus1939v01",
+   "title": "The Secretary of State to the Minister in the Netherlands (Gordon)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d944"
+  },
+  {
+   "id": "frus:frus1939v02/d26",
+   "date": "1939-01-27",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Delegates to the Conference on Tax Exemptions of Liquid Fuel and Lubricants Used by Civil Aircraft (Williamson and Kennedy)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d26"
+  },
+  {
+   "id": "frus:frus1939v02/d426",
+   "date": "1939-01-27",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Minister in Finland (Schoenfeld)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d426"
+  },
+  {
+   "id": "frus:frus1939v02/d669",
+   "date": "1939-01-27",
+   "source": "FRUS frus1939v02",
+   "title": "Memorandum of Conversation, by Mr. John C. Ross of the Division of Trade Agreements",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d669"
+  },
+  {
+   "id": "frus:frus1939v02/d27",
+   "date": "1939-01-28",
+   "source": "FRUS frus1939v02",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d27"
+  },
+  {
+   "id": "frus:frus1939v01/d4",
+   "date": "1939-01-29",
+   "source": "FRUS frus1939v01",
+   "title": "The Secretary of State to the Chargé in the United Kingdom (Johnson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d4"
+  },
+  {
+   "id": "frus:frus1933-39/d568",
+   "date": "1939-01-30",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d568"
+  },
+  {
+   "id": "frus:frus1939v01/d5",
+   "date": "1939-01-30",
+   "source": "FRUS frus1939v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d5"
+  },
+  {
+   "id": "frus:frus1939v01/d6",
+   "date": "1939-01-30",
+   "source": "FRUS frus1939v01",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d6"
+  },
+  {
+   "id": "frus:frus1939v02/d28",
+   "date": "1939-01-30",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Chargé in the United Kingdom (Johnson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d28"
+  },
+  {
+   "id": "frus:frus1939v02/d567",
+   "date": "1939-01-30",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d567"
+  },
+  {
+   "id": "frus:frus1939v02/d695",
+   "date": "1939-01-30",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d695"
+  },
+  {
+   "id": "frus:frus1939v02/d696",
+   "date": "1939-01-30",
+   "source": "FRUS frus1939v02",
+   "title": "The Counselor of Embassy in Spain (Thurston), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d696"
+  },
+  {
+   "id": "frus:frus1939v02/d759",
+   "date": "1939-01-30",
+   "source": "FRUS frus1939v02",
+   "title": "Memorandum of Conversation, by the Adviser on Political Relations (Dunn)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d759"
+  },
+  {
+   "id": "frus:frus1939v02/d775",
+   "date": "1939-01-30",
+   "source": "FRUS frus1939v02",
+   "title": "The Consul at Vigo (Graves) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d775"
+  },
+  {
+   "id": "frus:frus1933-39/d569",
+   "date": "1939-01-31",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d569"
+  },
+  {
+   "id": "frus:frus1939v01/d305",
+   "date": "1939-01-31",
+   "source": "FRUS frus1939v01",
+   "title": "The Chargé in the Soviet Union (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d305"
+  },
+  {
+   "id": "frus:frus1939v01/d26",
+   "date": "1939-02-01",
+   "source": "FRUS frus1939v01",
+   "title": "The Chargé in Germany (Gilbert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d26"
+  },
+  {
+   "id": "frus:frus1939v02/d29",
+   "date": "1939-02-01",
+   "source": "FRUS frus1939v02",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d29"
+  },
+  {
+   "id": "frus:frus1939v02/d568",
+   "date": "1939-02-01",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d568"
+  },
+  {
+   "id": "frus:frus1939v02/d760",
+   "date": "1939-02-01",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Ambassador in France (Bullitt)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d760"
+  },
+  {
+   "id": "frus:frus1938v01/d955",
+   "date": "1939-02-02",
+   "source": "FRUS frus1938v01",
+   "title": "The Chargé in Germany (Gilbert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d955"
+  },
+  {
+   "id": "frus:frus1939v01/d934",
+   "date": "1939-02-02",
+   "source": "FRUS frus1939v01",
+   "title": "The Adviser on International Economic Affairs (Feis) to the Acting Director of the Bureau of the Budget (Bell)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d934"
+  },
+  {
+   "id": "frus:frus1939v02/d36",
+   "date": "1939-02-02",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Secretary General of the League of Nations (Avenol)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d36"
+  },
+  {
+   "id": "frus:frus1939v01/d7",
+   "date": "1939-02-03",
+   "source": "FRUS frus1939v01",
+   "title": "The Chargé in Germany (Gilbert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d7"
+  },
+  {
+   "id": "frus:frus1939v02/d57",
+   "date": "1939-02-03",
+   "source": "FRUS frus1939v02",
+   "title": "The Chargé in Germany (Gilbert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d57"
+  },
+  {
+   "id": "frus:frus1939v02/d697",
+   "date": "1939-02-03",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d697"
+  },
+  {
+   "id": "frus:frus1939v01/d8",
+   "date": "1939-02-04",
+   "source": "FRUS frus1939v01",
+   "title": "The Chargé in Germany (Gilbert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d8"
+  },
+  {
+   "id": "frus:frus1939v02/d698",
+   "date": "1939-02-04",
+   "source": "FRUS frus1939v02",
+   "title": "The Counselor of Embassy in Spain (Thurston), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d698"
+  },
+  {
+   "id": "frus:frus1939v02/d699",
+   "date": "1939-02-05",
+   "source": "FRUS frus1939v02",
+   "title": "The Counselor of Embassy in Spain (Thurston), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d699"
+  },
+  {
+   "id": "frus:frus1939v01/d9",
+   "date": "1939-02-06",
+   "source": "FRUS frus1939v01",
+   "title": "The Chargé in Germany (Gilbert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d9"
+  },
+  {
+   "id": "frus:frus1939v02/d58",
+   "date": "1939-02-06",
+   "source": "FRUS frus1939v02",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d58"
+  },
+  {
+   "id": "frus:frus1939v02/d59",
+   "date": "1939-02-06",
+   "source": "FRUS frus1939v02",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d59"
+  },
+  {
+   "id": "frus:frus1939v02/d700",
+   "date": "1939-02-06",
+   "source": "FRUS frus1939v02",
+   "title": "The Counselor of Embassy in Spain (Thurston), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d700"
+  },
+  {
+   "id": "frus:frus1939v02/d701",
+   "date": "1939-02-06",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d701"
+  },
+  {
+   "id": "frus:frus1939v01/d10",
+   "date": "1939-02-07",
+   "source": "FRUS frus1939v01",
+   "title": "Memorandum of Conversation, by the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d10"
+  },
+  {
+   "id": "frus:frus1939v02/d533",
+   "date": "1939-02-07",
+   "source": "FRUS frus1939v02",
+   "title": "The Chargé in Germany (Gilbert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d533"
+  },
+  {
+   "id": "frus:frus1939v02/d702",
+   "date": "1939-02-07",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d702"
+  },
+  {
+   "id": "frus:frus1939v02/d703",
+   "date": "1939-02-07",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d703"
+  },
+  {
+   "id": "frus:frus1939v02/d776",
+   "date": "1939-02-07",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Consul at Vigo (Graves)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d776"
+  },
+  {
+   "id": "frus:frus1939v01/d11",
+   "date": "1939-02-08",
+   "source": "FRUS frus1939v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d11"
+  },
+  {
+   "id": "frus:frus1939v02/d273",
+   "date": "1939-02-08",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the British Chargé (Mallet)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d273"
+  },
+  {
+   "id": "frus:frus1939v02/d274",
+   "date": "1939-02-08",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the British Chargé (Mallet)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d274"
+  },
+  {
+   "id": "frus:frus1939v02/d60",
+   "date": "1939-02-08",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Chargé in the United Kingdom (Johnson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d60"
+  },
+  {
+   "id": "frus:frus1939v02/d61",
+   "date": "1939-02-08",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Minister in the Netherlands (Gordon)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d61"
+  },
+  {
+   "id": "frus:frus1939v02/d704",
+   "date": "1939-02-08",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d704"
+  },
+  {
+   "id": "frus:frus1939v02/d777",
+   "date": "1939-02-08",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Ambassador in Spain (Bowers), Then in France",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d777"
+  },
+  {
+   "id": "frus:frus1939v01/d990",
+   "date": "1939-02-09",
+   "source": "FRUS frus1939v01",
+   "title": "The Secretary of State to the Chargé in the United Kingdom (Johnson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d990"
+  },
+  {
+   "id": "frus:frus1939v02/d562",
+   "date": "1939-02-09",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Minister in Hungary (Montgomery)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d562"
+  },
+  {
+   "id": "frus:frus1939v02/d62",
+   "date": "1939-02-09",
+   "source": "FRUS frus1939v02",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d62"
+  },
+  {
+   "id": "frus:frus1939v02/d778",
+   "date": "1939-02-09",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d778"
+  },
+  {
+   "id": "frus:frus1939v02/d63",
+   "date": "1939-02-10",
+   "source": "FRUS frus1939v02",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d63"
+  },
+  {
+   "id": "frus:frus1939v02/d305",
+   "date": "1939-02-11",
+   "source": "FRUS frus1939v02",
+   "title": "Memorandum of Conversation, by Mr. Leo D. Sturgeon of the Division of Far Eastern Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d305"
+  },
+  {
+   "id": "frus:frus1939v02/d64",
+   "date": "1939-02-11",
+   "source": "FRUS frus1939v02",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d64"
+  },
+  {
+   "id": "frus:frus1939v02/d65",
+   "date": "1939-02-11",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Chargé in the United Kingdom (Johnson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d65"
+  },
+  {
+   "id": "frus:frus1939v02/d705",
+   "date": "1939-02-11",
+   "source": "FRUS frus1939v02",
+   "title": "The Counselor of Embassy in Spain (Thurston), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d705"
+  },
+  {
+   "id": "frus:frus1933-39/d621",
+   "date": "1939-02-13",
+   "source": "FRUS frus1933-39",
+   "title": "The Secretary of State to the Chargé in the Soviet Union (Kirk)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d621"
+  },
+  {
+   "id": "frus:frus1939v01/d945",
+   "date": "1939-02-13",
+   "source": "FRUS frus1939v01",
+   "title": "The Minister in the Netherlands (Gordon) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d945"
+  },
+  {
+   "id": "frus:frus1939v02/d446",
+   "date": "1939-02-13",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d446"
+  },
+  {
+   "id": "frus:frus1939v02/d563",
+   "date": "1939-02-13",
+   "source": "FRUS frus1939v02",
+   "title": "The Minister in Hungary (Montgomery) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d563"
+  },
+  {
+   "id": "frus:frus1939v02/d706",
+   "date": "1939-02-13",
+   "source": "FRUS frus1939v02",
+   "title": "The Counselor of Embassy in Spain (Thurston), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d706"
+  },
+  {
+   "id": "frus:frus1939v02/d762",
+   "date": "1939-02-13",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d762"
+  },
+  {
+   "id": "frus:frus1939v02/d763",
+   "date": "1939-02-13",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Ambassador in Spain (Bowers), Then in France",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d763"
+  },
+  {
+   "id": "frus:frus1933-39/d679",
+   "date": "1939-02-14",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d679"
+  },
+  {
+   "id": "frus:frus1939v02/d504",
+   "date": "1939-02-14",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d504"
+  },
+  {
+   "id": "frus:frus1939v02/d511",
+   "date": "1939-02-14",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d511"
+  },
+  {
+   "id": "frus:frus1939v02/d596",
+   "date": "1939-02-14",
+   "source": "FRUS frus1939v02",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d596"
+  },
+  {
+   "id": "frus:frus1939v02/d707",
+   "date": "1939-02-14",
+   "source": "FRUS frus1939v02",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d707"
+  },
+  {
+   "id": "frus:frus1939v01/d306",
+   "date": "1939-02-15",
+   "source": "FRUS frus1939v01",
+   "title": "The Chargé in the Soviet Union (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d306"
+  },
+  {
+   "id": "frus:frus1939v02/d515",
+   "date": "1939-02-15",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Chargé in Germany (Gilbert)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d515"
+  },
+  {
+   "id": "frus:frus1939v02/d534",
+   "date": "1939-02-15",
+   "source": "FRUS frus1939v02",
+   "title": "The Chargé in Germany (Gilbert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d534"
+  },
+  {
+   "id": "frus:frus1939v02/d66",
+   "date": "1939-02-15",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Chargé in the United Kingdom (Johnson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d66"
+  },
+  {
+   "id": "frus:frus1939v02/d67",
+   "date": "1939-02-15",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Chargé in the United Kingdom (Johnson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d67"
+  },
+  {
+   "id": "frus:frus1939v01/d12",
+   "date": "1939-02-16",
+   "source": "FRUS frus1939v01",
+   "title": "The Ambassador in Poland (Biddle) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d12"
+  },
+  {
+   "id": "frus:frus1939v02/d447",
+   "date": "1939-02-16",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Ambassador in France (Bullitt)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d447"
+  },
+  {
+   "id": "frus:frus1939v02/d597",
+   "date": "1939-02-16",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d597"
+  },
+  {
+   "id": "frus:frus1939v02/d598",
+   "date": "1939-02-16",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d598"
+  },
+  {
+   "id": "frus:frus1939v02/d68",
+   "date": "1939-02-16",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d68"
+  },
+  {
+   "id": "frus:frus1939v02/d779",
+   "date": "1939-02-16",
+   "source": "FRUS frus1939v02",
+   "title": "Memorandum of Conversation, by the Chief of the Division of European Affairs (Moffat)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d779"
+  },
+  {
+   "id": "frus:frus1939v02/d780",
+   "date": "1939-02-16",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d780"
+  },
+  {
+   "id": "frus:frus1939v01/d13",
+   "date": "1939-02-17",
+   "source": "FRUS frus1939v01",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d13"
+  },
+  {
+   "id": "frus:frus1939v02/d670",
+   "date": "1939-02-17",
+   "source": "FRUS frus1939v02",
+   "title": "Memorandum of Conversation, by Mr. John C. Ross of the Division of Trade Agreements",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d670"
+  },
+  {
+   "id": "frus:frus1939v02/d671",
+   "date": "1939-02-17",
+   "source": "FRUS frus1939v02",
+   "title": "The Department of State to the Portuguese Legation",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d671"
+  },
+  {
+   "id": "frus:frus1939v02/d69",
+   "date": "1939-02-17",
+   "source": "FRUS frus1939v02",
+   "title": "The Chargé in Germany (Gilbert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d69"
+  },
+  {
+   "id": "frus:frus1939v02/d708",
+   "date": "1939-02-17",
+   "source": "FRUS frus1939v02",
+   "title": "Extract From a Memorandum of a Press Conference, February 17, 1939",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d708"
+  },
+  {
+   "id": "frus:frus1939v02/d709",
+   "date": "1939-02-17",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d709"
+  },
+  {
+   "id": "frus:frus1939v02/d428",
+   "date": "1939-02-18",
+   "source": "FRUS frus1939v02",
+   "title": "The Consul at Paris (Murphy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d428"
+  },
+  {
+   "id": "frus:frus1939v02/d599",
+   "date": "1939-02-18",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Ambassador in Italy (Phillips)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d599"
+  },
+  {
+   "id": "frus:frus1939v02/d70",
+   "date": "1939-02-18",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Chargé in Germany (Gilbert)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d70"
+  },
+  {
+   "id": "frus:frus1939v02/d710",
+   "date": "1939-02-18",
+   "source": "FRUS frus1939v02",
+   "title": "The British Embassy to the Department of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d710"
+  },
+  {
+   "id": "frus:frus1939v02/d711",
+   "date": "1939-02-18",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d711"
+  },
+  {
+   "id": "frus:frus1939v02/d712",
+   "date": "1939-02-18",
+   "source": "FRUS frus1939v02",
+   "title": "The Vice Consul at Valencia (Wallner) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d712"
+  },
+  {
+   "id": "frus:frus1933-39/d622",
+   "date": "1939-02-19",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d622"
+  },
+  {
+   "id": "frus:frus1939v01/d14",
+   "date": "1939-02-20",
+   "source": "FRUS frus1939v01",
+   "title": "Memorandum of Conversation, by the Under Secretary of State (Welles)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d14"
+  },
+  {
+   "id": "frus:frus1939v01/d15",
+   "date": "1939-02-20",
+   "source": "FRUS frus1939v01",
+   "title": "The Secretary of State to President Roosevelt",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d15"
+  },
+  {
+   "id": "frus:frus1939v01/d18",
+   "date": "1939-02-20",
+   "source": "FRUS frus1939v01",
+   "title": "Report by the Military Attaché in Germany (Smith)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d18"
+  },
+  {
+   "id": "frus:frus1939v01/d307",
+   "date": "1939-02-20",
+   "source": "FRUS frus1939v01",
+   "title": "The Chargé in the Soviet Union (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d307"
+  },
+  {
+   "id": "frus:frus1939v01/d991",
+   "date": "1939-02-20",
+   "source": "FRUS frus1939v01",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d991"
+  },
+  {
+   "id": "frus:frus1939v02/d275",
+   "date": "1939-02-20",
+   "source": "FRUS frus1939v02",
+   "title": "The British Ambassador (Lindsay) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d275"
+  },
+  {
+   "id": "frus:frus1939v02/d535",
+   "date": "1939-02-20",
+   "source": "FRUS frus1939v02",
+   "title": "The Chargé in Germany (Gilbert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d535"
+  },
+  {
+   "id": "frus:frus1939v02/d713",
+   "date": "1939-02-20",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d713"
+  },
+  {
+   "id": "frus:frus1933-39/d570",
+   "date": "1939-02-22",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d570"
+  },
+  {
+   "id": "frus:frus1938v01/d941",
+   "date": "1939-02-22",
+   "source": "FRUS frus1938v01",
+   "title": "The Consul General at Sydney (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1938v01/d941"
+  },
+  {
+   "id": "frus:frus1939v02/d714",
+   "date": "1939-02-22",
+   "source": "FRUS frus1939v02",
+   "title": "The British Embassy to the Department of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d714"
+  },
+  {
+   "id": "frus:frus1939v02/d715",
+   "date": "1939-02-22",
+   "source": "FRUS frus1939v02",
+   "title": "The British Embassy to the Department of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d715"
+  },
+  {
+   "id": "frus:frus1933-39/d623",
+   "date": "1939-02-23",
+   "source": "FRUS frus1933-39",
+   "title": "The Secretary of State to the Chargé in the Soviet Union (Kirk)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d623"
+  },
+  {
+   "id": "frus:frus1939v01/d16",
+   "date": "1939-02-23",
+   "source": "FRUS frus1939v01",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d16"
+  },
+  {
+   "id": "frus:frus1939v02/d421",
+   "date": "1939-02-23",
+   "source": "FRUS frus1939v02",
+   "title": "The Chargé in Estonia (Leonard) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d421"
+  },
+  {
+   "id": "frus:frus1939v01/d17",
+   "date": "1939-02-24",
+   "source": "FRUS frus1939v01",
+   "title": "The Chargé in Germany (Gilbert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d17"
+  },
+  {
+   "id": "frus:frus1939v01/d992",
+   "date": "1939-02-24",
+   "source": "FRUS frus1939v01",
+   "title": "The Secretary of State to the Ambassador in the United Kingdom (Kennedy)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d992"
+  },
+  {
+   "id": "frus:frus1939v02/d5",
+   "date": "1939-02-24",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d5"
+  },
+  {
+   "id": "frus:frus1939v02/d716",
+   "date": "1939-02-24",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Ambassador in France (Bullitt)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d716"
+  },
+  {
+   "id": "frus:frus1939v02/d717",
+   "date": "1939-02-25",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d717"
+  },
+  {
+   "id": "frus:frus1939v02/d718",
+   "date": "1939-02-25",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d718"
+  },
+  {
+   "id": "frus:frus1939v02/d719",
+   "date": "1939-02-26",
+   "source": "FRUS frus1939v02",
+   "title": "The Vice Consul at Valencia (Wallner) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d719"
+  },
+  {
+   "id": "frus:frus1939v02/d21",
+   "date": "1939-02-27",
+   "source": "FRUS frus1939v02",
+   "title": "The Under Secretary of State (Welles) to the Brazilian Minister for Foreign Affairs (Aranha)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d21"
+  },
+  {
+   "id": "frus:frus1939v02/d600",
+   "date": "1939-02-27",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d600"
+  },
+  {
+   "id": "frus:frus1939v02/d71",
+   "date": "1939-02-27",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Ambassador in the United Kingdom (Kennedy)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d71"
+  },
+  {
+   "id": "frus:frus1939v02/d720",
+   "date": "1939-02-27",
+   "source": "FRUS frus1939v02",
+   "title": "Memorandum of Conversation, by the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d720"
+  },
+  {
+   "id": "frus:frus1939v02/d721",
+   "date": "1939-02-27",
+   "source": "FRUS frus1939v02",
+   "title": "The Spanish Ambassador (De los Rios) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d721"
+  },
+  {
+   "id": "frus:frus1933-39/d680",
+   "date": "1939-02-28",
+   "source": "FRUS frus1933-39",
+   "title": "The Secretary of State to the Chargé of the Soviet Union (Umansky)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d680"
+  },
+  {
+   "id": "frus:frus1939v01/d19",
+   "date": "1939-02-28",
+   "source": "FRUS frus1939v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d19"
+  },
+  {
+   "id": "frus:frus1939v02/d505",
+   "date": "1939-02-28",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Ambassador in France (Bullitt)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d505"
+  },
+  {
+   "id": "frus:frus1939v02/d722",
+   "date": "1939-02-28",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d722"
+  },
+  {
+   "id": "frus:frus1939v02/d723",
+   "date": "1939-02-28",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Ambassador in France (Bullitt)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d723"
+  },
+  {
+   "id": "frus:frus1939v02/d781",
+   "date": "1939-02-28",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d781"
+  },
+  {
+   "id": "frus:frus1939v02/d72",
+   "date": "1939-03-01",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d72"
+  },
+  {
+   "id": "frus:frus1933-39/d726",
+   "date": "1939-03-02",
+   "source": "FRUS frus1933-39",
+   "title": "Memorandum by the Chief of the Division of European Affairs (Moffat)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d726"
+  },
+  {
+   "id": "frus:frus1939v02/d30",
+   "date": "1939-03-02",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d30"
+  },
+  {
+   "id": "frus:frus1939v02/d506",
+   "date": "1939-03-02",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d506"
+  },
+  {
+   "id": "frus:frus1939v02/d724",
+   "date": "1939-03-02",
+   "source": "FRUS frus1939v02",
+   "title": "Memorandum of Conversation, by the Under Secretary of State (Welles)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d724"
+  },
+  {
+   "id": "frus:frus1939v02/d782",
+   "date": "1939-03-02",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d782"
+  },
+  {
+   "id": "frus:frus1939v02/d783",
+   "date": "1939-03-02",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Ambassador in Spain (Bowers), Then in France",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d783"
+  },
+  {
+   "id": "frus:frus1933-39/d681",
+   "date": "1939-03-03",
+   "source": "FRUS frus1933-39",
+   "title": "Memorandum by the Chief of the Division of Controls (Green)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d681"
+  },
+  {
+   "id": "frus:frus1939v01/d20",
+   "date": "1939-03-03",
+   "source": "FRUS frus1939v01",
+   "title": "The Ambassador in Poland (Biddle) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d20"
+  },
+  {
+   "id": "frus:frus1939v02/d391",
+   "date": "1939-03-03",
+   "source": "FRUS frus1939v02",
+   "title": "The Belgian Ambassador (Van der Straten-Ponthoz) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d391"
+  },
+  {
+   "id": "frus:frus1939v02/d73",
+   "date": "1939-03-03",
+   "source": "FRUS frus1939v02",
+   "title": "The Chargé in Germany (Geist) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d73"
+  },
+  {
+   "id": "frus:frus1933-39/d571",
+   "date": "1939-03-04",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d571"
+  },
+  {
+   "id": "frus:frus1939v01/d993",
+   "date": "1939-03-04",
+   "source": "FRUS frus1939v01",
+   "title": "The Secretary of State to the Ambassador in the United Kingdom (Kennedy)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d993"
+  },
+  {
+   "id": "frus:frus1939v02/d317",
+   "date": "1939-03-04",
+   "source": "FRUS frus1939v02",
+   "title": "The Minister in Albania (Grant) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d317"
+  },
+  {
+   "id": "frus:frus1939v02/d422",
+   "date": "1939-03-04",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Chargé in Estonia (Leonard)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d422"
+  },
+  {
+   "id": "frus:frus1939v02/d74",
+   "date": "1939-03-04",
+   "source": "FRUS frus1939v02",
+   "title": "The Chargé in Germany (Geist) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d74"
+  },
+  {
+   "id": "frus:frus1933-39/d727",
+   "date": "1939-03-06",
+   "source": "FRUS frus1933-39",
+   "title": "Memorandum by the Chief of the Division of European Affairs (Moffat)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d727"
+  },
+  {
+   "id": "frus:frus1939v01/d994",
+   "date": "1939-03-06",
+   "source": "FRUS frus1939v01",
+   "title": "The Ambassador in the United. Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d994"
+  },
+  {
+   "id": "frus:frus1939v02/d448",
+   "date": "1939-03-06",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d448"
+  },
+  {
+   "id": "frus:frus1939v02/d536",
+   "date": "1939-03-06",
+   "source": "FRUS frus1939v02",
+   "title": "The Chargé in Germany (Geist) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d536"
+  },
+  {
+   "id": "frus:frus1939v02/d725",
+   "date": "1939-03-06",
+   "source": "FRUS frus1939v02",
+   "title": "The Vice Consul at Valencia (Wallner) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d725"
+  },
+  {
+   "id": "frus:frus1939v01/d21",
+   "date": "1939-03-07",
+   "source": "FRUS frus1939v01",
+   "title": "The Secretary of State to the Ambassador in the United Kingdom (Kennedy)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d21"
+  },
+  {
+   "id": "frus:frus1939v02/d449",
+   "date": "1939-03-07",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Ambassador in France (Bullitt)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d449"
+  },
+  {
+   "id": "frus:frus1939v02/d726",
+   "date": "1939-03-07",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d726"
+  },
+  {
+   "id": "frus:frus1939v02/d727",
+   "date": "1939-03-07",
+   "source": "FRUS frus1939v02",
+   "title": "The Vice Consul at Valencia (Wallner) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d727"
+  },
+  {
+   "id": "frus:frus1939v02/d392",
+   "date": "1939-03-08",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Belgian Ambassador (Van der Straten-Ponthoz)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d392"
+  },
+  {
+   "id": "frus:frus1939v02/d601",
+   "date": "1939-03-08",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d601"
+  },
+  {
+   "id": "frus:frus1939v02/d728",
+   "date": "1939-03-08",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d728"
+  },
+  {
+   "id": "frus:frus1933-39/d624",
+   "date": "1939-03-09",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d624"
+  },
+  {
+   "id": "frus:frus1933-39/d712",
+   "date": "1939-03-09",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d712"
+  },
+  {
+   "id": "frus:frus1939v01/d22",
+   "date": "1939-03-09",
+   "source": "FRUS frus1939v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d22"
+  },
+  {
+   "id": "frus:frus1939v01/d995",
+   "date": "1939-03-09",
+   "source": "FRUS frus1939v01",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d995"
+  },
+  {
+   "id": "frus:frus1933-39/d649",
+   "date": "1939-03-10",
+   "source": "FRUS frus1933-39",
+   "title": "Memorandum by the Assistant Chief of the Division of European Affairs (Henderson) of a Conversation With the Chargé of the Soviet Union (Umansky)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d649"
+  },
+  {
+   "id": "frus:frus1933-39/d650",
+   "date": "1939-03-10",
+   "source": "FRUS frus1933-39",
+   "title": "Memorandum by the Assistant Chief of the Division of European Affairs (Henderson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d650"
+  },
+  {
+   "id": "frus:frus1933-39/d651",
+   "date": "1939-03-10",
+   "source": "FRUS frus1933-39",
+   "title": "Memorandum by the Assistant Secretary of State (Messersmith)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d651"
+  },
+  {
+   "id": "frus:frus1933-39/d728",
+   "date": "1939-03-10",
+   "source": "FRUS frus1933-39",
+   "title": "Memorandum by the Assistant Chief of the Division of European Affairs (Henderson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d728"
+  },
+  {
+   "id": "frus:frus1939v01/d23",
+   "date": "1939-03-10",
+   "source": "FRUS frus1939v01",
+   "title": "The Consul at Geneva (Bucknell) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d23"
+  },
+  {
+   "id": "frus:frus1939v01/d27",
+   "date": "1939-03-10",
+   "source": "FRUS frus1939v01",
+   "title": "The Minister in Czechoslovakia (Carr) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d27"
+  },
+  {
+   "id": "frus:frus1939v01/d946",
+   "date": "1939-03-10",
+   "source": "FRUS frus1939v01",
+   "title": "The Chargé in the United Kingdom (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d946"
+  },
+  {
+   "id": "frus:frus1939v02/d602",
+   "date": "1939-03-10",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d602"
+  },
+  {
+   "id": "frus:frus1939v02/d729",
+   "date": "1939-03-10",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d729"
+  },
+  {
+   "id": "frus:frus1939v02/d730",
+   "date": "1939-03-10",
+   "source": "FRUS frus1939v02",
+   "title": "The Acting Secretary of State to the Ambassador in France (Bullitt)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d730"
+  },
+  {
+   "id": "frus:frus1933-39/d572",
+   "date": "1939-03-11",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d572"
+  },
+  {
+   "id": "frus:frus1939v01/d24",
+   "date": "1939-03-11",
+   "source": "FRUS frus1939v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d24"
+  },
+  {
+   "id": "frus:frus1939v02/d450",
+   "date": "1939-03-11",
+   "source": "FRUS frus1939v02",
+   "title": "Memorandum of Conversation, by the Under Secretary of State (Welles)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d450"
+  },
+  {
+   "id": "frus:frus1939v02/d731",
+   "date": "1939-03-11",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d731"
+  },
+  {
+   "id": "frus:frus1933-39/d573",
+   "date": "1939-03-13",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d573"
+  },
+  {
+   "id": "frus:frus1939v01/d28",
+   "date": "1939-03-13",
+   "source": "FRUS frus1939v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d28"
+  },
+  {
+   "id": "frus:frus1939v02/d507",
+   "date": "1939-03-13",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d507"
+  },
+  {
+   "id": "frus:frus1939v02/d732",
+   "date": "1939-03-13",
+   "source": "FRUS frus1939v02",
+   "title": "The Acting Secretary of State to the Ambassador in France (Bullitt)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d732"
+  },
+  {
+   "id": "frus:frus1933-39/d574",
+   "date": "1939-03-14",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d574"
+  },
+  {
+   "id": "frus:frus1939v01/d29",
+   "date": "1939-03-14",
+   "source": "FRUS frus1939v01",
+   "title": "The Chargé in Germany (Geist) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d29"
+  },
+  {
+   "id": "frus:frus1939v01/d30",
+   "date": "1939-03-14",
+   "source": "FRUS frus1939v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d30"
+  },
+  {
+   "id": "frus:frus1939v02/d75",
+   "date": "1939-03-14",
+   "source": "FRUS frus1939v02",
+   "title": "The Acting Secretary of State to the Chargé in the United Kingdom (Johnson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d75"
+  },
+  {
+   "id": "frus:frus1939v02/d784",
+   "date": "1939-03-14",
+   "source": "FRUS frus1939v02",
+   "title": "The Acting Secretary of State to the Chargé in Spain (Thurston), Then in France",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d784"
+  },
+  {
+   "id": "frus:frus1939v01/d31",
+   "date": "1939-03-15",
+   "source": "FRUS frus1939v01",
+   "title": "The Minister in Czechoslovakia (Carr) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d31"
+  },
+  {
+   "id": "frus:frus1939v01/d32",
+   "date": "1939-03-15",
+   "source": "FRUS frus1939v01",
+   "title": "The Chargé in Germany (Geist) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d32"
+  },
+  {
+   "id": "frus:frus1939v01/d33",
+   "date": "1939-03-15",
+   "source": "FRUS frus1939v01",
+   "title": "Memorandum of Trans-Atlantic Telephone Conversation Between the Ambassador in France (Bullitt) and the Acting Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d33"
+  },
+  {
+   "id": "frus:frus1939v01/d34",
+   "date": "1939-03-15",
+   "source": "FRUS frus1939v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d34"
+  },
+  {
+   "id": "frus:frus1939v01/d996",
+   "date": "1939-03-15",
+   "source": "FRUS frus1939v01",
+   "title": "The Acting Secretary of State to the Ambassador in the United Kingdom (Kennedy)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d996"
+  },
+  {
+   "id": "frus:frus1939v02/d516",
+   "date": "1939-03-15",
+   "source": "FRUS frus1939v02",
+   "title": "The Chargé in Germany (Geist) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d516"
+  },
+  {
+   "id": "frus:frus1939v02/d564",
+   "date": "1939-03-15",
+   "source": "FRUS frus1939v02",
+   "title": "The Acting Secretary of State to the Minister in Hungary (Montgomery)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d564"
+  },
+  {
+   "id": "frus:frus1939v02/d603",
+   "date": "1939-03-15",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d603"
+  },
+  {
+   "id": "frus:frus1933-39/d575",
+   "date": "1939-03-16",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d575"
+  },
+  {
+   "id": "frus:frus1933-39/d729",
+   "date": "1939-03-16",
+   "source": "FRUS frus1933-39",
+   "title": "The Director of the Federal Bureau of Investigation (Hoover) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d729"
+  },
+  {
+   "id": "frus:frus1939v01/d35",
+   "date": "1939-03-16",
+   "source": "FRUS frus1939v01",
+   "title": "Memorandum of Conversation, by the Chief of the Division of European Affairs (Moffat)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d35"
+  },
+  {
+   "id": "frus:frus1939v01/d36",
+   "date": "1939-03-16",
+   "source": "FRUS frus1939v01",
+   "title": "The Chief of the Division of European Affairs (Moffat) to the Under Secretary of State (Welles)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d36"
+  },
+  {
+   "id": "frus:frus1939v01/d66",
+   "date": "1939-03-16",
+   "source": "FRUS frus1939v01",
+   "title": "Memorandum of Conversation, by the Chief of the Division of Controls (Green)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d66"
+  },
+  {
+   "id": "frus:frus1939v02/d276",
+   "date": "1939-03-16",
+   "source": "FRUS frus1939v02",
+   "title": "Memorandum of Conversation, by the Chief of the Division of European Affairs (Moffat)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d276"
+  },
+  {
+   "id": "frus:frus1939v01/d37",
+   "date": "1939-03-17",
+   "source": "FRUS frus1939v01",
+   "title": "Memorandum of Conversation, by the Chief of the Division of European Affairs (Moffat)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d37"
+  },
+  {
+   "id": "frus:frus1939v01/d38",
+   "date": "1939-03-17",
+   "source": "FRUS frus1939v01",
+   "title": "The German Chargé (Thomsen) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d38"
+  },
+  {
+   "id": "frus:frus1939v01/d39",
+   "date": "1939-03-17",
+   "source": "FRUS frus1939v01",
+   "title": "The Acting Secretary of State to the Minister in Czechoslovakia (Carr)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d39"
+  },
+  {
+   "id": "frus:frus1939v01/d40",
+   "date": "1939-03-17",
+   "source": "FRUS frus1939v01",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d40"
+  },
+  {
+   "id": "frus:frus1939v01/d41",
+   "date": "1939-03-17",
+   "source": "FRUS frus1939v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d41"
+  },
+  {
+   "id": "frus:frus1939v01/d42",
+   "date": "1939-03-17",
+   "source": "FRUS frus1939v01",
+   "title": "Statement Issued to the Press by the Acting Secretary of State, March 17, 1939",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d42"
+  },
+  {
+   "id": "frus:frus1939v01/d43",
+   "date": "1939-03-17",
+   "source": "FRUS frus1939v01",
+   "title": "The Acting Secretary of State to the Minister in Czechoslovakia (Carr)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d43"
+  },
+  {
+   "id": "frus:frus1939v01/d44",
+   "date": "1939-03-17",
+   "source": "FRUS frus1939v01",
+   "title": "The Acting Secretary of State to the Chargé in Germany (Geist)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d44"
+  },
+  {
+   "id": "frus:frus1939v01/d45",
+   "date": "1939-03-17",
+   "source": "FRUS frus1939v01",
+   "title": "The Minister in Czechoslovakia (Carr) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d45"
+  },
+  {
+   "id": "frus:frus1939v01/d67",
+   "date": "1939-03-17",
+   "source": "FRUS frus1939v01",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d67"
+  },
+  {
+   "id": "frus:frus1939v01/d935",
+   "date": "1939-03-17",
+   "source": "FRUS frus1939v01",
+   "title": "The Acting Secretary of State to Senator Morris Sheppard",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d935"
+  },
+  {
+   "id": "frus:frus1939v01/d997",
+   "date": "1939-03-17",
+   "source": "FRUS frus1939v01",
+   "title": "Memorandum of Conversation, by the Second Secretary of Embassy in the United Kingdom (Butterworth)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d997"
+  },
+  {
+   "id": "frus:frus1939v02/d522",
+   "date": "1939-03-17",
+   "source": "FRUS frus1939v02",
+   "title": "Memorandum by the Acting Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d522"
+  },
+  {
+   "id": "frus:frus1939v02/d604",
+   "date": "1939-03-17",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d604"
+  },
+  {
+   "id": "frus:frus1933-39/d730",
+   "date": "1939-03-18",
+   "source": "FRUS frus1933-39",
+   "title": "The Embassy of the Soviet Union to the Department of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d730"
+  },
+  {
+   "id": "frus:frus1939v01/d46",
+   "date": "1939-03-18",
+   "source": "FRUS frus1939v01",
+   "title": "The German Chargé (Thomsen) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d46"
+  },
+  {
+   "id": "frus:frus1939v01/d47",
+   "date": "1939-03-18",
+   "source": "FRUS frus1939v01",
+   "title": "The Minister in Czechoslovakia (Carr) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d47"
+  },
+  {
+   "id": "frus:frus1939v01/d48",
+   "date": "1939-03-18",
+   "source": "FRUS frus1939v01",
+   "title": "The Consul at Geneva (Bucknell) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d48"
+  },
+  {
+   "id": "frus:frus1939v01/d68",
+   "date": "1939-03-18",
+   "source": "FRUS frus1939v01",
+   "title": "The Acting Secretary of State to the Minister in Rumania (Gunther)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d68"
+  },
+  {
+   "id": "frus:frus1939v01/d69",
+   "date": "1939-03-18",
+   "source": "FRUS frus1939v01",
+   "title": "Memorandum of Conversation, by the Chief of the Division of European Affairs (Moffat)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d69"
+  },
+  {
+   "id": "frus:frus1939v01/d70",
+   "date": "1939-03-18",
+   "source": "FRUS frus1939v01",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d70"
+  },
+  {
+   "id": "frus:frus1939v02/d785",
+   "date": "1939-03-18",
+   "source": "FRUS frus1939v02",
+   "title": "The Chargé in Spain (Thurston), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d785"
+  },
+  {
+   "id": "frus:frus1939v01/d49",
+   "date": "1939-03-19",
+   "source": "FRUS frus1939v01",
+   "title": "The Minister in Czechoslovakia (Carr) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d49"
+  },
+  {
+   "id": "frus:frus1939v01/d50",
+   "date": "1939-03-19",
+   "source": "FRUS frus1939v01",
+   "title": "The Minister in Czechoslovakia (Carr) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d50"
+  },
+  {
+   "id": "frus:frus1939v01/d308",
+   "date": "1939-03-20",
+   "source": "FRUS frus1939v01",
+   "title": "The Chargé in the Soviet Union (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d308"
+  },
+  {
+   "id": "frus:frus1939v01/d51",
+   "date": "1939-03-20",
+   "source": "FRUS frus1939v01",
+   "title": "The Acting Secretary of State to the Minister in Czechoslovakia (Carr)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d51"
+  },
+  {
+   "id": "frus:frus1939v01/d52",
+   "date": "1939-03-20",
+   "source": "FRUS frus1939v01",
+   "title": "The Acting Secretary of State to the German Chargé (Thomsen)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d52"
+  },
+  {
+   "id": "frus:frus1939v01/d71",
+   "date": "1939-03-20",
+   "source": "FRUS frus1939v01",
+   "title": "The Minister in Rumania (Gunther) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d71"
+  },
+  {
+   "id": "frus:frus1939v01/d72",
+   "date": "1939-03-20",
+   "source": "FRUS frus1939v01",
+   "title": "The Acting Secretary of State to the Ambassador in the United Kingdom (Kennedy)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d72"
+  },
+  {
+   "id": "frus:frus1939v01/d73",
+   "date": "1939-03-20",
+   "source": "FRUS frus1939v01",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d73"
+  },
+  {
+   "id": "frus:frus1939v01/d74",
+   "date": "1939-03-20",
+   "source": "FRUS frus1939v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d74"
+  },
+  {
+   "id": "frus:frus1939v01/d75",
+   "date": "1939-03-20",
+   "source": "FRUS frus1939v01",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d75"
+  },
+  {
+   "id": "frus:frus1939v01/d76",
+   "date": "1939-03-20",
+   "source": "FRUS frus1939v01",
+   "title": "The Minister in Yugoslavia (Lane) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d76"
+  },
+  {
+   "id": "frus:frus1939v02/d786",
+   "date": "1939-03-20",
+   "source": "FRUS frus1939v02",
+   "title": "The Chargé in Spain (Thurston), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d786"
+  },
+  {
+   "id": "frus:frus1933-39/d576",
+   "date": "1939-03-21",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d576"
+  },
+  {
+   "id": "frus:frus1939v01/d53",
+   "date": "1939-03-21",
+   "source": "FRUS frus1939v01",
+   "title": "Memorandum of Conversation, by the Chief of the Division of European Affairs (Moffat)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d53"
+  },
+  {
+   "id": "frus:frus1939v01/d54",
+   "date": "1939-03-21",
+   "source": "FRUS frus1939v01",
+   "title": "The Acting Secretary of State to the Consul at Praha (Bruins)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d54"
+  },
+  {
+   "id": "frus:frus1939v01/d616",
+   "date": "1939-03-21",
+   "source": "FRUS frus1939v01",
+   "title": "The Secretary of State to All American Diplomatic Officers and Certain Consular Officers in Europe and the Near East",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d616"
+  },
+  {
+   "id": "frus:frus1939v01/d77",
+   "date": "1939-03-21",
+   "source": "FRUS frus1939v01",
+   "title": "Memorandum by the Chief of the Division of European Affairs (Moffat)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d77"
+  },
+  {
+   "id": "frus:frus1939v01/d78",
+   "date": "1939-03-21",
+   "source": "FRUS frus1939v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d78"
+  },
+  {
+   "id": "frus:frus1939v01/d79",
+   "date": "1939-03-21",
+   "source": "FRUS frus1939v01",
+   "title": "The Minister in Hungary (Montgomery) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d79"
+  },
+  {
+   "id": "frus:frus1939v02/d451",
+   "date": "1939-03-21",
+   "source": "FRUS frus1939v02",
+   "title": "Memorandum of Conversation, by the Chief of the Division of Controls (Green)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d451"
+  },
+  {
+   "id": "frus:frus1939v02/d565",
+   "date": "1939-03-21",
+   "source": "FRUS frus1939v02",
+   "title": "The Minister in Hungary (Montgomery) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d565"
+  },
+  {
+   "id": "frus:frus1933-39/d682",
+   "date": "1939-03-22",
+   "source": "FRUS frus1933-39",
+   "title": "Memorandum by the Chief of the Division of Controls (Green)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d682"
+  },
+  {
+   "id": "frus:frus1939v01/d55",
+   "date": "1939-03-22",
+   "source": "FRUS frus1939v01",
+   "title": "The Chargé in Germany (Geist) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d55"
+  },
+  {
+   "id": "frus:frus1939v01/d80",
+   "date": "1939-03-22",
+   "source": "FRUS frus1939v01",
+   "title": "The Minister in Lithuania (Norem) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d80"
+  },
+  {
+   "id": "frus:frus1939v01/d81",
+   "date": "1939-03-22",
+   "source": "FRUS frus1939v01",
+   "title": "Memorandum of Conversation, by the Chief of the Division of European, Affairs (Moffat)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d81"
+  },
+  {
+   "id": "frus:frus1939v01/d82",
+   "date": "1939-03-22",
+   "source": "FRUS frus1939v01",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d82"
+  },
+  {
+   "id": "frus:frus1939v01/d83",
+   "date": "1939-03-22",
+   "source": "FRUS frus1939v01",
+   "title": "The Chargé in the Soviet Union (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d83"
+  },
+  {
+   "id": "frus:frus1939v01/d84",
+   "date": "1939-03-22",
+   "source": "FRUS frus1939v01",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d84"
+  },
+  {
+   "id": "frus:frus1939v01/d85",
+   "date": "1939-03-22",
+   "source": "FRUS frus1939v01",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d85"
+  },
+  {
+   "id": "frus:frus1939v01/d86",
+   "date": "1939-03-22",
+   "source": "FRUS frus1939v01",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d86"
+  },
+  {
+   "id": "frus:frus1939v01/d87",
+   "date": "1939-03-22",
+   "source": "FRUS frus1939v01",
+   "title": "The Minister in the Netherlands (Gordon) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d87"
+  },
+  {
+   "id": "frus:frus1939v02/d76",
+   "date": "1939-03-22",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d76"
+  },
+  {
+   "id": "frus:frus1939v01/d88",
+   "date": "1939-03-23",
+   "source": "FRUS frus1939v01",
+   "title": "The Minister in Lithuania (Norem) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d88"
+  },
+  {
+   "id": "frus:frus1939v01/d89",
+   "date": "1939-03-23",
+   "source": "FRUS frus1939v01",
+   "title": "The Ambassador in Poland (Biddle) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d89"
+  },
+  {
+   "id": "frus:frus1939v01/d90",
+   "date": "1939-03-23",
+   "source": "FRUS frus1939v01",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d90"
+  },
+  {
+   "id": "frus:frus1939v02/d432",
+   "date": "1939-03-23",
+   "source": "FRUS frus1939v02",
+   "title": "Memorandum of Conversation, by the Chief of the Division of European Affairs (Moffat)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d432"
+  },
+  {
+   "id": "frus:frus1939v02/d566",
+   "date": "1939-03-23",
+   "source": "FRUS frus1939v02",
+   "title": "The Acting Secretary of State to President Roosevelt",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d566"
+  },
+  {
+   "id": "frus:frus1939v02/d77",
+   "date": "1939-03-23",
+   "source": "FRUS frus1939v02",
+   "title": "The Acting Secretary of State to the Ambassador in the United Kingdom (Kennedy)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d77"
+  },
+  {
+   "id": "frus:frus1939v02/d78",
+   "date": "1939-03-23",
+   "source": "FRUS frus1939v02",
+   "title": "Memorandum by the Chief of the Division of European Affairs (Moffat) to the Acting Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d78"
+  },
+  {
+   "id": "frus:frus1939v02/d834",
+   "date": "1939-03-23",
+   "source": "FRUS frus1939v02",
+   "title": "Press Release Issued by the Department of State, March 23, 1939",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d834"
+  },
+  {
+   "id": "frus:frus1933-39/d731",
+   "date": "1939-03-24",
+   "source": "FRUS frus1933-39",
+   "title": "The Secretary of State to the Chargé of the Soviet Union (Umansky)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d731"
+  },
+  {
+   "id": "frus:frus1939v01/d56",
+   "date": "1939-03-24",
+   "source": "FRUS frus1939v01",
+   "title": "The Minister in Guatemala (Des Portes) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d56"
+  },
+  {
+   "id": "frus:frus1939v01/d57",
+   "date": "1939-03-24",
+   "source": "FRUS frus1939v01",
+   "title": "Statement Issued to the Press by the Secretary of State, March 24, 1939",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d57"
+  },
+  {
+   "id": "frus:frus1939v01/d91",
+   "date": "1939-03-24",
+   "source": "FRUS frus1939v01",
+   "title": "The Ambassador in Belgium (Davies) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d91"
+  },
+  {
+   "id": "frus:frus1939v01/d92",
+   "date": "1939-03-24",
+   "source": "FRUS frus1939v01",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d92"
+  },
+  {
+   "id": "frus:frus1939v01/d93",
+   "date": "1939-03-24",
+   "source": "FRUS frus1939v01",
+   "title": "The Minister in Bulgaria (Atherton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d93"
+  },
+  {
+   "id": "frus:frus1939v02/d672",
+   "date": "1939-03-24",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Minister in Portugal (Pell)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d672"
+  },
+  {
+   "id": "frus:frus1939v02/d733",
+   "date": "1939-03-24",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Ambassador in France (Bullitt)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d733"
+  },
+  {
+   "id": "frus:frus1939v01/d58",
+   "date": "1939-03-25",
+   "source": "FRUS frus1939v01",
+   "title": "The Consul General at Praha (Linnell) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d58"
+  },
+  {
+   "id": "frus:frus1939v01/d94",
+   "date": "1939-03-25",
+   "source": "FRUS frus1939v01",
+   "title": "The Chargé in the Soviet Union (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d94"
+  },
+  {
+   "id": "frus:frus1939v01/d95",
+   "date": "1939-03-25",
+   "source": "FRUS frus1939v01",
+   "title": "The Ambassador in Poland (Biddle) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d95"
+  },
+  {
+   "id": "frus:frus1939v02/d734",
+   "date": "1939-03-25",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d734"
+  },
+  {
+   "id": "frus:frus1939v01/d59",
+   "date": "1939-03-26",
+   "source": "FRUS frus1939v01",
+   "title": "The Secretary of State to the Minister in Guatemala (Des Portes)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d59"
+  },
+  {
+   "id": "frus:frus1939v01/d96",
+   "date": "1939-03-26",
+   "source": "FRUS frus1939v01",
+   "title": "The Ambassador in Poland (Biddle) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d96"
+  },
+  {
+   "id": "frus:frus1939v01/d60",
+   "date": "1939-03-27",
+   "source": "FRUS frus1939v01",
+   "title": "Memorandum of Conversation, by the Chief of the Division of European Affairs (Moffat)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d60"
+  },
+  {
+   "id": "frus:frus1939v02/d735",
+   "date": "1939-03-27",
+   "source": "FRUS frus1939v02",
+   "title": "Memorandum of Conversation, by the Chief of the Division of European Affairs (Moffat)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d735"
+  },
+  {
+   "id": "frus:frus1939v02/d764",
+   "date": "1939-03-27",
+   "source": "FRUS frus1939v02",
+   "title": "Memorandum of Conversation, by the Under Secretary of State (Welles)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d764"
+  },
+  {
+   "id": "frus:frus1939v02/d79",
+   "date": "1939-03-27",
+   "source": "FRUS frus1939v02",
+   "title": "Memorandum of Conversation, by the Under Secretary of State (Welles)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d79"
+  },
+  {
+   "id": "frus:frus1939v01/d617",
+   "date": "1939-03-28",
+   "source": "FRUS frus1939v01",
+   "title": "The Secretary of State to All American Diplomatic and Consular Officers",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d617"
+  },
+  {
+   "id": "frus:frus1939v02/d736",
+   "date": "1939-03-28",
+   "source": "FRUS frus1939v02",
+   "title": "The Vice Consul at Valencia (Wallner) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d736"
+  },
+  {
+   "id": "frus:frus1939v02/d737",
+   "date": "1939-03-28",
+   "source": "FRUS frus1939v02",
+   "title": "The Vice Consul at Valencia (Wallner) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d737"
+  },
+  {
+   "id": "frus:frus1939v02/d765",
+   "date": "1939-03-28",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Ambassador in France (Bullitt)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d765"
+  },
+  {
+   "id": "frus:frus1939v01/d97",
+   "date": "1939-03-29",
+   "source": "FRUS frus1939v01",
+   "title": "The Ambassador in Poland (Biddle) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d97"
+  },
+  {
+   "id": "frus:frus1939v01/d98",
+   "date": "1939-03-29",
+   "source": "FRUS frus1939v01",
+   "title": "Memorandum of Conversation, by the Chief of the Division of European Affairs (Moffat)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d98"
+  },
+  {
+   "id": "frus:frus1939v02/d738",
+   "date": "1939-03-29",
+   "source": "FRUS frus1939v02",
+   "title": "Memorandum of Conversation, by Mr. Eric C. Wendelin of the Division of European Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d738"
+  },
+  {
+   "id": "frus:frus1939v02/d766",
+   "date": "1939-03-29",
+   "source": "FRUS frus1939v02",
+   "title": "Memorandum of Conversation, by the Chief of the Division of the American Republics (Duggan)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d766"
+  },
+  {
+   "id": "frus:frus1939v02/d767",
+   "date": "1939-03-29",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in France (Bullitt) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d767"
+  },
+  {
+   "id": "frus:frus1939v02/d768",
+   "date": "1939-03-29",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d768"
+  },
+  {
+   "id": "frus:frus1933-39/d577",
+   "date": "1939-03-30",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d577"
+  },
+  {
+   "id": "frus:frus1933-39/d732",
+   "date": "1939-03-30",
+   "source": "FRUS frus1933-39",
+   "title": "The Secretary of State to All Chiefs of Mission in the United States",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d732"
+  },
+  {
+   "id": "frus:frus1939v01/d1042",
+   "date": "1939-03-30",
+   "source": "FRUS frus1939v01",
+   "title": "The Chargé in the Soviet Union (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d1042"
+  },
+  {
+   "id": "frus:frus1939v01/d99",
+   "date": "1939-03-30",
+   "source": "FRUS frus1939v01",
+   "title": "The Ambassador in Belgium (Davies) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d99"
+  },
+  {
+   "id": "frus:frus1939v02/d739",
+   "date": "1939-03-30",
+   "source": "FRUS frus1939v02",
+   "title": "The Secretary of State to the Vice Consul at Valencia (Wallner)",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d739"
+  },
+  {
+   "id": "frus:frus1939v02/d769",
+   "date": "1939-03-30",
+   "source": "FRUS frus1939v02",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d769"
+  },
+  {
+   "id": "frus:frus1939v01/d100",
+   "date": "1939-03-31",
+   "source": "FRUS frus1939v01",
+   "title": "The Ambassador in the United Kingdom (Kennedy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v01/d100"
+  },
+  {
+   "id": "frus:frus1939v02/d277",
+   "date": "1939-03-31",
+   "source": "FRUS frus1939v02",
+   "title": "The British Embassy to the Department of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1939v02/d277"
+  }
+ ],
+ "proposals": [
+  {
+   "id": "1939Q1-001",
+   "document": "frus:frus1939v02/d512",
+   "proposal": {
+    "indicator_id": "frus:frus1939v02/d512:austria=annexed",
+    "variable": "austria",
+    "level": "annexed",
+    "date": "1939-01-04",
+    "quote": "no obligation exists for it to assume the foreign debts of the former Austrian Federal Government",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v02/d512",
+    "rule": "claude backend: Annexed rule: the German Government refers to the 'former Austrian Federal Government' and negotiates Austria's debts as its own successor, which implies the reunification is in force, though the note does not mention German troops.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-002",
+   "document": "frus:frus1939v02/d676",
+   "proposal": {
+    "indicator_id": "frus:frus1939v02/d676:axis=true",
+    "variable": "axis",
+    "level": true,
+    "date": "1939-01-07",
+    "quote": "more and more an enthusiastic supporter of the Rome–Berlin Axis",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v02/d676",
+    "rule": "claude backend: The axis rule sets the flag on the Rome-Berlin alignment; the ambassador refers to the Rome–Berlin Axis as an existing alignment that Franco supports.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-003",
+   "document": "frus:frus1939v02/d172",
+   "proposal": {
+    "indicator_id": "frus:frus1939v02/d172:china_war=true",
+    "variable": "china_war",
+    "level": true,
+    "date": "1939-01-19",
+    "quote": "the preoccupation of Japan in China",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v02/d172",
+    "rule": "claude backend: china_war is true when Japan's army is engaged in a general war in China; a congressman's remark on Japan's 'preoccupation' in China only hints at this, without stating the war outright.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-004",
+   "document": "frus:frus1939v02/d304",
+   "proposal": {
+    "indicator_id": "frus:frus1939v02/d304:china_war=true",
+    "variable": "china_war",
+    "level": true,
+    "date": "1939-01-19",
+    "quote": "the preoccupation of Japan in China caused him to believe that now would be an admirable time to enact legislation",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v02/d304",
+    "rule": "claude backend: The china_war rule requires Japan's army to be engaged in a general war in China; a congressman's passing reference to Japan's 'preoccupation' in China suggests a major ongoing commitment there but does not state outright that a general war is under way.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-005",
+   "document": "frus:frus1939v02/d513",
+   "proposal": {
+    "indicator_id": "frus:frus1939v02/d513:austria=annexed",
+    "variable": "austria",
+    "level": "annexed",
+    "date": "1939-01-19",
+    "quote": "affected by the absorption of Austria into the German Reich",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v02/d513",
+    "rule": "claude backend: The annexed level requires Austria incorporated into the Reich; the US note treats Austria's absorption into the German Reich as an accomplished fact and refers to the 'former Austrian Federal Government'.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-006",
+   "document": "frus:frus1939v01/d3",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d3:belief_WEST=uncertain",
+    "variable": "belief_WEST",
+    "level": "uncertain",
+    "date": "1939-01-24",
+    "quote": "Hitler, encouraged by Ribbentrop, Himmler and others, is considering an attack on the Western powers as a preliminary to subsequent action in the east... His Majesty’s Government have carefully considered the situation in the light of these reports and have decided to accelerate as far as possible the preparation of their defensive and counter-offensive measures",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d3",
+    "rule": "claude backend: The message, approved by the Prime Minister and Cabinet advisers as the Government's view, treats German aims as possibly beyond revision and adopts contingency measures while still seeking to deter, which is the uncertain level (the war scares of Jan–Feb 1939).",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-007",
+   "document": "frus:frus1939v01/d3",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d3:commit_WEST=wary",
+    "variable": "commit_WEST",
+    "level": "wary",
+    "date": "1939-01-24",
+    "quote": "have decided to accelerate as far as possible the preparation of their defensive and counter-offensive measures",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d3",
+    "rule": "claude backend: The government prepares for a possible military answer to a further German move (accelerated preparations, arbitration plan giving locus standi for action over Holland), but this is a confidential communication rather than a public acceptance, so the wary threshold is only partly met.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-008",
+   "document": "frus:frus1939v02/d55",
+   "proposal": {
+    "indicator_id": "frus:frus1939v02/d55:belief_WEST=uncertain",
+    "variable": "belief_WEST",
+    "level": "uncertain",
+    "date": "1939-01-25",
+    "quote": "the atmosphere both at Paris and here is charged with grave uncertainty... Both the British and the French are extremely anxious that our Government put our private producers in a position “to sell” (as the French put it) war materials to them in case of need.",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v02/d55",
+    "rule": "claude backend: The uncertain level covers the war scares of Jan to Feb 1939, when London and Paris treated German aims as possibly beyond revision and sought contingency measures (access to American war materials) while still pursuing peace; the evidence is an American envoy's report, not Cabinet records.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-009",
+   "document": "frus:frus1939v02/d173",
+   "proposal": {
+    "indicator_id": "frus:frus1939v02/d173:china_war=true",
+    "variable": "china_war",
+    "level": true,
+    "date": "1939-01-26",
+    "quote": "since the breaking out of the conflict with China",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v02/d173",
+    "rule": "claude backend: china_war is true when Japan is engaged in a general war in China, and a Japanese official refers to the conflict with China as having broken out and still continuing.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-010",
+   "document": "frus:frus1939v02/d693",
+   "proposal": {
+    "indicator_id": "frus:frus1939v02/d693:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1939-01-26",
+    "quote": "will raise the embargo on arms which weighs on the Government of the Spanish Republic",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v02/d693",
+    "rule": "claude backend: The isolationist level covers the Neutrality Act regime with a mandatory arms embargo, and the passage shows a US arms embargo still in force, here against Spain, which Spain asks to have lifted.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-011",
+   "document": "frus:frus1939v01/d4",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d4:belief_WEST=uncertain",
+    "variable": "belief_WEST",
+    "level": "uncertain",
+    "date": "1939-01-24",
+    "quote": "recent elaborate note of January 24, 1939 “received from his Government, in which many of the rumors and reports as to circumstances and conditions of a nature calculated to be the forerunner of a possible military outbreak in Europe were set forth",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d4",
+    "rule": "claude backend: belief_WEST uncertain covers the war scares of Jan to Feb 1939; here the British Government formally warns Washington of a possible military outbreak in Europe, so it treats German aims as possibly beyond revision, though the document reports only the note and not Cabinet records.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-012",
+   "document": "frus:frus1939v01/d5",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d5:belief_WEST=uncertain",
+    "variable": "belief_WEST",
+    "level": "uncertain",
+    "date": "1939-01-30",
+    "quote": "Bonnet said that he believed Germany did not desire war this spring. There was every indication that Hitler wished to employ the coming months to get Hungary and Rumania completely under his control.",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d5",
+    "rule": "claude backend: The French Foreign Minister treats German aims as reaching beyond ethnic revision, to full control of Hungary and Romania, while still expecting no deliberate war; this fits 'uncertain' rather than 'limited' or 'hegemonic'.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-013",
+   "document": "frus:frus1939v01/d6",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d6:belief_WEST=uncertain",
+    "variable": "belief_WEST",
+    "level": "uncertain",
+    "date": "1939-01-30",
+    "quote": "in the face of what might be a very grave situation his Government was necessarily constrained to take account of and examine every possibility",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d6",
+    "rule": "claude backend: Under the 'uncertain' rule, the Foreign Secretary, speaking for his government during the Jan 1939 war scares, treats German intentions as possibly grave and has the reports examined as contingencies, while not accepting them as established.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-014",
+   "document": "frus:frus1939v02/d57",
+   "proposal": {
+    "indicator_id": "frus:frus1939v02/d57:austria=annexed",
+    "variable": "austria",
+    "level": "annexed",
+    "date": "1939-02-03",
+    "quote": "There are approximately six hundred thousand Jews remaining in Germany, including Austria and the Sudetenland, at the present time.",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v02/d57",
+    "rule": "claude backend: The annexed level requires Austria to be under German control; the memorandum counts Austria as part of Germany, which implies annexation but does not state the troops or the reunification law.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-015",
+   "document": "frus:frus1939v02/d57",
+   "proposal": {
+    "indicator_id": "frus:frus1939v02/d57:sudeten=german",
+    "variable": "sudeten",
+    "level": "german",
+    "date": "1939-02-03",
+    "quote": "There are approximately six hundred thousand Jews remaining in Germany, including Austria and the Sudetenland, at the present time.",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v02/d57",
+    "rule": "claude backend: The german level requires the ceded Sudeten areas to be under German control; the memorandum counts the Sudetenland as part of Germany, which implies cession but does not state it directly.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-016",
+   "document": "frus:frus1939v01/d11",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d11:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1939-02-08",
+    "quote": "leave criticism of Italian words and acts to the British and Americans who were not at the moment objects of Mussolini’s immediate hostility",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d11",
+    "rule": "claude backend: Italy estranged from the West: the French Foreign Minister describes Mussolini's open hostility toward France and Italian press demands for French territory, which is consistent with the estranged level, though this is the French government's reading of Italian intent.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-017",
+   "document": "frus:frus1939v02/d446",
+   "proposal": {
+    "indicator_id": "frus:frus1939v02/d446:china_war=true",
+    "variable": "china_war",
+    "level": true,
+    "date": "1939-02-13",
+    "quote": "to ask the Japanese to promise to get out of Hainan when the war with China should come to an end",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v02/d446",
+    "rule": "claude backend: The French Prime Minister refers to an ongoing war between Japan and China, which meets the rule's condition of Japan engaged in a general war in China.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-018",
+   "document": "frus:frus1939v02/d446",
+   "proposal": {
+    "indicator_id": "frus:frus1939v02/d446:belief_WEST=uncertain",
+    "variable": "belief_WEST",
+    "level": "uncertain",
+    "date": "1939-02-13",
+    "quote": "war would be imminent if it were not for the hesitation created in Germany and Italy by the evolution of opinion in the United States",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v02/d446",
+    "rule": "claude backend: The French Prime Minister and two ministers treat German (and Italian) aims as possibly leading to war while France rearms, which fits the uncertain level (the war scares of Jan to Feb 1939); this is Paris's view only, reported by the US ambassador.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-019",
+   "document": "frus:frus1939v01/d13",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d13:belief_WEST=uncertain",
+    "variable": "belief_WEST",
+    "level": "uncertain",
+    "date": "1939-02-17",
+    "quote": "He still feels that the only hope of doing business with Hitler is to take him at his word and when he says this he realizes that it is by no means certain that the word will be kept",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d13",
+    "rule": "claude backend: uncertain: the Prime Minister keeps negotiating on Hitler's word while doubting it will be kept and fearing Hitler may cause a world war, and he is arming meanwhile. That fits 'possibly beyond revision, still negotiating', not the hegemonic statement that assurances cannot be relied on.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-020",
+   "document": "frus:frus1939v01/d14",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d14:belief_WEST=uncertain",
+    "variable": "belief_WEST",
+    "level": "uncertain",
+    "date": "1939-02-20",
+    "quote": "on January 24 and 25 public opinion in London and the Foreign Office in particular had been in an almost unbelievable state of excitement because of reports that Germany was planning a move in the west involving the invasion of Holland ... he doubted whether Mr. Chamberlain’s colleagues in the Cabinet shared his feeling of reassurance",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d14",
+    "rule": "claude backend: The war scares of Jan to Feb 1939 are named in the rule as marking 'uncertain'. Here, though, the alarm is recorded for public opinion and the Foreign Office, and the only reference to the Cabinet is the Ambassador's doubt about its reassurance, not a Cabinet record.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-021",
+   "document": "frus:frus1939v01/d14",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d14:commit_WEST=wary",
+    "variable": "commit_WEST",
+    "level": "wary",
+    "date": "1939-02-20",
+    "quote": "he was nevertheless of the impression from his talks with members of the Government that the rearmament program was at last moving ahead very quickly",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d14",
+    "rule": "claude backend: The post-Munich acceleration of rearmament is an example of 'wary' in the rule. This passage is only the Ambassador's second-hand impression of acceleration, not a public acceptance that a German move may require a military answer.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-022",
+   "document": "frus:frus1939v01/d15",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d15:commit_WEST=wary",
+    "variable": "commit_WEST",
+    "level": "wary",
+    "date": "1939-02-20",
+    "quote": "if Germany invaded Switzerland and France thereupon declared war upon Germany, the United Kingdom would go to the assistance of France",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d15",
+    "rule": "claude backend: wary: the British Government accepts that a further German move may require a military answer and prepares for it through this undertaking to France and the proposed extension of staff conversations, but this is not a standing guarantee to a threatened third state.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-023",
+   "document": "frus:frus1939v01/d15",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d15:belief_WEST=uncertain",
+    "variable": "belief_WEST",
+    "level": "uncertain",
+    "date": "1939-02-20",
+    "quote": "His Majesty’s Government in the United Kingdom had proposed to the French Government the extension of staff conversations",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d15",
+    "rule": "claude backend: uncertain: the British Government adopts contingency measures (staff talks, undertakings covering German invasion of Switzerland or Holland), treating German aggression as a real possibility, but the document does not state that German assurances cannot be relied on.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-024",
+   "document": "frus:frus1939v01/d16",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d16:belief_WEST=uncertain",
+    "variable": "belief_WEST",
+    "level": "uncertain",
+    "date": "1939-02-23",
+    "quote": "Halifax asked Von Dirksen why, if Hitler really were serious about wanting trade pacts and peace, he continued his terrific armament program",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d16",
+    "rule": "claude backend: uncertain: the Foreign Secretary openly doubts that German aims are limited to peaceful revision while still talking with Berlin; this is ministerial rather than Cabinet evidence, and it reaches us through the ambassador's report.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-025",
+   "document": "frus:frus1939v01/d16",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d16:commit_WEST=wary",
+    "variable": "commit_WEST",
+    "level": "wary",
+    "date": "1939-02-23",
+    "quote": "England feels that the last 6 months have aided them tremendously in preparation for defense and their attitude at a round table conference would be much stiffer than it was at Munich.",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d16",
+    "rule": "claude backend: wary: the passage reports post-Munich acceleration of defence preparation and a stiffer stance, but it is the US ambassador's characterization, not a public government commitment.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-026",
+   "document": "frus:frus1939v01/d20",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d20:axis=true",
+    "variable": "axis",
+    "level": true,
+    "date": "1939-03-03",
+    "quote": "a “wait and see” policy vis-à-vis developments between the Rome–Berlin and London–Paris Axes",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d20",
+    "rule": "claude backend: Axis flag rule (Rome-Berlin alignment): the ambassador refers to the Rome–Berlin Axis as an existing alignment, which is consistent with the flag being true, though the document does not report the founding protocols.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-027",
+   "document": "frus:frus1939v01/d22",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d22:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1939-03-09",
+    "quote": "there could be no possible question of any French concessions whatsoever to Italy at the present time. He would not give way to blackmail. He had given his final orders this morning for further reenforcement of French troops in Tunisia. If the Italians wanted war they could have it.",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d22",
+    "rule": "claude backend: Italy estranged from the West: the French Prime Minister refuses any concessions, calls Italian claims blackmail and reinforces troops in Tunisia against a possible Italian war, so Italy remains estranged from France.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-028",
+   "document": "frus:frus1939v01/d24",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d24:commit_WEST=wary",
+    "variable": "commit_WEST",
+    "level": "wary",
+    "date": "1939-03-11",
+    "quote": "Hore-Belisha’s speech was of the utmost importance as an indication of British policy. ... It would not be easy for the British to swallow the idea that they must send soldiers to France.",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d24",
+    "rule": "claude backend: wary: the War Secretary's speech, made at Chamberlain's instruction, publicly prepares a continental expeditionary commitment to France, which matches the Feb 1939 field-force indicator but is not a standing guarantee to a third state.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-029",
+   "document": "frus:frus1939v01/d30",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d30:belief_WEST=uncertain",
+    "variable": "belief_WEST",
+    "level": "uncertain",
+    "date": "1939-03-14",
+    "quote": "Daladier and Bonnet decided that Bonnet should send immediately an instruction to Coulondre in Berlin ordering him to go at once to the German Foreign Office and to state that present German actions were in entire disaccord with the Munich agreements and that the French Government would regard most seriously any entry of German troops into the territories now controlled by the Czechoslovak Government.",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d30",
+    "rule": "claude backend: Under the uncertain rule, the French Premier and Foreign Minister issue a warning to Berlin and treat further German action as possible, while Bonnet still doubts Germany 'would go this far at once'; this is warning without a settled hegemonic view, and it is French, not British Cabinet, evidence.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-030",
+   "document": "frus:frus1939v01/d32",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d32:bohemia=german",
+    "variable": "bohemia",
+    "level": "german",
+    "date": "1939-03-15",
+    "quote": "the commanders of the German forces in Moravia and in Bohemia would be responsible in those districts",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d32",
+    "rule": "claude backend: The bohemia rule sets german with the Protectorate of 15 to 16 Mar 1939; the passage shows German forces in control of Bohemia and Moravia under an agreement with the Reich, though the formal status was still to be clarified.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-031",
+   "document": "frus:frus1939v01/d33",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d33:bohemia=german",
+    "variable": "bohemia",
+    "level": "german",
+    "date": "1939-03-15",
+    "quote": "since he had taken possession of the territory at the request of the Czech Government, there was no cause for France to get excited about anything",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d33",
+    "rule": "claude backend: bohemia german requires German control of the rump Czech lands (the Protectorate, 15-16 Mar 1939); the German note delivered to Bonnet that day states Germany has taken possession of the Czech territory, though it does not name Bohemia-Moravia or the Protectorate.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-032",
+   "document": "frus:frus1939v01/d34",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d34:bohemia=german",
+    "variable": "bohemia",
+    "level": "german",
+    "date": "1939-03-15",
+    "quote": "the Czechoslovak Government had requested Hitler to take charge of Bohemia and Moravia",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d34",
+    "rule": "claude backend: The German Government's note reports Hitler taking charge of Bohemia and Moravia, which matches the German control of the Protectorate region on 15 March 1939; the note is the German version and gives no occupation details.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-033",
+   "document": "frus:frus1939v01/d34",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d34:belief_WEST=uncertain",
+    "variable": "belief_WEST",
+    "level": "uncertain",
+    "date": "1939-03-15",
+    "quote": "he could not see any possibility of any successful negotiations anywhere in Europe at the present time. There was nothing for France and England to do but to arm as fast as possible and stand ready to meet any attack",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d34",
+    "rule": "claude backend: The French Foreign Minister treats German aims as beyond negotiated settlement and calls for armed readiness, which is at least the uncertain level; this is a private ministerial remark, not a PM or Cabinet statement that Germany seeks domination, so it falls short of hegemonic.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-034",
+   "document": "frus:frus1939v01/d34",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d34:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1939-03-15",
+    "quote": "At least you can change the Neutrality Act so that we can get arms and munitions from America",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d34",
+    "rule": "claude backend: The request to change the Neutrality Act so that France can buy arms shows that the mandatory arms embargo regime is still in force, which is the isolationist level.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-035",
+   "document": "frus:frus1939v01/d35",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d35:bohemia=german",
+    "variable": "bohemia",
+    "level": "german",
+    "date": "1939-03-16",
+    "quote": "the claims of the Germans that Hacha had invited them into the country",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d35",
+    "rule": "claude backend: The bohemia rule sets german when Germany takes over Bohemia and Moravia (15 to 16 Mar 1939). The passage, with the minister's preparations to turn over his Legation, treats German forces as already in the country, though it does not name the Protectorate.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-036",
+   "document": "frus:frus1939v01/d36",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d36:bohemia=german",
+    "variable": "bohemia",
+    "level": "german",
+    "date": "1939-03-16",
+    "quote": "a telegram directing Dr. Thomsen to get in touch at once with Dr. Hurban, explain to him the developments that had taken place, and take over the Czechoslovak Legation.",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d36",
+    "rule": "claude backend: The 'german' level means the Protectorate of Bohemia and Moravia; Berlin ordering its embassy to take over the Czechoslovak Legation suggests Germany had assumed control of Czechoslovak affairs, but the document does not name the Protectorate or describe the occupation.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-037",
+   "document": "frus:frus1939v01/d66",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d66:belief_WEST=uncertain",
+    "variable": "belief_WEST",
+    "level": "uncertain",
+    "date": "1939-03-16",
+    "quote": "no one to whom he had talked—“not even the Prime Minister”—was now of the opinion that war could be indefinitely postponed",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d66",
+    "rule": "claude backend: belief_WEST uncertain: the Ambassador reports that the Prime Minister no longer thinks war can be indefinitely postponed, which treats German aims as possibly beyond a negotiated settlement while defence preparations continue; this is a second-hand account and not a Cabinet record.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-038",
+   "document": "frus:frus1939v01/d37",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d37:bohemia=german",
+    "variable": "bohemia",
+    "level": "german",
+    "date": "1939-03-16",
+    "quote": "a telegram in clear, signed Chvalkovsky, directing him to turn over the Legation to the German Embassy and to follow the latter’s instructions ... the capitulation of President Hacha",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d37",
+    "rule": "claude backend: The bohemia rule sets german when Bohemia-Moravia passes under German control as the Protectorate; Hacha's reported capitulation and Prague's order to hand its diplomatic missions to Germany indicate that Czech sovereignty has passed to Germany, though the document does not name the Protectorate.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-039",
+   "document": "frus:frus1939v01/d38",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d38:bohemia=german",
+    "variable": "bohemia",
+    "level": "german",
+    "date": "1939-03-16",
+    "quote": "The areas of the former Czechoslovak Republic occupied by German troops belong from now on to the domain of the Greater German Reich and come under its protection as the Protectorate of Bohemia and Moravia.",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d38",
+    "rule": "claude backend: The decree of 16 March establishing the Protectorate of Bohemia and Moravia under German troops meets the 'german' threshold.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-040",
+   "document": "frus:frus1939v01/d39",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d39:bohemia=german",
+    "variable": "bohemia",
+    "level": "german",
+    "date": "1939-03-17",
+    "quote": "Since Bohemia and Moravia have been occupied by Germany which has declared a protectorate and sent military officials to assume the functions of government",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d39",
+    "rule": "claude backend: The rule sets german when the Protectorate of Bohemia and Moravia exists; the passage states that Germany has occupied the region, declared a protectorate and taken over government functions.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-041",
+   "document": "frus:frus1939v01/d40",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d40:bohemia=german",
+    "variable": "bohemia",
+    "level": "german",
+    "date": "1939-03-17",
+    "quote": "the brutal methods employed by Hitler in seizing Bohemia and Moravia by armed force",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d40",
+    "rule": "claude backend: Bohemia is german when it is under German control as the Protectorate of Bohemia and Moravia; the ambassador reports as accomplished fact that Germany has seized Bohemia and Moravia by armed force.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-042",
+   "document": "frus:frus1939v01/d40",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d40:axis=true",
+    "variable": "axis",
+    "level": true,
+    "date": "1939-03-17",
+    "quote": "developments had proceeded in accordance with the Rome–Berlin Axis",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d40",
+    "rule": "claude backend: Axis is true when the Rome-Berlin alignment exists; the Italian Foreign Minister refers to the Rome–Berlin Axis as the standing framework of Italian policy.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-043",
+   "document": "frus:frus1939v01/d41",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d41:bohemia=german",
+    "variable": "bohemia",
+    "level": "german",
+    "date": "1939-03-17",
+    "quote": "The shock of Hitler's invasion of Czechoslovakia stunned not only the members of the Government but all Frenchmen.",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d41",
+    "rule": "claude backend: bohemia german requires German control of Bohemia-Moravia (the Protectorate). The ambassador reports Hitler's invasion of Czechoslovakia as an accomplished fact, though he does not name the Protectorate.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-044",
+   "document": "frus:frus1939v01/d41",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d41:belief_WEST=hegemonic",
+    "variable": "belief_WEST",
+    "level": "hegemonic",
+    "date": "1939-03-17",
+    "quote": "it is no longer possible to have confidence in any promises he may make ... Nothing remains but to develop as much armed force as possible, as rapidly as possible, to await the day when Germany and Italy will strike against France and England.",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d41",
+    "rule": "claude backend: hegemonic requires that German assurances are held unreliable and that Germany is expected to seek its aims by force. The ambassador reports this as the crystallizing French view after the taking of Prague, but as general French opinion rather than a formal Cabinet record.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-045",
+   "document": "frus:frus1939v01/d42",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d42:bohemia=german",
+    "variable": "bohemia",
+    "level": "german",
+    "date": "1939-03-17",
+    "quote": "acts which have resulted in the temporary extinguishment of the liberties of a free and independent people with whom, from the day when the Republic of Czechoslovakia attained its independence, the people of the United States have maintained specially close and friendly relations",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d42",
+    "rule": "claude backend: The bohemia rule sets german when the Protectorate is established. The statement reports that Czechoslovakia's independence was extinguished in the past three days, but it names neither Germany nor the Protectorate, so it supports the level only indirectly.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-046",
+   "document": "frus:frus1939v01/d44",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d44:bohemia=german",
+    "variable": "bohemia",
+    "level": "german",
+    "date": "1939-03-17",
+    "quote": "territory of the former Czechoslovak Government now under the control of Germany",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d44",
+    "rule": "claude backend: The bohemia rule sets german when the Czech lands come under German rule; the passage says the territory of the former Czechoslovak Government is now under German control, which implies more than the Sudeten areas ceded at Munich.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-047",
+   "document": "frus:frus1939v01/d45",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d45:bohemia=german",
+    "variable": "bohemia",
+    "level": "german",
+    "date": "1939-03-17",
+    "quote": "Bohemia and Moravia have been occupied by German military forces. They have been declared by the Reichs Chancellor to be a protectorate of the Reich",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d45",
+    "rule": "claude backend: bohemia is german when the Protectorate of Bohemia and Moravia exists; the passage reports German occupation and the declared protectorate.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-048",
+   "document": "frus:frus1939v02/d522",
+   "proposal": {
+    "indicator_id": "frus:frus1939v02/d522:bohemia=german",
+    "variable": "bohemia",
+    "level": "german",
+    "date": "1939-03-17",
+    "quote": "the new situation which had arisen by the proclamation by Germany of a protectorate over Bohemia and Moravia, and that the terms of the decree itself were contained in the note",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v02/d522",
+    "rule": "claude backend: The rule sets german when the Protectorate of Bohemia and Moravia is established, and the German Government's official note reports that the protectorate has been proclaimed by decree.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-049",
+   "document": "frus:frus1939v01/d46",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d46:bohemia=german",
+    "variable": "bohemia",
+    "level": "german",
+    "date": "1939-03-16",
+    "quote": "the decree of March 16th of the Reich Government on the establishment of the Protectorate of Bohemia and Moravia",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d46",
+    "rule": "claude backend: The bohemia rule sets german at the Protectorate of Bohemia and Moravia (15 to 16 Mar 1939), and the German government's note reports the decree establishing it as issued on 16 March.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-050",
+   "document": "frus:frus1939v01/d47",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d47:bohemia=german",
+    "variable": "bohemia",
+    "level": "german",
+    "date": "1939-03-18",
+    "quote": "The entire press here is under strict German control, the Gestapo is everywhere",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d47",
+    "rule": "claude backend: The 'german' level means Bohemia under German rule (the Protectorate); the American Minister in Prague reports German control of the press and the Gestapo throughout the city, which shows German authority in place, though the Protectorate is not named.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-051",
+   "document": "frus:frus1939v01/d48",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d48:bohemia=german",
+    "variable": "bohemia",
+    "level": "german",
+    "date": "1939-03-18",
+    "quote": "the situation resulting from the German annexation of Czechoslovakia",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d48",
+    "rule": "claude backend: The bohemia variable is german once the Czech lands are under German control; the consul reports the German annexation of Czechoslovakia as an accomplished fact.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-052",
+   "document": "frus:frus1939v01/d49",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d49:bohemia=german",
+    "variable": "bohemia",
+    "level": "german",
+    "date": "1939-03-19",
+    "quote": "The German secret police here are making hundreds and perhaps thousands of arrests in the usual Nazi manner; the Jewish population is terrified; as are the Social Democrats and also those persons closely associated with the former regime.",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d49",
+    "rule": "claude backend: The bohemia rule sets german when the region is under German rule (Protectorate); the US Minister in Prague reports German secret police exercising power there and refers to the Czech government as the 'former regime'.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-053",
+   "document": "frus:frus1939v01/d50",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d50:bohemia=german",
+    "variable": "bohemia",
+    "level": "german",
+    "date": "1939-03-19",
+    "quote": "Through no real fault of theirs their independence has ended.",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d50",
+    "rule": "claude backend: The 'german' level requires Bohemia-Moravia under German rule. The US Minister in Prague reports that Czechoslovak independence has ended and that the German Government must be persuaded to let people leave. The Protectorate is not named, so the threshold is a judgment.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-054",
+   "document": "frus:frus1939v01/d308",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d308:bohemia=german",
+    "variable": "bohemia",
+    "level": "german",
+    "date": "1939-03-20",
+    "quote": "the economic consequences of acquisition of Bohemia and Moravia",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d308",
+    "rule": "claude backend: The 'german' level applies once Bohemia and Moravia are under German control. The passage treats Germany's acquisition of Bohemia and Moravia as already done, but it does not name the Protectorate or give its date.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-055",
+   "document": "frus:frus1939v01/d52",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d52:bohemia=german",
+    "variable": "bohemia",
+    "level": "german",
+    "date": "1939-03-16",
+    "quote": "the decree issued on March 16 by the Government of the Reich announcing the assumption of a protectorate over the provinces of Bohemia and Moravia ... the provinces referred to are now under the de facto administration of the German authorities",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d52",
+    "rule": "claude backend: The bohemia rule sets german at the Protectorate of Bohemia and Moravia; the note reports the Reich's decree of 16 March assuming the protectorate and observes that the provinces are under de facto German administration.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-056",
+   "document": "frus:frus1939v01/d76",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d76:bohemia=german",
+    "variable": "bohemia",
+    "level": "german",
+    "date": "1939-03-19",
+    "quote": "Hitler, in incorporating non-Germans from Czechoslovakia into the Reich, “had at last taken off his mask”",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d76",
+    "rule": "claude backend: The bohemia rule sets german when the Czech lands are under German rule as the Protectorate; the passage reports, as an accomplished fact, the incorporation of the non-German Czech lands into the Reich, but only second-hand and without naming the Protectorate.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-057",
+   "document": "frus:frus1939v01/d53",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d53:bohemia=german",
+    "variable": "bohemia",
+    "level": "german",
+    "date": "1939-03-21",
+    "quote": "so long as we did not recognize the disappearance of Czechoslovakia he remained the Minister ... as his Government had disappeared",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d53",
+    "rule": "claude backend: The bohemia variable is german once the Protectorate replaces the Czechoslovak state. The Minister says his government has disappeared and Czechs 'do not accept the new régime', but the document never names Germany or the Protectorate, so German control is only inferred.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-058",
+   "document": "frus:frus1939v01/d54",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d54:bohemia=german",
+    "variable": "bohemia",
+    "level": "german",
+    "date": "1939-03-21",
+    "quote": "requesting intervention with the German Government to permit refugee emigration through Poland ... departure from Czechoslovakian territory under control of Germany",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d54",
+    "rule": "claude backend: german = Bohemia and Moravia under German control; a request from Prague that the German Government permit departure from Czechoslovak territory under German control implies Prague, in Bohemia, is under German control.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-059",
+   "document": "frus:frus1939v01/d77",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d77:belief_WEST=uncertain",
+    "variable": "belief_WEST",
+    "level": "uncertain",
+    "date": "1939-03-18",
+    "quote": "On March 18th the British Government informed the Soviet Government that it had weighty reasons to fear that a German coup was impending against Rumania, and asked what the Soviet Union would do.",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d77",
+    "rule": "claude backend: belief_WEST uncertain: per a second-hand Soviet account, the British Government treated German aims as reaching beyond revision to a non-German state (Rumania) and took a contingency step by sounding Moscow; it is not a Cabinet statement that Germany seeks domination by force, so hegemonic cannot be read from this text.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-060",
+   "document": "frus:frus1939v01/d78",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d78:commit_WEST=wary",
+    "variable": "commit_WEST",
+    "level": "wary",
+    "date": "1939-03-21",
+    "quote": "the British had sent this morning a proposal to Poland, France, the Soviet Union, Rumania, Turkey, Greece and Yugoslavia asking them if they were prepared to take concerted action with Great Britain in case of further German aggression against any one of them",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d78",
+    "rule": "claude backend: wary: the British government is preparing a concerted response to further German aggression, which treats a further German move as possibly requiring a military answer, though no standing commitment is yet made and the proposal was diplomatic rather than public.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-061",
+   "document": "frus:frus1939v01/d78",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d78:commit_WEST=resolved",
+    "variable": "commit_WEST",
+    "level": "resolved",
+    "date": "1939-03-19",
+    "quote": "Two days ago Bonnet had stated to him that France and Great Britain in reply to a Rumanian inquiry had stated that they were ready to go to war to protect Rumania if Rumania should be attacked.",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d78",
+    "rule": "claude backend: resolved requires a standing commitment to fight for a threatened third state; this second-hand report of a statement of readiness to go to war for Rumania may indicate one, but it is relayed hearsay and not a formal public guarantee.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-062",
+   "document": "frus:frus1939v01/d79",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d79:balkans=neutral",
+    "variable": "balkans",
+    "level": "neutral",
+    "date": "1939-03-21",
+    "quote": "The Regent said Hungary was not committed to Germany in any way",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d79",
+    "rule": "claude backend: german_aligned requires a German guarantee, a military mission and Tripartite adherence; Hungary's head of state says the country is uncommitted to Germany, which is consistent with neutral.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-063",
+   "document": "frus:frus1939v01/d55",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d55:bohemia=german",
+    "variable": "bohemia",
+    "level": "german",
+    "date": "1939-03-22",
+    "quote": "he would take immediate measures to see that our wish was made known to the proper authorities in Praha ... events in Czechoslovakia resulted in the driving of a large number of persons out of newly occupied territories",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d55",
+    "rule": "claude backend: The German Foreign Office directs the authorities in Prague and refers to newly occupied Czechoslovak territories, implying German control of Bohemia, though the Protectorate is not named.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-064",
+   "document": "frus:frus1939v01/d82",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d82:commit_WEST=wary",
+    "variable": "commit_WEST",
+    "level": "wary",
+    "date": "1939-03-21",
+    "quote": "if Rumania and Turkey and the Balkan States are prepared to fight, then England is advising France that they should both go along regardless of Poland. The plan is that the fleet would start an immediate blockade.",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d82",
+    "rule": "claude backend: wary: the Foreign Secretary reports that the British government accepts that a further German move may require a military answer and is preparing war plans with France, but this is a conditional plan and not a standing commitment to a third state, so it does not reach resolved.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-065",
+   "document": "frus:frus1939v01/d86",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d86:belief_WEST=hegemonic",
+    "variable": "belief_WEST",
+    "level": "hegemonic",
+    "date": "1939-03-22",
+    "quote": "With the Munich agreement washed away, an entirely new line of action has to be worked out and applied. ... the British Government ... is examining every possibility which might offer a lead to effective machinery for stemming German aggression.",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d86",
+    "rule": "claude backend: Under the hegemonic rule, the British Government treats the Munich settlement as void and seeks concerted measures against German aggression on Eastern European states, implying that German assurances are no longer relied on; this is an ambassador's report of officials' views, not a Cabinet statement.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-066",
+   "document": "frus:frus1939v01/d87",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d87:bohemia=german",
+    "variable": "bohemia",
+    "level": "german",
+    "date": "1939-03-22",
+    "quote": "in pursuance of the policy which dictated the Czechoslovak coup ... this latest coup of a new German policy completely devoid of even any pretext of racial protection principles",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d87",
+    "rule": "claude backend: The 'german' level requires German control of Bohemia and Moravia; the dispatch refers to an accomplished German coup in Czechoslovakia covering non-German populations, but it does not name the Protectorate explicitly.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-067",
+   "document": "frus:frus1939v01/d89",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d89:belief_GER=will_not_fight",
+    "variable": "belief_GER",
+    "level": "will_not_fight",
+    "date": "1939-03-23",
+    "quote": "Upon Ribbentrop’s advice that neither Britain nor France as signatories of Memel convention would intervene forcibly, Hitler timed Memel’s annexation",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d89",
+    "rule": "claude backend: will_not_fight: the passage reports that Hitler made a decision (Memel) on the premise that Britain and France would not intervene by force, but this is a secondhand report by the US ambassador rather than a German decision record.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-068",
+   "document": "frus:frus1939v02/d566",
+   "proposal": {
+    "indicator_id": "frus:frus1939v02/d566:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1939-03-22",
+    "quote": "there was no question that the neutrality legislation in the United States would be speedily amended",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v02/d566",
+    "rule": "claude backend: Under the isolationist rule the Neutrality Act regime is still in force; the President speaks of amending it only as a future prospect, so the embargo has not yet been repealed.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-069",
+   "document": "frus:frus1939v01/d56",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d56:bohemia=german",
+    "variable": "bohemia",
+    "level": "german",
+    "date": "1939-03-24",
+    "quote": "the German Legation has formally notified this Government of the absorption of Czechoslovakia ... the de facto occupation",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d56",
+    "rule": "claude backend: The bohemia rule sets german when the Czech lands come under German rule; a formal German notification of the absorption of Czechoslovakia and a reference to a de facto occupation show that state, although the Protectorate is not named.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-070",
+   "document": "frus:frus1939v01/d91",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d91:bohemia=german",
+    "variable": "bohemia",
+    "level": "german",
+    "date": "1939-03-24",
+    "quote": "Chamberlain’s speech condemning the German invasion of Czechoslovakia",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d91",
+    "rule": "claude backend: The bohemia rule sets german when Bohemia-Moravia comes under German control. The passage reports a completed German invasion of Czechoslovakia, but it does not name the Protectorate, so the threshold needs judgment.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-071",
+   "document": "frus:frus1939v01/d92",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d92:belief_WEST=hegemonic",
+    "variable": "belief_WEST",
+    "level": "hegemonic",
+    "date": "1939-03-24",
+    "quote": "He felt that the inevitability of war sooner or later should be met right now and that the Prime Minister himself and the Cabinet are strongly of the opinion that a line should be laid down and a statement given to Berlin that if they cross that imaginary line the war is on.",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d92",
+    "rule": "claude backend: The hegemonic rule needs the Prime Minister and Cabinet to treat German aims as beyond negotiated revision; the Foreign Secretary reports that they regard war as inevitable and want a line Germany may not cross, though this is his second-hand account of Cabinet opinion.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-072",
+   "document": "frus:frus1939v01/d92",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d92:oil_GER=secured",
+    "variable": "oil_GER",
+    "level": "secured",
+    "date": "1939-03-24",
+    "quote": "the trade agreement signed today between Rumania and Germany",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d92",
+    "rule": "claude backend: The secured rule names the German-Romanian economic treaty of March 1939 as an overland supply agreement with a producer outside the blockade; the passage reports its signature but does not mention oil.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-073",
+   "document": "frus:frus1939v01/d93",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d93:oil_GER=secured",
+    "variable": "oil_GER",
+    "level": "secured",
+    "date": "1939-03-24",
+    "quote": "shortly after the details of the Rumanian-German accord had been confirmed here",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d93",
+    "rule": "claude backend: The oil_GER rule lists the German-Romanian economic treaty of March 1939 as an overland supply agreement that makes oil secured, and the passage reports a confirmed Rumanian-German accord; the document does not say the accord covers oil.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-074",
+   "document": "frus:frus1939v01/d58",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d58:bohemia=german",
+    "variable": "bohemia",
+    "level": "german",
+    "date": "1939-03-16",
+    "quote": "The following day Ribbentrop read to the public (see my 42, March 16, and 43, March 16) the proclamation declaring that the two provinces of Bohemia and Moravia should constitute a protectorate and be a part of greater Germany.",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d58",
+    "rule": "claude backend: The bohemia rule sets german at the Protectorate of Bohemia and Moravia (15 to 16 Mar 1939); the passage reports the 16 March proclamation of the protectorate as part of Greater Germany, following the German army's arrival in Praha on the 15th.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-075",
+   "document": "frus:frus1939v01/d59",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d59:bohemia=german",
+    "variable": "bohemia",
+    "level": "german",
+    "date": "1939-03-26",
+    "quote": "the dismemberment of Czechoslovakia",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d59",
+    "rule": "claude backend: The rule for german requires the Protectorate of Bohemia and Moravia; the passage reports Czechoslovakia's dismemberment as a fact, but it does not name Bohemia, Moravia or German control.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-076",
+   "document": "frus:frus1939v01/d60",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d60:bohemia=german",
+    "variable": "bohemia",
+    "level": "german",
+    "date": "1939-03-27",
+    "quote": "there had been received from Praha some funds for the Consulate General at New York and some funds for the Legation. Obviously the Germans could not watch over every administrative detail",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d60",
+    "rule": "claude backend: The bohemia rule sets german for German control of Bohemia and Moravia; the passage implies German supervision of the administration in Praha, but the Protectorate is not named, so the reading is inferential.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-077",
+   "document": "frus:frus1939v01/d99",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d99:commit_WEST=wary",
+    "variable": "commit_WEST",
+    "level": "wary",
+    "date": "1939-03-30",
+    "quote": "Chamberlain’s Birmingham speech is held generally to have radically reversed the situation as to Peace prospects for the year. Peace this summer is not now protected by a British policy of appeasement.",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d99",
+    "rule": "claude backend: commit_WEST wary requires the government to accept publicly that a further German move may need a military answer; Belgian circles, as reported by the US ambassador, read the Birmingham speech as ending appeasement, but this is second-hand opinion, not a record of the British commitment itself.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-078",
+   "document": "frus:frus1939v01/d100",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d100:polish_guarantee=true",
+    "variable": "polish_guarantee",
+    "level": true,
+    "date": "1939-03-31",
+    "quote": "His Majesty’s Government would feel themselves bound at once to lend the Polish Government all support in their power. They have given the Polish Government an assurance to this effect.",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d100",
+    "rule": "claude backend: The Prime Minister's Commons statement of 31 Mar 1939 sets the flag; the passage gives its text and says the assurance has already been given to Poland, though the statement itself was still to be delivered that afternoon.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1939Q1-079",
+   "document": "frus:frus1939v01/d100",
+   "proposal": {
+    "indicator_id": "frus:frus1939v01/d100:commit_WEST=resolved",
+    "variable": "commit_WEST",
+    "level": "resolved",
+    "date": "1939-03-31",
+    "quote": "if Poland thought that any gesture of Germany’s threatened their independence and they themselves are the judges of that, Great Britain commits itself to fight.",
+    "url": "https://history.state.gov/historicaldocuments/frus1939v01/d100",
+    "rule": "claude backend: A standing commitment to fight for a third state threatened by Germany (the Polish guarantee, joined by France) meets the resolved threshold.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  }
+ ],
+ "discarded": [],
+ "errors": []
+}
