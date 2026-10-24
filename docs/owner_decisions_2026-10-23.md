@@ -39,3 +39,10 @@ Not yet decided: who runs it (the owner with the commands of docs/replay_harness
 ## 4. Framework-change budget
 
 The owner allows a larger budget. The cadence change (framework change 1) is counted as 1 of the phase 3 budget. The size of the increase is to be confirmed by the owner; until then the budget stays at five, and no Cold War framework change has been made.
+
+## 5. Follow-up decisions (2026-10-24, after the amended runs)
+
+- 5a. C5: v0 stays as recorded after the guard edit of 2l (C5 fails by a new route: the Soviet ICBM decision of 1950, Berlin, Korea, escalations adding up). No second guard edit; the route is a cw_v1 matter.
+- 5b. J3: stays failing as amended; no further rewording.
+- 5c. `oil_GER`: the German-Soviet Credit Agreement of 19 Aug 1939 is not used as a source. The snapshot change made under 2d is withdrawn; the difference stays tabulated (docs/guard_changelog_ww2.md, row of 2026-10-23).
+- 5d. The branch is pushed and a pull request opened.
