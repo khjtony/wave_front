@@ -494,7 +494,7 @@ def cmd_extract(args: argparse.Namespace) -> int:
     rules = parse_rules(args.rules)
     episode = None if args.episode == "ww2" else args.episode
     corpus = open_corpus(args.corpus, args.source)
-    backend = make_backend(args.backend, args.model)
+    backend = make_backend(args.backend, args.model, _guidance(args))
     if args.cache:
         backend = CachedBackend(backend, args.cache)
     result = extract(
@@ -560,6 +560,15 @@ def cmd_review(args: argparse.Namespace) -> int:
     data = read_proposals(args.proposals)
     print(format_listing(data, file_gates(args.proposals)))
     return 0
+
+
+def _guidance(args: argparse.Namespace) -> str:
+    path = getattr(args, "guidance_file", None)
+    if not path:
+        return ""
+    if args.backend != "deepseek":
+        raise SystemExit("error: --guidance-file applies to the deepseek backend only")
+    return Path(path).read_text(encoding="utf-8")
 
 
 def _print_plan(rows, backend, episode: str = "ww2") -> None:
@@ -651,7 +660,7 @@ def cmd_replay(args: argparse.Namespace) -> int:
         if not args.corpus:
             raise ValueError("--dry-run needs --corpus")
         corpus = open_corpus(args.corpus, args.source)
-        backend = make_backend(args.backend, args.model)
+        backend = make_backend(args.backend, args.model, _guidance(args))
         _print_plan(plan(corpus, quarters, out, backend, episode=ep), backend, ep.name)
         return 0
     if args.measure_proposals and not args.corpus:
@@ -669,7 +678,7 @@ def cmd_replay(args: argparse.Namespace) -> int:
         if not args.corpus:
             raise ValueError("--corpus is required unless --metrics-only")
         corpus = open_corpus(args.corpus, args.source)
-        backend = make_backend(args.backend, args.model)
+        backend = make_backend(args.backend, args.model, _guidance(args))
         runs = replay(
             corpus,
             quarters,
@@ -855,6 +864,10 @@ def _add_evidence_commands(sub) -> None:
         "--model", help="model for the claude or deepseek backend (default: the backend's)"
     )
     p.add_argument(
+        "--guidance-file",
+        help="deepseek backend: a text file of instructions appended to the shared ones",
+    )
+    p.add_argument(
         "--rules",
         metavar="RULES",
         help="harness rules recorded in the proposals file, comma-separated: two-document, "
@@ -925,6 +938,10 @@ def _add_evidence_commands(sub) -> None:
     p.add_argument("--backend", choices=("rules", "claude", "deepseek"), default="rules")
     p.add_argument(
         "--model", help="model for the claude or deepseek backend (default: the backend's)"
+    )
+    p.add_argument(
+        "--guidance-file",
+        help="deepseek backend: a text file of instructions appended to the shared ones",
     )
     p.add_argument(
         "--hindsight",

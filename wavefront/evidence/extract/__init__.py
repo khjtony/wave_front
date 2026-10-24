@@ -46,12 +46,14 @@ __all__ = [
 ]
 
 
-def make_backend(name: str, model: str | None = None) -> Backend:
-    """``rules``, ``claude`` or ``deepseek`` (the last two with an optional model)."""
+def make_backend(name: str, model: str | None = None, guidance: str = "") -> Backend:
+    """``rules``, ``claude`` or ``deepseek`` (the last two with an optional model; ``deepseek``
+    with optional ``guidance``, instructions appended to the shared ones)."""
     if name == "rules":
         return RuleBackend()
     if name == "claude":
         return ClaudeBackend(model) if model else ClaudeBackend()
     if name == "deepseek":
-        return DeepSeekBackend(model) if model else DeepSeekBackend()
+        kw = {"guidance": guidance} if guidance else {}
+        return DeepSeekBackend(model, **kw) if model else DeepSeekBackend(**kw)
     raise ValueError(f"unknown backend {name!r} (rules, claude, deepseek)")
