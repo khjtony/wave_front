@@ -11,9 +11,10 @@ A proposals file (JSON) holds::
       "corpus": {"source": "local", "synthetic": true, "root": "..."},
       "backend": {"name": "rules"},
       "harness_rules": ["two-document", "no-retrospective"],   # see evidence/harness_rules.py
-      "documents": [{"id", "date", "source", "title", "url"}, ...],
+      "documents": [{"id", "date", "source", "title", "url"[, "work"]}, ...],
       "proposals": [
         {"id": "1939Q1-001", "document": "<document id>",
+         ["work": "<the work the document is a copy or part of, when it has one>",]
          "proposal": {<the fixed schema>},
          "status": "pending" | "accepted" | "rejected",
          "decisions": [{"status", "reviewer", "note", "date", "auto"}]}
@@ -157,6 +158,7 @@ def write_proposals(
             {
                 "id": f"{label}-{n:03d}",
                 "document": doc.id,
+                **({"work": doc.work} if doc.work else {}),
                 "proposal": payload,
                 "status": "pending",
                 "decisions": [],

@@ -19,7 +19,13 @@ Examples::
         --terms Hitler,Chamberlain,Danzig
     TROVE_API_KEY=... python3 scripts/fetch_corpora.py trove --since 1939-03-01 \\
         --until 1939-03-31 --terms Hitler,Czechoslovakia
+    python3 scripts/fetch_corpora.py crest     # index the CIA estimates already on disk
     python3 scripts/fetch_corpora.py --check
+    python3 scripts/fetch_corpora.py --check crest
+
+``crest`` (CIA estimates, data/cw/corpora/raw/crest/) has no fetch: its PDFs and manifest are
+put in place by hand, and ``crest`` builds the index from them without the network (needs
+``pdftotext`` from poppler-utils). Its default directory is under data/cw/, not data/ww2/.
 """
 
 from __future__ import annotations
@@ -38,6 +44,7 @@ from wavefront.evidence.corpora import (  # noqa: E402
     SOURCES,
     CorpusError,
     chronicling,
+    crest,
     default_fetcher,
     frus,
     hansard,
@@ -84,10 +91,19 @@ def _list(text: str) -> list[str]:
     return [t.strip() for t in text.split(",") if t.strip()]
 
 
-def check(root: Path, sources: list[str]) -> int:
+def _corpus(root: Path | None, name: str):
+    """The corpus of source ``name`` under ``root``, or in its own default directory."""
+    return SOURCES[name](root / name) if root is not None else SOURCES[name]()
+
+
+def check(root: Path | None, sources: list[str]) -> int:
     status = 0
     for name in sources or list(SOURCES):
-        corpus = SOURCES[name](root / name)
+        if name not in SOURCES:
+            print(f"{name}: unknown source (known: {', '.join(SOURCES)})")
+            status = 1
+            continue
+        corpus = _corpus(root, name)
         if not corpus.index_path.exists():
             print(f"{name}: no index at {corpus.index_path} (not fetched)")
             continue
@@ -105,7 +121,13 @@ def check(root: Path, sources: list[str]) -> int:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
-    parser.add_argument("--root", type=Path, default=RAW_ROOT, help="raw corpus directory")
+    parser.add_argument(
+        "--root",
+        type=Path,
+        default=None,
+        help=f"raw corpus directory (default: {RAW_ROOT.relative_to(ROOT)}, and "
+        f"{crest.CW_RAW_ROOT.relative_to(ROOT)} for crest)",
+    )
     parser.add_argument(
         "--check",
         nargs="*",
@@ -135,14 +157,29 @@ def main(argv: list[str] | None = None) -> int:
     p = sub.add_parser("trove", parents=[common], help="Trove newspaper articles")
     p.add_argument("--max-pages", type=int)
     p.add_argument("--key-env", default="TROVE_API_KEY", help="environment variable with the key")
+    sub.add_parser(
+        "crest", help="index the CIA estimates already in the raw directory (no network)"
+    )
 
     args = parser.parse_args(argv)
     if args.check is not None:
         return check(args.root, args.check)
     if not args.source:
         parser.error("name a source to fetch, or --check")
+    corpus = _corpus(args.root, args.source)
+    if args.source == "crest":
+        try:
+            n, skipped = crest.build_index(corpus)
+        except CorpusError as exc:
+            print(f"error: {exc}", file=sys.stderr)
+            for p in exc.problems[1:]:
+                print(f"  {p}", file=sys.stderr)
+            return 2
+        print(f"crest: {n} documents indexed in {corpus.index_path}; {len(skipped)} skipped")
+        for s in skipped:
+            print(f"  skipped: {s}")
+        return check(args.root, ["crest"])
     fetcher = default_fetcher(delay=args.delay)
-    corpus = SOURCES[args.source](args.root / args.source)
     try:
         if args.source == "frus":
             n, skipped = frus.fetch(

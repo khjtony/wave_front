@@ -75,7 +75,11 @@ class Document:
 
     ``date`` is the document's own date (a dispatch, a sitting day, an issue date), never the
     date of its publication in a later collection. ``source`` names the corpus and, where it
-    has one, the series; ``url`` is where a reader finds the document."""
+    has one, the series; ``url`` is where a reader finds the document. ``work`` names the
+    work a document is a copy or a part of when a corpus holds it more than once (an
+    intelligence estimate reproduced in an edited volume and fetched again as a full text):
+    documents of one work are not independent for the harness rules. Empty means the
+    document is a work of its own (:attr:`work_key` is then its id)."""
 
     id: str
     date: date
@@ -83,16 +87,25 @@ class Document:
     title: str
     text: str
     url: str
+    work: str = ""
+
+    @property
+    def work_key(self) -> str:
+        """What the two-document rule counts: the work, or the id when there is none."""
+        return self.work or self.id
 
     def header(self) -> dict[str, str]:
         """The document without its text, as a JSON-ready mapping."""
-        return {
+        head = {
             "id": self.id,
             "date": self.date.isoformat(),
             "source": self.source,
             "title": self.title,
             "url": self.url,
         }
+        if self.work:
+            head["work"] = self.work
+        return head
 
 
 def parse_iso_date(text: str) -> date:

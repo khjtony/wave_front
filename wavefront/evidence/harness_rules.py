@@ -16,8 +16,10 @@ and counted as the backend made it.
     declares monotone: the pacts, the regions but the Rhineland, the war, ``oil_GER``;
     :data:`ONCE`) needs two independent
     documents, that is proposals of the same level from two different document ids, both
-    dated at or before the quarter. The first is *held*: it is not shown as a proposal for
-    review, cannot be accepted, and is not counted by ``--measure-proposals``. The proposal
+    dated at or before the quarter; two documents of one work (a record's ``work``: an
+    estimate reproduced in an edited volume and fetched again as a full text) count as one.
+    The first is *held*: it is not shown as a proposal for review, cannot be accepted, and
+    is not counted by ``--measure-proposals``. The proposal
     of the second document carries the flip, so the flip is dated by it; the first is then
     shown with it as *corroborating* and never sets the level by itself. Later proposals of
     the same level are shown as usual.
@@ -200,6 +202,11 @@ def _backward(name: str, level: Any, current: Any, held: list[Any]) -> bool:
     return level in held
 
 
+def _work(rec: dict[str, Any]) -> str:
+    """What makes a proposing document independent: its work, else its id."""
+    return rec.get("work") or rec["document"]
+
+
 def gate_records(
     records: Sequence[dict[str, Any]],
     until: date,
@@ -278,15 +285,15 @@ def gate_records(
             if not proposes(rec):
                 gates[i] = Gate(HELD, "rejected: does not count as a proposing document")
                 continue
-            if not documents or rec["document"] in documents:
-                bucket.append((i, rec["document"]))
+            if not documents or _work(rec) in documents:
+                bucket.append((i, _work(rec)))
                 gates[i] = Gate(
                     HELD,
                     f"two-document: the only document so far proposing {name} := {level!r}",
                 )
                 continue
             first = [j for j, _d in bucket]
-            bucket.append((i, rec["document"]))
+            bucket.append((i, _work(rec)))
             for j in first:
                 g = gates[j]
                 if g is not None and g.status == HELD:
