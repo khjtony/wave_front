@@ -47,6 +47,7 @@ from collections.abc import Sequence
 from typing import Any
 
 from ..corpora.base import Document
+from ..episodes import get_episode
 from .backend import ExtractError, merge_proposals, split_paragraphs
 from .schema import Proposal, VariableSpec, level_from_text, proposal_list_schema
 
@@ -55,6 +56,7 @@ __all__ = [
     "ExtractionRefused",
     "DEFAULT_MODEL",
     "FALLBACK_BETA",
+    "BELIEF_PROMPT",
     "SYSTEM_PROMPT",
     "system_prompt",
 ]
@@ -103,14 +105,50 @@ Variables and their threshold rules:
 """
 
 
+# The paragraph added before the variables for an episode whose variables are beliefs.
+BELIEF_PROMPT = """\
+Every variable below is a belief: the estimate or reading of one government, named in its \
+threshold rule. Propose a level from what the document shows that government's own estimate \
+or reading to be, not from what the document shows the facts to be: an estimate that \
+projects a force is evidence of the estimating government's belief whether or not the force \
+was ever built. A document of one government that reports what another government believes \
+or fears is evidence of the reporting government's belief, not of the other's: propose the \
+other government's reading only where the document reproduces that government's own words \
+(a quoted instruction, statement or document), and say so in the rule.
+
+"""
+_VARIABLES_HEADING = "Variables and their threshold rules:\n"
+_WW2_SCOPE = "European politics, 1936 to 1940"
+
+
+def _episode_prompt(episode: str) -> tuple[str, str]:
+    """The instructions and the date of the initial levels for ``episode``. WW2's are
+    :data:`SYSTEM_PROMPT` and 1 January 1936, unchanged; another episode's replace the
+    period in the first sentence and add :data:`BELIEF_PROMPT` when its variables are all
+    readings."""
+    ep = get_episode(episode)
+    if ep.name == "ww2":
+        return SYSTEM_PROMPT, "1 January 1936"
+    head = SYSTEM_PROMPT.replace(_WW2_SCOPE, ep.scope, 1)
+    if set(ep.text_variables) <= ep.readings:
+        head = head.replace(_VARIABLES_HEADING, BELIEF_PROMPT + _VARIABLES_HEADING, 1)
+    return head, ep.start
+
+
 def system_prompt(variables: Sequence[VariableSpec]) -> str:
-    """The instructions followed by each variable's levels and threshold rule text."""
-    lines = [SYSTEM_PROMPT]
+    """The instructions followed by each variable's levels and threshold rule text. The
+    instructions are those of the variables' episode (:attr:`VariableSpec.episode`; all the
+    variables must be of one episode)."""
+    episodes = {v.episode for v in variables} or {"ww2"}
+    if len(episodes) > 1:
+        raise ValueError(f"variables of several episodes: {', '.join(sorted(episodes))}")
+    head, start = _episode_prompt(episodes.pop())
+    lines = [head]
     for v in variables:
         rule = " ".join(v.rule_text.split()) or "(no threshold text in the ontology)"
         lines.append(
             f"\n## {v.name}\nlevels: {', '.join(v.level_names())}\n"
-            f"initial level (1 January 1936): {v.level_names()[v.levels.index(v.init)]}\n"
+            f"initial level ({start}): {v.level_names()[v.levels.index(v.init)]}\n"
             f"threshold rule: {rule}\n"
         )
     return "".join(lines)

@@ -21,6 +21,14 @@ variables:
 * the resource variables are copied from the dataset-derived hindsight snapshot of the
   quarter, marked as copied (they are read from datasets, not from documents).
 
+A proposals file of the Cold War episode (``"episode": "cw"``, :mod:`.episodes`) is reviewed
+the same way; its snapshot is the state on 1 January of the year after its cut-off (which must
+be a 31 December), for the model ``cw_v0``: the three belief variables from the accepted
+proposals (else their initial level, ``assumed``), every other variable, the rates and the
+built-ins carried from the hindsight snapshot of that year as ``assumed``, as in the manual
+replay (docs/cw_v0_decisions.md D7). The proposals files of one directory must be of one
+episode.
+
 ``--auto-accept`` (:data:`AUTO_REVIEWER`) is refused unless the proposals came from a
 synthetic fixture corpus, and every indicator it produces says AUTO-ACCEPTED.
 
@@ -43,6 +51,7 @@ from pathlib import Path
 from typing import Any
 
 from . import hindsight_ww2 as hw
+from .episodes import Episode, get_episode
 from .extract.extractor import read_proposals, save_proposals
 from .extract.schema import RESOURCE_VARIABLES, TEXT_VARIABLES
 from .harness_rules import (
@@ -63,7 +72,9 @@ __all__ = [
     "ReviewError",
     "build_snapshot",
     "decide",
+    "directory_episode",
     "directory_rules",
+    "file_episode",
     "file_gates",
     "file_rules",
     "format_listing",
@@ -86,8 +97,11 @@ class ReviewError(ValueError):
     a real corpus, an invalid resulting snapshot)."""
 
 
-def label_for(until: date) -> str:
-    """``YYYYQn`` when ``until`` is the last day of a quarter, else the ISO date."""
+def label_for(until: date, episode: str | Episode | None = None) -> str:
+    """``YYYYQn`` when ``until`` is the last day of a quarter, else the ISO date; for the
+    Cold War, ``YYYY`` (the year after) when ``until`` is a 31 December."""
+    if episode is not None and get_episode(episode).name != "ww2":
+        return get_episode(episode).label_for(until)
     quarter = hw.quarter_of(until)
     return quarter if hw.quarter_bounds(quarter)[1] == until else until.isoformat()
 
@@ -171,6 +185,22 @@ def file_rules(data: dict[str, Any]) -> tuple[str, ...]:
     return DEFAULT_RULES if recorded is None else parse_rules(recorded)
 
 
+def file_episode(data: dict[str, Any]) -> str:
+    """The episode of a proposals file (WW2 for a file that records none)."""
+    return get_episode(data.get("episode")).name
+
+
+def directory_episode(files: Sequence[tuple[Path, dict[str, Any]]]) -> str:
+    """The episode of a directory of proposals files; they must all agree."""
+    found = {file_episode(data) for _p, data in files}
+    if len(found) > 1:
+        raise ReviewError(
+            f"the proposals files are of several episodes ({', '.join(sorted(found))}); keep "
+            "one episode per replay directory"
+        )
+    return found.pop() if found else "ww2"
+
+
 def directory_rules(files: Sequence[tuple[Path, dict[str, Any]]]) -> tuple[str, ...]:
     """The harness rules of a directory of proposals files; they must all agree."""
     found = {file_rules(data) for _p, data in files}
@@ -201,11 +231,14 @@ def review_gating(
     rules: Sequence[str],
     *,
     measure: bool = False,
+    episode: str | Episode | None = None,
 ) -> tuple[list[dict[str, Any]], dict[tuple[Any, ...], int], Gating]:
     """The harness rules applied at ``until`` to the proposals of ``files`` (deduplicated,
-    in file order): the records, the index of each record key and the gating."""
+    in file order): the records, the index of each record key and the gating. The episode
+    is the files' unless given."""
     records, index = _unique(files)
-    return records, index, gate_records(records, until, rules, measure=measure)
+    episode = directory_episode(files) if episode is None else episode
+    return records, index, gate_records(records, until, rules, measure=measure, episode=episode)
 
 
 def file_gates(path: str | Path) -> dict[str, Gate]:
@@ -236,7 +269,7 @@ def decide(
     note: str,
     reviewer: str,
     snapshots_dir: str | Path | None = None,
-    hindsight_dir: str | Path = DEFAULT_HINDSIGHT,
+    hindsight_dir: str | Path | None = None,
     auto: bool = False,
     today: date | None = None,
 ) -> list[Path]:
@@ -244,7 +277,8 @@ def decide(
     ``ids`` of the file at ``path``, then rebuild the replay snapshots. A decision may be
     changed later; every decision is kept in the proposal's history. The snapshots go to
     ``snapshots_dir``, by default the parent of the ``proposals`` directory holding the
-    file. Returns the snapshot files written."""
+    file; the hindsight snapshots are the episode's unless ``hindsight_dir`` is given.
+    Returns the snapshot files written."""
     if status not in STATUSES:
         raise ReviewError(f"status must be one of {STATUSES}, not {status!r}")
     if not note or not note.strip():
@@ -342,11 +376,17 @@ def build_snapshot(
     until: date,
     accepted: Sequence[dict[str, Any]],
     *,
-    hindsight_dir: str | Path = DEFAULT_HINDSIGHT,
+    hindsight_dir: str | Path | None = None,
     schema_ref: str | None = None,
+    episode: str | Episode | None = None,
 ) -> dict[str, Any]:
     """The replay snapshot at ``until`` from ``accepted`` proposal records (in file order).
-    Raises :class:`ReviewError` if the result is not a valid snapshot of the ontology."""
+    Raises :class:`ReviewError` if the result is not a valid snapshot of the ontology. The
+    hindsight snapshots are the episode's (default WW2) unless ``hindsight_dir`` is given."""
+    ep = get_episode(episode)
+    if ep.name != "ww2":
+        return _build_annual(ep, until, accepted, hindsight_dir, schema_ref)
+    hindsight_dir = DEFAULT_HINDSIGHT if hindsight_dir is None else hindsight_dir
     quarter = hw.quarter_of(until)
     hindsight_path = Path(hindsight_dir) / f"{quarter}.json"
     hindsight = (
@@ -393,6 +433,83 @@ def build_snapshot(
     return snapshot
 
 
+def _build_annual(
+    ep: Episode,
+    until: date,
+    accepted: Sequence[dict[str, Any]],
+    hindsight_dir: str | Path | None,
+    schema_ref: str | None,
+) -> dict[str, Any]:
+    """The replay snapshot of an annual episode (the Cold War): the state on 1 January of the
+    year after ``until`` (a 31 December). The text variables take the level of their latest
+    accepted proposal, as in WW2; every other variable of the year's hindsight snapshot, its
+    rates and its built-ins are carried from it as ``assumed`` (decisions D7)."""
+    if (until.month, until.day) != (12, 31):
+        raise ReviewError(
+            f"{until}: a {ep.title} replay snapshot is the state on 1 January, read from the "
+            "documents dated to the 31 December before; extract with --until YYYY-12-31"
+        )
+    label = ep.label_for(until)
+    hindsight_dir = ep.hindsight if hindsight_dir is None else Path(hindsight_dir)
+    path = Path(hindsight_dir) / f"{label}.json"
+    if not path.exists():
+        raise ReviewError(f"{path}: no hindsight snapshot to carry the other variables from")
+    hindsight = json.loads(path.read_text(encoding="utf-8"))
+    order = {id(rec): n for n, rec in enumerate(accepted)}
+    variables: dict[str, Any] = {}
+    for name, entry in hindsight["variables"].items():
+        if name in ep.text_variables:
+            continue
+        entry = copy.deepcopy(entry)
+        entry["confidence"] = "assumed"
+        for ind in entry.get("indicators", []):
+            ind["rule"] = (
+                f"not read in the blind replay: the hindsight level of {label}. " + ind["rule"]
+            )
+        variables[name] = entry
+    for name in ep.text_variables:
+        var = ep.variable(name)
+        rows = sorted(
+            (
+                r
+                for r in accepted
+                if r["proposal"]["variable"] == name
+                and date.fromisoformat(r["proposal"]["date"]) <= until
+            ),
+            key=lambda r: (r["proposal"]["date"], order[id(r)]),
+        )
+        if not rows:
+            variables[name] = {"level": var.init, "confidence": "assumed", "indicators": []}
+            continue
+        level = rows[-1]["proposal"]["level"]
+        if level not in var.levels:
+            raise ReviewError(f"{name} has no level {level!r}")
+        first = len(rows) - 1
+        while first > 0 and rows[first - 1]["proposal"]["level"] == level:
+            first -= 1
+        chosen = [rows[first]] if first == len(rows) - 1 else [rows[first], rows[-1]]
+        variables[name] = {
+            "level": level,
+            "confidence": rows[-1]["proposal"]["confidence"],
+            "indicators": [_indicator(r) for r in chosen],
+        }
+    snapshot: dict[str, Any] = {}
+    if schema_ref:
+        snapshot["$schema"] = schema_ref
+    snapshot |= {
+        "date": ep.snapshot_date(label).isoformat(),
+        "model": ep.model,
+        "variables": variables,
+        "rates": copy.deepcopy(hindsight.get("rates", {})),
+    }
+    if hindsight.get("builtins"):
+        snapshot["builtins"] = copy.deepcopy(hindsight["builtins"])
+    problems = validate_snapshot(snapshot)
+    if problems:
+        raise ReviewError("the replay snapshot would be invalid: " + "; ".join(problems))
+    return snapshot
+
+
 def _schema_ref(out_dir: Path) -> str | None:
     try:
         out_dir.resolve().relative_to(ROOT)
@@ -405,7 +522,7 @@ def rebuild_snapshots(
     proposals_dir: str | Path,
     snapshots_dir: str | Path,
     *,
-    hindsight_dir: str | Path = DEFAULT_HINDSIGHT,
+    hindsight_dir: str | Path | None = None,
 ) -> list[Path]:
     """Rebuild every replay snapshot of ``proposals_dir`` into ``snapshots_dir`` (see the
     module docstring). Proposals repeated across files (the same document, variable, level
@@ -416,11 +533,12 @@ def rebuild_snapshots(
     out_dir = Path(snapshots_dir)
     files = proposal_files(proposals_dir)
     rules = directory_rules(files)
+    episode = directory_episode(files)
     written: list[Path] = []
     for n, (_path, data) in enumerate(files):
         until = date.fromisoformat(data["until"])
         upto = files[: n + 1]
-        records, index, gating = review_gating(upto, until, rules)
+        records, index, gating = review_gating(upto, until, rules, episode=episode)
         awaiting = 0
         for _p, d in upto:
             for rec in d["proposals"]:
@@ -433,7 +551,11 @@ def rebuild_snapshots(
                 target.unlink()  # stale: evidence up to this date is not all reviewed
             continue
         snapshot = build_snapshot(
-            until, gating.in_force, hindsight_dir=hindsight_dir, schema_ref=_schema_ref(out_dir)
+            until,
+            gating.in_force,
+            hindsight_dir=hindsight_dir,
+            schema_ref=_schema_ref(out_dir),
+            episode=episode,
         )
         out_dir.mkdir(parents=True, exist_ok=True)
         target.write_text(

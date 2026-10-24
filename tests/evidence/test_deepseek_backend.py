@@ -110,10 +110,10 @@ def test_request_carries_the_prompt_the_schema_and_json_mode():
 
 
 def test_model_and_json_mode_are_configurable():
-    backend, post = _backend(lambda b: _answer(), model="deepseek-chat", json_mode=False)
+    backend, post = _backend(lambda b: _answer(), model="deepseek-v4-pro", json_mode=False)
     backend.propose(DOC, VARS)
     body = post.calls[0][2]
-    assert body["model"] == "deepseek-chat" and "response_format" not in body
+    assert body["model"] == "deepseek-v4-pro" and "response_format" not in body
 
 
 def test_a_fenced_answer_is_parsed():
@@ -194,11 +194,11 @@ def test_missing_key_says_which_variable(monkeypatch):
 
 def test_cache_identity_names_the_model_and_differs_from_claude():
     a, _ = _backend(lambda b: _answer())
-    b, _ = _backend(lambda b: _answer(), model="deepseek-chat")
+    b, _ = _backend(lambda b: _answer(), model="deepseek-v4-pro")
     ia, ib = a.cache_identity(VARS), b.cache_identity(VARS)
     assert ia["model"] == ds.DEFAULT_DEEPSEEK_MODEL and ia != ib
     assert make_backend("deepseek").name == "deepseek"
-    assert make_backend("deepseek", "deepseek-chat").model == "deepseek-chat"
+    assert make_backend("deepseek", "deepseek-v4-pro").model == "deepseek-v4-pro"
 
 
 def test_proposals_go_through_the_extractor_checks():

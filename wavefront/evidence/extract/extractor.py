@@ -140,10 +140,12 @@ def write_proposals(
     corpus: dict[str, Any],
     backend: dict[str, Any],
     harness_rules: Sequence[str] | None = None,
+    episode: str | None = None,
 ) -> dict[str, Any]:
     """Write ``extraction`` as a proposals file with every proposal pending, recording the
     harness rules the replay and review layer applies to it (``None``: not recorded, which
-    reads as the default)."""
+    reads as the default) and, unless ``None``, the episode (:mod:`..episodes`; a file
+    without one is WW2's)."""
     seen: set[str] = set()
     records = []
     for n, (doc, p) in enumerate(extraction.kept, start=1):
@@ -173,6 +175,7 @@ def write_proposals(
         "corpus": corpus,
         "backend": backend,
         **({} if harness_rules is None else {"harness_rules": list(harness_rules)}),
+        **({} if episode is None else {"episode": episode}),
         "documents": [d.header() for d in extraction.documents],
         "proposals": records,
         "discarded": extraction.discarded,

@@ -35,6 +35,7 @@ from pathlib import Path
 from typing import Any
 
 from .. import hindsight_ww2 as hw
+from ..episodes import WW2_RESOURCE_VARIABLES, WW2_TEXT_VARIABLES, Episode, get_episode
 
 __all__ = [
     "PROPOSAL_FIELDS",
@@ -63,37 +64,10 @@ PROPOSAL_FIELDS = (
 )
 CONFIDENCE = ("high", "medium", "low")
 
-# The variables a replay reads from text (ww2_testbed.md section 8: commitment, belief,
-# treaty, pacts, war, regions, and oil where the datasets are silent) and the resource
-# variables it copies from the dataset-derived hindsight snapshot instead.
-TEXT_VARIABLES = (
-    "belief_WEST",
-    "belief_GER",
-    "commit_WEST",
-    "commit_US",
-    "treaty",
-    "axis",
-    "anticomintern",
-    "nazi_soviet_pact",
-    "polish_guarantee",
-    "anglo_soviet_alliance",
-    "ussr_axis",
-    "italy_estranged",
-    "china_war",
-    "war_west_ger",
-    "rhineland",
-    "austria",
-    "sudeten",
-    "bohemia",
-    "poland",
-    "france",
-    "britain",
-    "balkans",
-    "siberia",
-    "channel_air",
-    "oil_GER",
-)
-RESOURCE_VARIABLES = ("arms_GER", "arms_WEST", "arms_USSR", "arms_JPN", "ind_GER")
+# The WW2 variables a replay reads from text and the resource variables it copies from the
+# dataset-derived hindsight snapshot instead (the tables live in :mod:`..episodes`).
+TEXT_VARIABLES = WW2_TEXT_VARIABLES
+RESOURCE_VARIABLES = WW2_RESOURCE_VARIABLES
 
 
 @dataclass(frozen=True)
@@ -131,6 +105,8 @@ class VariableSpec:
     init: Any
     section: str
     rule_text: str = field(default="", compare=False)
+    #: the episode the variable belongs to (:mod:`..episodes`); it selects the prompt's wording
+    episode: str = field(default="ww2", compare=False)
 
     def level_names(self) -> list[str]:
         return [level_to_text(v) for v in self.levels]
@@ -183,14 +159,28 @@ def ontology_rule_text(path: str | Path = hw.DEFAULT_ONTOLOGY) -> dict[str, str]
 
 
 def text_variables(
-    names: Iterable[str] = TEXT_VARIABLES, ontology: str | Path = hw.DEFAULT_ONTOLOGY
+    names: Iterable[str] | None = None,
+    ontology: str | Path | None = None,
+    *,
+    episode: str | Episode | None = None,
 ) -> list[VariableSpec]:
-    """The ontology variables ``names`` with their levels (from the hindsight builder's table,
-    which a test keeps equal to the ontology) and their threshold rule text."""
+    """The text-derived variables ``names`` of ``episode`` (default: WW2, all of them) with
+    their levels (from the episode's table, which a test keeps equal to the ontology) and
+    their threshold rule text from ``ontology`` (default: the episode's). A variable on the
+    scale of another (the Cold War's ``belief_force_USA``, on ``nuke_USSR``'s scale) has the
+    other's level thresholds appended to its rule."""
+    ep = get_episode(episode)
+    names = ep.text_variables if names is None else names
+    ontology = ep.ontology if ontology is None else ontology
     rules = ontology_rule_text(ontology) if Path(ontology).exists() else {}
+    scales = dict(ep.scales)
     specs = []
     for name in names:
-        var = hw.BY_NAME[name]
+        var = ep.variable(name)
+        rule = rules.get(name, "")
+        if name in scales and rules.get(scales[name]):
+            scale = re.sub(r"^Monotone\.\s*", "", rules[scales[name]])
+            rule = f"{rule} The levels (the thresholds of `{scales[name]}`): {scale}"
         specs.append(
             VariableSpec(
                 name=var.name,
@@ -198,7 +188,8 @@ def text_variables(
                 levels=tuple(var.levels),
                 init=var.init,
                 section=var.section,
-                rule_text=rules.get(name, ""),
+                rule_text=rule,
+                episode=ep.name,
             )
         )
     return specs

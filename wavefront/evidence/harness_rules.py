@@ -9,7 +9,8 @@ Both rules apply to the structural variables only: never to the belief and commi
 variables (:data:`READINGS`: ``belief_WEST``, ``belief_GER``, ``commit_WEST``,
 ``commit_US``), which are what the replay exists to read and whose flips the rules would
 freeze (decision of 2026-10-15 on the FRUS measurement). A proposal for one of them is shown
-and counted as the backend made it.
+and counted as the backend made it. In the Cold War episode (:mod:`.episodes`) every text
+variable is a belief, so the rules are recorded but act on nothing.
 
 ``two-document``
     A flip of a structural variable that changes once (a flag, or a variable the model
@@ -50,6 +51,7 @@ from datetime import date
 from typing import Any
 
 from . import hindsight_ww2 as hw
+from .episodes import Episode, get_episode
 from .extract.schema import TEXT_VARIABLES
 
 __all__ = [
@@ -215,6 +217,7 @@ def gate_records(
     measure: bool,
     proposes: Callable[[dict[str, Any]], bool] | None = None,
     accepted: Callable[[dict[str, Any]], bool] | None = None,
+    episode: str | Episode | None = None,
 ) -> Gating:
     """Apply ``rules`` to proposal ``records`` (deduplicated, in file order) at the cut-off
     ``until``.
@@ -223,7 +226,9 @@ def gate_records(
     that a ``retrospective?`` record is never applied (not auto-applied). Otherwise (review)
     a record proposes unless rejected, and is applied only when accepted (a
     ``retrospective?`` one included: the reviewer decided). ``proposes`` and ``accepted``
-    override these defaults."""
+    override these defaults. ``episode`` (default WW2) names the text variables and the
+    readings; the Cold War's text variables are all readings, so neither rule acts on them."""
+    ep = get_episode(episode)
     if proposes is None:
         proposes = (lambda r: True) if measure else (lambda r: r["status"] != "rejected")
     if accepted is None:
@@ -231,8 +236,9 @@ def gate_records(
     two_doc = TWO_DOCUMENT in rules
     no_retro = NO_RETROSPECTIVE in rules
     gates: list[Gate | None] = [None] * len(records)
-    state = {n: hw.BY_NAME[n].init for n in TEXT_VARIABLES}
-    held = {n: [hw.BY_NAME[n].init] for n in TEXT_VARIABLES}
+    readings = READINGS if ep.name == "ww2" else ep.readings
+    state = {n: ep.variable(n).init for n in ep.text_variables}
+    held = {n: [ep.variable(n).init] for n in ep.text_variables}
     candidates: dict[tuple[str, str], list[tuple[int, str]]] = {}
     applied: set[int] = set()
 
@@ -253,7 +259,7 @@ def gate_records(
             gates[i] = Gate(OK, "not a text variable")
             continue
         current = state[name]
-        if name in READINGS:  # outside both rules: shown and counted as the backend made it
+        if name in readings:  # outside both rules: shown and counted as the backend made it
             gates[i] = Gate(OK, "confirms the current level" if level == current else "a flip")
             if accepted(rec):
                 apply(i, name, level)

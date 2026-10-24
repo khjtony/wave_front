@@ -480,18 +480,30 @@ def _shown(path: Path) -> str:
 @_evidence
 def cmd_extract(args: argparse.Namespace) -> int:
     from .evidence.corpora import open_corpus
-    from .evidence.extract import CachedBackend, extract, make_backend, write_proposals
+    from .evidence.extract import (
+        CachedBackend,
+        extract,
+        make_backend,
+        text_variables,
+        write_proposals,
+    )
     from .evidence.harness_rules import parse_rules
     from .evidence.replay import backend_info
     from .evidence.review import label_for
 
     rules = parse_rules(args.rules)
+    episode = None if args.episode == "ww2" else args.episode
     corpus = open_corpus(args.corpus, args.source)
     backend = make_backend(args.backend, args.model)
     if args.cache:
         backend = CachedBackend(backend, args.cache)
     result = extract(
-        corpus, until=args.until, since=args.since, backend=backend, workers=args.workers
+        corpus,
+        until=args.until,
+        since=args.since,
+        backend=backend,
+        workers=args.workers,
+        variables=text_variables(episode=args.episode),
     )
     info = backend_info(backend)
     usage = getattr(backend, "usage", None)
@@ -500,10 +512,11 @@ def cmd_extract(args: argparse.Namespace) -> int:
     data = write_proposals(
         args.out,
         result,
-        label=label_for(args.until),
+        label=label_for(args.until, episode),
         corpus=corpus.describe(),
         backend=info,
         harness_rules=rules,
+        episode=episode,
     )
     print(
         f"{len(result.documents)} documents dated to {args.until} read; "
@@ -549,7 +562,7 @@ def cmd_review(args: argparse.Namespace) -> int:
     return 0
 
 
-def _print_plan(rows, backend) -> None:
+def _print_plan(rows, backend, episode: str = "ww2") -> None:
     from .evidence.extract import text_variables
     from .evidence.extract.claude_backend import system_prompt
     from .evidence.extract.deepseek_backend import deepseek_system_prompt
@@ -557,11 +570,11 @@ def _print_plan(rows, backend) -> None:
 
     prompts = {"claude": system_prompt, "deepseek": deepseek_system_prompt}
     prompt = prompts.get(backend.name)
-    system_chars = len(prompt(text_variables())) if prompt else 0
+    system_chars = len(prompt(text_variables(episode=episode))) if prompt else 0
     print("DRY RUN: nothing is sent to the backend and nothing is written")
     print(
-        f"{'quarter':8} {'visible':>8} {'to read':>8} {'cached':>7} {'requests':>9} "
-        f"{'characters':>11}"
+        f"{'quarter' if episode == 'ww2' else 'year':8} {'visible':>8} {'to read':>8} "
+        f"{'cached':>7} {'requests':>9} {'characters':>11}"
     )
     for r in rows:
         print(
@@ -591,6 +604,7 @@ def _print_plan(rows, backend) -> None:
 @_evidence
 def cmd_replay(args: argparse.Namespace) -> int:
     from .evidence.corpora import open_corpus
+    from .evidence.episodes import get_episode
     from .evidence.extract import make_backend
     from .evidence.harness_rules import parse_rules
     from .evidence.replay import (
@@ -601,8 +615,24 @@ def cmd_replay(args: argparse.Namespace) -> int:
         render_report,
         replay,
     )
+    from .evidence.review import DEFAULT_HINDSIGHT
 
-    quarters = parse_quarters(args.quarters)
+    ep = get_episode(args.episode)
+    if ep.name == "ww2":
+        if args.years:
+            raise ValueError("--years is for --episode cw; the WW2 replay runs by --quarters")
+        periods_text = args.quarters or "1936Q1..1940Q4"
+        quarters = parse_quarters(periods_text)
+    else:
+        if args.quarters:
+            raise ValueError(
+                f"--episode {ep.name} runs by year (the model ticks yearly): give --years, "
+                "e.g. --years 1957..1962"
+            )
+        if not args.years:
+            raise ValueError(f"--episode {ep.name} needs --years, e.g. --years 1957..1962")
+        periods_text = args.years
+        quarters = ep.parse_periods(periods_text)
     out = Path(args.out)
     runs = []
     rules = parse_rules(args.rules) if args.rules is not None else None
@@ -622,7 +652,7 @@ def cmd_replay(args: argparse.Namespace) -> int:
             raise ValueError("--dry-run needs --corpus")
         corpus = open_corpus(args.corpus, args.source)
         backend = make_backend(args.backend, args.model)
-        _print_plan(plan(corpus, quarters, out, backend), backend)
+        _print_plan(plan(corpus, quarters, out, backend, episode=ep), backend, ep.name)
         return 0
     if args.measure_proposals and not args.corpus:
         from .evidence.review import proposal_files
@@ -650,6 +680,7 @@ def cmd_replay(args: argparse.Namespace) -> int:
             rules=parse_rules(args.rules),
             workers=args.workers,
             cache=not args.no_cache,
+            episode=ep,
         )
         corpus_info = corpus.describe()
         backend_record = backend_info(backend)
@@ -657,10 +688,22 @@ def cmd_replay(args: argparse.Namespace) -> int:
             print("SYNTHETIC RUN: fixture corpus; the results are not evidence")
         if args.auto_accept:
             print("AUTO-ACCEPT: every proposal accepted without review (synthetic run only)")
-    metrics = compare(
-        out, quarters, args.hindsight, measure_proposals=args.measure_proposals, rules=rules
-    )
-    command = f"wf replay --quarters {args.quarters} --out OUT"
+    if ep.name == "ww2":
+        metrics = compare(
+            out,
+            quarters,
+            args.hindsight or DEFAULT_HINDSIGHT,
+            measure_proposals=args.measure_proposals,
+            rules=rules,
+        )
+        command = f"wf replay --quarters {periods_text} --out OUT"
+    else:
+        from .evidence.replay_cw import compare as compare_cw
+
+        metrics = compare_cw(
+            out, quarters, args.hindsight, measure_proposals=args.measure_proposals, rules=rules
+        )
+        command = f"wf replay --episode {ep.name} --years {periods_text} --out OUT"
     if args.corpus:
         command += f" --corpus {_shown(Path(args.corpus))}"
     if args.backend != "rules":
@@ -678,7 +721,7 @@ def cmd_replay(args: argparse.Namespace) -> int:
         print("PROPOSAL-LEVEL: every proposal treated as accepted for the metrics; nothing written")
     text = render_report(
         metrics,
-        title=args.title or f"Replay metrics, WW2 {quarters[0]} to {quarters[-1]}",
+        title=args.title or f"Replay metrics, {ep.title} {quarters[0]} to {quarters[-1]}",
         corpus=corpus_info,
         backend=backend_record,
         command=command,
@@ -800,7 +843,13 @@ def _add_evidence_commands(sub) -> None:
     p.add_argument("--until", type=_date_arg, required=True, help="last document date, YYYY-MM-DD")
     p.add_argument("--since", type=_date_arg, help="first document date, YYYY-MM-DD")
     p.add_argument("--out", required=True, metavar="PROPOSALS", help="proposals file to write")
-    p.add_argument("--source", help="corpus kind (local, frus, hansard, chronicling, trove)")
+    p.add_argument("--source", help="corpus kind (local, frus, hansard, chronicling, trove, crest)")
+    p.add_argument(
+        "--episode",
+        choices=("ww2", "cw"),
+        default="ww2",
+        help="the model whose text variables are proposed: ww2 (default) or cw (the Cold War)",
+    )
     p.add_argument("--backend", choices=("rules", "claude", "deepseek"), default="rules")
     p.add_argument(
         "--model", help="model for the claude or deepseek backend (default: the backend's)"
@@ -840,20 +889,32 @@ def _add_evidence_commands(sub) -> None:
     p.add_argument("--snapshots", help="snapshot directory (default: the parent of proposals/)")
     p.add_argument(
         "--hindsight",
-        default=str(Path(__file__).resolve().parents[1] / "snapshots" / "ww2" / "hindsight"),
-        help="hindsight snapshots the resource variables are copied from",
+        help="hindsight snapshots the resource variables (Cold War: every variable but the "
+        "beliefs) are copied from (default: the proposals' episode's, snapshots/ww2/hindsight "
+        "or snapshots/cw/hindsight)",
     )
     p.set_defaults(func=cmd_review)
 
     p = sub.add_parser(
         "replay",
-        help="Blind replay over quarters, with the agreement and lag metrics.",
+        help="Blind replay over quarters (WW2) or years (Cold War), with the metrics.",
         description="For each quarter, filter the corpus to documents dated at or before its "
         "end, extract and write proposals; then compare the reviewed replay snapshots with "
         "the hindsight snapshots and write a Markdown metrics report.",
     )
     p.add_argument("--corpus", help="corpus directory")
-    p.add_argument("--quarters", default="1936Q1..1940Q4", help="e.g. 1936Q1..1940Q4")
+    p.add_argument(
+        "--episode",
+        choices=("ww2", "cw"),
+        default="ww2",
+        help="ww2 (default; by quarter) or cw (the Cold War; by year, with --years)",
+    )
+    p.add_argument("--quarters", help="WW2 quarters (default 1936Q1..1940Q4)")
+    p.add_argument(
+        "--years",
+        help="Cold War years, e.g. 1957..1962: the snapshot of a year is its 1 January, read "
+        "from the documents dated to the 31 December before",
+    )
     p.add_argument("--out", required=True, help="replay directory (proposals/ and snapshots)")
     p.add_argument(
         "--auto-accept",
@@ -867,8 +928,8 @@ def _add_evidence_commands(sub) -> None:
     )
     p.add_argument(
         "--hindsight",
-        default=str(Path(__file__).resolve().parents[1] / "snapshots" / "ww2" / "hindsight"),
-        help="hindsight snapshots to compare with",
+        help="hindsight snapshots to compare with (default: the episode's, snapshots/ww2/"
+        "hindsight or snapshots/cw/hindsight)",
     )
     p.add_argument("--report", help="metrics report file (default: OUT/metrics.md)")
     p.add_argument("--title", help="report title")

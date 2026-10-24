@@ -57,7 +57,7 @@ __all__ = [
     "deepseek_system_prompt",
 ]
 
-DEFAULT_DEEPSEEK_MODEL = "deepseek-reasoner"
+DEFAULT_DEEPSEEK_MODEL = "deepseek-flash"
 DEFAULT_BASE_URL = "https://api.deepseek.com"
 DEFAULT_MAX_TOKENS = 16000
 DEFAULT_MAX_CHARS = 120_000
@@ -77,11 +77,13 @@ Post = Callable[[str, dict[str, str], bytes, float], dict[str, Any]]
 _FENCE = re.compile(r"^\s*```(?:json)?\s*(.*?)\s*```\s*$", re.DOTALL)
 
 
-def deepseek_system_prompt(variables: Sequence[VariableSpec]) -> str:
-    """The Claude backend's instructions and threshold rules, then the answer's schema."""
+def deepseek_system_prompt(variables: Sequence[VariableSpec], guidance: str = "") -> str:
+    """The Claude backend's instructions and threshold rules, ``guidance`` (further
+    instructions for this backend, if any), then the answer's schema."""
     schema = json.dumps(proposal_list_schema(variables), indent=1, sort_keys=True)
+    extra = f"\n{guidance.strip()}\n" if guidance.strip() else ""
     return (
-        f"{system_prompt(variables)}\n"
+        f"{system_prompt(variables)}{extra}\n"
         "Answer with one JSON object and nothing else, of the form "
         '{"proposals": [...]}, valid against this JSON schema (an empty list when the '
         f"document shows no level):\n{schema}\n"
@@ -109,6 +111,8 @@ class DeepSeekBackend:
         max_tokens: int = DEFAULT_MAX_TOKENS,
         max_chars: int = DEFAULT_MAX_CHARS,
         json_mode: bool = True,
+        effort: str | None = None,
+        guidance: str = "",
         timeout: float = DEFAULT_TIMEOUT,
         retries: int = DEFAULT_RETRIES,
         backoff: float = 2.0,
@@ -121,6 +125,8 @@ class DeepSeekBackend:
         self.max_tokens = max_tokens
         self.max_chars = max_chars
         self.json_mode = json_mode
+        self.effort = effort
+        self.guidance = guidance
         self.timeout = timeout
         self.retries = retries
         self.backoff = backoff
@@ -140,7 +146,10 @@ class DeepSeekBackend:
             "max_tokens": self.max_tokens,
             "max_chars": self.max_chars,
             "json_mode": self.json_mode,
-            "system": hashlib.sha256(deepseek_system_prompt(variables).encode("utf-8")).hexdigest(),
+            "effort": self.effort,
+            "system": hashlib.sha256(
+                deepseek_system_prompt(variables, self.guidance).encode("utf-8")
+            ).hexdigest(),
         }
 
     def parts(self, document: Document) -> list[str]:
@@ -181,13 +190,15 @@ class DeepSeekBackend:
             "model": self.model,
             "max_tokens": self.max_tokens,
             "messages": [
-                {"role": "system", "content": deepseek_system_prompt(variables)},
+                {"role": "system", "content": deepseek_system_prompt(variables, self.guidance)},
                 {"role": "user", "content": user},
             ],
             "stream": False,
         }
         if self.json_mode:
             body["response_format"] = {"type": "json_object"}
+        if self.effort:
+            body["reasoning_effort"] = self.effort
         return body
 
     def _send(self, body: dict[str, Any]) -> dict[str, Any]:

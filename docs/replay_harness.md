@@ -500,8 +500,8 @@ whole run, and its wall-clock time by 33 divided by the `--workers` used.
 documents through DeepSeek's OpenAI-compatible chat API with the standard library; no extra
 dependency. It sends the Claude backend's instructions and threshold rules followed by the
 answer's JSON schema, in JSON mode (the API does not enforce a schema, so the extractor's checks
-discard anything outside it, with the reason). Default model `deepseek-reasoner`
-(`DEFAULT_DEEPSEEK_MODEL`); `--model deepseek-chat` for the non-reasoning model. The key is
+discard anything outside it, with the reason). Default model `deepseek-flash`
+(`DEFAULT_DEEPSEEK_MODEL`; the account listed `deepseek-v4-pro` and `deepseek-flash` on 2026-10-24); `--model deepseek-v4-pro` for the larger model. The key is
 read from `DEEPSEEK_API_KEY`, the base URL from `DEEPSEEK_BASE_URL` (default
 `https://api.deepseek.com`); never put either in a file of the repository. Long documents are
 split as for Claude (parts of at most 120,000 characters; a part whose answer stops on
@@ -513,6 +513,109 @@ cached per document like Claude's, under an identity naming the base URL, model,
 mode and system prompt, so the two backends never share cache entries. The same run as for
 Claude, with `--backend deepseek` and a different `--out`, gives comparable metrics; a pilot
 quarter first measures the cost.
+
+## The Cold War episode
+
+The harness reads one domain model at a time, named by an episode
+(`wavefront/evidence/episodes.py`): `ww2` (the default; everything above) or `cw`, the Cold
+War v0 model (`cw_v0`; [ontology_cw.md](ontology_cw.md); decisions D6 and D7 of
+[cw_v0_decisions.md](cw_v0_decisions.md)). The episode is threaded through
+`text_variables(episode=...)`, the system prompt, the harness rules, the review step, the
+replay driver, its metrics and the CLI (`wf replay --episode cw`, `wf extract --episode cw`);
+`wf review` reads it from the proposals file. With the default every WW2 output is unchanged:
+the WW2 system prompt, its variables and the answer schema are byte-identical (a test pins
+the prompt's SHA-256), so cached Claude answers stay valid.
+
+**Variables.** The text-derived variables are the three beliefs of the ontology's section 3,
+with the levels and initial levels of `models/cw/v0.py` (a test keeps them equal) and the
+`Threshold rule` column of the ontology as their rule text:
+
+| Variable | Levels | Initial (1 January 1947) |
+|---|---|---|
+| `belief_force_USA` | none, few, survivable, overkill | none |
+| `belief_USA_USSR` | status_quo, opportunist, expansionist | opportunist |
+| `belief_USSR_USA` | status_quo, hostile, first_strike_intent | hostile |
+
+`belief_force_USA` is "on `nuke_USSR`'s scale", whose thresholds the ontology states under
+`nuke_USA`; that rule (without "Monotone.") is appended to its rule text, so the extractor sees
+what few, survivable and overkill mean. The `Dated indicator` column (the record, read with
+hindsight) never enters the prompt; a test checks that no NIE number, NSC-68, Novikov or RYAN
+appears in it.
+
+**Prompt.** The WW2 instructions with two changes: the first sentence names "a model of the
+Cold War between the United States and the Soviet Union, 1947 to 1991", and a paragraph before
+the variables says that every variable is the belief of one named government, to be read from
+that government's own estimate (an estimate that projects a force is evidence of the
+estimating government's belief whether or not the force was built), and that a document of one
+government reporting another's belief or fear is evidence of the reporting government's belief:
+the other's reading is proposed only where the document reproduces that government's own
+words. The initial levels are stated at 1 January 1947. The DeepSeek backend appends its schema
+to the same prompt. The Cold War prompt is about 1,000 tokens.
+
+**Periods.** The model ticks yearly, so the replay runs by year (`--years 1957..1962`, or a
+comma-separated list); quarters are refused for this episode. The period `1958` is the state on
+1 January 1958 (tick 11), read from the documents dated to 31 December 1957: "documents dated
+before the snapshot's date" of D7. Its proposals file is `proposals/1958.json` (`until`
+1957-12-31, `"episode": "cw"`); `wf extract --episode cw` needs `--until YYYY-12-31` for its
+file to become a snapshot. A replay directory holds one episode.
+
+**Harness rules.** All three variables are beliefs, which are outside both rules (as WW2's
+belief and commitment variables), so the rules are recorded but act on nothing.
+
+**Review and snapshots.** A Cold War replay snapshot `<year>.json` is dated 1 January, for
+`cw_v0`: each belief takes the level of its latest accepted proposal (else its initial level,
+`assumed`, as in WW2); every other variable, the rates and the built-ins are carried from
+`snapshots/cw/hindsight/<year>.json` as `assumed`, as in the manual replay. Unlike the manual
+replay, `nuke_USSR` is not set from the estimates: the estimate is `belief_force_USA`, and the
+hindsight force stays the record's.
+
+**Metrics** (`wavefront/evidence/replay_cw.py`). Per year, each replayed belief beside (1) its
+hindsight truth from the hindsight snapshot (D6: `belief_force_USA` against the record's
+`nuke_USSR`; `belief_USSR_USA` against `hostile`; `belief_USA_USSR` has none, its truth being
+the swept hypothesis) and (2) the contemporaneous belief of the record: the manual replay
+snapshot of the year where there is one (1957 to 1962, 1983), else the latest `belief` row of
+`data/cw/events.csv` visible on 1 January, the rule the manual replay follows (a test checks
+that both agree in the manual years). The report has the C6 table (per year, whether the
+replayed `belief_force_USA` exceeds the hindsight `nuke_USSR`, beside the same for the manual
+replay), the C7 line (`belief_USSR_USA` on 1 January 1983), agreement per variable with both
+series, the flips of the replay against the documented flips of the contemporaneous series
+(matched within two years, lag in years), and the indicators behind every disagreement. These
+are inputs of C6 and C7; the claims themselves are computed on the model from the snapshots.
+
+```
+wf replay --episode cw --years 1957..1962 --corpus data/cw/corpora/raw/crest --source crest \
+    --backend claude --out $OUT --dry-run
+wf replay --episode cw --years 1957..1962 --corpus data/cw/corpora/raw/crest --source crest \
+    --backend claude --out $OUT --workers 4
+wf replay --episode cw --years 1957..1962 --out $OUT --measure-proposals
+wf review $OUT/proposals/1958.json
+```
+
+**Dry run on `crest`** (2026-10-24; nothing sent): for 1957 to 1962, 19 documents (1, 3, 3, 1,
+5 and 6 new per year), 22 requests with the Claude backend, 2.11 million characters, about
+550,000 input tokens. For 1982 to 1985 in a fresh directory, 26 documents, all but one read
+for 1982 (everything dated to 1981, back to 1956) and none dated 1982 or 1983: the corpus holds
+nothing between NIE 11-8-70 (Nov 1970) and SNIE 11-10-84 (May 1984), which becomes visible for
+1985; about 596,000 input tokens. Run after 1957 to 1962 in the same directory, the later years
+read only the documents not yet read.
+
+What a blind C6 and C7 replay still needs:
+
+- **Part III of the Steury volume** (estimates 27 to 41, 1972 to 1983) has no text layer: OCR
+  outside the harness. Without it nothing is read between 1971 and 1984, and C7's year has no
+  American document either.
+- **The twelve undated estimates** of Parts I and II (SNIE 11-6-57, SNIE 11-7-58, NIE 11-4-60,
+  NIE 11-8-62 among them) need a date with its source in `crest.STEURY_1996`; NIE 11-8-62 and
+  the Memorandum to Holders of NIE 11-5-58 (no text layer) bear on 1959 and 1963. The C6 years
+  are read now from 19 documents.
+- **C7 needs Soviet documents.** `crest` holds American estimates only; under the prompt's rule
+  an American estimate of what Moscow fears is Washington's belief, so `belief_USSR_USA` can
+  only be read from a document reproducing Moscow's own words (the KGB's RYAN instructions as
+  published by Andrew and Gordievsky, the Wilson Center's Soviet records), which no corpus of
+  the repository holds. The PFIAB report (1990) is dated after every C7 year.
+- `belief_USA_USSR` is read from Washington's basic national security papers (NSC-68,
+  NSC 162/2), which are FRUS documents, not estimates; a FRUS corpus for 1950 to 1953 would be
+  needed to replay it.
 
 ## Open items
 
@@ -537,5 +640,6 @@ quarter first measures the cost.
   page-text fetch before that source can be replayed.
 - DGFP, the Nuremberg documents, the 1941 Imperial Conference records and the Cabinet papers
   have no fetch module; they enter as `local` directories of dated text files.
-- The replay snapshots carry no `builtins` section; the built-in counters of a replayed
-  state come from the model's initial values when it is loaded.
+- The WW2 replay snapshots carry no `builtins` section; the built-in counters of a replayed
+  state come from the model's initial values when it is loaded. (The Cold War snapshots carry
+  the hindsight snapshot's built-ins.)
