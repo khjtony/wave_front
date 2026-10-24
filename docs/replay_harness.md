@@ -591,12 +591,12 @@ wf replay --episode cw --years 1957..1962 --out $OUT --measure-proposals
 wf review $OUT/proposals/1958.json
 ```
 
-**Dry run on `crest`** (2026-10-24; nothing sent): for 1957 to 1962, 19 documents (1, 3, 3, 1,
-5 and 6 new per year), 22 requests with the Claude backend, 2.11 million characters, about
-550,000 input tokens. For 1982 to 1985 in a fresh directory, 26 documents, all but one read
+**Dry run on `crest`** (2026-10-24; nothing sent): for 1957 to 1962, 22 documents (1, 4, 4, 1,
+6 and 6 new per year), 25 requests with the Claude backend, 2.20 million characters, about
+577,000 input tokens. For 1982 to 1985 in a fresh directory, 38 documents, all but one read
 for 1982 (everything dated to 1981, back to 1956) and none dated 1982 or 1983: the corpus holds
-nothing between NIE 11-8-70 (Nov 1970) and SNIE 11-10-84 (May 1984), which becomes visible for
-1985; about 596,000 input tokens. Run after 1957 to 1962 in the same directory, the later years
+nothing between NIE 11-8-71 (Oct 1971) and SNIE 11-10-84 (May 1984), which becomes visible for
+1985; about 682,000 input tokens. Run after 1957 to 1962 in the same directory, the later years
 read only the documents not yet read.
 
 What a blind C6 and C7 replay still needs:
@@ -604,10 +604,11 @@ What a blind C6 and C7 replay still needs:
 - **Part III of the Steury volume** (estimates 27 to 41, 1972 to 1983) has no text layer: OCR
   outside the harness. Without it nothing is read between 1971 and 1984, and C7's year has no
   American document either.
-- **The twelve undated estimates** of Parts I and II (SNIE 11-6-57, SNIE 11-7-58, NIE 11-4-60,
-  NIE 11-8-62 among them) need a date with its source in `crest.STEURY_1996`; NIE 11-8-62 and
-  the Memorandum to Holders of NIE 11-5-58 (no text layer) bear on 1959 and 1963. The C6 years
-  are read now from 19 documents.
+- **The estimates of Parts I and II** are all dated now: the twelve the volume prints no date
+  for carry one with its source in `crest.STEURY_1996` (a citation with the date in another
+  estimate of the corpus, the FRUS printing, or the CIA's 2004 list of declassified NIEs). The
+  Memorandum to Holders of NIE 11-5-58 (no text layer) still bears on 1959 unread. The C6
+  years are read now from 22 documents.
 - **C7 needs Soviet documents.** `crest` holds American estimates only; under the prompt's rule
   an American estimate of what Moscow fears is Washington's belief, so `belief_USSR_USA` can
   only be read from a document reproducing Moscow's own words (the KGB's RYAN instructions as
@@ -631,9 +632,8 @@ What a blind C6 and C7 replay still needs:
 - `crest`: Part III of the Steury volume (estimates 27 to 41, 1972 to 1983, among them NIE
   11-4-82, 11-3/8-82 and 11-3/8-83), the whole-volume PDF, the two Memoranda to Holders (NIE
   11-5-58, NIE 11-8-62) and SNIE 11-9-84 have no text layer and enter no index until they are
-  OCRed outside the harness; twelve estimates of Parts I and II have no recorded date (among
-  them SNIE 11-6-57, SNIE 11-7-58, NIE 11-4-60 and NIE 11-8-62) and wait for one, with its
-  source, in `crest.STEURY_1996`.
+  OCRed outside the harness; Part III's estimates also need a date with its source in
+  `crest.STEURY_1996` once they are readable.
 - A document the Claude backend refuses stops its quarter on every run; a way to record it and
   go on (with the quarter marked incomplete in the report) is not built.
 - Chronicling America's move to the loc.gov API (snippets only in search results) needs a

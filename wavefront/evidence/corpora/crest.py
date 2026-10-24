@@ -117,9 +117,19 @@ def _ed(title, start):
 
 
 _CITED_5858 = "cited with its date in NIE 11-5-58 (vol. p. 65)"
+
+
+def _cia_list(year: int) -> str:
+    return (
+        'listed with this date in CIA, Center for the Study of Intelligence, "Declassified '
+        f'National Intelligence Estimates on the Soviet Union and International Communism, {year}" '
+        f"(www.cia.gov/csi/books/nieuncls/{year}.htm, Wayback Machine 2004-12-29)"
+    )
+
+
 # The contents of Steury 1996 (front matter, pp. v-vi). Dates: see Entry.basis; an estimate
 # with no date here is undated in this corpus (its date is not printed in the volume or in
-# another document of the corpus).
+# another document of the corpus, and no source outside it is recorded here).
 STEURY_1996: tuple[Entry, ...] = (
     _ed("Part I: The Soviet Union as a World Power", 1),
     _ed('The "Bomber Gap," 1955-58', 5),
@@ -137,8 +147,19 @@ STEURY_1996: tuple[Entry, ...] = (
         "SNIE 11-6-57",
         "Soviet Gross Capabilities for Attack on the Continental US in Mid-1960",
         39,
+        "1957-01-15",
+        "cited with its date in NIE 11-4-57 (p. 30, PDF p. 39 of the full text in this corpus); "
+        + _cia_list(1957),
     ),
-    _e(3, "SNIE 11-7-58", "Strength and Composition of the Soviet Long Range Bomber Force", 47),
+    _e(
+        3,
+        "SNIE 11-7-58",
+        "Strength and Composition of the Soviet Long Range Bomber Force",
+        47,
+        "1958-06-05",
+        "cited with its date in NIE 11-4-58 (p. 38, PDF p. 42 of the full text in this corpus); "
+        + _cia_list(1958),
+    ),
     _ed('The "Missile Gap," 1957-61', 55),
     _e(
         4,
@@ -190,9 +211,32 @@ STEURY_1996: tuple[Entry, ...] = (
         "data/cw/events.csv (Prados 1982; Ruffner (ed.) 1995); not printed in the volume",
     ),
     _ed("Part II: Soviet Force Requirements", 139),
-    _e(11, "NIE 11-4-60", "Main Trends in Soviet Capabilities and Policies, 1960-1965", 141),
-    _e(12, "NIE 11-4-63", "Soviet Military Capabilities and Policies, 1962-1967", 147),
-    _e(13, "NIE 11-4-64", "Main Trends in Soviet Military Policy", 157),
+    _e(
+        11,
+        "NIE 11-4-60",
+        "Main Trends in Soviet Capabilities and Policies, 1960-1965",
+        141,
+        "1960-12-01",
+        "cited with its date in FRUS 1961-63 VIII, docs. 2 (NIE 1-61, USAF footnote) and 17 "
+        "(editor's note); not printed in the volume",
+    ),
+    _e(
+        12,
+        "NIE 11-4-63",
+        "Soviet Military Capabilities and Policies, 1962-1967",
+        147,
+        "1963-03-22",
+        "FRUS 1961-63 VIII, doc. 130 (printed with its date, Washington, 22 March 1963); "
+        "not printed in the volume",
+    ),
+    _e(
+        13,
+        "NIE 11-4-64",
+        "Main Trends in Soviet Military Policy",
+        157,
+        "1964-04-22",
+        _cia_list(1964) + "; not printed in the volume",
+    ),
     _e(
         14,
         "NIE 11-4-65",
@@ -209,7 +253,15 @@ STEURY_1996: tuple[Entry, ...] = (
         "1968-09-19",
         "the editor's note, vol. p. 139",
     ),
-    _e(16, "NIE 11-8-62", "Soviet Capabilities for Long Range Attack", 181),
+    _e(
+        16,
+        "NIE 11-8-62",
+        "Soviet Capabilities for Long Range Attack",
+        181,
+        "1962-07-06",
+        "FRUS 1961-63 VIII, doc. 96 (printed with its date, Washington, 6 July 1962); "
+        "not printed in the volume",
+    ),
     _e(
         17,
         "NIE 11-8-64",
@@ -218,8 +270,24 @@ STEURY_1996: tuple[Entry, ...] = (
         "1964-10-08",
         "cited with its date in the Memorandum to Holders of NIE 11-8-64 (vol. p. 199)",
     ),
-    _e(18, "M/H NIE 11-8-64", "Soviet Capabilities for Strategic Attack", 199),
-    _e(19, "NIE 11-8-65", "Soviet Capabilities for Strategic Attack", 203),
+    _e(
+        18,
+        "M/H NIE 11-8-64",
+        "Soviet Capabilities for Strategic Attack",
+        199,
+        "1965-05-10",
+        "FRUS 1964-68 X, doc. 88 (the same text, printed with its date, Washington, 10 May "
+        "1965); not printed in the volume",
+    ),
+    _e(
+        19,
+        "NIE 11-8-65",
+        "Soviet Capabilities for Strategic Attack",
+        203,
+        "1965-10-07",
+        "FRUS 1964-68 X, doc. 97 (printed with its date, Washington, 7 October 1965); "
+        "not printed in the volume",
+    ),
     _e(
         20,
         "NIE 11-8-66",
@@ -238,9 +306,32 @@ STEURY_1996: tuple[Entry, ...] = (
         "paragraph 5 on 2 March 1967)",
     ),
     _ed("Soviet ICBM Accuracy and MIRVs", 223),
-    _e(22, "NIE 11-8-67", "Soviet Capabilities for Strategic Attack", 225),
-    _e(23, "NIE 11-8-68", "Soviet Strategic Attack Forces", 239),
-    _e(24, "NIE 11-8-69", "Soviet Strategic Attack Forces", 253),
+    _e(
+        22,
+        "NIE 11-8-67",
+        "Soviet Capabilities for Strategic Attack",
+        225,
+        "1967-10-26",
+        _cia_list(1967) + "; not printed in the volume",
+    ),
+    _e(
+        23,
+        "NIE 11-8-68",
+        "Soviet Strategic Attack Forces",
+        239,
+        "1968-10-03",
+        "FRUS 1964-68 X, doc. 217 (printed with its date, Washington, 3 October 1968); "
+        "not printed in the volume",
+    ),
+    _e(
+        24,
+        "NIE 11-8-69",
+        "Soviet Strategic Attack Forces",
+        253,
+        "1969-09-09",
+        "FRUS 1969-76 XXXIV, doc. 46 (printed with its date, Washington, 9 September 1969); "
+        "not printed in the volume",
+    ),
     _e(
         25,
         "NIE 11-8-70",
@@ -249,7 +340,15 @@ STEURY_1996: tuple[Entry, ...] = (
         "1970-11-24",
         "cited with its date in NIE 11-8-71 (vol. p. 275)",
     ),
-    _e(26, "NIE 11-8-71", "Soviet Forces for Intercontinental Attack", 275),
+    _e(
+        26,
+        "NIE 11-8-71",
+        "Soviet Forces for Intercontinental Attack",
+        275,
+        "1971-10-21",
+        "FRUS 1969-76 XXXIV, doc. 198 (printed with its date, Washington, 21 October 1971); "
+        "not printed in the volume",
+    ),
     _ed("Part III: Soviet Strategic Objectives and Force Planning", 287),
     _e(27, "NIE 11-4-72", "Issues and Options in Soviet Military Policy", 289),
     _e(28, "SNIE 11-4-73", "Soviet Strategic Arms Programs and Detente: What are They Up To?", 297),
