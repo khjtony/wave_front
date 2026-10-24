@@ -4,11 +4,40 @@ Registered 2026-10-24 in docs/coldwar_testbed.md section 9, before any cw_v1 gua
 edit the claim text without a changelog entry in that document (section 8); an amended claim
 is a new row V2a. The readings the model step must fix before first sight are listed in
 section 9.4.
+
+Reading (docs/cw_v1_decisions.md, R V2): for each year 1967 to 1991, per hypothesis, the
+hindsight state; K_J, K_USA, K_USSR the kernels of ``balance_core`` through the horizon on the
+flattened game (the sub-games active), by the composite engine for 1972 to 1983, the
+symbolic engine from 1984 and the layered lifting for 1967 to 1971 (D7; each exact). Holds iff,
+under at least one hypothesis, the state is in K_J every year and outside K_USA and K_USSR
+every year, and the control holds under that hypothesis: on ``build(us_crisis_options=False)``
+the state is inside K_USSR in at least one year (same engines). Breaking moves (printed, not
+asserted): for each year and unilateral kernel, the moves of the attractor strategy of the
+other principal joined by Nature, the PRC idle, out of ``balance_core``, played from the
+state (the defender idle) until the play leaves ``balance_core``, enters a crisis or ends.
+Beside, not asserted: the fortune variants ({USA, Nature}, {USSR, Nature}), the kernels of
+``balance_cw`` and ``balance_tri`` for the same coalitions (these by the layered lifting) and
+the coarse kernels with the sub-games inert. Choices R left open: decisions section R notes.
 """
 
 import os
 
 import pytest
+
+from ..common import (
+    HYPS,
+    Timer,
+    compiled,
+    composite_graph,
+    composite_kernel,
+    engine_for,
+    hindsight,
+    kernel,
+    layered_kernel,
+    lift_of,
+    move_names,
+    prc_idle,
+)
 
 CLAIM = {
     "id": "V2",
@@ -42,7 +71,97 @@ CLAIM = {
 # WF_FIRST_SIGHT_CWV1=1 for the one recorded run of V1 to V10.
 FIRST_SIGHT = os.environ.get("WF_FIRST_SIGHT_CWV1") == "1"
 
+YEARS = range(1967, 1992)
+P = "balance_core"
+JOINT, US, SU = ("USA", "USSR"), ("USA",), ("USSR",)
+COALITIONS = (JOINT, US, SU)
+FORTUNE = (("USA", "Nature"), ("USSR", "Nature"))
+BESIDE = ("balance_cw", "balance_tri")
+
+
+def members(aims, year, coalitions, **build):
+    """Membership of the year's hindsight state in each coalition's kernel of P, by the
+    engine R assigns to the year, and the size of the explicit part (composite years)."""
+    s = hindsight(year, aims, **build)
+    engine = engine_for(year)
+    if engine == "symbolic":
+        return {c: kernel(aims, c, P, **build).contains(s) for c in coalitions}, engine
+    if engine == "layered":
+        return {c: layered_kernel(aims, c, P, **build).contains(s) for c in coalitions}, engine
+    g = composite_graph(aims, [s], **build)
+    start = g.index[s]
+    out = {c: start in composite_kernel(g, aims, c, P, **build) for c in coalitions}
+    return out, f"composite ({g.size()} states to 1984)"
+
+
+def breaking_moves(aims, defender, state):
+    """The attractor strategy of the other principal joined by Nature (the PRC idle) out of
+    P, played from ``state`` with the defender idle, until the play leaves P, enters a
+    crisis or ends (layered lifting, exact on the flattened game)."""
+    cm = compiled(aims)
+    attacker = ("USSR", "Nature") if defender == US else ("USA", "Nature")
+    lift = lift_of(aims, prc_idle(aims))
+    enc = lift.enc
+    res = lift.attractor(attacker, enc.mgr.DIFF(enc.dom, enc.predicate(P)))
+    if not res.contains(state):
+        return "not forced"
+    idx = enc.actor_indices(attacker)
+    plays, s = [], tuple(state)
+    while cm.evaluate(P, s) and not cm.is_terminal(s):
+        sub = lift.strategy_move(res, s)
+        if sub is None:
+            break
+        move = [0] * len(cm.actors)
+        for a, j in zip(idx, sub, strict=True):
+            move[a] = j
+        year = 1947 + s[cm.index["tick"]]
+        crisis = lift.crisis_at(s)
+        if crisis is not None and move[crisis.actor] == crisis.action:
+            plays.append(f"{year}: enters {crisis.label} (forced through it)")
+            break
+        plays.append(f"{year}: {move_names(cm, move) or ['idle']}")
+        s = cm.step(s, tuple(move))
+    return "; ".join(plays) or "outside P already"
+
 
 @pytest.mark.skipif(not FIRST_SIGHT, reason="cw_v1 first sight not switched on")
 def test_V2():
-    raise NotImplementedError(CLAIM["id"])
+    timer = Timer()
+    print("\n[V2] engines: composite 1972-1983, symbolic from 1984, layered lifting 1967-1971")
+    results = {}
+    for aims in HYPS:
+        cm = compiled(aims)
+        main = True
+        print(f"[V2] aims_USSR={aims}: year: {P}, K_J, K_USA, K_USSR (engine)")
+        for y in YEARS:
+            s = hindsight(y, aims)
+            m, engine = members(aims, y, COALITIONS)
+            ok = m[JOINT] and not m[US] and not m[SU]
+            main = main and ok
+            print(
+                f"[V2]   {y}: {bool(cm.evaluate(P, s))}, {m[JOINT]}, {m[US]}, {m[SU]} ({engine})"
+                f"{'' if ok else '  <- fails'}"
+            )
+            fortune = {c: layered_kernel(aims, c, P).contains(s) for c in FORTUNE}
+            beside = {
+                (inv, c): layered_kernel(aims, c, inv).contains(s)
+                for inv in BESIDE
+                for c in COALITIONS
+            }
+            inert = {c: kernel(aims, c, P).contains(s) for c in COALITIONS}
+            print(
+                f"[V2]     beside: fortune {fortune}; "
+                + "; ".join(f"{inv} {[beside[(inv, c)] for c in COALITIONS]}" for inv in BESIDE)
+                + f"; coarse inert {[inert[c] for c in COALITIONS]}"
+            )
+            for side in (US, SU):
+                print(f"[V2]     breaking K_{side[0]}: {breaking_moves(aims, side, s)}")
+        control = {}
+        for y in YEARS:
+            m, engine = members(aims, y, (SU,), us_crisis_options=False)
+            control[y] = m[SU]
+        c = any(control.values())
+        print(f"[V2]   control (no American crisis options), K_USSR by year: {control}")
+        results[aims] = (main, c)
+        print(f"[V2] aims_USSR={aims}: main {main}, control {c} ({timer})")
+    assert any(all(v) for v in results.values()), results

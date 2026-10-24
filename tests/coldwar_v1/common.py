@@ -1,7 +1,8 @@
 """Shared machinery for the Cold War v1 tests: per-hypothesis builds, hindsight and replay
 states from ``snapshots/cw_v1``, the realized play on the flattened game, and the analysis
 devices of docs/cw_v1_decisions.md (the cut-off, restricted games, symbolic boundary values
-for explicit graphs, lifted crisis kernels). Analysis devices only; the model is
+for explicit graphs, lifted crisis kernels, the composite engine and the layered lifting of D7,
+the latter in tests/coldwar_v1/layered.py). Analysis devices only; the model is
 ``models/cw/v1.py`` with ``models/cw/crises/`` and the readings are decisions section R.
 
 The generic devices (``Cut``, ``Forbid``, ``bfs_distance``, ``minimal_coalitions``,
@@ -37,6 +38,7 @@ from tests.coldwar.common import (  # noqa: F401  (re-exported for the scenario 
     minimal_relaxation_sets,
     move_names,
 )
+from tests.coldwar_v1.layered import Lift, idle_pairs
 from wavefront.engine import explore
 from wavefront.model.compile import CompiledModel
 
@@ -163,7 +165,8 @@ def encoding(aims: str, **build):
     return encode(compiled(aims, **build))
 
 
-def kernel(aims: str, coalition: tuple[str, ...], invariant: str, **build):
+@lru_cache(maxsize=None)
+def kernel(aims: str, coalition: tuple[str, ...], invariant, **build):
     """The coarse kernel of ``invariant`` for ``coalition`` through the horizon, over the
     whole domain (symbolic; the crisis actions inert)."""
     from wavefront.symbolic import safe as ssafe
@@ -172,6 +175,7 @@ def kernel(aims: str, coalition: tuple[str, ...], invariant: str, **build):
     return ssafe(enc, list(coalition), enc.predicate(invariant))
 
 
+@lru_cache(maxsize=None)
 def bounded_kernel(aims: str, coalition: tuple[str, ...], invariant: str, cut: int, **build):
     """The coarse kernel of ``invariant`` kept only to tick ``cut`` (states at or after the
     cut count as kept: decisions D5's cut-off), symbolic, crisis actions inert."""
@@ -214,3 +218,110 @@ def fine_graph(fm, coarse_state, crisis_name: str):
         if g.terminal[i]
     }
     return g, returns, k
+
+
+# -- the engines of decisions D7 ------------------------------------------------------------
+# No crisis action is available from 1 January 1984 (tick 37): the composite engine's cut.
+COMPOSITE_CUT = 37
+EVERYONE = ("USA", "USSR", "PRC", "Nature")
+
+
+def engine_for(year: int) -> str:
+    """The engine decisions R assigns to a year's unbounded kernels and distances:
+    ``"symbolic"`` from 1984, ``"composite"`` for 1972 to 1983, ``"layered"`` before 1972."""
+    return "symbolic" if year >= 1984 else "composite" if year >= 1972 else "layered"
+
+
+@lru_cache(maxsize=None)
+def lift_of(aims: str, forbid: frozenset = frozenset(), **build) -> Lift:
+    """The layered lifting (D7) of the flattened game of ``aims`` and ``build``, with the
+    ``(actor, action)`` pairs of ``forbid`` never available."""
+    return Lift(flat_of(aims, **build), encoding(aims, **build), forbid=forbid)
+
+
+def prc_idle(aims: str, **build) -> frozenset:
+    """The pairs that leave the PRC idle (R V2's breaking moves)."""
+    return idle_pairs(compiled(aims, **build), "PRC")
+
+
+@lru_cache(maxsize=None)
+def layered_kernel(aims: str, coalition: tuple[str, ...], invariant, **build):
+    """The kernel of ``invariant`` for ``coalition`` through the horizon on the flattened
+    game, over the whole coarse domain, by the layered lifting (exact)."""
+    lift = lift_of(aims, **build)
+    return lift.kernel(coalition, lift.enc.predicate(invariant))
+
+
+def phi_ids(g, fm, pred) -> set[int]:
+    """Ids of ``g`` satisfying the coarse predicate ``pred`` (every fine state does)."""
+    return {i for i, s in enumerate(g.states) if fm.is_fine(s) or fm.coarse.evaluate(pred, s)}
+
+
+def composite_graph(aims: str, starts, max_states: int = 6_000_000, forbid=(), **build):
+    """The flattened game explored from ``starts`` to 1 January 1984 (the composite engine's
+    explicit part); raises ``BudgetExceeded`` beyond ``max_states``."""
+    fm = flat_of(aims, **build)
+    m = Forbid(fm, sorted(forbid)) if forbid else fm
+    return explore(Cut(m, COMPOSITE_CUT), initial=list(starts), max_states=max_states)
+
+
+def composite_kernel(g, aims: str, coalition: tuple[str, ...], pred, **build) -> set[int]:
+    """The composite kernel (D7) on the explicit part ``g``: its cut states valued by the
+    symbolic coarse kernel of ``pred`` through the horizon (exact from 1984)."""
+    fm = flat_of(aims, **build)
+    sym = kernel(aims, coalition, pred, **build)
+    return boundary_kernel(g, coalition, phi_ids(g, fm, pred), sym.contains)
+
+
+@lru_cache(maxsize=None)
+def everyone_attractor(aims: str, key: str, **build):
+    """The symbolic attractor of every actor (Nature included) on the coarse game, over the
+    whole domain, so that a state's rank is its fewest transitions (exact from 1984):
+    ``key`` is ``"adverse"`` (GENERAL_WAR or ACCIDENTAL_WAR) or ``"out:<coalition>:<inv>"``
+    (outside that coalition's symbolic kernel of the invariant, members joined by '+')."""
+    from wavefront.model import V
+    from wavefront.symbolic import attractor
+
+    enc = encoding(aims, **build)
+    if key == "adverse":
+        target = enc.predicate(~V.invariant("no_general_war"))
+    else:
+        _, coalition, inv = key.split(":")
+        res = kernel(aims, tuple(coalition.split("+")), inv, **build)
+        target = enc.mgr.DIFF(enc.dom, res.kernel)
+    return attractor(enc, list(EVERYONE), target)
+
+
+@lru_cache(maxsize=None)
+def layered_distance(aims: str, key: str, **build):
+    """Fewest transitions on the flattened game from every coarse state, by the layered
+    lifting (exact): ``key`` as in :func:`everyone_attractor`, the kernel being the layered
+    one (fine states outside the lifted kernel count as outside)."""
+    from wavefront.model import V
+
+    lift = lift_of(aims, **build)
+    if key == "adverse":
+        return lift.distance(lift.enc.predicate(~V.invariant("no_general_war")))
+    _, coalition, inv = key.split(":")
+    return lift.distance(
+        None, kernel=layered_kernel(aims, tuple(coalition.split("+")), inv, **build)
+    )
+
+
+def composite_distances(aims: str, g, keys, **build) -> dict[str, list]:
+    """Per key (as :func:`everyone_attractor`), the fewest transitions from every state of
+    the composite graph ``g``: explicit to the cut, the symbolic rank beyond it."""
+    from tests.coldwar_v1.layered import dag_distance
+
+    fm = flat_of(aims, **build)
+    out = {}
+    for key in keys:
+        beyond = everyone_attractor(aims, key, **build)
+        if key == "adverse":
+            targets = ending_ids(g, *ADVERSE)
+        else:
+            _, coalition, inv = key.split(":")
+            k = composite_kernel(g, aims, tuple(coalition.split("+")), inv, **build)
+            targets = set(range(g.size())) - k
+        out[key] = dag_distance(g, fm, targets, beyond.rank)
+    return out
