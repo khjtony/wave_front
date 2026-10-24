@@ -48,7 +48,7 @@ __all__ = [
 
 def make_backend(name: str, model: str | None = None, guidance: str = "") -> Backend:
     """``rules``, ``claude`` or ``deepseek`` (the last two with an optional model; ``deepseek``
-    with optional ``guidance``, instructions appended to the shared ones)."""
+    with optional ``guidance`` replacing the default guidance)."""
     if name == "rules":
         return RuleBackend()
     if name == "claude":

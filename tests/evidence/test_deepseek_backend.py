@@ -213,3 +213,16 @@ def test_proposals_go_through_the_extractor_checks():
 
     result = extract(One(), until=date(1939, 3, 31), backend=backend, variables=VARS)
     assert len(result.kept) == 1 and len(result.discarded) == 2
+
+
+def test_default_guidance_is_the_adopted_text_and_can_be_overridden():
+    from pathlib import Path
+
+    adopted = Path(__file__).resolve().parents[2] / "data/extract/deepseek_guidance_g2.txt"
+    assert ds.DEFAULT_GUIDANCE.strip() == adopted.read_text(encoding="utf-8").strip()
+    backend, post = _backend(lambda b: _answer())
+    backend.propose(DOC, VARS)
+    assert ds.DEFAULT_GUIDANCE.strip() in post.calls[0][2]["messages"][0]["content"]
+    plain, post = _backend(lambda b: _answer(), guidance="")
+    plain.propose(DOC, VARS)
+    assert ds.DEFAULT_GUIDANCE.strip() not in post.calls[0][2]["messages"][0]["content"]

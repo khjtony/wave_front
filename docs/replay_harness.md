@@ -501,7 +501,7 @@ documents through DeepSeek's OpenAI-compatible chat API with the standard librar
 dependency. It sends the Claude backend's instructions and threshold rules followed by the
 answer's JSON schema, in JSON mode (the API does not enforce a schema, so the extractor's checks
 discard anything outside it, with the reason). Default model `deepseek-flash`
-(`DEFAULT_DEEPSEEK_MODEL`; the account listed `deepseek-v4-pro` and `deepseek-flash` on 2026-10-24); `--model deepseek-v4-pro` for the larger model. The key is
+(`DEFAULT_DEEPSEEK_MODEL`, with the guidance `DEFAULT_GUIDANCE` adopted on 2026-10-24, the text of data/extract/deepseek_guidance_g2.txt; `--guidance-file` replaces it; the account listed `deepseek-v4-pro` and `deepseek-flash` on 2026-10-24); `--model deepseek-v4-pro` for the larger model. The key is
 read from `DEEPSEEK_API_KEY`, the base URL from `DEEPSEEK_BASE_URL` (default
 `https://api.deepseek.com`); never put either in a file of the repository. Long documents are
 split as for Claude (parts of at most 120,000 characters; a part whose answer stops on

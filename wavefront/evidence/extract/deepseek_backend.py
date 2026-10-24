@@ -53,12 +53,38 @@ from .schema import Proposal, VariableSpec, level_from_text, proposal_list_schem
 __all__ = [
     "DEFAULT_BASE_URL",
     "DEFAULT_DEEPSEEK_MODEL",
+    "DEFAULT_GUIDANCE",
     "DeepSeekBackend",
     "deepseek_system_prompt",
 ]
 
 DEFAULT_DEEPSEEK_MODEL = "deepseek-flash"
 DEFAULT_BASE_URL = "https://api.deepseek.com"
+#: The guidance adopted on the owner's decision of 2026-10-24 (data/extract/
+#: deepseek_guidance_g2.txt; reports/replay_ww2_frus_deepseek/README.md).
+DEFAULT_GUIDANCE = (
+    "Additional instructions for this reader:\n"
+    "- Propose a level when the passage reports a fact that meets the variable's "
+    "threshold rule: an event, a decision, a measure in force, or an explicit statement "
+    "of the state of affairs. Such a fact counts even when the document is about "
+    "something else and even when the level is unchanged (for example, sanctions reported"
+    " as being applied to Italy; troops reported as sent into the zone; neutrality "
+    "legislation reported as in force).\n"
+    '- A bare mention is not such a fact: a document that only names "the demilitarized '
+    "zone\", refers to Austria's independence as a topic, or says there was no agreement "
+    "does not establish a level unless it reports the fact that meets the threshold rule.\n"
+    "- Read the level from what the passage states, not from a chain of inference: a "
+    "phrase about restored sovereignty is not a report of troops in the zone, and a "
+    "protest is not the end of a treaty.\n"
+    "- Beliefs (belief_* variables) are read from what a government or its responsible "
+    "minister is reported to think about another government's aims or intentions, "
+    "including a reported policy of seeking a settlement with it. A description of "
+    "another government's methods or a commentator's analysis is not a government's "
+    "belief.\n"
+    "- Confidence: high when the passage states the fact outright, medium when the "
+    "threshold judgment is needed, low when the report is second-hand or partial. Low-"
+    "confidence proposals are welcome: the reviewer decides.\n"
+)
 DEFAULT_MAX_TOKENS = 16000
 DEFAULT_MAX_CHARS = 120_000
 DEFAULT_TIMEOUT = 600.0
@@ -112,7 +138,7 @@ class DeepSeekBackend:
         max_chars: int = DEFAULT_MAX_CHARS,
         json_mode: bool = True,
         effort: str | None = None,
-        guidance: str = "",
+        guidance: str = DEFAULT_GUIDANCE,
         timeout: float = DEFAULT_TIMEOUT,
         retries: int = DEFAULT_RETRIES,
         backoff: float = 2.0,

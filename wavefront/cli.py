@@ -865,7 +865,7 @@ def _add_evidence_commands(sub) -> None:
     )
     p.add_argument(
         "--guidance-file",
-        help="deepseek backend: a text file of instructions appended to the shared ones",
+        help="deepseek backend: a text file of instructions replacing the default guidance",
     )
     p.add_argument(
         "--rules",
@@ -941,7 +941,7 @@ def _add_evidence_commands(sub) -> None:
     )
     p.add_argument(
         "--guidance-file",
-        help="deepseek backend: a text file of instructions appended to the shared ones",
+        help="deepseek backend: a text file of instructions replacing the default guidance",
     )
     p.add_argument(
         "--hindsight",

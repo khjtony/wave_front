@@ -46,3 +46,10 @@ The owner allows a larger budget. The cadence change (framework change 1) is cou
 - 5b. J3: stays failing as amended; no further rewording.
 - 5c. `oil_GER`: the German-Soviet Credit Agreement of 19 Aug 1939 is not used as a source. The snapshot change made under 2d is withdrawn; the difference stays tabulated (docs/guard_changelog_ww2.md, row of 2026-10-23).
 - 5d. The branch is pushed and a pull request opened.
+
+## 6. Decisions of 2026-10-24 (morning, on docs/owner_questions_2026-10-24.md)
+
+- 6a. Item 7: the DeepSeek backend's default is `deepseek-flash` with guidance g2 (`DEFAULT_GUIDANCE`, the text of data/extract/deepseek_guidance_g2.txt); `--guidance-file` replaces it.
+- 6b. Item 8: OCR is installed by the owner on the owner's machine.
+- 6c. Item 9: the owner merges pull request #5.
+- Items 1 to 6 were explained to the owner and are open.
