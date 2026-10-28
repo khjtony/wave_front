@@ -71,6 +71,8 @@ Rough sizes assume one full-time engineer and a part-time historian reviewer. Th
 
 **Addendum (2026-10-28): the first sight of July 1914 v1.** J1v1 to J9v1 run once on the owner's go (decision 7e(b)) at c0c4460: J1v1, J2v1, J4v1, J5v1, J7v1, J9v1 pass; J3v1, J6v1 (its minimum of two relaxations holds; the set-membership clause fails), J8v1 (c) fail; reports/july1914_v1.md, with proposals for the owner.
 
+**Gate passed (2026-10-28), on the owner's decision 7h.** The replay criterion is met after a sample review of the Claude-backend proposals (113 proposals reviewed blind by a delegated reviewer on the owner's instruction; 17 rejected): text-derived agreement 477/500 (95 percent) against the target of 80, 8 of 9 documented flips within one quarter (reports/replay_ww2_frus_claude/). With the hold-out results as amended on 2026-10-15 and the transfer hypotheses committed, the owner accepted the phase 2 gate.
+
 **Open at exit (2026-10-17).** When the WW2 model is finished: work out where it and the human-SI relationship differ in kind (an SI carries no historical burden and may not be bound by the restrictions on human choices), starting from [ww2_si_disanalogies.md](ww2_si_disanalogies.md).
 
 **Risk.** OCR noise and extraction drift in the corpora. Mitigation: resource variables come from datasets, and the extractor is scored only on the text-derived variables.
