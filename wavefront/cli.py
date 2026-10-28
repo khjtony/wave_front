@@ -965,7 +965,7 @@ def _add_evidence_commands(sub) -> None:
         "--hindsight",
         help="hindsight snapshots the resource variables (Cold War: every variable but the "
         "beliefs) are copied from (default: the proposals' episode's, snapshots/ww2/hindsight "
-        "or snapshots/cw/hindsight)",
+        "or snapshots/cw_v1/hindsight)",
     )
     p.set_defaults(func=cmd_review)
 
@@ -1007,7 +1007,7 @@ def _add_evidence_commands(sub) -> None:
     p.add_argument(
         "--hindsight",
         help="hindsight snapshots to compare with (default: the episode's, snapshots/ww2/"
-        "hindsight or snapshots/cw/hindsight)",
+        "hindsight or snapshots/cw_v1/hindsight)",
     )
     p.add_argument("--report", help="metrics report file (default: OUT/metrics.md)")
     p.add_argument("--title", help="report title")

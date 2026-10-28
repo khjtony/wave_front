@@ -23,11 +23,11 @@ variables:
 
 A proposals file of the Cold War episode (``"episode": "cw"``, :mod:`.episodes`) is reviewed
 the same way; its snapshot is the state on 1 January of the year after its cut-off (which must
-be a 31 December), for the model ``cw_v0``: the three belief variables from the accepted
+be a 31 December), for the model ``cw_v1``: the three belief variables from the accepted
 proposals (else their initial level, ``assumed``), every other variable, the rates and the
 built-ins carried from the hindsight snapshot of that year as ``assumed``, as in the manual
-replay (docs/cw_v0_decisions.md D7). The proposals files of one directory must be of one
-episode.
+replay (docs/cw_v0_decisions.md D7, kept in v1). The proposals files of one directory must be
+of one episode.
 
 ``--auto-accept`` (:data:`AUTO_REVIEWER`) is refused unless the proposals came from a
 synthetic fixture corpus, and every indicator it produces says AUTO-ACCEPTED.

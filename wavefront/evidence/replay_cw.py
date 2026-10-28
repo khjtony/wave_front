@@ -4,20 +4,24 @@ A Cold War replay snapshot ``<year>.json`` is the state on 1 January of the year
 the documents dated to the 31 December before (:mod:`.replay` runs it, :mod:`.review` builds
 it). :func:`compare` sets the three belief variables of each year against two series:
 
-* the **hindsight** snapshots (``snapshots/cw/hindsight/<year>.json``): the hindsight truth of
-  what each belief estimates (decisions D6 of docs/cw_v0_decisions.md): for
-  ``belief_force_USA`` the record's ``nuke_USSR``, which claim C6 compares the replayed estimate
-  with; for ``belief_USSR_USA`` the record's American aims (``hostile`` throughout), which C7
-  compares with in 1983. ``belief_USA_USSR`` has no hindsight level (its truth is the swept
+* the **hindsight** snapshots of cw_v1 (``snapshots/cw_v1/hindsight/<year>.json``): the
+  hindsight truth of what each belief estimates (decisions D6 of docs/cw_v0_decisions.md): for
+  ``belief_force_USA`` the record's ``count_USSR``, the number of Soviet intercontinental
+  delivery vehicles in being in the bands of the belief (the owner's decision 7g;
+  docs/cw_v1_decisions.md D9), which claim C6 compares the replayed estimate with; for
+  ``belief_USSR_USA`` the record's American aims (``hostile`` throughout), which C7 compares
+  with in 1983. ``belief_USA_USSR`` has no hindsight level (its truth is the swept
   hypothesis), so it is compared with the second series only;
-* the **contemporaneous** beliefs of the record: the manual replay snapshots
-  (``snapshots/cw/replay/<year>.json``, 1957 to 1962 and 1983; decisions D7) where there is
-  one, else the latest ``belief`` row of ``data/cw/events.csv`` visible on 1 January, the rule
-  the manual replay follows. A blind replay that agrees with this series reads the documents as
-  the record's coder did, without the coder's knowledge of the outcome.
+* the **contemporaneous** beliefs of the record: the manual replay snapshots of cw_v1
+  (``snapshots/cw_v1/replay/<year>.json``, 1957 to 1962 and 1983; decisions D7) where there is
+  one, else the latest ``belief`` row visible on 1 January of ``data/cw/events.csv`` with
+  ``data/cw/v1/events.csv`` (v1's ``belief`` rows of a variable replacing v0's, as the v1
+  snapshots read them), the rule the manual replay follows. A blind replay that agrees with
+  this series reads the documents as the record's coder did, without the coder's knowledge of
+  the outcome.
 
 The report (:func:`render_report`) gives, per year, the replayed level beside both, the C6
-table (whether the replayed ``belief_force_USA`` exceeds the hindsight ``nuke_USSR``), the C7
+table (whether the replayed ``belief_force_USA`` exceeds the hindsight ``count_USSR``), the C7
 line (``belief_USSR_USA`` in 1983), the flips of the replay against the documented flips of
 the contemporaneous series with their lag in years, and the indicators behind each
 disagreement. It reports inputs to C6 and C7, not their verdicts: the claims are computed on
@@ -58,8 +62,9 @@ __all__ = [
     "render_report",
 ]
 
-DEFAULT_MANUAL = ROOT / "snapshots" / "cw" / "replay"
-DEFAULT_EVENTS = ROOT / "data" / "cw" / "events.csv"
+DEFAULT_MANUAL = ROOT / "snapshots" / "cw_v1" / "replay"
+#: v0's events, then v1's (whose ``belief`` rows of a variable replace v0's)
+DEFAULT_EVENTS = (ROOT / "data" / "cw" / "events.csv", ROOT / "data" / "cw" / "v1" / "events.csv")
 C6_YEARS = ("1958", "1959", "1960", "1961")
 C7_YEAR = "1983"
 
@@ -68,18 +73,36 @@ def _read(path: Path) -> dict[str, Any] | None:
     return json.loads(path.read_text(encoding="utf-8")) if path.exists() else None
 
 
+def _belief_rows(events: str | Path | Sequence[str | Path]) -> list[dict[str, str]]:
+    """The ``belief`` rows of the events files in order, a later file's rows of a variable
+    replacing the earlier files' rows of it (v1's rows of ``belief_force_USA``, on the count
+    scale, replace v0's on the survivability scale)."""
+    paths = [events] if isinstance(events, str | Path) else list(events)
+    rows: list[dict[str, str]] = []
+    for path in paths:
+        if not Path(path).exists():
+            continue
+        with open(path, newline="", encoding="utf-8") as fh:
+            found = [
+                r
+                for r in csv.DictReader(line for line in fh if not line.startswith("#"))
+                if r["series"] == "belief"
+            ]
+        names = {r["variable"] for r in found}
+        rows = [r for r in rows if r["variable"] not in names] + found
+    return rows
+
+
 def contemporaneous(
     years: Sequence[str],
     manual_dir: str | Path = DEFAULT_MANUAL,
-    events: str | Path = DEFAULT_EVENTS,
+    events: str | Path | Sequence[str | Path] = DEFAULT_EVENTS,
 ) -> dict[str, dict[str, tuple[Any, str]]]:
     """Per belief variable and year, the contemporaneous level and where it comes from: the
     manual replay snapshot of the year if there is one, else the latest ``belief`` row of the
-    events file visible on 1 January of the year (``visible_year <= year``)."""
-    rows: list[dict[str, str]] = []
-    if Path(events).exists():
-        with open(events, newline="", encoding="utf-8") as fh:
-            rows = list(csv.DictReader(line for line in fh if not line.startswith("#")))
+    events files (:func:`_belief_rows`) visible on 1 January of the year
+    (``visible_year <= year``)."""
+    rows = _belief_rows(events)
     out: dict[str, dict[str, tuple[Any, str]]] = {n: {} for n in CW.text_variables}
     for year in years:
         manual = _read(Path(manual_dir) / f"{year}.json")
@@ -149,7 +172,7 @@ class YearMetrics:
 
     def exceeds(self, year: str, series: str = "replay") -> bool | None:
         """Whether ``belief_force_USA`` of ``series`` (``replay`` or ``contemporaneous``)
-        exceeds the hindsight ``nuke_USSR`` in ``year`` (C6 (a)); ``None`` when either is
+        exceeds the hindsight ``count_USSR`` in ``year`` (C6 (a)); ``None`` when either is
         missing. Against a set-valued hindsight level the answer is ``True`` when the belief
         exceeds every member, ``False`` when it exceeds none, and ``None`` when it depends on
         the member (fragile)."""
@@ -203,7 +226,7 @@ def compare(
     measure_proposals: bool = False,
     rules: Sequence[str] | None = None,
     manual_dir: str | Path = DEFAULT_MANUAL,
-    events: str | Path = DEFAULT_EVENTS,
+    events: str | Path | Sequence[str | Path] = DEFAULT_EVENTS,
 ) -> YearMetrics:
     """The Cold War replay of ``years`` in ``replay_dir`` against the hindsight snapshots and
     the contemporaneous beliefs (see the module docstring). With ``measure_proposals`` the
@@ -429,12 +452,14 @@ def _c6_table(metrics: YearMetrics) -> list[str]:
     lines = [
         "## C6: the replayed estimate of the Soviet force against the hindsight force",
         "",
-        "Per year, the replayed `belief_force_USA` and the hindsight `nuke_USSR` (decisions "
-        "R C6 (a): the replayed belief exceeds the hindsight force in every year 1958 to 1961), "
+        "Per year, the replayed `belief_force_USA` and the hindsight `count_USSR`, the number "
+        "of Soviet intercontinental delivery vehicles in being, in the same bands (the owner's "
+        "decision 7g; cw_v1 decisions R V6 (a), v0's C6 as amended: the replayed belief "
+        "exceeds the hindsight count, a higher band, in every year 1958 to 1961), "
         "beside the contemporaneous belief of the record. These are inputs of C6; its parts "
         "(b) and (c) are computed on the model.",
         "",
-        "| Year | Replayed | Hindsight `nuke_USSR` | Replay exceeds | Contemporaneous "
+        "| Year | Replayed | Hindsight `count_USSR` | Replay exceeds | Contemporaneous "
         "(source) | Contemporaneous exceeds |",
         "|---|---|---|---|---|---|",
     ]

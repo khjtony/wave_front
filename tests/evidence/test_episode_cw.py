@@ -9,8 +9,8 @@ from pathlib import Path
 
 import pytest
 
-from models.cw import v0 as cw_model
-from models.cw.snapshots import REPLAY_YEARS
+from models.cw import v1 as cw_model
+from models.cw.snapshots_v1 import REPLAY_YEARS
 from wavefront.cli import main
 from wavefront.evidence import validate_snapshot
 from wavefront.evidence.corpora import LocalCorpus
@@ -80,10 +80,17 @@ def test_cw_variables_match_the_model_and_the_ontology():
         assert spec.kind == "level" and spec.episode == "cw"
         assert spec.rule_text.startswith(rules[spec.name])
     force = specs[0]
-    assert force.levels == tuple(declared["nuke_USSR"].levels)
-    # the scale: nuke_USA's thresholds, without "Monotone." (a belief can move both ways)
-    assert "**survivable**: a force able to absorb a first strike" in force.rule_text
-    assert "Monotone" not in force.rule_text
+    # the count scale of the owner's decision 7g, the bands of its hindsight truth count_USSR
+    assert force.levels == ("none", "under_200", "under_1000", "over_1000")
+    assert force.levels == tuple(declared["count_USSR"].levels)
+    assert CW.truth_of("belief_force_USA") == "count_USSR" and CW.scales == ()
+    assert CW.model == "cw_v1" and CW.hindsight == ROOT / "snapshots" / "cw_v1" / "hindsight"
+    for band in ("**none**", "**under_200**: 1 to 199", "**under_1000**: 200 to 999"):
+        assert band in force.rule_text
+    assert "**over_1000**: 1,000 or more" in force.rule_text
+    # no appended scale of another variable, and nothing of the survivability scale
+    for gone in ("survivable", "overkill", "nuke_USA", "nuke_USSR", "thresholds of", "Monotone"):
+        assert gone not in force.rule_text
 
 
 def test_cw_prompt_wording_and_no_hindsight_in_it():
@@ -95,8 +102,23 @@ def test_cw_prompt_wording_and_no_hindsight_in_it():
     for name in CW.text_variables:
         assert f"\n## {name}\n" in prompt
     # the ontology's dated indicators (the record, read with hindsight) stay out of the prompt
-    for leak in ("NIE 11-10-57", "Novikov", "RYAN", "NSC-68", "Gaither", "visible 19"):
-        assert leak not in prompt
+    for leak in (
+        "NIE 11-10-57",
+        "NIE 11-56",
+        "NIE 11-8",
+        "11-8/1-61",
+        "bomber gap",
+        "missile gap",
+        "Norris",
+        "count_USSR",
+        "Novikov",
+        "RYAN",
+        "NSC-68",
+        "Gaither",
+        "visible 19",
+        "events.csv",
+    ):
+        assert leak not in prompt, leak
     assert deepseek_system_prompt(text_variables(episode="cw")).startswith(prompt)
     with pytest.raises(ValueError, match="several episodes"):
         system_prompt([*text_variables(episode="cw"), *text_variables(["treaty"])])
@@ -138,8 +160,9 @@ def test_contemporaneous_series_follows_the_manual_replay():
     for name in CW.text_variables:
         for y in years:
             assert from_files[name][y][0] == from_events[name][y][0], (name, y)
-    assert from_files["belief_force_USA"]["1958"][0] == "survivable"
-    assert from_files["belief_force_USA"]["1962"][0] == "few"
+    assert from_files["belief_force_USA"]["1958"][0] == "under_1000"
+    assert from_files["belief_force_USA"]["1962"][0] == "under_1000"
+    assert from_files["belief_force_USA"]["1983"][0] == "over_1000"
     assert from_files["belief_USSR_USA"]["1983"][0] == "first_strike_intent"
 
 
@@ -148,7 +171,7 @@ def test_harness_rules_act_on_no_cw_variable():
         p = Proposal(f"d{n}:x", "belief_force_USA", level, day, "q", "u", "r", "high").to_json()
         return {"id": f"p{n}", "document": f"d{n}", "proposal": p, "status": "pending"}
 
-    records = [rec(1, "survivable", "1957-12-10"), rec(2, "few", "1961-09-21")]
+    records = [rec(1, "under_1000", "1957-12-10"), rec(2, "under_200", "1961-09-21")]
     g = gate_records(records, date(1961, 12, 31), DEFAULT_RULES, measure=True, episode="cw")
     assert [x.status for x in g.gates] == [OK, OK]
     assert len(g.in_force) == 2
@@ -159,15 +182,15 @@ def test_harness_rules_act_on_no_cw_variable():
 DOCS = {
     "1957-12-10_estimate": (
         "The Soviet ICBM force will be able to threaten SAC bases by 1959.",
-        ("belief_force_USA", "survivable"),
+        ("belief_force_USA", "under_1000"),
     ),
     "1959-11-03_estimate": (
         "We continue to estimate a Soviet ICBM force able to threaten SAC.",
-        ("belief_force_USA", "survivable"),
+        ("belief_force_USA", "under_1000"),
     ),
     "1961-09-21_estimate": (
         "The Soviets have only 10 to 25 ICBM launchers, vulnerable to attack.",
-        ("belief_force_USA", "few"),
+        ("belief_force_USA", "under_200"),
     ),
 }
 
@@ -230,11 +253,11 @@ def test_cw_replay_reads_by_year_and_writes_cw_snapshots(cw_run):
     data = read_proposals(out / "proposals" / "1958.json")
     assert data["episode"] == "cw" and data["until"] == "1957-12-31"
     hindsight_1958 = json.loads((CW.hindsight / "1958.json").read_text())
-    expected = {"1957": "none", "1958": "survivable", "1960": "survivable", "1962": "few"}
+    expected = {"1957": "none", "1958": "under_1000", "1960": "under_1000", "1962": "under_200"}
     for year, level in expected.items():
         snap = json.loads((out / f"{year}.json").read_text())
         assert validate_snapshot(snap) == []
-        assert snap["date"] == f"{year}-01-01" and snap["model"] == "cw_v0"
+        assert snap["date"] == f"{year}-01-01" and snap["model"] == "cw_v1"
         assert snap["variables"]["belief_force_USA"]["level"] == level
         assert snap["variables"]["belief_USSR_USA"]["confidence"] == "assumed"
         assert snap["variables"]["nuke_USA"]["confidence"] == "assumed"
@@ -244,9 +267,9 @@ def test_cw_replay_reads_by_year_and_writes_cw_snapshots(cw_run):
         )
     snap = json.loads((out / "1958.json").read_text())
     assert snap["builtins"] == hindsight_1958["builtins"]
-    assert (
-        snap["variables"]["nuke_USSR"]["level"] == hindsight_1958["variables"]["nuke_USSR"]["level"]
-    )
+    for name in ("nuke_USSR", "count_USSR"):
+        assert snap["variables"][name]["level"] == hindsight_1958["variables"][name]["level"]
+        assert snap["variables"][name]["confidence"] == "assumed"
     assert "AUTO-ACCEPTED" in snap["variables"]["belief_force_USA"]["indicators"][0]["rule"]
 
 
@@ -256,20 +279,24 @@ def test_cw_metrics_and_report(cw_run):
     assert isinstance(m, YearMetrics) and m.auto_accepted
     assert m.replay["belief_force_USA"] == {
         "1957": "none",
-        "1958": "survivable",
-        "1959": "survivable",
-        "1960": "survivable",
-        "1961": "survivable",
-        "1962": "few",
+        "1958": "under_1000",
+        "1959": "under_1000",
+        "1960": "under_1000",
+        "1961": "under_1000",
+        "1962": "under_200",
     }
-    assert all(m.hindsight["belief_force_USA"][y] == "few" for y in YEARS)
+    # the hindsight count_USSR: 1 to 199 vehicles in being from the end of 1956 to 1961
+    assert all(m.hindsight["belief_force_USA"][y] == "under_200" for y in YEARS)
     assert [m.exceeds(y) for y in YEARS] == [False, True, True, True, True, False]
-    assert m.agreement("belief_force_USA", "contemporaneous") == (5, 6)  # 1957: none vs few
+    # 1957: none against NIE 11-56's under_1000; 1962: under_200 against NIE 11-8/1-61's
+    assert m.agreement("belief_force_USA", "contemporaneous") == (4, 6)
     assert m.agreement("belief_USA_USSR", "hindsight") == (0, 0)
     flips = m.matches["belief_force_USA"]
+    # the record's flip to under_1000 is NIE 11-56's (visible 1957), answered a year late; the
+    # replayed flip to under_200 in 1962 has no documented counterpart (the record stays)
     assert [(d and d.year, r and r.year) for d, r in flips] == [
-        ("1958", "1958"),
-        ("1962", "1962"),
+        ("1957", "1958"),
+        (None, "1962"),
     ]
     text = render_report(
         m,
@@ -286,7 +313,7 @@ def test_cw_metrics_and_report(cw_run):
 def test_cw_measurement_and_cli(cw_run, tmp_path, capsys):
     corpus, out, _backend, _runs = cw_run
     m = compare(out, YEARS, episode="cw", measure_proposals=True)
-    assert m.proposal_level and m.replay["belief_force_USA"]["1961"] == "survivable"
+    assert m.proposal_level and m.replay["belief_force_USA"]["1961"] == "under_1000"
     assert sum(sum(c.values()) for c in m.counts.values()) == 3
     report = tmp_path / "m.md"
     code = main(
@@ -334,7 +361,7 @@ def test_cw_review_and_refusals(cw_run, tmp_path):
     written = decide(path, "1958-001", "accepted", note="reads the estimate", reviewer="t")
     assert written == [out / "1958.json"]
     snap = json.loads(written[0].read_text())
-    assert snap["variables"]["belief_force_USA"]["level"] == "survivable"
+    assert snap["variables"]["belief_force_USA"]["level"] == "under_1000"
     assert "accepted by t" in snap["variables"]["belief_force_USA"]["indicators"][0]["rule"]
     # one episode per directory
     with pytest.raises(ReplayError, match="episode"):

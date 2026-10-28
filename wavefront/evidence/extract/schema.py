@@ -167,8 +167,9 @@ def text_variables(
     """The text-derived variables ``names`` of ``episode`` (default: WW2, all of them) with
     their levels (from the episode's table, which a test keeps equal to the ontology) and
     their threshold rule text from ``ontology`` (default: the episode's). A variable on the
-    scale of another (the Cold War's ``belief_force_USA``, on ``nuke_USSR``'s scale) has the
-    other's level thresholds appended to its rule."""
+    scale of another (``Episode.scales``; no episode has one since the Cold War's
+    ``belief_force_USA`` got its own scale on the owner's decision 7g) has the other's level
+    thresholds appended to its rule."""
     ep = get_episode(episode)
     names = ep.text_variables if names is None else names
     ontology = ep.ontology if ontology is None else ontology

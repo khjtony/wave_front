@@ -11,15 +11,16 @@ periods of the replay.
     quarter (``1936Q1``): a quarter's cut-off is its last day and its snapshot is dated by it.
     The tables are those of :mod:`.hindsight_ww2`; nothing here changes them.
 ``cw``
-    The Cold War v0 model (``cw_v0``; docs/ontology_cw.md; ``snapshots/cw/hindsight/``), by
+    The Cold War v1 model (``cw_v1``; docs/ontology_cw.md; ``snapshots/cw_v1/hindsight/``), by
     year, as the model ticks: the period ``1958`` is the state on 1 January 1958 (tick 11),
     read from the documents dated at or before 31 December 1957 (decisions D1 and D7 of
-    docs/cw_v0_decisions.md: "documents dated before the snapshot's date"). The text-derived
-    variables are the three belief variables of the ontology's section 3
-    (:data:`CW_TEXT_VARIABLES`); every other variable of a replay snapshot is carried from the
-    hindsight snapshot of the year as ``assumed``, as in the manual replay of D7. The belief
-    variables are readings, outside both harness rules, as WW2's belief and commitment
-    variables are.
+    docs/cw_v0_decisions.md, kept in v1: "documents dated before the snapshot's date"). The
+    text-derived variables are the three belief variables of the ontology's section 3
+    (:data:`CW_TEXT_VARIABLES`), ``belief_force_USA`` on the projected-count scale of the
+    owner's decision 7g (docs/cw_v1_decisions.md D9; its hindsight truth ``count_USSR``); every
+    other variable of a replay snapshot is carried from the hindsight snapshot of the year as
+    ``assumed``, as in the manual replay of D7. The belief variables are readings, outside both
+    harness rules, as WW2's belief and commitment variables are.
 """
 
 from __future__ import annotations
@@ -64,11 +65,13 @@ class EpisodeVariable:
     section: str
 
 
-NUKE = ("none", "few", "survivable", "overkill")
-# The belief variables of docs/ontology_cw.md section 3, as models/cw/v0.py declares them
+# The projected number of Soviet intercontinental delivery vehicles (the owner's decision 7g;
+# docs/ontology_cw.md sections 3 and 12.1), the bands of belief_force_USA and count_USSR.
+COUNT = ("none", "under_200", "under_1000", "over_1000")
+# The belief variables of docs/ontology_cw.md section 3, as models/cw/v1.py declares them
 # (tests/evidence/test_episode_cw.py keeps this equal to the model and the ontology).
 CW_VARIABLES: tuple[EpisodeVariable, ...] = (
-    EpisodeVariable("belief_force_USA", "level", NUKE, "none", "3"),
+    EpisodeVariable("belief_force_USA", "level", COUNT, "none", "3"),
     EpisodeVariable(
         "belief_USA_USSR",
         "level",
@@ -235,16 +238,15 @@ CW = Episode(
     scope="the Cold War between the United States and the Soviet Union, 1947 to 1991",
     start="1 January 1947",
     ontology=ROOT / "docs" / "ontology_cw.md",
-    model="cw_v0",
-    hindsight=ROOT / "snapshots" / "cw" / "hindsight",
+    model="cw_v1",
+    hindsight=ROOT / "snapshots" / "cw_v1" / "hindsight",
     period="year",
     text_variables=CW_TEXT_VARIABLES,
     resource_variables=(),
     readings=frozenset(CW_TEXT_VARIABLES),
     match_window=2,
-    # belief_force_USA is on nuke_USSR's scale, whose thresholds are nuke_USA's
-    scales=(("belief_force_USA", "nuke_USA"),),
-    truth=(("belief_force_USA", "nuke_USSR"),),
+    # belief_force_USA has its own scale (decision 7g), the bands of its truth count_USSR
+    truth=(("belief_force_USA", "count_USSR"),),
 )
 
 EPISODES = {"ww2": WW2, "cw": CW}

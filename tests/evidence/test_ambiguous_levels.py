@@ -344,13 +344,13 @@ def test_the_cold_war_metrics_take_a_set_valued_hindsight_level():
     from wavefront.evidence.replay_cw import YearMetrics
 
     m = YearMetrics(years=["1960"], missing_replay=[])
-    m.replay["belief_force_USA"] = {"1960": "few"}
-    m.hindsight["belief_force_USA"] = {"1960": ("none", "few")}
+    m.replay["belief_force_USA"] = {"1960": "under_200"}
+    m.hindsight["belief_force_USA"] = {"1960": ("none", "under_200")}
     assert m.agreement("belief_force_USA", "hindsight") == (1, 1)
     assert m.exceeds("1960") is None  # exceeds one member, not the other: fragile
-    m.hindsight["belief_force_USA"] = {"1960": ("few", "survivable")}
+    m.hindsight["belief_force_USA"] = {"1960": ("under_200", "under_1000")}
     assert m.agreement("belief_force_USA", "hindsight") == (1, 1)
     assert m.exceeds("1960") is False
-    m.replay["belief_force_USA"] = {"1960": "overkill"}
+    m.replay["belief_force_USA"] = {"1960": "over_1000"}
     assert m.exceeds("1960") is True
     assert m.agreement("belief_force_USA", "hindsight") == (0, 1)

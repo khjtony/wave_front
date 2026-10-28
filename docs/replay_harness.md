@@ -541,8 +541,11 @@ quarter first measures the cost.
 
 The harness reads one domain model at a time, named by an episode
 (`wavefront/evidence/episodes.py`): `ww2` (the default; everything above) or `cw`, the Cold
-War v0 model (`cw_v0`; [ontology_cw.md](ontology_cw.md); decisions D6 and D7 of
-[cw_v0_decisions.md](cw_v0_decisions.md)). The episode is threaded through
+War v1 model (`cw_v1`; [ontology_cw.md](ontology_cw.md); decisions D6 and D7 of
+[cw_v0_decisions.md](cw_v0_decisions.md), kept in v1, and D9 of
+[cw_v1_decisions.md](cw_v1_decisions.md)). Until 2026-10-28 the episode was for `cw_v0`, with
+`belief_force_USA` on `nuke_USSR`'s scale; on the owner's decision 7g it moved to `cw_v1` and
+the count scale before any replay under the new scale was run (v0's C6 stays as recorded). The episode is threaded through
 `text_variables(episode=...)`, the system prompt, the harness rules, the review step, the
 replay driver, its metrics and the CLI (`wf replay --episode cw`, `wf extract --episode cw`);
 `wf review` reads it from the proposals file. With the default every WW2 output is unchanged:
@@ -550,20 +553,23 @@ the WW2 system prompt, its variables and the answer schema are byte-identical (a
 the prompt's SHA-256), so cached Claude answers stay valid.
 
 **Variables.** The text-derived variables are the three beliefs of the ontology's section 3,
-with the levels and initial levels of `models/cw/v0.py` (a test keeps them equal) and the
+with the levels and initial levels of `models/cw/v1.py` (a test keeps them equal) and the
 `Threshold rule` column of the ontology as their rule text:
 
 | Variable | Levels | Initial (1 January 1947) |
 |---|---|---|
-| `belief_force_USA` | none, few, survivable, overkill | none |
+| `belief_force_USA` | none, under_200, under_1000, over_1000 | none |
 | `belief_USA_USSR` | status_quo, opportunist, expansionist | opportunist |
 | `belief_USSR_USA` | status_quo, hostile, first_strike_intent | hostile |
 
-`belief_force_USA` is "on `nuke_USSR`'s scale", whose thresholds the ontology states under
-`nuke_USA`; that rule (without "Monotone.") is appended to its rule text, so the extractor sees
-what few, survivable and overkill mean. The `Dated indicator` column (the record, read with
-hindsight) never enters the prompt; a test checks that no NIE number, NSC-68, Novikov or RYAN
-appears in it.
+`belief_force_USA` is the projected number of Soviet intercontinental delivery vehicles
+(ICBM and SLBM launchers, heavy bombers) about two to three years after the estimate's date, in
+the bands none, under 200, under 1,000 and 1,000 or more (the owner's decision 7g; ontology
+section 3); its own rule states the bands, so no other variable's rule is appended to it (until
+2026-10-28 it was on `nuke_USSR`'s scale and `nuke_USA`'s thresholds were appended). The
+`Dated indicator` column (the record, read with hindsight) never enters the prompt, nor does the
+hindsight counterpart `count_USSR`; a test checks that no NIE number, bomber or missile gap,
+Norris, NSC-68, Novikov or RYAN appears in it.
 
 **Prompt.** The WW2 instructions with two changes: the first sentence names "a model of the
 Cold War between the United States and the Soviet Union, 1947 to 1991", and a paragraph before
@@ -573,7 +579,7 @@ estimating government's belief whether or not the force was built), and that a d
 government reporting another's belief or fear is evidence of the reporting government's belief:
 the other's reading is proposed only where the document reproduces that government's own
 words. The initial levels are stated at 1 January 1947. The DeepSeek backend appends its schema
-to the same prompt. The Cold War prompt is about 1,000 tokens.
+to the same prompt. The Cold War prompt is about 1,050 tokens.
 
 **Periods.** The model ticks yearly, so the replay runs by year (`--years 1957..1962`, or a
 comma-separated list); quarters are refused for this episode. The period `1958` is the state on
@@ -586,21 +592,23 @@ file to become a snapshot. A replay directory holds one episode.
 belief and commitment variables), so the rules are recorded but act on nothing.
 
 **Review and snapshots.** A Cold War replay snapshot `<year>.json` is dated 1 January, for
-`cw_v0`: each belief takes the level of its latest accepted proposal (else its initial level,
-`assumed`, as in WW2); every other variable, the rates and the built-ins are carried from
-`snapshots/cw/hindsight/<year>.json` as `assumed`, as in the manual replay. Unlike the manual
-replay, `nuke_USSR` is not set from the estimates: the estimate is `belief_force_USA`, and the
-hindsight force stays the record's.
+`cw_v1`: each belief takes the level of its latest accepted proposal (else its initial level,
+`assumed`, as in WW2); every other variable, the rates and the built-ins (`nuke_USSR` and
+`count_USSR` among them) are carried from `snapshots/cw_v1/hindsight/<year>.json` as
+`assumed`, as in v1's manual replay: the estimate is `belief_force_USA`, and the hindsight force
+stays the record's.
 
 **Metrics** (`wavefront/evidence/replay_cw.py`). Per year, each replayed belief beside (1) its
 hindsight truth from the hindsight snapshot (D6: `belief_force_USA` against the record's
-`nuke_USSR`; `belief_USSR_USA` against `hostile`; `belief_USA_USSR` has none, its truth being
-the swept hypothesis) and (2) the contemporaneous belief of the record: the manual replay
-snapshot of the year where there is one (1957 to 1962, 1983), else the latest `belief` row of
-`data/cw/events.csv` visible on 1 January, the rule the manual replay follows (a test checks
-that both agree in the manual years). The report has the C6 table (per year, whether the
-replayed `belief_force_USA` exceeds the hindsight `nuke_USSR`, beside the same for the manual
-replay), the C7 line (`belief_USSR_USA` on 1 January 1983), agreement per variable with both
+`count_USSR`, the number of vehicles in being in the same bands, D9 of cw_v1_decisions.md;
+`belief_USSR_USA` against `hostile`; `belief_USA_USSR` has none, its truth being the swept
+hypothesis) and (2) the contemporaneous belief of the record: v1's manual replay snapshot of the
+year where there is one (`snapshots/cw_v1/replay/`, 1957 to 1962, 1983), else the latest
+`belief` row visible on 1 January of `data/cw/events.csv` with `data/cw/v1/events.csv` (v1's
+rows of a variable replacing v0's, as the v1 snapshots read them), the rule the manual replay
+follows (a test checks that both agree in the manual years). The report has the C6 table (per
+year, whether the replayed `belief_force_USA` is in a higher band than the hindsight
+`count_USSR`, beside the same for the manual replay; R V6 (a) of cw_v1_decisions.md), the C7 line (`belief_USSR_USA` on 1 January 1983), agreement per variable with both
 series, the flips of the replay against the documented flips of the contemporaneous series
 (matched within two years, lag in years), and the indicators behind every disagreement. These
 are inputs of C6 and C7; the claims themselves are computed on the model from the snapshots.
@@ -616,7 +624,8 @@ wf review $OUT/proposals/1958.json
 
 **Dry run on `crest`** (2026-10-24; nothing sent): for 1957 to 1962, 22 documents (1, 4, 4, 1,
 6 and 6 new per year), 25 requests with the Claude backend, 2.20 million characters, about
-577,000 input tokens. For 1982 to 1985 in a fresh directory, 38 documents, all but one read
+577,000 input tokens. Again on 2026-10-28 with the count scale: the same documents and
+requests, about 578,500 input tokens (the system prompt 1,054 tokens). For 1982 to 1985 in a fresh directory, 38 documents, all but one read
 for 1982 (everything dated to 1981, back to 1956) and none dated 1982 or 1983: the corpus holds
 nothing between NIE 11-8-71 (Oct 1971) and SNIE 11-10-84 (May 1984), which becomes visible for
 1985; about 682,000 input tokens. Run after 1957 to 1962 in the same directory, the later years
