@@ -42,7 +42,7 @@ CHANGELOG = ROOT / "docs" / "guard_changelog_1914.md"
 
 # The commit at which J1v1 to J9v1 are first run, in one go, with the working tree
 # uncommitted (testbed section 8.6; decisions V9). None until the owner's go.
-FIRST_SIGHT_COMMIT = None
+FIRST_SIGHT_COMMIT = "c0c44601aec10cdfb82272a3b77e0a22793277c6"
 
 LEVELS = {
     "aims_GER": ("localize", "continental"),
