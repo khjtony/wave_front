@@ -11,7 +11,12 @@ A snapshot named ``<year>.json`` is the state on 1 January of that year (tick ``
   hindsight truth of what it estimates; ``aims_USSR`` and ``belief_USA_USSR`` are fixed per
   hypothesis by :func:`snapshot_state`; the built-ins are the pending delayed decisions.
 * **Replay** (``snapshots/cw_v1/replay/``, 1957 to 1962 and 1983): the manual replay of v0's
-  decisions D7, unchanged (v1 adds no belief and no ``replay`` row).
+  decisions D7, with ``belief_force_USA`` on the projected-count scale of the owner's decision
+  7g (v1's belief rows, each citing the estimate and its numbers) and without v0's ``replay``
+  rows of ``nuke_USSR`` (docs/cw_v1_decisions.md D9).
+* **The count** ``count_USSR`` (hindsight, and the truth of ``belief_force_USA``): the bands of
+  ``data/cw/v1/strategic_launchers.csv`` through its ``record`` rows in
+  ``data/cw/v1/events.csv``.
 
 Regenerate and check::
 
@@ -41,11 +46,23 @@ EVENTS_V1 = DATA_V1 / "events.csv"
 DECISIONS_V1 = DATA_V1 / "decisions.csv"
 
 
+# The owner's decision 7g (2026-10-28, before first sight; docs/cw_v1_decisions.md D9):
+# belief_force_USA is the projected count of Soviet intercontinental delivery vehicles, whose
+# hindsight truth is count_USSR. v0's rows on the survivability scale are not read in v1: its
+# belief rows of belief_force_USA (replaced by v1's), and its replay rows of nuke_USSR, which
+# coded the projected missile force as a survivable one (the projected ICBMs of 1958 to 1961
+# were soft; reports/replay_cw_crest_projected.md); the projection is now the belief's, and the
+# replay snapshots carry the hindsight nuke_USSR as ``assumed``.
+TRUTH_V1 = {**TRUTH, "belief_force_USA": "count_USSR"}
+DROPPED_V0_ROWS = (("belief_force_USA", "belief"), ("nuke_USSR", "replay"))
+
+
 def events() -> list[dict[str, str]]:
-    """v0's dated events followed by v1's additions."""
+    """v0's dated events, less the rows of ``DROPPED_V0_ROWS``, followed by v1's additions."""
     with open(EVENTS_V1, newline="", encoding="utf-8") as fh:
         added = list(csv.DictReader(line for line in fh if not line.startswith("#")))
-    return v0_snapshots.events() + added
+    kept = [r for r in v0_snapshots.events() if (r["variable"], r["series"]) not in DROPPED_V0_ROWS]
+    return kept + added
 
 
 def decisions() -> list[dict[str, str]]:
@@ -86,11 +103,11 @@ def hindsight(year: int) -> dict[str, Any]:
         name = decl.name
         if name in SWEPT:
             continue
-        if name in TRUTH:
-            row = _latest(rows, TRUTH[name], ("record",), tick)
+        if name in TRUTH_V1:
+            row = _latest(rows, TRUTH_V1[name], ("record",), tick)
             rule = (
-                f"hindsight truth of the estimated quantity ({TRUTH[name]} in the record; "
-                "decisions D6)"
+                f"hindsight truth of the estimated quantity ({TRUTH_V1[name]} in the record; "
+                "decisions D6, and D9 of docs/cw_v1_decisions.md)"
             )
         else:
             row = _latest(rows, name, ("record",), tick)

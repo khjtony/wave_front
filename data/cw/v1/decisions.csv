@@ -1,3 +1,6 @@
 year,tick,actor,action,delay_years,source,note
 1951,4,PRC,intervene_korea,0,"Mao to Stalin, 2 and 13 Oct 1950; the CPV order of 8 Oct 1950 (Chen Jian 1994; Mansourov 1995/96)","[SQR]: the entry of Oct 1950 answered the war of the same year; decided in the 1951 move at annual resolution, visible 1952 on the model's path"
 1973,26,USSR,warn_unilateral,0,"Brezhnev to Nixon, 24 Oct 1973 (Israelyan 1995; Kissinger 1982)",crisis action; the sub-game alert_1973
+1956,9,USSR,heavy_bombers,0,"the M-4 (BISON) and Tu-95 (BEAR) in Long Range Aviation units, ordered Mar and Jul 1951 (Zaloga 2002; Podvig (ed.) 2001); 22 at the end of 1956 (Norris and Cochran 1990)","added 2026-10-28 on the owner's decision 7g: count_USSR under_200 from 1957"
+1959,12,USSR,first_icbms,3,"the R-16 decree of 13 May 1959 and the Strategic Rocket Forces of 17 Dec 1959 (Podvig (ed.) 2001; Zaloga 2002); 235 vehicles at the end of 1962 (Norris and Cochran 1990)","added 2026-10-28 on the owner's decision 7g: count_USSR under_1000 from 1963"
+1968,21,USSR,icbm_parity,0,"909 ICBM launchers and 1,206 intercontinental vehicles at the end of 1968 (Norris and Cochran 1990); NIE 11-8-67 of 26 Oct 1967","added 2026-10-28 on the owner's decision 7g: count_USSR over_1000 from 1969"

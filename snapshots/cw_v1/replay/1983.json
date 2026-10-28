@@ -43,15 +43,15 @@
    ]
   },
   "belief_force_USA": {
-   "level": "overkill",
+   "level": "over_1000",
    "confidence": "medium",
    "indicators": [
     {
-     "id": "event_1975_belief_force_USA_belief",
-     "value": "the MIRVed deployments seen; the 'window of vulnerability' argument",
-     "source": "Garthoff 1994",
-     "observed": "1975-12-31",
-     "rule": "the contemporaneous reading dated before 1 January"
+     "id": "event_1967_belief_force_USA_belief",
+     "value": "NIE 11-8-67 (26 Oct 1967): about 700 ICBM launchers in being and about 1,000 by the end of 1968, about the US number; more than 1,000 but not over 1,300 by mid-1972",
+     "source": "NIE 11-8-67, Conclusions B and E (Steury (ed.) 1996; crest corpus)",
+     "observed": "1967-12-31",
+     "rule": "the contemporaneous reading dated before 1 January Note: projected count (decision 7g); added 2026-10-28"
     }
    ]
   },
@@ -351,6 +351,19 @@
      "source": "the Chinese record of the meeting (Wilson Center Digital Archive); Yang Kuisong 2000; Gerson 2010",
      "observed": "1969-12-31",
      "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: added 2026-10-27 on the owner's decision 7f(a): set by the exit of the 1969 sub-game"
+    }
+   ]
+  },
+  "count_USSR": {
+   "level": "over_1000",
+   "confidence": "assumed",
+   "indicators": [
+    {
+     "id": "event_1968_count_USSR_record",
+     "value": "1,206 at the end of 1968: 909 ICBM launchers (SS-9, SS-11 in silos), 138 SLBM launchers, 159 heavy bombers: USSR.icbm_parity",
+     "source": "Norris and Cochran 1990, Table 2",
+     "observed": "1968-12-31",
+     "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: added 2026-10-28 on the owner's decision 7g"
     }
    ]
   }

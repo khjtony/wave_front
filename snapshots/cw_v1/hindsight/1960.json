@@ -43,15 +43,15 @@
    ]
   },
   "belief_force_USA": {
-   "level": "few",
+   "level": "under_200",
    "confidence": "high",
    "indicators": [
     {
-     "id": "event_1949_nuke_USSR_record",
-     "value": "first Soviet test, 29 Aug 1949 (RDS-1)",
-     "source": "Holloway 1994",
-     "observed": "1949-12-31",
-     "rule": "hindsight truth of the estimated quantity (nuke_USSR in the record; decisions D6)"
+     "id": "event_1956_count_USSR_record",
+     "value": "22 heavy bombers at the end of 1956 (20 M-4 BISON, 2 Tu-95 BEAR): USSR.heavy_bombers",
+     "source": "Norris and Cochran 1990, Tables 2 and 8",
+     "observed": "1956-12-31",
+     "rule": "hindsight truth of the estimated quantity (count_USSR in the record; decisions D6, and D9 of docs/cw_v1_decisions.md) Note: added 2026-10-28 on the owner's decision 7g"
     }
    ]
   },
@@ -64,7 +64,7 @@
      "value": "hindsight: US aims of containment by means short of war; no plan of a first strike at any time",
      "source": "Gaddis 2005; PFIAB 1990",
      "observed": "1946-12-31",
-     "rule": "hindsight truth of the estimated quantity (belief_USSR_USA in the record; decisions D6)"
+     "rule": "hindsight truth of the estimated quantity (belief_USSR_USA in the record; decisions D6, and D9 of docs/cw_v1_decisions.md)"
     }
    ]
   },
@@ -340,6 +340,19 @@
      "rule": "the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level (added 2026-10-27 on the owner's decision 7f(a))"
     }
    ]
+  },
+  "count_USSR": {
+   "level": "under_200",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1956_count_USSR_record",
+     "value": "22 heavy bombers at the end of 1956 (20 M-4 BISON, 2 Tu-95 BEAR): USSR.heavy_bombers",
+     "source": "Norris and Cochran 1990, Tables 2 and 8",
+     "observed": "1956-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: added 2026-10-28 on the owner's decision 7g"
+    }
+   ]
   }
  },
  "rates": {},
@@ -371,6 +384,20 @@
     }
    ],
    "rule": "decided at tick 11 with delay 2: pending t + 1 + d - T"
+  },
+  "pending_USSR_first_icbms": {
+   "value": 3,
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "decision_1959_USSR_first_icbms",
+     "value": "USSR.first_icbms decided 1959",
+     "source": "the R-16 decree of 13 May 1959 and the Strategic Rocket Forces of 17 Dec 1959 (Podvig (ed.) 2001; Zaloga 2002); 235 vehicles at the end of 1962 (Norris and Cochran 1990)",
+     "observed": "1959-12-31",
+     "rule": "years until the delayed effect of the decision is visible (framework_spec.md section 3.1)"
+    }
+   ],
+   "rule": "decided at tick 12 with delay 3: pending t + 1 + d - T"
   }
  }
 }

@@ -17,15 +17,15 @@
    ]
   },
   "nuke_USSR": {
-   "level": "survivable",
-   "confidence": "medium",
+   "level": "few",
+   "confidence": "assumed",
    "indicators": [
     {
-     "id": "event_1958_nuke_USSR_replay",
-     "value": "NIE 11-4-58 and NIE 11-5-58 projections of 100 Soviet ICBMs by 1960 (not verified)",
-     "source": "Prados 1982",
-     "observed": "1958-12-31",
-     "rule": "the contemporaneous reading dated before 1 January"
+     "id": "event_1949_nuke_USSR_record",
+     "value": "first Soviet test, 29 Aug 1949 (RDS-1)",
+     "source": "Holloway 1994",
+     "observed": "1949-12-31",
+     "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv)"
     }
    ]
   },
@@ -43,15 +43,15 @@
    ]
   },
   "belief_force_USA": {
-   "level": "survivable",
+   "level": "under_1000",
    "confidence": "medium",
    "indicators": [
     {
-     "id": "event_1957_belief_force_USA_belief",
-     "value": "NIE 11-10-57 (10 Dec 1957) and the Gaither report: a Soviet ICBM force able to threaten SAC by 1959 to 1961",
-     "source": "Prados 1982; Preble 2004",
-     "observed": "1957-12-31",
-     "rule": "the contemporaneous reading dated before 1 January"
+     "id": "event_1958_belief_force_USA_belief",
+     "value": "NIE 11-4-58 (23 Dec 1958): a first operational capability in 1959, 100 ICBMs about a year and a half later, 500 some time in 1962 (about 230 for mid-1961), and 150 to 250 heavy bombers and tankers for mid-1961; about 430 for mid-1961 (250 to 750); NIE 11-5-58 (19 Aug 1958): 100 ICBMs in 1960, 500 in 1961 or at the latest 1962",
+     "source": "NIE 11-4-58, paras. 148 to 150 and the Long Range Aviation table; NIE 11-5-58, para. 9 (crest corpus)",
+     "observed": "1958-12-31",
+     "rule": "the contemporaneous reading dated before 1 January Note: projected count (decision 7g); added 2026-10-28"
     }
    ]
   },
@@ -351,6 +351,19 @@
      "source": "Yang Kuisong 2000; Gerson 2010",
      "observed": "1946-12-31",
      "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level (added 2026-10-27 on the owner's decision 7f(a))"
+    }
+   ]
+  },
+  "count_USSR": {
+   "level": "under_200",
+   "confidence": "assumed",
+   "indicators": [
+    {
+     "id": "event_1956_count_USSR_record",
+     "value": "22 heavy bombers at the end of 1956 (20 M-4 BISON, 2 Tu-95 BEAR): USSR.heavy_bombers",
+     "source": "Norris and Cochran 1990, Tables 2 and 8",
+     "observed": "1956-12-31",
+     "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: added 2026-10-28 on the owner's decision 7g"
     }
    ]
   }

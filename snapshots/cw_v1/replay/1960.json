@@ -17,15 +17,15 @@
    ]
   },
   "nuke_USSR": {
-   "level": "survivable",
-   "confidence": "medium",
+   "level": "few",
+   "confidence": "assumed",
    "indicators": [
     {
-     "id": "event_1959_nuke_USSR_replay",
-     "value": "NIE 11-8-59 (Feb 1960): 140 to 200 ICBMs by mid-1961 (not verified)",
-     "source": "Prados 1982",
-     "observed": "1959-12-31",
-     "rule": "the contemporaneous reading dated before 1 January"
+     "id": "event_1949_nuke_USSR_record",
+     "value": "first Soviet test, 29 Aug 1949 (RDS-1)",
+     "source": "Holloway 1994",
+     "observed": "1949-12-31",
+     "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv)"
     }
    ]
   },
@@ -43,15 +43,15 @@
    ]
   },
   "belief_force_USA": {
-   "level": "survivable",
+   "level": "under_1000",
    "confidence": "medium",
    "indicators": [
     {
-     "id": "event_1957_belief_force_USA_belief",
-     "value": "NIE 11-10-57 (10 Dec 1957) and the Gaither report: a Soviet ICBM force able to threaten SAC by 1959 to 1961",
-     "source": "Prados 1982; Preble 2004",
-     "observed": "1957-12-31",
-     "rule": "the contemporaneous reading dated before 1 January"
+     "id": "event_1959_belief_force_USA_belief",
+     "value": "NIE 11-5-59 (3 Nov 1959): the initial operational capability of a few (about 10) series ICBMs by 1 Jan 1960 for planning purposes, with no force projection (left to NIE 11-8-59 of 9 Feb 1960); the projection in force is NIE 11-4-58's, about 430 for mid-1961 (250 to 750)",
+     "source": "NIE 11-5-59, paras. 4 and 73; NIE 11-4-58 (crest corpus)",
+     "observed": "1959-12-31",
+     "rule": "the contemporaneous reading dated before 1 January Note: projected count (decision 7g); NIE 11-8-59 is dated 9 Feb 1960 and first read for 1961 (superseded there by NIE 11-8-60); added 2026-10-28"
     }
    ]
   },
@@ -353,6 +353,19 @@
      "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level (added 2026-10-27 on the owner's decision 7f(a))"
     }
    ]
+  },
+  "count_USSR": {
+   "level": "under_200",
+   "confidence": "assumed",
+   "indicators": [
+    {
+     "id": "event_1956_count_USSR_record",
+     "value": "22 heavy bombers at the end of 1956 (20 M-4 BISON, 2 Tu-95 BEAR): USSR.heavy_bombers",
+     "source": "Norris and Cochran 1990, Tables 2 and 8",
+     "observed": "1956-12-31",
+     "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: added 2026-10-28 on the owner's decision 7g"
+    }
+   ]
   }
  },
  "rates": {},
@@ -384,6 +397,20 @@
     }
    ],
    "rule": "decided at tick 11 with delay 2: pending t + 1 + d - T"
+  },
+  "pending_USSR_first_icbms": {
+   "value": 3,
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "decision_1959_USSR_first_icbms",
+     "value": "USSR.first_icbms decided 1959",
+     "source": "the R-16 decree of 13 May 1959 and the Strategic Rocket Forces of 17 Dec 1959 (Podvig (ed.) 2001; Zaloga 2002); 235 vehicles at the end of 1962 (Norris and Cochran 1990)",
+     "observed": "1959-12-31",
+     "rule": "years until the delayed effect of the decision is visible (framework_spec.md section 3.1)"
+    }
+   ],
+   "rule": "decided at tick 12 with delay 3: pending t + 1 + d - T"
   }
  }
 }

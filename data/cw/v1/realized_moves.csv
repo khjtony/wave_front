@@ -8,10 +8,10 @@ tick,year,USA,USSR,PRC,Nature,note,source
 6,1953,armistice,idle,idle,new_look,Korean armistice 27 Jul 1953; NSC 162/2 of 30 Oct 1953.,FRUS 1952-54 vols. II and XV
 7,1954,approve_u2,idle,idle,none,"Eisenhower approves the U-2, 24 Nov 1954.",Pedlow and Welzenbach 1992
 8,1955,idle,idle,idle,none,,
-9,1956,survivable_force,idle,idle,none,"The Polaris programme approved, Dec 1956 (Hungary, 4 Nov 1956, was suppressed within the year: below the threshold of bloc_USSR).",Rosenberg 1983
+9,1956,survivable_force,heavy_bombers,idle,bomber_gap,"The Polaris programme approved, Dec 1956 (Hungary, 4 Nov 1956, was suppressed within the year: below the threshold of bloc_USSR). The M-4 and Tu-95 in Long Range Aviation units (22 at the end of 1956) and NIE 11-56 of 6 Mar 1956 (the bomber gap), added 2026-10-28 on the owner's decision 7g.",Rosenberg 1983; Norris and Cochran 1990; Steury (ed.) 1996
 10,1957,idle,idle,idle,missile_gap,"Soviet ICBM test 21 Aug 1957, Sputnik 4 Oct; the Gaither report 7 Nov; NIE 11-10-57 of 10 Dec 1957.",Preble 2004; Prados 1982
 11,1958,corona,berlin_ultimatum,idle,none,CORONA approved Feb 1958; Khrushchev's Berlin ultimatum 10 and 27 Nov 1958.,Ruffner 1995; Zubok and Pleshakov 1996
-12,1959,offer_test_ban,idle,idle,none,Western draft test-ban treaty and Eisenhower's proposal of 13 Apr 1959; the Berlin deadline of May 1959 lapses inside the standing crisis (no level change).,Seaborg 1981
+12,1959,offer_test_ban,first_icbms,idle,none,"Western draft test-ban treaty and Eisenhower's proposal of 13 Apr 1959; the Berlin deadline of May 1959 lapses inside the standing crisis (no level change). The first-generation ICBM force (the R-16 decree of 13 May 1959; the Strategic Rocket Forces of 17 Dec 1959), visible 1963, added 2026-10-28 on the owner's decision 7g.",Seaborg 1981; Podvig (ed.) 2001; Norris and Cochran 1990
 13,1960,idle,withdraw_advisers,idle,none,"Soviet specialists withdrawn from China, notified 16 Jul 1960.",Luthi 2008
 14,1961,strategic_buildup,build_wall,idle,estimate_revised,"Kennedy's buildup (28 Mar, 25 May 1961); the Wall, 13 Aug 1961; NIE 11-8/1-61 of 21 Sep 1961.",Preble 2004; Harrison 2003; Prados 1982
 15,1962,idle,deploy_cuba,idle,none,Operation Anadyr decided 24 May 1962; the crisis of 16 to 28 Oct 1962 is the sub-game models/cw/crises/cuba_1962.py.,Fursenko and Naftali 1997
@@ -20,7 +20,7 @@ tick,year,USA,USSR,PRC,Nature,note,source
 18,1965,idle,idle,idle,none,,
 19,1966,idle,idle,idle,none,,
 20,1967,offer_limits,idle,idle,none,"Johnson's letter of 27 Jan 1967 and the Glassboro summit, 23 to 25 Jun 1967.",Newhouse 1973
-21,1968,idle,idle,idle,none,,
+21,1968,idle,icbm_parity,idle,none,"The ICBM deployment of 1968 (701 to 909 launchers; 1,206 intercontinental vehicles at the end of 1968), added 2026-10-28 on the owner's decision 7g.",Norris and Cochran 1990; NIE 11-8-67
 22,1969,idle,idle,border_clash,none,"Zhenbao Island, 2 and 15 Mar 1969: the crisis action; the sub-game models/cw/crises/sino_soviet_1969.py plays the confrontation from 17 Mar to the opening of the border talks on 20 Oct 1969 (the Kosygin-Zhou meeting of 11 Sep 1969 eased the crisis without ending the armed confrontation; the talks it agreed are carried into the coarse game by the exit, sino_soviet_talks from 1970, which closes USSR.strike_china: the owner's decision 7f(a) of 2026-10-27).",Yang Kuisong 2000; Gerson 2010
 23,1970,idle,mirv,idle,none,Soviet MIRVed ICBM development (date of the decision not verified).,Podvig 2001
 24,1971,open_china,idle,idle,none,Kissinger in Beijing 9 to 11 Jul 1971; Nixon's announcement 15 Jul 1971.,FRUS 1969-76 vol. XVII

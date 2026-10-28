@@ -59,11 +59,19 @@ def test_v0_is_unchanged():
 
 
 # -- declarations ---------------------------------------------------------------------------
-def test_variables_are_v0s_plus_the_us_prc_war_and_the_talks():
+def test_variables_are_v0s_plus_the_us_prc_war_the_talks_and_the_count():
     v0_vars = [v.name for v in v0.model.compile().variables if v.origin == "var"]
     v1_vars = [v.name for v in CM.variables if v.origin == "var"]
-    assert v1_vars == [*v0_vars, "esc_usprc", "sino_soviet_talks"]
+    assert v1_vars == [*v0_vars, "esc_usprc", "sino_soviet_talks", "count_USSR"]
     assert tuple(CM.variables[CM.index["esc_usprc"]].levels) == ("peace", "war")
+    # the owner's decision 7g: belief_force_USA on the bands of count_USSR (decisions D9)
+    bands = ("none", "under_200", "under_1000", "over_1000")
+    assert tuple(v1.BANDS) == bands
+    for name in ("count_USSR", "belief_force_USA"):
+        assert tuple(CM.variables[CM.index[name]].levels) == bands, name
+    count = next(v for v in v1.model.variables if v.name == "count_USSR")
+    belief = next(v for v in v1.model.variables if v.name == "belief_force_USA")
+    assert count.monotone and count.init == 0 and not belief.monotone and belief.init == 0
     talks = next(v for v in v1.model.variables if v.name == "sino_soviet_talks")
     assert talks.monotone and talks.init is not None and not talks.init
     assert CM.horizon == v1.HORIZON == 45
@@ -167,24 +175,26 @@ def test_the_frozen_oversight_build_only_drops_the_oversight_effects():
 def test_budget_and_fingerprints_as_catalogued():
     b = CM.budget()
     expected = {
-        "variables": 28,
-        "levels": 82,
+        "variables": 29,
+        "levels": 86,
         "actors": 4,
-        "actions": 64,
-        "guards": 64,
-        "guard_parts": 127,
+        "actions": 68,
+        "guards": 68,
+        "guard_parts": 137,
         "speculative_actions": 0,
         "fairness_constraints": 0,
-        "delays": 7,
+        "delays": 8,
         "cadence": 0,
         "invariants": 9,
         "endings": 5,
     }
     assert {k: b[k] for k in expected} == expected
-    assert fingerprint(v1.model) == "151787621ce1"
-    assert fingerprint(v1.build(prc_principal=False)) == "a21bc2f7c046"
-    assert fingerprint(v1.build(us_crisis_options=False)) == "a2c78d3a609d"
-    assert fingerprint(v1.build(frozen_oversight=True)) == "736ac7362625"
+    # before the owner's decision 7g (2026-10-28): 151787621ce1, a21bc2f7c046, a2c78d3a609d,
+    # 736ac7362625, with 28 variables, 82 levels, 64 actions, 127 guard parts and 7 delays
+    assert fingerprint(v1.model) == "6cbb54f105b1"
+    assert fingerprint(v1.build(prc_principal=False)) == "8eb285056b15"
+    assert fingerprint(v1.build(us_crisis_options=False)) == "9780a34b6304"
+    assert fingerprint(v1.build(frozen_oversight=True)) == "6b7059a046d4"
     assert fingerprint(sino_soviet_1969.model) == "ac9a1b01ddaa"
     assert fingerprint(sino_soviet_1969.model_prc_scripted) == "6df79b14f313"
     assert fingerprint(alert_1973.model) == "6e4f5e7c5efe"
@@ -260,7 +270,8 @@ def test_realized_moves_are_the_dated_decisions():
         for r, s in zip(rows, v0_rows, strict=True)
         if any(r[a] != s[a] for a in (*actors, "Nature"))
     }
-    assert changed == {tick_of(1951), tick_of(1973)}
+    # 1956, 1959, 1968: the Soviet deployments of the count and the bomber gap (decision 7g)
+    assert changed == {tick_of(y) for y in (1951, 1956, 1959, 1968, 1973)}
 
 
 @pytest.mark.parametrize("aims", HYPS)
@@ -311,6 +322,27 @@ def test_dated_events_are_visible_on_the_realized_path():
     assert checked > 60
 
 
+def test_the_realized_path_reproduces_the_count_at_each_1_january():
+    """The owner's decision 7g: count_USSR on the realized path is, on every 1 January from
+    1947 to 1992, the band of the record's count of Soviet intercontinental delivery vehicles
+    at the end of the year before (data/cw/v1/strategic_launchers.csv), set by the Soviet
+    deployments (USSR.heavy_bombers, first_icbms, icbm_buildup, icbm_parity)."""
+    coarse, _, _ = realized("opportunist")
+    cm = flat_of("opportunist").coarse
+    with open(v1.DATA_V1 / "strategic_launchers.csv", newline="", encoding="utf-8") as fh:
+        rows = list(csv.DictReader(line for line in fh if not line.startswith("#")))
+    assert [int(r["visible_year"]) for r in rows] == list(range(1947, 1993))
+    for r in rows:
+        if r["total"]:
+            total = int(r["total"])
+            assert total == int(r["icbm"]) + int(r["slbm"]) + int(r["bombers"]), r["year"]
+            assert r["band"] == v1.BANDS[(total > 0) + (total >= 200) + (total >= 1000)]
+        else:
+            assert r["mark"] == "[U]" and r["band"] == "over_1000", r["year"]
+        t = int(r["visible_year"]) - v1.YEAR0
+        assert cm.state_dict(coarse[t])["count_USSR"] == r["band"], r["year"]
+
+
 def test_snapshots_are_up_to_date():
     assert write(SNAPSHOTS, check=True) == []
 
@@ -329,7 +361,9 @@ def test_hindsight_differs_from_the_realized_path_only_in_the_belief_errors(aims
         if diff:
             errors[year] = diff
     expected = {
-        **{y: {"belief_force_USA"} for y in range(1958, 1962)},
+        # the projected count above the count in being (decisions D9): the bomber and missile
+        # gaps, 1957 to 1962, and the buildup projected past 1,000 before it got there
+        **{y: {"belief_force_USA"} for y in [*range(1957, 1963), 1967, 1968]},
         **{y: {"belief_USSR_USA"} for y in [*range(1983, 1986), *range(1988, 1993)]},
     }
     usa_reading = range(1951, 1954) if aims == "opportunist" else range(1947, 1993)
@@ -377,7 +411,7 @@ def test_every_return_of_every_sub_game_is_a_valid_coarse_transition(aims, build
 SIZES = [
     ("V3", 1973, 1974, 209),
     ("V5", 1970, 1973, 11407),  # 16274 before the talks flag (decision 7f(a), 2026-10-27)
-    ("V5 control", 1968, 1970, 35636),  # 35600 before the talks flag
+    ("V5 control", 1968, 1970, 47619),  # 35600 before the talks flag, 35636 before 7g
     ("V2 from 1984", 1984, None, 3440),
     ("V2 from 1983", 1983, None, 4143),
 ]

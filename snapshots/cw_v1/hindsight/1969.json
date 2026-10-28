@@ -43,15 +43,15 @@
    ]
   },
   "belief_force_USA": {
-   "level": "survivable",
-   "confidence": "medium",
+   "level": "over_1000",
+   "confidence": "high",
    "indicators": [
     {
-     "id": "event_1966_nuke_USSR_record",
-     "value": "SS-9 and SS-11 in hardened silos from 1966",
-     "source": "Podvig 2001; Zaloga 2002",
-     "observed": "1966-12-31",
-     "rule": "hindsight truth of the estimated quantity (nuke_USSR in the record; decisions D6) Note: (the year of a secure Soviet second strike not verified)"
+     "id": "event_1968_count_USSR_record",
+     "value": "1,206 at the end of 1968: 909 ICBM launchers (SS-9, SS-11 in silos), 138 SLBM launchers, 159 heavy bombers: USSR.icbm_parity",
+     "source": "Norris and Cochran 1990, Table 2",
+     "observed": "1968-12-31",
+     "rule": "hindsight truth of the estimated quantity (count_USSR in the record; decisions D6, and D9 of docs/cw_v1_decisions.md) Note: added 2026-10-28 on the owner's decision 7g"
     }
    ]
   },
@@ -64,7 +64,7 @@
      "value": "hindsight: US aims of containment by means short of war; no plan of a first strike at any time",
      "source": "Gaddis 2005; PFIAB 1990",
      "observed": "1946-12-31",
-     "rule": "hindsight truth of the estimated quantity (belief_USSR_USA in the record; decisions D6)"
+     "rule": "hindsight truth of the estimated quantity (belief_USSR_USA in the record; decisions D6, and D9 of docs/cw_v1_decisions.md)"
     }
    ]
   },
@@ -338,6 +338,19 @@
      "source": "Yang Kuisong 2000; Gerson 2010",
      "observed": "1946-12-31",
      "rule": "the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level (added 2026-10-27 on the owner's decision 7f(a))"
+    }
+   ]
+  },
+  "count_USSR": {
+   "level": "over_1000",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1968_count_USSR_record",
+     "value": "1,206 at the end of 1968: 909 ICBM launchers (SS-9, SS-11 in silos), 138 SLBM launchers, 159 heavy bombers: USSR.icbm_parity",
+     "source": "Norris and Cochran 1990, Table 2",
+     "observed": "1968-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: added 2026-10-28 on the owner's decision 7g"
     }
    ]
   }

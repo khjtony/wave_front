@@ -43,15 +43,15 @@
    ]
   },
   "belief_force_USA": {
-   "level": "few",
+   "level": "under_1000",
    "confidence": "medium",
    "indicators": [
     {
-     "id": "event_1949_belief_force_USA_belief",
-     "value": "the test detected by air sampling, announced by Truman 23 Sep 1949",
-     "source": "Holloway 1994",
-     "observed": "1949-12-31",
-     "rule": "the contemporaneous reading dated before 1 January"
+     "id": "event_1956_belief_force_USA_belief",
+     "value": "NIE 11-56 (6 Mar 1956): some 400 BISON and 300 BEAR heavy bombers in operational use by mid-1959, from about 75 on 1 Jan 1956; for mid-1958 about 520 by interpolation, 700 for mid-1959: Nature.bomber_gap",
+     "source": "NIE 11-56, 6 Mar 1956, paras. 5 and 19 (Steury (ed.) 1996, no. 1; crest corpus)",
+     "observed": "1956-12-31",
+     "rule": "the contemporaneous reading dated before 1 January Note: projected count (decision 7g): the estimate's projection for the mid-year two to three years ahead, midpoints of its ranges, linear between its milestones; added 2026-10-28"
     }
    ]
   },
@@ -351,6 +351,19 @@
      "source": "Yang Kuisong 2000; Gerson 2010",
      "observed": "1946-12-31",
      "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level (added 2026-10-27 on the owner's decision 7f(a))"
+    }
+   ]
+  },
+  "count_USSR": {
+   "level": "under_200",
+   "confidence": "assumed",
+   "indicators": [
+    {
+     "id": "event_1956_count_USSR_record",
+     "value": "22 heavy bombers at the end of 1956 (20 M-4 BISON, 2 Tu-95 BEAR): USSR.heavy_bombers",
+     "source": "Norris and Cochran 1990, Tables 2 and 8",
+     "observed": "1956-12-31",
+     "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: added 2026-10-28 on the owner's decision 7g"
     }
    ]
   }

@@ -39,6 +39,14 @@ Changes from v0 (docs/cw_v1_decisions.md D1 to D6):
   ``sino_soviet_talks`` when the talks were agreed (Kosygin and Zhou, 11 Sep 1969; the talks
   opened 20 Oct 1969) and no strike was made, and ``USSR.strike_china`` gains the part
   ``talks`` (``¬sino_soviet_talks``).
+* **The projected count** (the owner's decisions 7d and 7g of 2026-10-28, before first sight;
+  docs/cw_v1_decisions.md D9): ``belief_force_USA`` is re-declared on its own scale, the
+  number of Soviet intercontinental delivery vehicles the estimates project for two to three
+  years ahead, in the bands of :data:`BANDS`, and the new monotone ``count_USSR`` is the number
+  in being on the same bands (its hindsight truth), set by ``USSR.heavy_bombers``,
+  ``USSR.first_icbms``, ``USSR.icbm_buildup`` and ``USSR.icbm_parity``; every guard part and
+  effect that reads or sets the belief is re-expressed on the bands, and Nature's
+  ``bomber_gap`` (NIE 11-56) carries the belief of 1957.
 * **Predicates** of coldwar_testbed.md section 9.2: ``no_war_core``, ``both_or_neither``,
   ``balance_core``, ``balance_tri``, ``no_general_war_core``; v0's ``balance_cw``,
   ``no_war``, ``no_general_war`` and ``bloc_intact`` with a US-PRC war counted as a war
@@ -49,16 +57,28 @@ Changes from v0 (docs/cw_v1_decisions.md D1 to D6):
 
 from __future__ import annotations
 
+from dataclasses import replace
+
 from wavefront.engine import flatten
 from wavefront.engine.multires import FlatModel
-from wavefront.model import FALSE, Bump, Model, SetIf, V
+from wavefront.model import FALSE, Bump, Model, Set, SetIf, V
 from wavefront.model.compile import CompiledModel
 
 from . import v0
 from .crises import able_archer_1983, alert_1973, berlin_1948, cuba_1962, sino_soviet_1969
 from .v0 import DATA, HORIZON, ROOT, YEAR0, raise_to, tick_of
 
+# The number of Soviet intercontinental delivery vehicles in bands (the owner's decision 7g of
+# 2026-10-28; docs/ontology_cw.md sections 3 and 12.1; docs/cw_v1_decisions.md D9): ICBM
+# launchers, SLBM launchers and heavy bombers (Bear, Bison; not the Backfire), as Norris and
+# Cochran count the Soviet strategic offensive forces (data/cw/v1/strategic_launchers.csv).
+# Edges: 200, the force the estimates judged able to threaten SAC's operational bases (NIE
+# 11-8-60 of 1 Aug 1960, para. 7: 150 to 200 ICBM launchers at the start of 1961), and 1,000,
+# numbers matching the American ICBM force (1,000 Minuteman and 54 Titan II from 1967).
+BANDS = ["none", "under_200", "under_1000", "over_1000"]
+
 __all__ = [
+    "BANDS",
     "DATA",
     "DATA_V1",
     "HORIZON",
@@ -137,6 +157,12 @@ def build(
     # -- variables (ontology section 12.1) ---------------------------------------------------
     m.var("esc_usprc", levels=["peace", "war"], init="peace")
     m.flag("sino_soviet_talks", init=False, monotone=True)
+    # The owner's decision 7g (2026-10-28, before first sight): the hindsight count of Soviet
+    # intercontinental delivery vehicles, and belief_force_USA re-declared in place (same
+    # position, so v0's state layout is otherwise kept) as the projected count on its bands.
+    m.var("count_USSR", levels=BANDS, init="none", monotone=True)
+    k = next(i for i, d in enumerate(m.variables) if d.name == "belief_force_USA")
+    m.variables[k] = replace(m.variables[k], levels=tuple(BANDS), init=0)
 
     usa = m.actor_named("USA")
     ussr = m.actor_named("USSR")
@@ -254,6 +280,176 @@ def build(
         note=composition,
     )
 
+    # -- the force count and the projected count (D9; the owner's decisions 7d and 7g) -------
+    # Each guard part and effect that reads or sets belief_force_USA, re-expressed on the
+    # bands of the count; the count is set by the Soviet deployments. A detection effect
+    # (``seen``) sets the belief to the force the deployment brings, as projected once seen by
+    # satellite (intel_USA = overhead).
+    def seen(level: str) -> SetIf:
+        return SetIf(V.intel_USA == "overhead", "belief_force_USA", level)
+
+    projected = (
+        "On the count scale of the owner's decision 7g of 2026-10-28 (belief_force_USA the "
+        "number of Soviet intercontinental delivery vehicles that the estimate projects for "
+        "about two to three years after its date, in the bands of count_USSR; "
+        "docs/cw_v1_decisions.md D9)."
+    )
+    _edit(
+        ussr,
+        "build_bomb",
+        effects=[raise_to("nuke_USSR", "few")],
+        note=(
+            projected + " The bomb detected (Truman, 23 Sep 1949) set no projected count: the "
+            "Tu-4 was a medium bomber with a one-way reach of the United States, not an "
+            "intercontinental vehicle (Norris and Cochran, US-USSR Strategic Offensive Nuclear "
+            "Forces 1946-1989, NRDC 1990, Definitions: a bomber designed for an operating "
+            "radius over 2,500 n.m.); the estimates of intercontinental bombers begin with the "
+            "BISON and BEAR (NIE 11-56, 6 Mar 1956)."
+        ),
+    )
+    _edit(
+        ussr,
+        "icbm_buildup",
+        effects=[
+            raise_to("nuke_USSR", "survivable"),
+            raise_to("count_USSR", "under_1000"),
+            seen("over_1000"),
+        ],
+        note=(
+            projected + " The buildup also brings the count to at least 200 to 999 (333 ICBM "
+            "launchers at the end of 1966, Norris and Cochran 1990 Table 2). Seen by satellite, "
+            "it is projected past 1,000: NIE 11-8-66 (20 Oct 1966) estimated 670 to 765 ICBM "
+            "launchers for mid-1968 and 800 to 1,100 for mid-1971, beside some 150 heavy "
+            "bombers and the ballistic missile submarines (M/H NIE 11-8-66, 13 Mar 1967)."
+        ),
+    )
+    _edit(
+        ussr,
+        "mirv",
+        effects=[raise_to("nuke_USSR", "overkill"), seen("over_1000")],
+        note=(
+            projected + " The MIRVed missiles replaced launchers rather than adding to them "
+            "(1,587 ICBM launchers at the end of 1975, 1,398 from 1978; Norris and Cochran 1990 "
+            "Table 2): seen, the projected count stays above 1,000."
+        ),
+    )
+    _edit(
+        usa,
+        "strategic_buildup",
+        {"missile_gap": V.belief_force_USA >= "under_1000"},
+        note=(
+            projected + " Part missile_gap: a projected Soviet force of 200 or more "
+            "intercontinental vehicles, the force the estimates judged able to threaten SAC's "
+            "bases (NIE 11-8-60, 1 Aug 1960, para. 7; its program A, 400 ICBM launchers for "
+            "mid-1963, was the estimate in force when Kennedy decided in Mar 1961). The guard of "
+            "an American decision reads the American estimate, not the hindsight count."
+        ),
+    )
+    _edit(
+        nature,
+        "missile_gap",
+        {"soviet_force": V.count_USSR == "under_200"},
+        effects=[Set("belief_force_USA", "under_1000")],
+        note=(
+            projected + " Part soviet_force: a Soviet force in being of fewer than 200 "
+            "intercontinental vehicles (28 at the end of 1957, all heavy bombers; Norris and "
+            "Cochran 1990 Table 2). Effect: SNIE 11-10-57 (10 Dec 1957) projected 100 ICBMs "
+            "about a year after a first operational capability in mid-1958 to mid-1959 and 500 "
+            "two or at most three years after it; NIE 11-4-57 (12 Nov 1957) 250 to 450 heavy "
+            "bombers and tankers for mid-1960: some 580 vehicles for mid-1960, 200 to 999."
+        ),
+    )
+    _edit(
+        nature,
+        "estimate_revised",
+        {"gap": V.belief_force_USA > V.count_USSR},
+        effects=[
+            SetIf(V.count_USSR == "none", "belief_force_USA", "under_200"),
+            SetIf(V.count_USSR == "under_200", "belief_force_USA", "under_1000"),
+        ],
+        note=(
+            projected + " Part gap: the projected count above the count in being. Effect: the "
+            "revised estimate projects the force seen and its programme, which on these bands "
+            "is the band above the count in being: NIE 11-8/1-61 (21 Sep 1961) cut the ICBM "
+            "force in being to 10 to 25 launchers and projected 75 to 125 for mid-1963, beside "
+            "about 150 heavy bombers and tankers and about 20 missile submarines (NIE 11-8-61, "
+            "7 Jun 1961): some 300 vehicles for mid-1963, 200 to 999, while the force in being "
+            "was 187 at the end of 1961 (Norris and Cochran 1990 Table 2). On the count scale "
+            "the revision of 1961 moved the projection within its band (from some 700 in NIE "
+            "11-8-60 to some 300)."
+        ),
+    )
+    nature.event(
+        "bomber_gap",
+        guard={
+            "blind": V.intel_USA != "overhead",
+            "soviet_bomb": V.nuke_USSR >= "few",
+            "level": V.belief_force_USA == "none",
+        },
+        effect=Set("belief_force_USA", "under_1000"),
+        source=(
+            "The bomber-gap estimate after the BISON flypast of May Day 1955: NIE 11-56 (6 Mar "
+            "1956) estimated some 400 BISON and 300 BEAR heavy bombers in operational use by "
+            "mid-1959, from about 75 on 1 Jan 1956 (Steury (ed.), Intentions and Capabilities, "
+            "CIA 1996, no. 1; Prados, The Soviet Estimate, 1982): some 520 for mid-1958 and 700 "
+            "for mid-1959, 200 to 999. Part blind: before satellite coverage (the U-2 flights "
+            "from 4 Jul 1956 reduced the bomber estimates of 1957 and 1958, NIE 11-4-57, SNIE "
+            "11-7-58). The estimates of 1954 and 1955 are not in the corpus and not placed."
+        ),
+    )
+    ussr.action(
+        "heavy_bombers",
+        guard={
+            "level": V.count_USSR == "none",
+            "bomb": V.nuke_USSR >= "few",
+            "technology": V.tick >= tick_of(1955),
+        },
+        effect=[raise_to("count_USSR", "under_200"), seen("under_200")],
+        source=(
+            "The first intercontinental bombers in Long Range Aviation: the Myasishchev M-4 "
+            "(BISON) from 1955 and the Tupolev Tu-95 (BEAR) from 1956, ordered by the Council "
+            "of Ministers in Mar and Jul 1951 (Zaloga, The Kremlin's Nuclear Sword, 2002; "
+            "Podvig (ed.), Russian Strategic Nuclear Forces, 2001; the decree dates not "
+            "verified): 22 at the end of 1956, 20 BISON and 2 BEAR (Norris and Cochran, "
+            "US-USSR Strategic Offensive Nuclear Forces 1946-1989, NRDC Working Paper 90-1, "
+            "1990, Tables 2 and 8). Part technology: the two types were first flown on 20 Jan "
+            "1953 (M-4) and 12 Nov 1952 (Tu-95) and series-built from 1954 to 1955 (Zaloga "
+            "2002). Realized in the 1956 move, visible 1 Jan 1957."
+        ),
+    )
+    ussr.action(
+        "first_icbms",
+        guard={"level": V.count_USSR == "under_200", "technology": V.tick >= tick_of(1959)},
+        effect=[raise_to("count_USSR", "under_1000"), seen("under_1000")],
+        delay=3,
+        source=(
+            "The first-generation ICBM force: the Council of Ministers' decree of 13 May 1959 on "
+            "the R-16 (SS-7) and the Strategic Rocket Forces created on 17 Dec 1959, with the "
+            "R-7A (SS-6) on combat duty at Plesetsk from 1959 to 1960 and the R-16 regiments "
+            "from late 1961 (Podvig (ed.) 2001; Zaloga 2002; the decree date not verified); "
+            "with the BEAR and BISON deliveries and the first ballistic missile submarines (the "
+            "Golf and Hotel classes), 235 intercontinental vehicles at the end of 1962: 30 ICBM "
+            "launchers, 72 SLBM launchers, 133 heavy bombers (Norris and Cochran 1990 Table "
+            "2). Part technology: the R-7 was first flown to range on 21 Aug 1957, and no ICBM "
+            "unit existed before 1959. Delay 3: decided 1959, visible 1 Jan 1963."
+        ),
+    )
+    ussr.action(
+        "icbm_parity",
+        guard={"level": V.count_USSR == "under_1000", "silos": V.nuke_USSR >= "survivable"},
+        effect=[raise_to("count_USSR", "over_1000"), seen("over_1000")],
+        source=(
+            "The third-generation ICBM deployment carried past the American number: from 701 "
+            "ICBM launchers at the end of 1967 to 909 at the end of 1968 (the SS-11 and SS-9 in "
+            "single silos), with the first Yankee-class submarines, 1,206 intercontinental "
+            "vehicles at the end of 1968 (Norris and Cochran 1990 Table 2); NIE 11-8-67 (26 "
+            "Oct 1967) expected about 1,000 ICBM launchers by the end of 1968, about the US "
+            "number (Steury (ed.) 1996; Podvig (ed.) 2001; the date of the decision not "
+            "verified). Part silos: the deployment was of the hardened third generation "
+            "(docs/cw_v1_decisions.md D3). Realized in the 1968 move, visible 1 Jan 1969."
+        ),
+    )
+
     # -- the 1969 and 1973 sub-games (D4) ----------------------------------------------------
     _edit(
         prc,
@@ -331,9 +527,11 @@ def build(
                 "standing confrontation carried across 1 Jan 1982."
             ),
         )
-        # 1984 to 1991: a source search for documented, argued and rejected American
-        # crisis-initiating options is pending (docs/cw_v1_decisions.md D2, 2026-10-27). Any
-        # option it finds is declared here, inside this block, before first sight.
+        # 1984 to 1991: the source search of docs/cw_v1_us_options_1984_1991.md (2026-10-27)
+        # found no documented, argued and rejected American option whose adoption would have
+        # opened a standing crisis across a 1 January; none is added (docs/cw_v1_decisions.md
+        # D2). From 1984 the United States has no way out of balance_core of its own: V2's
+        # report says so.
     ussr.action(
         "reaffirm_understanding",
         guard={

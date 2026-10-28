@@ -18,14 +18,14 @@
   },
   "nuke_USSR": {
    "level": "few",
-   "confidence": "medium",
+   "confidence": "assumed",
    "indicators": [
     {
-     "id": "event_1961_nuke_USSR_replay",
-     "value": "NIE 11-8/1-61 (21 Sep 1961)",
-     "source": "Prados 1982",
-     "observed": "1961-12-31",
-     "rule": "the contemporaneous reading dated before 1 January"
+     "id": "event_1949_nuke_USSR_record",
+     "value": "first Soviet test, 29 Aug 1949 (RDS-1)",
+     "source": "Holloway 1994",
+     "observed": "1949-12-31",
+     "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv)"
     }
    ]
   },
@@ -43,15 +43,15 @@
    ]
   },
   "belief_force_USA": {
-   "level": "few",
+   "level": "under_1000",
    "confidence": "medium",
    "indicators": [
     {
      "id": "event_1961_belief_force_USA_belief",
-     "value": "NIE 11-8/1-61 (21 Sep 1961): 10 to 25 Soviet ICBM launchers",
-     "source": "Prados 1982; Ruffner (ed.) 1995",
+     "value": "NIE 11-8/1-61 (21 Sep 1961): 10 to 25 ICBM launchers in being on the CORONA photography and 75 to 125 for mid-1963 (no projection beyond mid-1963); NIE 11-8-61 (7 Jun 1961): about 150 heavy bombers and tankers, declining gradually, and about 20 missile submarines; about 300 for mid-1963 (above 200 on the low ends without the submarines): Nature.estimate_revised",
+     "source": "NIE 11-8/1-61, Conclusions 2 and 3 and para. 22 (Steury (ed.) 1996, no. 13); NIE 11-8-61, Conclusions 6 and 7 (crest corpus)",
      "observed": "1961-12-31",
-     "rule": "the contemporaneous reading dated before 1 January"
+     "rule": "the contemporaneous reading dated before 1 January Note: projected count (decision 7g); the revision moved the projection within its band (from some 700 to some 300); added 2026-10-28"
     }
    ]
   },
@@ -353,6 +353,19 @@
      "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level (added 2026-10-27 on the owner's decision 7f(a))"
     }
    ]
+  },
+  "count_USSR": {
+   "level": "under_200",
+   "confidence": "assumed",
+   "indicators": [
+    {
+     "id": "event_1956_count_USSR_record",
+     "value": "22 heavy bombers at the end of 1956 (20 M-4 BISON, 2 Tu-95 BEAR): USSR.heavy_bombers",
+     "source": "Norris and Cochran 1990, Tables 2 and 8",
+     "observed": "1956-12-31",
+     "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: added 2026-10-28 on the owner's decision 7g"
+    }
+   ]
   }
  },
  "rates": {},
@@ -370,6 +383,20 @@
     }
    ],
    "rule": "decided at tick 14 with delay 3: pending t + 1 + d - T"
+  },
+  "pending_USSR_first_icbms": {
+   "value": 1,
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "decision_1959_USSR_first_icbms",
+     "value": "USSR.first_icbms decided 1959",
+     "source": "the R-16 decree of 13 May 1959 and the Strategic Rocket Forces of 17 Dec 1959 (Podvig (ed.) 2001; Zaloga 2002); 235 vehicles at the end of 1962 (Norris and Cochran 1990)",
+     "observed": "1959-12-31",
+     "rule": "years until the delayed effect of the decision is visible (framework_spec.md section 3.1)"
+    }
+   ],
+   "rule": "decided at tick 12 with delay 3: pending t + 1 + d - T"
   }
  }
 }
