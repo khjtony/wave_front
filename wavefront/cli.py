@@ -259,11 +259,35 @@ def cmd_force(args: argparse.Namespace) -> int:
     return 0
 
 
+def _snapshot_members(args: argparse.Namespace, model: Model, cm):
+    """The member states of ``--snapshot`` (with ``--fix``): one state, or the product set
+    of a snapshot giving a set of levels (docs/ambiguous_levels.md)."""
+    from .evidence import load_snapshot_states, snapshot_to_states
+
+    snapshot = _snapshot_with_fixes(args, model)
+    if isinstance(snapshot, dict):
+        return snapshot_to_states(snapshot, cm)
+    return load_snapshot_states(snapshot, cm)
+
+
+def _print_robustness(results, show=str) -> None:
+    """One line per robust/fragile verdict, after the member list."""
+    if not results:
+        return
+    labels = results[0].labels
+    print(f"Start state: a set of {len(labels)} member states (a snapshot with a set of levels):")
+    for i, label in enumerate(labels):
+        print(f"  member {i}: {label}")
+    for r in results:
+        print(f"{r.question}: {r.summary(show)}")
+
+
 def cmd_viable(args: argparse.Namespace) -> int:
     initial = None
+    snap_states = None
     if args.snapshot:
         try:
-            from .evidence import load_snapshot
+            from .evidence import load_snapshot_states  # noqa: F401
         except ImportError as exc:
             print(
                 f"error: --snapshot needs wavefront.evidence, which is not available ({exc})",
@@ -271,13 +295,8 @@ def cmd_viable(args: argparse.Namespace) -> int:
             )
             return 1
         model, cm = _compile(args)
-        snapshot = _snapshot_with_fixes(args, model)
-        if isinstance(snapshot, dict):
-            from .evidence import snapshot_to_state
-
-            initial = [tuple(snapshot_to_state(snapshot, cm))]
-        else:
-            initial = [tuple(load_snapshot(snapshot, cm))]
+        snap_states = _snapshot_members(args, model, cm)
+        initial = list(snap_states.states)
         g = explore(cm, initial=initial, max_states=args.max_states)
     else:
         _no_fix_without_snapshot(args)
@@ -304,6 +323,17 @@ def cmd_viable(args: argparse.Namespace) -> int:
     kept = [s for s in g.initial if s in k.kernel]
     if kept:
         _uniformity_line(g, coalition, k.strategy, kept, "keeping")
+    if snap_states is not None and snap_states.is_set:
+        from .analysis import robust_kernel
+
+        rk = robust_kernel(g, snap_states, coalition, args.invariant)
+
+        def show(x) -> str:
+            if isinstance(x, bool):
+                return "yes" if x else "no"
+            return f"shortest {'-' if x.shortest is None else x.shortest}"
+
+        _print_robustness([rk.in_kernel, rk.distance], show)
     return 0
 
 
@@ -414,9 +444,20 @@ def cmd_viz(args: argparse.Namespace) -> int:
 def cmd_report(args: argparse.Namespace) -> int:
     model = load_model(args.model)
     coalitions = [_names(c) for c in args.coalition] if args.coalition else None
+    initial = members = None
+    if args.snapshot:
+        found = _snapshot_members(args, model, compile_model(model, profile=_profile(args)))
+        if found.is_set:
+            members = found
+        else:
+            initial = list(found.states)
+    else:
+        _no_fix_without_snapshot(args)
     analysis = run_all(
         model,
         coalitions=coalitions,
+        initial=initial,
+        members=members,
         profile=_profile(args),
         max_relax=args.max_relax,
         max_states=args.max_states,
@@ -645,6 +686,11 @@ def cmd_replay(args: argparse.Namespace) -> int:
     out = Path(args.out)
     runs = []
     rules = parse_rules(args.rules) if args.rules is not None else None
+    if args.drop_rejected and (not args.measure_proposals or args.corpus or ep.name != "ww2"):
+        raise ValueError(
+            "--drop-rejected goes with --measure-proposals on proposals already written "
+            "(no --corpus), WW2 only"
+        )
     if args.measure_proposals and (args.auto_accept or args.metrics_only):
         raise ValueError("--measure-proposals goes with neither --auto-accept nor --metrics-only")
     if args.dry_run and (args.auto_accept or args.metrics_only or args.measure_proposals):
@@ -704,6 +750,7 @@ def cmd_replay(args: argparse.Namespace) -> int:
             args.hindsight or DEFAULT_HINDSIGHT,
             measure_proposals=args.measure_proposals,
             rules=rules,
+            drop_rejected=args.drop_rejected,
         )
         command = f"wf replay --quarters {periods_text} --out OUT"
     else:
@@ -727,6 +774,8 @@ def cmd_replay(args: argparse.Namespace) -> int:
         command += " --metrics-only"
     if args.measure_proposals:
         command += " --measure-proposals"
+    if args.drop_rejected:
+        command += " --drop-rejected"
         print("PROPOSAL-LEVEL: every proposal treated as accepted for the metrics; nothing written")
     text = render_report(
         metrics,
@@ -803,6 +852,18 @@ def build_parser() -> argparse.ArgumentParser:
 
     p = command("report", cmd_report, "Full Markdown report.")
     p.add_argument("--out", help="write the report to this file instead of stdout")
+    p.add_argument(
+        "--snapshot",
+        help="start from a snapshot file (wavefront.evidence); with a set of levels the "
+        "report adds the robust/fragile verdicts",
+    )
+    p.add_argument(
+        "--fix",
+        action="append",
+        type=_parse_fix,
+        metavar="VAR=LEVEL",
+        help="fix a swept variable the snapshot omits (repeatable; needs --snapshot)",
+    )
     p.add_argument("--max-relax", type=int, default=2, help="largest relaxation set size")
     p.add_argument(
         "--coalition",
@@ -961,6 +1022,12 @@ def _add_evidence_commands(sub) -> None:
         help="compute the metrics from the proposals in OUT/proposals as if every one were "
         "accepted, without review and without writing snapshots (a measurement of the "
         "backend; the report says so); with --corpus the extraction runs first",
+    )
+    p.add_argument(
+        "--drop-rejected",
+        action="store_true",
+        help="with --measure-proposals: leave out the proposals a reviewer rejected and treat "
+        "the accepted and the pending ones as accepted (a partly reviewed run; WW2)",
     )
     p.add_argument(
         "--rules",

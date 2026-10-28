@@ -45,7 +45,7 @@ from __future__ import annotations
 import copy
 import json
 import os
-from collections.abc import Iterable, Sequence
+from collections.abc import Callable, Iterable, Sequence
 from datetime import date
 from pathlib import Path
 from typing import Any
@@ -232,13 +232,20 @@ def review_gating(
     *,
     measure: bool = False,
     episode: str | Episode | None = None,
+    applies_back: Callable[[dict[str, Any]], bool] | None = None,
 ) -> tuple[list[dict[str, Any]], dict[tuple[Any, ...], int], Gating]:
     """The harness rules applied at ``until`` to the proposals of ``files`` (deduplicated,
     in file order): the records, the index of each record key and the gating. The episode
-    is the files' unless given."""
+    is the files' unless given; ``applies_back`` is passed to :func:`.gate_records`."""
     records, index = _unique(files)
     episode = directory_episode(files) if episode is None else episode
-    return records, index, gate_records(records, until, rules, measure=measure, episode=episode)
+    return (
+        records,
+        index,
+        gate_records(
+            records, until, rules, measure=measure, episode=episode, applies_back=applies_back
+        ),
+    )
 
 
 def file_gates(path: str | Path) -> dict[str, Gate]:

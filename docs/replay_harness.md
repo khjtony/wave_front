@@ -165,7 +165,11 @@ written to `OUT/metrics.md` (or `--report`):
   missed;
 - the disagreements, each with the hindsight event and the replay quote behind it.
 
-`--metrics-only` recomputes the report from the snapshots already reviewed.
+`--metrics-only` recomputes the report from the snapshots already reviewed. It counts no
+pending proposal: a quarter has a reviewed snapshot only when no proposal of it or of an earlier
+quarter awaits review (see "Review"), and a quarter without one is listed as "not compared". A
+review of a sample therefore leaves `--metrics-only` with nothing to compare; for a partly
+reviewed run use `--measure-proposals --drop-rejected` (below).
 
 `--measure-proposals` measures a backend before anyone has reviewed its proposals: every
 proposal in `OUT/proposals/` counts as accepted, whatever its status (pending, accepted or
@@ -176,6 +180,20 @@ reviewed; it adds a table of proposals per variable and level. With `--corpus` t
 runs first (proposals only, as without the flag); without it the proposals already in `OUT` are
 measured. It cannot be combined with `--auto-accept` or `--metrics-only`. It is a measurement
 of the backend, not a replay snapshot: the review step stays human.
+
+`--measure-proposals --drop-rejected` measures a partly reviewed run (added 2026-10-27 for the
+owner's decision 7a of 2026-10-23, the review of a sample of the Claude backend's FRUS
+proposals): the proposals a reviewer rejected are left out as if never proposed (so a
+rejected document is not a proposing document under `two-document`, as in review), the
+accepted and the pending proposals count as accepted, and a `retrospective?` proposal is
+applied only if a reviewer accepted it (as in review; a plain measurement never applies it).
+An accepted proposal keeps its reviewer's decision in its indicator; a pending one says NOT
+REVIEWED. The report's first line gives the number of proposals accepted, rejected and still
+pending, and its tables of proposals leave the rejected ones out. Nothing is written but the
+report. It goes with proposals already written only (no `--corpus`), and the WW2 replay only.
+With no decision recorded it gives exactly the metrics of `--measure-proposals`. Under it,
+rejecting the proposal that set a level lets the next proposal of that level still in the run
+set it: a false reading goes away only when every proposal carrying it is rejected.
 
 Every report also gives the agreement of a replay that reads nothing (every text variable at
 its ontology initial level), per variable and in total, and splits the replay's agreement
@@ -433,6 +451,11 @@ wf review $OUT/proposals/1936Q1.json
 wf review $OUT/proposals/1936Q1.json --accept 1936Q1-001,1936Q1-003 --note "..."
 wf review $OUT/proposals/1936Q1.json --reject 1936Q1-002 --note "..."
 wf replay --out $OUT --quarters 1936Q1..1940Q4 --metrics-only --report $OUT/metrics_reviewed.md
+# With only a sample reviewed, --metrics-only has no snapshot to compare; measure without the
+# rejected proposals instead (scripts/apply_review.py applies a filled review sheet to a copy of
+# the proposals and runs both):
+wf replay --out $OUT --quarters 1936Q1..1940Q4 --measure-proposals --drop-rejected \
+    --report $OUT/metrics_partial.md
 ```
 
 **What to send back:** the two reports of step 5 (`$OUT/metrics_claude.md`,

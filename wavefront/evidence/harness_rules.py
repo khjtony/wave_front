@@ -217,6 +217,7 @@ def gate_records(
     measure: bool,
     proposes: Callable[[dict[str, Any]], bool] | None = None,
     accepted: Callable[[dict[str, Any]], bool] | None = None,
+    applies_back: Callable[[dict[str, Any]], bool] | None = None,
     episode: str | Episode | None = None,
 ) -> Gating:
     """Apply ``rules`` to proposal ``records`` (deduplicated, in file order) at the cut-off
@@ -226,13 +227,17 @@ def gate_records(
     that a ``retrospective?`` record is never applied (not auto-applied). Otherwise (review)
     a record proposes unless rejected, and is applied only when accepted (a
     ``retrospective?`` one included: the reviewer decided). ``proposes`` and ``accepted``
-    override these defaults. ``episode`` (default WW2) names the text variables and the
-    readings; the Cold War's text variables are all readings, so neither rule acts on them."""
+    override these defaults, and ``applies_back`` which ``retrospective?`` records are
+    applied (default: none in a measurement, the accepted ones in review). ``episode``
+    (default WW2) names the text variables and the readings; the Cold War's text variables
+    are all readings, so neither rule acts on them."""
     ep = get_episode(episode)
     if proposes is None:
         proposes = (lambda r: True) if measure else (lambda r: r["status"] != "rejected")
     if accepted is None:
         accepted = (lambda r: True) if measure else (lambda r: r["status"] == "accepted")
+    if applies_back is None:
+        applies_back = (lambda r: False) if measure else accepted
     two_doc = TWO_DOCUMENT in rules
     no_retro = NO_RETROSPECTIVE in rules
     gates: list[Gate | None] = [None] * len(records)
@@ -282,7 +287,7 @@ def gate_records(
                     f"no-retrospective: {name} held {level!r} earlier and is now at "
                     f"{current!r}; a reviewer decides, nothing applies it automatically",
                 )
-                if not measure and accepted(rec):
+                if applies_back(rec):
                     apply(i, name, level)
             continue
         if two_doc and name in ONCE:
