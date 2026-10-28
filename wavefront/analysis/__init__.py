@@ -1,7 +1,8 @@
 """The analysis layer (spec section 7): viability kernels, the point of no return and the
 silent phase, distances, strategy uniformity, pivotal coalitions, brute-force assumption
-mining, sensitivity, trace clusters, the parameter budget and informativeness, and the
-:func:`run_all` orchestrator used by the report and the CLI.
+mining, sensitivity, trace clusters, the parameter budget and informativeness, the
+:func:`run_all` orchestrator used by the report and the CLI, and the robust/fragile wrapper
+over a set of start states (:func:`robust` and its companions; docs/ambiguous_levels.md).
 
 Every function is pure over a :class:`~wavefront.engine.Graph` or a
 :class:`~wavefront.model.Model`; only :func:`run_all` combines them.
@@ -10,6 +11,17 @@ Every function is pure over a :class:`~wavefront.engine.Graph` or a
 from .cluster import Cluster, cluster, signature
 from .pivotal import PivotalResult, pivotal
 from .relax import RelaxSets, informativeness, minimal_relaxation_size, relax_explicit
+from .robust import (
+    RobustKernel,
+    Robustness,
+    members_of,
+    robust,
+    robust_attractor,
+    robust_kernel,
+    robust_pivotal,
+    robust_sensitivity,
+    robust_status,
+)
 from .run import (
     Analysis,
     EndingEntry,
@@ -61,4 +73,13 @@ __all__ = [
     "KernelEntry",
     "EndingEntry",
     "UniformityNote",
+    "robust",
+    "Robustness",
+    "RobustKernel",
+    "members_of",
+    "robust_kernel",
+    "robust_status",
+    "robust_attractor",
+    "robust_pivotal",
+    "robust_sensitivity",
 ]

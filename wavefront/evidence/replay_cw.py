@@ -46,6 +46,7 @@ from .replay import (
     proposal_counts,
 )
 from .review import directory_rules, proposal_files
+from .snapshot import level_set
 
 __all__ = [
     "DEFAULT_EVENTS",
@@ -119,7 +120,8 @@ class YearMetrics:
     replay: dict[str, dict[str, Any]] = field(default_factory=dict)
     #: var -> year -> the replay snapshot's entry (for the indicators)
     entries: dict[str, dict[str, dict[str, Any]]] = field(default_factory=dict)
-    #: var -> year -> hindsight level of the variable's truth (absent: no hindsight level)
+    #: var -> year -> hindsight level of the variable's truth (absent: no hindsight level;
+    #: a tuple: the hindsight snapshot gives a set of levels, docs/ambiguous_levels.md)
     hindsight: dict[str, dict[str, Any]] = field(default_factory=dict)
     #: var -> year -> (contemporaneous level, its source)
     contemporaneous: dict[str, dict[str, tuple[Any, str]]] = field(default_factory=dict)
@@ -132,7 +134,8 @@ class YearMetrics:
     rules: tuple[str, ...] | None = None
 
     def agreement(self, name: str, against: str) -> tuple[int, int]:
-        """(agree, total) of the replay with ``hindsight`` or ``contemporaneous``."""
+        """(agree, total) of the replay with ``hindsight`` or ``contemporaneous``; against a
+        set-valued hindsight level, a replayed level in the set agrees."""
         table = self.hindsight if against == "hindsight" else self.contemporaneous
         agree = total = 0
         for year, level in self.replay.get(name, {}).items():
@@ -141,13 +144,15 @@ class YearMetrics:
                 continue
             other = other[0] if against == "contemporaneous" else other
             total += 1
-            agree += level == other
+            agree += level in other if isinstance(other, tuple) else level == other
         return agree, total
 
     def exceeds(self, year: str, series: str = "replay") -> bool | None:
         """Whether ``belief_force_USA`` of ``series`` (``replay`` or ``contemporaneous``)
         exceeds the hindsight ``nuke_USSR`` in ``year`` (C6 (a)); ``None`` when either is
-        missing."""
+        missing. Against a set-valued hindsight level the answer is ``True`` when the belief
+        exceeds every member, ``False`` when it exceeds none, and ``None`` when it depends on
+        the member (fragile)."""
         levels = CW.variable("belief_force_USA").levels
         if series == "replay":
             belief = self.replay.get("belief_force_USA", {}).get(year)
@@ -156,7 +161,9 @@ class YearMetrics:
         truth = self.hindsight.get("belief_force_USA", {}).get(year)
         if belief is None or truth is None:
             return None
-        return levels.index(belief) > levels.index(truth)
+        members = truth if isinstance(truth, tuple) else (truth,)
+        answers = {levels.index(belief) > levels.index(t) for t in members}
+        return answers.pop() if len(answers) == 1 else None
 
 
 def _flips(series: dict[str, Any], name: str, observed: dict[str, str | None]) -> list[YearFlip]:
@@ -239,7 +246,8 @@ def compare(
         for y in years:
             h = _read(hindsight_dir / f"{y}.json")
             if h is not None and truth in h["variables"]:
-                m.hindsight[name][y] = h["variables"][truth]["level"]
+                found = level_set(h["variables"][truth])
+                m.hindsight[name][y] = found[0] if len(found) == 1 else found
             if y not in snaps:
                 continue
             entry = snaps[y]["variables"][name]
@@ -262,6 +270,9 @@ def compare(
 def _cite(entry: dict[str, Any] | None) -> str:
     if not entry:
         return "-"
+    if "levels" in entry:
+        why = " ".join(str(entry.get("ambiguity", "")).split())
+        return f"`{_lv(level_set(entry))}` (a set over a contested window: {why})"
     inds = entry.get("indicators") or []
     if not inds:
         return f"`{_lv(entry['level'])}` ({entry.get('confidence')}, no indicator)"
