@@ -53,3 +53,12 @@ The owner allows a larger budget. The cadence change (framework change 1) is cou
 - 6b. Item 8: OCR is installed by the owner on the owner's machine.
 - 6c. Item 9: the owner merges pull request #5.
 - Items 1 to 6 were explained to the owner and are open.
+
+## 7. Decisions of 2026-10-27 (on docs/owner_questions_2026-10-24.md items 1 to 6)
+
+- 7a. Item 1, phase 2 gate: review a sample first (the proposals behind the documented and the false flips and the disagreeing quarters), then re-measure with `--metrics-only` and decide.
+- 7b. Item 2: the owner asks how the framework represents the ambiguity of a continuous history read as discrete levels (answered in conversation; no change yet).
+- 7c. Item 3: the framework-change budget stays at five (1 used, the cadence).
+- 7d. Item 4: `belief_force_USA` is Washington's *projected* Soviet force (a reading fixed after the blind replay was seen, logged as such); the blind replay over the CIA estimates is rerun under that wording, with DeepSeek and with Claude as a second reader.
+- 7e. Item 5, July 1914 v1: (a) the Russian mobilization steps gain an Austrian-measures part, symmetric with decision 2h, before first sight; (b) go for the first sight of J1v1 to J9v1.
+- 7f. Item 6, Cold War v1: (a) the 1969 sub-game's exit carries the talks into the coarse game; (b) V8's composite years use the layered lifting instead of counting as undecided; (c) the R notes are reviewed and decided by a separate high-effort agent; (e) the owner asked what a crisis-initiating option is (answered in conversation; open); (f) C7 is not re-asked in v1. The go for cw_v1's first sight is not yet given.

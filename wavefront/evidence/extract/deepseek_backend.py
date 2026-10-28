@@ -138,7 +138,7 @@ class DeepSeekBackend:
         max_chars: int = DEFAULT_MAX_CHARS,
         json_mode: bool = True,
         effort: str | None = None,
-        guidance: str = DEFAULT_GUIDANCE,
+        guidance: str | None = None,
         timeout: float = DEFAULT_TIMEOUT,
         retries: int = DEFAULT_RETRIES,
         backoff: float = 2.0,
@@ -164,6 +164,14 @@ class DeepSeekBackend:
         self.usage: Counter[str] = Counter()
         self._lock = threading.Lock()
 
+    def guidance_for(self, variables: Sequence[VariableSpec]) -> str:
+        """The guidance sent with ``variables``: the one given, else :data:`DEFAULT_GUIDANCE`
+        for the WW2 episode (it was tuned there) and none for any other episode."""
+        if self.guidance is not None:
+            return self.guidance
+        episodes = {getattr(v, "episode", "ww2") for v in variables}
+        return DEFAULT_GUIDANCE if episodes <= {"ww2"} else ""
+
     def cache_identity(self, variables: Sequence[VariableSpec]) -> dict[str, Any]:
         """What an answer depends on besides the document (for :mod:`.cache`)."""
         return {
@@ -174,7 +182,7 @@ class DeepSeekBackend:
             "json_mode": self.json_mode,
             "effort": self.effort,
             "system": hashlib.sha256(
-                deepseek_system_prompt(variables, self.guidance).encode("utf-8")
+                deepseek_system_prompt(variables, self.guidance_for(variables)).encode("utf-8")
             ).hexdigest(),
         }
 
@@ -216,7 +224,10 @@ class DeepSeekBackend:
             "model": self.model,
             "max_tokens": self.max_tokens,
             "messages": [
-                {"role": "system", "content": deepseek_system_prompt(variables, self.guidance)},
+                {
+                    "role": "system",
+                    "content": deepseek_system_prompt(variables, self.guidance_for(variables)),
+                },
                 {"role": "user", "content": user},
             ],
             "stream": False,

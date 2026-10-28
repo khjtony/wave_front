@@ -226,3 +226,12 @@ def test_default_guidance_is_the_adopted_text_and_can_be_overridden():
     plain, post = _backend(lambda b: _answer(), guidance="")
     plain.propose(DOC, VARS)
     assert ds.DEFAULT_GUIDANCE.strip() not in post.calls[0][2]["messages"][0]["content"]
+
+
+def test_default_guidance_is_sent_for_ww2_only():
+    cw = text_variables(episode="cw")
+    backend, post = _backend(lambda b: _answer())
+    assert backend.guidance_for(VARS) == ds.DEFAULT_GUIDANCE
+    assert backend.guidance_for(cw) == ""
+    explicit, _ = _backend(lambda b: _answer(), guidance="read carefully")
+    assert explicit.guidance_for(cw) == "read carefully"
