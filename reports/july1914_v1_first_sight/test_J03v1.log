@@ -1,0 +1,84 @@
+START=2026-10-28T05:25:41Z
+
+[J3v1] engine: explicit, graph from tick 0 per pair; wavefront.analysis.pivotal
+[J3v1] aims_GER=localize, aims_RUS=deter: 2485 states; LOCALIZED forceable from tick 0 (amended (a)): True; reachable (registered 2026-10-15): True
+[J3v1]   pivotal at tick 0: forcing {AUH, GER}; blocking {AUH}, {GER}
+[J3v1]   minimal coalitions keeping the invariant localized: {AUH}, {GER}, {RUS}
+[J3v1]   registered reading (ending at the horizon): ticks with GBR in a minimal forcing coalition: []; forcing families along the realized prefix: t0: {AUH, GER}; t8: {AUH}; t31: {RUS}
+[J3v1]   declaration by 3 August (amended (b), (c)): forcing at tick 0 {AUH, GER, RUS}; along the realized prefix: t0: {AUH, GER, RUS}; t8: {AUH, RUS}; t31: {RUS}; ticks with GBR: []
+[J3v1] aims_GER=localize, aims_RUS=fight: 12188 states; LOCALIZED forceable from tick 0 (amended (a)): True; reachable (registered 2026-10-15): True
+[J3v1]   pivotal at tick 0: forcing {AUH, GER}; blocking {AUH}, {GER}
+[J3v1]   minimal coalitions keeping the invariant localized: {AUH}, {GER}, {RUS}
+[J3v1]   registered reading (ending at the horizon): ticks with GBR in a minimal forcing coalition: []; forcing families along the realized prefix: t0: {AUH, GER}; t8: {AUH}; t31: {RUS}; t33: none
+[J3v1]   declaration by 3 August (amended (b), (c)): forcing at tick 0 {AUH, GER, RUS}; along the realized prefix: t0: {AUH, GER, RUS}; t8: {AUH, RUS}; t31: {RUS}; t33: none; ticks with GBR: []
+[J3v1] aims_GER=continental, aims_RUS=deter: 38932 states; LOCALIZED forceable from tick 0 (amended (a)): True; reachable (registered 2026-10-15): True
+[J3v1]   pivotal at tick 0: forcing {AUH, GER}; blocking {AUH}, {GER}
+[J3v1]   minimal coalitions keeping the invariant localized: {AUH}, {GER}, {RUS}
+[J3v1]   registered reading (ending at the horizon): ticks with GBR in a minimal forcing coalition: []; forcing families along the realized prefix: t0: {AUH, GER}; t8: {AUH}; t31: {RUS}; t32: {FRA, RUS}, {GER, RUS}
+[J3v1]   declaration by 3 August (amended (b), (c)): forcing at tick 0 {AUH, GER, RUS}; along the realized prefix: t0: {AUH, GER, RUS}; t8: {AUH, RUS}; t31: {RUS}; t32: {FRA, RUS}, {GER, RUS}; ticks with GBR: []
+[J3v1] aims_GER=continental, aims_RUS=fight: 39398 states; LOCALIZED forceable from tick 0 (amended (a)): True; reachable (registered 2026-10-15): True
+[J3v1]   pivotal at tick 0: forcing {AUH, GER}; blocking {AUH}, {GER}
+[J3v1]   minimal coalitions keeping the invariant localized: {AUH}, {GER}, {RUS}
+[J3v1]   registered reading (ending at the horizon): ticks with GBR in a minimal forcing coalition: []; forcing families along the realized prefix: t0: {AUH, GER}; t8: {AUH}; t31: {RUS}; t32: {FRA, RUS}, {GER, RUS}; t33: none
+[J3v1]   declaration by 3 August (amended (b), (c)): forcing at tick 0 {AUH, GER, RUS}; along the realized prefix: t0: {AUH, GER, RUS}; t8: {AUH, RUS}; t31: {RUS}; t32: {FRA, RUS}, {GER, RUS}; t33: none; ticks with GBR: []
+[J3v1] done (117.5 s)
+F
+=================================== FAILURES ===================================
+__________________________________ test_J3v1 ___________________________________
+
+    @pytest.mark.slow
+    @pytest.mark.skipif(
+        not (V1.exists() and FIRST_SIGHT),
+        reason="1914 v1 first sight held for the owner's go (WF_FIRST_SIGHT_1914V1=1)",
+    )
+    def test_J3v1():
+        timer = Timer()
+        print("\n[J3v1] engine: explicit, graph from tick 0 per pair; wavefront.analysis.pivotal")
+        failures = []
+        for pair in PAIRS:
+            g, reachable, piv, per_tick, keep = j3_tables(pair)
+            forceable = bool(piv.forcing)
+            print(
+                f"[J3v1] {label(pair)}: {g.size()} states; LOCALIZED forceable from tick 0 (amended "
+                f"(a)): {forceable}; reachable (registered 2026-10-15): {reachable}"
+            )
+            print(
+                f"[J3v1]   pivotal at tick 0: forcing {fmt(piv.forcing)}; blocking {fmt(piv.blocking)}"
+            )
+            print(f"[J3v1]   minimal coalitions keeping the invariant localized: {fmt(keep)}")
+            gbr_ticks = [t for t, fam in per_tick if any("GBR" in c for c in fam)]
+            print(
+                f"[J3v1]   registered reading (ending at the horizon): ticks with GBR in a minimal "
+                f"forcing coalition: {gbr_ticks}; forcing families along the realized prefix: "
+                f"{changes_of(per_tick)}"
+            )
+            fam0, per_tick3 = j3_by_3_august(pair)
+            gbr3 = [t for t, fam in per_tick3 if any("GBR" in c for c in fam)]
+            print(
+                f"[J3v1]   declaration by 3 August (amended (b), (c)): forcing at tick 0 {fmt(fam0)}; "
+                f"along the realized prefix: {changes_of(per_tick3)}; ticks with GBR: {gbr3}"
+            )
+            want = pair == LOCALIZE_DETER
+            if forceable != want:
+                failures.append(f"{label(pair)}: LOCALIZED forceable {forceable}, claim {want}")
+            if gbr3:
+                failures.append(f"{label(pair)}: GBR in a minimal forcing coalition at {gbr3}")
+            if pair == LOCALIZE_DETER:
+                if frozenset({"GER", "RUS"}) not in fam0:
+                    failures.append(
+                        f"{{GER, RUS}} not a minimal coalition forcing the localized war with the "
+                        f"declaration by 3 August: {fmt(fam0)}"
+                    )
+                for single in ("GER", "RUS"):
+                    if any(c <= frozenset({single}) for c in fam0):
+                        failures.append(f"{{{single}}} forces the localized war alone")
+        print(f"[J3v1] done ({timer})")
+>       assert not failures, "; ".join(failures)
+E       AssertionError: {GER, RUS} not a minimal coalition forcing the localized war with the declaration by 3 August: {AUH, GER, RUS}; aims_GER=localize, aims_RUS=fight: LOCALIZED forceable True, claim False; aims_GER=continental, aims_RUS=deter: LOCALIZED forceable True, claim False; aims_GER=continental, aims_RUS=fight: LOCALIZED forceable True, claim False
+E       assert not ['{GER, RUS} not a minimal coalition forcing the localized war with the declaration by 3 August: {AUH, GER, RUS}', 'ai... LOCALIZED forceable True, claim False', 'aims_GER=continental, aims_RUS=fight: LOCALIZED forceable True, claim False']
+
+tests/july1914_v1/test_J03v1.py:172: AssertionError
+=========================== short test summary info ============================
+FAILED tests/july1914_v1/test_J03v1.py::test_J3v1 - AssertionError: {GER, RUS...
+1 failed in 117.82s (0:01:57)
+END=2026-10-28T05:27:41Z

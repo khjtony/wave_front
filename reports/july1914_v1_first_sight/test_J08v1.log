@@ -1,0 +1,86 @@
+START=2026-10-28T05:31:50Z
+
+[J8v1] engine: explicit (replay, successor generation, graph from tick 0)
+[J8v1] aims_GER=localize, aims_RUS=deter: (a) withholding available at ticks 9..16: True ([True, True, True, True, True, True, True, True]); tisza_consent available at 16: True
+[J8v1]   (b) without the consent: 185 states reachable; war_GER_RUS reached in 0
+[J8v1]   (c) realized state at 17 in {AUH}'s kernel: True; {AUH}'s departure along the realized path from tick 0: None (prefix to tick 32, stops at 32); distance at 17: Distance(forced=None, shortest=17, margin=16)
+[J8v1] aims_GER=localize, aims_RUS=fight: (a) withholding available at ticks 9..16: True ([True, True, True, True, True, True, True, True]); tisza_consent available at 16: True
+[J8v1]   (b) without the consent: 185 states reachable; war_GER_RUS reached in 0
+[J8v1]   (c) realized state at 17 in {AUH}'s kernel: True; {AUH}'s departure along the realized path from tick 0: 31 (prefix to tick 38); distance at 17: Distance(forced=None, shortest=14, margin=13)
+[J8v1] aims_GER=continental, aims_RUS=deter: (a) withholding available at ticks 9..16: True ([True, True, True, True, True, True, True, True]); tisza_consent available at 16: True
+[J8v1]   (b) without the consent: 185 states reachable; war_GER_RUS reached in 0
+[J8v1]   (c) realized state at 17 in {AUH}'s kernel: True; {AUH}'s departure along the realized path from tick 0: 31 (prefix to tick 32, stops at 32); distance at 17: Distance(forced=None, shortest=14, margin=13)
+[J8v1] aims_GER=continental, aims_RUS=fight: (a) withholding available at ticks 9..16: True ([True, True, True, True, True, True, True, True]); tisza_consent available at 16: True
+[J8v1]   (b) without the consent: 185 states reachable; war_GER_RUS reached in 0
+[J8v1]   (c) realized state at 17 in {AUH}'s kernel: True; {AUH}'s departure along the realized path from tick 0: 31 (prefix to tick 38); distance at 17: Distance(forced=None, shortest=14, margin=13)
+[J8v1] done (15.9 s)
+F
+=================================== FAILURES ===================================
+__________________________________ test_J8v1 ___________________________________
+
+    @pytest.mark.slow
+    @pytest.mark.skipif(
+        not (V1.exists() and FIRST_SIGHT),
+        reason="1914 v1 first sight held for the owner's go (WF_FIRST_SIGHT_1914V1=1)",
+    )
+    def test_J8v1():
+        timer = Timer()
+        print("\n[J8v1] engine: explicit (replay, successor generation, graph from tick 0)")
+        failures = []
+        for pair in PAIRS:
+            cm = compiled(pair)
+            states, stop = replay(pair)
+            auh = next(a for a in cm.actors if a.name == "AUH")
+            j = auh.action_index("tisza_consent")
+            # (a) withholding available 7 to 14 July; the consent available on 14 July
+            withheld = []
+            for t in CONSENT_WINDOW:
+                sd = cm.state_dict(states[t])
+                others = [k for k in cm.available(states[t])[auh.index] if k != j]
+                withheld.append(sd["tisza"] == "opposed" and bool(others))
+            consent_16 = j in cm.available(states[16])[auh.index]
+            print(
+                f"[J8v1] {label(pair)}: (a) withholding available at ticks 9..16: {all(withheld)} "
+                f"({withheld}); tisza_consent available at 16: {consent_16}"
+            )
+            if not all(withheld):
+                failures.append(f"{label(pair)}: withholding not available at every tick 9..16")
+            if not consent_16:
+                failures.append(f"{label(pair)}: tisza_consent unavailable on 14 July")
+            # (b) with the consent never given, no war between Germany and Russia
+            cm_b, seen = reachable_without_consent(pair)
+            war = [s for s in seen if cm_b.state_dict(s)["war_GER_RUS"] == "war"]
+            print(
+                f"[J8v1]   (b) without the consent: {len(seen)} states reachable; "
+                f"war_GER_RUS reached in {len(war)}"
+            )
+            if war:
+                failures.append(f"{label(pair)}: war between Germany and Russia without the consent")
+            # (c) {AUH}'s kernel of no_war_GER_RUS after the consent
+            g = graph0(pair)
+            kernel = viability(g, ["AUH"], "no_war_GER_RUS").kernel
+            s17 = g.index[states[STATE_OF_15_JULY]]
+            ids = [g.index[s] for s in states]
+            dep = departure(ids, kernel, 0)
+            others = [a.name for a in g.model.actors if a.name != "AUH"]
+            dist = distance(g, s17, kernel, ["AUH"], others)
+            print(
+                f"[J8v1]   (c) realized state at 17 in {{AUH}}'s kernel: {s17 in kernel}; "
+                f"{{AUH}}'s departure along the realized path from tick 0: {dep} (prefix to tick "
+                f"{len(states) - 1}{'' if stop is None else f', stops at {stop[0]}'}); distance at "
+                f"17: {dist}"
+            )
+            if s17 not in kernel:
+                failures.append(f"{label(pair)}: the state of 15 July is outside {{AUH}}'s kernel")
+            if pair in FIGHT and dep != AFTER_19_JULY:
+                failures.append(f"{label(pair)}: {{AUH}}'s departure from tick 0 at {dep}, not 22")
+        print(f"[J8v1] done ({timer})")
+>       assert not failures, "; ".join(failures)
+E       AssertionError: aims_GER=localize, aims_RUS=fight: {AUH}'s departure from tick 0 at 31, not 22; aims_GER=continental, aims_RUS=fight: {AUH}'s departure from tick 0 at 31, not 22
+E       assert not ["aims_GER=localize, aims_RUS=fight: {AUH}'s departure from tick 0 at 31, not 22", "aims_GER=continental, aims_RUS=fight: {AUH}'s departure from tick 0 at 31, not 22"]
+
+tests/july1914_v1/test_J08v1.py:141: AssertionError
+=========================== short test summary info ============================
+FAILED tests/july1914_v1/test_J08v1.py::test_J8v1 - AssertionError: aims_GER=...
+1 failed in 16.14s
+END=2026-10-28T05:32:07Z

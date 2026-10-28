@@ -1,0 +1,17 @@
+START=2026-10-28T05:31:19Z
+
+[J7v1] engine: explicit; the build with every cadence 1 against the model of record
+[J7v1] aims_GER=localize, aims_RUS=deter: J4's E (earliest Halt accepted): record 34, daily 32
+[J7v1] aims_GER=localize, aims_RUS=fight: J4's E (earliest Halt accepted): record 34, daily 32
+[J7v1] aims_GER=continental, aims_RUS=deter: J4's E (earliest Halt accepted): record 34, daily 32
+[J7v1] aims_GER=continental, aims_RUS=fight: J4's E (earliest Halt accepted): record 34, daily 32
+[J7v1] reported besides: X's departures in both builds
+[J7v1] aims_GER=localize, aims_RUS=fight: X's departure from tick 32: record 32, daily 32 (earlier by 0); from tick 0: record 31, daily 31
+[J7v1] aims_GER=continental, aims_RUS=fight: X's departure from tick 32: record 32, daily 32 (earlier by 0); from tick 0: record 31, daily 31
+[J7v1] done (29.7 s)
+.
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED tests/july1914_v1/test_J07v1.py::test_J7v1
+1 passed in 30.07s
+END=2026-10-28T05:31:50Z
