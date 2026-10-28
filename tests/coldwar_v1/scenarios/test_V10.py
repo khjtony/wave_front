@@ -16,7 +16,8 @@ year's successor) puts it back inside, printed with the realized moves of the de
 (b) holds iff there is one; (c) the departure year is within one year of v0's recorded
 departure (1980; reports/cw_v0.md section 14). Control: on the PRC-to-Nature build the
 departure year is the same. Holds iff (a), (b), (c) and the control under at least one
-hypothesis.
+hypothesis. Beside, not asserted (the fortune variant): the departure year of
+``safe({USSR, Nature}, bloc_intact)``, on the same explicit parts.
 """
 
 import os
@@ -56,24 +57,39 @@ FIRST_SIGHT = os.environ.get("WF_FIRST_SIGHT_CWV1") == "1"
 YEARS = range(1975, 1991)
 INV = "bloc_intact"
 USSR = ("USSR",)
+FORTUNE = ("USSR", "Nature")  # beside, not asserted (section 9.2, the fortune variant)
 V0_DEPARTURE = 1980  # reports/cw_v0.md section 14
 
 
-def inside(aims, year, states, **build):
-    """Membership of ``states`` (of hindsight year ``year``) in K_USSR^bloc by the composite
-    engine (symbolic alone from 1984)."""
+def inside(aims, year, states, coalitions=(USSR,), **build):
+    """Membership of ``states`` (of hindsight year ``year``) in each coalition's kernel of
+    ``bloc_intact`` by the composite engine (symbolic alone from 1984), one explicit part for
+    all coalitions; a list per state when several coalitions are asked, else a bool."""
     if year >= 1984:
-        k = kernel(aims, USSR, INV, **build)
-        return [k.contains(s) for s in states]
-    g = composite_graph(aims, states, **build)
-    k = composite_kernel(g, aims, USSR, INV, **build)
-    return [g.index[s] in k for s in states]
+        ks = [kernel(aims, c, INV, **build) for c in coalitions]
+        out = [[k.contains(s) for k in ks] for s in states]
+    else:
+        g = composite_graph(aims, states, **build)
+        ks = [composite_kernel(g, aims, c, INV, **build) for c in coalitions]
+        out = [[g.index[s] in k for k in ks] for s in states]
+    return [m[0] for m in out] if len(coalitions) == 1 else out
 
 
-def departure(aims, **build):
-    member = {y: inside(aims, y, [hindsight(y, aims, **build)], **build)[0] for y in YEARS}
-    dep = next((y for y in YEARS[:-1] if member[y] and not member[y + 1]), None)
-    return member, dep
+def first_departure(member):
+    return next((y for y in YEARS[:-1] if member[y] and not member[y + 1]), None)
+
+
+def departure(aims, fortune=False, **build):
+    """The departure year of K_USSR^bloc; with ``fortune`` also that of safe({USSR, Nature},
+    bloc_intact), computed on the same explicit parts (beside, not asserted)."""
+    coalitions = (USSR, FORTUNE) if fortune else (USSR,)
+    member, luck = {}, {}
+    for y in YEARS:
+        m = inside(aims, y, [hindsight(y, aims, **build)], coalitions, **build)[0]
+        member[y], luck[y] = (m[0], m[1]) if fortune else (m, None)
+    if fortune:
+        return member, first_departure(member), luck, first_departure(luck)
+    return member, first_departure(member)
 
 
 def drivers(aims, dep):
@@ -99,8 +115,9 @@ def test_V10():
     rows = realized_rows(v1.REALIZED_MOVES)
     results = {}
     for aims in HYPS:
-        member, dep = departure(aims)
+        member, dep, luck, dep_luck = departure(aims, fortune=True)
         print(f"[V10] aims_USSR={aims}: {member}")
+        print(f"[V10]   beside (fortune), safe({{USSR, Nature}}): {luck}; departure {dep_luck}")
         a = dep is not None and 1979 <= dep <= 1989
         found = []
         if dep is not None:

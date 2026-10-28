@@ -12,15 +12,17 @@ armistice`` and ``esc < conventional`` is reachable (zero relaxations). (b) The 
 ``safe({USA}, no_general_war_core)`` with the cut states kept; beside, H8: the symbolic coarse
 kernel with ``tick >= 15`` kept. (c) Structural: ``USA.nuclear_korea`` is the only American
 action whose guard reads ``korea`` with an effect that can raise ``esc`` to a nuclear rung; its
-parts ``total_commitment`` and ``reading`` are as registered; some state of the graph has it
-available, (b) being computed on that graph. (d) Reported: the attractor of {USSR, PRC,
-Nature} to ``GENERAL_WAR_core`` with every declared American action forbidden, its rank and
-the moves of one play along the strategy (the others' best delay), each marked (i) a Soviet
+parts ``total_commitment`` and ``reading`` are as registered; semantically, every state of the
+graph of (b) in which it is available satisfies ``(esc >= conventional ∨ esc_usprc = war) ∧
+belief_USA_USSR ≠ opportunist`` (R notes of 2026-10-27, decision 4); and some state of the graph
+has it available, (b) being computed on that graph. (d) Reported: the attractor of {USSR, PRC,
+Nature} to ``GENERAL_WAR_core`` with every declared American action forbidden, its rank and the
+moves of one play along the strategy (the others' best delay), each marked (i) a Soviet
 programme decision before its documented year in data/cw/decisions.csv or (ii) an escalation
-taken while ``esc`` already stood at ``crisis`` or above (the record has no standing
-US-Soviet crisis in 1950 to 1953). Control: the 1950 state is outside ``safe({USA}, korea =
-peace)`` on the flattened game cut at tick 4, the cut states kept iff ``korea = peace``.
-Holds iff (a), (b), (c) and the control under ``opportunist``. Engine: explicit.
+taken while ``esc`` already stood at ``crisis`` or above (the record has no standing US-Soviet
+crisis in 1950 to 1953). Control: the 1950 state is outside ``safe({USA}, korea = peace)`` on
+the flattened game cut at tick 4, the cut states kept iff ``korea = peace``. Holds iff (a), (b),
+(c) and the control under ``opportunist``. Engine: explicit.
 """
 
 import csv
@@ -98,6 +100,24 @@ def documented_years():
         for r in rows
         if r["actor"] == "USSR" and r["action"] in PROGRAMME
     }
+
+
+# (c), semantic: where the option is offered (R notes of 2026-10-27, decision 4).
+OFFERED_ONLY = ((V.esc >= "conventional") | (V.esc_usprc == "war")) & (
+    V.belief_USA_USSR != "opportunist"
+)
+
+
+def offered_where(g, fm, actor, action, pred):
+    """The coarse states of ``g`` in which ``actor`` has ``action`` available, and those of
+    them that do not satisfy ``pred``."""
+    cm = fm.coarse
+    a = next(x for x in cm.actors if x.name == actor)
+    k = a.action_index(action)
+    offering = [
+        i for i in range(g.size()) if not fm.is_fine(g.states[i]) and k in g.avail[i][a.index]
+    ]
+    return offering, [i for i in offering if not cm.evaluate(pred, g.states[i])]
 
 
 def raises_to_nuclear(effect) -> bool:
@@ -201,10 +221,12 @@ def test_V4():
         }
         b = start in safe(g, ["USA"], keep).kernel
         h8 = bounded_kernel(aims, ("USA",), "no_general_war_core", H8_CUT).contains(s50)
-        usa = next(x for x in cm.actors if x.name == "USA")
-        nk = usa.action_index("nuclear_korea")
-        offered = sum(1 for i in range(g.size()) if nk in g.avail[i][usa.index])
-        c = korea == ["nuclear_korea"] and all(parts.values()) and offered > 0
+        offering, outside = offered_where(g, fm, "USA", "nuclear_korea", OFFERED_ONLY)
+        offered = len(offering)
+        # The semantic check (R notes of 2026-10-27, decision 4): every state of the graph in
+        # which the option is offered has total commitment and a reading other than opportunist.
+        semantic = not outside
+        c = korea == ["nuclear_korea"] and all(parts.values()) and semantic and offered > 0
         print(
             f"[V4] aims_USSR={aims}: graph {g.size()} states; (a) limited war reachable with "
             f"zero relaxations: {a} (in {d} transitions); (b) in USA's kernel of "
@@ -212,7 +234,10 @@ def test_V4():
         )
         print(
             f"[V4]   (c) American nuclear actions in Korea {korea}; parts as registered "
-            f"{parts}; states offering USA.nuclear_korea {offered}: {c}"
+            f"{parts}; states offering USA.nuclear_korea {offered}; offered only with total "
+            f"commitment and a non-opportunist reading: {semantic}"
+            + (f" (first counterexample {g.format_state(outside[0])})" if outside else "")
+            + f": {c}"
         )
         rank, moves, size = forcing_play(aims, s50)
         print(

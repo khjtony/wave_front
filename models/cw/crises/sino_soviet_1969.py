@@ -16,7 +16,11 @@ of coldwar_testbed.md V5 (b), in which the crisis is entered by Nature).
 when the Lop Nur installations exist and the PRC is not aligned with the United States).
 ``exit`` maps a Soviet strike to ``esc_sino = war`` and every other end to ``esc_sino =
 clash``: the talks did not end the armed confrontation along the border (v0's level, to the
-normalization of 1989).
+normalization of 1989). Agreed talks without a strike also set the coarse flag
+``sino_soviet_talks`` (the owner's decision 7f(a) of 2026-10-27, before first sight): Zhou's
+acceptance at the Kosygin-Zhou meeting of 11 Sep 1969 and the border talks opened in Beijing on
+20 Oct 1969 are carried into the coarse game, where they close ``USSR.strike_china``
+(docs/cw_v1_decisions.md D4).
 """
 
 from __future__ import annotations
@@ -146,6 +150,10 @@ def entry(year: dict[str, str]) -> dict[str, object]:
 def exit_map(week: dict[str, str], year: dict[str, str]) -> dict[str, object]:
     if week["strike"] == "True":
         return {"esc_sino": "war"}
+    if week["talks"] == "agreed":
+        # The talks agreed (Kosygin and Zhou, 11 Sep 1969; opened 20 Oct 1969) carried into
+        # the coarse game (the owner's decision 7f(a), 2026-10-27).
+        return {"esc_sino": "clash", "sino_soviet_talks": True}
     return {"esc_sino": "clash"}
 
 

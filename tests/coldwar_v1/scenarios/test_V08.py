@@ -14,30 +14,25 @@ variable when it changes membership in K_USA or K_USSR of ``balance_core`` or th
 transitions to ``GENERAL_WAR`` or ``ACCIDENTAL_WAR`` (on the flattened game); a family's score
 is its best member's (nuke: ``nuke_USA``, ``nuke_USSR``; belief: the three belief variables;
 oversight); score(nuke) < score(oversight) and < score(belief) in every year from 1966, and >
-both in every year to 1964 (the control); 1965 reported. Engines: symbolic from 1984, the
-composite engine for 1972 to 1983 (the explicit part explored once per year from the state and
-its perturbations), the layered lifting before 1972 (kernels and distances over the whole
-domain, looked up). Bounded fallback: a composite year whose explicit part exceeds 6,000,000
-states is computed on the coarse game with the sub-games inert, marked "coarse
-approximation" and counted undecided. Holds iff (a) and (b) under at least one hypothesis
-with no undecided year.
+both in every year to 1964 (the control); 1965 reported. Engines (the owner's decision 7f(b)
+of 2026-10-27; R notes of 2026-10-27, decision 8): the layered lifting for every year 1947 to
+1983 and the symbolic engine from 1984, each exact; the kernels and the distance to the
+adverse endings are computed once over the whole domain and the state and its perturbations
+are looked up, so nothing is explored from a perturbed state and no year is undecided (R
+V8's composite engine for 1972 to 1983 and its bounded fallback are replaced). Holds iff (a)
+and (b) under at least one hypothesis. Beside, not asserted (section 9.2, the fortune
+variant): the family scores with K_USA and K_USSR replaced by the kernels of {USA, Nature}
+and {USSR, Nature} of ``balance_core``.
 """
 
 import os
 
 import pytest
 
-from wavefront.engine import BudgetExceeded
-from wavefront.model import ModelError
-
 from ..common import (
     HYPS,
     Timer,
     compiled,
-    composite_distances,
-    composite_graph,
-    composite_kernel,
-    engine_for,
     everyone_attractor,
     hindsight,
     kernel,
@@ -72,6 +67,8 @@ FIRST_SIGHT = os.environ.get("WF_FIRST_SIGHT_CWV1") == "1"
 
 P = "balance_core"
 JOINT, US, SU = ("USA", "USSR"), ("USA",), ("USSR",)
+FORTUNE = (("USA", "Nature"), ("USSR", "Nature"))
+COALITIONS = (JOINT, US, SU, *FORTUNE)
 FAMILIES = {
     "nuke": ("nuke_USA", "nuke_USSR"),
     "belief": ("belief_force_USA", "belief_USA_USSR", "belief_USSR_USA"),
@@ -92,31 +89,24 @@ def perturbations(cm, s):
                 yield v.name, d, s[:i] + (j,) + s[i + 1 :]
 
 
+def engine_of(year: int) -> str:
+    """The owner's decision 7f(b): the layered lifting to 1983, symbolic from 1984."""
+    return "symbolic" if year >= 1984 else "layered"
+
+
 def measures(aims, year, states):
-    """Per state: (in K_J, in K_USA, in K_USSR, fewest transitions to the adverse endings),
-    by the year's engine; and the engine's label (``None`` label: undecided)."""
-    engine = engine_for(year)
-    if engine in ("symbolic", "layered"):
-        if engine == "symbolic":
-            ks = [kernel(aims, c, P) for c in (JOINT, US, SU)]
-            dist = everyone_attractor(aims, "adverse")
-        else:
-            ks = [layered_kernel(aims, c, P) for c in (JOINT, US, SU)]
-            dist = layered_distance(aims, "adverse")
-        out = [tuple(k.contains(s) for k in ks) + (dist.rank(s),) for s in states]
-        return out, engine
-    try:
-        g = composite_graph(aims, states)
-    except (BudgetExceeded, ModelError) as exc:
-        print(f"[V8]   {year}: explicit part not computed ({type(exc).__name__}: {exc})")
-        ks = [kernel(aims, c, P) for c in (JOINT, US, SU)]
+    """Per state: (in K_J, in K_USA, in K_USSR, in K_{USA,Nature}, in K_{USSR,Nature}, fewest
+    transitions to the adverse endings), by the year's engine over the whole domain (each
+    exact; the states looked up); and the engine's label."""
+    engine = engine_of(year)
+    if engine == "symbolic":
+        ks = [kernel(aims, c, P) for c in COALITIONS]
         dist = everyone_attractor(aims, "adverse")
-        out = [tuple(k.contains(s) for k in ks) + (dist.rank(s),) for s in states]
-        return out, None
-    kids = [composite_kernel(g, aims, c, P) for c in (JOINT, US, SU)]
-    dist = composite_distances(aims, g, ["adverse"])["adverse"]
-    out = [tuple(g.index[s] in k for k in kids) + (dist[g.index[s]],) for s in states]
-    return out, f"composite ({g.size()} states to 1984)"
+    else:
+        ks = [layered_kernel(aims, c, P) for c in COALITIONS]
+        dist = layered_distance(aims, "adverse")
+    out = [tuple(k.contains(s) for k in ks) + (dist.rank(s),) for s in states]
+    return out, engine
 
 
 def rank_ok(fam, y, before, after):
@@ -130,21 +120,22 @@ def rank_ok(fam, y, before, after):
 @pytest.mark.skipif(not FIRST_SIGHT, reason="cw_v1 first sight not switched on")
 def test_V8():
     timer = Timer()
-    print("\n[V8] engines: layered lifting to 1971, composite 1972-1983, symbolic from 1984")
+    print("\n[V8] engines: layered lifting 1947-1983, symbolic from 1984 (decision 7f(b))")
     results = {}
     for aims in HYPS:
         cm = compiled(aims)
         a = True
         before = after = True
-        undecided = []
         for y in range(1947, 1992):
             s = hindsight(y, aims)
             perts = list(perturbations(cm, s))
             values, engine = measures(aims, y, [s] + [t for _, _, t in perts])
             base, rest = values[0], values[1:]
             score = {v.name: 0 for v in cm.variables}
+            luck = {v.name: 0 for v in cm.variables}  # the fortune variant, beside
             for (name, d, _), m in zip(perts, rest, strict=True):
-                score[name] += (m[1], m[2], m[3]) != (base[1], base[2], base[3])
+                score[name] += (m[1], m[2], m[5]) != (base[1], base[2], base[5])
+                luck[name] += (m[3], m[4], m[5]) != (base[3], base[4], base[5])
                 if (
                     y >= 1965
                     and d == 1
@@ -154,19 +145,21 @@ def test_V8():
                 ):
                     a = False
             fam = {f: max(score[v] for v in vs) for f, vs in FAMILIES.items()}
-            if engine is None:
-                undecided.append(y)
+            fam_luck = {f: max(luck[v] for v in vs) for f, vs in FAMILIES.items()}
             before, after = rank_ok(fam, y, before, after)
             top = sorted(score.items(), key=lambda kv: -kv[1])[:4]
             print(
                 f"[V8]   aims_USSR={aims} {y}: K_J {base[0]}, K_USA {base[1]}, K_USSR "
-                f"{base[2]}; to adverse {base[3]}; families {fam}; top {top} "
-                f"[{engine or 'coarse approximation: undecided'}]"
+                f"{base[2]}; to adverse {base[5]}; families {fam}; top {top} [{engine}]"
             )
-        ok = a and before and after and not undecided
+            print(
+                f"[V8]     beside (fortune): K_USA+Nature {base[3]}, K_USSR+Nature {base[4]}; "
+                f"families {fam_luck}"
+            )
+        ok = a and before and after
         results[aims] = ok
         print(
-            f"[V8] aims_USSR={aims}: (a) {a}; (b) before 1965 {before}, after 1965 {after}; "
-            f"undecided years {undecided}: {ok} ({timer})"
+            f"[V8] aims_USSR={aims}: (a) {a}; (b) before 1965 {before}, after 1965 {after}: "
+            f"{ok} ({timer})"
         )
     assert any(results.values()), results

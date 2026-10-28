@@ -7,15 +7,17 @@ section 9.4.
 
 Reading (docs/cw_v1_decisions.md, R V2): for each year 1967 to 1991, per hypothesis, the
 hindsight state; K_J, K_USA, K_USSR the kernels of ``balance_core`` through the horizon on the
-flattened game (the sub-games active), by the composite engine for 1972 to 1983, the
-symbolic engine from 1984 and the layered lifting for 1967 to 1971 (D7; each exact). Holds iff,
-under at least one hypothesis, the state is in K_J every year and outside K_USA and K_USSR
-every year, and the control holds under that hypothesis: on ``build(us_crisis_options=False)``
-the state is inside K_USSR in at least one year (same engines). Breaking moves (printed, not
-asserted): for each year and unilateral kernel, the moves of the attractor strategy of the
-other principal joined by Nature, the PRC idle, out of ``balance_core``, played from the
-state (the defender idle) until the play leaves ``balance_core``, enters a crisis or ends.
-Beside, not asserted: the fortune variants ({USA, Nature}, {USSR, Nature}), the kernels of
+flattened game (the sub-games active), by the composite engine for 1972 to 1983, the symbolic
+engine from 1984 and the layered lifting for 1967 to 1971 (D7; each exact). Holds iff, under at
+least one hypothesis, the state is in K_J every year and outside K_USA and K_USSR every year,
+and the control holds under that hypothesis: on ``build(us_crisis_options=False)`` the state is
+inside K_USSR in at least one year (same engines). Breaking moves (printed, not asserted): for
+each year and unilateral kernel, the moves of the attractor strategy of the other principal
+joined by Nature, the PRC idle, out of ``balance_core``, played from the state (the defender
+idle) until the play leaves ``balance_core``, enters a crisis or ends; if that attractor does
+not contain the state, the attractor of the other principal joined by the PRC and Nature (no
+action forbidden), printed "with the PRC", else "not forced" (R notes of 2026-10-27, decision
+2). Beside, not asserted: the fortune variants ({USA, Nature}, {USSR, Nature}), the kernels of
 ``balance_cw`` and ``balance_tri`` for the same coalitions (these by the layered lifting) and
 the coarse kernels with the sub-games inert. Choices R left open: decisions section R notes.
 """
@@ -97,14 +99,28 @@ def members(aims, year, coalitions, **build):
 def breaking_moves(aims, defender, state):
     """The attractor strategy of the other principal joined by Nature (the PRC idle) out of
     P, played from ``state`` with the defender idle, until the play leaves P, enters a
-    crisis or ends (layered lifting, exact on the flattened game)."""
+    crisis or ends (layered lifting, exact on the flattened game). If that attractor does not
+    contain the state, the attractor of the other principal joined by the PRC and Nature (no
+    action forbidden), its moves marked "with the PRC"; if neither contains it, "not forced"
+    (the game is concurrent and not assumed determined). R notes of 2026-10-27, decision 2."""
+    other = "USSR" if defender == US else "USA"
+    played = _play(aims, (other, "Nature"), lift_of(aims, prc_idle(aims)), state)
+    if played is not None:
+        return played
+    played = _play(aims, (other, "PRC", "Nature"), lift_of(aims), state)
+    if played is not None:
+        return f"with the PRC: {played}"
+    return "not forced"
+
+
+def _play(aims, attacker, lift, state):
+    """The moves of ``attacker``'s attractor strategy out of P from ``state`` (the others
+    idle), or None if the attractor does not contain the state."""
     cm = compiled(aims)
-    attacker = ("USSR", "Nature") if defender == US else ("USA", "Nature")
-    lift = lift_of(aims, prc_idle(aims))
     enc = lift.enc
     res = lift.attractor(attacker, enc.mgr.DIFF(enc.dom, enc.predicate(P)))
     if not res.contains(state):
-        return "not forced"
+        return None
     idx = enc.actor_indices(attacker)
     plays, s = [], tuple(state)
     while cm.evaluate(P, s) and not cm.is_terminal(s):

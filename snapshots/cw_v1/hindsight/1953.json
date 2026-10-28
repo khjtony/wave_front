@@ -327,6 +327,19 @@
      "rule": "the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: [SQR] on the model's path: PRC.intervene_korea in the 1951 move, visible 1952"
     }
    ]
+  },
+  "sino_soviet_talks": {
+   "level": false,
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "event_1946_sino_soviet_talks_record",
+     "value": "no Sino-Soviet border talks before 1969 (the consultations of 1964 broken off without agreement)",
+     "source": "Yang Kuisong 2000; Gerson 2010",
+     "observed": "1946-12-31",
+     "rule": "the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level (added 2026-10-27 on the owner's decision 7f(a))"
+    }
+   ]
   }
  },
  "rates": {}

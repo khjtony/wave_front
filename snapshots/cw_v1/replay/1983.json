@@ -340,6 +340,19 @@
      "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv)"
     }
    ]
+  },
+  "sino_soviet_talks": {
+   "level": true,
+   "confidence": "assumed",
+   "indicators": [
+    {
+     "id": "event_1969_sino_soviet_talks_record",
+     "value": "Zhou Enlai's acceptance of border talks at his meeting with Kosygin at Beijing airport, 11 Sep 1969; the talks opened in Beijing on 20 Oct 1969",
+     "source": "the Chinese record of the meeting (Wilson Center Digital Archive); Yang Kuisong 2000; Gerson 2010",
+     "observed": "1969-12-31",
+     "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: added 2026-10-27 on the owner's decision 7f(a): set by the exit of the 1969 sub-game"
+    }
+   ]
   }
  },
  "rates": {}

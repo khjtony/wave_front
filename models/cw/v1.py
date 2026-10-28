@@ -34,6 +34,11 @@ Changes from v0 (docs/cw_v1_decisions.md D1 to D6):
 * **Two new sub-games** (decision 2m): the Sino-Soviet confrontation of 1969, entered by the
   PRC's ``border_clash`` (now a crisis action with the occasion 1969), and the October 1973
   alert, entered by ``USSR.warn_unilateral`` (Brezhnev's message of 24 Oct 1973).
+* **The border talks of 1969 carried into the coarse game** (the owner's decision 7f(a) of
+  2026-10-27, before first sight): the 1969 sub-game's exit sets the new monotone flag
+  ``sino_soviet_talks`` when the talks were agreed (Kosygin and Zhou, 11 Sep 1969; the talks
+  opened 20 Oct 1969) and no strike was made, and ``USSR.strike_china`` gains the part
+  ``talks`` (``¬sino_soviet_talks``).
 * **Predicates** of coldwar_testbed.md section 9.2: ``no_war_core``, ``both_or_neither``,
   ``balance_core``, ``balance_tri``, ``no_general_war_core``; v0's ``balance_cw``,
   ``no_war``, ``no_general_war`` and ``bloc_intact`` with a US-PRC war counted as a war
@@ -131,6 +136,7 @@ def build(
 
     # -- variables (ontology section 12.1) ---------------------------------------------------
     m.var("esc_usprc", levels=["peace", "war"], init="peace")
+    m.flag("sino_soviet_talks", init=False, monotone=True)
 
     usa = m.actor_named("USA")
     ussr = m.actor_named("USSR")
@@ -191,6 +197,27 @@ def build(
             "Soviet entry, and the NSC deliberations of Feb and May 1953 concerned the war "
             "with the Chinese armies (Dingman 1988; Foot, The Wrong War, 1985; Chen Jian "
             "1994)."
+        ),
+    )
+
+    # -- the Sino-Soviet border talks (D4; the owner's decision 7f(a) of 2026-10-27) ---------
+    _edit(
+        ussr,
+        "strike_china",
+        {"talks": ~V.sino_soviet_talks},
+        note=(
+            "Part talks: once the border talks agreed by Kosygin and Zhou at Beijing airport on "
+            "11 Sep 1969 held (they opened in Beijing on 20 Oct 1969), the strike was no longer "
+            "an option Moscow weighed: the threat had served to bring Beijing to talks, and the "
+            "meeting removed its occasion (the Chinese record of the meeting, Wilson Center "
+            "Digital Archive; Yang Kuisong, 'The Sino-Soviet Border Clash of 1969', Cold War "
+            "History 2000; Gerson, The Sino-Soviet Border Conflict, CNA 2010; "
+            "docs/prc_research.md section 1.12). The flag sino_soviet_talks is set by the exit "
+            "of the 1969 sub-game when the talks were agreed and no strike was made. "
+            "Documented alternative: Beijing's reading that the talks could cover a surprise "
+            "attack (Lin Biao's Order No. 1 of 18 Oct 1969 and the dispersal of the "
+            "leadership; Yang 2000), under which the strike option outlived the talks (the "
+            "reading of docs/cw_v1_decisions.md D4 before the owner's decision 7f(a))."
         ),
     )
 
@@ -304,6 +331,9 @@ def build(
                 "standing confrontation carried across 1 Jan 1982."
             ),
         )
+        # 1984 to 1991: a source search for documented, argued and rejected American
+        # crisis-initiating options is pending (docs/cw_v1_decisions.md D2, 2026-10-27). Any
+        # option it finds is declared here, inside this block, before first sight.
     ussr.action(
         "reaffirm_understanding",
         guard={

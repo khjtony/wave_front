@@ -59,11 +59,13 @@ def test_v0_is_unchanged():
 
 
 # -- declarations ---------------------------------------------------------------------------
-def test_variables_are_v0s_plus_the_us_prc_war():
+def test_variables_are_v0s_plus_the_us_prc_war_and_the_talks():
     v0_vars = [v.name for v in v0.model.compile().variables if v.origin == "var"]
     v1_vars = [v.name for v in CM.variables if v.origin == "var"]
-    assert v1_vars == [*v0_vars, "esc_usprc"]
+    assert v1_vars == [*v0_vars, "esc_usprc", "sino_soviet_talks"]
     assert tuple(CM.variables[CM.index["esc_usprc"]].levels) == ("peace", "war")
+    talks = next(v for v in v1.model.variables if v.name == "sino_soviet_talks")
+    assert talks.monotone and talks.init is not None and not talks.init
     assert CM.horizon == v1.HORIZON == 45
     assert [a.name for a in CM.actors] == ["USA", "USSR", "PRC", "Nature"]
     aims = next(v for v in v1.model.variables if v.name == "aims_USSR")
@@ -165,12 +167,12 @@ def test_the_frozen_oversight_build_only_drops_the_oversight_effects():
 def test_budget_and_fingerprints_as_catalogued():
     b = CM.budget()
     expected = {
-        "variables": 27,
-        "levels": 80,
+        "variables": 28,
+        "levels": 82,
         "actors": 4,
         "actions": 64,
         "guards": 64,
-        "guard_parts": 126,
+        "guard_parts": 127,
         "speculative_actions": 0,
         "fairness_constraints": 0,
         "delays": 7,
@@ -179,10 +181,10 @@ def test_budget_and_fingerprints_as_catalogued():
         "endings": 5,
     }
     assert {k: b[k] for k in expected} == expected
-    assert fingerprint(v1.model) == "a034e056d9cd"
-    assert fingerprint(v1.build(prc_principal=False)) == "9cbffaa61f2c"
-    assert fingerprint(v1.build(us_crisis_options=False)) == "265b3dcbeac3"
-    assert fingerprint(v1.build(frozen_oversight=True)) == "b0c7ea9a94dc"
+    assert fingerprint(v1.model) == "151787621ce1"
+    assert fingerprint(v1.build(prc_principal=False)) == "a21bc2f7c046"
+    assert fingerprint(v1.build(us_crisis_options=False)) == "a2c78d3a609d"
+    assert fingerprint(v1.build(frozen_oversight=True)) == "736ac7362625"
     assert fingerprint(sino_soviet_1969.model) == "ac9a1b01ddaa"
     assert fingerprint(sino_soviet_1969.model_prc_scripted) == "6df79b14f313"
     assert fingerprint(alert_1973.model) == "6e4f5e7c5efe"
@@ -207,6 +209,30 @@ def test_the_registered_predicates_are_declared():
     assert {"balance_cw", "no_war", "no_general_war", "bloc_intact"} <= names
     assert "no_general_war_core" in names
     assert set(v1.model.endings) == set(v0.model.endings)
+
+
+@pytest.mark.parametrize("prc_principal", [True, False])
+def test_the_1969_exit_carries_the_talks_into_the_coarse_game(prc_principal):
+    """The owner's decision 7f(a): agreed talks without a strike set ``sino_soviet_talks``;
+    a strike sets the Sino-Soviet war and not the flag; the flag closes ``strike_china``."""
+    sub = sub_of("sino_soviet_1969", prc_principal)
+    g = explore(sub, max_states=1_000_000)
+    seen = set()
+    for i in range(g.size()):
+        if not g.terminal[i]:
+            continue
+        week = {k: str(v) for k, v in sub.state_dict(g.states[i]).items()}
+        out = sino_soviet_1969.exit_map(week, {})
+        if week["strike"] == "True":
+            assert out == {"esc_sino": "war"}
+        elif week["talks"] == "agreed":
+            assert out == {"esc_sino": "clash", "sino_soviet_talks": True}
+        else:
+            assert out == {"esc_sino": "clash"}
+        seen.add(tuple(sorted(out)))
+    assert seen == {("esc_sino",), ("esc_sino", "sino_soviet_talks")}
+    strike = next(x for x in v1.model.actor_named("USSR").actions if x.name == "strike_china")
+    assert repr(dict(strike.guard_parts)["talks"]) == repr(~V.sino_soviet_talks)
 
 
 # -- data -----------------------------------------------------------------------------------
@@ -350,8 +376,8 @@ def test_every_return_of_every_sub_game_is_a_valid_coarse_transition(aims, build
 # decrease or a bad exit map).
 SIZES = [
     ("V3", 1973, 1974, 209),
-    ("V5", 1970, 1973, 16274),
-    ("V5 control", 1968, 1970, 35600),
+    ("V5", 1970, 1973, 11407),  # 16274 before the talks flag (decision 7f(a), 2026-10-27)
+    ("V5 control", 1968, 1970, 35636),  # 35600 before the talks flag
     ("V2 from 1984", 1984, None, 3440),
     ("V2 from 1983", 1983, None, 4143),
 ]

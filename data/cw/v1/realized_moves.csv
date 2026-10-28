@@ -21,7 +21,7 @@ tick,year,USA,USSR,PRC,Nature,note,source
 19,1966,idle,idle,idle,none,,
 20,1967,offer_limits,idle,idle,none,"Johnson's letter of 27 Jan 1967 and the Glassboro summit, 23 to 25 Jun 1967.",Newhouse 1973
 21,1968,idle,idle,idle,none,,
-22,1969,idle,idle,border_clash,none,"Zhenbao Island, 2 and 15 Mar 1969: the crisis action; the sub-game models/cw/crises/sino_soviet_1969.py plays the confrontation from 17 Mar to the opening of the border talks on 20 Oct 1969 (the Kosygin-Zhou meeting of 11 Sep 1969 eased the crisis without ending the armed confrontation).",Yang Kuisong 2000; Gerson 2010
+22,1969,idle,idle,border_clash,none,"Zhenbao Island, 2 and 15 Mar 1969: the crisis action; the sub-game models/cw/crises/sino_soviet_1969.py plays the confrontation from 17 Mar to the opening of the border talks on 20 Oct 1969 (the Kosygin-Zhou meeting of 11 Sep 1969 eased the crisis without ending the armed confrontation; the talks it agreed are carried into the coarse game by the exit, sino_soviet_talks from 1970, which closes USSR.strike_china: the owner's decision 7f(a) of 2026-10-27).",Yang Kuisong 2000; Gerson 2010
 23,1970,idle,mirv,idle,none,Soviet MIRVed ICBM development (date of the decision not verified).,Podvig 2001
 24,1971,open_china,idle,idle,none,Kissinger in Beijing 9 to 11 Jul 1971; Nixon's announcement 15 Jul 1971.,FRUS 1969-76 vol. XVII
 25,1972,idle,accept_limits,rapprochement,none,SALT I signed 26 May 1972; Nixon in Beijing 21 to 28 Feb 1972.,Newhouse 1973; Chen Jian 2001

@@ -169,6 +169,7 @@ Status: written for the model step of cw_v1 on 2026-10-24, after the registratio
 | Variable | Levels | Init | Threshold rule | Dated indicator |
 |---|---|---|---|---|
 | `esc_usprc` | peace, war | peace | Not monotone. **war**: combat between American and Chinese forces. Set by `PRC.intervene_korea`, ended by `USA.armistice`. No Strait level: the Taiwan Strait crises are out of scope (coldwar_testbed.md section 9.1; docs/prc_experiment.md section 7), so no action sets a crisis level and none is declared. | war from the CPV's crossing of 19 Oct 1950 (first engagements 25 Oct to 1 Nov 1950), visible 1951 in the record and 1952 on the model's path ([SQR]; decisions R V1); peace from the armistice of 27 Jul 1953, visible 1954 (Chen Jian 1994; FRUS 1952-54 vol. XV). |
+| `sino_soviet_talks` | flag | False | Monotone. **True**: the Sino-Soviet border talks agreed and held. Set only by the exit of the 1969 sub-game when the talks were agreed and no strike was made; read only by `USSR.strike_china` (part `talks`). Added 2026-10-27, before first sight, on the owner's decision 7f(a). | True from Zhou's acceptance at the Kosygin-Zhou meeting of 11 Sep 1969 (the talks opened in Beijing on 20 Oct 1969), visible 1970 (the Chinese record of the meeting, Wilson Center Digital Archive; Yang Kuisong 2000; Gerson 2010). |
 
 The PRC's nuclear force enters only as the dated target part of `USSR.strike_china` (`tick >= 1965`, v0's), as section 9.1 of the registration says; no `nuke_PRC` variable.
 
@@ -199,7 +200,7 @@ Entered by `PRC.border_clash` (the clashes of 2 and 15 Mar 1969) in 1969; in the
 | `us_signal` | flag | the American signal of non-indifference (NSC of 14 Aug; Richardson, 5 Sep) |
 | `strike` | flag | a Soviet strike on Lop Nur (not taken) |
 
-Ending: `STRIKE`. Exit: strike → `esc_sino = war`; otherwise `esc_sino = clash` (the talks did not end the armed confrontation; v0's level to 1989).
+Ending: `STRIKE`. Exit: strike → `esc_sino = war`; otherwise `esc_sino = clash` (the talks did not end the armed confrontation; v0's level to 1989), and, when the talks were agreed (`talks = agreed`), also `sino_soviet_talks = True`, which closes the coarse `USSR.strike_china` (amended 2026-10-27, before first sight, on the owner's decision 7f(a); docs/cw_v1_decisions.md D4).
 
 ### 12.4 Invariants and endings of v1
 

@@ -171,6 +171,7 @@ Status: written for the model step of cw_v1 on 2026-10-24, after the registratio
 | USSR | `icbm_buildup` | `level`: nuke_USSR = few; `technology`: tick ≥ 15 | nuke_USSR := survivable if nuke_USSR < survivable; belief_force_USA := survivable if intel_USA = overhead | 2 |
 | USSR | `escalate` | `crisis`: esc = crisis | esc := conventional if esc < conventional |  |
 | USSR | `invade_west` | `hypothesis`: aims_USSR = opportunist; `response`: esc ≥ crisis; `no_us_nuclear`: nuke_USA = none | esc := conventional if esc < conventional; invasion_west := True |  |
+| USSR | `strike_china` | `confrontation`: esc_sino = clash; `targets`: tick ≥ 18; `no_us_link`: align_PRC ≠ us_aligned; `talks`: ¬sino_soviet_talks | esc_sino +1 |  |
 | USSR | `warn_unilateral` | `occasion`: tick = 26 | none (crisis) |  |
 | USSR | `reaffirm_understanding` | `crisis`: esc = crisis; `understanding`: tick ≥ 16; `not_berlin`: berlin_wall | esc -1 |  |
 | PRC | `border_clash` | `principal`: tick ≥ 3; `split`: align_PRC = split; `level`: esc_sino = peace; `occasion`: tick = 22 | none (crisis) |  |
@@ -214,10 +215,12 @@ Status: written for the model step of cw_v1 on 2026-10-24, after the registratio
 | `USSR.warn_unilateral` (taken) | joint diplomacy on the ceasefire of 22 Oct 1973 without the threat | V3 |
 | Alert 1973: `USA.defcon3` (taken), `USA.reply` alone, `USSR.land_forces`, `USA.oppose_landing` | the WSAG meeting of 24 to 25 Oct 1973; the Politburo of 25 Oct (Israelyan 1995), which also rejected Grechko's proposal to answer the alert with a mobilization (not represented: it changes no variable of the sub-game) | V3 |
 | Sino-Soviet 1969: `USSR.strike`, `USSR.border_offensive` (taken), `USA.signal` (taken), `PRC.accept_talks` (taken) | the soundings of Aug to Sep 1969 (EBB 49); the NSC of 14 Aug 1969 and the State Department's even-handed line; Beijing's silence on the Soviet proposals of spring 1969 | V5 |
+| `USSR.strike_china` after the talks (part `talks`, 2026-10-27) | the strike option closed once the talks of 11 Sep and 20 Oct 1969 held (Gerson 2010); the alternative reading: the talks a cover for a surprise attack (Lin Biao's Order No. 1 of 18 Oct 1969; Yang 2000) | V5 |
 
 ### 6.2 What v1 changes in v0's actions, in one line each
 
 - **PRC** (`border_clash`, `rapprochement`, `normalize`): the scope part `principal` from 1950 (tick 3) instead of 1969; `border_clash` is the crisis action of the 1969 sub-game, with the occasion 1969 (D4).
 - **`USA.armistice`** also ends the US-PRC war; **`USA.nuclear_korea`**'s part `total_commitment` also holds in a war with the PRC (D1).
 - **`USSR.icbm_buildup`** gains the part `technology` (from 1962) (D3).
+- **`USSR.strike_china`** gains the part `talks` (`¬sino_soviet_talks`): the border talks agreed by Kosygin and Zhou on 11 Sep 1969 and opened on 20 Oct 1969, carried into the coarse game by the 1969 sub-game's exit (D4; the owner's decision 7f(a) of 2026-10-27, before first sight). Documented alternative: Beijing's reading that the talks could cover a surprise attack (Lin Biao's Order No. 1 of 18 Oct 1969; Yang 2000).
 - **`USA.escalate`, `USSR.escalate`, `USSR.enter_korea`, `USSR.invade_west`** raise `esc` to `conventional` instead of adding to it (D3).

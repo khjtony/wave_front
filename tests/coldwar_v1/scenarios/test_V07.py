@@ -5,19 +5,20 @@ edit the claim text without a changelog entry in that document (section 8); an a
 is a new row V7a. The readings the model step must fix before first sight are listed in
 section 9.4.
 
-Reading (docs/cw_v1_decisions.md, R V7): as v0's A C8 with ``balance_core`` in the
-unilateral kernels. For each regime year Y in {1963, 1972, 1987}, per hypothesis: (a) the
-hindsight ``oversight`` of Y + 1 is above that of Y; (b) s the hindsight state of Y + 1 and s-
-the same with ``oversight`` at its level of Y; three distances (fewest transitions of
-arbitrary play on the flattened game, a crisis counting its entry, fine steps and return): to
-``GENERAL_WAR`` or ``ACCIDENTAL_WAR``, and out of K_USA and K_USSR of ``balance_core`` through
-the horizon (0 when outside; never is infinitely far), by the layered lifting for 1964, the
-composite engine for 1973 (explicit to 1984, the symbolic all-actor rank beyond) and the
-symbolic engine for 1988; (b) holds iff for every Y at least one is larger from s and none is
-smaller. (c) Control: on ``build(frozen_oversight=True)`` ``arms = reduced`` is unreachable
-from the 1962 hindsight state within the horizon, while it is reachable on the model
-(symbolic reachability on the coarse game; exact for this target). Holds iff (a), (b) and (c)
-under at least one hypothesis.
+Reading (docs/cw_v1_decisions.md, R V7): as v0's A C8 with ``balance_core`` in the unilateral
+kernels. For each regime year Y in {1963, 1972, 1987}, per hypothesis: (a) the hindsight
+``oversight`` of Y + 1 is above that of Y; (b) s the hindsight state of Y + 1 and s- the same
+with ``oversight`` at its level of Y; three distances (fewest transitions of arbitrary play on
+the flattened game, a crisis counting its entry, fine steps and return): to ``GENERAL_WAR`` or
+``ACCIDENTAL_WAR``, and out of K_USA and K_USSR of ``balance_core`` through the horizon (0 when
+outside; never is infinitely far), by the layered lifting for 1964, the composite engine for
+1973 (explicit to 1984, the symbolic all-actor rank beyond) and the symbolic engine for 1988;
+(b) holds iff for every Y at least one is larger from s and none is smaller. Beside, not
+asserted (the fortune variant): the distances out of the kernels of {USA, Nature} and {USSR,
+Nature} of ``balance_core``, by the same engines. (c) Control: on
+``build(frozen_oversight=True)`` ``arms = reduced`` is unreachable from the 1962 hindsight state
+within the horizon, while it is reachable on the model (symbolic reachability on the coarse
+game; exact for this target). Holds iff (a), (b) and (c) under at least one hypothesis.
 """
 
 import os
@@ -71,21 +72,27 @@ KEYS = {
     "out K_USA": "out:USA:balance_core",
     "out K_USSR": "out:USSR:balance_core",
 }
+# Beside, not asserted (section 9.2, the fortune variant; R notes of 2026-10-27, "found in
+# review"): the distances out of the kernels of {USA, Nature} and {USSR, Nature}.
+FORTUNE_KEYS = {
+    "out K_USA+Nature": "out:USA+Nature:balance_core",
+    "out K_USSR+Nature": "out:USSR+Nature:balance_core",
+}
 
 
-def distances(aims, year, states):
-    """The three distances from each of ``states`` (hindsight-year ``year``), by the engine
-    R assigns to the year."""
+def distances(aims, year, states, keys=KEYS):
+    """The distances of ``keys`` (by default the three of (b)) from each of ``states``
+    (hindsight-year ``year``), by the engine R assigns to the year."""
     engine = engine_for(year)
     if engine == "symbolic":
-        ranks = {k: everyone_attractor(aims, key) for k, key in KEYS.items()}
+        ranks = {k: everyone_attractor(aims, key) for k, key in keys.items()}
         return [{k: r.rank(s) for k, r in ranks.items()} for s in states], engine
     if engine == "layered":
-        ranks = {k: layered_distance(aims, key) for k, key in KEYS.items()}
+        ranks = {k: layered_distance(aims, key) for k, key in keys.items()}
         return [{k: r.rank(s) for k, r in ranks.items()} for s in states], engine
     g = composite_graph(aims, states)
-    dist = composite_distances(aims, g, list(KEYS.values()))
-    out = [{k: dist[key][g.index[s]] for k, key in KEYS.items()} for s in states]
+    dist = composite_distances(aims, g, list(keys.values()))
+    out = [{k: dist[key][g.index[s]] for k, key in keys.items()} for s in states]
     return out, f"composite ({g.size()} states to 1984)"
 
 
@@ -112,6 +119,8 @@ def test_V7():
                 f"[V7]   aims_USSR={aims} {y}: oversight {before} -> {after} ({a}); "
                 f"distances {m_s} (lowered: {m_m}) [{engine}]: {b}"
             )
+            (f_s, f_m), _ = distances(aims, y + 1, [s, sm], FORTUNE_KEYS)
+            print(f"[V7]     beside (fortune): {f_s} (lowered: {f_m})")
             ab = ab and a and b
         frozen = encoding(aims, frozen_oversight=True)
         start_f = hindsight(1962, aims, frozen_oversight=True)
