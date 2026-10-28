@@ -17,6 +17,10 @@ e082977, with exactly the changes of testbed section 8.2, each marked ``# v1`` b
    ``tisza`` (opposed | consented, initial opposed), and the date part
    ``AUH.ultimatum:council`` (``tick >= 16``) is replaced by the part
    ``AUH.ultimatum:tisza`` (``tisza == consented``).
+3. ``RUS.mobilize_general`` answers an Austro-Hungarian measure (the owner's decision 7e(a)
+   of 2026-10-23, testbed section 8.5, before first sight): it gains the part
+   ``austrian_measures`` (``war_AUH_SER == war``), the expression of
+   ``RUS.mobilize_partial:occasion``, symmetric with item 1.
 
 Everything else is v0's: time (one tick a day, tick 0 is 28 June 1914, horizon 38),
 actors, the other variables and levels, every other guard, effect and source, the delay of
@@ -380,12 +384,15 @@ def build(cadence: bool = True) -> Model:
             "Austro-Hungarian military action against Serbia."
         ),
     )
+    # v1: RUS.mobilize_general answers an Austro-Hungarian measure (the owner's decision
+    # 7e(a), testbed section 8.5): the expression of RUS.mobilize_partial:occasion.
     rus.action(
         "mobilize_general",
         guard={
             "hypothesis": (V.aims_RUS == "fight")
             | (V.mob_GER >= "kriegsgefahr")
             | (V.mob_AUH == "general"),
+            "austrian_measures": V.war_AUH_SER == "war",
             "prepared": V.mob_RUS >= "pre_mobilization",
             "level": V.mob_RUS != "general",
         },
@@ -395,7 +402,26 @@ def build(cadence: bool = True) -> Model:
             "after Sazonov's audience and ordered about 17:00 (Yanushkevich, Dobrorolsky), "
             "first day 31 Jul (Lieven 2015; Albertini vol. II). [H]: under deter Russia orders "
             "general mobilization only once Germany or Austria-Hungary has taken general "
-            "measures; under fight the preparatory period suffices."
+            "measures; under fight the preparatory period suffices. Part austrian_measures "
+            "(v1, the owner's decision 7e(a)): the general order followed the partial order of "
+            "29 Jul and the Austro-Hungarian measures that order answered, the declaration of "
+            "war on Serbia of 28 Jul and the bombardment of Belgrade in the night of 28 to 29 "
+            "Jul (the model has no variable for the bombardment; both are read as the "
+            "Austro-Serbian war state). The Council of Ministers of 24 Jul and the Tsar's "
+            "council of 25 Jul made Russian mobilization conditional on Austro-Hungarian "
+            "military action against Serbia (the council journals as printed in the "
+            "literature, not verified); Sazonov's telegram of 28 Jul announcing the partial "
+            "mobilization for the next day in answer to the declaration (Russian Orange Book, "
+            "number not verified); the Foreign Ministry's daily journal for 29 and 30 Jul "
+            "(Schilling, How the War Began in 1914, 1925) and Sazonov's audience with Nicholas "
+            "II of 30 Jul, where the general order was argued from the Austrian war on Serbia "
+            "and the partial order already in force (Sazonov, Fateful Years, 1928); Geiss "
+            "(ed.), July 1914, the documents of 28 to 30 Jul (numbers not verified); Albertini "
+            "vol. II (chapters not verified); McMeekin, The Russian Origins of the First World "
+            "War, 2011 (who dates the preparatory measures earlier: those are pre_mobilize, not "
+            "this order); Clark 2012 chs. 10 and 11. Same expression as "
+            "RUS.mobilize_partial:occasion, as GER.mobilize took "
+            "GER.kriegsgefahr:russian_measures."
         ),
     )
     rus.action(

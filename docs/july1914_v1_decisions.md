@@ -4,11 +4,12 @@ Inputs: the v1 registration ([july1914_testbed.md](july1914_testbed.md) section 
 
 ## V1. Scope
 
-v1 is v0 with exactly the changes of testbed section 8.2, and nothing else:
+v1 is v0 with exactly the changes of testbed section 8.2 and of section 8.5 as resolved by the owner's decision 7e(a) (V3a), and nothing else:
 
 1. `GER.mobilize` gains the parts `hypothesis` [H] and `russian_measures` of `GER.kriegsgefahr`, with the same expressions (`aims_GER == continental or mob_RUS == general`; `mob_RUS >= partial`); `sequence` is kept. `GER.mobilize_east` gains the same two parts (before `sequence` and `coupling`).
 2. The AUH action `tisza_consent` (effect `tisza := consented`) and the variable `tisza` in {opposed, consented}, initial `opposed`, monotone. The part `AUH.ultimatum:council` (`tick >= 16`) is replaced by `AUH.ultimatum:tisza` (`tisza == consented`).
-3. Every other declaration is v0's: D1 (time and horizon), D2 (actors, Nature, the hidden objectives), D3 (cadences), D4 (pre-commitments, the coupling, the fairness constraints), D5 (the belief), D6 (variables, endings, invariants) apply to v1 unchanged except as V2 to V5 say. `harvest_leave` and `in_paris` stay dates (testbed 8.2 item 3).
+3. `RUS.mobilize_general` gains the part `austrian_measures` (`war_AUH_SER == war`), the expression of `RUS.mobilize_partial:occasion` (V3a; amendment of 2026-10-27, before first sight).
+4. Every other declaration is v0's: D1 (time and horizon), D2 (actors, Nature, the hidden objectives), D3 (cadences), D4 (pre-commitments, the coupling, the fairness constraints), D5 (the belief), D6 (variables, endings, invariants) apply to v1 unchanged except as V2 to V5 say. `harvest_leave` and `in_paris` stay dates (testbed 8.2 item 3).
 
 `build(cadence=True)` is the model of record, `build(cadence=False)` the J7v1 build (every cadence 1). `build` is a copy of v0's with each change marked `# v1`; v0's constants and `raise_to` are imported, and `models/july1914/v0.py` and `data/july1914/*.csv` are not edited (a construction test pins their bytes and v0's fingerprints).
 
@@ -25,20 +26,29 @@ v1 is v0 with exactly the changes of testbed section 8.2, and nothing else:
 - `GER.mobilize` and `GER.mobilize_east` take the Kriegsgefahr step's [H] and `russian_measures` with the same expressions and readings (testbed 8.2 item 1; the sources in the actions catalogue, v1 additions). On the realized path the parts hold at tick 34 under both German aims (the Russian general order is visible from 33).
 - **A departure from D2.** D2 has each hidden objective enter exactly one guard. In v1 `aims_GER` enters three (`GER.kriegsgefahr`, `GER.mobilize`, `GER.mobilize_east`), as decision 2h requires; the hypothesis gates [H] rise from 2 to 4. The reading of `aims_GER` is unchanged (localize: no German general measure before a Russian general order; continental: the Russian partial measures suffice), so the extra gates restate it for the mobilization step rather than add a hypothesis.
 - With `russian_measures` on `GER.mobilize`, Russia's `revoke` can withdraw the occasion for the German mobilization after a Kriegsgefahr under `continental`; the mobilization then waits (the Kriegsgefahr level stays, as D4 makes German levels irrevocable). This is the content of decision 2h, not a further choice.
-- **Not done (testbed 8.5).** No part by which a Russian mobilization step answers a measure of another power is added: that is the open item for the owner, outside decision 2h. J6v1 and J9v1 are read on v1 as built.
+- **Testbed 8.5.** As first built (2026-10-24), no part by which a Russian mobilization step answers a measure of another power was added: the item was open for the owner, outside decision 2h. Resolved by decision 7e(a): V3a.
+
+## V3a. The Russian general mobilization answers an Austro-Hungarian measure (amendment of 2026-10-27, before first sight)
+
+- **Decision.** The owner's decision 7e(a) of 2026-10-23 ([owner_decisions_2026-10-23.md](owner_decisions_2026-10-23.md)): the Russian mobilization steps gain an Austrian-measures part, symmetric with decision 2h, before the first sight of J1v1 to J9v1. Coded on 2026-10-27, before any of J1v1 to J9v1 was run.
+- **Which actions.** v0's J6 sets on the Russian side (reports/july1914.md section 9; under `fight`) were `RUS.mobilize_general:prepared` and `RUS.pre_mobilize:occasion`, both of size 1, both routes ending in `RUS.mobilize_general`, whose only non-[H] conditions were the preparatory period (`prepared`) and its own level. `RUS.pre_mobilize` already answers an Austro-Hungarian measure (`occasion: ultimatum >= delivered`, the note) and `RUS.mobilize_partial` another (`occasion: war_AUH_SER == war`, the declaration); the general order read none. So only `RUS.mobilize_general` changes, as only `GER.mobilize` (and `mobilize_east`) did under 2h: it gains `austrian_measures: war_AUH_SER == war`, the expression of `RUS.mobilize_partial:occasion`, as `GER.mobilize` took `GER.kriegsgefahr:russian_measures`. Part order: `hypothesis`, `austrian_measures`, `prepared`, `level`; [H], `prepared` and `level` are v0's.
+- **Record.** The partial mobilization (Sazonov's decision of 28 July, announced 29 July) answered the Austro-Hungarian declaration of war on Serbia of 28 July and the bombardment of Belgrade in the night of 28 to 29 July; the general order of 30 July followed the partial order and those measures. The model has no variable for the bombardment: both measures are read as `war_AUH_SER == war`, the variable v1 already has. Sources (in the action's `source=`): the Council of Ministers of 24 July and the Tsar's council of 25 July (mobilization conditional on Austro-Hungarian military action against Serbia; journals as printed in the literature, not verified); Sazonov's telegram of 28 July announcing the partial mobilization (Russian Orange Book, number not verified); the Foreign Ministry's daily journal of 29 and 30 July (Schilling, *How the War Began in 1914*, 1925); Sazonov, *Fateful Years* (1928) on the audience of 30 July; Geiss (ed.), documents of 28 to 30 July (numbers not verified); Albertini vol. II (chapters not verified); McMeekin, *The Russian Origins of the First World War* (2011), who dates the preparatory measures earlier (those are `pre_mobilize`, not this order); Clark 2012 chs. 10 and 11.
+- **The realized path.** The declaration is played at tick 30 and visible from 31; the general order is played at 32. The replay (V8) is unchanged: every move available under `fight`, the stop at 32 under `deter` on the [H] gate.
+- **Not speculative**; no other guard, effect, delay, cadence, fairness constraint or data row changes; v0 is not edited (its fingerprints are pinned).
+- **Readings.** No reading of section R names the guard of `RUS.mobilize_general` or its parts: R is unchanged. (V8's "its [H] gate" still describes the `deter` stop.) The J6v1 reading's list of required parts is the registered claim's and is not extended to the new part.
 
 ## V4. Budget (`CompiledModel.budget()`)
 
 | Item | v0 | v1 |
 |---|---|---|
 | Declared variables / levels | 15 / 42 | 16 / 44 (`tisza`) |
-| Actions (with Nature's) / guards / guard parts | 26 / 26 / 54 | 27 / 27 / 60 (`tisza_consent` 2; `GER.mobilize` +2; `GER.mobilize_east` +2; `AUH.ultimatum` 2 for 2) |
+| Actions (with Nature's) / guards / guard parts | 26 / 26 / 54 | 27 / 27 / 61 (`tisza_consent` 2; `GER.mobilize` +2; `GER.mobilize_east` +2; `AUH.ultimatum` 2 for 2; `RUS.mobilize_general` +1, V3a; 60 as first built) |
 | Hypothesis gates [H] | 2 | 4 (`GER.kriegsgefahr`, `GER.mobilize`, `GER.mobilize_east`, `RUS.mobilize_general`) |
 | Date-coded parts | 4 | 3 (`AUH.mobilize_partial:harvest_leave`, `FRA.covering_troops:in_paris`, `FRA.mobilize:in_paris`) |
 | Speculative / fairness / delays / cadence / latches / profiles / `assume` | 0 / 4 / 1 / 2 / 0 / 0 / 0 | 0 / 4 / 1 / 2 / 0 / 0 / 0 |
 | Built-in variables / invariants / endings | 8 / 2 / 4 | 8 / 2 / 4 |
-| Fingerprint (record / daily) | `368d154000b2` / `f63b4510ab6a` | `836afdb695b7` / `3b23e6bec46e` |
-| Reachable states from tick 0, four pairs (record / daily) | 181,913 / 73,937 | 193,721 / 83,829 |
+| Fingerprint (record / daily) | `368d154000b2` / `f63b4510ab6a` | `c0548a4c25db` / `a979eb052d20` (first built: `836afdb695b7` / `3b23e6bec46e`) |
+| Reachable states from tick 0, four pairs (record / daily) | 181,913 / 73,937 | 93,003 / 50,813 (first built: 193,721 / 83,829) |
 
 ## V5. Engines
 
@@ -50,7 +60,7 @@ None. v0 has no snapshot and v1 needs none: every claim starts from tick 0 or fr
 
 ## V7. Well-formedness
 
-`explore` raises on every ill-formed state (D8). A complete exploration from tick 0 of the four pairs (193,721 states) and of the J7v1 build (83,829) raised nothing, with no edit during the step.
+`explore` raises on every ill-formed state (D8). A complete exploration from tick 0 of the four pairs (193,721 states) and of the J7v1 build (83,829) raised nothing, with no edit during the step. After V3a (2026-10-27): 93,003 states (four pairs) and 50,813 (J7v1 build), nothing raised.
 
 ## V8. The realized replay (a construction check, not J1v1)
 

@@ -63,13 +63,15 @@ LEVELS = {
     "commitment_GBR": ("none", "naval_assurance", "belgian_guarantee", "war"),
 }
 
-# Testbed section 8.2: the guard parts of the actions v1 changes or adds; every other action
-# is v0's, guard, effect, delay and source alike.
+# Testbed section 8.2, and 8.5 as resolved by the owner's decision 7e(a): the guard parts of
+# the actions v1 changes or adds; every other action is v0's, guard, effect, delay and source
+# alike.
 V1_PARTS = {
     "AUH.tisza_consent": ["council", "once"],
     "AUH.ultimatum": ["resolved", "tisza"],
     "GER.mobilize": ["hypothesis", "russian_measures", "sequence"],
     "GER.mobilize_east": ["hypothesis", "russian_measures", "sequence", "coupling"],
+    "RUS.mobilize_general": ["hypothesis", "austrian_measures", "prepared", "level"],
 }
 
 # v0 as committed (e082977): the model file and its data, byte for byte (sha256, 16 hex).
@@ -108,7 +110,7 @@ def test_the_change_from_v0_is_exactly_the_registered_scope():
     a0, a1 = actions_of(v0.model), actions_of(model)
     assert set(a1) - set(a0) == {"AUH.tisza_consent"} and set(a0) <= set(a1)
     changed = sorted(k for k in a0 if repr(a0[k]) != repr(a1[k]))
-    assert changed == ["AUH.ultimatum", "GER.mobilize", "GER.mobilize_east"]
+    assert changed == ["AUH.ultimatum", "GER.mobilize", "GER.mobilize_east", "RUS.mobilize_general"]
     for key, parts in V1_PARTS.items():
         assert [p for p, _ in a1[key].guard_parts] == parts, key
     for key in changed:  # effects and delays as v0's
@@ -119,6 +121,15 @@ def test_the_change_from_v0_is_exactly_the_registered_scope():
         parts = dict(a1[key].guard_parts)
         for p in ("hypothesis", "russian_measures"):
             assert repr(parts[p]) == repr(ger0[p]) == repr(ger1[p]), (key, p)
+    # decision 7e(a): the Russian general order takes the partial order's occasion; its other
+    # parts are v0's
+    rus0, rus1 = (
+        dict(a0["RUS.mobilize_general"].guard_parts),
+        dict(a1["RUS.mobilize_general"].guard_parts),
+    )
+    occasion = dict(a1["RUS.mobilize_partial"].guard_parts)["occasion"]
+    assert repr(rus1.pop("austrian_measures")) == repr(occasion)
+    assert repr(rus1) == repr(rus0)
     assert "AUH.ultimatum:council" not in CM.assumptions()
     assert "AUH.ultimatum:tisza" in CM.assumptions()
     assert repr(model.fairness_constraints) == repr(v0.model.fairness_constraints)
@@ -169,7 +180,7 @@ def test_budget_as_catalogued():
         "actors": 6,
         "actions": 27,
         "guards": 27,
-        "guard_parts": 60,
+        "guard_parts": 61,
         "speculative_actions": 0,
         "fairness_constraints": 4,
         "delays": 1,
@@ -181,8 +192,8 @@ def test_budget_as_catalogued():
     }
     assert {k: b[k] for k in expected} == expected
     assert build(False).compile().budget()["cadence"] == 0
-    assert fingerprint(model) == "836afdb695b7"
-    assert fingerprint(build(False)) == "3b23e6bec46e"
+    assert fingerprint(model) == "c0548a4c25db"
+    assert fingerprint(build(False)) == "a979eb052d20"
 
 
 def test_v0_is_unaffected():
@@ -265,7 +276,7 @@ def test_dated_events_are_visible_on_the_replay():
 def test_well_formed_from_tick_0_under_every_pair(cadence):
     g = explore(build(cadence).compile(), max_states=3_000_000)
     assert len(g.initial) == 4
-    assert g.size() == (193_721 if cadence else 83_829)
+    assert g.size() == (93_003 if cadence else 50_813)
 
 
 def test_the_model_step_is_logged_and_the_first_sight_is_held():
@@ -273,6 +284,9 @@ def test_the_model_step_is_logged_and_the_first_sight_is_held():
     rows = [line for line in text.splitlines() if line.startswith("| 2026")]
     step = [r for r in rows if "v1 model step" in r]
     assert len(step) == 1 and "before any of J1v1 to J9v1 was run" in step[0]
+    amendment = [r for r in rows if "model step amendment on the owner's decision 7e(a)" in r]
+    assert len(amendment) == 1 and "before any of J1v1 to J9v1 was run" in amendment[0]
+    assert "c0548a4c25db" in amendment[0] and "a979eb052d20" in amendment[0]
     sight = [r for r in rows if "first sight of J1v1" in r]
     if FIRST_SIGHT_COMMIT is None:
         assert not sight, "a v1 first-sight row without FIRST_SIGHT_COMMIT"
