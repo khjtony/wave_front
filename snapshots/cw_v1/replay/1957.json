@@ -52,6 +52,13 @@
      "source": "NIE 11-56, 6 Mar 1956, paras. 5 and 19 (Steury (ed.) 1996, no. 1; crest corpus)",
      "observed": "1956-12-31",
      "rule": "the contemporaneous reading dated before 1 January Note: projected count (decision 7g): the estimate's projection for the mid-year two to three years ahead, midpoints of its ranges, linear between its milestones; added 2026-10-28"
+    },
+    {
+     "id": "projection_1956_belief_force_USA",
+     "value": "520 for 1958-07-01",
+     "source": "NIE 11-56, 6 Mar 1956, paras. 5 and 19 (Steury (ed.) 1996, no. 1; crest corpus)",
+     "observed": "1956-03-06",
+     "rule": "the date the estimate (of the observed date) projects for, from its own text, and the projected number there (every range at its midpoint, linear between its stated milestones); V6 compares the band with the hindsight count_USSR at that date, read from the hindsight snapshot of the latest 1 January not after it (the owner's decision 7i; docs/cw_v1_decisions.md D9 and R V6)"
     }
    ]
   },

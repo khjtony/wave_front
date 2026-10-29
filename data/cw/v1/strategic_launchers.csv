@@ -13,13 +13,13 @@ year,visible_year,icbm,slbm,bombers,total,band,mark,source,note
 1953,1954,0,0,0,0,none,[S],"Norris and Cochran 1990 (NRDC Working Paper 90-1) Table 2; Definitions","no intercontinental vehicle: the table begins with the 22 bombers of 1956; the Tu-4 (a B-29 copy, one-way reach of the US) is a medium bomber, outside the definition (operating radius over 2,500 n.m.)"
 1954,1955,0,0,0,0,none,[S],"Norris and Cochran 1990 (NRDC Working Paper 90-1) Table 2; Definitions","no intercontinental vehicle: the table begins with the 22 bombers of 1956; the Tu-4 (a B-29 copy, one-way reach of the US) is a medium bomber, outside the definition (operating radius over 2,500 n.m.)"
 1955,1956,0,0,0,0,none,[S],"Norris and Cochran 1990 (NRDC Working Paper 90-1) Table 2; Definitions","no intercontinental vehicle: the table begins with the 22 bombers of 1956; the Tu-4 (a B-29 copy, one-way reach of the US) is a medium bomber, outside the definition (operating radius over 2,500 n.m.)"
-1956,1957,0,0,22,22,under_200,[S],"Norris and Cochran 1990 (NRDC Working Paper 90-1) Table 2","Norris and Cochran 1997 Table 2 revises the bombers to 40 (same band)"
-1957,1958,0,0,28,28,under_200,[S],"Norris and Cochran 1990 (NRDC Working Paper 90-1) Table 2","Norris and Cochran 1997 Table 2 revises the bombers to 53 (same band)"
-1958,1959,0,6,50,56,under_200,[S],"Norris and Cochran 1990 (NRDC Working Paper 90-1) Table 2","Norris and Cochran 1997 Table 2 revises the bombers to 85 (same band)"
-1959,1960,0,33,75,108,under_200,[S],"Norris and Cochran 1990 (NRDC Working Paper 90-1) Table 2","Norris and Cochran 1997 Table 2 revises the bombers to 105 (same band); the bomber column of Table 8 adds to 81 (25 BEAR A, 56 BISON) against 75 in Table 2 (same band)"
-1960,1961,4,30,104,138,under_200,[S],"Norris and Cochran 1990 (NRDC Working Paper 90-1) Table 2","Norris and Cochran 1997 Table 2 revises the bombers to 121 (same band)"
-1961,1962,10,57,120,187,under_200,[S],"Norris and Cochran 1990 (NRDC Working Paper 90-1) Table 2","the revised bomber count of Norris and Cochran 1997 Table 2 is 133 (total 200, at the edge of the band); this file follows the 1990 edition in all three columns"
-1962,1963,30,72,133,235,under_1000,[S],"Norris and Cochran 1990 (NRDC Working Paper 90-1) Table 2","Norris and Cochran 1997 Table 2: 138 bombers (same band)"
+1956,1957,0,0,22,22,under_200,[S],"Norris and Cochran 1990 (NRDC Working Paper 90-1) Table 2","the 1990 edition, as for every year (the owner's decision 7i); the 1997 revision of the bombers is not used"
+1957,1958,0,0,28,28,under_200,[S],"Norris and Cochran 1990 (NRDC Working Paper 90-1) Table 2","the 1990 edition, as for every year (the owner's decision 7i); the 1997 revision of the bombers is not used"
+1958,1959,0,6,50,56,under_200,[S],"Norris and Cochran 1990 (NRDC Working Paper 90-1) Table 2","the 1990 edition, as for every year (the owner's decision 7i); the 1997 revision of the bombers is not used"
+1959,1960,0,33,75,108,under_200,[S],"Norris and Cochran 1990 (NRDC Working Paper 90-1) Table 2","the 1990 edition, as for every year (the owner's decision 7i); the 1997 revision of the bombers is not used; the bomber column of Table 8 adds to 81 (25 BEAR A, 56 BISON) against 75 in Table 2 (same band)"
+1960,1961,4,30,104,138,under_200,[S],"Norris and Cochran 1990 (NRDC Working Paper 90-1) Table 2","the 1990 edition, as for every year (the owner's decision 7i); the 1997 revision of the bombers is not used"
+1961,1962,10,57,120,187,under_200,[S],"Norris and Cochran 1990 (NRDC Working Paper 90-1) Table 2","the 1990 edition, as for every year (the owner's decision 7i); the 1997 revision of the bombers is not used"
+1962,1963,30,72,133,235,under_1000,[S],"Norris and Cochran 1990 (NRDC Working Paper 90-1) Table 2","the 1990 edition, as for every year (the owner's decision 7i); the 1997 revision of the bombers is not used"
 1963,1964,80,72,150,302,under_1000,[S],"Norris and Cochran 1990 (NRDC Working Paper 90-1) Table 2",
 1964,1965,180,72,173,425,under_1000,[S],"Norris and Cochran 1990 (NRDC Working Paper 90-1) Table 2",
 1965,1966,225,75,163,463,under_1000,[S],"Norris and Cochran 1990 (NRDC Working Paper 90-1) Table 2",
@@ -47,5 +47,5 @@ year,visible_year,icbm,slbm,bombers,total,band,mark,source,note
 1987,1988,1418,962,155,2535,over_1000,[S],"Norris and Cochran 1990 (NRDC Working Paper 90-1) Table 2",
 1988,1989,1378,963,170,2511,over_1000,[S],"Norris and Cochran 1990 (NRDC Working Paper 90-1) Table 2",
 1989,1990,1356,949,162,2467,over_1000,[S],"Norris and Cochran 1990 (NRDC Working Paper 90-1) Table 2",
-1990,1991,,,128,,over_1000,[U],"Norris and Cochran 1997 (NRDC) Table 2 (bombers)","ICBM and SLBM launchers not in the text layer of the 1997 edition; the band holds on the 1989 levels (1,356 ICBM launchers alone) with no reduction in force before START I (signed 31 Jul 1991, in force 5 Dec 1994)"
-1991,1992,,,100,,over_1000,[U],"Norris and Cochran 1997 (NRDC) Table 2 (bombers)","as 1990"
+1990,1991,,,,,over_1000,[U],"Norris and Cochran 1990 (NRDC Working Paper 90-1) Table 2 (the 1989 levels)","after the last year of the 1990 edition (1989): the band holds on its 1989 levels (1,356 ICBM launchers alone) with no reduction in force before START I (signed 31 Jul 1991, in force 5 Dec 1994); the 1997 edition is not used (the owner's decision 7i)"
+1991,1992,,,,,over_1000,[U],"Norris and Cochran 1990 (NRDC Working Paper 90-1) Table 2 (the 1989 levels)","after the last year of the 1990 edition (1989): the band holds on its 1989 levels (1,356 ICBM launchers alone) with no reduction in force before START I (signed 31 Jul 1991, in force 5 Dec 1994); the 1997 edition is not used (the owner's decision 7i)"

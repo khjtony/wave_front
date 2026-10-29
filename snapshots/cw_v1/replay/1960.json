@@ -52,6 +52,13 @@
      "source": "NIE 11-5-59, paras. 4 and 73; NIE 11-4-58 (crest corpus)",
      "observed": "1959-12-31",
      "rule": "the contemporaneous reading dated before 1 January Note: projected count (decision 7g); NIE 11-8-59 is dated 9 Feb 1960 and first read for 1961 (superseded there by NIE 11-8-60); added 2026-10-28"
+    },
+    {
+     "id": "projection_1959_belief_force_USA",
+     "value": "430 for 1961-07-01",
+     "source": "NIE 11-5-59, paras. 4 and 73; NIE 11-4-58 (crest corpus)",
+     "observed": "1958-12-23",
+     "rule": "the date the estimate (of the observed date) projects for, from its own text, and the projected number there (every range at its midpoint, linear between its stated milestones); V6 compares the band with the hindsight count_USSR at that date, read from the hindsight snapshot of the latest 1 January not after it (the owner's decision 7i; docs/cw_v1_decisions.md D9 and R V6)"
     }
    ]
   },

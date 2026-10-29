@@ -52,6 +52,13 @@
      "source": "NIE 11-4-58, paras. 148 to 150 and the Long Range Aviation table; NIE 11-5-58, para. 9 (crest corpus)",
      "observed": "1958-12-31",
      "rule": "the contemporaneous reading dated before 1 January Note: projected count (decision 7g); added 2026-10-28"
+    },
+    {
+     "id": "projection_1958_belief_force_USA",
+     "value": "430 for 1961-07-01",
+     "source": "NIE 11-4-58, paras. 148 to 150 and the Long Range Aviation table; NIE 11-5-58, para. 9 (crest corpus)",
+     "observed": "1958-12-23",
+     "rule": "the date the estimate (of the observed date) projects for, from its own text, and the projected number there (every range at its midpoint, linear between its stated milestones); V6 compares the band with the hindsight count_USSR at that date, read from the hindsight snapshot of the latest 1 January not after it (the owner's decision 7i; docs/cw_v1_decisions.md D9 and R V6)"
     }
    ]
   },

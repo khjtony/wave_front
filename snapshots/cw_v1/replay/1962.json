@@ -52,6 +52,13 @@
      "source": "NIE 11-8/1-61, Conclusions 2 and 3 and para. 22 (Steury (ed.) 1996, no. 13); NIE 11-8-61, Conclusions 6 and 7 (crest corpus)",
      "observed": "1961-12-31",
      "rule": "the contemporaneous reading dated before 1 January Note: projected count (decision 7g); the revision moved the projection within its band (from some 700 to some 300); added 2026-10-28"
+    },
+    {
+     "id": "projection_1961_belief_force_USA",
+     "value": "300 for 1963-07-01",
+     "source": "NIE 11-8/1-61, Conclusions 2 and 3 and para. 22 (Steury (ed.) 1996, no. 13); NIE 11-8-61, Conclusions 6 and 7 (crest corpus)",
+     "observed": "1961-09-21",
+     "rule": "the date the estimate (of the observed date) projects for, from its own text, and the projected number there (every range at its midpoint, linear between its stated milestones); V6 compares the band with the hindsight count_USSR at that date, read from the hindsight snapshot of the latest 1 January not after it (the owner's decision 7i; docs/cw_v1_decisions.md D9 and R V6)"
     }
    ]
   },
