@@ -1,0 +1,8 @@
+1957: 1 documents visible, 1 read, 1 proposals (proposals awaiting review)
+1958: 5 documents visible, 4 read, 3 proposals (proposals awaiting review)
+1959: 9 documents visible, 4 read, 4 proposals (proposals awaiting review)
+1960: 10 documents visible, 1 read, 0 proposals (proposals awaiting review)
+1961: 16 documents visible, 6 read, 6 proposals (proposals awaiting review)
+1962: 22 documents visible, 6 read, 3 proposals (proposals awaiting review)
+harness rules: two-document, no-retrospective
+metrics report written to /home/khjtony/wf_runs/fs_cwv1_blind/metrics.md

@@ -1,0 +1,153 @@
+{
+ "kind": "wave_front proposals",
+ "format": 1,
+ "label": "1962",
+ "until": "1961-12-31",
+ "since": null,
+ "corpus": {
+  "source": "crest",
+  "synthetic": false,
+  "root": "/home/khjtony/workspace/wave_front/data/cw/corpora/raw/crest"
+ },
+ "backend": {
+  "name": "claude",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "usage": {
+   "input_tokens": 226486,
+   "output_tokens": 4117,
+   "cache_read_input_tokens": 10998
+  },
+  "cache": {
+   "hits": 0,
+   "misses": 6
+  }
+ },
+ "harness_rules": [
+  "two-document",
+  "no-retrospective"
+ ],
+ "episode": "cw",
+ "documents": [
+  {
+   "id": "crest:NIE_11-5-61_1961-04-25",
+   "date": "1961-04-25",
+   "source": "CIA estimates: NIE_11-5-61_1961-04-25_Soviet_Technical_Capabilities_in_Guided_Missiles_and_Space_Vehicles.pdf, pp. 1-101",
+   "title": "NIE 11-5-61: Soviet Technical Capabilities in Guided Missiles and Space Vehicles",
+   "url": "https://web.archive.org/web/20250325213643id_/https://www.cia.gov/readingroom/docs/1961-04-25-A.pdf",
+   "work": "NIE 11-5-61"
+  },
+  {
+   "id": "crest:NIE_11-8-61_1961-06-07/annex-c",
+   "date": "1961-06-07",
+   "source": "CIA estimates: NIE_11-8-61_1961-06-07_Soviet_Capabilities_for_Long_Range_Attack_Annex_C.pdf, pp. 1-26",
+   "title": "NIE 11-8-61: Soviet Capabilities for Long Range Attack (annex-c)",
+   "url": "https://web.archive.org/web/20250330075920id_/https://www.cia.gov/readingroom/docs/1961-06-07b.pdf",
+   "work": "NIE 11-8-61"
+  },
+  {
+   "id": "crest:NIE_11-8-61_1961-06-07/main-text-annexes-a-b",
+   "date": "1961-06-07",
+   "source": "CIA estimates: NIE_11-8-61_1961-06-07_Soviet_Capabilities_for_Long_Range_Attack_main_text_Annexes_A-B.pdf, pp. 1-46",
+   "title": "NIE 11-8-61: Soviet Capabilities for Long Range Attack (main-text-annexes-a-b)",
+   "url": "https://web.archive.org/web/20250330075821id_/https://www.cia.gov/readingroom/docs/1961-06-07a.pdf",
+   "work": "NIE 11-8-61"
+  },
+  {
+   "id": "crest:NIE_11-8-61_1961-06-07@steury1996",
+   "date": "1961-06-07",
+   "source": "CIA estimates: Steury 1996, no. 9, vol. pp. 115-119",
+   "title": "NIE 11-8-61: Soviet Capabilities for Long Range Attack (as reproduced in Steury 1996, no. 9)",
+   "url": "https://www.cia.gov/resources/csi/static/Part-I-The-Riddle-Inside-the-Enigma-from-Intentions-and-Capabilities.pdf#page=108",
+   "work": "NIE 11-8-61"
+  },
+  {
+   "id": "crest:NIE_11-4-61_1961-08-24/annexes-a-b",
+   "date": "1961-08-24",
+   "source": "CIA estimates: NIE_11-4-61_1961-08-24_Main_Trends_in_Soviet_Capabilities_and_Policies_1961-1966_Annexes_A-B.pdf, pp. 1-46",
+   "title": "NIE 11-4-61: Main Trends in Soviet Capabilities and Policies 1961-1966 (annexes-a-b)",
+   "url": "https://web.archive.org/web/20250401130153id_/https://www.cia.gov/readingroom/docs/1961-08-24b.pdf",
+   "work": "NIE 11-4-61"
+  },
+  {
+   "id": "crest:NIE_11-8/1-61_1961-09-21@steury1996",
+   "date": "1961-09-21",
+   "source": "CIA estimates: Steury 1996, no. 10, vol. pp. 121-136",
+   "title": "NIE 11-8/1-61: Strength and Deployment of Soviet Long Range Ballistic Missile Forces (as reproduced in Steury 1996, no. 10)",
+   "url": "https://www.cia.gov/resources/csi/static/Part-I-The-Riddle-Inside-the-Enigma-from-Intentions-and-Capabilities.pdf#page=113",
+   "work": "NIE 11-8/1-61"
+  }
+ ],
+ "proposals": [
+  {
+   "id": "1962-001",
+   "document": "crest:NIE_11-8-61_1961-06-07/annex-c",
+   "work": "NIE 11-8-61",
+   "proposal": {
+    "indicator_id": "crest:NIE_11-8-61_1961-06-07/annex-c:belief_force_USA=under_1000",
+    "variable": "belief_force_USA",
+    "level": "under_1000",
+    "date": "1961-06-07",
+    "quote": "We therefore consider that 200-400 operational launchers remains the best present estimate of the Soviet force in mid-1964.",
+    "url": "https://web.archive.org/web/20250330075920id_/https://www.cia.gov/readingroom/docs/1961-06-07b.pdf",
+    "rule": "claude backend: The estimate's probable case for two to three years out is 150-300 ICBM launchers in mid-1963 and 200-400 in mid-1964, midpoints about 225-300 from ICBMs alone; heavy bombers and SLBMs would add to this, and nothing in the annex suggests the total reaches 1,000, so the summed force falls in the 200-999 band.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1962-002",
+   "document": "crest:NIE_11-8-61_1961-06-07/main-text-annexes-a-b",
+   "work": "NIE 11-8-61",
+   "proposal": {
+    "indicator_id": "crest:NIE_11-8-61_1961-06-07/main-text-annexes-a-b:belief_force_USA=under_1000",
+    "variable": "belief_force_USA",
+    "level": "under_1000",
+    "date": "1961-06-07",
+    "quote": "150-300 in mid-1963, and 200-400 in",
+    "url": "https://web.archive.org/web/20250330075821id_/https://www.cia.gov/readingroom/docs/1961-06-07a.pdf",
+    "rule": "claude backend: Under the belief_force_USA rule, the estimate's probable ICBM force for two to three years out (midpoints of about 225 in mid-1963 and 300 in mid-1964) plus about 120-130 heavy bombers and tankers projected for the same dates gives a total between 200 and 999, before any submarine launchers are added.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1962-003",
+   "document": "crest:NIE_11-8-61_1961-06-07@steury1996",
+   "work": "NIE 11-8-61",
+   "proposal": {
+    "indicator_id": "crest:NIE_11-8-61_1961-06-07@steury1996:belief_force_USA=under_1000",
+    "variable": "belief_force_USA",
+    "level": "under_1000",
+    "date": "1961-06-07",
+    "quote": "100200 operational launchers in mid-1962, 150300 in mid-1963, and 200--400 in .mid-1964",
+    "url": "https://www.cia.gov/resources/csi/static/Part-I-The-Riddle-Inside-the-Enigma-from-Intentions-and-Capabilities.pdf#page=108",
+    "rule": "claude backend: The estimate's probable ICBM force two to three years out (about 225-300 launchers, the middle of the mid-1963 and mid-1964 ranges), plus its roughly 150 heavy bombers and tankers, sums to between 200 and 999 intercontinental vehicles.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  }
+ ],
+ "discarded": [
+  {
+   "document": "crest:NIE_11-4-61_1961-08-24/annexes-a-b",
+   "proposal": {
+    "indicator_id": "crest:NIE_11-4-61_1961-08-24/annexes-a-b:belief_force_USA=under_1000",
+    "variable": "belief_force_USA",
+    "level": "under_1000",
+    "date": "1961-08-24",
+    "quote": "Soviet operational units were equipped with approximately 150 heavy bombers in mid-1961 ... we estimate that a gradual buildup of missile-launching ships will occur over the next five years",
+    "url": "https://web.archive.org/web/20250401130153id_/https://www.cia.gov/readingroom/docs/1961-08-24b.pdf",
+    "rule": "claude backend: For mid-1963 to mid-1964, the estimate's tables project about 140-145 heavy bombers (BISON figures include tankers) plus roughly 108-126 submarine-launched missiles, summing to more than 200 before any ICBMs, which this annex omits, so the band is at least under_1000 (200 to 999). The ICBM count could raise the total, so the band is uncertain.",
+    "confidence": "low"
+   },
+   "reasons": [
+    "the quote is not in the document"
+   ]
+  }
+ ],
+ "errors": []
+}

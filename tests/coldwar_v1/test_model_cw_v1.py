@@ -36,7 +36,7 @@ BELIEFS = ("belief_force_USA", "belief_USA_USSR", "belief_USSR_USA")
 
 # The commit at which V1 to V10 are first run, in one go (decisions D8): None until the
 # owner's first sight.
-FIRST_SIGHT_COMMIT_V1 = None
+FIRST_SIGHT_COMMIT_V1 = "1663c43ac4b5f3c33ebd60a0f3c2130550104194"
 
 
 def all_actions(m):

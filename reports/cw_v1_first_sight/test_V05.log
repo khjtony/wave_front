@@ -1,0 +1,73 @@
+START=2026-10-29T07:24:27Z
+
+[V5] engine: explicit sub-game lifted to symbolic bounded kernels (to 1 Jan 1973)
+[V5] aims_USSR=status_quo: sub-game 975 states; (a) pivotal families {'entry': 'none', 1970: '{USA}', 1971: '{}', 1972: '{}'}: False
+[V5]   beside (a): fortune {'entry': 'none', 1970: '{USA}', 1971: '{}', 1972: '{}'}; unbounded {'entry': 'none', 1970: 'none', 1971: 'none', 1972: 'none'}
+[V5]   (b) PRC-to-Nature build (975 states): families {'entry': '{USA}', 1970: '{USA}', 1971: '{}', 1972: '{}'}: False
+[V5]   beside (b): fortune {'entry': '{USA}', 1970: '{USA}', 1971: '{}', 1972: '{}'}; unbounded {'entry': 'none', 1970: 'none', 1971: 'none', 1972: 'none'}
+[V5]   control: 1968 state in PRC's kernel of esc_sino < war to 1970: True
+[V5] aims_USSR=status_quo: (a) False, (b) False, control True (32.2 s)
+[V5] aims_USSR=opportunist: sub-game 975 states; (a) pivotal families {'entry': 'none', 1970: '{USA}', 1971: '{}', 1972: '{}'}: False
+[V5]   beside (a): fortune {'entry': 'none', 1970: '{USA}', 1971: '{}', 1972: '{}'}; unbounded {'entry': 'none', 1970: 'none', 1971: 'none', 1972: 'none'}
+[V5]   (b) PRC-to-Nature build (975 states): families {'entry': '{USA}', 1970: '{USA}', 1971: '{}', 1972: '{}'}: False
+[V5]   beside (b): fortune {'entry': '{USA}', 1970: '{USA}', 1971: '{}', 1972: '{}'}; unbounded {'entry': 'none', 1970: 'none', 1971: 'none', 1972: 'none'}
+[V5]   control: 1968 state in PRC's kernel of esc_sino < war to 1970: True
+[V5] aims_USSR=opportunist: (a) False, (b) False, control True (64.6 s)
+F
+=================================== FAILURES ===================================
+___________________________________ test_V5 ____________________________________
+
+    @pytest.mark.skipif(not FIRST_SIGHT, reason="cw_v1 first sight not switched on")
+    def test_V5():
+        timer = Timer()
+        print("\n[V5] engine: explicit sub-game lifted to symbolic bounded kernels (to 1 Jan 1973)")
+        results = {}
+        for aims in HYPS:
+            fam, size = families(aims, ("USA", "PRC"), "balance_tri", bounded(aims, "balance_tri"))
+            a = all(v == [frozenset({"USA", "PRC"})] for v in fam.values())
+            print(
+                f"[V5] aims_USSR={aims}: sub-game {size} states; (a) pivotal families {show(fam)}: {a}"
+            )
+            fortune, _ = families(
+                aims, ("USA", "PRC"), "balance_tri", bounded(aims, "balance_tri", nature=True)
+            )
+            unb, _ = families(aims, ("USA", "PRC"), "balance_tri", unbounded(aims, "balance_tri"))
+            print(f"[V5]   beside (a): fortune {show(fortune)}; unbounded {show(unb)}")
+            famb, sizeb = families(
+                aims, ("USA",), "balance_core", bounded(aims, "balance_core", **SCRIPTED), **SCRIPTED
+            )
+            b = all(v == [frozenset({"USA"})] for v in famb.values())
+            print(f"[V5]   (b) PRC-to-Nature build ({sizeb} states): families {show(famb)}: {b}")
+            fortune_b, _ = families(
+                aims,
+                ("USA",),
+                "balance_core",
+                bounded(aims, "balance_core", nature=True, **SCRIPTED),
+                **SCRIPTED,
+            )
+            unb_b, _ = families(
+                aims, ("USA",), "balance_core", unbounded(aims, "balance_core", **SCRIPTED), **SCRIPTED
+            )
+            print(f"[V5]   beside (b): fortune {show(fortune_b)}; unbounded {show(unb_b)}")
+            fm = flat_of(aims)
+            s68 = hindsight(1968, aims)
+            g = graph(fm, s68, cut=23)
+            phi = {
+                i
+                for i, s in enumerate(g.states)
+                if fm.is_fine(s) or fm.coarse.evaluate(V.esc_sino < "war", s)
+            }
+            control = g.index[s68] in safe(g, ["PRC"], phi).kernel
+            print(f"[V5]   control: 1968 state in PRC's kernel of esc_sino < war to 1970: {control}")
+            results[aims] = (a, b, control)
+            print(f"[V5] aims_USSR={aims}: (a) {a}, (b) {b}, control {control} ({timer})")
+>       assert any(all(v) for v in results.values()), results
+E       AssertionError: {'status_quo': (False, False, True), 'opportunist': (False, False, True)}
+E       assert False
+E        +  where False = any(<generator object test_V5.<locals>.<genexpr> at 0x7d6346ddb6b0>)
+
+tests/coldwar_v1/scenarios/test_V05.py:167: AssertionError
+=========================== short test summary info ============================
+FAILED tests/coldwar_v1/scenarios/test_V05.py::test_V5 - AssertionError: {'st...
+1 failed in 64.80s (0:01:04)
+END=2026-10-29T07:25:32Z

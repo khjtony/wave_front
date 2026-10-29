@@ -1,0 +1,263 @@
+START=2026-10-29T07:21:57Z
+
+[V2] engines: composite 1972-1983, symbolic from 1984, layered lifting 1967-1971
+[V2] aims_USSR=status_quo: year: balance_core, K_J, K_USA, K_USSR (engine)
+[V2]   1967: True, True, False, False (layered)
+[V2]     beside: fortune {('USA', 'Nature'): False, ('USSR', 'Nature'): True}; balance_cw [True, False, False]; balance_tri [True, False, False]; coarse inert [True, True, False]
+[V2]     breaking K_USA: 1967: ['idle']; 1968: ['idle']; 1969: ['idle']; 1970: ['idle']; 1971: ['idle']; 1972: ['idle']; 1973: enters alert_1973 (forced through it)
+[V2]     breaking K_USSR: 1967: ['idle']; 1968: ['idle']; 1969: ['idle']; 1970: ['idle']; 1971: ['idle']; 1972: ['idle']; 1973: ['idle']; 1974: ['idle']; 1975: ['idle']; 1976: ['idle']; 1977: ['idle']; 1978: ['idle']; 1979: ['idle']; 1980: ['idle']; 1981: ['USA.blockade_cuba']; 1982: ['Nature.accident']
+[V2]   1968: True, True, False, False (layered)
+[V2]     beside: fortune {('USA', 'Nature'): False, ('USSR', 'Nature'): True}; balance_cw [True, False, False]; balance_tri [True, False, False]; coarse inert [True, True, False]
+[V2]     breaking K_USA: 1968: ['idle']; 1969: ['idle']; 1970: ['idle']; 1971: ['idle']; 1972: ['idle']; 1973: enters alert_1973 (forced through it)
+[V2]     breaking K_USSR: 1968: ['idle']; 1969: ['idle']; 1970: ['idle']; 1971: ['idle']; 1972: ['idle']; 1973: ['idle']; 1974: ['idle']; 1975: ['idle']; 1976: ['idle']; 1977: ['idle']; 1978: ['idle']; 1979: ['idle']; 1980: ['idle']; 1981: ['USA.blockade_cuba']; 1982: ['Nature.accident']
+[V2]   1969: True, True, False, False (layered)
+[V2]     beside: fortune {('USA', 'Nature'): False, ('USSR', 'Nature'): True}; balance_cw [True, False, False]; balance_tri [True, False, False]; coarse inert [True, True, False]
+[V2]     breaking K_USA: 1969: ['idle']; 1970: ['idle']; 1971: ['idle']; 1972: ['idle']; 1973: enters alert_1973 (forced through it)
+[V2]     breaking K_USSR: 1969: ['idle']; 1970: ['idle']; 1971: ['idle']; 1972: ['idle']; 1973: ['idle']; 1974: ['idle']; 1975: ['idle']; 1976: ['idle']; 1977: ['idle']; 1978: ['idle']; 1979: ['idle']; 1980: ['idle']; 1981: ['USA.blockade_cuba']; 1982: ['Nature.accident']
+[V2]   1970: True, True, False, False (layered)
+[V2]     beside: fortune {('USA', 'Nature'): False, ('USSR', 'Nature'): True}; balance_cw [True, False, False]; balance_tri [True, False, False]; coarse inert [True, True, False]
+[V2]     breaking K_USA: 1970: ['idle']; 1971: ['idle']; 1972: ['idle']; 1973: enters alert_1973 (forced through it)
+[V2]     breaking K_USSR: 1970: ['idle']; 1971: ['idle']; 1972: ['idle']; 1973: ['idle']; 1974: ['idle']; 1975: ['idle']; 1976: ['idle']; 1977: ['idle']; 1978: ['idle']; 1979: ['idle']; 1980: ['idle']; 1981: ['USA.blockade_cuba']; 1982: ['Nature.accident']
+[V2]   1971: True, True, False, False (layered)
+[V2]     beside: fortune {('USA', 'Nature'): False, ('USSR', 'Nature'): True}; balance_cw [True, False, False]; balance_tri [True, False, False]; coarse inert [True, True, False]
+[V2]     breaking K_USA: 1971: ['idle']; 1972: ['idle']; 1973: enters alert_1973 (forced through it)
+[V2]     breaking K_USSR: 1971: ['idle']; 1972: ['idle']; 1973: ['idle']; 1974: ['idle']; 1975: ['idle']; 1976: ['idle']; 1977: ['idle']; 1978: ['idle']; 1979: ['idle']; 1980: ['idle']; 1981: ['USA.blockade_cuba']; 1982: ['Nature.accident']
+[V2]   1972: True, True, False, False (composite (1485415 states to 1984))
+[V2]     beside: fortune {('USA', 'Nature'): False, ('USSR', 'Nature'): True}; balance_cw [True, False, False]; balance_tri [True, False, False]; coarse inert [True, True, False]
+[V2]     breaking K_USA: 1972: ['idle']; 1973: enters alert_1973 (forced through it)
+[V2]     breaking K_USSR: 1972: ['idle']; 1973: ['idle']; 1974: ['idle']; 1975: ['idle']; 1976: ['idle']; 1977: ['idle']; 1978: ['idle']; 1979: ['idle']; 1980: ['idle']; 1981: ['USA.blockade_cuba']; 1982: ['Nature.accident']
+[V2]   1973: True, True, False, False (composite (404473 states to 1984))
+[V2]     beside: fortune {('USA', 'Nature'): False, ('USSR', 'Nature'): True}; balance_cw [True, False, False]; balance_tri [True, False, False]; coarse inert [True, True, False]
+[V2]     breaking K_USA: 1973: enters alert_1973 (forced through it)
+[V2]     breaking K_USSR: 1973: ['idle']; 1974: ['idle']; 1975: ['idle']; 1976: ['idle']; 1977: ['idle']; 1978: ['idle']; 1979: ['idle']; 1980: ['idle']; 1981: ['USA.blockade_cuba']; 1982: ['Nature.accident']
+[V2]   1974: True, True, True, False (composite (390648 states to 1984))  <- fails
+[V2]     beside: fortune {('USA', 'Nature'): True, ('USSR', 'Nature'): True}; balance_cw [True, False, False]; balance_tri [True, True, False]; coarse inert [True, True, False]
+[V2]     breaking K_USA: not forced
+[V2]     breaking K_USSR: 1974: ['idle']; 1975: ['idle']; 1976: ['idle']; 1977: ['idle']; 1978: ['idle']; 1979: ['idle']; 1980: ['idle']; 1981: ['USA.blockade_cuba']; 1982: ['Nature.accident']
+[V2]   1975: True, True, True, False (composite (389788 states to 1984))  <- fails
+[V2]     beside: fortune {('USA', 'Nature'): True, ('USSR', 'Nature'): True}; balance_cw [True, False, False]; balance_tri [True, True, False]; coarse inert [True, True, False]
+[V2]     breaking K_USA: not forced
+[V2]     breaking K_USSR: 1975: ['idle']; 1976: ['idle']; 1977: ['idle']; 1978: ['idle']; 1979: ['idle']; 1980: ['idle']; 1981: ['USA.blockade_cuba']; 1982: ['Nature.accident']
+[V2]   1976: True, True, True, False (composite (378291 states to 1984))  <- fails
+[V2]     beside: fortune {('USA', 'Nature'): True, ('USSR', 'Nature'): True}; balance_cw [True, False, False]; balance_tri [True, True, False]; coarse inert [True, True, False]
+[V2]     breaking K_USA: not forced
+[V2]     breaking K_USSR: 1976: ['idle']; 1977: ['idle']; 1978: ['idle']; 1979: ['idle']; 1980: ['idle']; 1981: ['USA.blockade_cuba']; 1982: ['Nature.accident']
+[V2]   1977: True, True, True, False (composite (375956 states to 1984))  <- fails
+[V2]     beside: fortune {('USA', 'Nature'): True, ('USSR', 'Nature'): True}; balance_cw [True, False, False]; balance_tri [True, True, False]; coarse inert [True, True, False]
+[V2]     breaking K_USA: not forced
+[V2]     breaking K_USSR: 1977: ['idle']; 1978: ['idle']; 1979: ['idle']; 1980: ['idle']; 1981: ['USA.blockade_cuba']; 1982: ['Nature.accident']
+[V2]   1978: True, True, True, False (composite (345458 states to 1984))  <- fails
+[V2]     beside: fortune {('USA', 'Nature'): True, ('USSR', 'Nature'): True}; balance_cw [True, False, False]; balance_tri [True, True, False]; coarse inert [True, True, False]
+[V2]     breaking K_USA: not forced
+[V2]     breaking K_USSR: 1978: ['idle']; 1979: ['idle']; 1980: ['idle']; 1981: ['USA.blockade_cuba']; 1982: ['Nature.accident']
+[V2]   1979: True, True, True, False (composite (230727 states to 1984))  <- fails
+[V2]     beside: fortune {('USA', 'Nature'): True, ('USSR', 'Nature'): True}; balance_cw [True, False, False]; balance_tri [True, True, False]; coarse inert [True, True, False]
+[V2]     breaking K_USA: not forced
+[V2]     breaking K_USSR: 1979: ['idle']; 1980: ['idle']; 1981: ['USA.blockade_cuba']; 1982: ['Nature.accident']
+[V2]   1980: True, True, True, False (composite (95342 states to 1984))  <- fails
+[V2]     beside: fortune {('USA', 'Nature'): True, ('USSR', 'Nature'): True}; balance_cw [True, False, False]; balance_tri [True, True, False]; coarse inert [True, True, False]
+[V2]     breaking K_USA: not forced
+[V2]     breaking K_USSR: 1980: ['idle']; 1981: ['USA.blockade_cuba']; 1982: ['Nature.accident']
+[V2]   1981: True, True, True, False (composite (23266 states to 1984))  <- fails
+[V2]     beside: fortune {('USA', 'Nature'): True, ('USSR', 'Nature'): True}; balance_cw [False, False, False]; balance_tri [True, True, False]; coarse inert [True, True, False]
+[V2]     breaking K_USA: not forced
+[V2]     breaking K_USSR: 1981: ['USA.blockade_cuba']; 1982: ['Nature.accident']
+[V2]   1982: True, True, True, True (composite (1554 states to 1984))  <- fails
+[V2]     beside: fortune {('USA', 'Nature'): True, ('USSR', 'Nature'): True}; balance_cw [True, False, True]; balance_tri [True, True, True]; coarse inert [True, True, True]
+[V2]     breaking K_USA: not forced
+[V2]     breaking K_USSR: not forced
+[V2]   1983: True, True, True, True (composite (32 states to 1984))  <- fails
+[V2]     beside: fortune {('USA', 'Nature'): True, ('USSR', 'Nature'): True}; balance_cw [True, False, True]; balance_tri [True, True, True]; coarse inert [True, True, True]
+[V2]     breaking K_USA: not forced
+[V2]     breaking K_USSR: not forced
+[V2]   1984: True, True, True, True (symbolic)  <- fails
+[V2]     beside: fortune {('USA', 'Nature'): True, ('USSR', 'Nature'): True}; balance_cw [True, False, True]; balance_tri [True, True, True]; coarse inert [True, True, True]
+[V2]     breaking K_USA: not forced
+[V2]     breaking K_USSR: not forced
+[V2]   1985: True, True, True, True (symbolic)  <- fails
+[V2]     beside: fortune {('USA', 'Nature'): True, ('USSR', 'Nature'): True}; balance_cw [True, False, True]; balance_tri [True, True, True]; coarse inert [True, True, True]
+[V2]     breaking K_USA: not forced
+[V2]     breaking K_USSR: not forced
+[V2]   1986: True, True, True, True (symbolic)  <- fails
+[V2]     beside: fortune {('USA', 'Nature'): True, ('USSR', 'Nature'): True}; balance_cw [True, False, True]; balance_tri [True, True, True]; coarse inert [True, True, True]
+[V2]     breaking K_USA: not forced
+[V2]     breaking K_USSR: not forced
+[V2]   1987: True, True, True, True (symbolic)  <- fails
+[V2]     beside: fortune {('USA', 'Nature'): True, ('USSR', 'Nature'): True}; balance_cw [False, False, False]; balance_tri [True, True, True]; coarse inert [True, True, True]
+[V2]     breaking K_USA: not forced
+[V2]     breaking K_USSR: not forced
+[V2]   1988: True, True, True, True (symbolic)  <- fails
+[V2]     beside: fortune {('USA', 'Nature'): True, ('USSR', 'Nature'): True}; balance_cw [False, False, False]; balance_tri [True, True, True]; coarse inert [True, True, True]
+[V2]     breaking K_USA: not forced
+[V2]     breaking K_USSR: not forced
+[V2]   1989: True, True, True, True (symbolic)  <- fails
+[V2]     beside: fortune {('USA', 'Nature'): True, ('USSR', 'Nature'): True}; balance_cw [False, False, False]; balance_tri [True, True, True]; coarse inert [True, True, True]
+[V2]     breaking K_USA: not forced
+[V2]     breaking K_USSR: not forced
+[V2]   1990: True, True, True, True (symbolic)  <- fails
+[V2]     beside: fortune {('USA', 'Nature'): True, ('USSR', 'Nature'): True}; balance_cw [False, False, False]; balance_tri [True, True, True]; coarse inert [True, True, True]
+[V2]     breaking K_USA: not forced
+[V2]     breaking K_USSR: not forced
+[V2]   1991: True, True, True, True (symbolic)  <- fails
+[V2]     beside: fortune {('USA', 'Nature'): True, ('USSR', 'Nature'): True}; balance_cw [False, False, False]; balance_tri [True, True, True]; coarse inert [True, True, True]
+[V2]     breaking K_USA: not forced
+[V2]     breaking K_USSR: not forced
+[V2]   control (no American crisis options), K_USSR by year: {1967: True, 1968: True, 1969: True, 1970: True, 1971: True, 1972: True, 1973: True, 1974: True, 1975: True, 1976: True, 1977: True, 1978: True, 1979: True, 1980: True, 1981: True, 1982: True, 1983: True, 1984: True, 1985: True, 1986: True, 1987: True, 1988: True, 1989: True, 1990: True, 1991: True}
+[V2] aims_USSR=status_quo: main False, control True (633.2 s)
+[V2] aims_USSR=opportunist: year: balance_core, K_J, K_USA, K_USSR (engine)
+[V2]   1967: True, True, False, False (layered)
+[V2]     beside: fortune {('USA', 'Nature'): False, ('USSR', 'Nature'): True}; balance_cw [True, False, False]; balance_tri [True, False, False]; coarse inert [True, True, False]
+[V2]     breaking K_USA: 1967: ['idle']; 1968: ['idle']; 1969: ['idle']; 1970: ['idle']; 1971: ['idle']; 1972: ['idle']; 1973: enters alert_1973 (forced through it)
+[V2]     breaking K_USSR: 1967: ['idle']; 1968: ['idle']; 1969: ['idle']; 1970: ['idle']; 1971: ['idle']; 1972: ['idle']; 1973: ['idle']; 1974: ['idle']; 1975: ['idle']; 1976: ['idle']; 1977: ['idle']; 1978: ['idle']; 1979: ['idle']; 1980: ['idle']; 1981: ['USA.blockade_cuba']; 1982: ['Nature.accident']
+[V2]   1968: True, True, False, False (layered)
+[V2]     beside: fortune {('USA', 'Nature'): False, ('USSR', 'Nature'): True}; balance_cw [True, False, False]; balance_tri [True, False, False]; coarse inert [True, True, False]
+[V2]     breaking K_USA: 1968: ['idle']; 1969: ['idle']; 1970: ['idle']; 1971: ['idle']; 1972: ['idle']; 1973: enters alert_1973 (forced through it)
+[V2]     breaking K_USSR: 1968: ['idle']; 1969: ['idle']; 1970: ['idle']; 1971: ['idle']; 1972: ['idle']; 1973: ['idle']; 1974: ['idle']; 1975: ['idle']; 1976: ['idle']; 1977: ['idle']; 1978: ['idle']; 1979: ['idle']; 1980: ['idle']; 1981: ['USA.blockade_cuba']; 1982: ['Nature.accident']
+[V2]   1969: True, True, False, False (layered)
+[V2]     beside: fortune {('USA', 'Nature'): False, ('USSR', 'Nature'): True}; balance_cw [True, False, False]; balance_tri [True, False, False]; coarse inert [True, True, False]
+[V2]     breaking K_USA: 1969: ['idle']; 1970: ['idle']; 1971: ['idle']; 1972: ['idle']; 1973: enters alert_1973 (forced through it)
+[V2]     breaking K_USSR: 1969: ['idle']; 1970: ['idle']; 1971: ['idle']; 1972: ['idle']; 1973: ['idle']; 1974: ['idle']; 1975: ['idle']; 1976: ['idle']; 1977: ['idle']; 1978: ['idle']; 1979: ['idle']; 1980: ['idle']; 1981: ['USA.blockade_cuba']; 1982: ['Nature.accident']
+[V2]   1970: True, True, False, False (layered)
+[V2]     beside: fortune {('USA', 'Nature'): False, ('USSR', 'Nature'): True}; balance_cw [True, False, False]; balance_tri [True, False, False]; coarse inert [True, True, False]
+[V2]     breaking K_USA: 1970: ['idle']; 1971: ['idle']; 1972: ['idle']; 1973: enters alert_1973 (forced through it)
+[V2]     breaking K_USSR: 1970: ['idle']; 1971: ['idle']; 1972: ['idle']; 1973: ['idle']; 1974: ['idle']; 1975: ['idle']; 1976: ['idle']; 1977: ['idle']; 1978: ['idle']; 1979: ['idle']; 1980: ['idle']; 1981: ['USA.blockade_cuba']; 1982: ['Nature.accident']
+[V2]   1971: True, True, False, False (layered)
+[V2]     beside: fortune {('USA', 'Nature'): False, ('USSR', 'Nature'): True}; balance_cw [True, False, False]; balance_tri [True, False, False]; coarse inert [True, True, False]
+[V2]     breaking K_USA: 1971: ['idle']; 1972: ['idle']; 1973: enters alert_1973 (forced through it)
+[V2]     breaking K_USSR: 1971: ['idle']; 1972: ['idle']; 1973: ['idle']; 1974: ['idle']; 1975: ['idle']; 1976: ['idle']; 1977: ['idle']; 1978: ['idle']; 1979: ['idle']; 1980: ['idle']; 1981: ['USA.blockade_cuba']; 1982: ['Nature.accident']
+[V2]   1972: True, True, False, False (composite (2983389 states to 1984))
+[V2]     beside: fortune {('USA', 'Nature'): False, ('USSR', 'Nature'): True}; balance_cw [True, False, False]; balance_tri [True, False, False]; coarse inert [True, True, False]
+[V2]     breaking K_USA: 1972: ['idle']; 1973: enters alert_1973 (forced through it)
+[V2]     breaking K_USSR: 1972: ['idle']; 1973: ['idle']; 1974: ['idle']; 1975: ['idle']; 1976: ['idle']; 1977: ['idle']; 1978: ['idle']; 1979: ['idle']; 1980: ['idle']; 1981: ['USA.blockade_cuba']; 1982: ['Nature.accident']
+[V2]   1973: True, True, False, False (composite (811615 states to 1984))
+[V2]     beside: fortune {('USA', 'Nature'): False, ('USSR', 'Nature'): True}; balance_cw [True, False, False]; balance_tri [True, False, False]; coarse inert [True, True, False]
+[V2]     breaking K_USA: 1973: enters alert_1973 (forced through it)
+[V2]     breaking K_USSR: 1973: ['idle']; 1974: ['idle']; 1975: ['idle']; 1976: ['idle']; 1977: ['idle']; 1978: ['idle']; 1979: ['idle']; 1980: ['idle']; 1981: ['USA.blockade_cuba']; 1982: ['Nature.accident']
+[V2]   1974: True, True, True, False (composite (785646 states to 1984))  <- fails
+[V2]     beside: fortune {('USA', 'Nature'): True, ('USSR', 'Nature'): True}; balance_cw [True, False, False]; balance_tri [True, True, False]; coarse inert [True, True, False]
+[V2]     breaking K_USA: not forced
+[V2]     breaking K_USSR: 1974: ['idle']; 1975: ['idle']; 1976: ['idle']; 1977: ['idle']; 1978: ['idle']; 1979: ['idle']; 1980: ['idle']; 1981: ['USA.blockade_cuba']; 1982: ['Nature.accident']
+[V2]   1975: True, True, True, False (composite (782498 states to 1984))  <- fails
+[V2]     beside: fortune {('USA', 'Nature'): True, ('USSR', 'Nature'): True}; balance_cw [True, False, False]; balance_tri [True, True, False]; coarse inert [True, True, False]
+[V2]     breaking K_USA: not forced
+[V2]     breaking K_USSR: 1975: ['idle']; 1976: ['idle']; 1977: ['idle']; 1978: ['idle']; 1979: ['idle']; 1980: ['idle']; 1981: ['USA.blockade_cuba']; 1982: ['Nature.accident']
+[V2]   1976: True, True, True, False (composite (759534 states to 1984))  <- fails
+[V2]     beside: fortune {('USA', 'Nature'): True, ('USSR', 'Nature'): True}; balance_cw [True, False, False]; balance_tri [True, True, False]; coarse inert [True, True, False]
+[V2]     breaking K_USA: not forced
+[V2]     breaking K_USSR: 1976: ['idle']; 1977: ['idle']; 1978: ['idle']; 1979: ['idle']; 1980: ['idle']; 1981: ['USA.blockade_cuba']; 1982: ['Nature.accident']
+[V2]   1977: True, True, True, False (composite (737308 states to 1984))  <- fails
+[V2]     beside: fortune {('USA', 'Nature'): True, ('USSR', 'Nature'): True}; balance_cw [True, False, False]; balance_tri [True, True, False]; coarse inert [True, True, False]
+[V2]     breaking K_USA: not forced
+[V2]     breaking K_USSR: 1977: ['idle']; 1978: ['idle']; 1979: ['idle']; 1980: ['idle']; 1981: ['USA.blockade_cuba']; 1982: ['Nature.accident']
+[V2]   1978: True, True, True, False (composite (630128 states to 1984))  <- fails
+[V2]     beside: fortune {('USA', 'Nature'): True, ('USSR', 'Nature'): True}; balance_cw [True, False, False]; balance_tri [True, True, False]; coarse inert [True, True, False]
+[V2]     breaking K_USA: not forced
+[V2]     breaking K_USSR: 1978: ['idle']; 1979: ['idle']; 1980: ['idle']; 1981: ['USA.blockade_cuba']; 1982: ['Nature.accident']
+[V2]   1979: True, True, True, False (composite (409880 states to 1984))  <- fails
+[V2]     beside: fortune {('USA', 'Nature'): True, ('USSR', 'Nature'): True}; balance_cw [True, False, False]; balance_tri [True, True, False]; coarse inert [True, True, False]
+[V2]     breaking K_USA: not forced
+[V2]     breaking K_USSR: 1979: ['idle']; 1980: ['idle']; 1981: ['USA.blockade_cuba']; 1982: ['Nature.accident']
+[V2]   1980: True, True, True, False (composite (148958 states to 1984))  <- fails
+[V2]     beside: fortune {('USA', 'Nature'): True, ('USSR', 'Nature'): True}; balance_cw [True, False, False]; balance_tri [True, True, False]; coarse inert [True, True, False]
+[V2]     breaking K_USA: not forced
+[V2]     breaking K_USSR: 1980: ['idle']; 1981: ['USA.blockade_cuba']; 1982: ['Nature.accident']
+[V2]   1981: True, True, True, False (composite (34914 states to 1984))  <- fails
+[V2]     beside: fortune {('USA', 'Nature'): True, ('USSR', 'Nature'): True}; balance_cw [False, False, False]; balance_tri [True, True, False]; coarse inert [True, True, False]
+[V2]     breaking K_USA: not forced
+[V2]     breaking K_USSR: 1981: ['USA.blockade_cuba']; 1982: ['Nature.accident']
+[V2]   1982: True, True, True, True (composite (1731 states to 1984))  <- fails
+[V2]     beside: fortune {('USA', 'Nature'): True, ('USSR', 'Nature'): True}; balance_cw [True, False, True]; balance_tri [True, True, True]; coarse inert [True, True, True]
+[V2]     breaking K_USA: not forced
+[V2]     breaking K_USSR: not forced
+[V2]   1983: True, True, True, True (composite (35 states to 1984))  <- fails
+[V2]     beside: fortune {('USA', 'Nature'): True, ('USSR', 'Nature'): True}; balance_cw [True, False, True]; balance_tri [True, True, True]; coarse inert [True, True, True]
+[V2]     breaking K_USA: not forced
+[V2]     breaking K_USSR: not forced
+[V2]   1984: True, True, True, True (symbolic)  <- fails
+[V2]     beside: fortune {('USA', 'Nature'): True, ('USSR', 'Nature'): True}; balance_cw [True, False, True]; balance_tri [True, True, True]; coarse inert [True, True, True]
+[V2]     breaking K_USA: not forced
+[V2]     breaking K_USSR: not forced
+[V2]   1985: True, True, True, True (symbolic)  <- fails
+[V2]     beside: fortune {('USA', 'Nature'): True, ('USSR', 'Nature'): True}; balance_cw [True, False, True]; balance_tri [True, True, True]; coarse inert [True, True, True]
+[V2]     breaking K_USA: not forced
+[V2]     breaking K_USSR: not forced
+[V2]   1986: True, True, True, True (symbolic)  <- fails
+[V2]     beside: fortune {('USA', 'Nature'): True, ('USSR', 'Nature'): True}; balance_cw [True, False, True]; balance_tri [True, True, True]; coarse inert [True, True, True]
+[V2]     breaking K_USA: not forced
+[V2]     breaking K_USSR: not forced
+[V2]   1987: True, True, True, True (symbolic)  <- fails
+[V2]     beside: fortune {('USA', 'Nature'): True, ('USSR', 'Nature'): True}; balance_cw [False, False, False]; balance_tri [True, True, True]; coarse inert [True, True, True]
+[V2]     breaking K_USA: not forced
+[V2]     breaking K_USSR: not forced
+[V2]   1988: True, True, True, True (symbolic)  <- fails
+[V2]     beside: fortune {('USA', 'Nature'): True, ('USSR', 'Nature'): True}; balance_cw [False, False, False]; balance_tri [True, True, True]; coarse inert [True, True, True]
+[V2]     breaking K_USA: not forced
+[V2]     breaking K_USSR: not forced
+[V2]   1989: True, True, True, True (symbolic)  <- fails
+[V2]     beside: fortune {('USA', 'Nature'): True, ('USSR', 'Nature'): True}; balance_cw [False, False, False]; balance_tri [True, True, True]; coarse inert [True, True, True]
+[V2]     breaking K_USA: not forced
+[V2]     breaking K_USSR: not forced
+[V2]   1990: True, True, True, True (symbolic)  <- fails
+[V2]     beside: fortune {('USA', 'Nature'): True, ('USSR', 'Nature'): True}; balance_cw [False, False, False]; balance_tri [True, True, True]; coarse inert [True, True, True]
+[V2]     breaking K_USA: not forced
+[V2]     breaking K_USSR: not forced
+[V2]   1991: True, True, True, True (symbolic)  <- fails
+[V2]     beside: fortune {('USA', 'Nature'): True, ('USSR', 'Nature'): True}; balance_cw [False, False, False]; balance_tri [True, True, True]; coarse inert [True, True, True]
+[V2]     breaking K_USA: not forced
+[V2]     breaking K_USSR: not forced
+[V2]   control (no American crisis options), K_USSR by year: {1967: True, 1968: True, 1969: True, 1970: True, 1971: True, 1972: True, 1973: True, 1974: True, 1975: True, 1976: True, 1977: True, 1978: True, 1979: True, 1980: True, 1981: True, 1982: True, 1983: True, 1984: True, 1985: True, 1986: True, 1987: True, 1988: True, 1989: True, 1990: True, 1991: True}
+[V2] aims_USSR=opportunist: main False, control True (1649.7 s)
+F
+=================================== FAILURES ===================================
+___________________________________ test_V2 ____________________________________
+
+    @pytest.mark.skipif(not FIRST_SIGHT, reason="cw_v1 first sight not switched on")
+    def test_V2():
+        timer = Timer()
+        print("\n[V2] engines: composite 1972-1983, symbolic from 1984, layered lifting 1967-1971")
+        results = {}
+        for aims in HYPS:
+            cm = compiled(aims)
+            main = True
+            print(f"[V2] aims_USSR={aims}: year: {P}, K_J, K_USA, K_USSR (engine)")
+            for y in YEARS:
+                s = hindsight(y, aims)
+                m, engine = members(aims, y, COALITIONS)
+                ok = m[JOINT] and not m[US] and not m[SU]
+                main = main and ok
+                print(
+                    f"[V2]   {y}: {bool(cm.evaluate(P, s))}, {m[JOINT]}, {m[US]}, {m[SU]} ({engine})"
+                    f"{'' if ok else '  <- fails'}"
+                )
+                fortune = {c: layered_kernel(aims, c, P).contains(s) for c in FORTUNE}
+                beside = {
+                    (inv, c): layered_kernel(aims, c, inv).contains(s)
+                    for inv in BESIDE
+                    for c in COALITIONS
+                }
+                inert = {c: kernel(aims, c, P).contains(s) for c in COALITIONS}
+                print(
+                    f"[V2]     beside: fortune {fortune}; "
+                    + "; ".join(f"{inv} {[beside[(inv, c)] for c in COALITIONS]}" for inv in BESIDE)
+                    + f"; coarse inert {[inert[c] for c in COALITIONS]}"
+                )
+                for side in (US, SU):
+                    print(f"[V2]     breaking K_{side[0]}: {breaking_moves(aims, side, s)}")
+            control = {}
+            for y in YEARS:
+                m, engine = members(aims, y, (SU,), us_crisis_options=False)
+                control[y] = m[SU]
+            c = any(control.values())
+            print(f"[V2]   control (no American crisis options), K_USSR by year: {control}")
+            results[aims] = (main, c)
+            print(f"[V2] aims_USSR={aims}: main {main}, control {c} ({timer})")
+>       assert any(all(v) for v in results.values()), results
+E       AssertionError: {'status_quo': (False, True), 'opportunist': (False, True)}
+E       assert False
+E        +  where False = any(<generator object test_V2.<locals>.<genexpr> at 0x7c837738adc0>)
+
+tests/coldwar_v1/scenarios/test_V02.py:183: AssertionError
+=========================== short test summary info ============================
+FAILED tests/coldwar_v1/scenarios/test_V02.py::test_V2 - AssertionError: {'st...
+1 failed in 1649.96s (0:27:29)
+END=2026-10-29T07:49:28Z

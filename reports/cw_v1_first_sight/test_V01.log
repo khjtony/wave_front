@@ -1,0 +1,16 @@
+START=2026-10-29T07:21:57Z
+
+[V1] engine: explicit replay on the flattened game; control explicit, cut 1954
+[V1] the PRC's realized decisions: {1951: 'intervene_korea', 1969: 'border_clash', 1972: 'rapprochement', 1989: 'normalize'}
+[V1] aims_USSR=status_quo: stops in 1950 (coarse): USSR.approve_korea unavailable
+[V1]   (b) control, Korean entry forbidden, cut 1954 (explicit, 482887 states): US-PRC war reachable False
+[V1] aims_USSR=status_quo: (a) False, (b) True (19.7 s)
+[V1] aims_USSR=opportunist: every move available (zero relaxations); tick 45, ending CHALLENGER_EXHAUSTION; crises played: ['able_archer_1983', 'alert_1973', 'berlin_1948', 'cuba_1962', 'sino_soviet_1969'] (105 fine states)
+[V1]   (b) control, Korean entry forbidden, cut 1954 (explicit, 1078351 states): US-PRC war reachable False
+[V1] aims_USSR=opportunist: (a) True, (b) True (72.5 s)
+.
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED tests/coldwar_v1/scenarios/test_V01.py::test_V1
+1 passed in 72.74s (0:01:12)
+END=2026-10-29T07:23:11Z

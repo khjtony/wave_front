@@ -1,0 +1,246 @@
+START=2026-10-29T07:49:28Z
+
+[V8] engines: layered lifting 1947-1983, symbolic from 1984 (decision 7f(b))
+[V8]   aims_USSR=status_quo 1947: K_J True, K_USA False, K_USSR False; to adverse 2; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('tick', 0), ('aims_USSR', 0)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1948: K_J True, K_USA False, K_USSR False; to adverse 2; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('tick', 0), ('aims_USSR', 0)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1949: K_J True, K_USA False, K_USSR False; to adverse 2; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('tick', 0), ('aims_USSR', 0)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1950: K_J True, K_USA False, K_USSR False; to adverse 2; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('tick', 0), ('aims_USSR', 0)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1951: K_J True, K_USA False, K_USSR False; to adverse 1; families {'nuke': 0, 'belief': 1, 'oversight': 0}; top [('korea', 2), ('belief_USA_USSR', 1), ('esc_usprc', 1), ('tick', 0)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 0, 'belief': 1, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1952: K_J True, K_USA False, K_USSR False; to adverse 1; families {'nuke': 0, 'belief': 1, 'oversight': 0}; top [('korea', 2), ('belief_USA_USSR', 1), ('esc_usprc', 1), ('tick', 0)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 0, 'belief': 1, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1953: K_J True, K_USA False, K_USSR False; to adverse 1; families {'nuke': 0, 'belief': 1, 'oversight': 0}; top [('korea', 2), ('belief_USA_USSR', 1), ('esc_usprc', 1), ('tick', 0)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 0, 'belief': 1, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1954: K_J True, K_USA False, K_USSR False; to adverse 2; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('tick', 0), ('aims_USSR', 0)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1955: K_J True, K_USA False, K_USSR False; to adverse 2; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('tick', 0), ('aims_USSR', 0)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1956: K_J True, K_USA False, K_USSR False; to adverse 2; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('tick', 0), ('aims_USSR', 0)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1957: K_J False, K_USA False, K_USSR False; to adverse 2; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('tick', 0), ('aims_USSR', 0)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 0, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1958: K_J False, K_USA False, K_USSR False; to adverse 2; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('tick', 0), ('aims_USSR', 0)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 0, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1959: K_J False, K_USA False, K_USSR False; to adverse 1; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('tick', 0), ('aims_USSR', 0), ('nuke_USA', 0)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 0, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1960: K_J False, K_USA False, K_USSR False; to adverse 1; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('tick', 0), ('aims_USSR', 0), ('nuke_USA', 0)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 0, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1961: K_J False, K_USA False, K_USSR False; to adverse 1; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('tick', 0), ('aims_USSR', 0), ('nuke_USA', 0)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1962: K_J False, K_USA False, K_USSR False; to adverse 4; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('tick', 0)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1963: K_J False, K_USA False, K_USSR False; to adverse 9; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1964: K_J False, K_USA False, K_USSR False; to adverse 8; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1965: K_J False, K_USA False, K_USSR False; to adverse 7; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1966: K_J False, K_USA False, K_USSR False; to adverse 6; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1967: K_J True, K_USA False, K_USSR False; to adverse 5; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature True; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1968: K_J True, K_USA False, K_USSR False; to adverse 4; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature True; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1969: K_J True, K_USA False, K_USSR False; to adverse 3; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature True; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1970: K_J True, K_USA False, K_USSR False; to adverse 2; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('esc_sino', 1), ('sino_soviet_talks', 1), ('tick', 0)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature True; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1971: K_J True, K_USA False, K_USSR False; to adverse 7; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature True; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1972: K_J True, K_USA False, K_USSR False; to adverse 6; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature True; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1973: K_J True, K_USA False, K_USSR False; to adverse 5; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature True; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1974: K_J True, K_USA True, K_USSR False; to adverse 7; families {'nuke': 1, 'belief': 0, 'oversight': 0}; top [('nuke_USSR', 1), ('esc', 1), ('berlin_wall', 1), ('korea', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature True, K_USSR+Nature True; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1975: K_J True, K_USA True, K_USSR False; to adverse 6; families {'nuke': 1, 'belief': 0, 'oversight': 0}; top [('nuke_USSR', 1), ('esc', 1), ('berlin_wall', 1), ('korea', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature True, K_USSR+Nature True; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1976: K_J True, K_USA True, K_USSR False; to adverse 5; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature True, K_USSR+Nature True; families {'nuke': 0, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1977: K_J True, K_USA True, K_USSR False; to adverse 4; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature True, K_USSR+Nature True; families {'nuke': 0, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1978: K_J True, K_USA True, K_USSR False; to adverse 3; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature True, K_USSR+Nature True; families {'nuke': 0, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1979: K_J True, K_USA True, K_USSR False; to adverse 2; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('esc_sino', 1), ('tick', 0)] [layered]
+[V8]     beside (fortune): K_USA+Nature True, K_USSR+Nature True; families {'nuke': 0, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1980: K_J True, K_USA True, K_USSR False; to adverse 3; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature True, K_USSR+Nature True; families {'nuke': 0, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1981: K_J True, K_USA True, K_USSR False; to adverse 2; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('esc_sino', 1), ('tick', 0)] [layered]
+[V8]     beside (fortune): K_USA+Nature True, K_USSR+Nature True; families {'nuke': 0, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1982: K_J True, K_USA True, K_USSR True; to adverse 5; families {'nuke': 0, 'belief': 1, 'oversight': 0}; top [('belief_USSR_USA', 1), ('buildup', 1), ('esc', 1), ('berlin_wall', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature True, K_USSR+Nature True; families {'nuke': 0, 'belief': 1, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1983: K_J True, K_USA True, K_USSR True; to adverse None; families {'nuke': 0, 'belief': 1, 'oversight': 0}; top [('belief_USSR_USA', 1), ('esc', 1), ('berlin_wall', 1), ('korea', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature True, K_USSR+Nature True; families {'nuke': 0, 'belief': 1, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1984: K_J True, K_USA True, K_USSR True; to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [symbolic]
+[V8]     beside (fortune): K_USA+Nature True, K_USSR+Nature True; families {'nuke': 0, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1985: K_J True, K_USA True, K_USSR True; to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [symbolic]
+[V8]     beside (fortune): K_USA+Nature True, K_USSR+Nature True; families {'nuke': 0, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1986: K_J True, K_USA True, K_USSR True; to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [symbolic]
+[V8]     beside (fortune): K_USA+Nature True, K_USSR+Nature True; families {'nuke': 0, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1987: K_J True, K_USA True, K_USSR True; to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [symbolic]
+[V8]     beside (fortune): K_USA+Nature True, K_USSR+Nature True; families {'nuke': 0, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1988: K_J True, K_USA True, K_USSR True; to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [symbolic]
+[V8]     beside (fortune): K_USA+Nature True, K_USSR+Nature True; families {'nuke': 0, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1989: K_J True, K_USA True, K_USSR True; to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [symbolic]
+[V8]     beside (fortune): K_USA+Nature True, K_USSR+Nature True; families {'nuke': 0, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1990: K_J True, K_USA True, K_USSR True; to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('tick', 0)] [symbolic]
+[V8]     beside (fortune): K_USA+Nature True, K_USSR+Nature True; families {'nuke': 0, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=status_quo 1991: K_J True, K_USA True, K_USSR True; to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('tick', 0), ('aims_USSR', 0), ('nuke_USA', 0)] [symbolic]
+[V8]     beside (fortune): K_USA+Nature True, K_USSR+Nature True; families {'nuke': 0, 'belief': 0, 'oversight': 0}
+[V8] aims_USSR=status_quo: (a) True; (b) before 1965 False, after 1965 False: False (241.3 s)
+[V8]   aims_USSR=opportunist 1947: K_J True, K_USA False, K_USSR False; to adverse 2; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('tick', 0), ('aims_USSR', 0)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1948: K_J True, K_USA False, K_USSR False; to adverse 2; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('tick', 0), ('aims_USSR', 0)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1949: K_J True, K_USA False, K_USSR False; to adverse 2; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('tick', 0), ('aims_USSR', 0)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1950: K_J True, K_USA False, K_USSR False; to adverse 2; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('tick', 0), ('aims_USSR', 0)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1951: K_J True, K_USA False, K_USSR False; to adverse 2; families {'nuke': 0, 'belief': 2, 'oversight': 0}; top [('belief_USA_USSR', 2), ('esc', 1), ('tick', 0), ('aims_USSR', 0)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 1, 'belief': 2, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1952: K_J True, K_USA False, K_USSR False; to adverse 2; families {'nuke': 0, 'belief': 2, 'oversight': 0}; top [('belief_USA_USSR', 2), ('esc', 1), ('tick', 0), ('aims_USSR', 0)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 1, 'belief': 2, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1953: K_J True, K_USA False, K_USSR False; to adverse 2; families {'nuke': 0, 'belief': 2, 'oversight': 0}; top [('belief_USA_USSR', 2), ('esc', 1), ('tick', 0), ('aims_USSR', 0)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 1, 'belief': 2, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1954: K_J True, K_USA False, K_USSR False; to adverse 2; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('tick', 0), ('aims_USSR', 0)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1955: K_J True, K_USA False, K_USSR False; to adverse 2; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('tick', 0), ('aims_USSR', 0)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1956: K_J True, K_USA False, K_USSR False; to adverse 2; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('tick', 0), ('aims_USSR', 0)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1957: K_J False, K_USA False, K_USSR False; to adverse 2; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('tick', 0), ('aims_USSR', 0)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 0, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1958: K_J False, K_USA False, K_USSR False; to adverse 2; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('tick', 0), ('aims_USSR', 0)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 0, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1959: K_J False, K_USA False, K_USSR False; to adverse 1; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('tick', 0), ('aims_USSR', 0), ('nuke_USA', 0)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 0, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1960: K_J False, K_USA False, K_USSR False; to adverse 1; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('tick', 0), ('aims_USSR', 0), ('nuke_USA', 0)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 0, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1961: K_J False, K_USA False, K_USSR False; to adverse 1; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('tick', 0), ('aims_USSR', 0), ('nuke_USA', 0)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1962: K_J False, K_USA False, K_USSR False; to adverse 4; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('tick', 0)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1963: K_J False, K_USA False, K_USSR False; to adverse 9; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1964: K_J False, K_USA False, K_USSR False; to adverse 8; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1965: K_J False, K_USA False, K_USSR False; to adverse 7; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1966: K_J False, K_USA False, K_USSR False; to adverse 6; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature False; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1967: K_J True, K_USA False, K_USSR False; to adverse 5; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature True; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1968: K_J True, K_USA False, K_USSR False; to adverse 4; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature True; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1969: K_J True, K_USA False, K_USSR False; to adverse 3; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature True; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1970: K_J True, K_USA False, K_USSR False; to adverse 2; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('korea', 1), ('esc_sino', 1), ('sino_soviet_talks', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature True; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1971: K_J True, K_USA False, K_USSR False; to adverse 7; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature True; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1972: K_J True, K_USA False, K_USSR False; to adverse 6; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature True; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1973: K_J True, K_USA False, K_USSR False; to adverse 5; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature False, K_USSR+Nature True; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1974: K_J True, K_USA True, K_USSR False; to adverse 7; families {'nuke': 1, 'belief': 0, 'oversight': 0}; top [('nuke_USSR', 1), ('esc', 1), ('berlin_wall', 1), ('korea', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature True, K_USSR+Nature True; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1975: K_J True, K_USA True, K_USSR False; to adverse 6; families {'nuke': 1, 'belief': 0, 'oversight': 0}; top [('nuke_USSR', 1), ('esc', 1), ('berlin_wall', 1), ('korea', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature True, K_USSR+Nature True; families {'nuke': 1, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1976: K_J True, K_USA True, K_USSR False; to adverse 5; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature True, K_USSR+Nature True; families {'nuke': 0, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1977: K_J True, K_USA True, K_USSR False; to adverse 4; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature True, K_USSR+Nature True; families {'nuke': 0, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1978: K_J True, K_USA True, K_USSR False; to adverse 3; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature True, K_USSR+Nature True; families {'nuke': 0, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1979: K_J True, K_USA True, K_USSR False; to adverse 2; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature True, K_USSR+Nature True; families {'nuke': 0, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1980: K_J True, K_USA True, K_USSR False; to adverse 3; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature True, K_USSR+Nature True; families {'nuke': 0, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1981: K_J True, K_USA True, K_USSR False; to adverse 2; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature True, K_USSR+Nature True; families {'nuke': 0, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1982: K_J True, K_USA True, K_USSR True; to adverse 5; families {'nuke': 0, 'belief': 1, 'oversight': 0}; top [('belief_USSR_USA', 1), ('buildup', 1), ('esc', 1), ('berlin_wall', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature True, K_USSR+Nature True; families {'nuke': 0, 'belief': 1, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1983: K_J True, K_USA True, K_USSR True; to adverse None; families {'nuke': 0, 'belief': 1, 'oversight': 0}; top [('belief_USSR_USA', 1), ('esc', 1), ('berlin_wall', 1), ('korea', 1)] [layered]
+[V8]     beside (fortune): K_USA+Nature True, K_USSR+Nature True; families {'nuke': 0, 'belief': 1, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1984: K_J True, K_USA True, K_USSR True; to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [symbolic]
+[V8]     beside (fortune): K_USA+Nature True, K_USSR+Nature True; families {'nuke': 0, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1985: K_J True, K_USA True, K_USSR True; to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [symbolic]
+[V8]     beside (fortune): K_USA+Nature True, K_USSR+Nature True; families {'nuke': 0, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1986: K_J True, K_USA True, K_USSR True; to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [symbolic]
+[V8]     beside (fortune): K_USA+Nature True, K_USSR+Nature True; families {'nuke': 0, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1987: K_J True, K_USA True, K_USSR True; to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [symbolic]
+[V8]     beside (fortune): K_USA+Nature True, K_USSR+Nature True; families {'nuke': 0, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1988: K_J True, K_USA True, K_USSR True; to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [symbolic]
+[V8]     beside (fortune): K_USA+Nature True, K_USSR+Nature True; families {'nuke': 0, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1989: K_J True, K_USA True, K_USSR True; to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('esc_sino', 1)] [symbolic]
+[V8]     beside (fortune): K_USA+Nature True, K_USSR+Nature True; families {'nuke': 0, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1990: K_J True, K_USA True, K_USSR True; to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('berlin_wall', 1), ('korea', 1), ('tick', 0)] [symbolic]
+[V8]     beside (fortune): K_USA+Nature True, K_USSR+Nature True; families {'nuke': 0, 'belief': 0, 'oversight': 0}
+[V8]   aims_USSR=opportunist 1991: K_J True, K_USA True, K_USSR True; to adverse None; families {'nuke': 0, 'belief': 0, 'oversight': 0}; top [('esc', 1), ('korea', 1), ('tick', 0), ('aims_USSR', 0)] [symbolic]
+[V8]     beside (fortune): K_USA+Nature True, K_USSR+Nature True; families {'nuke': 0, 'belief': 0, 'oversight': 0}
+[V8] aims_USSR=opportunist: (a) True; (b) before 1965 False, after 1965 False: False (435.3 s)
+F
+=================================== FAILURES ===================================
+___________________________________ test_V8 ____________________________________
+
+    @pytest.mark.skipif(not FIRST_SIGHT, reason="cw_v1 first sight not switched on")
+    def test_V8():
+        timer = Timer()
+        print("\n[V8] engines: layered lifting 1947-1983, symbolic from 1984 (decision 7f(b))")
+        results = {}
+        for aims in HYPS:
+            cm = compiled(aims)
+            a = True
+            before = after = True
+            for y in range(1947, 1992):
+                s = hindsight(y, aims)
+                perts = list(perturbations(cm, s))
+                values, engine = measures(aims, y, [s] + [t for _, _, t in perts])
+                base, rest = values[0], values[1:]
+                score = {v.name: 0 for v in cm.variables}
+                luck = {v.name: 0 for v in cm.variables}  # the fortune variant, beside
+                for (name, d, _), m in zip(perts, rest, strict=True):
+                    score[name] += (m[1], m[2], m[5]) != (base[1], base[2], base[5])
+                    luck[name] += (m[3], m[4], m[5]) != (base[3], base[4], base[5])
+                    if (
+                        y >= 1965
+                        and d == 1
+                        and name in FAMILIES["nuke"]
+                        and cm.state_dict(s)[name] in ("survivable", "overkill")
+                        and m[0] != base[0]
+                    ):
+                        a = False
+                fam = {f: max(score[v] for v in vs) for f, vs in FAMILIES.items()}
+                fam_luck = {f: max(luck[v] for v in vs) for f, vs in FAMILIES.items()}
+                before, after = rank_ok(fam, y, before, after)
+                top = sorted(score.items(), key=lambda kv: -kv[1])[:4]
+                print(
+                    f"[V8]   aims_USSR={aims} {y}: K_J {base[0]}, K_USA {base[1]}, K_USSR "
+                    f"{base[2]}; to adverse {base[5]}; families {fam}; top {top} [{engine}]"
+                )
+                print(
+                    f"[V8]     beside (fortune): K_USA+Nature {base[3]}, K_USSR+Nature {base[4]}; "
+                    f"families {fam_luck}"
+                )
+            ok = a and before and after
+            results[aims] = ok
+            print(
+                f"[V8] aims_USSR={aims}: (a) {a}; (b) before 1965 {before}, after 1965 {after}: "
+                f"{ok} ({timer})"
+            )
+>       assert any(results.values()), results
+E       AssertionError: {'status_quo': False, 'opportunist': False}
+E       assert False
+E        +  where False = any(dict_values([False, False]))
+E        +    where dict_values([False, False]) = <built-in method values of dict object at 0x7d2e377a9e80>()
+E        +      where <built-in method values of dict object at 0x7d2e377a9e80> = {'status_quo': False, 'opportunist': False}.values
+
+tests/coldwar_v1/scenarios/test_V08.py:165: AssertionError
+=========================== short test summary info ============================
+FAILED tests/coldwar_v1/scenarios/test_V08.py::test_V8 - AssertionError: {'st...
+1 failed in 435.51s (0:07:15)
+END=2026-10-29T07:56:44Z
