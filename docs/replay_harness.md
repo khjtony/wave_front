@@ -652,11 +652,12 @@ What a blind C6 and C7 replay still needs:
 
 ## Open items
 
-- framework_spec.md section 2 (package layout), section 9 (evidence) and section 10 (CLI)
-  do not yet list the `corpora`, `extract` (with its per-document cache), `harness_rules`,
-  `review` and `replay` modules and the `extract`, `review` and `replay` subcommands with their
-  options (`--rules`, `--workers`, `--cache`, `--no-cache`, `--dry-run`); the spec belongs to
-  the framework step and should gain a paragraph for each.
+- Done 2026-10-29: framework_spec.md section 2 (package layout), section 9 (evidence) and
+  section 10 (CLI) now have their paragraphs for the `corpora` (the `crest` corpus included),
+  `extract` (the DeepSeek backend and the per-document cache included), `harness_rules`,
+  `review`, `episodes`, `replay` and `replay_cw` modules, and for the `extract`, `review` and
+  `replay` subcommands with every option and its default (`--episode`, `--years`,
+  `--guidance-file` and `--drop-rejected` included).
 - The two-document rule counts document ids, so a document printed in two FRUS volumes under
   two ids corroborates itself; a near-duplicate check (same date, same sender, most of the
   text in common) would close that. Where a corpus knows the duplication it says so: a
