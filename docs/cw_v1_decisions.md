@@ -211,6 +211,42 @@ Rows marked ✓ were remeasured after the talks flag of 2026-10-27 (decision 7f(
 
 **Reading.** The symbolic engine holds every coarse kernel the readings need in seconds; it cannot hold the flattened game (spec section 15). The explicit flattened game holds every bounded question (V1 control, V3, V4, V5, V9 (d)) and the composite engine from 1971 on, but not the unbounded kernels from 1967 to 1970 (V2, V5's unbounded columns, V8) nor V6's window (1957 to 1962 with the Cuba sub-game). For those the readings use the layered lifting of D7, which is exact and is analysis code, not an engine change; its bounded fallback (coarse approximation, year undecided) is stated in D7. Where the growth comes from: the flattened game copies each sub-game's fine states once per entered-from coarse state, so a year with many distinct coarse states at a crisis tick multiplies; the layered lifting explores each sub-game once.
 
+### S remeasured 2026-10-29 after D9; diagnostic, no claim computed
+
+This answers reports/cw_v1.md proposal 2 (first half) and adds V9 (d)'s graph under each hypothesis. Every row of the table above that was not remeasured after D9 was measured again on the current model, as reachable state counts only. No kernel, attractor, distance or claim quantity was computed, and no scenario test was run. The engine is `wavefront.engine.explore` on the flattened game with v0's `Cut`, from the hindsight state (or the 1958 replay state), one process each. The cap was `max_states=100,000,000`, with a stop at 20 GB resident (RSS), polled every 100,000 expanded states. Until 2026-10-29 a separate full suite shared the machine, and the measurement also stopped when less than 3 GB was available; rows so stopped were run again alone. "Over N" means stopped with N states found. Times and peak RSS are those of this machine.
+
+| Start | Cut | opportunist | status_quo | Earlier row |
+|---|---|---|---|---|
+| 1947 | 1954 | 1,531,484 (99 s, 1.3 GB) | 482,887 (33 s, 0.4 GB) | 1,511,398; status_quo "stops at 1950" |
+| 1950 | 1955 | 400,351 (27 s, 0.4 GB) | | unchanged |
+| 1950 | 1962 | 12,504,644 (1,280 s, 10.2 GB) | | over 4,000,000 |
+| 1957 | 1963 | **over 31,611,290** (RSS stop at 20.0 GB, 1,082 s) | | over 6,000,000 |
+| 1958 (replay) | 1963 | 28,083,512 (1,090 s, 18.5 GB) | | over 6,000,000 |
+| 1959 | 1963 (V9 (d)) | **11,350,359** (734 s, 7.7 GB) | 5,673,596 (378 s, 3.9 GB) | 4,283,960 (opportunist) |
+| 1967 | 1984 | over 31,970,487 (RSS stop at 20.0 GB, 1,010 s) | | over 4,000,000 |
+| 1968 | 1984 | over 27,109,604 (RSS stop at 20.0 GB, 1,210 s) | | not run |
+| 1969 | 1984 | over 28,501,276 (RSS stop at 20.0 GB, 1,181 s) | | not run |
+| 1970 | 1984 | over 28,857,763 (RSS stop at 20.0 GB, 1,229 s) | | over 6,000,000 |
+| 1971 | 1984 | 4,545,534 (219 s, 3.7 GB) | | 5,067,617 |
+| 1972 | 1984 | 2,983,389 (196 s, 2.5 GB) | | 3,310,503 |
+| 1973 | 1984 | 811,615 (54 s) | | unchanged |
+| 1974 | 1984 | 785,646 (46 s) | | unchanged |
+| 1975 | horizon | 1,024,482 (88 s) | 506,076 (39 s) | unchanged |
+| 1968 | 1970 | (47,619 ✓) | 31,757 (1 s) | 23,741 |
+| 1970 | 1973 | (11,407 ✓) | 6,940 (0 s) | 9,794 |
+| 1983 | horizon | (4,143 ✓) | 2,222 (0 s) | unchanged |
+
+**V9 (d).** The explicit graph from 1959 cut at 1963 has 11,350,359 states under `opportunist`, which is 1.89 times the `max_states=6,000,000` of `tests/coldwar_v1/scenarios/test_V09.py`. Peak RSS is 7.7 GB. Under `status_quo` it has 5,673,596 states, as at first sight. Per year under `opportunist`: 1 (1959), 88 (1960), 1,367 (1961), 11,317,549 (1962, the Cuba sub-game's fine states copied per coarse state) and 31,354 (1963). A measured budget of 12,000,000 would hold it on this machine. This is a size only; the rerun with it is the owner's (reports/cw_v1.md proposal 2).
+
+**The layered lifting's per-year counts, where it is the method** (D7). For V6's window, the explicit form (`Window`) explores the coarse game to the crisis tick (1 January 1962) and the Cuba sub-game once. Coarse states per year, opportunist (status_quo):
+- from the 1957 hindsight state: 1, 36, 679, 6,194, 20,542, 47,580 for 1957 to 1962, total 75,032 (status_quo 34,926);
+- from the 1958 replay state: 1, 24, 527, 4,263, 19,866 for 1958 to 1962, total 24,681 (status_quo the same);
+- from the 1959 hindsight state: 1, 88, 1,367, 7,951, total 9,407 (status_quo 4,514).
+
+The sub-games, explored once from the hindsight entry of their year (the same under both hypotheses): Berlin 1948, 22,784 fine states (17,133 terminal); Cuba 1962, 2,869 (2,236); Sino-Soviet 1969, 975 (367); alert 1973, 197 (104); Able Archer 1983, 19 (3; its entry reads `belief_USSR_USA`, and this is the hindsight value's). For 1967 to 1970, the layered lifting's coarse layers are whole-domain BDDs, and it enumerates no reachable set. For scale, the coarse game alone (crisis actions inert) from the 1970 hindsight state to 1984 has 5,796,368 states (1, 45, 1,012, 10,349, 52,883, 133,166, 217,206, 259,128, 274,950, 277,110, 483,930, 735,336, 1,051,428, 1,149,912 and 1,149,912 for 1970 to 1984). From 1967 to 1969 it was not completed: it was stopped at an 8 GB process cap, in a process that still held the 1970 graph.
+
+**Reading.** D9 multiplied the window years. Its pending `first_icbms` counter, `count_USSR` and the new events raise the number of distinct coarse states at the 1962 crisis tick, and the flattened game copies the Cuba sub-game once per state. V9 (d)'s graph grew from 4.3M to 11.4M. The V6 window from 1958 now fits explicitly at 28M states. The window from 1957 and the composite years 1967 to 1970 still do not fit in 20 GB. The composite engine's explicit part holds from 1971 on (4.5M), as before. None of this changes a reading's engine assignment (R; D7).
+
 ## O. Open for the owner before first sight
 
 - **The count scale (D9, 2026-10-28).** *Closed 2026-10-28 by the owner's decisions 7i and 7k:* (i) the count at the date the estimate projects for is adopted (R V6; the projected dates in D9's table); (ii) the 1990 edition throughout, the 1997 revision not used, so the 1962 count is 187 (D9); (iii) confirmed, cw_v1 does not read v0's `replay` rows of `nuke_USSR` (D9); (iv) every range at its midpoint, uniformly; the 1967 belief is the one that depends on it (D9). The replay input of V6 is the blind replay at proposal level, the manual one printed beside (7k, R V6). The item as raised: (i) The comparison of V6 (a) and (c), as amended, sets a projection two to three years ahead against the count in being on the same 1 January; a projection of a growing force is above the force in being even when it proves right (NIE 11-8/1-61's some 300 for mid-1963 against 302 at the end of 1963). The alternative, the count at the date the estimate projects for, was not adopted because decision 7g names the count as the hindsight counterpart; it is the owner's to choose before first sight. (ii) The 1 January 1962 count sits at the edge of a band (187 on the 1990 edition, 200 with the 1997 revision of the bombers). (iii) Dropping v0's `replay` rows of `nuke_USSR` in v1 is the step's choice, for the owner to confirm. (iv) The interpolation and midpoint rule of the belief (D9) is the step's; the bands of 1957 to 1962 hold on the ends of each estimate's ranges, that of 1967 only on the midpoints.

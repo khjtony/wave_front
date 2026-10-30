@@ -1,5 +1,5 @@
-"""The ambiguous layers of the WW2 hindsight snapshots (owner's decision 7j,
-docs/owner_decisions_2026-10-23.md; docs/ambiguous_levels.md section 8), built by
+"""The ambiguous layers of the WW2 hindsight snapshots and of cw_v1's replay snapshots (owner's
+decision 7j, docs/owner_decisions_2026-10-23.md; docs/ambiguous_levels.md section 8), built by
 scripts/build_ambiguous_layer.py from the canonical files and data/ambiguous_windows.csv:
 they load with the set loaders, each file differs from its canonical counterpart only in its
 windowed variables, the canonical files are unchanged, and the builder is idempotent."""
@@ -63,7 +63,6 @@ def compiled():
 @pytest.mark.parametrize("canonical,layer,windows,model,hidden", LAYERS)
 def test_the_layer_holds_exactly_the_window_files(canonical, layer, windows, model, hidden):
     assert sorted(p.stem for p in (WW2 / layer).glob("*.json")) == sorted(windows)
-    assert not (ROOT / "snapshots" / "cw_v1" / "replay_ambiguous").exists()
 
 
 @pytest.mark.parametrize("canonical,layer,windows,model,hidden", LAYERS)
@@ -184,9 +183,69 @@ def test_the_builder_is_idempotent_and_the_layer_up_to_date(tmp_path):
     assert not (tmp_path / "hindsight_ambiguous" / "1937Q1.json").exists()
 
 
-def test_the_cold_war_window_is_recorded_but_not_built():
+# -- the Cold War window (cw_v1 replay, belief_force_USA; built 2026-10-29) ------------------
+CW = ROOT / "snapshots" / "cw_v1"
+CW_WINDOWS = {"1958": ("under_1000", "over_1000"), "1961": ("under_1000", "over_1000")}
+CW_HIGH = {"1958": (1100, "1960-07-01"), "1961": (1018, "1963-07-01")}
+
+
+def test_the_cold_war_window_is_built_where_the_spread_crosses_a_band():
+    """The estimates' low-to-high spread on the count bands of decision 7g: two bands in 1958
+    and 1961 (built), one band in 1959 and 1960 (recorded, not built)."""
     b = builder()
-    (cw,) = [w for w in b.read_windows() if w.episode == "cw_v1_replay"]
-    assert cw.variable == "belief_force_USA" and (cw.first, cw.last) == ("1958", "1961")
-    assert not cw.built and "after cw_v1's replay coding is final" in cw.status
-    assert all(layer.name != "replay_ambiguous" for layer in b.build_all())
+    rows = [w for w in b.read_windows() if w.episode == "cw_v1_replay"]
+    assert {w.variable for w in rows} == {"belief_force_USA"}
+    assert [(w.first, w.last, w.built) for w in rows] == [
+        ("1958", "1958", True),
+        ("1959", "1960", False),
+        ("1961", "1961", True),
+    ]
+    assert "one band" in rows[1].status
+    for w in rows:
+        assert "owner's decision 7j" in w.ambiguity and "data/cw/v1/events.csv" in w.sources
+    layers = b.build_all()
+    assert sorted(layers[CW / "replay_ambiguous"]) == ["1958.json", "1961.json"]
+    assert sorted(p.stem for p in (CW / "replay_ambiguous").glob("*.json")) == sorted(CW_WINDOWS)
+
+
+def test_the_cold_war_layer_loads_and_differs_only_in_the_belief():
+    from models.cw.snapshots_v1 import PROJECTION, _projection_of, snapshot_data
+    from tests.coldwar_v1.common import compiled
+
+    for aims in ("opportunist", "status_quo"):
+        cm = compiled(aims)
+        for year, levels in CW_WINDOWS.items():
+            new = read(CW / "replay_ambiguous" / f"{year}.json")
+            old = read(CW / "replay" / f"{year}.json")
+            assert {k: v for k, v in new.items() if k != "variables"} == {
+                k: v for k, v in old.items() if k != "variables"
+            }
+            assert set(new["variables"]) == set(old["variables"])
+            for name, entry in new["variables"].items():
+                if name != "belief_force_USA":
+                    assert entry == old["variables"][name], (year, name)
+            entry = new["variables"]["belief_force_USA"]
+            assert [m["level"] for m in entry["levels"]] == list(levels)
+            assert entry["levels"][0] == old["variables"]["belief_force_USA"]
+            high = entry["levels"][1]
+            assert high["confidence"] == "low" and high["indicators"]
+            m = PROJECTION.match(_projection_of(high)["value"])
+            want = PROJECTION.match(_projection_of(entry["levels"][0])["value"])
+            # the high member projects for the same date as the canonical row, higher
+            assert (int(m.group(1)), m.group(2)) == CW_HIGH[year]
+            assert m.group(2) == want.group(2) and int(m.group(1)) > int(want.group(1))
+            res = snapshot_to_states(snapshot_data(int(year), aims, "replay", new), cm)
+            assert res.is_set and len(res) == 2
+            base = snapshot_to_state(snapshot_data(int(year), aims, "replay", old), cm)
+            i = cm.index["belief_force_USA"]
+            assert base in res.states
+            for s in res.states:
+                assert all(a == b for k, (a, b) in enumerate(zip(s, base)) if k != i)
+
+
+def test_the_canonical_cold_war_replay_is_unchanged():
+    """The canonical replay snapshots are those its builder writes from data/cw/v1/events.csv
+    (the registered start states), untouched by the layer."""
+    from models.cw.snapshots_v1 import write
+
+    assert write(CW, check=True) == []

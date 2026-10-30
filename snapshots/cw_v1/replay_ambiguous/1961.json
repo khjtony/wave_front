@@ -1,0 +1,420 @@
+{
+  "$schema": "../../schema.json",
+  "date": "1961-01-01",
+  "model": "cw_v1",
+  "variables": {
+    "nuke_USA": {
+      "level": "survivable",
+      "confidence": "assumed",
+      "indicators": [
+        {
+          "id": "event_1960_nuke_USA_record",
+          "value": "first Polaris patrol 15 Nov 1960; SAC ground alert; Minuteman from Oct 1962",
+          "source": "Rosenberg 1983; Freedman, The Evolution of Nuclear Strategy",
+          "observed": "1960-12-31",
+          "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv)"
+        }
+      ]
+    },
+    "nuke_USSR": {
+      "level": "few",
+      "confidence": "assumed",
+      "indicators": [
+        {
+          "id": "event_1949_nuke_USSR_record",
+          "value": "first Soviet test, 29 Aug 1949 (RDS-1)",
+          "source": "Holloway 1994",
+          "observed": "1949-12-31",
+          "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv)"
+        }
+      ]
+    },
+    "intel_USA": {
+      "level": "overhead",
+      "confidence": "assumed",
+      "indicators": [
+        {
+          "id": "event_1960_intel_USA_record",
+          "value": "CORONA's first recovered photography, 18 Aug 1960",
+          "source": "Ruffner (ed.) 1995",
+          "observed": "1960-12-31",
+          "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv)"
+        }
+      ]
+    },
+    "belief_force_USA": {
+      "levels": [
+        {
+          "level": "under_1000",
+          "confidence": "medium",
+          "indicators": [
+            {
+              "id": "event_1960_belief_force_USA_belief",
+              "value": "NIE 11-8-60 (1 Aug 1960): program A (the DCI's) 30, 150, 270 and 400 operational ICBM launchers in mid-1960 to mid-1963 (program B 700 in mid-1963, program C 200); for mid-1963 130 heavy bombers and tankers and 4 Z-, 18 G- and 6 nuclear missile submarines; about 700 for mid-1963 (above 330 on program C without the submarines); NIE 11-4-60 (1 Dec 1960) keeps it ('a substantial missile force')",
+              "source": "NIE 11-8-60, Conclusions 5, 6 and 12 (crest corpus; Steury (ed.) 1996, no. 10); NIE 11-4-60, para. 9",
+              "observed": "1960-12-31",
+              "rule": "the contemporaneous reading dated before 1 January Note: projected count (decision 7g); added 2026-10-28"
+            },
+            {
+              "id": "projection_1960_belief_force_USA",
+              "value": "700 for 1963-07-01",
+              "source": "NIE 11-8-60, Conclusions 5, 6 and 12 (crest corpus; Steury (ed.) 1996, no. 10); NIE 11-4-60, para. 9",
+              "observed": "1960-08-01",
+              "rule": "the date the estimate (of the observed date) projects for, from its own text, and the projected number there (every range at its midpoint, linear between its stated milestones); V6 compares the band with the hindsight count_USSR at that date, read from the hindsight snapshot of the latest 1 January not after it (the owner's decision 7i; docs/cw_v1_decisions.md D9 and R V6)"
+            }
+          ]
+        },
+        {
+          "level": "over_1000",
+          "confidence": "low",
+          "indicators": [
+            {
+              "id": "estimate_high_1961_belief_force_USA",
+              "value": "The high case for mid-1963: 700 operational ICBM launchers (illustrative program B, the USAF's), 130 heavy bombers and tankers, and 188 SLBM launchers (4 Z-class at two, 18 G-class at about six, 6 nuclear at up to 12 missiles): 1,018 (1,000 with the nuclear boats at the midpoint of 6 to 12, 982 at 6)",
+              "source": "NIE 11-8-60 (1 Aug 1960), Conclusions 5 and 12 and paras. 33 to 40 (crest corpus; Steury (ed.) 1996, no. 8)",
+              "observed": "1960-08-01",
+              "rule": "The over_1000 member: the estimate's own high projection (the range of its three illustrative programs) for the date it projects for, on the count of decision 7g (docs/cw_v1_decisions.md D9); the canonical row reads program A (under_1000). At the band's edge. Owner's decision 7j; built 2026-10-29."
+            },
+            {
+              "id": "projection_high_1961_belief_force_USA",
+              "value": "1018 for 1963-07-01",
+              "source": "NIE 11-8-60, Conclusions 5 and 12 and paras. 33 to 40 (crest corpus)",
+              "observed": "1960-08-01",
+              "rule": "the date the estimate projects for and the high projected number there (every range at its high end); compared, in the exploratory report reports/robustness_cw_v1.md, with the hindsight count_USSR at that date as V6 reads it (decision 7i)"
+            }
+          ]
+        }
+      ],
+      "ambiguity": "The CIA estimates of 1957 to 1961 give ranges for the projected Soviet intercontinental force (a low and a high case); on the count scale of decision 7g the window is the set of the bands from the estimate's low to its high projection for the date it projects for, read on the same count as the canonical row (ICBM launchers, heavy bombers and tankers, SLBM launchers where the estimate counts missile submarines; D9). The reading (the projected force) is fixed by decision 7d; what is set-valued is the projection, not the reading; the hindsight truth (count_USSR) is not in question. Built 2026-10-29 from the final replay coding (commit 1663c43 and cw_v1's first sight); candidate 4 of docs/ambiguous_levels.md section 8; owner's decision 7j. 1961 (NIE 11-8-60 of 1 Aug 1960, for mid-1963): the estimate's three illustrative programs 'represent the range of judgments' (Conclusion 5; paras. 33 to 40): operational ICBM launchers for mid-1963 200 (program C, para. 40), 400 (program A, para. 33, the DCI's) and 700 (program B, para. 36, USAF's); 130 heavy bombers and tankers for mid-1963 (Conclusion 12 table; USAF's higher footnote not used); missile submarines for mid-1963 4 Z (two missiles each), 18 G (about six) and 6 nuclear (6 to 12): 152 to 188 SLBM launchers. Low 482 (program C, 6 per nuclear boat; 330 without the submarines; under_1000), high 1,018 (program B, 12 per nuclear boat; over_1000; 1,000 at the midpoint of 6 to 12, 982 at 6, so the high member sits at the band's edge). The canonical member is the canonical row (under_1000, about 700 on program A). Sources: data/cw/v1/events.csv; data/cw/corpora/raw/crest (read with wavefront.evidence.corpora.crest); reports/replay_cw_crest_projected.md; docs/cw_v1_decisions.md D9; docs/owner_decisions_2026-10-23.md (7d; 7g; 7i; 7j)."
+    },
+    "belief_USA_USSR": {
+      "level": "opportunist",
+      "confidence": "medium",
+      "indicators": [
+        {
+          "id": "event_1953_belief_USA_USSR_belief",
+          "value": "NSC 162/2 of 30 Oct 1953",
+          "source": "FRUS 1952-54 vol. II",
+          "observed": "1953-12-31",
+          "rule": "the contemporaneous reading dated before 1 January"
+        }
+      ]
+    },
+    "belief_USSR_USA": {
+      "level": "hostile",
+      "confidence": "medium",
+      "indicators": [
+        {
+          "id": "event_1946_belief_USSR_USA_belief",
+          "value": "Novikov's telegram of 27 Sep 1946: American policy aims at world supremacy by means short of war",
+          "source": "Novikov telegram, Diplomatic History 1991",
+          "observed": "1946-12-31",
+          "rule": "the contemporaneous reading dated before 1 January"
+        }
+      ]
+    },
+    "offer": {
+      "level": "test_ban",
+      "confidence": "assumed",
+      "indicators": [
+        {
+          "id": "event_1959_offer_record",
+          "value": "the Western draft treaty and Eisenhower's proposal of 13 Apr 1959",
+          "source": "Seaborg 1981",
+          "observed": "1959-12-31",
+          "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv)"
+        }
+      ]
+    },
+    "oversight": {
+      "level": "none",
+      "confidence": "assumed",
+      "indicators": [
+        {
+          "id": "event_1946_oversight_record",
+          "value": "no verification regime",
+          "source": "Hoffman 2009",
+          "observed": "1946-12-31",
+          "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level"
+        }
+      ]
+    },
+    "arms": {
+      "level": "race",
+      "confidence": "assumed",
+      "indicators": [
+        {
+          "id": "event_1946_arms_record",
+          "value": "no limitation agreement",
+          "source": "Newhouse 1973",
+          "observed": "1946-12-31",
+          "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level"
+        }
+      ]
+    },
+    "buildup": {
+      "level": false,
+      "confidence": "assumed",
+      "indicators": [
+        {
+          "id": "event_1946_buildup_record",
+          "value": "the Reagan buildup lies in 1981",
+          "source": "Fischer 1997",
+          "observed": "1946-12-31",
+          "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level"
+        }
+      ]
+    },
+    "esc": {
+      "level": "crisis",
+      "confidence": "assumed",
+      "indicators": [
+        {
+          "id": "event_1958_esc_record",
+          "value": "Khrushchev's Berlin ultimatum of 27 Nov 1958: a standing confrontation into 1959",
+          "source": "Zubok and Pleshakov 1996",
+          "observed": "1958-12-31",
+          "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv)"
+        }
+      ]
+    },
+    "accidental": {
+      "level": false,
+      "confidence": "assumed",
+      "indicators": [
+        {
+          "id": "event_1946_accidental_record",
+          "value": "no nuclear use by accident in the Cold War",
+          "source": "Sagan 1993",
+          "observed": "1946-12-31",
+          "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level"
+        }
+      ]
+    },
+    "us_strike": {
+      "level": false,
+      "confidence": "assumed",
+      "indicators": [
+        {
+          "id": "event_1946_us_strike_record",
+          "value": "no US preventive strike",
+          "source": "Trachtenberg 1988",
+          "observed": "1946-12-31",
+          "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level"
+        }
+      ]
+    },
+    "berlin_wall": {
+      "level": false,
+      "confidence": "assumed",
+      "indicators": [
+        {
+          "id": "event_1946_berlin_wall_record",
+          "value": "the sector border open until 13 Aug 1961",
+          "source": "Harrison 2003",
+          "observed": "1946-12-31",
+          "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level"
+        }
+      ]
+    },
+    "invasion_west": {
+      "level": false,
+      "confidence": "assumed",
+      "indicators": [
+        {
+          "id": "event_1946_invasion_west_record",
+          "value": "no Soviet offensive into Western Europe",
+          "source": "Mastny and Byrne 2005",
+          "observed": "1946-12-31",
+          "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level"
+        }
+      ]
+    },
+    "us_began_war": {
+      "level": false,
+      "confidence": "assumed",
+      "indicators": [
+        {
+          "id": "event_1946_us_began_war_record",
+          "value": "no war between the principals begun by the United States in the Cold War",
+          "source": "Gaddis 2005",
+          "observed": "1946-12-31",
+          "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level (added 2026-10-23 on the owner's decision 2l)"
+        }
+      ]
+    },
+    "korea": {
+      "level": "armistice",
+      "confidence": "assumed",
+      "indicators": [
+        {
+          "id": "event_1953_korea_record",
+          "value": "armistice of 27 Jul 1953",
+          "source": "FRUS 1952-54 vol. XV",
+          "observed": "1953-12-31",
+          "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv)"
+        }
+      ]
+    },
+    "afghan": {
+      "level": "none",
+      "confidence": "assumed",
+      "indicators": [
+        {
+          "id": "event_1946_afghan_record",
+          "value": "no Soviet forces in Afghanistan before Dec 1979",
+          "source": "Kalinovsky 2011",
+          "observed": "1946-12-31",
+          "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level"
+        }
+      ]
+    },
+    "econ_USSR": {
+      "level": "growing",
+      "confidence": "assumed",
+      "indicators": [
+        {
+          "id": "event_1946_econ_USSR_record",
+          "value": "postwar reconstruction and growth of 5 percent a year or more into the 1960s",
+          "source": "Easterly and Fischer 1995",
+          "observed": "1946-12-31",
+          "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level"
+        }
+      ]
+    },
+    "legit_USSR": {
+      "level": "secure",
+      "confidence": "assumed",
+      "indicators": [
+        {
+          "id": "event_1946_legit_USSR_record",
+          "value": "the party's monopoly unchallenged inside the USSR",
+          "source": "Brown 2009",
+          "observed": "1946-12-31",
+          "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level"
+        }
+      ]
+    },
+    "perestroika": {
+      "level": false,
+      "confidence": "assumed",
+      "indicators": [
+        {
+          "id": "event_1946_perestroika_record",
+          "value": "no reform programme before 1985",
+          "source": "Brown 1996",
+          "observed": "1946-12-31",
+          "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level"
+        }
+      ]
+    },
+    "bloc_USSR": {
+      "level": "intact",
+      "confidence": "assumed",
+      "indicators": [
+        {
+          "id": "event_1946_bloc_USSR_record",
+          "value": "Soviet-controlled governments in Eastern Europe (Poland Jan 1947 elections; the coup in Prague of Feb 1948 inside intact)",
+          "source": "Westad 2017",
+          "observed": "1946-12-31",
+          "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv)"
+        }
+      ]
+    },
+    "align_PRC": {
+      "level": "split",
+      "confidence": "assumed",
+      "indicators": [
+        {
+          "id": "event_1960_align_PRC_record",
+          "value": "Soviet specialists withdrawn from China, Jul 1960",
+          "source": "Luthi 2008",
+          "observed": "1960-12-31",
+          "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv)"
+        }
+      ]
+    },
+    "china_opening": {
+      "level": false,
+      "confidence": "assumed",
+      "indicators": [
+        {
+          "id": "event_1946_china_opening_record",
+          "value": "no US opening to the PRC before 1969 to 1971",
+          "source": "Chen Jian 2001",
+          "observed": "1946-12-31",
+          "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level"
+        }
+      ]
+    },
+    "esc_sino": {
+      "level": "peace",
+      "confidence": "assumed",
+      "indicators": [
+        {
+          "id": "event_1946_esc_sino_record",
+          "value": "no armed Sino-Soviet confrontation before 1969",
+          "source": "Luthi 2008",
+          "observed": "1946-12-31",
+          "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level"
+        }
+      ]
+    },
+    "esc_usprc": {
+      "level": "peace",
+      "confidence": "assumed",
+      "indicators": [
+        {
+          "id": "event_1953_esc_usprc_record",
+          "value": "the Armistice Agreement of 27 Jul 1953, signed by the Chinese People's Volunteers",
+          "source": "FRUS 1952-54 vol. XV",
+          "observed": "1953-12-31",
+          "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv)"
+        }
+      ]
+    },
+    "sino_soviet_talks": {
+      "level": false,
+      "confidence": "assumed",
+      "indicators": [
+        {
+          "id": "event_1946_sino_soviet_talks_record",
+          "value": "no Sino-Soviet border talks before 1969 (the consultations of 1964 broken off without agreement)",
+          "source": "Yang Kuisong 2000; Gerson 2010",
+          "observed": "1946-12-31",
+          "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: initial level (added 2026-10-27 on the owner's decision 7f(a))"
+        }
+      ]
+    },
+    "count_USSR": {
+      "level": "under_200",
+      "confidence": "assumed",
+      "indicators": [
+        {
+          "id": "event_1956_count_USSR_record",
+          "value": "22 heavy bombers at the end of 1956 (20 M-4 BISON, 2 Tu-95 BEAR): USSR.heavy_bombers",
+          "source": "Norris and Cochran 1990, Tables 2 and 8",
+          "observed": "1956-12-31",
+          "rule": "not read in the manual replay: the hindsight level. the record row in force on 1 January (data/cw/events.csv, data/cw/v1/events.csv) Note: added 2026-10-28 on the owner's decision 7g"
+        }
+      ]
+    }
+  },
+  "rates": {},
+  "builtins": {
+    "pending_USSR_first_icbms": {
+      "value": 2,
+      "confidence": "high",
+      "indicators": [
+        {
+          "id": "decision_1959_USSR_first_icbms",
+          "value": "USSR.first_icbms decided 1959",
+          "source": "the R-16 decree of 13 May 1959 and the Strategic Rocket Forces of 17 Dec 1959 (Podvig (ed.) 2001; Zaloga 2002); 235 vehicles at the end of 1962 (Norris and Cochran 1990)",
+          "observed": "1959-12-31",
+          "rule": "years until the delayed effect of the decision is visible (framework_spec.md section 3.1)"
+        }
+      ],
+      "rule": "decided at tick 12 with delay 3: pending t + 1 + d - T"
+    }
+  }
+}
