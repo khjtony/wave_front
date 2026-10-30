@@ -14,7 +14,7 @@ Layers built by `scripts/build_ambiguous_layer.py` from `data/ambiguous_windows.
 | same | `belief_GER` | {will_not_fight, will_fight} | 1938Q2 to 1938Q4 |
 | `snapshots/ww2/hindsight_v1_ambiguous/` | `oil_GER` | {dependent, secured} | 1939Q3, 1939Q4 |
 
-So 1938Q2 to 1938Q4 have 4 members each and 1939Q1, 1939Q3 and 1939Q4 have 2 each. The Cold War window (`belief_force_USA`, cw_v1 replay, 1958 to 1961) is in the table and not built (status: to build after cw_v1's replay coding is final).
+So 1938Q2 to 1938Q4 have 4 members each and 1939Q1, 1939Q3 and 1939Q4 have 2 each. The Cold War window (`belief_force_USA`, cw_v1 replay, 1958 to 1961) was built on 2026-10-29 in `snapshots/cw_v1/replay_ambiguous/`, for 1958 and 1961 (in 1959 and 1960 the spread stays in one band). Its exploratory reading is in reports/robustness_cw_v1.md.
 
 ## Results
 
