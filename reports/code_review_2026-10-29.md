@@ -188,3 +188,71 @@ Test coverage: none (script).
   rejecting can change which acceptances are left pending, but under `--drop-rejected` a
   pending proposal counts as an accepted one, so the measured metrics do not depend on that
   order. A BOM or a bad encoding fails loudly.
+
+## Fixes (2026-10-30)
+
+Each finding has a regression test that fails at d24e361 and passes with the fix.
+
+1. **False flip on the return out of a window.** `Metrics._in_window` (`replay.py`) also
+   excuses an unmatched replayed flip on the first concrete quarter after a window when it
+   leaves a level of the window's set for that quarter's hindsight level. Test:
+   `tests/evidence/test_ambiguous_levels.py::test_a_return_on_the_first_quarter_after_a_window_is_not_a_false_flip`
+   (the return is a window flip; a return one quarter late is still a false flip).
+2. **Flip baselines.** Both series now start from the record, the definition the WW2 metrics
+   use for documented flips (docs/replay_harness.md, "Replay and metrics"): Cold War, the
+   contemporaneous level of the year before the first (`replay_cw.compare`); WW2, the hindsight
+   snapshot of the quarter before the first, else the initial levels, in both modes (the WW2
+   asymmetry was in measure mode and, when no replay snapshot of that quarter existed, in the
+   reviewed mode too). A replay snapshot of the previous period is not read. The Cold War
+   report's flips section states the baseline. Tests:
+   `tests/evidence/test_episode_cw.py::test_cw_flips_start_from_the_record_of_the_year_before`
+   (1982..1983, the review's reproduction) and
+   `tests/evidence/test_replay.py::test_metrics_a_range_after_1936q1_starts_both_series_from_the_record`.
+   Recorded WW2 metrics: all start at 1936Q1, and `snapshots/ww2/hindsight/1935Q4.json` equals
+   the initial levels for every text variable, so nothing changes. Recomputed with the fix outside
+   the repository (the five measurements of `reports/replay_ww2_frus_claude/` and
+   `reports/replay_ww2_frus_deepseek/`, the two reviewed-sample ones through
+   `scripts/apply_review.py`, the 5c one with the three `oil_GER` acceptances of 19 to 25 Aug
+   1939 rejected): every report matches its recorded file line for line except the title and the
+   command line. The recorded reports are unchanged.
+3. **Proposal-level banner.** `cmd_replay` prints it under `--measure-proposals`, with the
+   rejected-dropped wording under `--drop-rejected`. Test:
+   `tests/evidence/test_replay.py::test_measure_proposals_prints_the_banner_of_its_mode`.
+4. **DeepSeek error classes.** `finish_reason == "insufficient_system_resource"` is a retryable
+   `ExtractError` raised inside the retry loop (usage still counted);
+   `http.client.HTTPException` is a retryable network error and `UnicodeDecodeError` a
+   non-retryable one, so `extract()` records them per document. Tests:
+   `tests/evidence/test_deepseek_backend.py::test_an_answer_interrupted_for_lack_of_resources_is_retried`,
+   `::test_transport_and_decoding_failures_are_extract_errors`.
+5. **Unrecorded settings.** Header fields: the same id and text can come with another title or
+   URL (`crest` titles come from the code table `STEURY_1996`, URLs and sources from the manifest
+   and the raw file), so they are not part of the document's identity. The key is unchanged (the
+   recorded caches stay valid); each new cache entry records its `header` (source, title, url)
+   and an entry with another header is read again; an entry without a header is used as before
+   (`extract/cache.py` docstring, spec section 9). Guidance: `backend_info` records `guidance`
+   (`default`, `none`, or `sha256:<hex>` of the file), the report's backend line names it and its
+   command line gives `--guidance-file`; `make_backend(guidance=None)` keeps the default and an
+   empty string means no guidance, as in `scripts/compare_backends.py`. Tests:
+   `tests/evidence/test_deepseek_backend.py::test_a_cached_answer_is_not_reused_under_another_header`,
+   `::test_the_guidance_is_recorded_and_an_empty_one_means_none`.
+6. **Set-valued entry in a Cold War snapshot.** `_build_annual` carries a set as a set: no
+   `confidence` at the set level, each member `assumed` with its indicators' rules marked. Test:
+   `tests/evidence/test_episode_cw.py::test_a_set_valued_hindsight_entry_is_carried_as_a_set`.
+7. **`compare_backends.py` recall.** Documents in `result.errors` are left out of every count,
+   precision and recall, and reported as `failed_documents` with
+   `reference_proposals_on_failed`; the "halve it" comment is replaced by the docstring (a
+   "level differs" pair is counted on each side). Test:
+   `tests/evidence/test_compare_backends.py::test_failed_documents_are_not_counted_as_misses`.
+
+The other reviewer's six: (a) `wf replay --source` help lists `crest`; (b) as 3; (c) the
+`_evidence` docstring says that `wf replay` turns a backend failure into a `ReplayError` (exit
+2) and `wf extract` exits 1; (d) `--no-cache` help and the `replay` docstrings say
+`OUT/cache/<backend>/`; (e) the `cache.py` docstring names the fallback setting and the schema
+hash of the Claude key, and the DeepSeek key; (f) the WW2 report's Target line names the
+hindsight directory compared with (`Metrics.hindsight`; test
+`tests/evidence/test_replay.py::test_report_target_names_the_hindsight_directory_compared_with`).
+The layered lifting's docstring (`tests/coldwar_v1/layered.py`) now says which conditions
+`Lift` checks (no latch, no exit variable written by a delayed effect, one crisis per state)
+and which are asserted on cw_v1 in `tests/coldwar_v1/test_yearwise.py` (exits read only the
+fine state, entries read only `entry_reads`). Specification: docs/framework_spec.md sections 9
+and 10, docs/replay_harness.md and docs/ambiguous_levels.md section 5.

@@ -306,6 +306,30 @@ def test_a_replayed_level_in_the_hindsight_set_agrees_and_is_counted_separately(
     assert all(same.false_flips(v) == [] for v in TEXT_VARIABLES)
 
 
+def test_a_return_on_the_first_quarter_after_a_window_is_not_a_false_flip(tmp_path):
+    """The shape of the real layer (belief_GER, italy_estranged): the record is the same
+    level before and after a window of sets, so no flip is documented. A replay that reads
+    the other member inside the window and comes back to the record's level on the first
+    concrete quarter after it agrees everywhere and has no false flip; a replay that comes
+    back to a level outside the window's set, or later, still has one."""
+    hind = _copy(HINDSIGHT, tmp_path / "hind")
+    rep = _copy(HINDSIGHT, tmp_path / "rep")
+    window = parse_quarters("1938Q2..1939Q1")
+    for q in window:
+        _edit(hind, q, "italy_estranged", level_set_entry(True, False))
+    for q in window[1:]:
+        _edit(rep, q, "italy_estranged", _concrete(False, q))
+    m = compare(rep, QUARTERS, hind)
+    assert m.agreement["italy_estranged"] == (20, 20)
+    assert [f.quarter for f in m.window_flips("italy_estranged")] == ["1938Q3", "1939Q2"]
+    assert m.false_flips("italy_estranged") == []
+    # still reading reconciled after the window: a disagreement, and the late return is false
+    _edit(rep, "1939Q2", "italy_estranged", _concrete(False, "1939Q2"))
+    late = compare(rep, QUARTERS, hind)
+    assert late.agreement["italy_estranged"] == (19, 20)
+    assert [f.quarter for f in late.false_flips("italy_estranged")] == ["1939Q3"]
+
+
 def test_a_replayed_level_outside_the_set_disagrees(tmp_path):
     hind = _copy(HINDSIGHT, tmp_path / "hind")
     rep = _copy(HINDSIGHT, tmp_path / "rep")

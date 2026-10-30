@@ -35,12 +35,13 @@ with exit ``e`` costs 2 plus the fewest fine steps from the entry to a terminal 
 with that exit, and (for the distance out of a kernel) a fine state outside the lifted kernel
 costs 1 plus the fewest fine steps to it.
 
-Conditions, checked when a :class:`Lift` is built: the exit maps read only the fine state
-(and are evaluated once per terminal fine state), the entry maps read only the coarse
-variables named in ``entry_reads``, no coarse variable written by an exit is written by a
-delayed effect, the coarse model has no latch, and no two crisis actions are available in one
-state. Like the symbolic engine (spec section 15), transitions on which the explicit engine
-would raise (an exit lowering a monotone variable) are not excluded.
+Conditions: the exit maps read only the fine state (and are evaluated once per terminal fine
+state) and the entry maps read only the coarse variables named in ``entry_reads``, asserted
+on cw_v1 in tests/coldwar_v1/test_yearwise.py (not checked by :class:`Lift`); no coarse
+variable written by an exit is written by a delayed effect, the coarse model has no latch,
+and no two crisis actions are available in one state, checked when a :class:`Lift` is built.
+Like the symbolic engine (spec section 15), transitions on which the explicit engine would
+raise (an exit lowering a monotone variable) are not excluded.
 
 The explicit form (:class:`Window`, R V6): the coarse game explored explicitly to the tick of
 a single crisis, that tick's states valued one step ahead with the crisis lifted, and the cut

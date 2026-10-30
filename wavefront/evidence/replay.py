@@ -25,9 +25,10 @@ reviewer accepted it, as in review.
 The harness rules (:mod:`.harness_rules`: ``two-document`` and ``no-retrospective``, both on
 by default) are recorded in every proposals file the replay writes and act on review, on
 auto-accept and on the measurement alike; every report states which rules were in force.
-With a paid backend the replay caches each document's answer under ``<out>/cache/`` (see
-:mod:`.extract.cache`), so a run stopped by an error resumes, when run again, from the
-documents it has not read; :func:`plan` (``wf replay --dry-run``) counts what a run would send.
+With a paid backend the replay caches each document's answer under
+``<out>/cache/<backend>/`` (see :mod:`.extract.cache`), so a run stopped by an error resumes,
+when run again, from the documents it has not read; :func:`plan` (``wf replay --dry-run``)
+counts what a run would send.
 
 The episode (:mod:`.episodes`; ``episode="ww2"`` by default, ``"cw"`` for the Cold War) names
 the text variables, the prompt, the periods and the hindsight snapshots. A Cold War replay runs
@@ -53,6 +54,7 @@ flip is listed as a flip inside an ambiguous window, not as a false flip.
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
 import re
 from collections import Counter
@@ -90,6 +92,9 @@ from .review import (
     rebuild_snapshots,
     review_gating,
 )
+from .review import (
+    ROOT as _ROOT,
+)
 from .snapshot import level_set
 
 __all__ = [
@@ -100,6 +105,7 @@ __all__ = [
     "ReplayError",
     "backend_info",
     "compare",
+    "describe_backend",
     "measured_snapshots",
     "parse_quarters",
     "plan",
@@ -253,9 +259,9 @@ def replay(
 ) -> list[QuarterRun]:
     """Run the blind replay over ``quarters`` (see the module docstring). ``rules`` are the
     harness rules recorded in the proposals files; ``workers`` documents are read at a time;
-    a backend other than the rule backend is cached under ``<out>/cache/`` unless ``cache``
-    is false. ``quarters`` are the periods of ``episode`` (default WW2): years for the Cold
-    War."""
+    a backend other than the rule backend is cached under ``<out>/cache/<backend>/`` unless
+    ``cache`` is false. ``quarters`` are the periods of ``episode`` (default WW2): years for
+    the Cold War."""
     ep = get_episode(episode)
     if auto_accept and not corpus.synthetic:
         raise ReplayError(
@@ -427,6 +433,10 @@ def plan(
 
 
 def backend_info(backend: Backend) -> dict[str, Any]:
+    """The backend's record in a proposals file: name, model and effort, and for a backend
+    with guidance (DeepSeek) ``guidance``: ``"default"`` (the built-in guidance, sent for WW2
+    only), ``"none"`` (an empty guidance, so none is sent) or ``"sha256:<hex>"`` of the text
+    given with ``--guidance-file``."""
     info: dict[str, Any] = {"name": backend.name}
     model = getattr(backend, "model", None)
     if isinstance(model, str) and model:
@@ -434,7 +444,34 @@ def backend_info(backend: Backend) -> dict[str, Any]:
     effort = getattr(backend, "effort", None)
     if isinstance(effort, str) and effort:
         info["effort"] = effort
+    if callable(getattr(backend, "guidance_for", None)):
+        guidance = getattr(backend, "guidance", None)
+        if guidance is None:
+            info["guidance"] = "default"
+        elif not guidance.strip():
+            info["guidance"] = "none"
+        else:
+            info["guidance"] = "sha256:" + hashlib.sha256(guidance.encode("utf-8")).hexdigest()
     return info
+
+
+def describe_backend(backend: dict[str, Any]) -> str:
+    """The report's ``Backend:`` line from a proposals file's backend record."""
+    guidance = backend.get("guidance")
+    return (
+        f"{backend.get('name')}"
+        + (f", model `{backend['model']}`" if backend.get("model") else "")
+        + (f", effort {backend['effort']}" if backend.get("effort") else "")
+        + (
+            ""
+            if guidance is None
+            else ", the default guidance"
+            if guidance == "default"
+            else ", no guidance"
+            if guidance == "none"
+            else f", guidance file `{guidance[:19]}...`"
+        )
+    )
 
 
 # -- proposal-level measurement -------------------------------------------------------------
@@ -650,6 +687,8 @@ class Metrics:
     ambiguous: dict[str, tuple[int, int]] = field(default_factory=dict)
     #: var -> quarter -> the hindsight set of levels, for the set-valued quarters
     windows: dict[str, dict[str, tuple[Any, ...]]] = field(default_factory=dict)
+    #: the hindsight directory compared with (the report's "Target" line)
+    hindsight: str | None = None
 
     def matched(self, variable: str) -> list[FlipMatch]:
         return [m for m in self.matches.get(variable, []) if m.documented and m.replayed]
@@ -663,7 +702,9 @@ class Metrics:
 
     def window_flips(self, variable: str) -> list[Flip]:
         """Replayed flips that answer no documented flip but land inside a window of
-        set-valued hindsight levels on a level of the window's set (not false flips)."""
+        set-valued hindsight levels on a level of the window's set, or that leave a level
+        of the window's set on the first concrete quarter after it for the hindsight level
+        of that quarter (a return out of the window); neither is a false flip."""
         return [
             m.replayed
             for m in self.matches.get(variable, [])
@@ -673,8 +714,19 @@ class Metrics:
     def _in_window(self, flip: Flip | None) -> bool:
         if flip is None:
             return False
-        window = self.windows.get(flip.variable, {}).get(flip.quarter)
-        return window is not None and flip.after in window
+        windows = self.windows.get(flip.variable, {})
+        window = windows.get(flip.quarter)
+        if window is not None:
+            return flip.after in window
+        # the first concrete quarter after a window: the replay comes back to the record
+        before = windows.get(_qname(_qindex(flip.quarter) - 1))
+        here = self.levels.get(flip.variable, {}).get(flip.quarter)
+        return (
+            before is not None
+            and here is not None
+            and flip.before in before
+            and _agrees(here[0], flip.after)
+        )
 
     def missed_flips(self, variable: str) -> list[Flip]:
         return [m.documented for m in self.matches.get(variable, []) if m.replayed is None]
@@ -760,9 +812,11 @@ def compare(
     drop_rejected: bool = False,
 ) -> Metrics:
     """The section 9 metrics of the replay snapshots in ``replay_dir`` against the hindsight
-    snapshots, for ``quarters``. The baseline for flips at the first quarter is the hindsight
-    snapshot of the previous quarter and, for the replay, its snapshot of that quarter if
-    there is one, else the ontology's initial levels.
+    snapshots, for ``quarters``. The baseline for flips at the first quarter is the same for
+    the documented and the replayed series: the record's level at the end of the previous
+    quarter (its hindsight snapshot; the ontology's initial levels if there is none). A replay
+    snapshot of the previous quarter is not read, in either mode, so a replay that agrees with
+    the hindsight in every quarter has no false flip whatever its first quarter.
 
     With ``measure_proposals`` the replay snapshots are not read: they are built in memory
     from every proposal in ``replay_dir/proposals`` as if accepted (:func:`measured_snapshots`)
@@ -799,15 +853,17 @@ def compare(
             in_force,
             drop_rejected=drop_rejected,
         )
-    hind = [(prev, _read(hindsight_dir / f"{prev}.json"))]
-    rep = [(prev, _initial() if measure_proposals else _read(replay_dir / f"{prev}.json"))]
-    if rep[0][1] is None:
-        rep[0] = (prev, _initial())
+    # both series start from the record: the hindsight snapshot of the quarter before the
+    # first (else the initial levels), never the replay's own snapshot of that quarter
+    baseline = _read(hindsight_dir / f"{prev}.json") or _initial()
+    hind = [(prev, baseline)]
+    rep = [(prev, baseline)]
     for q in quarters:
         hind.append((q, _read(hindsight_dir / f"{q}.json")))
         rep.append((q, measured.get(q) if measure_proposals else _read(replay_dir / f"{q}.json")))
     m = Metrics(quarters=list(quarters), missing_replay=[q for q, s in rep[1:] if s is None])
     m.rules = in_force
+    m.hindsight = _shown_dir(hindsight_dir)
     if measure_proposals:
         m.proposal_level = True
         m.drop_rejected = drop_rejected
@@ -856,6 +912,14 @@ def compare(
         if name in TEXT_VARIABLES:
             m.matches[name] = _match(_flips(hind, name), _flips(rep, name))
     return m
+
+
+def _shown_dir(path: Path) -> str:
+    """A directory as the report names it: relative to the repository when inside it."""
+    try:
+        return path.resolve().relative_to(_ROOT).as_posix()
+    except ValueError:
+        return str(path)
 
 
 def _level(entry: dict[str, Any]) -> Any:
@@ -940,9 +1004,7 @@ def render_report(
         f"- Corpus: {corpus.get('source')}"
         + (f", `{corpus['root']}`" if corpus.get("root") else "")
         + (" (synthetic fixtures)" if synthetic else ""),
-        f"- Backend: {backend.get('name')}"
-        + (f", model `{backend['model']}`" if backend.get("model") else "")
-        + (f", effort {backend['effort']}" if backend.get("effort") else ""),
+        f"- Backend: {describe_backend(backend)}",
         "- Harness rules in force: "
         + (
             describe_rules(metrics.rules)
@@ -965,8 +1027,8 @@ def render_report(
             else "human review"
         ),
         f"- Command: `{command}`",
-        "- Target: the hindsight snapshots in `snapshots/ww2/hindsight/` (levels at each "
-        "quarter's end, read with full knowledge of the record).",
+        f"- Target: the hindsight snapshots in `{metrics.hindsight or 'snapshots/ww2/hindsight'}/`"
+        " (levels at each quarter's end, read with full knowledge of the record).",
         "",
     ]
     if synthetic:

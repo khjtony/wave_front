@@ -18,9 +18,14 @@ How a document is read, as in :mod:`.claude_backend` wherever the two APIs allow
 * ``finish_reason == "content_filter"`` raises :class:`~.claude_backend.ExtractionRefused`.
   The answer's ``content`` is parsed as JSON (a Markdown code fence around it is tolerated);
   the reasoning text of a reasoning model (``reasoning_content``) is not read.
+* ``finish_reason == "insufficient_system_resource"`` (the provider interrupted the answer)
+  is a retryable :class:`~.backend.ExtractError`, not a schema failure.
 * HTTP errors are mapped to :class:`~.backend.ExtractError`: 400 and 422 (a bad request),
   401 (authentication), 402 (insufficient balance), 429 (rate limit) and 5xx (server) and
-  network failures, the last three ``retryable``. There is no SDK to retry them, so a
+  network failures (``urllib`` and socket errors, timeouts, and ``http.client.HTTPException``
+  such as a body cut short), the last three ``retryable``; a body that is not UTF-8 or not
+  JSON is a non-retryable one. Every failure is an ``ExtractError``, so the extractor records
+  it against its document instead of ending the run. There is no SDK to retry them, so a
   retryable failure is retried here ``retries`` times with a doubling wait before it is
   raised; the replay resumes from the cache when run again.
 
@@ -34,6 +39,7 @@ prompt is billed at the cache-hit price after the first requests.
 from __future__ import annotations
 
 import hashlib
+import http.client
 import json
 import os
 import re
@@ -120,6 +126,21 @@ def _urlopen_post(url: str, headers: dict[str, str], body: bytes, timeout: float
     request = urllib.request.Request(url, data=body, headers=headers, method="POST")
     with urllib.request.urlopen(request, timeout=timeout) as response:
         return json.loads(response.read().decode("utf-8"))
+
+
+def _check_interrupted(response: dict[str, Any]) -> None:
+    """Raise a retryable error when the provider stopped the answer for lack of resources
+    (``finish_reason == "insufficient_system_resource"``): its content is cut short and is
+    neither the model's answer nor a schema failure."""
+    try:
+        finish = response["choices"][0].get("finish_reason")
+    except (KeyError, IndexError, TypeError, AttributeError):
+        return  # no choice: reported by the caller
+    if finish == "insufficient_system_resource":
+        raise ExtractError(
+            "the API interrupted the answer (insufficient_system_resource); retry later",
+            retryable=True,
+        )
 
 
 class DeepSeekBackend:
@@ -267,8 +288,16 @@ class DeepSeekBackend:
             if status >= 500:
                 raise ExtractError(f"server error ({status}); retry later", retryable=True) from exc
             raise ExtractError(f"API error ({status}): {detail}") from exc
-        except (urllib.error.URLError, TimeoutError, ConnectionError) as exc:
+        except (
+            urllib.error.URLError,
+            TimeoutError,
+            ConnectionError,
+            http.client.HTTPException,
+        ) as exc:
+            # HTTPException: a response cut short or malformed (IncompleteRead, BadStatusLine)
             raise ExtractError("network error reaching the API", retryable=True) from exc
+        except UnicodeDecodeError as exc:
+            raise ExtractError("the API answered with something other than UTF-8") from exc
         except json.JSONDecodeError as exc:
             raise ExtractError("the API answered with something other than JSON") from exc
 
@@ -276,7 +305,10 @@ class DeepSeekBackend:
         wait = self.backoff
         for attempt in range(self.retries + 1):
             try:
-                return self._send(body)
+                response = self._send(body)
+                self._count(response)
+                _check_interrupted(response)
+                return response
             except ExtractError as exc:
                 if not exc.retryable or attempt == self.retries:
                     raise
@@ -305,7 +337,6 @@ class DeepSeekBackend:
         out: list[Proposal] = []
         for i, part in enumerate(parts):
             response = self._create(self.request_body(document, part, i, len(parts), variables))
-            self._count(response)
             try:
                 choice = response["choices"][0]
             except (KeyError, IndexError, TypeError) as exc:

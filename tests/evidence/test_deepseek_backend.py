@@ -1,6 +1,7 @@
 """The DeepSeek backend through a fake ``post``: the request, the answer's parsing, the
 re-split on ``length``, refusals, the error map with retries, usage and the cache identity."""
 
+import http.client
 import io
 import json
 import urllib.error
@@ -235,3 +236,96 @@ def test_default_guidance_is_sent_for_ww2_only():
     assert backend.guidance_for(cw) == ""
     explicit, _ = _backend(lambda b: _answer(), guidance="read carefully")
     assert explicit.guidance_for(cw) == "read carefully"
+
+
+def test_an_answer_interrupted_for_lack_of_resources_is_retried():
+    """finish_reason insufficient_system_resource (the provider stopped the answer): a
+    retryable error, not a schema failure; retried, and its usage still counted."""
+    answers = iter([_answer(finish="insufficient_system_resource", content='{"propos'), None])
+
+    def reply(body):
+        a = next(answers)
+        return a if a is not None else _answer([_item()])
+
+    backend, post = _backend(reply)
+    assert len(backend.propose(DOC, VARS)) == 1 and len(post.calls) == 2
+    assert backend.usage["prompt_tokens"] == 200
+    waits = []
+    stuck, post = _backend(
+        lambda b: _answer(finish="insufficient_system_resource"), retries=1, sleep=waits.append
+    )
+    with pytest.raises(ExtractError, match="insufficient_system_resource") as info:
+        stuck.propose(DOC, VARS)
+    assert info.value.retryable and len(post.calls) == 2 and waits == [2.0]
+
+
+@pytest.mark.parametrize(
+    "error, retryable",
+    [
+        (http.client.IncompleteRead(b"{"), True),
+        (http.client.RemoteDisconnected("closed"), True),
+        (UnicodeDecodeError("utf-8", b"\xff", 0, 1, "invalid start byte"), False),
+    ],
+)
+def test_transport_and_decoding_failures_are_extract_errors(error, retryable):
+    """http.client.HTTPException (a body cut short) and UnicodeDecodeError become
+    ExtractError, so extract() records them against the document instead of ending the run."""
+
+    def reply(body):
+        return error
+
+    backend, post = _backend(reply, retries=1)
+    with pytest.raises(ExtractError) as info:
+        backend.propose(DOC, VARS)
+    assert info.value.retryable is retryable
+    assert len(post.calls) == (2 if retryable else 1)
+
+    class One:
+        synthetic = False
+
+        def iter_documents(self, until, since=None):
+            yield DOC
+
+    result = extract(One(), until=date(1939, 3, 31), backend=backend, variables=VARS)
+    assert [e["document"] for e in result.errors] == ["doc-1"]
+
+
+def test_a_cached_answer_is_not_reused_under_another_header(tmp_path):
+    """The header (source, title, url) is sent with the text but is not in the key: the
+    entry records it, and an entry answered under another header is read again. An entry
+    without a header (written before headers were recorded) is used as before."""
+    import dataclasses
+
+    from wavefront.evidence.extract import CachedBackend
+
+    backend, post = _backend(lambda b: _answer([_item()]))
+    cached = CachedBackend(backend, tmp_path)
+    cached.propose(DOC, VARS)
+    cached.propose(DOC, VARS)
+    assert len(post.calls) == 1 and (cached.hits, cached.misses) == (1, 1)
+    retitled = dataclasses.replace(DOC, title="Birmingham (corrected title)")
+    assert not cached.cached(retitled, VARS)
+    cached.propose(retitled, VARS)
+    assert len(post.calls) == 2 and "corrected title" in post.calls[1][2]["messages"][1]["content"]
+    assert cached.cached(retitled, VARS) and not cached.cached(DOC, VARS)
+    (entry,) = tmp_path.glob("*.json")
+    data = json.loads(entry.read_text())
+    del data["header"]
+    entry.write_text(json.dumps(data))
+    assert cached.cached(DOC, VARS) and cached.cached(retitled, VARS)
+
+
+def test_the_guidance_is_recorded_and_an_empty_one_means_none(tmp_path):
+    import hashlib
+
+    from wavefront.evidence.replay import backend_info, describe_backend
+
+    assert backend_info(make_backend("deepseek"))["guidance"] == "default"
+    empty = make_backend("deepseek", guidance="")
+    assert empty.guidance_for(VARS) == "" and backend_info(empty)["guidance"] == "none"
+    text = "read carefully\n"
+    info = backend_info(make_backend("deepseek", guidance=text))
+    assert info["guidance"] == "sha256:" + hashlib.sha256(text.encode()).hexdigest()
+    assert describe_backend(info).startswith("deepseek, model `deepseek-flash`, guidance file")
+    assert "guidance" not in backend_info(make_backend("rules"))
+    assert "guidance" not in backend_info(make_backend("claude"))

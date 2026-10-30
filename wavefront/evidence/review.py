@@ -450,7 +450,9 @@ def _build_annual(
     """The replay snapshot of an annual episode (the Cold War): the state on 1 January of the
     year after ``until`` (a 31 December). The text variables take the level of their latest
     accepted proposal, as in WW2; every other variable of the year's hindsight snapshot, its
-    rates and its built-ins are carried from it as ``assumed`` (decisions D7)."""
+    rates and its built-ins are carried from it as ``assumed`` (decisions D7). A set-valued
+    hindsight entry is carried as a set, each member marked ``assumed`` with its own
+    indicators."""
     if (until.month, until.day) != (12, 31):
         raise ReviewError(
             f"{until}: a {ep.title} replay snapshot is the state on 1 January, read from the "
@@ -468,11 +470,14 @@ def _build_annual(
         if name in ep.text_variables:
             continue
         entry = copy.deepcopy(entry)
-        entry["confidence"] = "assumed"
-        for ind in entry.get("indicators", []):
-            ind["rule"] = (
-                f"not read in the blind replay: the hindsight level of {label}. " + ind["rule"]
-            )
+        # a set-valued entry (levels and ambiguity) is carried as a set: each member is
+        # marked and keeps its own indicators; nothing is added at the set level
+        for level in entry["levels"] if "levels" in entry else [entry]:
+            level["confidence"] = "assumed"
+            for ind in level.get("indicators", []):
+                ind["rule"] = (
+                    f"not read in the blind replay: the hindsight level of {label}. " + ind["rule"]
+                )
         variables[name] = entry
     for name in ep.text_variables:
         var = ep.variable(name)

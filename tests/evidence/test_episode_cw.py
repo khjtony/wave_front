@@ -2,6 +2,7 @@
 them, the WW2 prompt left byte-identical, annual periods, and a synthetic Cold War replay end to
 end with a fake backend (auto-accept, review, measurement, metrics and the CLI)."""
 
+import copy
 import hashlib
 import json
 from datetime import date
@@ -371,3 +372,58 @@ def test_cw_review_and_refusals(cw_run, tmp_path):
 
     with pytest.raises(ReviewError, match="31 December"):
         build_snapshot(date(1958, 6, 30), [], episode="cw")
+
+
+def test_cw_flips_start_from_the_record_of_the_year_before(tmp_path):
+    """1982 and 1983 (a range the harness plans): the record's belief_force_USA is over_1000
+    from 1968, not the initial none. The replayed and the documented flips both start from
+    the record's level of 1981, so a replay that agrees with the record in both years has no
+    false flip; its own 1981 snapshot, if any, is not read."""
+    years = ["1982", "1983"]
+    record = contemporaneous(["1981", *years])
+    for y in years:
+        snap = json.loads((CW.hindsight / f"{y}.json").read_text())
+        for name in CW.text_variables:
+            snap["variables"][name] = {
+                "level": record[name][y][0],
+                "confidence": "medium",
+                "indicators": [],
+            }
+        (tmp_path / f"{y}.json").write_text(json.dumps(snap))
+    m = compare(tmp_path, years, episode="cw")
+    assert m.agreement("belief_force_USA", "contemporaneous") == (2, 2)
+    text = render_report(m, title="t", corpus={"source": "s"}, backend={"name": "b"}, command="c")
+    assert "Both series start from the record's level on 1 January 1981" in text
+    assert [(d and d.year, r and r.year) for d, r in m.matches["belief_force_USA"]] == []
+    # the documented 1983 flip of belief_USSR_USA (hostile -> first_strike_intent) is matched
+    assert [(d and d.year, r and r.year) for d, r in m.matches["belief_USSR_USA"]] == [
+        ("1983", "1983")
+    ]
+    stale = json.loads((tmp_path / "1982.json").read_text())
+    stale["variables"]["belief_force_USA"]["level"] = "none"
+    (tmp_path / "1981.json").write_text(json.dumps(stale))
+    m = compare(tmp_path, years, episode="cw")
+    assert m.matches["belief_force_USA"] == []
+
+
+def test_a_set_valued_hindsight_entry_is_carried_as_a_set(tmp_path):
+    """A Cold War snapshot carries a set-valued hindsight entry (a contested window) as a
+    set: no confidence at the set level, each member marked assumed with its indicators."""
+    from wavefront.evidence.review import build_snapshot
+
+    snap = json.loads((CW.hindsight / "1958.json").read_text())
+    concrete = snap["variables"]["intel_USA"]
+    other = "overhead"
+    snap["variables"]["intel_USA"] = {
+        "levels": [concrete, {**copy.deepcopy(concrete), "level": other}],
+        "ambiguity": "the crossing is a judgement",
+    }
+    assert validate_snapshot(snap) == []
+    (tmp_path / "1958.json").write_text(json.dumps(snap))
+    out = build_snapshot(date(1957, 12, 31), [], hindsight_dir=tmp_path, episode="cw")
+    entry = out["variables"]["intel_USA"]
+    assert set(entry) == {"levels", "ambiguity"}
+    assert [m["level"] for m in entry["levels"]] == ["partial", other]
+    for m in entry["levels"]:
+        assert m["confidence"] == "assumed"
+        assert m["indicators"][0]["rule"].startswith("not read in the blind replay")

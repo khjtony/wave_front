@@ -162,7 +162,16 @@ written to `OUT/metrics.md` (or `--report`):
   that set the new level; each documented flip is paired with the nearest replayed flip to
   the same level within four quarters, and the lag is given in quarters and days (positive:
   the replay is late); unpaired replayed flips are false flips, unpaired documented flips are
-  missed;
+  missed. Both series start from the same baseline, the record's level at the end of the
+  quarter before the first (its hindsight snapshot, else the initial levels), never the
+  replay's own snapshot of that quarter, so a replay that agrees in every quarter has no false
+  flip whatever `--quarters` starts with (fixed 2026-10-30; until then a measurement started
+  the replay from the initial levels, which gave a false flip at the first quarter of a range
+  starting after 1936Q1 for every variable already moved; every recorded WW2 report starts at
+  1936Q1, where the two baselines are equal, and is unchanged). With set-valued hindsight
+  levels, a replayed flip inside a window to a level of its set, or on the first concrete
+  quarter after it back to that quarter's hindsight level, is a flip inside the window, not a
+  false flip ([ambiguous_levels.md](ambiguous_levels.md) section 5);
 - the disagreements, each with the hindsight event and the replay quote behind it.
 
 `--metrics-only` recomputes the report from the snapshots already reviewed. It counts no
@@ -470,7 +479,10 @@ was declined", not retryable: running again asks again), send the error message 
 model, the effort, the token and part limits, the system prompt with the ontology's threshold
 rules, and the document's text; only complete answers are cached, never an error. Running the
 same command again therefore sends only the documents not yet answered (`--dry-run` shows how
-many are left: its "cached" column). Keep `--model` and the repository's commit the same across
+many are left: its "cached" column). The document's source, title and URL, which are sent with
+its text, are not in the key (so the recorded runs' caches stay valid) but are recorded in each
+entry: an entry answered under another header (a corrected `crest` title, another URL) is read
+again (an entry from before 2026-10-30, without a header, is used as before). Keep `--model` and the repository's commit the same across
 the resumed runs: a different model or a changed threshold rule reads every document again. A
 quarter whose proposals carry a reviewer's decision is never replayed over (the replay refuses
 instead of resetting the decisions), so start `--quarters` after the reviewed ones. `--workers`
@@ -528,8 +540,15 @@ discard anything outside it, with the reason). Default model `deepseek-flash`
 read from `DEEPSEEK_API_KEY`, the base URL from `DEEPSEEK_BASE_URL` (default
 `https://api.deepseek.com`); never put either in a file of the repository. Long documents are
 split as for Claude (parts of at most 120,000 characters; a part whose answer stops on
-`length` is split again); `content_filter` is a refusal; HTTP 429, 5xx and network failures
-are retried three times with a doubling wait, 402 is reported as insufficient balance. Usage
+`length` is split again); `content_filter` is a refusal; HTTP 429, 5xx, network failures (a
+response cut short, `http.client.HTTPException`, included) and an answer interrupted by the
+provider (`finish_reason` `insufficient_system_resource`) are retried three times with a
+doubling wait, 402 is reported as insufficient balance, and a body that is not UTF-8 or JSON is
+an error; every failure is recorded against its document. An empty `--guidance-file` means no
+guidance (as in `scripts/compare_backends.py`); no `--guidance-file` means the default. The
+proposals file's `backend` records the guidance (`"default"`, `"none"`, or `"sha256:<hex>"` of
+the file's text), the report's backend line names it, and the report's command line gives
+`--guidance-file`. Usage
 is recorded per quarter under the API's names (`prompt_tokens`, `completion_tokens`,
 `prompt_cache_hit_tokens`, `prompt_cache_miss_tokens`, `reasoning_tokens`). Answers are
 cached per document like Claude's, under an identity naming the base URL, model, limits, JSON
@@ -610,7 +629,9 @@ follows (a test checks that both agree in the manual years). The report has the 
 year, whether the replayed `belief_force_USA` is in a higher band than the hindsight
 `count_USSR`, beside the same for the manual replay; R V6 (a) of cw_v1_decisions.md), the C7 line (`belief_USSR_USA` on 1 January 1983), agreement per variable with both
 series, the flips of the replay against the documented flips of the contemporaneous series
-(matched within two years, lag in years), and the indicators behind every disagreement. These
+(matched within two years, lag in years; both series start from the record's contemporaneous
+level of the year before the first, never from a replay snapshot of that year, so a replay of
+1982 to 1985 that reads `over_1000` from the start has no false flip), and the indicators behind every disagreement. These
 are inputs of C6 and C7; the claims themselves are computed on the model from the snapshots.
 
 ```

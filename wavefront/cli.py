@@ -494,7 +494,10 @@ def _date_arg(text: str):
 
 def _evidence(func):
     """Run an evidence subcommand; its user errors exit 2 with the message on stderr, and a
-    missing optional SDK or a backend failure exits 1."""
+    missing optional SDK or a backend error that reaches here (an ``ExtractError``) exits 1.
+    ``wf extract`` also exits 1 when the backend failed on a document (the error is recorded
+    and the proposals file still written); ``wf replay`` turns such a failure into a
+    ``ReplayError``, so it exits 2 without writing the period's proposals file."""
 
     def run(args: argparse.Namespace) -> int:
         from .evidence.extract import ExtractError
@@ -603,10 +606,11 @@ def cmd_review(args: argparse.Namespace) -> int:
     return 0
 
 
-def _guidance(args: argparse.Namespace) -> str:
+def _guidance(args: argparse.Namespace) -> str | None:
+    """The text of ``--guidance-file`` (an empty file: no guidance), or None (the default)."""
     path = getattr(args, "guidance_file", None)
     if not path:
-        return ""
+        return None
     if args.backend != "deepseek":
         raise SystemExit("error: --guidance-file applies to the deepseek backend only")
     return Path(path).read_text(encoding="utf-8")
@@ -766,6 +770,8 @@ def cmd_replay(args: argparse.Namespace) -> int:
         command += f" --backend {args.backend}"
     if args.model:
         command += f" --model {args.model}"
+    if args.guidance_file and args.corpus:
+        command += f" --guidance-file {_shown(Path(args.guidance_file))}"
     if args.rules is not None:
         command += f" --rules {args.rules}"
     if args.auto_accept:
@@ -776,6 +782,12 @@ def cmd_replay(args: argparse.Namespace) -> int:
         command += " --measure-proposals"
     if args.drop_rejected:
         command += " --drop-rejected"
+    if args.measure_proposals and args.drop_rejected:
+        print(
+            "PROPOSAL-LEVEL: rejected proposals left out, the accepted and the pending ones "
+            "treated as accepted for the metrics; nothing written"
+        )
+    elif args.measure_proposals:
         print("PROPOSAL-LEVEL: every proposal treated as accepted for the metrics; nothing written")
     text = render_report(
         metrics,
@@ -926,7 +938,8 @@ def _add_evidence_commands(sub) -> None:
     )
     p.add_argument(
         "--guidance-file",
-        help="deepseek backend: a text file of instructions replacing the default guidance",
+        help="deepseek backend: a text file of instructions replacing the default guidance "
+        "(an empty file: no guidance); its SHA-256 is recorded in the proposals file",
     )
     p.add_argument(
         "--rules",
@@ -995,14 +1008,15 @@ def _add_evidence_commands(sub) -> None:
         action="store_true",
         help="accept every proposal without review (synthetic fixture corpus only; flagged)",
     )
-    p.add_argument("--source", help="corpus kind (local, frus, hansard, chronicling, trove)")
+    p.add_argument("--source", help="corpus kind (local, frus, hansard, chronicling, trove, crest)")
     p.add_argument("--backend", choices=("rules", "claude", "deepseek"), default="rules")
     p.add_argument(
         "--model", help="model for the claude or deepseek backend (default: the backend's)"
     )
     p.add_argument(
         "--guidance-file",
-        help="deepseek backend: a text file of instructions replacing the default guidance",
+        help="deepseek backend: a text file of instructions replacing the default guidance "
+        "(an empty file: no guidance); its SHA-256 is recorded in the proposals file",
     )
     p.add_argument(
         "--hindsight",
@@ -1045,8 +1059,8 @@ def _add_evidence_commands(sub) -> None:
     p.add_argument(
         "--no-cache",
         action="store_true",
-        help="do not cache the answers of a paid backend under OUT/cache/ (default: cached, so "
-        "running the same command again resumes a stopped run)",
+        help="do not cache the answers of a paid backend under OUT/cache/<backend>/ (default: "
+        "cached, so running the same command again resumes a stopped run)",
     )
     p.add_argument(
         "--dry-run",

@@ -4,11 +4,24 @@ resumes without asking again for the documents it has already read.
 The cache stores, per document, the proposals the backend returned (before the extractor's
 checks, which run again on every read). An entry is keyed by the document (id, date and a
 hash of its text) and by the backend's identity for the request (``cache_identity``: for
-the Claude backend the model, effort, token and part limits and a hash of the system prompt
-with the variables' threshold rules), so changing the model, the prompt or the ontology's
-rule text reads the document again. Only successful answers are stored; an error is never
-cached. Entries are written atomically, one file per document, so a run stopped mid-way
-leaves only whole entries.
+the Claude backend the model, effort, token and part limits, the fallback setting, a hash of
+the system prompt with the variables' threshold rules and a hash of the answer's schema; for
+the DeepSeek backend the base URL, model, token and part limits, JSON mode, effort and a hash
+of the system prompt with its guidance and schema), so changing the model, the prompt or the
+ontology's rule text reads the document again. Only successful answers are stored; an error
+is never cached. Entries are written atomically, one file per document, so a run stopped
+mid-way leaves only whole entries. The replay keeps one cache per backend, under
+``OUT/cache/<backend>/``.
+
+**The document's header.** Both LLM backends also send the document's ``source``, ``title``
+and ``url`` with the text. They are not part of the key, so that the caches of the recorded
+runs stay valid, and they are not fixed by the document's id and text: in the ``crest``
+corpus the title comes from the contents table of the volume (``crest.STEURY_1996``, code that
+can be edited) and the URL and source from the manifest and the raw file, so the same id and
+text can come with another header. Each entry therefore records the header it was answered
+with (``header``), and an entry whose header differs from the document's is not used: the
+document is read again and the entry replaced. An entry written before headers were recorded
+(no ``header``) is used as before.
 """
 
 from __future__ import annotations
@@ -25,7 +38,7 @@ from ..corpora.base import Document
 from .backend import Backend
 from .schema import Proposal, VariableSpec
 
-__all__ = ["CachedBackend", "cache_key"]
+__all__ = ["CachedBackend", "cache_key", "header"]
 
 _SAFE = re.compile(r"[^A-Za-z0-9._-]+")
 
@@ -38,8 +51,14 @@ def _identity(backend: Backend, variables: Sequence[VariableSpec]) -> dict[str, 
     return {"backend": backend.name, "variables": rules}
 
 
+def header(document: Document) -> dict[str, str]:
+    """The header fields the LLM backends send with the text (checked, not keyed)."""
+    return {"source": document.source, "title": document.title, "url": document.url}
+
+
 def cache_key(backend: Backend, document: Document, variables: Sequence[VariableSpec]) -> str:
-    """The SHA-256 of the backend's identity and the document (id, date, text)."""
+    """The SHA-256 of the backend's identity and the document (id, date, text); the header
+    (:func:`header`) is checked against the entry, not keyed (module docstring)."""
     payload = {
         "identity": _identity(backend, variables),
         "document": document.id,
@@ -68,13 +87,23 @@ class CachedBackend:
         key = cache_key(self.backend, document, variables)
         return self.directory / f"{_SAFE.sub('_', document.id)}.{key[:20]}.json"
 
+    def _entry(self, document: Document, variables: Sequence[VariableSpec]) -> Any:
+        """The usable cached entry of ``document``, or None (none, or another header)."""
+        path = self.path(document, variables)
+        if not path.exists():
+            return None
+        data = json.loads(path.read_text(encoding="utf-8"))
+        if data.get("header", header(document)) != header(document):
+            return None
+        return data
+
     def cached(self, document: Document, variables: Sequence[VariableSpec]) -> bool:
-        return self.path(document, variables).exists()
+        return self._entry(document, variables) is not None
 
     def propose(self, document: Document, variables: Sequence[VariableSpec]) -> list[Proposal]:
         path = self.path(document, variables)
-        if path.exists():
-            data = json.loads(path.read_text(encoding="utf-8"))
+        data = self._entry(document, variables)
+        if data is not None:
             with self._lock:
                 self.hits += 1
             return [Proposal.from_json(p) for p in data["proposals"]]
@@ -83,7 +112,11 @@ class CachedBackend:
         tmp = path.with_name(f"{path.name}.{threading.get_ident()}.part")
         tmp.write_text(
             json.dumps(
-                {"document": document.id, "proposals": [p.to_json() for p in proposals]},
+                {
+                    "document": document.id,
+                    "header": header(document),
+                    "proposals": [p.to_json() for p in proposals],
+                },
                 ensure_ascii=False,
             ),
             encoding="utf-8",

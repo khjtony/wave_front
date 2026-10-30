@@ -45,6 +45,7 @@ from .replay import (
     QuarterRun,
     _lv,
     _pct,
+    describe_backend,
     gate_counts,
     measured_snapshots,
     proposal_counts,
@@ -232,8 +233,11 @@ def compare(
     the contemporaneous beliefs (see the module docstring). With ``measure_proposals`` the
     replay snapshots are built in memory from every proposal as if accepted
     (:func:`.replay.measured_snapshots`), and the metrics say so. The flips are taken
-    between consecutive years of ``years``; the year before the first is the baseline (its
-    replay snapshot if there is one, else the initial levels)."""
+    between consecutive years of ``years``; both the replayed and the documented series start
+    from the same baseline, the record's (contemporaneous) level of the year before the first
+    (else the initial level), as the WW2 flips start from the hindsight snapshot of the
+    quarter before the first. A replay snapshot of that year, if the directory has one, is not
+    read: a replay that agrees with the record in every year has no false flip."""
     for y in years:
         CW.index(y)
     replay_dir = Path(replay_dir)
@@ -259,11 +263,14 @@ def compare(
     )
     m.contemporaneous = contemporaneous(years, manual_dir, events)
     prev = str(int(years[0]) - 1)
-    base = None if measure_proposals else _read(replay_dir / f"{prev}.json")
+    before = contemporaneous([prev], manual_dir, events)
     for name in CW.text_variables:
         init = CW.variable(name).init
         truth = CW.truth_of(name)
-        series = {prev: base["variables"][name]["level"] if base else init}
+        # both series start from the record's level of the year before the first
+        prior = before[name].get(prev)
+        baseline = prior[0] if prior else init
+        series = {prev: baseline}
         observed: dict[str, str | None] = {}
         m.replay[name], m.entries[name], m.hindsight[name] = {}, {}, {}
         for y in years:
@@ -279,8 +286,7 @@ def compare(
             inds = entry.get("indicators") or []
             observed[y] = inds[0].get("observed") if inds else None
         documented_series = {y: lv for y, (lv, _src) in m.contemporaneous[name].items()}
-        prior = contemporaneous([prev], manual_dir, events)[name].get(prev)
-        documented_series[prev] = prior[0] if prior else init
+        documented_series[prev] = baseline
         m.matches[name] = _match(
             _flips(documented_series, name, {}), _flips(series, name, observed)
         )
@@ -345,9 +351,7 @@ def render_report(
         f"- Corpus: {corpus.get('source')}"
         + (f", `{corpus['root']}`" if corpus.get("root") else "")
         + (" (synthetic fixtures)" if synthetic else ""),
-        f"- Backend: {backend.get('name')}"
-        + (f", model `{backend['model']}`" if backend.get("model") else "")
-        + (f", effort {backend['effort']}" if backend.get("effort") else ""),
+        f"- Backend: {describe_backend(backend)}",
         "- Harness rules recorded: "
         + (describe_rules(metrics.rules) if metrics.rules is not None else "unknown")
         + "; the three belief variables are readings, outside both rules, so the rules act on "
@@ -410,7 +414,9 @@ def render_report(
         "A documented flip is a change of the contemporaneous belief between consecutive "
         "1 Januaries; a replayed flip is the same in the replay, dated by the "
         + ("proposal (treated as accepted)" if metrics.proposal_level else "accepted proposal")
-        + f" that set it. Matched within {CW.match_window} years to the same level; lag is "
+        + f" that set it. Both series start from the record's level on 1 January "
+        f"{int(metrics.years[0]) - 1}, so a replay that agrees with the record in every year "
+        f"has no false flip. Matched within {CW.match_window} years to the same level; lag is "
         "replay minus documented, in years (positive: the replay is late).",
         "",
         "| Variable | Level | Documented (year) | Replayed (year, date) | Lag (years) |",

@@ -158,6 +158,35 @@ def test_metrics_identical_series_agree_fully_with_zero_lags(tmp_path):
         assert all(x.lag_quarters == 0 and x.lag_days == 0 for x in m.matched(name))
 
 
+def test_metrics_a_range_after_1936q1_starts_both_series_from_the_record(tmp_path):
+    """--quarters 1937Q1..: the replayed and the documented flips both start from the
+    hindsight snapshot of 1936Q4 (docs/replay_harness.md, "Replay and metrics"), so a
+    replay that agrees in every quarter has no false flip, whether or not the directory
+    holds a replay snapshot of 1936Q4, and whatever that snapshot reads."""
+    out = _series(tmp_path)
+    quarters = parse_quarters("1937Q1..1940Q4")
+    (out / "1936Q4.json").unlink()
+    m = compare(out, quarters, HINDSIGHT)
+    for name in TEXT_VARIABLES:
+        assert m.agreement[name] == (16, 16)
+        assert m.false_flips(name) == [] and m.missed_flips(name) == [], name
+    shutil.copy(HINDSIGHT / "1936Q4.json", out / "1936Q4.json")
+    _set(out, "1936Q4", "rhineland", "demilitarized")
+    m = compare(out, quarters, HINDSIGHT)
+    assert m.false_flips("rhineland") == []
+
+
+def test_report_target_names_the_hindsight_directory_compared_with(tmp_path):
+    out = _series(tmp_path)
+    m = compare(out, QUARTERS, HINDSIGHT)
+    text = render_report(m, title="T", corpus={"source": "x"}, backend={"name": "b"}, command="c")
+    assert "- Target: the hindsight snapshots in `snapshots/ww2/hindsight/`" in text
+    text = render_report(
+        compare(out, QUARTERS, out), title="T", corpus={"source": "x"}, backend={}, command="c"
+    )
+    assert f"- Target: the hindsight snapshots in `{out}/`" in text
+
+
 def test_metrics_a_late_flip_has_a_lag_and_costs_agreement(tmp_path):
     out = _series(tmp_path)
     levels = _levels("belief_WEST")
@@ -291,6 +320,29 @@ def test_measure_proposals_without_corpus_and_its_refusals(measured_run, tmp_pat
     empty = tmp_path / "empty"
     empty.mkdir()
     assert main(["replay", "--out", str(empty), "--measure-proposals"]) == 2
+
+
+def test_measure_proposals_prints_the_banner_of_its_mode(measured_run, tmp_path, capsys):
+    """The stdout banner of a proposal-level measurement: every proposal treated as accepted,
+    or, with --drop-rejected, the rejected ones left out; none for a reviewed measurement."""
+    out, _ = measured_run
+    args = ["replay", "--out", str(out), "--measure-proposals", "--report", str(tmp_path / "r")]
+    capsys.readouterr()
+    assert main(args) == 0
+    lines = [x for x in capsys.readouterr().out.splitlines() if x.startswith("PROPOSAL-LEVEL")]
+    assert lines == [
+        "PROPOSAL-LEVEL: every proposal treated as accepted for the metrics; nothing written"
+    ]
+    assert main([*args, "--drop-rejected"]) == 0
+    lines = [x for x in capsys.readouterr().out.splitlines() if x.startswith("PROPOSAL-LEVEL")]
+    assert lines == [
+        "PROPOSAL-LEVEL: rejected proposals left out, the accepted and the pending ones "
+        "treated as accepted for the metrics; nothing written"
+    ]
+    assert (
+        main(["replay", "--out", str(out), "--metrics-only", "--report", str(tmp_path / "m")]) == 0
+    )
+    assert "PROPOSAL-LEVEL" not in capsys.readouterr().out
 
 
 def test_report_gives_the_reading_nothing_baseline(synthetic_run):

@@ -9,6 +9,9 @@ compares the kept proposals with the reference's, per document, as (variable, le
 - level differs: same document and variable, another level;
 - extra: proposed here, not in the reference; missing: in the reference, not here.
 
+A document the backend failed on is left out of the counts, precision and recall (it would
+count every reference pair as missing) and listed under ``failed_documents``.
+
 The reference is another reader, not the truth: agreement measures whether the two read the
 documents alike. Writes ``<out>/<tag>.json`` (every proposal with its quote, the discards and
 errors, the usage) and prints a summary. Example::
@@ -39,10 +42,19 @@ def _pairs(records):
     return out
 
 
-def compare(ours: dict, ref: dict, docs: list[str]) -> dict:
+def compare(
+    ours: dict, ref: dict, docs: list[str], failed: set[str] | frozenset = frozenset()
+) -> dict:
+    """The per-pair comparison over ``docs``. A document the backend failed on (``failed``,
+    from the extractor's errors) has no proposals of ours, so it is left out of every count,
+    precision and recall included, and reported separately with the reference proposals it
+    holds. A "level differs" pair is counted on each side (ours and the reference's), so its
+    count is that of pairs, not of variables; precision and recall use ``match`` only."""
     counts = Counter()
     by_var: dict[str, Counter] = {}
     rows = []
+    failed_docs = [d for d in docs if d in failed]
+    docs = [d for d in docs if d not in failed]
     for d in docs:
         a, b = ours.get(d, set()), ref.get(d, set())
         a_vars, b_vars = {v for v, _ in a}, {v for v, _ in b}
@@ -59,7 +71,6 @@ def compare(ours: dict, ref: dict, docs: list[str]) -> dict:
             by_var.setdefault(v, Counter())[kind] += 1
             if kind != "match":
                 rows.append({"document": d, "variable": v, "level": lv, "kind": kind})
-    # "level differs" is counted once per side; halve it to count variables, not pairs.
     n_ours = sum(len(ours.get(d, ())) for d in docs)
     n_ref = sum(len(ref.get(d, ())) for d in docs)
     return {
@@ -69,6 +80,8 @@ def compare(ours: dict, ref: dict, docs: list[str]) -> dict:
         "precision": counts["match"] / n_ours if n_ours else None,
         "recall": counts["match"] / n_ref if n_ref else None,
         "by_variable": {v: dict(c) for v, c in sorted(by_var.items())},
+        "failed_documents": failed_docs,
+        "reference_proposals_on_failed": sum(len(ref.get(d, ())) for d in failed_docs),
         "disagreements": rows,
     }
 
@@ -106,6 +119,7 @@ def main(argv: list[str] | None = None) -> int:
         if args.effort:
             kw["effort"] = args.effort
         if args.guidance_file:
+            # an empty file means no guidance, as with make_backend and wf --guidance-file
             kw["guidance"] = Path(args.guidance_file).read_text(encoding="utf-8")
         backend = DeepSeekBackend(**kw)
     else:
@@ -129,7 +143,7 @@ def main(argv: list[str] | None = None) -> int:
         for r in reference["proposals"]
         if r["document"] in wanted
     )
-    report = compare(ours, ref, ids)
+    report = compare(ours, ref, ids, {e["document"] for e in result.errors})
     report |= {
         "tag": args.tag,
         "documents": len(ids),
@@ -149,7 +163,9 @@ def main(argv: list[str] | None = None) -> int:
         f"{report['reference_proposals']}; match {c.get('match', 0)}, level differs "
         f"{c.get('level differs', 0)}, extra {c.get('extra', 0)}, missing {c.get('missing', 0)}; "
         f"precision {report['precision']}, recall {report['recall']}; discarded "
-        f"{len(result.discarded)}, errors {len(result.errors)}; usage {report['usage']}"
+        f"{len(result.discarded)}, errors {len(result.errors)} (left out of the counts, with "
+        f"{report['reference_proposals_on_failed']} reference proposals); usage "
+        f"{report['usage']}"
     )
     return 0
 

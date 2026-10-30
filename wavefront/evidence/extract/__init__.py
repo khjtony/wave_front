@@ -46,14 +46,16 @@ __all__ = [
 ]
 
 
-def make_backend(name: str, model: str | None = None, guidance: str = "") -> Backend:
+def make_backend(name: str, model: str | None = None, guidance: str | None = None) -> Backend:
     """``rules``, ``claude`` or ``deepseek`` (the last two with an optional model; ``deepseek``
-    with optional ``guidance`` replacing the default guidance)."""
+    with optional ``guidance`` replacing the default guidance). ``guidance=None`` keeps the
+    default guidance; any string replaces it, so an empty one (an empty ``--guidance-file``)
+    means no guidance, as in ``scripts/compare_backends.py``."""
     if name == "rules":
         return RuleBackend()
     if name == "claude":
         return ClaudeBackend(model) if model else ClaudeBackend()
     if name == "deepseek":
-        kw = {"guidance": guidance} if guidance else {}
+        kw = {"guidance": guidance} if guidance is not None else {}
         return DeepSeekBackend(model, **kw) if model else DeepSeekBackend(**kw)
     raise ValueError(f"unknown backend {name!r} (rules, claude, deepseek)")
