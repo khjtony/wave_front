@@ -254,6 +254,43 @@ def _pivotal(a: Analysis) -> list[str]:
     return [*lines, ""]
 
 
+def _robustness(a: Analysis) -> list[str]:
+    """The robust/fragile verdicts of a snapshot with a set of levels (docs/ambiguous_levels.md)."""
+    if not a.robustness:
+        return []
+    labels = a.robustness[0].labels
+    lines = [
+        "## Robust and fragile findings",
+        "",
+        f"The start state is a set of {len(labels)} member states (a snapshot giving a set of "
+        "levels over a contested window): " + "; ".join(f"[{x}]" for x in labels) + ". Each "
+        "question is asked from every member on its own. *Robust*: the same answer from every "
+        "member. *Fragile*: the answer depends on the member; the members are named. No member "
+        "is weighted.",
+        "",
+    ]
+    order = {n: i for i, n in enumerate(a.cm.actor_names)}
+
+    def show(x: object) -> str:
+        if isinstance(x, Distance):
+            return f"shortest {_num(x.shortest)}, forced {_num(x.forced)}"
+        if hasattr(x, "forcing") and hasattr(x, "blocking"):
+
+            def fmt(cs: list[frozenset[str]]) -> str:
+                if not cs:
+                    return "none"
+                return "; ".join(_coalition(sorted(c, key=order.__getitem__)) for c in cs)
+
+            return f"forcing {fmt(x.forcing)}, blocking {fmt(x.blocking)}"  # type: ignore[attr-defined]
+        if isinstance(x, bool):
+            return "yes" if x else "no"
+        return str(x)
+
+    rows = [(r.question, r.verdict, r.summary(show).split(": ", 1)[1]) for r in a.robustness]
+    lines += _table(["question", "verdict", "answer (by member when fragile)"], rows)
+    return [*lines, ""]
+
+
 def _sensitivity(a: Analysis) -> list[str]:
     lines = [
         "## Sensitivity",
@@ -345,8 +382,9 @@ def render(analysis: Analysis) -> str:
     """Markdown report of an analysis, in the order of spec section 8: the caveat, the
     model and its parameter budget, initial states and kernel membership per coalition,
     endings with forced/blocked/contested status and shortest witness traces, minimal
-    relaxation sets, pivotal coalitions, the sensitivity table, strategy uniformity notes
-    and the speculative actions used by any reported trace."""
+    relaxation sets, pivotal coalitions, the robust/fragile verdicts when the start state is
+    a set of member states, the sensitivity table, strategy uniformity notes and the
+    speculative actions used by any reported trace."""
     parts = [
         _header(analysis),
         _budget(analysis),
@@ -354,6 +392,7 @@ def render(analysis: Analysis) -> str:
         _endings(analysis),
         _relaxations(analysis),
         _pivotal(analysis),
+        _robustness(analysis),
         _sensitivity(analysis),
         _uniformity(analysis),
         _speculative(analysis),

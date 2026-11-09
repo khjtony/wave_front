@@ -3,6 +3,8 @@
 
 ``python scripts/cw_catalogue.py`` prints the tables; ``--check`` exits 1 if the document's
 tables differ from the model (tests/coldwar/test_model_cw.py runs the same comparison).
+``--v1`` does the same for the v1 tables (the coarse actions v1 adds or edits, and the two v1
+sub-games; tests/coldwar_v1/test_model_cw_v1.py runs that comparison).
 """
 
 from __future__ import annotations
@@ -20,6 +22,7 @@ from wavefront.model.effects import Bump, Set, SetIf  # noqa: E402
 
 DOC = ROOT / "docs" / "actions_cw.md"
 BEGIN, END = "<!-- tables:begin -->", "<!-- tables:end -->"
+BEGIN_V1, END_V1 = "<!-- v1 tables:begin -->", "<!-- v1 tables:end -->"
 
 OPS = {"==": "=", "!=": "≠", "<=": "≤", ">=": "≥", "<": "<", ">": ">"}
 
@@ -55,11 +58,13 @@ def effect(x) -> str:
     return str(x)
 
 
-def rows(m) -> list[str]:
+def rows(m, keep=lambda actor, action: True) -> list[str]:
     out = ["| Actor | Action | Guard parts | Effect | Delay |", "|---|---|---|---|---|"]
     actors = list(m.actors) + [m.nature()]
     for a in actors:
         for x in a.actions:
+            if not keep(a.name, x):
+                continue
             guard = "; ".join(f"`{p}`: {expr(g)}" for p, g in x.guard_parts) or "none"
             eff = "; ".join(effect(e) for e in x.effects) or "none (crisis)"
             out.append(f"| {a.name} | `{x.name}` | {guard} | {eff} | {x.delay or ''} |")
@@ -73,12 +78,37 @@ def tables() -> str:
     return "\n".join(parts)
 
 
-def current() -> str:
+def tables_v1() -> str:
+    """The coarse actions v1 adds or edits (guard parts, effects or delay differing from
+    v0's action of the same actor and name), then the two sub-games v1 adds."""
+    from models.cw import v1
+
+    before = {
+        (a.name, x.name): (repr(x.guard_parts), repr(x.effects), x.delay)
+        for a in [*model.actors, model.nature()]
+        for x in a.actions
+    }
+
+    def changed(actor: str, x) -> bool:
+        return before.get((actor, x.name)) != (repr(x.guard_parts), repr(x.effects), x.delay)
+
+    parts = ["### The coarse game, v1 additions and edits (`models/cw/v1.py`)", ""]
+    parts += rows(v1.model, changed)
+    for name in ("sino_soviet_1969", "alert_1973"):
+        mod = v1.SUBGAMES[name]
+        parts += ["", f"### {name} (`models/cw/crises/{name}.py`)", "", *rows(mod.model)]
+    return "\n".join(parts)
+
+
+def current(begin: str = BEGIN, end: str = END) -> str:
     text = DOC.read_text(encoding="utf-8")
-    return text.split(BEGIN, 1)[1].split(END, 1)[0].strip()
+    return text.split(begin, 1)[1].split(end, 1)[0].strip()
 
 
 if __name__ == "__main__":
+    v1_tables = "--v1" in sys.argv
     if "--check" in sys.argv:
+        if v1_tables:
+            sys.exit(0 if current(BEGIN_V1, END_V1) == tables_v1() else 1)
         sys.exit(0 if current() == tables() else 1)
-    print(tables())
+    print(tables_v1() if v1_tables else tables())

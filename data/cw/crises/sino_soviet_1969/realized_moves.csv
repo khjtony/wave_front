@@ -1,0 +1,32 @@
+tick,date,USA,USSR,PRC,Nature,note,source
+0,1969-03-17,idle,idle,idle,none,"After the clashes of 2 and 15 Mar on Zhenbao Island; Kosygin's attempted call to Mao, 21 Mar, refused.",Yang Kuisong 2000
+1,1969-03-24,idle,propose_talks,idle,none,The Soviet government's statement of 29 Mar 1969 proposing border consultations.,Yang Kuisong 2000; Gerson 2010
+2,1969-03-31,idle,idle,idle,none,,
+3,1969-04-07,idle,idle,idle,none,,
+4,1969-04-14,idle,idle,idle,none,,
+5,1969-04-21,idle,idle,idle,none,,
+6,1969-04-28,idle,idle,idle,none,,
+7,1969-05-05,idle,idle,idle,none,,
+8,1969-05-12,idle,idle,idle,none,,
+9,1969-05-19,idle,idle,idle,none,,
+10,1969-05-26,idle,idle,idle,none,,
+11,1969-06-02,idle,idle,idle,none,,
+12,1969-06-09,idle,idle,idle,none,,
+13,1969-06-16,idle,idle,idle,none,,
+14,1969-06-23,idle,idle,idle,none,,
+15,1969-06-30,idle,idle,idle,none,,
+16,1969-07-07,idle,idle,idle,none,,
+17,1969-07-14,idle,idle,idle,none,,
+18,1969-07-21,idle,idle,idle,none,,
+19,1969-07-28,idle,idle,idle,none,,
+20,1969-08-04,idle,idle,idle,none,,
+21,1969-08-11,idle,border_offensive,idle,none,"Tielieketi (Zhalanashkol), Xinjiang, 13 Aug 1969.",Yang Kuisong 2000; Gerson 2010
+22,1969-08-18,signal,sound_out,idle,none,"Davydov to Stearman, 18 Aug 1969; Nixon at the NSC of 14 Aug ([SQR]: the answer to the clash of 13 Aug placed the week after it; Richardson's speech of 5 Sep is the same level).",Burr (ed.) 2001 EBB 49 doc. 10; Kissinger 1979
+23,1969-08-25,idle,idle,idle,none,,
+24,1969-09-01,idle,idle,idle,none,"The soundings repeated through Tehran (4 Sep) and Shevchenko (5 Sep); Richardson, 5 Sep (same levels).",Burr (ed.) 2001 EBB 49 docs. 16 and 18
+25,1969-09-08,idle,idle,accept_talks,none,"Kosygin and Zhou at Beijing airport, 11 Sep 1969: border talks agreed.",Yang Kuisong 2000; Gerson 2010
+26,1969-09-15,idle,idle,idle,none,,
+27,1969-09-22,idle,idle,idle,none,,
+28,1969-09-29,idle,idle,idle,none,,
+29,1969-10-06,idle,idle,idle,none,,
+30,1969-10-13,idle,idle,idle,none,"Lin Biao's Order No. 1 of 18 Oct 1969 (the PRC's alert against a surprise attack; not represented).",Yang Kuisong 2000

@@ -16,25 +16,45 @@ the way to measure a backend on a real corpus before anyone has reviewed its pro
 proposal of the proposals files is treated as if accepted, whatever its review status, the
 quarter-end snapshots are built in memory with the same rules as :mod:`.review`, and the metrics
 are computed from them. Nothing is written but the report, which says on its first line that no
-proposal was reviewed. It measures the backend, not the reviewed evidence.
+proposal was reviewed. It measures the backend, not the reviewed evidence. With
+``drop_rejected`` (``--drop-rejected``) it measures a partly reviewed run: the proposals a
+reviewer rejected are removed (they neither propose nor set a level), the accepted ones and the
+pending ones count as accepted, and a ``retrospective?`` proposal is applied only when a
+reviewer accepted it, as in review.
 
 The harness rules (:mod:`.harness_rules`: ``two-document`` and ``no-retrospective``, both on
 by default) are recorded in every proposals file the replay writes and act on review, on
 auto-accept and on the measurement alike; every report states which rules were in force.
-With a paid backend the replay caches each document's answer under ``<out>/cache/`` (see
-:mod:`.extract.cache`), so a run stopped by an error resumes, when run again, from the
-documents it has not read; :func:`plan` (``wf replay --dry-run``) counts what a run would send.
+With a paid backend the replay caches each document's answer under
+``<out>/cache/<backend>/`` (see :mod:`.extract.cache`), so a run stopped by an error resumes,
+when run again, from the documents it has not read; :func:`plan` (``wf replay --dry-run``)
+counts what a run would send.
+
+The episode (:mod:`.episodes`; ``episode="ww2"`` by default, ``"cw"`` for the Cold War) names
+the text variables, the prompt, the periods and the hindsight snapshots. A Cold War replay runs
+by year: the period ``1958`` reads the documents dated to 31 December 1957 and its snapshot is
+the state on 1 January 1958; its metrics are those of :mod:`.replay_cw`.
 
 Then :func:`compare` sets the replay snapshots against the hindsight snapshots: per-variable
 agreement of the levels at each quarter's end, the lag of each replayed flip against the
 documented flip, false flips and missed flips; :func:`render_report` writes the Markdown
 metrics report. Resource variables are copied from the hindsight snapshots, not extracted:
 their agreement is shown but is not a test of anything.
+
+A hindsight snapshot may give a set of levels for a variable over a contested window
+(docs/ambiguous_levels.md). A replayed level then agrees when it is in the set; those
+variable-quarters are also counted separately (``Metrics.ambiguous``) and reported on their
+own line. A documented flip across a window (concrete level ``a`` before it, ``b != a``
+after it) is dated by the window: its quarter is the window's first and ``window_end`` the
+first concrete quarter after it, and a replayed flip to ``b`` anywhere in that range has lag
+0. A replayed flip inside a window to a level of the window's set that answers no documented
+flip is listed as a flip inside an ambiguous window, not as a false flip.
 """
 
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
 import re
 from collections import Counter
@@ -46,6 +66,7 @@ from typing import Any
 
 from . import hindsight_ww2 as hw
 from .corpora.base import Corpus
+from .episodes import Episode, get_episode
 from .extract.backend import Backend, ExtractError
 from .extract.cache import CachedBackend
 from .extract.extractor import extract, write_proposals
@@ -65,11 +86,16 @@ from .review import (
     DEFAULT_HINDSIGHT,
     build_snapshot,
     decide,
+    directory_episode,
     directory_rules,
     proposal_files,
     rebuild_snapshots,
     review_gating,
 )
+from .review import (
+    ROOT as _ROOT,
+)
+from .snapshot import level_set
 
 __all__ = [
     "BELIEF_COMMIT",
@@ -79,6 +105,7 @@ __all__ = [
     "ReplayError",
     "backend_info",
     "compare",
+    "describe_backend",
     "measured_snapshots",
     "parse_quarters",
     "plan",
@@ -121,6 +148,7 @@ MATCH_WINDOW = 4  # quarters within which a replayed flip may answer a documente
 AUTO_NOTE = "auto-accepted by wf replay --auto-accept: synthetic fixture run, not a review"
 MEASURE_REVIEWER = "proposal-level measurement (no review)"
 MEASURE_NOTE = "wf replay --measure-proposals: a measurement of the backend, never written"
+REVIEW_STATUSES = ("accepted", "rejected", "pending")
 AUTO_RETRO_NOTE = (
     "auto-rejected by wf replay --auto-accept: retrospective? under the no-retrospective rule "
     "is never applied automatically (synthetic fixture run, not a review)"
@@ -182,11 +210,18 @@ class QuarterRun:
     snapshot: Path | None
 
 
-def _read_before(proposals_dir: Path, first_quarter: str) -> set[str]:
+def _read_before(proposals_dir: Path, first_quarter: str, ep: Episode | None = None) -> set[str]:
     """The documents read by the proposals files of the quarters before ``first_quarter``."""
+    ep = get_episode(ep)
     read: set[str] = set()
     if proposals_dir.exists():
-        first_end = quarter_end(first_quarter)
+        files = proposal_files(proposals_dir)
+        if files and directory_episode(files) != ep.name:
+            raise ReplayError(
+                f"{proposals_dir} holds proposals of the episode {directory_episode(files)}, "
+                f"not {ep.name}; use another --out"
+            )
+        first_end = ep.cutoff(first_quarter)
         for _p, data in proposal_files(proposals_dir):
             if date.fromisoformat(data["until"]) < first_end:
                 read.update(d["id"] for d in data["documents"])
@@ -216,24 +251,27 @@ def replay(
     backend: Backend,
     *,
     auto_accept: bool = False,
-    hindsight_dir: str | Path = DEFAULT_HINDSIGHT,
+    hindsight_dir: str | Path | None = None,
     rules: Sequence[str] = DEFAULT_RULES,
     workers: int = 1,
     cache: bool = True,
+    episode: str | Episode | None = None,
 ) -> list[QuarterRun]:
     """Run the blind replay over ``quarters`` (see the module docstring). ``rules`` are the
     harness rules recorded in the proposals files; ``workers`` documents are read at a time;
-    a backend other than the rule backend is cached under ``<out>/cache/`` unless ``cache``
-    is false."""
+    a backend other than the rule backend is cached under ``<out>/cache/<backend>/`` unless
+    ``cache`` is false. ``quarters`` are the periods of ``episode`` (default WW2): years for
+    the Cold War."""
+    ep = get_episode(episode)
     if auto_accept and not corpus.synthetic:
         raise ReplayError(
             "--auto-accept is only for the synthetic fixture corpus; a real corpus needs wf review"
         )
     out_dir = Path(out_dir)
     proposals_dir = out_dir / "proposals"
-    read_before = _read_before(proposals_dir, quarters[0])
+    read_before = _read_before(proposals_dir, quarters[0], ep)
     backend = _cached(backend, out_dir, cache)
-    variables = text_variables()
+    variables = text_variables(episode=ep)
     runs: list[QuarterRun] = []
     for quarter in quarters:
         reviewed = _reviewed(proposals_dir / f"{quarter}.json")
@@ -244,7 +282,7 @@ def replay(
                 "every proposal pending; start --quarters after it, or use another --out"
             )
     for quarter in quarters:
-        until = quarter_end(quarter)
+        until = ep.cutoff(quarter)
         visible = sum(1 for _ in corpus.iter_documents(until=until))
         usage_before = Counter(getattr(backend, "usage", None) or {})
         hits_before = getattr(backend, "hits", 0), getattr(backend, "misses", 0)
@@ -286,11 +324,12 @@ def replay(
             corpus=corpus.describe(),
             backend=info,
             harness_rules=rules,
+            episode=None if ep.name == "ww2" else ep.name,
         )
         read_before.update(d.id for d in result.documents)
         snapshot = None
         if auto_accept:
-            snapshot = _auto_decide(path, data, quarter, out_dir, hindsight_dir)
+            snapshot = _auto_decide(path, data, quarter, out_dir, hindsight_dir, ep)
         runs.append(
             QuarterRun(
                 quarter=quarter,
@@ -305,7 +344,12 @@ def replay(
 
 
 def _auto_decide(
-    path: Path, data: dict[str, Any], quarter: str, out_dir: Path, hindsight_dir: str | Path
+    path: Path,
+    data: dict[str, Any],
+    quarter: str,
+    out_dir: Path,
+    hindsight_dir: str | Path | None,
+    ep: Episode | None = None,
 ) -> Path | None:
     """Synthetic runs only: accept what a measurement would count, reject (with a note)
     what the no-retrospective rule never applies automatically, and leave held and blocked
@@ -313,7 +357,7 @@ def _auto_decide(
     measurement at the quarter's end, so an auto-accepted run and a measurement agree."""
     proposals_dir = path.parent
     files = proposal_files(proposals_dir)
-    until = quarter_end(quarter)
+    until = get_episode(ep).cutoff(quarter)
     upto = [f for f in files if date.fromisoformat(f[1]["until"]) <= until]
     records, index, gating = review_gating(upto, until, directory_rules(files), measure=True)
     accept, reject = [], []
@@ -356,19 +400,22 @@ def plan(
     quarters: Sequence[str],
     out_dir: str | Path,
     backend: Backend,
+    *,
+    episode: str | Episode | None = None,
 ) -> list[PlanRow]:
     """Count, without calling the backend, what :func:`replay` would read per quarter: the
     documents not read by an earlier quarter's proposals file in ``out_dir``, those of them
     already in the cache (a resumed run does not send them), and the characters and requests
     (one per part of at most the backend's ``max_chars``) of the rest."""
+    ep = get_episode(episode)
     out_dir = Path(out_dir)
-    read_before = _read_before(out_dir / "proposals", quarters[0])
+    read_before = _read_before(out_dir / "proposals", quarters[0], ep)
     cached = _cached(backend, out_dir, True)
-    variables = text_variables()
+    variables = text_variables(episode=ep)
     parts = getattr(backend, "parts", None)
     rows: list[PlanRow] = []
     for quarter in quarters:
-        until = quarter_end(quarter)
+        until = ep.cutoff(quarter)
         visible = to_read = hits = chars = requests = 0
         for doc in corpus.iter_documents(until=until):
             visible += 1
@@ -386,6 +433,10 @@ def plan(
 
 
 def backend_info(backend: Backend) -> dict[str, Any]:
+    """The backend's record in a proposals file: name, model and effort, and for a backend
+    with guidance (DeepSeek) ``guidance``: ``"default"`` (the built-in guidance, sent for WW2
+    only), ``"none"`` (an empty guidance, so none is sent) or ``"sha256:<hex>"`` of the text
+    given with ``--guidance-file``."""
     info: dict[str, Any] = {"name": backend.name}
     model = getattr(backend, "model", None)
     if isinstance(model, str) and model:
@@ -393,7 +444,34 @@ def backend_info(backend: Backend) -> dict[str, Any]:
     effort = getattr(backend, "effort", None)
     if isinstance(effort, str) and effort:
         info["effort"] = effort
+    if callable(getattr(backend, "guidance_for", None)):
+        guidance = getattr(backend, "guidance", None)
+        if guidance is None:
+            info["guidance"] = "default"
+        elif not guidance.strip():
+            info["guidance"] = "none"
+        else:
+            info["guidance"] = "sha256:" + hashlib.sha256(guidance.encode("utf-8")).hexdigest()
     return info
+
+
+def describe_backend(backend: dict[str, Any]) -> str:
+    """The report's ``Backend:`` line from a proposals file's backend record."""
+    guidance = backend.get("guidance")
+    return (
+        f"{backend.get('name')}"
+        + (f", model `{backend['model']}`" if backend.get("model") else "")
+        + (f", effort {backend['effort']}" if backend.get("effort") else "")
+        + (
+            ""
+            if guidance is None
+            else ", the default guidance"
+            if guidance == "default"
+            else ", no guidance"
+            if guidance == "none"
+            else f", guidance file `{guidance[:19]}...`"
+        )
+    )
 
 
 # -- proposal-level measurement -------------------------------------------------------------
@@ -418,8 +496,11 @@ def _as_measured(rec: dict[str, Any]) -> dict[str, Any]:
 def measured_snapshots(
     proposals_dir: str | Path,
     quarters: Sequence[str],
-    hindsight_dir: str | Path = DEFAULT_HINDSIGHT,
+    hindsight_dir: str | Path | None = None,
     rules: Sequence[str] | None = None,
+    *,
+    episode: str | Episode | None = None,
+    drop_rejected: bool = False,
 ) -> dict[str, dict[str, Any]]:
     """Quarter-end snapshots, in memory, in which every proposal of the files in
     ``proposals_dir`` dated up to the quarter's end counts as accepted, whatever its review
@@ -427,43 +508,93 @@ def measured_snapshots(
     recorded in the files) hold it, block it or flag it ``retrospective?``. Built with
     :func:`.review.build_snapshot`, so the levels follow the same rules as reviewed snapshots;
     every indicator says NOT REVIEWED. Nothing is written. A quarter whose own proposals file
-    is missing has no snapshot."""
+    is missing has no snapshot. The episode is the files' unless given.
+
+    With ``drop_rejected`` the rejected proposals are removed first (as if never proposed),
+    the accepted ones keep their reviewer's decision in their indicator, the pending ones
+    count as accepted (NOT REVIEWED), and a ``retrospective?`` proposal is applied only if a
+    reviewer accepted it."""
     files = proposal_files(proposals_dir)
     rules = directory_rules(files) if rules is None else tuple(rules)
+    ep = get_episode(directory_episode(files) if episode is None else episode)
+    if drop_rejected:
+        files = _without_rejected(files)
+    applies_back = (lambda r: r["status"] == "accepted") if drop_rejected else None
     labels = {data["label"] for _p, data in files}
     out: dict[str, dict[str, Any]] = {}
     for quarter in quarters:
         if quarter not in labels:
             continue
-        until = quarter_end(quarter)
+        until = ep.cutoff(quarter)
         upto = [f for f in files if date.fromisoformat(f[1]["until"]) <= until]
-        _records, _index, gating = review_gating(upto, until, rules, measure=True)
-        records = [_as_measured(rec) for rec in gating.in_force]
-        out[quarter] = build_snapshot(until, records, hindsight_dir=hindsight_dir)
+        _records, _index, gating = review_gating(
+            upto, until, rules, measure=True, episode=ep, applies_back=applies_back
+        )
+        records = [
+            rec if drop_rejected and rec["status"] == "accepted" else _as_measured(rec)
+            for rec in gating.in_force
+        ]
+        out[quarter] = build_snapshot(until, records, hindsight_dir=hindsight_dir, episode=ep)
+    return out
+
+
+def _without_rejected(
+    files: Sequence[tuple[Path, dict[str, Any]]],
+) -> list[tuple[Path, dict[str, Any]]]:
+    """The proposals files with the proposals a reviewer rejected removed (not written)."""
+    out = []
+    for path, data in files:
+        kept = [rec for rec in data["proposals"] if rec["status"] != "rejected"]
+        out.append((path, {**data, "proposals": kept}))
+    return out
+
+
+def review_counts(proposals_dir: str | Path, quarters: Sequence[str]) -> Counter[str]:
+    """The proposals of ``quarters`` by review status (accepted, rejected, pending)."""
+    wanted = set(quarters)
+    out: Counter[str] = Counter({s: 0 for s in REVIEW_STATUSES})
+    for _p, data in proposal_files(proposals_dir):
+        if data["label"] in wanted:
+            out.update(rec["status"] for rec in data["proposals"])
     return out
 
 
 def gate_counts(
-    proposals_dir: str | Path, quarters: Sequence[str], rules: Sequence[str]
+    proposals_dir: str | Path,
+    quarters: Sequence[str],
+    rules: Sequence[str],
+    *,
+    episode: str | Episode | None = None,
+    drop_rejected: bool = False,
 ) -> dict[str, Counter[str]]:
     """Per variable, how the harness ``rules`` classify the proposals of ``quarters`` at the
-    last quarter's end, measured as in :func:`measured_snapshots`."""
+    last quarter's end, measured as in :func:`measured_snapshots` (without the rejected
+    proposals with ``drop_rejected``)."""
     files = [f for f in proposal_files(proposals_dir) if f[1]["label"] in set(quarters)]
+    if drop_rejected:
+        files = _without_rejected(files)
     if not files:
         return {}
-    records, _index, gating = review_gating(files, quarter_end(quarters[-1]), rules, measure=True)
+    ep = get_episode(directory_episode(files) if episode is None else episode)
+    records, _index, gating = review_gating(
+        files, ep.cutoff(quarters[-1]), rules, measure=True, episode=ep
+    )
     return gating.counts(records)
 
 
-def proposal_counts(proposals_dir: str | Path, quarters: Sequence[str]) -> dict[str, Counter[str]]:
+def proposal_counts(
+    proposals_dir: str | Path, quarters: Sequence[str], *, drop_rejected: bool = False
+) -> dict[str, Counter[str]]:
     """The number of proposals per variable and level in the proposals files of ``quarters``
-    (levels as strings)."""
+    (levels as strings); without the rejected ones with ``drop_rejected``."""
     wanted = set(quarters)
     counts: dict[str, Counter[str]] = {}
     for _p, data in proposal_files(proposals_dir):
         if data["label"] not in wanted:
             continue
         for rec in data["proposals"]:
+            if drop_rejected and rec["status"] == "rejected":
+                continue
             p = rec["proposal"]
             counts.setdefault(p["variable"], Counter())[_lv(p["level"])] += 1
     return counts
@@ -482,6 +613,17 @@ class Flip:
     before: Any
     after: Any
     observed: str | None
+    #: for a documented flip across a window of set-valued hindsight levels: the first
+    #: concrete quarter after the window (``quarter`` is the window's first)
+    window_end: str | None = None
+
+
+def _gap(documented: Flip, replayed: Flip) -> int:
+    """Quarters from the documented flip (or its window) to the replayed flip: 0 inside the
+    window, positive when the replay is late."""
+    r, lo = _qindex(replayed.quarter), _qindex(documented.quarter)
+    hi = lo if documented.window_end is None else _qindex(documented.window_end)
+    return 0 if lo <= r <= hi else r - hi if r > hi else r - lo
 
 
 @dataclass
@@ -493,13 +635,15 @@ class FlipMatch:
     def lag_quarters(self) -> int | None:
         if self.documented is None or self.replayed is None:
             return None
-        return _qindex(self.replayed.quarter) - _qindex(self.documented.quarter)
+        return _gap(self.documented, self.replayed)
 
     @property
     def lag_days(self) -> int | None:
         if self.documented is None or self.replayed is None:
             return None
         if not self.documented.observed or not self.replayed.observed:
+            return None
+        if self.documented.window_end is not None:
             return None
         return (
             date.fromisoformat(self.replayed.observed)
@@ -534,12 +678,55 @@ class Metrics:
     rules: tuple[str, ...] | None = None
     #: per variable, the proposals by harness gate status (proposal-level mode)
     gates: dict[str, Counter[str]] = field(default_factory=dict)
+    #: True when the rejected proposals were removed from the measurement (--drop-rejected)
+    drop_rejected: bool = False
+    #: the proposals by review status (proposal-level mode)
+    review: Counter[str] = field(default_factory=Counter)
+    #: var -> (agree, total) over the quarters whose hindsight level is a set (agree: the
+    #: replayed level is in it); these quarters are also counted in ``agreement``
+    ambiguous: dict[str, tuple[int, int]] = field(default_factory=dict)
+    #: var -> quarter -> the hindsight set of levels, for the set-valued quarters
+    windows: dict[str, dict[str, tuple[Any, ...]]] = field(default_factory=dict)
+    #: the hindsight directory compared with (the report's "Target" line)
+    hindsight: str | None = None
 
     def matched(self, variable: str) -> list[FlipMatch]:
         return [m for m in self.matches.get(variable, []) if m.documented and m.replayed]
 
     def false_flips(self, variable: str) -> list[Flip]:
-        return [m.replayed for m in self.matches.get(variable, []) if m.documented is None]
+        return [
+            m.replayed
+            for m in self.matches.get(variable, [])
+            if m.documented is None and not self._in_window(m.replayed)
+        ]
+
+    def window_flips(self, variable: str) -> list[Flip]:
+        """Replayed flips that answer no documented flip but land inside a window of
+        set-valued hindsight levels on a level of the window's set, or that leave a level
+        of the window's set on the first concrete quarter after it for the hindsight level
+        of that quarter (a return out of the window); neither is a false flip."""
+        return [
+            m.replayed
+            for m in self.matches.get(variable, [])
+            if m.documented is None and self._in_window(m.replayed)
+        ]
+
+    def _in_window(self, flip: Flip | None) -> bool:
+        if flip is None:
+            return False
+        windows = self.windows.get(flip.variable, {})
+        window = windows.get(flip.quarter)
+        if window is not None:
+            return flip.after in window
+        # the first concrete quarter after a window: the replay comes back to the record
+        before = windows.get(_qname(_qindex(flip.quarter) - 1))
+        here = self.levels.get(flip.variable, {}).get(flip.quarter)
+        return (
+            before is not None
+            and here is not None
+            and flip.before in before
+            and _agrees(here[0], flip.after)
+        )
 
     def missed_flips(self, variable: str) -> list[Flip]:
         return [m.documented for m in self.matches.get(variable, []) if m.replayed is None]
@@ -565,13 +752,31 @@ def _setting_date(entry: dict[str, Any] | None) -> str | None:
 
 
 def _flips(series: list[tuple[str, dict[str, Any] | None]], name: str) -> list[Flip]:
+    """The flips of ``name`` along ``series``. Between concrete levels a flip is a change
+    from one quarter to the next; a run of set-valued quarters between concrete levels
+    ``a != b`` gives one flip ``a -> b`` dated by the window (module docstring); a missing
+    snapshot breaks the series."""
     out = []
-    for (q0, s0), (q1, s1) in zip(series, series[1:], strict=False):
-        if s0 is None or s1 is None:
+    last: Any = None  # the last concrete level, or None
+    known = False
+    start: str | None = None  # the first quarter of the current run of set-valued levels
+    for q, s in series:
+        if s is None:
+            known, start = False, None
             continue
-        a, b = s0["variables"][name]["level"], s1["variables"][name]["level"]
-        if a != b:
-            out.append(Flip(name, q1, a, b, _setting_date(s1["variables"][name])))
+        entry = s["variables"][name]
+        levels = level_set(entry)
+        if len(levels) > 1:
+            if start is None:
+                start = q
+            continue
+        level = levels[0]
+        if known and last != level:
+            if start is None:
+                out.append(Flip(name, q, last, level, _setting_date(entry)))
+            else:
+                out.append(Flip(name, start, last, level, _setting_date(entry), window_end=q))
+        last, known, start = level, True, None
     return out
 
 
@@ -581,16 +786,9 @@ def _match(documented: list[Flip], replayed: list[Flip]) -> list[FlipMatch]:
     free = list(replayed)
     out: list[FlipMatch] = []
     for d in documented:
-        candidates = [
-            r
-            for r in free
-            if r.after == d.after and abs(_qindex(r.quarter) - _qindex(d.quarter)) <= MATCH_WINDOW
-        ]
+        candidates = [r for r in free if r.after == d.after and abs(_gap(d, r)) <= MATCH_WINDOW]
         if candidates:
-            best = min(
-                candidates,
-                key=lambda r: (abs(_qindex(r.quarter) - _qindex(d.quarter)), _qindex(r.quarter)),
-            )
+            best = min(candidates, key=lambda r: (abs(_gap(d, r)), _qindex(r.quarter)))
             free.remove(best)
             out.append(FlipMatch(d, best))
         else:
@@ -610,36 +808,70 @@ def compare(
     *,
     measure_proposals: bool = False,
     rules: Sequence[str] | None = None,
+    episode: str | Episode | None = None,
+    drop_rejected: bool = False,
 ) -> Metrics:
     """The section 9 metrics of the replay snapshots in ``replay_dir`` against the hindsight
-    snapshots, for ``quarters``. The baseline for flips at the first quarter is the hindsight
-    snapshot of the previous quarter and, for the replay, its snapshot of that quarter if
-    there is one, else the ontology's initial levels.
+    snapshots, for ``quarters``. The baseline for flips at the first quarter is the same for
+    the documented and the replayed series: the record's level at the end of the previous
+    quarter (its hindsight snapshot; the ontology's initial levels if there is none). A replay
+    snapshot of the previous quarter is not read, in either mode, so a replay that agrees with
+    the hindsight in every quarter has no false flip whatever its first quarter.
 
     With ``measure_proposals`` the replay snapshots are not read: they are built in memory
     from every proposal in ``replay_dir/proposals`` as if accepted (:func:`measured_snapshots`)
     under the harness ``rules`` (default: those recorded in the files), and the metrics say
-    so."""
+    so; with ``drop_rejected`` as well the rejected proposals are left out (a partly
+    reviewed run: accepted and pending count, rejected do not).
+
+    For the Cold War (``episode="cw"``) this is :func:`.replay_cw.compare` (``quarters`` are
+    years; ``hindsight_dir`` may be ``None`` for the episode's)."""
+    if drop_rejected and not measure_proposals:
+        raise ReplayError("drop_rejected goes with measure_proposals only")
+    if get_episode(episode).name == "cw":
+        if drop_rejected:
+            raise ReplayError("drop_rejected is implemented for the WW2 replay only")
+        from .replay_cw import compare as compare_cw
+
+        return compare_cw(  # type: ignore[return-value]
+            replay_dir,
+            quarters,
+            None if hindsight_dir == DEFAULT_HINDSIGHT else hindsight_dir,
+            measure_proposals=measure_proposals,
+            rules=rules,
+        )
     replay_dir, hindsight_dir = Path(replay_dir), Path(hindsight_dir)
     prev = _qname(_qindex(quarters[0]) - 1)
     measured: dict[str, dict[str, Any]] = {}
     files = proposal_files(replay_dir / "proposals") if (replay_dir / "proposals").exists() else []
     in_force = tuple(rules) if rules is not None else directory_rules(files) if files else None
     if measure_proposals:
-        measured = measured_snapshots(replay_dir / "proposals", quarters, hindsight_dir, in_force)
-    hind = [(prev, _read(hindsight_dir / f"{prev}.json"))]
-    rep = [(prev, _initial() if measure_proposals else _read(replay_dir / f"{prev}.json"))]
-    if rep[0][1] is None:
-        rep[0] = (prev, _initial())
+        measured = measured_snapshots(
+            replay_dir / "proposals",
+            quarters,
+            hindsight_dir,
+            in_force,
+            drop_rejected=drop_rejected,
+        )
+    # both series start from the record: the hindsight snapshot of the quarter before the
+    # first (else the initial levels), never the replay's own snapshot of that quarter
+    baseline = _read(hindsight_dir / f"{prev}.json") or _initial()
+    hind = [(prev, baseline)]
+    rep = [(prev, baseline)]
     for q in quarters:
         hind.append((q, _read(hindsight_dir / f"{q}.json")))
         rep.append((q, measured.get(q) if measure_proposals else _read(replay_dir / f"{q}.json")))
     m = Metrics(quarters=list(quarters), missing_replay=[q for q, s in rep[1:] if s is None])
     m.rules = in_force
+    m.hindsight = _shown_dir(hindsight_dir)
     if measure_proposals:
         m.proposal_level = True
-        m.counts = proposal_counts(replay_dir / "proposals", quarters)
-        m.gates = gate_counts(replay_dir / "proposals", quarters, in_force or ())
+        m.drop_rejected = drop_rejected
+        m.review = review_counts(replay_dir / "proposals", quarters)
+        m.counts = proposal_counts(replay_dir / "proposals", quarters, drop_rejected=drop_rejected)
+        m.gates = gate_counts(
+            replay_dir / "proposals", quarters, in_force or (), drop_rejected=drop_rejected
+        )
     auto = False
     for _q, s in rep[1:]:
         if s is None:
@@ -651,27 +883,57 @@ def compare(
     init = {v.name: v.init for v in hw.VARIABLES}
     for name in (*TEXT_VARIABLES, *RESOURCE_VARIABLES):
         per_q: dict[str, tuple[Any, Any]] = {}
-        agree = total = unread = moved = moved_agree = 0
+        agree = total = unread = moved = moved_agree = amb = amb_agree = 0
         for (q, h), (_q, r) in zip(hind[1:], rep[1:], strict=True):
             if h is None or r is None or name not in h["variables"]:
                 continue
-            hl, rl = h["variables"][name]["level"], r["variables"][name]["level"]
+            hl, rl = _level(h["variables"][name]), _level(r["variables"][name])
             per_q[q] = (hl, rl)
+            ok = _agrees(hl, rl)
             total += 1
-            agree += hl == rl
-            unread += hl == init.get(name)
-            if hl != init.get(name):
+            agree += ok
+            initial = _agrees(hl, init.get(name))
+            unread += initial
+            if not initial:
                 moved += 1
-                moved_agree += hl == rl
-            if hl != rl:
+                moved_agree += ok
+            if isinstance(hl, tuple):
+                amb += 1
+                amb_agree += ok
+                m.windows.setdefault(name, {})[q] = hl
+            if not ok:
                 m.details.setdefault(name, {})[q] = (h["variables"][name], r["variables"][name])
         m.levels[name] = per_q
         m.agreement[name] = (agree, total)
         m.unread[name] = (unread, total)
         m.moved[name] = (moved_agree, moved)
+        if amb:
+            m.ambiguous[name] = (amb_agree, amb)
         if name in TEXT_VARIABLES:
             m.matches[name] = _match(_flips(hind, name), _flips(rep, name))
     return m
+
+
+def _shown_dir(path: Path) -> str:
+    """A directory as the report names it: relative to the repository when inside it."""
+    try:
+        return path.resolve().relative_to(_ROOT).as_posix()
+    except ValueError:
+        return str(path)
+
+
+def _level(entry: dict[str, Any]) -> Any:
+    """A snapshot entry's level, or the tuple of its levels when it gives a set."""
+    levels = level_set(entry)
+    return levels[0] if len(levels) == 1 else levels
+
+
+def _agrees(hindsight: Any, replayed: Any) -> bool:
+    """Whether a replayed level (or set, for a copied set-valued entry) agrees with a
+    hindsight level or set: every replayed level is in the hindsight set."""
+    h = hindsight if isinstance(hindsight, tuple) else (hindsight,)
+    r = replayed if isinstance(replayed, tuple) else (replayed,)
+    return all(any(x == y for y in h) for x in r)
 
 
 # -- the report -----------------------------------------------------------------------------
@@ -682,6 +944,8 @@ def _pct(agree: int, total: int) -> str:
 
 
 def _lv(level: Any) -> str:
+    if isinstance(level, tuple):
+        return "{" + ", ".join(_lv(x) for x in level) + "}"
     return str(level).lower() if isinstance(level, bool) else str(level)
 
 
@@ -695,10 +959,28 @@ def render_report(
     runs: Sequence[QuarterRun] = (),
 ) -> str:
     """The Markdown metrics report. A synthetic or auto-accepted run says so in its title,
-    its first line and its summary."""
+    its first line and its summary. The metrics of a Cold War replay
+    (:class:`.replay_cw.YearMetrics`) are rendered by :func:`.replay_cw.render_report`."""
+    if not isinstance(metrics, Metrics):
+        from .replay_cw import render_report as render_cw
+
+        return render_cw(
+            metrics, title=title, corpus=corpus, backend=backend, command=command, runs=runs
+        )
     synthetic = bool(corpus.get("synthetic"))
     lines: list[str] = []
-    if metrics.proposal_level:
+    if metrics.proposal_level and metrics.drop_rejected:
+        r = metrics.review
+        lines.append(
+            "PROPOSAL-LEVEL MEASUREMENT, REJECTED PROPOSALS DROPPED: of the "
+            f"{sum(r.values())} proposals, accepted by a reviewer {r['accepted']}, rejected "
+            f"{r['rejected']}, not reviewed {r['pending']}. The rejected ones "
+            "are left out; the accepted ones and the unreviewed ones are treated as accepted "
+            "to compute these metrics, no replay snapshot was written, and a level or quote "
+            "below may be an unreviewed reading."
+        )
+        lines.append("")
+    elif metrics.proposal_level:
         lines.append(
             "PROPOSAL-LEVEL MEASUREMENT: no proposal below was reviewed. Every proposal the "
             "backend made was treated as if accepted to compute these metrics, no replay "
@@ -722,9 +1004,7 @@ def render_report(
         f"- Corpus: {corpus.get('source')}"
         + (f", `{corpus['root']}`" if corpus.get("root") else "")
         + (" (synthetic fixtures)" if synthetic else ""),
-        f"- Backend: {backend.get('name')}"
-        + (f", model `{backend['model']}`" if backend.get("model") else "")
-        + (f", effort {backend['effort']}" if backend.get("effort") else ""),
+        f"- Backend: {describe_backend(backend)}",
         "- Harness rules in force: "
         + (
             describe_rules(metrics.rules)
@@ -736,14 +1016,19 @@ def render_report(
         + (
             "auto-accepted (synthetic run only)"
             if metrics.auto_accepted
+            else "partial: proposal-level measurement without the rejected proposals "
+            f"({metrics.review['accepted']} accepted, {metrics.review['rejected']} rejected and "
+            f"left out, {metrics.review['pending']} pending treated as accepted; nothing "
+            "written)"
+            if metrics.proposal_level and metrics.drop_rejected
             else "none: proposal-level measurement (every proposal treated as accepted, "
             "nothing written)"
             if metrics.proposal_level
             else "human review"
         ),
         f"- Command: `{command}`",
-        "- Target: the hindsight snapshots in `snapshots/ww2/hindsight/` (levels at each "
-        "quarter's end, read with full knowledge of the record).",
+        f"- Target: the hindsight snapshots in `{metrics.hindsight or 'snapshots/ww2/hindsight'}/`"
+        " (levels at each quarter's end, read with full knowledge of the record).",
         "",
     ]
     if synthetic:
@@ -809,6 +1094,7 @@ def render_report(
         f"replayed within one quarter ({len(bc)} matched within {MATCH_WINDOW} quarters).",
         f"- False flips (replayed, no documented flip to the same level within {MATCH_WINDOW} "
         f"quarters): {false_total}. Missed flips: {missed_total}.",
+        *_ambiguous_summary(metrics),
         "",
         "## Agreement per variable",
         "",
@@ -822,7 +1108,7 @@ def render_report(
             bad = [
                 f"{q} ({_lv(h)} / {_lv(r)})"
                 for q, (h, r) in metrics.levels.get(name, {}).items()
-                if h != r
+                if not _agrees(h, r)
             ]
             lines.append(
                 f"| {group} | `{name}` | {_pct(*a)} | {_pct(*metrics.unread.get(name, (0, 0)))} "
@@ -852,7 +1138,15 @@ def render_report(
         for m in metrics.matches.get(name, []):
             d, r = m.documented, m.replayed
             level = _lv((d or r).after)
-            dcell = f"{d.quarter}, {d.observed}" if d else "none (false flip)"
+            dcell = (
+                f"{d.quarter} to {d.window_end} (ambiguous window), {d.observed}"
+                if d and d.window_end
+                else f"{d.quarter}, {d.observed}"
+                if d
+                else "none (inside an ambiguous window)"
+                if metrics._in_window(r)
+                else "none (false flip)"
+            )
             rcell = f"{r.quarter}, {r.observed}" if r else "none (missed)"
             lq = "-" if m.lag_quarters is None else f"{m.lag_quarters:+d}"
             ld = "-" if m.lag_days is None else f"{m.lag_days:+d}"
@@ -862,11 +1156,28 @@ def render_report(
     return "\n".join(lines)
 
 
+def _ambiguous_summary(metrics: Metrics) -> list[str]:
+    """The set-valued hindsight quarters, reported on their own (docs/ambiguous_levels.md)."""
+    if not metrics.ambiguous:
+        return []
+    text = [n for n in TEXT_VARIABLES if n in metrics.ambiguous]
+    parts = [f"`{n}` {_pct(*metrics.ambiguous[n])}" for n in metrics.ambiguous]
+    windowed = sum(len(metrics.window_flips(v)) for v in TEXT_VARIABLES)
+    return [
+        "- Set-valued hindsight levels (contested windows; a replayed level in the set counts "
+        "as agreeing above): the replay is in the set on "
+        f"{_pct(*metrics.share(text, 'ambiguous'))} of the text variables' set-valued "
+        f"quarters ({'; '.join(parts)}). Replayed flips inside a window, not counted as "
+        f"false: {windowed}."
+    ]
+
+
 def _proposal_table(metrics: Metrics) -> list[str]:
     lines = [
         "## Proposals per variable",
         "",
-        "Every proposal kept by the extractor's checks over the quarters, by level.",
+        "Every proposal kept by the extractor's checks over the quarters, by level"
+        + (", less the rejected ones." if metrics.drop_rejected else "."),
         "",
         "| Variable | Proposals | By level |",
         "|---|---|---|",
@@ -923,6 +1234,9 @@ def _first_of_runs(quarters: Sequence[str]) -> list[str]:
 
 
 def _cite(entry: dict[str, Any]) -> str:
+    if "levels" in entry:
+        why = " ".join(str(entry.get("ambiguity", "")).split())
+        return f"`{_lv(_level(entry))}` (a set over a contested window: {why})"
     inds = entry.get("indicators") or []
     if not inds:
         return f"`{_lv(entry['level'])}` ({entry.get('confidence')}, no indicator)"

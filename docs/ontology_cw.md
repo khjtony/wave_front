@@ -31,11 +31,15 @@ Each hypothesis enters a guard as a part named `hypothesis` (decisions D3).
 
 | Variable | Levels | Init | Threshold rule | Dated indicator (contemporaneous belief) |
 |---|---|---|---|---|
-| `belief_force_USA` | as `nuke_USSR` | none | Washington's estimate of the Soviet strategic force on `nuke_USSR`'s scale, read from the National Intelligence Estimates. A level is the estimate's force in being or within two years, whichever the estimate's text treats as the planning case. | few: the test of 1949 detected (Truman, 23 Sep 1949). survivable: NIE 11-10-57 (10 Dec 1957) and the Gaither report, the missile gap; visible 1958. few: NIE 11-8/1-61 (21 Sep 1961); visible 1962. survivable 1967 and overkill 1976 with the deployments seen by satellite. |
+| `belief_force_USA` | none, under_200, under_1000, over_1000 | none | Washington's estimate of the **number** of Soviet intercontinental delivery vehicles, read from the National Intelligence Estimates: ICBM launchers, SLBM launchers and heavy bombers able to reach the United States and return (BEAR, BISON and later heavy types; not medium bombers on one-way missions, not tankers where the estimate counts them apart), in bands. **none**: no intercontinental vehicle. **under_200**: 1 to 199. **under_1000**: 200 to 999, a force of the size the estimates judged able to threaten SAC's bases. **over_1000**: 1,000 or more, numbers matching the American ICBM force. A level is the number the estimate projects as probable for about two to three years after its date (its planning or most probable case for the period it covers; the middle of a stated range, between its stated milestones by proportion), summed over the three kinds of vehicle; the force in being only when the estimate projects nothing. | none: no Soviet intercontinental vehicle projected before the BISON and BEAR. under_1000: NIE 11-56 (6 Mar 1956), 700 heavy bombers for mid-1959, the bomber gap; visible 1957; SNIE 11-10-57 (10 Dec 1957), NIE 11-4-58 (23 Dec 1958), NIE 11-8-60 (1 Aug 1960) and NIE 11-8/1-61 (21 Sep 1961) keep it, the missile gap, visible 1958 to 1962; NIE 11-8-62 to 11-8-65 keep it to 1966. over_1000: NIE 11-8-66 (20 Oct 1966); visible 1967. Rows with the estimates' numbers: data/cw/v1/events.csv. |
 | `belief_USA_USSR` | status_quo, opportunist, expansionist | opportunist | Washington's reading of Soviet aims in its basic national security papers. **opportunist**: expansion by pressure where cheap. **expansionist**: a design of domination pursued by war if the balance allowed. **status_quo**: security-seeking. | opportunist: Kennan 1946 to 1947. expansionist: NSC-68 (Apr 1950, NSC 68/2 of 30 Sep 1950); visible 1951. opportunist: NSC 162/2 (30 Oct 1953); visible 1954. The Bush administration's reassessment of 1989 to 1990 is not placed ([NSL]; no claim reads the level after 1988). |
 | `belief_USSR_USA` | status_quo, hostile, first_strike_intent | hostile | Moscow's reading of American aims. **hostile**: containment and pressure by means short of war. **first_strike_intent**: preparation of a disarming first strike. **status_quo**: no threat of attack. | hostile: Novikov's telegram of 27 Sep 1946. first_strike_intent: RYAN, from Andropov's KGB conference of May 1981 to the instructions of Feb 1983; visible 1983. hostile: Geneva, Nov 1985; visible 1986. status_quo: new thinking, the defensive doctrine of 29 May 1987; visible 1988. |
 
-Hindsight truth (decisions D6): `belief_force_USA` is the record's `nuke_USSR`; `belief_USSR_USA` is `hostile` throughout (no American first-strike plan at any time; PFIAB 1990); `belief_USA_USSR` is the hypothesis's own level. The hindsight snapshots carry these, the replay snapshots the contemporaneous beliefs above.
+**`belief_force_USA`, the projected force (2026-10-27).** The threshold rule above was fixed on the owner's decision 7d after the blind replay over the CIA estimates (reports/replay_cw_crest_deepseek.md) had read the force in being; until then the rule allowed the force in being or within two years, whichever the estimate treated as the planning case. The level is now the projected force. The change is a reading made after that replay was seen; the manual replay of C6 already coded the projection.
+
+**`belief_force_USA`, the projected count (2026-10-28).** On the owner's decision 7g, after the two-reader blind replay under the projected-force reading (reports/replay_cw_crest_projected.md), the belief has its own scale: the projected number of Soviet intercontinental delivery vehicles in bands, with the hindsight counterpart `count_USSR` on the same bands (section 12.1), because the missile gap was a gap in numbers that `nuke_USSR`'s survivability scale cannot express. The row above is the new scale, which cw_v1 and the extractor's Cold War episode use. **v0 keeps the scale of `nuke_USSR`** as recorded (`models/cw/v0.py`, the snapshots in `snapshots/cw/`; total hold-out of C6, cw_v0_decisions.md D9): until 2026-10-28 the row read "Levels: as `nuke_USSR`" with the rule "Washington's estimate of the Soviet strategic force on `nuke_USSR`'s scale ..." (git history). Edges, what is counted and why: docs/cw_v1_decisions.md D9.
+
+Hindsight truth (decisions D6): `belief_force_USA` is the record's `nuke_USSR` in v0 and the record's `count_USSR` in v1 (cw_v1_decisions.md D9); `belief_USSR_USA` is `hostile` throughout (no American first-strike plan at any time; PFIAB 1990); `belief_USA_USSR` is the hypothesis's own level. The hindsight snapshots carry these, the replay snapshots the contemporaneous beliefs above.
 
 ## 4. Arms control and verification
 
@@ -155,3 +159,56 @@ Ending: `STRIKE`.
 | Vietnam, the Middle East wars, the Taiwan Strait crises, the 1973 alert | No claim reads them at annual resolution; the 1973 alert is a crisis of days inside one year. |
 | Hungary 1956, Czechoslovakia 1968 | Below the threshold of `bloc_USSR` (suppressed within the year); they are the record behind `USSR.intervene`. |
 | The August coup of 1991, Yeltsin, the republics | Inside `legit_USSR = failing` and `USSR.dissolve`. |
+
+## 12. v1 (Cold War v1, `models/cw/v1.py`)
+
+Status: written for the model step of cw_v1 on 2026-10-24, after the registration of V1 to V10 ([coldwar_testbed.md](coldwar_testbed.md) section 9) and before any of them was run. Sections 0 to 11 are v0's and stand for v1 except as below. The decisions are in [cw_v1_decisions.md](cw_v1_decisions.md); data in `data/cw/v1/` (added rows, read with v0's files) and `data/cw/crises/{sino_soviet_1969,alert_1973}/`; snapshots in `snapshots/cw_v1/` (built by `models/cw/snapshots_v1.py`).
+
+### 12.1 Actors and the added variable
+
+- Actors: `USA`, `USSR`, `PRC` (a principal from 1950, tick 3) and Nature. `build(prc_principal=False)` gives the PRC's decisions to Nature, as in v0.
+
+| Variable | Levels | Init | Threshold rule | Dated indicator |
+|---|---|---|---|---|
+| `esc_usprc` | peace, war | peace | Not monotone. **war**: combat between American and Chinese forces. Set by `PRC.intervene_korea`, ended by `USA.armistice`. No Strait level: the Taiwan Strait crises are out of scope (coldwar_testbed.md section 9.1; docs/prc_experiment.md section 7), so no action sets a crisis level and none is declared. | war from the CPV's crossing of 19 Oct 1950 (first engagements 25 Oct to 1 Nov 1950), visible 1951 in the record and 1952 on the model's path ([SQR]; decisions R V1); peace from the armistice of 27 Jul 1953, visible 1954 (Chen Jian 1994; FRUS 1952-54 vol. XV). |
+| `sino_soviet_talks` | flag | False | Monotone. **True**: the Sino-Soviet border talks agreed and held. Set only by the exit of the 1969 sub-game when the talks were agreed and no strike was made; read only by `USSR.strike_china` (part `talks`). Added 2026-10-27, before first sight, on the owner's decision 7f(a). | True from Zhou's acceptance at the Kosygin-Zhou meeting of 11 Sep 1969 (the talks opened in Beijing on 20 Oct 1969), visible 1970 (the Chinese record of the meeting, Wilson Center Digital Archive; Yang Kuisong 2000; Gerson 2010). |
+| `count_USSR` | none, under_200, under_1000, over_1000 | none | Monotone. The number of Soviet intercontinental delivery vehicles in being (ICBM launchers, SLBM launchers, heavy bombers: the strategic offensive forces of Norris and Cochran 1990, end-of-year force levels; not the BACKFIRE), in the bands of `belief_force_USA` (section 3): **under_200** 1 to 199, **under_1000** 200 to 999, **over_1000** 1,000 or more. The hindsight truth of `belief_force_USA` in v1; read by Nature's `missile_gap` and `estimate_revised`; set by `USSR.heavy_bombers`, `first_icbms`, `icbm_buildup`, `icbm_parity`. Added 2026-10-28, before first sight, on the owner's decision 7g. | none to 1956. under_200: 22 heavy bombers at the end of 1956; visible 1957. under_1000: 235 at the end of 1962 (30 ICBM, 72 SLBM, 133 bombers); visible 1963. over_1000: 1,206 at the end of 1968 (909 ICBM, 138 SLBM, 159 bombers); visible 1969; 1,431 to 2,593 from 1970 to 1990 (Norris and Cochran 1990, Table 2; per year in data/cw/v1/strategic_launchers.csv). |
+
+The PRC's nuclear force enters only as the dated target part of `USSR.strike_china` (`tick >= 1965`, v0's), as section 9.1 of the registration says; no `nuke_PRC` variable.
+
+### 12.2 The October 1973 alert (`models/cw/crises/alert_1973.py`; daily; tick 0 is 24 Oct 1973; horizon 5)
+
+Entered by `USSR.warn_unilateral` (Brezhnev's message of 24 Oct 1973) in 1973.
+
+| Variable | Levels | Rule |
+|---|---|---|
+| `soviet_forces` | alerted, landed | **alerted** at entry: the seven airborne divisions on alert and the Mediterranean squadron at readiness (Blechman and Hart 1982; Israelyan 1995). **landed**: Soviet troops sent to Egypt (not taken). |
+| `us_alert` | normal, defcon3 | DEFCON 3 ordered 23:41 EDT 24 Oct |
+| `reply` | flag | Nixon's letter of 25 Oct, 05:40 EDT |
+| `ceasefire` | violated, holding | **violated** at entry (the Third Army encircled after the ceasefire of 22 Oct); **holding**: supplies let through, 26 to 28 Oct |
+| `un_force` | flag | Resolution 340, 25 Oct 1973 |
+| `fighting` | flag | US-Soviet combat (not taken) |
+
+Endings: `WAR` (fighting), `CEASEFIRE` (a UN force voted, the ceasefire holding, no landing, no fighting). Exit: fighting → `esc = conventional`; landed without fighting → `crisis`; a UN force voted → no change; otherwise → `crisis`. Nature carries the belligerents (the Israeli advance) and the forces at sea (an incident under the alert).
+
+### 12.3 The Sino-Soviet confrontation of 1969 (`models/cw/crises/sino_soviet_1969.py`; weekly; tick 0 is the week of 17 Mar 1969; horizon 31, the week of 20 Oct 1969)
+
+Entered by `PRC.border_clash` (the clashes of 2 and 15 Mar 1969) in 1969; in the PRC-to-Nature build by Nature's `border_clash`, with `accept_talks` Nature's.
+
+| Variable | Levels | Rule |
+|---|---|---|
+| `border` | clash, escalated | **clash** at entry (Zhenbao); **escalated**: a Soviet-initiated attack beyond the March clashes (Tielieketi, 13 Aug) |
+| `talks` | none, proposed, agreed | the Soviet statement of 29 Mar (proposed); Kosygin and Zhou, 11 Sep (agreed) |
+| `soundings` | flag | the Soviet soundings on a strike, from 18 Aug |
+| `us_signal` | flag | the American signal of non-indifference (NSC of 14 Aug; Richardson, 5 Sep) |
+| `strike` | flag | a Soviet strike on Lop Nur (not taken) |
+
+Ending: `STRIKE`. Exit: strike → `esc_sino = war`; otherwise `esc_sino = clash` (the talks did not end the armed confrontation; v0's level to 1989), and, when the talks were agreed (`talks = agreed`), also `sino_soviet_talks = True`, which closes the coarse `USSR.strike_china` (amended 2026-10-27, before first sight, on the owner's decision 7f(a); docs/cw_v1_decisions.md D4).
+
+### 12.4 Invariants and endings of v1
+
+v0's section 9 with a US-PRC war counted as a war between principals (`no_war` excludes `esc_usprc = war` when the PRC is a principal), and the predicates of coldwar_testbed.md section 9.2 declared as invariants: `no_war_core` (`esc < conventional`), `both_or_neither`, `balance_core` (`no_war_core ∧ both_or_neither`), `balance_tri` (`no_war_core ∧ esc_sino < war ∧ esc_usprc < war ∧ both_or_neither`), `no_general_war_core` (¬(`esc ≥ tactical_nuclear` ∧ ¬`accidental`)). A US-PRC war is not an ending; a Sino-Soviet war is `GENERAL_WAR` as in v0.
+
+### 12.5 Not modeled in v1 (declared scope cuts)
+
+The United Kingdom and France (coldwar_testbed.md section 9.1); the PRC's Strait crises, bomb programme, polemic of 1959 to 1960, Vietnam signals and independent line of 1982 (docs/prc_experiment.md section 7: indifferent in every measure on v0's decision space); Lin Biao's Order No. 1 of 18 Oct 1969 and Grechko's mobilization proposal of 25 Oct 1973 (they change no variable of their sub-game); the dating of `USSR.mirv` and `USSR.berlin_ultimatum` (decisions D3).

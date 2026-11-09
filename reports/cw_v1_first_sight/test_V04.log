@@ -1,0 +1,20 @@
+START=2026-10-29T07:24:20Z
+
+[V4] engine: explicit, the flattened game cut at 1 Jan 1954 (no sub-game inside)
+[V4] aims_USSR=status_quo: graph 18941 states; (a) limited war reachable with zero relaxations: False (in None transitions); (b) in USA's kernel of no_general_war_core to 1954: True; beside, H8 (symbolic, to 1962): True
+[V4]   (c) American nuclear actions in Korea ['nuclear_korea']; parts as registered {'total_commitment': True, 'reading': True}; states offering USA.nuclear_korea 0; offered only with total commitment and a non-opportunist reading: True: False
+[V4]   (d) {USSR, PRC, Nature} with the USA idle (83 states): cannot force GENERAL_WAR_core
+[V4]   control: outside USA's kernel of korea = peace to 1951: False
+[V4] aims_USSR=status_quo: (a) False, (b) True, (c) False, control False (1.1 s)
+[V4] aims_USSR=opportunist: graph 129549 states; (a) limited war reachable with zero relaxations: True (in 2 transitions); (b) in USA's kernel of no_general_war_core to 1954: True; beside, H8 (symbolic, to 1962): True
+[V4]   (c) American nuclear actions in Korea ['nuclear_korea']; parts as registered {'total_commitment': True, 'reading': True}; states offering USA.nuclear_korea 1743; offered only with total commitment and a non-opportunist reading: True: True
+[V4]   (d) {USSR, PRC, Nature} with the USA idle (380 states): cannot force GENERAL_WAR_core
+[V4]   control: outside USA's kernel of korea = peace to 1951: True
+[V4] aims_USSR=opportunist: (a) True, (b) True, (c) True, control True (6.4 s)
+[V4] registered hypothesis opportunist: (True, True, True, True)
+.
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED tests/coldwar_v1/scenarios/test_V04.py::test_V4
+1 passed in 6.60s
+END=2026-10-29T07:24:27Z

@@ -259,11 +259,35 @@ def cmd_force(args: argparse.Namespace) -> int:
     return 0
 
 
+def _snapshot_members(args: argparse.Namespace, model: Model, cm):
+    """The member states of ``--snapshot`` (with ``--fix``): one state, or the product set
+    of a snapshot giving a set of levels (docs/ambiguous_levels.md)."""
+    from .evidence import load_snapshot_states, snapshot_to_states
+
+    snapshot = _snapshot_with_fixes(args, model)
+    if isinstance(snapshot, dict):
+        return snapshot_to_states(snapshot, cm)
+    return load_snapshot_states(snapshot, cm)
+
+
+def _print_robustness(results, show=str) -> None:
+    """One line per robust/fragile verdict, after the member list."""
+    if not results:
+        return
+    labels = results[0].labels
+    print(f"Start state: a set of {len(labels)} member states (a snapshot with a set of levels):")
+    for i, label in enumerate(labels):
+        print(f"  member {i}: {label}")
+    for r in results:
+        print(f"{r.question}: {r.summary(show)}")
+
+
 def cmd_viable(args: argparse.Namespace) -> int:
     initial = None
+    snap_states = None
     if args.snapshot:
         try:
-            from .evidence import load_snapshot
+            from .evidence import load_snapshot_states  # noqa: F401
         except ImportError as exc:
             print(
                 f"error: --snapshot needs wavefront.evidence, which is not available ({exc})",
@@ -271,13 +295,8 @@ def cmd_viable(args: argparse.Namespace) -> int:
             )
             return 1
         model, cm = _compile(args)
-        snapshot = _snapshot_with_fixes(args, model)
-        if isinstance(snapshot, dict):
-            from .evidence import snapshot_to_state
-
-            initial = [tuple(snapshot_to_state(snapshot, cm))]
-        else:
-            initial = [tuple(load_snapshot(snapshot, cm))]
+        snap_states = _snapshot_members(args, model, cm)
+        initial = list(snap_states.states)
         g = explore(cm, initial=initial, max_states=args.max_states)
     else:
         _no_fix_without_snapshot(args)
@@ -304,6 +323,17 @@ def cmd_viable(args: argparse.Namespace) -> int:
     kept = [s for s in g.initial if s in k.kernel]
     if kept:
         _uniformity_line(g, coalition, k.strategy, kept, "keeping")
+    if snap_states is not None and snap_states.is_set:
+        from .analysis import robust_kernel
+
+        rk = robust_kernel(g, snap_states, coalition, args.invariant)
+
+        def show(x) -> str:
+            if isinstance(x, bool):
+                return "yes" if x else "no"
+            return f"shortest {'-' if x.shortest is None else x.shortest}"
+
+        _print_robustness([rk.in_kernel, rk.distance], show)
     return 0
 
 
@@ -414,9 +444,20 @@ def cmd_viz(args: argparse.Namespace) -> int:
 def cmd_report(args: argparse.Namespace) -> int:
     model = load_model(args.model)
     coalitions = [_names(c) for c in args.coalition] if args.coalition else None
+    initial = members = None
+    if args.snapshot:
+        found = _snapshot_members(args, model, compile_model(model, profile=_profile(args)))
+        if found.is_set:
+            members = found
+        else:
+            initial = list(found.states)
+    else:
+        _no_fix_without_snapshot(args)
     analysis = run_all(
         model,
         coalitions=coalitions,
+        initial=initial,
+        members=members,
         profile=_profile(args),
         max_relax=args.max_relax,
         max_states=args.max_states,
@@ -453,7 +494,10 @@ def _date_arg(text: str):
 
 def _evidence(func):
     """Run an evidence subcommand; its user errors exit 2 with the message on stderr, and a
-    missing optional SDK or a backend failure exits 1."""
+    missing optional SDK or a backend error that reaches here (an ``ExtractError``) exits 1.
+    ``wf extract`` also exits 1 when the backend failed on a document (the error is recorded
+    and the proposals file still written); ``wf replay`` turns such a failure into a
+    ``ReplayError``, so it exits 2 without writing the period's proposals file."""
 
     def run(args: argparse.Namespace) -> int:
         from .evidence.extract import ExtractError
@@ -480,18 +524,30 @@ def _shown(path: Path) -> str:
 @_evidence
 def cmd_extract(args: argparse.Namespace) -> int:
     from .evidence.corpora import open_corpus
-    from .evidence.extract import CachedBackend, extract, make_backend, write_proposals
+    from .evidence.extract import (
+        CachedBackend,
+        extract,
+        make_backend,
+        text_variables,
+        write_proposals,
+    )
     from .evidence.harness_rules import parse_rules
     from .evidence.replay import backend_info
     from .evidence.review import label_for
 
     rules = parse_rules(args.rules)
+    episode = None if args.episode == "ww2" else args.episode
     corpus = open_corpus(args.corpus, args.source)
-    backend = make_backend(args.backend, args.model)
+    backend = make_backend(args.backend, args.model, _guidance(args))
     if args.cache:
         backend = CachedBackend(backend, args.cache)
     result = extract(
-        corpus, until=args.until, since=args.since, backend=backend, workers=args.workers
+        corpus,
+        until=args.until,
+        since=args.since,
+        backend=backend,
+        workers=args.workers,
+        variables=text_variables(episode=args.episode),
     )
     info = backend_info(backend)
     usage = getattr(backend, "usage", None)
@@ -500,10 +556,11 @@ def cmd_extract(args: argparse.Namespace) -> int:
     data = write_proposals(
         args.out,
         result,
-        label=label_for(args.until),
+        label=label_for(args.until, episode),
         corpus=corpus.describe(),
         backend=info,
         harness_rules=rules,
+        episode=episode,
     )
     print(
         f"{len(result.documents)} documents dated to {args.until} read; "
@@ -549,16 +606,29 @@ def cmd_review(args: argparse.Namespace) -> int:
     return 0
 
 
-def _print_plan(rows, backend) -> None:
+def _guidance(args: argparse.Namespace) -> str | None:
+    """The text of ``--guidance-file`` (an empty file: no guidance), or None (the default)."""
+    path = getattr(args, "guidance_file", None)
+    if not path:
+        return None
+    if args.backend != "deepseek":
+        raise SystemExit("error: --guidance-file applies to the deepseek backend only")
+    return Path(path).read_text(encoding="utf-8")
+
+
+def _print_plan(rows, backend, episode: str = "ww2") -> None:
     from .evidence.extract import text_variables
     from .evidence.extract.claude_backend import system_prompt
+    from .evidence.extract.deepseek_backend import deepseek_system_prompt
     from .evidence.replay import CHARS_PER_TOKEN
 
-    system_chars = len(system_prompt(text_variables())) if backend.name == "claude" else 0
+    prompts = {"claude": system_prompt, "deepseek": deepseek_system_prompt}
+    prompt = prompts.get(backend.name)
+    system_chars = len(prompt(text_variables(episode=episode))) if prompt else 0
     print("DRY RUN: nothing is sent to the backend and nothing is written")
     print(
-        f"{'quarter':8} {'visible':>8} {'to read':>8} {'cached':>7} {'requests':>9} "
-        f"{'characters':>11}"
+        f"{'quarter' if episode == 'ww2' else 'year':8} {'visible':>8} {'to read':>8} "
+        f"{'cached':>7} {'requests':>9} {'characters':>11}"
     )
     for r in rows:
         print(
@@ -588,6 +658,7 @@ def _print_plan(rows, backend) -> None:
 @_evidence
 def cmd_replay(args: argparse.Namespace) -> int:
     from .evidence.corpora import open_corpus
+    from .evidence.episodes import get_episode
     from .evidence.extract import make_backend
     from .evidence.harness_rules import parse_rules
     from .evidence.replay import (
@@ -598,11 +669,32 @@ def cmd_replay(args: argparse.Namespace) -> int:
         render_report,
         replay,
     )
+    from .evidence.review import DEFAULT_HINDSIGHT
 
-    quarters = parse_quarters(args.quarters)
+    ep = get_episode(args.episode)
+    if ep.name == "ww2":
+        if args.years:
+            raise ValueError("--years is for --episode cw; the WW2 replay runs by --quarters")
+        periods_text = args.quarters or "1936Q1..1940Q4"
+        quarters = parse_quarters(periods_text)
+    else:
+        if args.quarters:
+            raise ValueError(
+                f"--episode {ep.name} runs by year (the model ticks yearly): give --years, "
+                "e.g. --years 1957..1962"
+            )
+        if not args.years:
+            raise ValueError(f"--episode {ep.name} needs --years, e.g. --years 1957..1962")
+        periods_text = args.years
+        quarters = ep.parse_periods(periods_text)
     out = Path(args.out)
     runs = []
     rules = parse_rules(args.rules) if args.rules is not None else None
+    if args.drop_rejected and (not args.measure_proposals or args.corpus or ep.name != "ww2"):
+        raise ValueError(
+            "--drop-rejected goes with --measure-proposals on proposals already written "
+            "(no --corpus), WW2 only"
+        )
     if args.measure_proposals and (args.auto_accept or args.metrics_only):
         raise ValueError("--measure-proposals goes with neither --auto-accept nor --metrics-only")
     if args.dry_run and (args.auto_accept or args.metrics_only or args.measure_proposals):
@@ -618,8 +710,8 @@ def cmd_replay(args: argparse.Namespace) -> int:
         if not args.corpus:
             raise ValueError("--dry-run needs --corpus")
         corpus = open_corpus(args.corpus, args.source)
-        backend = make_backend(args.backend, args.model)
-        _print_plan(plan(corpus, quarters, out, backend), backend)
+        backend = make_backend(args.backend, args.model, _guidance(args))
+        _print_plan(plan(corpus, quarters, out, backend, episode=ep), backend, ep.name)
         return 0
     if args.measure_proposals and not args.corpus:
         from .evidence.review import proposal_files
@@ -636,7 +728,7 @@ def cmd_replay(args: argparse.Namespace) -> int:
         if not args.corpus:
             raise ValueError("--corpus is required unless --metrics-only")
         corpus = open_corpus(args.corpus, args.source)
-        backend = make_backend(args.backend, args.model)
+        backend = make_backend(args.backend, args.model, _guidance(args))
         runs = replay(
             corpus,
             quarters,
@@ -647,6 +739,7 @@ def cmd_replay(args: argparse.Namespace) -> int:
             rules=parse_rules(args.rules),
             workers=args.workers,
             cache=not args.no_cache,
+            episode=ep,
         )
         corpus_info = corpus.describe()
         backend_record = backend_info(backend)
@@ -654,16 +747,31 @@ def cmd_replay(args: argparse.Namespace) -> int:
             print("SYNTHETIC RUN: fixture corpus; the results are not evidence")
         if args.auto_accept:
             print("AUTO-ACCEPT: every proposal accepted without review (synthetic run only)")
-    metrics = compare(
-        out, quarters, args.hindsight, measure_proposals=args.measure_proposals, rules=rules
-    )
-    command = f"wf replay --quarters {args.quarters} --out OUT"
+    if ep.name == "ww2":
+        metrics = compare(
+            out,
+            quarters,
+            args.hindsight or DEFAULT_HINDSIGHT,
+            measure_proposals=args.measure_proposals,
+            rules=rules,
+            drop_rejected=args.drop_rejected,
+        )
+        command = f"wf replay --quarters {periods_text} --out OUT"
+    else:
+        from .evidence.replay_cw import compare as compare_cw
+
+        metrics = compare_cw(
+            out, quarters, args.hindsight, measure_proposals=args.measure_proposals, rules=rules
+        )
+        command = f"wf replay --episode {ep.name} --years {periods_text} --out OUT"
     if args.corpus:
         command += f" --corpus {_shown(Path(args.corpus))}"
     if args.backend != "rules":
         command += f" --backend {args.backend}"
     if args.model:
         command += f" --model {args.model}"
+    if args.guidance_file and args.corpus:
+        command += f" --guidance-file {_shown(Path(args.guidance_file))}"
     if args.rules is not None:
         command += f" --rules {args.rules}"
     if args.auto_accept:
@@ -672,10 +780,18 @@ def cmd_replay(args: argparse.Namespace) -> int:
         command += " --metrics-only"
     if args.measure_proposals:
         command += " --measure-proposals"
+    if args.drop_rejected:
+        command += " --drop-rejected"
+    if args.measure_proposals and args.drop_rejected:
+        print(
+            "PROPOSAL-LEVEL: rejected proposals left out, the accepted and the pending ones "
+            "treated as accepted for the metrics; nothing written"
+        )
+    elif args.measure_proposals:
         print("PROPOSAL-LEVEL: every proposal treated as accepted for the metrics; nothing written")
     text = render_report(
         metrics,
-        title=args.title or f"Replay metrics, WW2 {quarters[0]} to {quarters[-1]}",
+        title=args.title or f"Replay metrics, {ep.title} {quarters[0]} to {quarters[-1]}",
         corpus=corpus_info,
         backend=backend_record,
         command=command,
@@ -748,6 +864,18 @@ def build_parser() -> argparse.ArgumentParser:
 
     p = command("report", cmd_report, "Full Markdown report.")
     p.add_argument("--out", help="write the report to this file instead of stdout")
+    p.add_argument(
+        "--snapshot",
+        help="start from a snapshot file (wavefront.evidence); with a set of levels the "
+        "report adds the robust/fragile verdicts",
+    )
+    p.add_argument(
+        "--fix",
+        action="append",
+        type=_parse_fix,
+        metavar="VAR=LEVEL",
+        help="fix a swept variable the snapshot omits (repeatable; needs --snapshot)",
+    )
     p.add_argument("--max-relax", type=int, default=2, help="largest relaxation set size")
     p.add_argument(
         "--coalition",
@@ -797,9 +925,22 @@ def _add_evidence_commands(sub) -> None:
     p.add_argument("--until", type=_date_arg, required=True, help="last document date, YYYY-MM-DD")
     p.add_argument("--since", type=_date_arg, help="first document date, YYYY-MM-DD")
     p.add_argument("--out", required=True, metavar="PROPOSALS", help="proposals file to write")
-    p.add_argument("--source", help="corpus kind (local, frus, hansard, chronicling, trove)")
-    p.add_argument("--backend", choices=("rules", "claude"), default="rules")
-    p.add_argument("--model", help="model for the claude backend (default: the backend's)")
+    p.add_argument("--source", help="corpus kind (local, frus, hansard, chronicling, trove, crest)")
+    p.add_argument(
+        "--episode",
+        choices=("ww2", "cw"),
+        default="ww2",
+        help="the model whose text variables are proposed: ww2 (default) or cw (the Cold War)",
+    )
+    p.add_argument("--backend", choices=("rules", "claude", "deepseek"), default="rules")
+    p.add_argument(
+        "--model", help="model for the claude or deepseek backend (default: the backend's)"
+    )
+    p.add_argument(
+        "--guidance-file",
+        help="deepseek backend: a text file of instructions replacing the default guidance "
+        "(an empty file: no guidance); its SHA-256 is recorded in the proposals file",
+    )
     p.add_argument(
         "--rules",
         metavar="RULES",
@@ -835,33 +976,52 @@ def _add_evidence_commands(sub) -> None:
     p.add_argument("--snapshots", help="snapshot directory (default: the parent of proposals/)")
     p.add_argument(
         "--hindsight",
-        default=str(Path(__file__).resolve().parents[1] / "snapshots" / "ww2" / "hindsight"),
-        help="hindsight snapshots the resource variables are copied from",
+        help="hindsight snapshots the resource variables (Cold War: every variable but the "
+        "beliefs) are copied from (default: the proposals' episode's, snapshots/ww2/hindsight "
+        "or snapshots/cw_v1/hindsight)",
     )
     p.set_defaults(func=cmd_review)
 
     p = sub.add_parser(
         "replay",
-        help="Blind replay over quarters, with the agreement and lag metrics.",
+        help="Blind replay over quarters (WW2) or years (Cold War), with the metrics.",
         description="For each quarter, filter the corpus to documents dated at or before its "
         "end, extract and write proposals; then compare the reviewed replay snapshots with "
         "the hindsight snapshots and write a Markdown metrics report.",
     )
     p.add_argument("--corpus", help="corpus directory")
-    p.add_argument("--quarters", default="1936Q1..1940Q4", help="e.g. 1936Q1..1940Q4")
+    p.add_argument(
+        "--episode",
+        choices=("ww2", "cw"),
+        default="ww2",
+        help="ww2 (default; by quarter) or cw (the Cold War; by year, with --years)",
+    )
+    p.add_argument("--quarters", help="WW2 quarters (default 1936Q1..1940Q4)")
+    p.add_argument(
+        "--years",
+        help="Cold War years, e.g. 1957..1962: the snapshot of a year is its 1 January, read "
+        "from the documents dated to the 31 December before",
+    )
     p.add_argument("--out", required=True, help="replay directory (proposals/ and snapshots)")
     p.add_argument(
         "--auto-accept",
         action="store_true",
         help="accept every proposal without review (synthetic fixture corpus only; flagged)",
     )
-    p.add_argument("--source", help="corpus kind (local, frus, hansard, chronicling, trove)")
-    p.add_argument("--backend", choices=("rules", "claude"), default="rules")
-    p.add_argument("--model", help="model for the claude backend (default: the backend's)")
+    p.add_argument("--source", help="corpus kind (local, frus, hansard, chronicling, trove, crest)")
+    p.add_argument("--backend", choices=("rules", "claude", "deepseek"), default="rules")
+    p.add_argument(
+        "--model", help="model for the claude or deepseek backend (default: the backend's)"
+    )
+    p.add_argument(
+        "--guidance-file",
+        help="deepseek backend: a text file of instructions replacing the default guidance "
+        "(an empty file: no guidance); its SHA-256 is recorded in the proposals file",
+    )
     p.add_argument(
         "--hindsight",
-        default=str(Path(__file__).resolve().parents[1] / "snapshots" / "ww2" / "hindsight"),
-        help="hindsight snapshots to compare with",
+        help="hindsight snapshots to compare with (default: the episode's, snapshots/ww2/"
+        "hindsight or snapshots/cw_v1/hindsight)",
     )
     p.add_argument("--report", help="metrics report file (default: OUT/metrics.md)")
     p.add_argument("--title", help="report title")
@@ -876,6 +1036,12 @@ def _add_evidence_commands(sub) -> None:
         help="compute the metrics from the proposals in OUT/proposals as if every one were "
         "accepted, without review and without writing snapshots (a measurement of the "
         "backend; the report says so); with --corpus the extraction runs first",
+    )
+    p.add_argument(
+        "--drop-rejected",
+        action="store_true",
+        help="with --measure-proposals: leave out the proposals a reviewer rejected and treat "
+        "the accepted and the pending ones as accepted (a partly reviewed run; WW2)",
     )
     p.add_argument(
         "--rules",
@@ -893,8 +1059,8 @@ def _add_evidence_commands(sub) -> None:
     p.add_argument(
         "--no-cache",
         action="store_true",
-        help="do not cache the answers of a paid backend under OUT/cache/ (default: cached, so "
-        "running the same command again resumes a stopped run)",
+        help="do not cache the answers of a paid backend under OUT/cache/<backend>/ (default: "
+        "cached, so running the same command again resumes a stopped run)",
     )
     p.add_argument(
         "--dry-run",

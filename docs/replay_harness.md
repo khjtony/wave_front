@@ -162,10 +162,23 @@ written to `OUT/metrics.md` (or `--report`):
   that set the new level; each documented flip is paired with the nearest replayed flip to
   the same level within four quarters, and the lag is given in quarters and days (positive:
   the replay is late); unpaired replayed flips are false flips, unpaired documented flips are
-  missed;
+  missed. Both series start from the same baseline, the record's level at the end of the
+  quarter before the first (its hindsight snapshot, else the initial levels), never the
+  replay's own snapshot of that quarter, so a replay that agrees in every quarter has no false
+  flip whatever `--quarters` starts with (fixed 2026-10-30; until then a measurement started
+  the replay from the initial levels, which gave a false flip at the first quarter of a range
+  starting after 1936Q1 for every variable already moved; every recorded WW2 report starts at
+  1936Q1, where the two baselines are equal, and is unchanged). With set-valued hindsight
+  levels, a replayed flip inside a window to a level of its set, or on the first concrete
+  quarter after it back to that quarter's hindsight level, is a flip inside the window, not a
+  false flip ([ambiguous_levels.md](ambiguous_levels.md) section 5);
 - the disagreements, each with the hindsight event and the replay quote behind it.
 
-`--metrics-only` recomputes the report from the snapshots already reviewed.
+`--metrics-only` recomputes the report from the snapshots already reviewed. It counts no
+pending proposal: a quarter has a reviewed snapshot only when no proposal of it or of an earlier
+quarter awaits review (see "Review"), and a quarter without one is listed as "not compared". A
+review of a sample therefore leaves `--metrics-only` with nothing to compare; for a partly
+reviewed run use `--measure-proposals --drop-rejected` (below).
 
 `--measure-proposals` measures a backend before anyone has reviewed its proposals: every
 proposal in `OUT/proposals/` counts as accepted, whatever its status (pending, accepted or
@@ -176,6 +189,20 @@ reviewed; it adds a table of proposals per variable and level. With `--corpus` t
 runs first (proposals only, as without the flag); without it the proposals already in `OUT` are
 measured. It cannot be combined with `--auto-accept` or `--metrics-only`. It is a measurement
 of the backend, not a replay snapshot: the review step stays human.
+
+`--measure-proposals --drop-rejected` measures a partly reviewed run (added 2026-10-27 for the
+owner's decision 7a of 2026-10-23, the review of a sample of the Claude backend's FRUS
+proposals): the proposals a reviewer rejected are left out as if never proposed (so a
+rejected document is not a proposing document under `two-document`, as in review), the
+accepted and the pending proposals count as accepted, and a `retrospective?` proposal is
+applied only if a reviewer accepted it (as in review; a plain measurement never applies it).
+An accepted proposal keeps its reviewer's decision in its indicator; a pending one says NOT
+REVIEWED. The report's first line gives the number of proposals accepted, rejected and still
+pending, and its tables of proposals leave the rejected ones out. Nothing is written but the
+report. It goes with proposals already written only (no `--corpus`), and the WW2 replay only.
+With no decision recorded it gives exactly the metrics of `--measure-proposals`. Under it,
+rejecting the proposal that set a level lets the next proposal of that level still in the run
+set it: a false reading goes away only when every proposal carrying it is rejected.
 
 Every report also gives the agreement of a replay that reads nothing (every text variable at
 its ontology initial level), per variable and in total, and splits the replay's agreement
@@ -433,6 +460,11 @@ wf review $OUT/proposals/1936Q1.json
 wf review $OUT/proposals/1936Q1.json --accept 1936Q1-001,1936Q1-003 --note "..."
 wf review $OUT/proposals/1936Q1.json --reject 1936Q1-002 --note "..."
 wf replay --out $OUT --quarters 1936Q1..1940Q4 --metrics-only --report $OUT/metrics_reviewed.md
+# With only a sample reviewed, --metrics-only has no snapshot to compare; measure without the
+# rejected proposals instead (scripts/apply_review.py applies a filled review sheet to a copy of
+# the proposals and runs both):
+wf replay --out $OUT --quarters 1936Q1..1940Q4 --measure-proposals --drop-rejected \
+    --report $OUT/metrics_partial.md
 ```
 
 **What to send back:** the two reports of step 5 (`$OUT/metrics_claude.md`,
@@ -447,7 +479,10 @@ was declined", not retryable: running again asks again), send the error message 
 model, the effort, the token and part limits, the system prompt with the ontology's threshold
 rules, and the document's text; only complete answers are cached, never an error. Running the
 same command again therefore sends only the documents not yet answered (`--dry-run` shows how
-many are left: its "cached" column). Keep `--model` and the repository's commit the same across
+many are left: its "cached" column). The document's source, title and URL, which are sent with
+its text, are not in the key (so the recorded runs' caches stay valid) but are recorded in each
+entry: an entry answered under another header (a corrected `crest` title, another URL) is read
+again (an entry from before 2026-10-30, without a header, is used as before). Keep `--model` and the repository's commit the same across
 the resumed runs: a different model or a changed threshold rule reads every document again. A
 quarter whose proposals carry a reviewer's decision is never replayed over (the replay refuses
 instead of resetting the decisions), so start `--quarters` after the reviewed ones. `--workers`
@@ -494,13 +529,156 @@ magnitude: one to a few hundred dollars for the whole corpus, dominated by think
 of step 3 reads 320 of the 10,551 requests: multiply its recorded `usage` by about 33 for the
 whole run, and its wall-clock time by 33 divided by the `--workers` used.
 
+## The DeepSeek backend
+
+`wavefront/evidence/extract/deepseek_backend.py` (`--backend deepseek`, optional `--model`) reads
+documents through DeepSeek's OpenAI-compatible chat API with the standard library; no extra
+dependency. It sends the Claude backend's instructions and threshold rules followed by the
+answer's JSON schema, in JSON mode (the API does not enforce a schema, so the extractor's checks
+discard anything outside it, with the reason). Default model `deepseek-flash`
+(`DEFAULT_DEEPSEEK_MODEL`, with the guidance `DEFAULT_GUIDANCE` adopted on 2026-10-24, the text of data/extract/deepseek_guidance_g2.txt; `--guidance-file` replaces it; the account listed `deepseek-v4-pro` and `deepseek-flash` on 2026-10-24); `--model deepseek-v4-pro` for the larger model. The key is
+read from `DEEPSEEK_API_KEY`, the base URL from `DEEPSEEK_BASE_URL` (default
+`https://api.deepseek.com`); never put either in a file of the repository. Long documents are
+split as for Claude (parts of at most 120,000 characters; a part whose answer stops on
+`length` is split again); `content_filter` is a refusal; HTTP 429, 5xx, network failures (a
+response cut short, `http.client.HTTPException`, included) and an answer interrupted by the
+provider (`finish_reason` `insufficient_system_resource`) are retried three times with a
+doubling wait, 402 is reported as insufficient balance, and a body that is not UTF-8 or JSON is
+an error; every failure is recorded against its document. An empty `--guidance-file` means no
+guidance (as in `scripts/compare_backends.py`); no `--guidance-file` means the default. The
+proposals file's `backend` records the guidance (`"default"`, `"none"`, or `"sha256:<hex>"` of
+the file's text), the report's backend line names it, and the report's command line gives
+`--guidance-file`. Usage
+is recorded per quarter under the API's names (`prompt_tokens`, `completion_tokens`,
+`prompt_cache_hit_tokens`, `prompt_cache_miss_tokens`, `reasoning_tokens`). Answers are
+cached per document like Claude's, under an identity naming the base URL, model, limits, JSON
+mode and system prompt, so the two backends never share cache entries. The same run as for
+Claude, with `--backend deepseek` and a different `--out`, gives comparable metrics; a pilot
+quarter first measures the cost.
+
+## The Cold War episode
+
+The harness reads one domain model at a time, named by an episode
+(`wavefront/evidence/episodes.py`): `ww2` (the default; everything above) or `cw`, the Cold
+War v1 model (`cw_v1`; [ontology_cw.md](ontology_cw.md); decisions D6 and D7 of
+[cw_v0_decisions.md](cw_v0_decisions.md), kept in v1, and D9 of
+[cw_v1_decisions.md](cw_v1_decisions.md)). Until 2026-10-28 the episode was for `cw_v0`, with
+`belief_force_USA` on `nuke_USSR`'s scale; on the owner's decision 7g it moved to `cw_v1` and
+the count scale before any replay under the new scale was run (v0's C6 stays as recorded). The episode is threaded through
+`text_variables(episode=...)`, the system prompt, the harness rules, the review step, the
+replay driver, its metrics and the CLI (`wf replay --episode cw`, `wf extract --episode cw`);
+`wf review` reads it from the proposals file. With the default every WW2 output is unchanged:
+the WW2 system prompt, its variables and the answer schema are byte-identical (a test pins
+the prompt's SHA-256), so cached Claude answers stay valid.
+
+**Variables.** The text-derived variables are the three beliefs of the ontology's section 3,
+with the levels and initial levels of `models/cw/v1.py` (a test keeps them equal) and the
+`Threshold rule` column of the ontology as their rule text:
+
+| Variable | Levels | Initial (1 January 1947) |
+|---|---|---|
+| `belief_force_USA` | none, under_200, under_1000, over_1000 | none |
+| `belief_USA_USSR` | status_quo, opportunist, expansionist | opportunist |
+| `belief_USSR_USA` | status_quo, hostile, first_strike_intent | hostile |
+
+`belief_force_USA` is the projected number of Soviet intercontinental delivery vehicles
+(ICBM and SLBM launchers, heavy bombers) about two to three years after the estimate's date, in
+the bands none, under 200, under 1,000 and 1,000 or more (the owner's decision 7g; ontology
+section 3); its own rule states the bands, so no other variable's rule is appended to it (until
+2026-10-28 it was on `nuke_USSR`'s scale and `nuke_USA`'s thresholds were appended). The
+`Dated indicator` column (the record, read with hindsight) never enters the prompt, nor does the
+hindsight counterpart `count_USSR`; a test checks that no NIE number, bomber or missile gap,
+Norris, NSC-68, Novikov or RYAN appears in it.
+
+**Prompt.** The WW2 instructions with two changes: the first sentence names "a model of the
+Cold War between the United States and the Soviet Union, 1947 to 1991", and a paragraph before
+the variables says that every variable is the belief of one named government, to be read from
+that government's own estimate (an estimate that projects a force is evidence of the
+estimating government's belief whether or not the force was built), and that a document of one
+government reporting another's belief or fear is evidence of the reporting government's belief:
+the other's reading is proposed only where the document reproduces that government's own
+words. The initial levels are stated at 1 January 1947. The DeepSeek backend appends its schema
+to the same prompt. The Cold War prompt is about 1,050 tokens.
+
+**Periods.** The model ticks yearly, so the replay runs by year (`--years 1957..1962`, or a
+comma-separated list); quarters are refused for this episode. The period `1958` is the state on
+1 January 1958 (tick 11), read from the documents dated to 31 December 1957: "documents dated
+before the snapshot's date" of D7. Its proposals file is `proposals/1958.json` (`until`
+1957-12-31, `"episode": "cw"`); `wf extract --episode cw` needs `--until YYYY-12-31` for its
+file to become a snapshot. A replay directory holds one episode.
+
+**Harness rules.** All three variables are beliefs, which are outside both rules (as WW2's
+belief and commitment variables), so the rules are recorded but act on nothing.
+
+**Review and snapshots.** A Cold War replay snapshot `<year>.json` is dated 1 January, for
+`cw_v1`: each belief takes the level of its latest accepted proposal (else its initial level,
+`assumed`, as in WW2); every other variable, the rates and the built-ins (`nuke_USSR` and
+`count_USSR` among them) are carried from `snapshots/cw_v1/hindsight/<year>.json` as
+`assumed`, as in v1's manual replay: the estimate is `belief_force_USA`, and the hindsight force
+stays the record's.
+
+**Metrics** (`wavefront/evidence/replay_cw.py`). Per year, each replayed belief beside (1) its
+hindsight truth from the hindsight snapshot (D6: `belief_force_USA` against the record's
+`count_USSR`, the number of vehicles in being in the same bands, D9 of cw_v1_decisions.md;
+`belief_USSR_USA` against `hostile`; `belief_USA_USSR` has none, its truth being the swept
+hypothesis) and (2) the contemporaneous belief of the record: v1's manual replay snapshot of the
+year where there is one (`snapshots/cw_v1/replay/`, 1957 to 1962, 1983), else the latest
+`belief` row visible on 1 January of `data/cw/events.csv` with `data/cw/v1/events.csv` (v1's
+rows of a variable replacing v0's, as the v1 snapshots read them), the rule the manual replay
+follows (a test checks that both agree in the manual years). The report has the C6 table (per
+year, whether the replayed `belief_force_USA` is in a higher band than the hindsight
+`count_USSR`, beside the same for the manual replay; R V6 (a) of cw_v1_decisions.md), the C7 line (`belief_USSR_USA` on 1 January 1983), agreement per variable with both
+series, the flips of the replay against the documented flips of the contemporaneous series
+(matched within two years, lag in years; both series start from the record's contemporaneous
+level of the year before the first, never from a replay snapshot of that year, so a replay of
+1982 to 1985 that reads `over_1000` from the start has no false flip), and the indicators behind every disagreement. These
+are inputs of C6 and C7; the claims themselves are computed on the model from the snapshots.
+
+```
+wf replay --episode cw --years 1957..1962 --corpus data/cw/corpora/raw/crest --source crest \
+    --backend claude --out $OUT --dry-run
+wf replay --episode cw --years 1957..1962 --corpus data/cw/corpora/raw/crest --source crest \
+    --backend claude --out $OUT --workers 4
+wf replay --episode cw --years 1957..1962 --out $OUT --measure-proposals
+wf review $OUT/proposals/1958.json
+```
+
+**Dry run on `crest`** (2026-10-24; nothing sent): for 1957 to 1962, 22 documents (1, 4, 4, 1,
+6 and 6 new per year), 25 requests with the Claude backend, 2.20 million characters, about
+577,000 input tokens. Again on 2026-10-28 with the count scale: the same documents and
+requests, about 578,500 input tokens (the system prompt 1,054 tokens). For 1982 to 1985 in a fresh directory, 38 documents, all but one read
+for 1982 (everything dated to 1981, back to 1956) and none dated 1982 or 1983: the corpus holds
+nothing between NIE 11-8-71 (Oct 1971) and SNIE 11-10-84 (May 1984), which becomes visible for
+1985; about 682,000 input tokens. Run after 1957 to 1962 in the same directory, the later years
+read only the documents not yet read.
+
+What a blind C6 and C7 replay still needs:
+
+- **Part III of the Steury volume** (estimates 27 to 41, 1972 to 1983) has no text layer: OCR
+  outside the harness. Without it nothing is read between 1971 and 1984, and C7's year has no
+  American document either.
+- **The estimates of Parts I and II** are all dated now: the twelve the volume prints no date
+  for carry one with its source in `crest.STEURY_1996` (a citation with the date in another
+  estimate of the corpus, the FRUS printing, or the CIA's 2004 list of declassified NIEs). The
+  Memorandum to Holders of NIE 11-5-58 (no text layer) still bears on 1959 unread. The C6
+  years are read now from 22 documents.
+- **C7 needs Soviet documents.** `crest` holds American estimates only; under the prompt's rule
+  an American estimate of what Moscow fears is Washington's belief, so `belief_USSR_USA` can
+  only be read from a document reproducing Moscow's own words (the KGB's RYAN instructions as
+  published by Andrew and Gordievsky, the Wilson Center's Soviet records), which no corpus of
+  the repository holds. The PFIAB report (1990) is dated after every C7 year.
+- `belief_USA_USSR` is read from Washington's basic national security papers (NSC-68,
+  NSC 162/2), which are FRUS documents, not estimates; a FRUS corpus for 1950 to 1953 would be
+  needed to replay it.
+
 ## Open items
 
-- framework_spec.md section 2 (package layout), section 9 (evidence) and section 10 (CLI)
-  do not yet list the `corpora`, `extract` (with its per-document cache), `harness_rules`,
-  `review` and `replay` modules and the `extract`, `review` and `replay` subcommands with their
-  options (`--rules`, `--workers`, `--cache`, `--no-cache`, `--dry-run`); the spec belongs to
-  the framework step and should gain a paragraph for each.
+- Done 2026-10-29: framework_spec.md section 2 (package layout), section 9 (evidence) and
+  section 10 (CLI) now have their paragraphs for the `corpora` (the `crest` corpus included),
+  `extract` (the DeepSeek backend and the per-document cache included), `harness_rules`,
+  `review`, `episodes`, `replay` and `replay_cw` modules, and for the `extract`, `review` and
+  `replay` subcommands with every option and its default (`--episode`, `--years`,
+  `--guidance-file` and `--drop-rejected` included).
 - The two-document rule counts document ids, so a document printed in two FRUS volumes under
   two ids corroborates itself; a near-duplicate check (same date, same sender, most of the
   text in common) would close that. Where a corpus knows the duplication it says so: a
@@ -508,14 +686,14 @@ whole run, and its wall-clock time by 33 divided by the `--workers` used.
 - `crest`: Part III of the Steury volume (estimates 27 to 41, 1972 to 1983, among them NIE
   11-4-82, 11-3/8-82 and 11-3/8-83), the whole-volume PDF, the two Memoranda to Holders (NIE
   11-5-58, NIE 11-8-62) and SNIE 11-9-84 have no text layer and enter no index until they are
-  OCRed outside the harness; twelve estimates of Parts I and II have no recorded date (among
-  them SNIE 11-6-57, SNIE 11-7-58, NIE 11-4-60 and NIE 11-8-62) and wait for one, with its
-  source, in `crest.STEURY_1996`.
+  OCRed outside the harness; Part III's estimates also need a date with its source in
+  `crest.STEURY_1996` once they are readable.
 - A document the Claude backend refuses stops its quarter on every run; a way to record it and
   go on (with the quarter marked incomplete in the report) is not built.
 - Chronicling America's move to the loc.gov API (snippets only in search results) needs a
   page-text fetch before that source can be replayed.
 - DGFP, the Nuremberg documents, the 1941 Imperial Conference records and the Cabinet papers
   have no fetch module; they enter as `local` directories of dated text files.
-- The replay snapshots carry no `builtins` section; the built-in counters of a replayed
-  state come from the model's initial values when it is loaded.
+- The WW2 replay snapshots carry no `builtins` section; the built-in counters of a replayed
+  state come from the model's initial values when it is loaded. (The Cold War snapshots carry
+  the hindsight snapshot's built-ins.)

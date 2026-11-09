@@ -1,0 +1,4161 @@
+{
+ "kind": "wave_front proposals",
+ "format": 1,
+ "label": "1936Q3",
+ "until": "1936-09-30",
+ "since": null,
+ "corpus": {
+  "source": "frus",
+  "synthetic": false,
+  "root": "data/ww2/corpora/raw/frus"
+ },
+ "backend": {
+  "name": "deepseek",
+  "model": "deepseek-flash",
+  "usage": {
+   "prompt_tokens": 2265865,
+   "completion_tokens": 188819,
+   "prompt_cache_hit_tokens": 1906688,
+   "prompt_cache_miss_tokens": 359177,
+   "reasoning_tokens": 181502
+  },
+  "cache": {
+   "hits": 0,
+   "misses": 532
+  }
+ },
+ "harness_rules": [
+  "two-document",
+  "no-retrospective"
+ ],
+ "documents": [
+  {
+   "id": "frus:frus1936v01/d333",
+   "date": "1936-07-02",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chargé in Belgium (Sussdorff)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d333"
+  },
+  {
+   "id": "frus:frus1936v01/d96",
+   "date": "1936-07-02",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in the United Kingdom (Atherton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d96"
+  },
+  {
+   "id": "frus:frus1936v02/d22",
+   "date": "1936-07-02",
+   "source": "FRUS frus1936v02",
+   "title": "Memorandum by the Assistant Chief of the Division of Trade Agreements (Deimel)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d22"
+  },
+  {
+   "id": "frus:frus1936v02/d262",
+   "date": "1936-07-02",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Minister in Greece (MacVeagh)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d262"
+  },
+  {
+   "id": "frus:frus1936v02/d347",
+   "date": "1936-07-02",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Poland (Nielsen) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d347"
+  },
+  {
+   "id": "frus:frus1933-39/d321",
+   "date": "1936-07-03",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Henderson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d321"
+  },
+  {
+   "id": "frus:frus1936v01/d255",
+   "date": "1936-07-03",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in Germany (Mayer) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d255"
+  },
+  {
+   "id": "frus:frus1936v01/d539",
+   "date": "1936-07-03",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Ambassador in the United Kingdom (Bingham)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d539"
+  },
+  {
+   "id": "frus:frus1936v01/d580",
+   "date": "1936-07-06",
+   "source": "FRUS frus1936v01",
+   "title": "The British Ambassador (Lindsay) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d580"
+  },
+  {
+   "id": "frus:frus1936v02/d166",
+   "date": "1936-07-06",
+   "source": "FRUS frus1936v02",
+   "title": "Memorandum by Mr. Rudolf E. Schoenfeld of the Division of Western European Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d166"
+  },
+  {
+   "id": "frus:frus1936v02/d167",
+   "date": "1936-07-06",
+   "source": "FRUS frus1936v02",
+   "title": "Memorandum by the Assistant Economic Adviser (Livesey)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d167"
+  },
+  {
+   "id": "frus:frus1936v02/d874",
+   "date": "1936-07-06",
+   "source": "FRUS frus1936v02",
+   "title": "Memorandum by the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d874"
+  },
+  {
+   "id": "frus:frus1933-39/d322",
+   "date": "1936-07-07",
+   "source": "FRUS frus1933-39",
+   "title": "The Secretary of State to the Chargé in the Soviet Union (Henderson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d322"
+  },
+  {
+   "id": "frus:frus1936v01/d334",
+   "date": "1936-07-07",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in Belgium (Sussdorff) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d334"
+  },
+  {
+   "id": "frus:frus1933-39/d323",
+   "date": "1936-07-09",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Henderson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d323"
+  },
+  {
+   "id": "frus:frus1936v01/d540",
+   "date": "1936-07-09",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in the United Kingdom (Bingham) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d540"
+  },
+  {
+   "id": "frus:frus1936v01/d569",
+   "date": "1936-07-09",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Ambassador in the United Kingdom (Bingham)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d569"
+  },
+  {
+   "id": "frus:frus1936v01/d97",
+   "date": "1936-07-09",
+   "source": "FRUS frus1936v01",
+   "title": "The British Assistant Under Secretary of State for Foreign Affairs (Craigie) to the First Secretary of the American Embassy in the United Kingdom (Johnson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d97"
+  },
+  {
+   "id": "frus:frus1933-39/d324",
+   "date": "1936-07-10",
+   "source": "FRUS frus1933-39",
+   "title": "The Secretary of State to the Chargé in the Soviet Union (Henderson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d324"
+  },
+  {
+   "id": "frus:frus1933-39/d325",
+   "date": "1936-07-11",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Henderson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d325"
+  },
+  {
+   "id": "frus:frus1936v01/d256",
+   "date": "1936-07-11",
+   "source": "FRUS frus1936v01",
+   "title": "The Minister in Austria (Messersmith) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d256"
+  },
+  {
+   "id": "frus:frus1936v02/d201",
+   "date": "1936-07-11",
+   "source": "FRUS frus1936v02",
+   "title": "The American Agent (Bonynge) and Counsel (Martin), Mixed Claims Commission, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d201"
+  },
+  {
+   "id": "frus:frus1936v02/d23",
+   "date": "1936-07-11",
+   "source": "FRUS frus1936v02",
+   "title": "The Czechoslovak Minister (Veverka) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d23"
+  },
+  {
+   "id": "frus:frus1936v01/d257",
+   "date": "1936-07-13",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in the United Kingdom (Bingham) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d257"
+  },
+  {
+   "id": "frus:frus1936v02/d168",
+   "date": "1936-07-13",
+   "source": "FRUS frus1936v02",
+   "title": "Memorandum by Mr. Rudolf E. Schoenfeld of the Division of Western European Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d168"
+  },
+  {
+   "id": "frus:frus1936v01/d369",
+   "date": "1936-07-14",
+   "source": "FRUS frus1936v01",
+   "title": "The Consul at Geneva (Gilbert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d369"
+  },
+  {
+   "id": "frus:frus1936v02/d101",
+   "date": "1936-07-14",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Germany (Mayer) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d101"
+  },
+  {
+   "id": "frus:frus1936v02/d102",
+   "date": "1936-07-14",
+   "source": "FRUS frus1936v02",
+   "title": "Extract From Political Report of the Chargé in Germany (Mayer)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d102"
+  },
+  {
+   "id": "frus:frus1936v02/d24",
+   "date": "1936-07-14",
+   "source": "FRUS frus1936v02",
+   "title": "Memorandum by the Acting Chief of the Division of Trade Agreements (Deimel)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d24"
+  },
+  {
+   "id": "frus:frus1936v02/d355",
+   "date": "1936-07-14",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Spain (Bowers) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d355"
+  },
+  {
+   "id": "frus:frus1936v01/d124",
+   "date": "1936-07-15",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in the United Kingdom (Bingham) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d124"
+  },
+  {
+   "id": "frus:frus1936v01/d258",
+   "date": "1936-07-15",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in Germany (Mayer) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d258"
+  },
+  {
+   "id": "frus:frus1936v01/d259",
+   "date": "1936-07-16",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in France (Straus) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d259"
+  },
+  {
+   "id": "frus:frus1933-39/d326",
+   "date": "1936-07-17",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Henderson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d326"
+  },
+  {
+   "id": "frus:frus1936v02/d269",
+   "date": "1936-07-17",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Hungary (Stewart) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d269"
+  },
+  {
+   "id": "frus:frus1936v01/d675",
+   "date": "1936-07-18",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Consul at Capetown (De Courcy)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d675"
+  },
+  {
+   "id": "frus:frus1936v02/d332",
+   "date": "1936-07-18",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Chargé in Poland (Nielsen)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d332"
+  },
+  {
+   "id": "frus:frus1936v02/d356",
+   "date": "1936-07-18",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Spain (Bowers) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d356"
+  },
+  {
+   "id": "frus:frus1936v02/d357",
+   "date": "1936-07-18",
+   "source": "FRUS frus1936v02",
+   "title": "The Diplomatic Agent and Consul General at Tangier (Blake) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d357"
+  },
+  {
+   "id": "frus:frus1937v02/d79",
+   "date": "1936-07-18",
+   "source": "FRUS frus1937v02",
+   "title": "The British Ambassador (Lindsay) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d79"
+  },
+  {
+   "id": "frus:frus1936v02/d358",
+   "date": "1936-07-19",
+   "source": "FRUS frus1936v02",
+   "title": "The Diplomatic Agent and Consul General at Tangier (Blake) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d358"
+  },
+  {
+   "id": "frus:frus1936v02/d359",
+   "date": "1936-07-19",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Spain (Bowers) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d359"
+  },
+  {
+   "id": "frus:frus1936v01/d541",
+   "date": "1936-07-20",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d541"
+  },
+  {
+   "id": "frus:frus1936v01/d581",
+   "date": "1936-07-20",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the British Ambassador (Lindsay)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d581"
+  },
+  {
+   "id": "frus:frus1936v01/d676",
+   "date": "1936-07-20",
+   "source": "FRUS frus1936v01",
+   "title": "The Consul at Capetown (De Courcy) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d676"
+  },
+  {
+   "id": "frus:frus1936v02/d360",
+   "date": "1936-07-20",
+   "source": "FRUS frus1936v02",
+   "title": "The Counselor of Embassy in Spain (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d360"
+  },
+  {
+   "id": "frus:frus1937v02/d80",
+   "date": "1936-07-20",
+   "source": "FRUS frus1937v02",
+   "title": "Memorandum by Mr. William R. Vallance of the Office of the Legal Adviser",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d80"
+  },
+  {
+   "id": "frus:frus1933-39/d329",
+   "date": "1936-07-21",
+   "source": "FRUS frus1933-39",
+   "title": "The Ambassador of the Soviet Union (Troyanovsky) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d329"
+  },
+  {
+   "id": "frus:frus1936v01/d661",
+   "date": "1936-07-21",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chargé in Canada (Palmer)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d661"
+  },
+  {
+   "id": "frus:frus1936v02/d115",
+   "date": "1936-07-21",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Germany (Mayer) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d115"
+  },
+  {
+   "id": "frus:frus1936v02/d276",
+   "date": "1936-07-21",
+   "source": "FRUS frus1936v02",
+   "title": "Memorandum by the Assistant Secretary of State (Sayre)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d276"
+  },
+  {
+   "id": "frus:frus1936v02/d361",
+   "date": "1936-07-21",
+   "source": "FRUS frus1936v02",
+   "title": "The Counselor of Embassy in Spain (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d361"
+  },
+  {
+   "id": "frus:frus1936v02/d362",
+   "date": "1936-07-21",
+   "source": "FRUS frus1936v02",
+   "title": "The Diplomatic Agent and Consul General at Tangier (Blake) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d362"
+  },
+  {
+   "id": "frus:frus1936v02/d578",
+   "date": "1936-07-21",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in France (Straus) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d578"
+  },
+  {
+   "id": "frus:frus1936v02/d579",
+   "date": "1936-07-21",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to All American Consuls in Spain",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d579"
+  },
+  {
+   "id": "frus:frus1936v02/d580",
+   "date": "1936-07-21",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Ambassador in the United Kingdom (Bingham)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d580"
+  },
+  {
+   "id": "frus:frus1936v01/d677",
+   "date": "1936-07-22",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Consul at Capetown (De Courcy)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d677"
+  },
+  {
+   "id": "frus:frus1936v02/d363",
+   "date": "1936-07-22",
+   "source": "FRUS frus1936v02",
+   "title": "The Diplomatic Agent and Consul General at Tangier (Blake) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d363"
+  },
+  {
+   "id": "frus:frus1936v02/d364",
+   "date": "1936-07-22",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Diplomatic Agent and Consul General at Tangier (Blake)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d364"
+  },
+  {
+   "id": "frus:frus1936v02/d581",
+   "date": "1936-07-22",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in France (Straus) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d581"
+  },
+  {
+   "id": "frus:frus1936v02/d582",
+   "date": "1936-07-22",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in France (Straus) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d582"
+  },
+  {
+   "id": "frus:frus1936v02/d583",
+   "date": "1936-07-22",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in France (Straus) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d583"
+  },
+  {
+   "id": "frus:frus1936v01/d260",
+   "date": "1936-07-23",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in Czechoslovakia (Benton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d260"
+  },
+  {
+   "id": "frus:frus1936v02/d333",
+   "date": "1936-07-23",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Poland (Nielsen) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d333"
+  },
+  {
+   "id": "frus:frus1936v02/d584",
+   "date": "1936-07-23",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in France (Straus) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d584"
+  },
+  {
+   "id": "frus:frus1936v02/d585",
+   "date": "1936-07-23",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul at Bilbao (Chapman) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d585"
+  },
+  {
+   "id": "frus:frus1936v02/d586",
+   "date": "1936-07-23",
+   "source": "FRUS frus1936v02",
+   "title": "The Counselor of Embassy in Spain (Johnson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d586"
+  },
+  {
+   "id": "frus:frus1936v02/d587",
+   "date": "1936-07-23",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in France (Straus) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d587"
+  },
+  {
+   "id": "frus:frus1936v02/d588",
+   "date": "1936-07-23",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to President Roosevelt, at Sea",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d588"
+  },
+  {
+   "id": "frus:frus1936v02/d589",
+   "date": "1936-07-23",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Ambassador in France (Straus)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d589"
+  },
+  {
+   "id": "frus:frus1936v02/d590",
+   "date": "1936-07-23",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Ambassador in France (Straus)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d590"
+  },
+  {
+   "id": "frus:frus1936v02/d591",
+   "date": "1936-07-23",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in France (Straus) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d591"
+  },
+  {
+   "id": "frus:frus1936v02/d592",
+   "date": "1936-07-23",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Consul at Barcelona (Franklin)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d592"
+  },
+  {
+   "id": "frus:frus1936v02/d593",
+   "date": "1936-07-23",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in France (Straws) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d593"
+  },
+  {
+   "id": "frus:frus1936v01/d261",
+   "date": "1936-07-24",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in France (Straus) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d261"
+  },
+  {
+   "id": "frus:frus1936v01/d623",
+   "date": "1936-07-24",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Consul General at Sydney (Moffat)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d623"
+  },
+  {
+   "id": "frus:frus1936v02/d365",
+   "date": "1936-07-24",
+   "source": "FRUS frus1936v02",
+   "title": "The Diplomatic Agent and Consul General at Tangier (Blake) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d365"
+  },
+  {
+   "id": "frus:frus1936v02/d594",
+   "date": "1936-07-24",
+   "source": "FRUS frus1936v02",
+   "title": "President Roosevelt, at Sea, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d594"
+  },
+  {
+   "id": "frus:frus1936v02/d595",
+   "date": "1936-07-24",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to President Roosevelt, at Sea",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d595"
+  },
+  {
+   "id": "frus:frus1936v02/d596",
+   "date": "1936-07-24",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in France (Straus) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d596"
+  },
+  {
+   "id": "frus:frus1936v02/d597",
+   "date": "1936-07-24",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in France (Straus) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d597"
+  },
+  {
+   "id": "frus:frus1936v02/d598",
+   "date": "1936-07-24",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in France (Straus) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d598"
+  },
+  {
+   "id": "frus:frus1936v02/d599",
+   "date": "1936-07-24",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Consul at Barcelona (Franklin)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d599"
+  },
+  {
+   "id": "frus:frus1936v02/d600",
+   "date": "1936-07-24",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Consul at Gibraltar (Williams)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d600"
+  },
+  {
+   "id": "frus:frus1936v02/d601",
+   "date": "1936-07-24",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in France (Straus) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d601"
+  },
+  {
+   "id": "frus:frus1936v01/d262",
+   "date": "1936-07-25",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in Czechoslovakia (Benton) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d262"
+  },
+  {
+   "id": "frus:frus1936v01/d542",
+   "date": "1936-07-25",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Ambassador in the United Kingdom (Bingham)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d542"
+  },
+  {
+   "id": "frus:frus1936v01/d98",
+   "date": "1936-07-25",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Ambassador in the United Kingdom (Bingham)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d98"
+  },
+  {
+   "id": "frus:frus1936v02/d169",
+   "date": "1936-07-25",
+   "source": "FRUS frus1936v02",
+   "title": "The German Ambassador (Luther) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d169"
+  },
+  {
+   "id": "frus:frus1936v02/d366",
+   "date": "1936-07-25",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Italy (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d366"
+  },
+  {
+   "id": "frus:frus1936v02/d602",
+   "date": "1936-07-25",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul at Bordeaux (Finley) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d602"
+  },
+  {
+   "id": "frus:frus1936v02/d603",
+   "date": "1936-07-25",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Third Secretary of Embassy in Spain (Wendelin)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d603"
+  },
+  {
+   "id": "frus:frus1936v02/d604",
+   "date": "1936-07-25",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul at Barcelona (Franklin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d604"
+  },
+  {
+   "id": "frus:frus1936v02/d868",
+   "date": "1936-07-25",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Chargé in Switzerland (Bigelow)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d868"
+  },
+  {
+   "id": "frus:frus1936v02/d605",
+   "date": "1936-07-26",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Consul at Barcelona (Franklin)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d605"
+  },
+  {
+   "id": "frus:frus1936v02/d606",
+   "date": "1936-07-26",
+   "source": "FRUS frus1936v02",
+   "title": "The Minister in Portugal (Caldwell) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d606"
+  },
+  {
+   "id": "frus:frus1936v02/d607",
+   "date": "1936-07-26",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Ambassador in France (Straus)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d607"
+  },
+  {
+   "id": "frus:frus1936v02/d608",
+   "date": "1936-07-26",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul at Vigo (Corcoran) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d608"
+  },
+  {
+   "id": "frus:frus1936v02/d609",
+   "date": "1936-07-26",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul at Bordeaux (Finley) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d609"
+  },
+  {
+   "id": "frus:frus1936v02/d610",
+   "date": "1936-07-26",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in France (Straus) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d610"
+  },
+  {
+   "id": "frus:frus1936v02/d611",
+   "date": "1936-07-26",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Ambassador in France (Straus)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d611"
+  },
+  {
+   "id": "frus:frus1936v02/d367",
+   "date": "1936-07-27",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in France (Straus) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d367"
+  },
+  {
+   "id": "frus:frus1936v02/d612",
+   "date": "1936-07-27",
+   "source": "FRUS frus1936v02",
+   "title": "Memorandum by the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d612"
+  },
+  {
+   "id": "frus:frus1936v02/d613",
+   "date": "1936-07-27",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d613"
+  },
+  {
+   "id": "frus:frus1936v02/d614",
+   "date": "1936-07-27",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Consul at Vigo (Corcoran)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d614"
+  },
+  {
+   "id": "frus:frus1936v01/d263",
+   "date": "1936-07-28",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in Germany (Mayer) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d263"
+  },
+  {
+   "id": "frus:frus1936v01/d543",
+   "date": "1936-07-28",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in the United Kingdom (Bingham) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d543"
+  },
+  {
+   "id": "frus:frus1936v02/d170",
+   "date": "1936-07-28",
+   "source": "FRUS frus1936v02",
+   "title": "Memorandum by the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d170"
+  },
+  {
+   "id": "frus:frus1936v02/d334",
+   "date": "1936-07-28",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Chargé in Poland (Nielsen)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d334"
+  },
+  {
+   "id": "frus:frus1936v02/d615",
+   "date": "1936-07-28",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d615"
+  },
+  {
+   "id": "frus:frus1936v01/d264",
+   "date": "1936-07-29",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in Germany (Mayer) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d264"
+  },
+  {
+   "id": "frus:frus1936v01/d678",
+   "date": "1936-07-29",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Consul at Capetown (De Courcy)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d678"
+  },
+  {
+   "id": "frus:frus1936v02/d12",
+   "date": "1936-07-29",
+   "source": "FRUS frus1936v02",
+   "title": "The Belgian Ambassador (Van der Straten-Ponthoz) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d12"
+  },
+  {
+   "id": "frus:frus1936v02/d218",
+   "date": "1936-07-29",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Chargé in Germany (Mayer)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d218"
+  },
+  {
+   "id": "frus:frus1936v02/d335",
+   "date": "1936-07-29",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Poland (Nielsen) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d335"
+  },
+  {
+   "id": "frus:frus1936v02/d368",
+   "date": "1936-07-29",
+   "source": "FRUS frus1936v02",
+   "title": "Señor Miguel Cabanellas to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d368"
+  },
+  {
+   "id": "frus:frus1936v02/d616",
+   "date": "1936-07-29",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to All American Consular Officers in Spain",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d616"
+  },
+  {
+   "id": "frus:frus1936v02/d617",
+   "date": "1936-07-29",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul at Barcelona (Franklin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d617"
+  },
+  {
+   "id": "frus:frus1936v02/d618",
+   "date": "1936-07-29",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to All American Consuls in Spain",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d618"
+  },
+  {
+   "id": "frus:frus1936v02/d619",
+   "date": "1936-07-29",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d619"
+  },
+  {
+   "id": "frus:frus1936v02/d620",
+   "date": "1936-07-29",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d620"
+  },
+  {
+   "id": "frus:frus1936v01/d679",
+   "date": "1936-07-30",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by Mr. Samuel Reber of the Division of Western European Affairs of a Conversation Between the South African Minister (Close) and the Assistant Chief of the Division (Culbertson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d679"
+  },
+  {
+   "id": "frus:frus1936v02/d123",
+   "date": "1936-07-30",
+   "source": "FRUS frus1936v02",
+   "title": "Extract From Political Report of the Chargé in Germany (Mayer)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d123"
+  },
+  {
+   "id": "frus:frus1936v02/d219",
+   "date": "1936-07-30",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Germany (Mayer) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d219"
+  },
+  {
+   "id": "frus:frus1936v02/d336",
+   "date": "1936-07-30",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Poland (Nielsen) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d336"
+  },
+  {
+   "id": "frus:frus1936v02/d369",
+   "date": "1936-07-30",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Spain (Bowers) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d369"
+  },
+  {
+   "id": "frus:frus1936v02/d621",
+   "date": "1936-07-30",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Third Secretary of Embassy in Spain (Wendelin)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d621"
+  },
+  {
+   "id": "frus:frus1936v02/d622",
+   "date": "1936-07-30",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d622"
+  },
+  {
+   "id": "frus:frus1936v02/d623",
+   "date": "1936-07-30",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Spain (Bowers), Then on the U. S. S. “Cayuga”, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d623"
+  },
+  {
+   "id": "frus:frus1936v02/d624",
+   "date": "1936-07-30",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul at Barcelona (Franklin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d624"
+  },
+  {
+   "id": "frus:frus1936v01/d99",
+   "date": "1936-07-31",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in the United Kingdom (Bingham) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d99"
+  },
+  {
+   "id": "frus:frus1936v02/d220",
+   "date": "1936-07-31",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Chargé in Germany (Mayer)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d220"
+  },
+  {
+   "id": "frus:frus1936v02/d370",
+   "date": "1936-07-31",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in France (Straus) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d370"
+  },
+  {
+   "id": "frus:frus1936v02/d371",
+   "date": "1936-07-31",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in the Soviet Union (Henderson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d371"
+  },
+  {
+   "id": "frus:frus1936v01/d100",
+   "date": "1936-08-01",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Ambassador in Japan (Grew)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d100"
+  },
+  {
+   "id": "frus:frus1936v02/d171",
+   "date": "1936-08-01",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul General at Berlin (Jenkins) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d171"
+  },
+  {
+   "id": "frus:frus1936v02/d372",
+   "date": "1936-08-01",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Italy (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d372"
+  },
+  {
+   "id": "frus:frus1936v02/d625",
+   "date": "1936-08-01",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Third Secretary of Embassy in Spain (Wendelin)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d625"
+  },
+  {
+   "id": "frus:frus1936v02/d626",
+   "date": "1936-08-01",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d626"
+  },
+  {
+   "id": "frus:frus1936v02/d627",
+   "date": "1936-08-01",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d627"
+  },
+  {
+   "id": "frus:frus1936v02/d373",
+   "date": "1936-08-02",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in France (Straus) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d373"
+  },
+  {
+   "id": "frus:frus1936v02/d628",
+   "date": "1936-08-02",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d628"
+  },
+  {
+   "id": "frus:frus1936v01/d354",
+   "date": "1936-08-03",
+   "source": "FRUS frus1936v01",
+   "title": "The Minister in the Netherlands (Emmet) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d354"
+  },
+  {
+   "id": "frus:frus1936v01/d672",
+   "date": "1936-08-03",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by the Economic Adviser (Feis)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d672"
+  },
+  {
+   "id": "frus:frus1936v02/d374",
+   "date": "1936-08-03",
+   "source": "FRUS frus1936v02",
+   "title": "The Minister in Portugal (Caldwell) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d374"
+  },
+  {
+   "id": "frus:frus1936v02/d375",
+   "date": "1936-08-03",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Belgium (Sussdorff) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d375"
+  },
+  {
+   "id": "frus:frus1936v02/d629",
+   "date": "1936-08-03",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Third Secretary of Embassy in Spain (Wendelin)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d629"
+  },
+  {
+   "id": "frus:frus1936v02/d376",
+   "date": "1936-08-04",
+   "source": "FRUS frus1936v02",
+   "title": "Memorandum by the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d376"
+  },
+  {
+   "id": "frus:frus1936v02/d377",
+   "date": "1936-08-04",
+   "source": "FRUS frus1936v02",
+   "title": "The Minister in Portugal (Caldwell) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d377"
+  },
+  {
+   "id": "frus:frus1936v02/d378",
+   "date": "1936-08-04",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Belgium (Sussdorff) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d378"
+  },
+  {
+   "id": "frus:frus1936v02/d379",
+   "date": "1936-08-04",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in France (Straus) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d379"
+  },
+  {
+   "id": "frus:frus1936v02/d380",
+   "date": "1936-08-04",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Italy (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d380"
+  },
+  {
+   "id": "frus:frus1936v02/d381",
+   "date": "1936-08-04",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in the Soviet Union (Henderson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d381"
+  },
+  {
+   "id": "frus:frus1936v02/d630",
+   "date": "1936-08-04",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d630"
+  },
+  {
+   "id": "frus:frus1936v02/d631",
+   "date": "1936-08-04",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul at Barcelona (Franklin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d631"
+  },
+  {
+   "id": "frus:frus1936v02/d632",
+   "date": "1936-08-04",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d632"
+  },
+  {
+   "id": "frus:frus1936v01/d265",
+   "date": "1936-08-05",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chargé in Germany (Mayer)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d265"
+  },
+  {
+   "id": "frus:frus1936v01/d337",
+   "date": "1936-08-05",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Minister in Canada (Armour)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d337"
+  },
+  {
+   "id": "frus:frus1936v01/d673",
+   "date": "1936-08-05",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by the Chief of the Division of Trade Agreements (Hawkins)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d673"
+  },
+  {
+   "id": "frus:frus1936v02/d172",
+   "date": "1936-08-05",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the German Ambassador (Luther)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d172"
+  },
+  {
+   "id": "frus:frus1936v02/d382",
+   "date": "1936-08-05",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Germany (Mayer) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d382"
+  },
+  {
+   "id": "frus:frus1936v02/d383",
+   "date": "1936-08-05",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Italy (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d383"
+  },
+  {
+   "id": "frus:frus1936v02/d384",
+   "date": "1936-08-05",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d384"
+  },
+  {
+   "id": "frus:frus1936v02/d633",
+   "date": "1936-08-05",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d633"
+  },
+  {
+   "id": "frus:frus1936v02/d634",
+   "date": "1936-08-05",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Third Secretary of Embassy in Spain (Wendelin)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d634"
+  },
+  {
+   "id": "frus:frus1936v02/d635",
+   "date": "1936-08-05",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d635"
+  },
+  {
+   "id": "frus:frus1936v01/d266",
+   "date": "1936-08-06",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d266"
+  },
+  {
+   "id": "frus:frus1936v02/d385",
+   "date": "1936-08-06",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Italy (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d385"
+  },
+  {
+   "id": "frus:frus1936v02/d386",
+   "date": "1936-08-06",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d386"
+  },
+  {
+   "id": "frus:frus1936v02/d636",
+   "date": "1936-08-06",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d636"
+  },
+  {
+   "id": "frus:frus1936v02/d885",
+   "date": "1936-08-06",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Yugoslavia (Abbott) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d885"
+  },
+  {
+   "id": "frus:frus1936v01/d606",
+   "date": "1936-08-07",
+   "source": "FRUS frus1936v01",
+   "title": "The Consul General at Sydney (Moffat) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d606"
+  },
+  {
+   "id": "frus:frus1936v02/d221",
+   "date": "1936-08-07",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Germany (Mayer) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d221"
+  },
+  {
+   "id": "frus:frus1936v02/d270",
+   "date": "1936-08-07",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Hungary (Stewart) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d270"
+  },
+  {
+   "id": "frus:frus1936v02/d387",
+   "date": "1936-08-07",
+   "source": "FRUS frus1936v02",
+   "title": "Memorandum by the Acting Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d387"
+  },
+  {
+   "id": "frus:frus1936v02/d388",
+   "date": "1936-08-07",
+   "source": "FRUS frus1936v02",
+   "title": "The Diplomatic Agent and Consul General at Tangier (Blake) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d388"
+  },
+  {
+   "id": "frus:frus1936v02/d389",
+   "date": "1936-08-07",
+   "source": "FRUS frus1936v02",
+   "title": "The Acting Secretary of State to All Consulates in Spain",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d389"
+  },
+  {
+   "id": "frus:frus1936v02/d637",
+   "date": "1936-08-07",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul at Malaga (Graves) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d637"
+  },
+  {
+   "id": "frus:frus1936v02/d869",
+   "date": "1936-08-07",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Chargé in Switzerland (Bigelow)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d869"
+  },
+  {
+   "id": "frus:frus1936v01/d680",
+   "date": "1936-08-08",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the South African Minister (Close)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d680"
+  },
+  {
+   "id": "frus:frus1936v02/d390",
+   "date": "1936-08-08",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d390"
+  },
+  {
+   "id": "frus:frus1936v02/d391",
+   "date": "1936-08-08",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d391"
+  },
+  {
+   "id": "frus:frus1936v02/d392",
+   "date": "1936-08-08",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Italy (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d392"
+  },
+  {
+   "id": "frus:frus1936v02/d638",
+   "date": "1936-08-08",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Consul at Malaga (Graves)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d638"
+  },
+  {
+   "id": "frus:frus1936v02/d639",
+   "date": "1936-08-08",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d639"
+  },
+  {
+   "id": "frus:frus1936v02/d640",
+   "date": "1936-08-09",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul at Malaga (Graves) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d640"
+  },
+  {
+   "id": "frus:frus1936v02/d641",
+   "date": "1936-08-09",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d641"
+  },
+  {
+   "id": "frus:frus1936v01/d439",
+   "date": "1936-08-10",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in the United Kingdom (Bingham) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d439"
+  },
+  {
+   "id": "frus:frus1936v02/d393",
+   "date": "1936-08-10",
+   "source": "FRUS frus1936v02",
+   "title": "Memorandum by the Assistant Chief of the Division of Western European Affairs (Hickerson) to the Acting Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d393"
+  },
+  {
+   "id": "frus:frus1936v02/d394",
+   "date": "1936-08-10",
+   "source": "FRUS frus1936v02",
+   "title": "Memorandum by the Assistant Chief of the Office of Arms and Munitions Control (Yost)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d394"
+  },
+  {
+   "id": "frus:frus1936v02/d395",
+   "date": "1936-08-10",
+   "source": "FRUS frus1936v02",
+   "title": "The Acting Secretary of State to the Glenn L. Martin Company, Baltimore, Maryland",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d395"
+  },
+  {
+   "id": "frus:frus1936v02/d396",
+   "date": "1936-08-10",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d396"
+  },
+  {
+   "id": "frus:frus1936v02/d397",
+   "date": "1936-08-10",
+   "source": "FRUS frus1936v02",
+   "title": "The Acting Secretary of State to the Chargé in France (Wilson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d397"
+  },
+  {
+   "id": "frus:frus1936v02/d642",
+   "date": "1936-08-10",
+   "source": "FRUS frus1936v02",
+   "title": "The Acting Secretary of State to the Third Secretary of Embassy in Spain (Wendelin)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d642"
+  },
+  {
+   "id": "frus:frus1936v02/d398",
+   "date": "1936-08-11",
+   "source": "FRUS frus1936v02",
+   "title": "Memorandum by the Acting Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d398"
+  },
+  {
+   "id": "frus:frus1936v02/d399",
+   "date": "1936-08-11",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d399"
+  },
+  {
+   "id": "frus:frus1936v02/d400",
+   "date": "1936-08-11",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in the United Kingdom (Bingham) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d400"
+  },
+  {
+   "id": "frus:frus1936v02/d401",
+   "date": "1936-08-11",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Italy (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d401"
+  },
+  {
+   "id": "frus:frus1936v02/d402",
+   "date": "1936-08-11",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d402"
+  },
+  {
+   "id": "frus:frus1936v02/d643",
+   "date": "1936-08-11",
+   "source": "FRUS frus1936v02",
+   "title": "The Acting Secretary of State to the Consul at Seville (Bay)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d643"
+  },
+  {
+   "id": "frus:frus1936v02/d644",
+   "date": "1936-08-11",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d644"
+  },
+  {
+   "id": "frus:frus1936v02/d7",
+   "date": "1936-08-11",
+   "source": "FRUS frus1936v02",
+   "title": "The Acting Secretary of State to the Belgian Ambassador (Van der Straten-Ponthoz)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d7"
+  },
+  {
+   "id": "frus:frus1933-39/d303",
+   "date": "1936-08-12",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Henderson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d303"
+  },
+  {
+   "id": "frus:frus1936v02/d173",
+   "date": "1936-08-12",
+   "source": "FRUS frus1936v02",
+   "title": "Memorandum by the Under Secretary of State (Phillips)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d173"
+  },
+  {
+   "id": "frus:frus1936v02/d174",
+   "date": "1936-08-12",
+   "source": "FRUS frus1936v02",
+   "title": "The German Ambassador (Luther) to the Under Secretary of State (Phillips)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d174"
+  },
+  {
+   "id": "frus:frus1936v02/d403",
+   "date": "1936-08-12",
+   "source": "FRUS frus1936v02",
+   "title": "The Minister in the Netherlands (Emmet) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d403"
+  },
+  {
+   "id": "frus:frus1936v02/d404",
+   "date": "1936-08-12",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d404"
+  },
+  {
+   "id": "frus:frus1936v02/d405",
+   "date": "1936-08-12",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul at Seville (Bay) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d405"
+  },
+  {
+   "id": "frus:frus1936v02/d645",
+   "date": "1936-08-12",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul at Vigo (Corcoran) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d645"
+  },
+  {
+   "id": "frus:frus1936v02/d646",
+   "date": "1936-08-12",
+   "source": "FRUS frus1936v02",
+   "title": "The Acting Secretary of State to the U. S. S. “Oklahoma”",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d646"
+  },
+  {
+   "id": "frus:frus1936v02/d647",
+   "date": "1936-08-12",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d647"
+  },
+  {
+   "id": "frus:frus1936v02/d648",
+   "date": "1936-08-12",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d648"
+  },
+  {
+   "id": "frus:frus1936v02/d649",
+   "date": "1936-08-13",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul at Seville (Bay) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d649"
+  },
+  {
+   "id": "frus:frus1936v02/d650",
+   "date": "1936-08-13",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d650"
+  },
+  {
+   "id": "frus:frus1936v01/d125",
+   "date": "1936-08-14",
+   "source": "FRUS frus1936v01",
+   "title": "The Acting Secretary of State to the Ambassador in Japan (Grew)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d125"
+  },
+  {
+   "id": "frus:frus1936v02/d175",
+   "date": "1936-08-14",
+   "source": "FRUS frus1936v02",
+   "title": "The Acting Secretary of State to the German Ambassador (Luther)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d175"
+  },
+  {
+   "id": "frus:frus1936v02/d406",
+   "date": "1936-08-14",
+   "source": "FRUS frus1936v02",
+   "title": "From Naval Communications for the Information of the Department of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d406"
+  },
+  {
+   "id": "frus:frus1936v02/d407",
+   "date": "1936-08-14",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d407"
+  },
+  {
+   "id": "frus:frus1936v02/d408",
+   "date": "1936-08-14",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d408"
+  },
+  {
+   "id": "frus:frus1936v02/d409",
+   "date": "1936-08-14",
+   "source": "FRUS frus1936v02",
+   "title": "From Naval Communications for the Information of the Department of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d409"
+  },
+  {
+   "id": "frus:frus1936v02/d651",
+   "date": "1936-08-14",
+   "source": "FRUS frus1936v02",
+   "title": "The Acting Secretary of State to the Ambassador in Spain (Bowers), Then in France",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d651"
+  },
+  {
+   "id": "frus:frus1936v02/d652",
+   "date": "1936-08-14",
+   "source": "FRUS frus1936v02",
+   "title": "The Acting Secretary of State to the Third Secretary of Embassy in Spain (Wendelin)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d652"
+  },
+  {
+   "id": "frus:frus1936v02/d653",
+   "date": "1936-08-14",
+   "source": "FRUS frus1936v02",
+   "title": "The Acting Secretary of State to the Third Secretary of Embassy in Spain (Wendelin)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d653"
+  },
+  {
+   "id": "frus:frus1936v02/d870",
+   "date": "1936-08-14",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Switzerland (Bigelow) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d870"
+  },
+  {
+   "id": "frus:frus1936v01/d150",
+   "date": "1936-08-15",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in the United Kingdom (Bingham) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d150"
+  },
+  {
+   "id": "frus:frus1936v01/d681",
+   "date": "1936-08-15",
+   "source": "FRUS frus1936v01",
+   "title": "The Acting Secretary of State to the South African Minister (Close)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d681"
+  },
+  {
+   "id": "frus:frus1936v02/d410",
+   "date": "1936-08-15",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Italy (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d410"
+  },
+  {
+   "id": "frus:frus1936v02/d411",
+   "date": "1936-08-15",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in the United Kingdom (Bingham) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d411"
+  },
+  {
+   "id": "frus:frus1936v02/d654",
+   "date": "1936-08-15",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d654"
+  },
+  {
+   "id": "frus:frus1936v02/d655",
+   "date": "1936-08-16",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d655"
+  },
+  {
+   "id": "frus:frus1936v02/d656",
+   "date": "1936-08-16",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d656"
+  },
+  {
+   "id": "frus:frus1936v02/d657",
+   "date": "1936-08-16",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d657"
+  },
+  {
+   "id": "frus:frus1936v01/d1",
+   "date": "1936-08-17",
+   "source": "FRUS frus1936v01",
+   "title": "The Consul at Geneva (Gilbert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d1"
+  },
+  {
+   "id": "frus:frus1936v02/d412",
+   "date": "1936-08-17",
+   "source": "FRUS frus1936v02",
+   "title": "The Minister in Portugal (Caldwell) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d412"
+  },
+  {
+   "id": "frus:frus1936v02/d413",
+   "date": "1936-08-17",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d413"
+  },
+  {
+   "id": "frus:frus1936v02/d414",
+   "date": "1936-08-17",
+   "source": "FRUS frus1936v02",
+   "title": "The Acting Secretary of State to the Ambassador in Spain (Bowers), Then in France",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d414"
+  },
+  {
+   "id": "frus:frus1936v02/d415",
+   "date": "1936-08-17",
+   "source": "FRUS frus1936v02",
+   "title": "The Minister in Uruguay (Lay) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d415"
+  },
+  {
+   "id": "frus:frus1936v02/d416",
+   "date": "1936-08-17",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d416"
+  },
+  {
+   "id": "frus:frus1936v02/d417",
+   "date": "1936-08-17",
+   "source": "FRUS frus1936v02",
+   "title": "The Acting Secretary of State to the Diplomatic Representatives in Argentina, Brazil, Chile, and Mexico",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d417"
+  },
+  {
+   "id": "frus:frus1936v02/d418",
+   "date": "1936-08-17",
+   "source": "FRUS frus1936v02",
+   "title": "The Uruguayan Minister (Richling) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d418"
+  },
+  {
+   "id": "frus:frus1933-39/d304",
+   "date": "1936-08-18",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Henderson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d304"
+  },
+  {
+   "id": "frus:frus1936v01/d267",
+   "date": "1936-08-18",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d267"
+  },
+  {
+   "id": "frus:frus1936v01/d570",
+   "date": "1936-08-18",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in the United Kingdom (Bingham) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d570"
+  },
+  {
+   "id": "frus:frus1936v01/d574",
+   "date": "1936-08-18",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in the United Kingdom (Bingham) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d574"
+  },
+  {
+   "id": "frus:frus1936v02/d176",
+   "date": "1936-08-18",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d176"
+  },
+  {
+   "id": "frus:frus1936v02/d419",
+   "date": "1936-08-18",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in the Soviet Union (Henderson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d419"
+  },
+  {
+   "id": "frus:frus1936v02/d420",
+   "date": "1936-08-18",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Argentina (Cox) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d420"
+  },
+  {
+   "id": "frus:frus1936v02/d421",
+   "date": "1936-08-18",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Italy (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d421"
+  },
+  {
+   "id": "frus:frus1936v02/d422",
+   "date": "1936-08-18",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d422"
+  },
+  {
+   "id": "frus:frus1936v02/d423",
+   "date": "1936-08-18",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Chile (Philip) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d423"
+  },
+  {
+   "id": "frus:frus1936v02/d424",
+   "date": "1936-08-18",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Mexico (Daniels) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d424"
+  },
+  {
+   "id": "frus:frus1936v02/d658",
+   "date": "1936-08-18",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d658"
+  },
+  {
+   "id": "frus:frus1936v02/d659",
+   "date": "1936-08-18",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d659"
+  },
+  {
+   "id": "frus:frus1936v02/d660",
+   "date": "1936-08-18",
+   "source": "FRUS frus1936v02",
+   "title": "The Acting Secretary of State to the Ambassador in Spain (Bowers), Then in Frame",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d660"
+  },
+  {
+   "id": "frus:frus1936v02/d136",
+   "date": "1936-08-19",
+   "source": "FRUS frus1936v02",
+   "title": "Extract From Political Report of the Ambassador in Germany (Dodd)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d136"
+  },
+  {
+   "id": "frus:frus1936v02/d425",
+   "date": "1936-08-19",
+   "source": "FRUS frus1936v02",
+   "title": "The Minister in Uruguay (Lay) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d425"
+  },
+  {
+   "id": "frus:frus1936v02/d426",
+   "date": "1936-08-19",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Brazil (Gibson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d426"
+  },
+  {
+   "id": "frus:frus1936v02/d427",
+   "date": "1936-08-19",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d427"
+  },
+  {
+   "id": "frus:frus1936v02/d428",
+   "date": "1936-08-19",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Italy (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d428"
+  },
+  {
+   "id": "frus:frus1936v02/d661",
+   "date": "1936-08-19",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d661"
+  },
+  {
+   "id": "frus:frus1936v02/d871",
+   "date": "1936-08-19",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Switzerland (Bigelow) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d871"
+  },
+  {
+   "id": "frus:frus1936v02/d429",
+   "date": "1936-08-20",
+   "source": "FRUS frus1936v02",
+   "title": "The Acting Secretary of State to the Uruguayan Minister (Richling)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d429"
+  },
+  {
+   "id": "frus:frus1936v02/d430",
+   "date": "1936-08-20",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Belgium (Sussdorff) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d430"
+  },
+  {
+   "id": "frus:frus1936v02/d431",
+   "date": "1936-08-20",
+   "source": "FRUS frus1936v02",
+   "title": "The Diplomatic Agent and Consul General at Tangier (Blake) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d431"
+  },
+  {
+   "id": "frus:frus1936v02/d432",
+   "date": "1936-08-20",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Italy (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d432"
+  },
+  {
+   "id": "frus:frus1936v02/d433",
+   "date": "1936-08-20",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d433"
+  },
+  {
+   "id": "frus:frus1936v02/d434",
+   "date": "1936-08-20",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d434"
+  },
+  {
+   "id": "frus:frus1936v02/d435",
+   "date": "1936-08-20",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Mexico (Daniels) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d435"
+  },
+  {
+   "id": "frus:frus1936v02/d436",
+   "date": "1936-08-20",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in the United Kingdom (Bingham) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d436"
+  },
+  {
+   "id": "frus:frus1936v02/d662",
+   "date": "1936-08-20",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spam (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d662"
+  },
+  {
+   "id": "frus:frus1936v02/d663",
+   "date": "1936-08-20",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d663"
+  },
+  {
+   "id": "frus:frus1936v02/d664",
+   "date": "1936-08-20",
+   "source": "FRUS frus1936v02",
+   "title": "The Acting Secretary of State to the Third Secretary of Embassy in Spain (Wendelin)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d664"
+  },
+  {
+   "id": "frus:frus1936v02/d665",
+   "date": "1936-08-20",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d665"
+  },
+  {
+   "id": "frus:frus1937v02/d81",
+   "date": "1936-08-20",
+   "source": "FRUS frus1937v02",
+   "title": "The Acting Secretary of State to the British Chargé (Mallet)",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d81"
+  },
+  {
+   "id": "frus:frus1936v02/d666",
+   "date": "1936-08-21",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul at Valencia (Davis) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d666"
+  },
+  {
+   "id": "frus:frus1936v02/d667",
+   "date": "1936-08-21",
+   "source": "FRUS frus1936v02",
+   "title": "The Acting Secretary of State to the Consul at Valencia (Davis)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d667"
+  },
+  {
+   "id": "frus:frus1936v02/d668",
+   "date": "1936-08-21",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d668"
+  },
+  {
+   "id": "frus:frus1936v02/d437",
+   "date": "1936-08-22",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Italy (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d437"
+  },
+  {
+   "id": "frus:frus1936v02/d438",
+   "date": "1936-08-22",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d438"
+  },
+  {
+   "id": "frus:frus1936v02/d669",
+   "date": "1936-08-22",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d669"
+  },
+  {
+   "id": "frus:frus1936v02/d439",
+   "date": "1936-08-23",
+   "source": "FRUS frus1936v02",
+   "title": "The Diplomatic Agent and Consul General at Tangier (Blake) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d439"
+  },
+  {
+   "id": "frus:frus1936v02/d670",
+   "date": "1936-08-23",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d670"
+  },
+  {
+   "id": "frus:frus1936v02/d671",
+   "date": "1936-08-23",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul at Barcelona (Franklin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d671"
+  },
+  {
+   "id": "frus:frus1936v02/d672",
+   "date": "1936-08-23",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d672"
+  },
+  {
+   "id": "frus:frus1936v01/d682",
+   "date": "1936-08-24",
+   "source": "FRUS frus1936v01",
+   "title": "The South African Minister (Close) to the Acting Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d682"
+  },
+  {
+   "id": "frus:frus1936v02/d440",
+   "date": "1936-08-24",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d440"
+  },
+  {
+   "id": "frus:frus1936v02/d441",
+   "date": "1936-08-24",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d441"
+  },
+  {
+   "id": "frus:frus1936v02/d442",
+   "date": "1936-08-24",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Italy (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d442"
+  },
+  {
+   "id": "frus:frus1936v02/d673",
+   "date": "1936-08-24",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d673"
+  },
+  {
+   "id": "frus:frus1936v02/d443",
+   "date": "1936-08-25",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d443"
+  },
+  {
+   "id": "frus:frus1936v02/d444",
+   "date": "1936-08-25",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d444"
+  },
+  {
+   "id": "frus:frus1936v02/d445",
+   "date": "1936-08-25",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Ambassador in Spain (Bowers), Then in France",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d445"
+  },
+  {
+   "id": "frus:frus1936v02/d674",
+   "date": "1936-08-25",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Third Secretary of Embassy in Spain (Wendelin)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d674"
+  },
+  {
+   "id": "frus:frus1936v02/d675",
+   "date": "1936-08-25",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Third Secretary of Embassy in Spain (Wendelin)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d675"
+  },
+  {
+   "id": "frus:frus1936v02/d676",
+   "date": "1936-08-25",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d676"
+  },
+  {
+   "id": "frus:frus1936v02/d677",
+   "date": "1936-08-25",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Consul at Barcelona (Franklin)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d677"
+  },
+  {
+   "id": "frus:frus1936v01/d370",
+   "date": "1936-08-26",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Consul at Geneva (Gilbert)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d370"
+  },
+  {
+   "id": "frus:frus1936v01/d607",
+   "date": "1936-08-26",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d607"
+  },
+  {
+   "id": "frus:frus1936v01/d683",
+   "date": "1936-08-26",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Minister in the Union of South Africa (Totten)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d683"
+  },
+  {
+   "id": "frus:frus1936v02/d271",
+   "date": "1936-08-26",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Hungary (Stewart) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d271"
+  },
+  {
+   "id": "frus:frus1936v02/d337",
+   "date": "1936-08-26",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Poland (Nielsen) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d337"
+  },
+  {
+   "id": "frus:frus1936v02/d338",
+   "date": "1936-08-26",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Chargé in Poland (Nielsen)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d338"
+  },
+  {
+   "id": "frus:frus1936v02/d678",
+   "date": "1936-08-26",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul at Barcelona (Franklin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d678"
+  },
+  {
+   "id": "frus:frus1936v02/d679",
+   "date": "1936-08-26",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d679"
+  },
+  {
+   "id": "frus:frus1933-39/d305",
+   "date": "1936-08-27",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Henderson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d305"
+  },
+  {
+   "id": "frus:frus1936v01/d101",
+   "date": "1936-08-27",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in Japan (Grew) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d101"
+  },
+  {
+   "id": "frus:frus1936v02/d116",
+   "date": "1936-08-27",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d116"
+  },
+  {
+   "id": "frus:frus1936v02/d339",
+   "date": "1936-08-27",
+   "source": "FRUS frus1936v02",
+   "title": "Memorandum by the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d339"
+  },
+  {
+   "id": "frus:frus1936v02/d446",
+   "date": "1936-08-27",
+   "source": "FRUS frus1936v02",
+   "title": "The Minister in Portugal (Caldwell) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d446"
+  },
+  {
+   "id": "frus:frus1936v02/d447",
+   "date": "1936-08-27",
+   "source": "FRUS frus1936v02",
+   "title": "The Diplomatic Agent and Consul General at Tangier (Blake) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d447"
+  },
+  {
+   "id": "frus:frus1936v02/d680",
+   "date": "1936-08-27",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Consul at Barcelona (Franklin)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d680"
+  },
+  {
+   "id": "frus:frus1936v02/d681",
+   "date": "1936-08-27",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d681"
+  },
+  {
+   "id": "frus:frus1936v02/d448",
+   "date": "1936-08-28",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Italy (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d448"
+  },
+  {
+   "id": "frus:frus1936v02/d449",
+   "date": "1936-08-28",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Ambassador in Spam (Bowers), Then in France",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d449"
+  },
+  {
+   "id": "frus:frus1936v02/d450",
+   "date": "1936-08-28",
+   "source": "FRUS frus1936v02",
+   "title": "The Diplomatic Agent and Consul General at Tangier (Blake) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d450"
+  },
+  {
+   "id": "frus:frus1937v02/d391",
+   "date": "1936-08-28",
+   "source": "FRUS frus1937v02",
+   "title": "The Chargé in Lithuania (Kuykendall) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1937v02/d391"
+  },
+  {
+   "id": "frus:frus1936v02/d340",
+   "date": "1936-08-29",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Poland (Nielsen) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d340"
+  },
+  {
+   "id": "frus:frus1936v02/d451",
+   "date": "1936-08-29",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in the Soviet Union (Henderson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d451"
+  },
+  {
+   "id": "frus:frus1936v02/d452",
+   "date": "1936-08-29",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul at Bordeaux (Finley) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d452"
+  },
+  {
+   "id": "frus:frus1936v02/d453",
+   "date": "1936-08-29",
+   "source": "FRUS frus1936v02",
+   "title": "The Vice Consul at Vigo (Stewart) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d453"
+  },
+  {
+   "id": "frus:frus1936v02/d454",
+   "date": "1936-08-29",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d454"
+  },
+  {
+   "id": "frus:frus1936v02/d682",
+   "date": "1936-08-29",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d682"
+  },
+  {
+   "id": "frus:frus1936v02/d683",
+   "date": "1936-08-30",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Third Secretary of Embassy in Spain (Wendelin)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d683"
+  },
+  {
+   "id": "frus:frus1936v02/d222",
+   "date": "1936-08-31",
+   "source": "FRUS frus1936v02",
+   "title": "Memorandum by the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d222"
+  },
+  {
+   "id": "frus:frus1936v02/d293",
+   "date": "1936-08-31",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Chargé in Italy (Kirk)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d293"
+  },
+  {
+   "id": "frus:frus1936v02/d327",
+   "date": "1936-08-31",
+   "source": "FRUS frus1936v02",
+   "title": "The Minister in Norway (Biddle) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d327"
+  },
+  {
+   "id": "frus:frus1936v02/d341",
+   "date": "1936-08-31",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Chargé in Poland (Nielsen)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d341"
+  },
+  {
+   "id": "frus:frus1936v02/d455",
+   "date": "1936-08-31",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in the Soviet Union (Henderson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d455"
+  },
+  {
+   "id": "frus:frus1936v02/d684",
+   "date": "1936-08-31",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Third Secretary of Embassy in Spain (Wendelin)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d684"
+  },
+  {
+   "id": "frus:frus1936v02/d685",
+   "date": "1936-08-31",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d685"
+  },
+  {
+   "id": "frus:frus1933-39/d306",
+   "date": "1936-09-01",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Henderson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d306"
+  },
+  {
+   "id": "frus:frus1933-39/d330",
+   "date": "1936-09-01",
+   "source": "FRUS frus1933-39",
+   "title": "The Secretary of State to the Chargé in the Soviet Union (Henderson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d330"
+  },
+  {
+   "id": "frus:frus1936v02/d342",
+   "date": "1936-09-01",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Poland (Nielsen) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d342"
+  },
+  {
+   "id": "frus:frus1936v02/d456",
+   "date": "1936-09-01",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d456"
+  },
+  {
+   "id": "frus:frus1936v02/d457",
+   "date": "1936-09-01",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Ambassador in Spain (Bowers), Then in France",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d457"
+  },
+  {
+   "id": "frus:frus1936v02/d458",
+   "date": "1936-09-01",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Ambassador in Spain (Bowers), Then in France",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d458"
+  },
+  {
+   "id": "frus:frus1936v02/d686",
+   "date": "1936-09-01",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul at Seville (Bay) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d686"
+  },
+  {
+   "id": "frus:frus1936v02/d687",
+   "date": "1936-09-01",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Consul at Barcelona (Franklin)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d687"
+  },
+  {
+   "id": "frus:frus1936v02/d688",
+   "date": "1936-09-01",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Ambassador in Spain (Bowers), Then in France",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d688"
+  },
+  {
+   "id": "frus:frus1936v02/d689",
+   "date": "1936-09-01",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d689"
+  },
+  {
+   "id": "frus:frus1936v02/d690",
+   "date": "1936-09-01",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul at Bilbao (Chapman) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d690"
+  },
+  {
+   "id": "frus:frus1936v02/d691",
+   "date": "1936-09-01",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d691"
+  },
+  {
+   "id": "frus:frus1936v02/d117",
+   "date": "1936-09-02",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d117"
+  },
+  {
+   "id": "frus:frus1936v02/d328",
+   "date": "1936-09-02",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Minister in Norway (Biddle)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d328"
+  },
+  {
+   "id": "frus:frus1936v02/d459",
+   "date": "1936-09-02",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Diplomatic Agent and Consul General at Tangier (Blake)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d459"
+  },
+  {
+   "id": "frus:frus1936v02/d460",
+   "date": "1936-09-02",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d460"
+  },
+  {
+   "id": "frus:frus1936v02/d692",
+   "date": "1936-09-02",
+   "source": "FRUS frus1936v02",
+   "title": "The Vice Consul at Vigo (Stewart) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d692"
+  },
+  {
+   "id": "frus:frus1936v02/d693",
+   "date": "1936-09-02",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Consul at Valencia (Davis)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d693"
+  },
+  {
+   "id": "frus:frus1936v01/d126",
+   "date": "1936-09-03",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d126"
+  },
+  {
+   "id": "frus:frus1936v01/d268",
+   "date": "1936-09-03",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d268"
+  },
+  {
+   "id": "frus:frus1936v01/d544",
+   "date": "1936-09-03",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Ambassador in the United Kingdom (Bingham)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d544"
+  },
+  {
+   "id": "frus:frus1936v02/d210",
+   "date": "1936-09-03",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d210"
+  },
+  {
+   "id": "frus:frus1936v02/d461",
+   "date": "1936-09-03",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d461"
+  },
+  {
+   "id": "frus:frus1936v02/d462",
+   "date": "1936-09-03",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Ambassador in Spain (Bowers), Then in France",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d462"
+  },
+  {
+   "id": "frus:frus1936v02/d694",
+   "date": "1936-09-03",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Consul at Seville (Bay)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d694"
+  },
+  {
+   "id": "frus:frus1936v01/d443",
+   "date": "1936-09-04",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d443"
+  },
+  {
+   "id": "frus:frus1936v01/d444",
+   "date": "1936-09-04",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chargé in France (Wilson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d444"
+  },
+  {
+   "id": "frus:frus1936v02/d211",
+   "date": "1936-09-04",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d211"
+  },
+  {
+   "id": "frus:frus1936v02/d463",
+   "date": "1936-09-04",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d463"
+  },
+  {
+   "id": "frus:frus1936v02/d464",
+   "date": "1936-09-04",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Italy (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d464"
+  },
+  {
+   "id": "frus:frus1936v02/d695",
+   "date": "1936-09-04",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d695"
+  },
+  {
+   "id": "frus:frus1936v02/d80",
+   "date": "1936-09-04",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d80"
+  },
+  {
+   "id": "frus:frus1936v01/d269",
+   "date": "1936-09-05",
+   "source": "FRUS frus1936v01",
+   "title": "The Minister in Czechoslovakia (Wright) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d269"
+  },
+  {
+   "id": "frus:frus1936v02/d465",
+   "date": "1936-09-05",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d465"
+  },
+  {
+   "id": "frus:frus1936v02/d466",
+   "date": "1936-09-05",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Italy (Kirk) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d466"
+  },
+  {
+   "id": "frus:frus1936v02/d467",
+   "date": "1936-09-05",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d467"
+  },
+  {
+   "id": "frus:frus1936v02/d468",
+   "date": "1936-09-05",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul at Bilbao (Chapman) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d468"
+  },
+  {
+   "id": "frus:frus1936v02/d696",
+   "date": "1936-09-05",
+   "source": "FRUS frus1936v02",
+   "title": "Memorandum by the Assistant Chief of the Division of Latin American Affairs (Beaulac)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d696"
+  },
+  {
+   "id": "frus:frus1936v02/d697",
+   "date": "1936-09-05",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spam (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d697"
+  },
+  {
+   "id": "frus:frus1936v02/d469",
+   "date": "1936-09-06",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Consul at Bilbao (Chapman)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d469"
+  },
+  {
+   "id": "frus:frus1936v02/d470",
+   "date": "1936-09-06",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d470"
+  },
+  {
+   "id": "frus:frus1936v02/d698",
+   "date": "1936-09-06",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul General at Barcelona (Perkins) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d698"
+  },
+  {
+   "id": "frus:frus1936v02/d699",
+   "date": "1936-09-06",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul at Seville (Bay) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d699"
+  },
+  {
+   "id": "frus:frus1936v02/d700",
+   "date": "1936-09-06",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d700"
+  },
+  {
+   "id": "frus:frus1936v01/d127",
+   "date": "1936-09-07",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in the United Kingdom (Bingham) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d127"
+  },
+  {
+   "id": "frus:frus1936v02/d701",
+   "date": "1936-09-07",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d701"
+  },
+  {
+   "id": "frus:frus1936v02/d702",
+   "date": "1936-09-07",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Third Secretary of Embassy in Spain (Wendelin)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d702"
+  },
+  {
+   "id": "frus:frus1936v02/d703",
+   "date": "1936-09-07",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul at Seville (Bay) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d703"
+  },
+  {
+   "id": "frus:frus1936v02/d704",
+   "date": "1936-09-07",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d704"
+  },
+  {
+   "id": "frus:frus1933-39/d331",
+   "date": "1936-09-08",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Henderson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d331"
+  },
+  {
+   "id": "frus:frus1936v01/d445",
+   "date": "1936-09-08",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d445"
+  },
+  {
+   "id": "frus:frus1936v02/d250",
+   "date": "1936-09-08",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Chargé in Greece (Shantz)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d250"
+  },
+  {
+   "id": "frus:frus1936v02/d277",
+   "date": "1936-09-08",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Ambassador in Italy (Phillips)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d277"
+  },
+  {
+   "id": "frus:frus1936v02/d322",
+   "date": "1936-09-08",
+   "source": "FRUS frus1936v02",
+   "title": "The Netherland Minister (Van Haersma de With) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d322"
+  },
+  {
+   "id": "frus:frus1936v02/d471",
+   "date": "1936-09-08",
+   "source": "FRUS frus1936v02",
+   "title": "The Minister in Uruguay (Lay) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d471"
+  },
+  {
+   "id": "frus:frus1936v02/d472",
+   "date": "1936-09-08",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul at Bilbao (Chapman) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d472"
+  },
+  {
+   "id": "frus:frus1936v02/d705",
+   "date": "1936-09-08",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Ambassador in Spain (Bowers), Then in France",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d705"
+  },
+  {
+   "id": "frus:frus1936v02/d706",
+   "date": "1936-09-08",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d706"
+  },
+  {
+   "id": "frus:frus1936v02/d707",
+   "date": "1936-09-08",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Ambassador in Spain (Bowers), Then in France",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d707"
+  },
+  {
+   "id": "frus:frus1936v01/d2",
+   "date": "1936-09-09",
+   "source": "FRUS frus1936v01",
+   "title": "The Consul at Geneva (Gilbert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d2"
+  },
+  {
+   "id": "frus:frus1936v01/d446",
+   "date": "1936-09-09",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d446"
+  },
+  {
+   "id": "frus:frus1936v01/d447",
+   "date": "1936-09-09",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chargé in France (Wilson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d447"
+  },
+  {
+   "id": "frus:frus1936v01/d545",
+   "date": "1936-09-09",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in the United Kingdom (Bingham) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d545"
+  },
+  {
+   "id": "frus:frus1936v02/d343",
+   "date": "1936-09-09",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Poland (Rose) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d343"
+  },
+  {
+   "id": "frus:frus1936v02/d708",
+   "date": "1936-09-09",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Third Secretary of Embassy in Spain (Wendelin)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d708"
+  },
+  {
+   "id": "frus:frus1936v02/d709",
+   "date": "1936-09-09",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d709"
+  },
+  {
+   "id": "frus:frus1936v01/d128",
+   "date": "1936-09-10",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Ambassador in Japan (Grew)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d128"
+  },
+  {
+   "id": "frus:frus1936v01/d270",
+   "date": "1936-09-10",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by the Minister in Austria (Messersmith)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d270"
+  },
+  {
+   "id": "frus:frus1936v02/d710",
+   "date": "1936-09-10",
+   "source": "FRUS frus1936v02",
+   "title": "The Minister in Austria (Messersmith) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d710"
+  },
+  {
+   "id": "frus:frus1936v02/d711",
+   "date": "1936-09-10",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul General at Barcelona (Perkins) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d711"
+  },
+  {
+   "id": "frus:frus1936v02/d712",
+   "date": "1936-09-10",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Consul General at Barcelona (Perkins)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d712"
+  },
+  {
+   "id": "frus:frus1936v02/d713",
+   "date": "1936-09-10",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Ambassador in Spain (Bowers), Then in France",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d713"
+  },
+  {
+   "id": "frus:frus1936v02/d714",
+   "date": "1936-09-10",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d714"
+  },
+  {
+   "id": "frus:frus1936v02/d715",
+   "date": "1936-09-10",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Chargé in France (Wilson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d715"
+  },
+  {
+   "id": "frus:frus1936v02/d726",
+   "date": "1936-09-10",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d726"
+  },
+  {
+   "id": "frus:frus1936v01/d117",
+   "date": "1936-09-11",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by the Acting Chief of the Division of Western European Affairs (Hickerson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d117"
+  },
+  {
+   "id": "frus:frus1936v02/d103",
+   "date": "1936-09-11",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d103"
+  },
+  {
+   "id": "frus:frus1936v02/d257",
+   "date": "1936-09-11",
+   "source": "FRUS frus1936v02",
+   "title": "The Chargé in Greece (Shantz) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d257"
+  },
+  {
+   "id": "frus:frus1936v02/d473",
+   "date": "1936-09-11",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in the United Kingdom (Bingham) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d473"
+  },
+  {
+   "id": "frus:frus1936v02/d716",
+   "date": "1936-09-11",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul at Seville (Bay) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d716"
+  },
+  {
+   "id": "frus:frus1936v02/d717",
+   "date": "1936-09-11",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Minister in Austria (Messersmith)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d717"
+  },
+  {
+   "id": "frus:frus1936v01/d271",
+   "date": "1936-09-12",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in the Soviet Union (Henderson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d271"
+  },
+  {
+   "id": "frus:frus1936v02/d137",
+   "date": "1936-09-12",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d137"
+  },
+  {
+   "id": "frus:frus1936v02/d718",
+   "date": "1936-09-12",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d718"
+  },
+  {
+   "id": "frus:frus1936v02/d719",
+   "date": "1936-09-12",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d719"
+  },
+  {
+   "id": "frus:frus1936v02/d720",
+   "date": "1936-09-12",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d720"
+  },
+  {
+   "id": "frus:frus1936v02/d721",
+   "date": "1936-09-12",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Ambassador in Spain (Bowers), Then in France",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d721"
+  },
+  {
+   "id": "frus:frus1936v02/d722",
+   "date": "1936-09-12",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul General at Barcelona (Perkins) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d722"
+  },
+  {
+   "id": "frus:frus1936v02/d723",
+   "date": "1936-09-12",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Third Secretary of Embassy in Spain (Wendelin)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d723"
+  },
+  {
+   "id": "frus:frus1936v02/d875",
+   "date": "1936-09-12",
+   "source": "FRUS frus1936v02",
+   "title": "The Minister in Yugoslavia (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d875"
+  },
+  {
+   "id": "frus:frus1936v02/d724",
+   "date": "1936-09-13",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d724"
+  },
+  {
+   "id": "frus:frus1936v02/d725",
+   "date": "1936-09-13",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul at Bilbao (Chapman) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d725"
+  },
+  {
+   "id": "frus:frus1933-39/d332",
+   "date": "1936-09-14",
+   "source": "FRUS frus1933-39",
+   "title": "The Ambassador of the Soviet Union (Troyanovsky) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d332"
+  },
+  {
+   "id": "frus:frus1936v01/d371",
+   "date": "1936-09-14",
+   "source": "FRUS frus1936v01",
+   "title": "The Consul at Geneva (Gilbert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d371"
+  },
+  {
+   "id": "frus:frus1936v01/d448",
+   "date": "1936-09-14",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chargé in France (Wilson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d448"
+  },
+  {
+   "id": "frus:frus1936v01/d684",
+   "date": "1936-09-14",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by the Assistant Secretary of State (Sayre)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d684"
+  },
+  {
+   "id": "frus:frus1936v01/d685",
+   "date": "1936-09-14",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by Mr. John R. Minter of the Division of Western European Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d685"
+  },
+  {
+   "id": "frus:frus1936v02/d13",
+   "date": "1936-09-14",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Belgian Ambassador (Van der Straten-Ponthoz)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d13"
+  },
+  {
+   "id": "frus:frus1936v02/d474",
+   "date": "1936-09-14",
+   "source": "FRUS frus1936v02",
+   "title": "Memorandum by the Chief of the Division of Mexican Affairs (Reed)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d474"
+  },
+  {
+   "id": "frus:frus1936v02/d727",
+   "date": "1936-09-14",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Third Secretary of Embassy in Spain (Wendelin)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d727"
+  },
+  {
+   "id": "frus:frus1936v02/d728",
+   "date": "1936-09-14",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d728"
+  },
+  {
+   "id": "frus:frus1936v01/d372",
+   "date": "1936-09-15",
+   "source": "FRUS frus1936v01",
+   "title": "The Acting Secretary of State to the Consul at Geneva (Gilbert)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d372"
+  },
+  {
+   "id": "frus:frus1936v01/d373",
+   "date": "1936-09-15",
+   "source": "FRUS frus1936v01",
+   "title": "The Acting Secretary of State to the Ambassador in the United Kingdom (Bingham)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d373"
+  },
+  {
+   "id": "frus:frus1936v01/d449",
+   "date": "1936-09-15",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d449"
+  },
+  {
+   "id": "frus:frus1936v02/d475",
+   "date": "1936-09-15",
+   "source": "FRUS frus1936v02",
+   "title": "Memorandum by the Chief of the Division of Mexican Affairs (Reed)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d475"
+  },
+  {
+   "id": "frus:frus1936v02/d729",
+   "date": "1936-09-15",
+   "source": "FRUS frus1936v02",
+   "title": "The Acting Secretary of State to the Third Secretary of Embassy in Spain (Wendelin)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d729"
+  },
+  {
+   "id": "frus:frus1936v02/d730",
+   "date": "1936-09-15",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d730"
+  },
+  {
+   "id": "frus:frus1936v02/d876",
+   "date": "1936-09-15",
+   "source": "FRUS frus1936v02",
+   "title": "The Minister in Yugoslavia (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d876"
+  },
+  {
+   "id": "frus:frus1936v02/d886",
+   "date": "1936-09-15",
+   "source": "FRUS frus1936v02",
+   "title": "The Minister in Yugoslavia (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d886"
+  },
+  {
+   "id": "frus:frus1933-39/d333",
+   "date": "1936-09-16",
+   "source": "FRUS frus1933-39",
+   "title": "The Secretary of State to the Chargé in the Soviet Union (Henderson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d333"
+  },
+  {
+   "id": "frus:frus1936v01/d118",
+   "date": "1936-09-16",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum of Conversation, by Mr. Robert T. Pell of the Division of Western European Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d118"
+  },
+  {
+   "id": "frus:frus1936v01/d272",
+   "date": "1936-09-16",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in Belgium (Sussdorff) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d272"
+  },
+  {
+   "id": "frus:frus1936v01/d414",
+   "date": "1936-09-16",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Minister in the Netherlands (Emmet)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d414"
+  },
+  {
+   "id": "frus:frus1936v02/d731",
+   "date": "1936-09-16",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul General at Barcelona (Perkins) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d731"
+  },
+  {
+   "id": "frus:frus1936v02/d732",
+   "date": "1936-09-16",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d732"
+  },
+  {
+   "id": "frus:frus1936v02/d8",
+   "date": "1936-09-16",
+   "source": "FRUS frus1936v02",
+   "title": "Memorandum by the Assistant Secretary of State (Sayre)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d8"
+  },
+  {
+   "id": "frus:frus1936v01/d450",
+   "date": "1936-09-17",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d450"
+  },
+  {
+   "id": "frus:frus1936v02/d39",
+   "date": "1936-09-17",
+   "source": "FRUS frus1936v02",
+   "title": "The Minister in Estonia (Lane) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d39"
+  },
+  {
+   "id": "frus:frus1936v02/d733",
+   "date": "1936-09-17",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d733"
+  },
+  {
+   "id": "frus:frus1936v02/d734",
+   "date": "1936-09-17",
+   "source": "FRUS frus1936v02",
+   "title": "The Minister in Austria (Messersmith) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d734"
+  },
+  {
+   "id": "frus:frus1936v02/d735",
+   "date": "1936-09-17",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Ambassador in Spain (Bowers), Then in France",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d735"
+  },
+  {
+   "id": "frus:frus1936v01/d273",
+   "date": "1936-09-18",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d273"
+  },
+  {
+   "id": "frus:frus1936v01/d374",
+   "date": "1936-09-18",
+   "source": "FRUS frus1936v01",
+   "title": "The Minister in Switzerland (Wilson), Temporarily at Paris, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d374"
+  },
+  {
+   "id": "frus:frus1936v01/d451",
+   "date": "1936-09-18",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d451"
+  },
+  {
+   "id": "frus:frus1936v01/d686",
+   "date": "1936-09-18",
+   "source": "FRUS frus1936v01",
+   "title": "The Assistant Secretary of State (Sayre) to the South African Minister (Close)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d686"
+  },
+  {
+   "id": "frus:frus1936v02/d104",
+   "date": "1936-09-18",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d104"
+  },
+  {
+   "id": "frus:frus1936v02/d476",
+   "date": "1936-09-18",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d476"
+  },
+  {
+   "id": "frus:frus1936v02/d736",
+   "date": "1936-09-18",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul at Malaga (Graves) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d736"
+  },
+  {
+   "id": "frus:frus1936v02/d737",
+   "date": "1936-09-18",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Third Secretary of Embassy in Spain (Wendelin)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d737"
+  },
+  {
+   "id": "frus:frus1936v01/d452",
+   "date": "1936-09-19",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d452"
+  },
+  {
+   "id": "frus:frus1936v01/d453",
+   "date": "1936-09-19",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chargé in France (Wilson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d453"
+  },
+  {
+   "id": "frus:frus1936v01/d546",
+   "date": "1936-09-19",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in the United Kingdom (Bingham) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d546"
+  },
+  {
+   "id": "frus:frus1936v01/d687",
+   "date": "1936-09-19",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Minister in the Union of South Africa (Totten)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d687"
+  },
+  {
+   "id": "frus:frus1936v02/d738",
+   "date": "1936-09-19",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Ambassador in Spain (Bowers), Then in France",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d738"
+  },
+  {
+   "id": "frus:frus1936v02/d739",
+   "date": "1936-09-19",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Spain (Bowers), Then in France, to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d739"
+  },
+  {
+   "id": "frus:frus1936v02/d740",
+   "date": "1936-09-19",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul General at Barcelona (Perkins) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d740"
+  },
+  {
+   "id": "frus:frus1936v01/d274",
+   "date": "1936-09-21",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d274"
+  },
+  {
+   "id": "frus:frus1936v01/d547",
+   "date": "1936-09-21",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by Mr. John R. Minter of the Division of Western European Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d547"
+  },
+  {
+   "id": "frus:frus1936v01/d573",
+   "date": "1936-09-21",
+   "source": "FRUS frus1936v01",
+   "title": "The British Chargé (Mallet) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d573"
+  },
+  {
+   "id": "frus:frus1936v01/d575",
+   "date": "1936-09-21",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum of Conversation, by Mr. John R. Minter of the Division of Western European Affairs",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d575"
+  },
+  {
+   "id": "frus:frus1933-39/d334",
+   "date": "1936-09-22",
+   "source": "FRUS frus1933-39",
+   "title": "The Chargé in the Soviet Union (Henderson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1933-39/d334"
+  },
+  {
+   "id": "frus:frus1936v01/d275",
+   "date": "1936-09-22",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d275"
+  },
+  {
+   "id": "frus:frus1936v01/d415",
+   "date": "1936-09-22",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in the Netherlands (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d415"
+  },
+  {
+   "id": "frus:frus1936v02/d477",
+   "date": "1936-09-22",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d477"
+  },
+  {
+   "id": "frus:frus1936v02/d741",
+   "date": "1936-09-22",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Third Secretary of Embassy in Spain (Wendelin)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d741"
+  },
+  {
+   "id": "frus:frus1936v02/d742",
+   "date": "1936-09-22",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d742"
+  },
+  {
+   "id": "frus:frus1936v02/d872",
+   "date": "1936-09-22",
+   "source": "FRUS frus1936v02",
+   "title": "The Minister in Switzerland (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d872"
+  },
+  {
+   "id": "frus:frus1936v01/d416",
+   "date": "1936-09-23",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in the Netherlands (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d416"
+  },
+  {
+   "id": "frus:frus1936v01/d454",
+   "date": "1936-09-23",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d454"
+  },
+  {
+   "id": "frus:frus1936v01/d455",
+   "date": "1936-09-23",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chargé in Frame (Wilson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d455"
+  },
+  {
+   "id": "frus:frus1936v02/d223",
+   "date": "1936-09-23",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Ambassador in Germany (Dodd)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d223"
+  },
+  {
+   "id": "frus:frus1936v02/d224",
+   "date": "1936-09-23",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Consul General at Berlin (Jenkins)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d224"
+  },
+  {
+   "id": "frus:frus1936v02/d743",
+   "date": "1936-09-23",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d743"
+  },
+  {
+   "id": "frus:frus1936v01/d417",
+   "date": "1936-09-24",
+   "source": "FRUS frus1936v01",
+   "title": "The Acting Secretary of State to the Minister in the Netherlands (Emmet)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d417"
+  },
+  {
+   "id": "frus:frus1936v01/d418",
+   "date": "1936-09-24",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in the United Kingdom (Bingham) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d418"
+  },
+  {
+   "id": "frus:frus1936v01/d456",
+   "date": "1936-09-24",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d456"
+  },
+  {
+   "id": "frus:frus1936v02/d105",
+   "date": "1936-09-24",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d105"
+  },
+  {
+   "id": "frus:frus1936v02/d106",
+   "date": "1936-09-24",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d106"
+  },
+  {
+   "id": "frus:frus1936v02/d225",
+   "date": "1936-09-24",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d225"
+  },
+  {
+   "id": "frus:frus1936v02/d226",
+   "date": "1936-09-24",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul General at Berlin (Jenkins) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d226"
+  },
+  {
+   "id": "frus:frus1936v02/d239",
+   "date": "1936-09-24",
+   "source": "FRUS frus1936v02",
+   "title": "The Minister in Greece (MacVeagh) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d239"
+  },
+  {
+   "id": "frus:frus1936v02/d744",
+   "date": "1936-09-24",
+   "source": "FRUS frus1936v02",
+   "title": "The Acting Secretary of State to the Third Secretary of Embassy in Spain (Wendelin)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d744"
+  },
+  {
+   "id": "frus:frus1936v02/d745",
+   "date": "1936-09-24",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul General at Barcelona (Perkins) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d745"
+  },
+  {
+   "id": "frus:frus1936v01/d119",
+   "date": "1936-09-25",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Ambassador in the United Kingdom (Bingham)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d119"
+  },
+  {
+   "id": "frus:frus1936v01/d129",
+   "date": "1936-09-25",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in the United Kingdom (Bingham) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d129"
+  },
+  {
+   "id": "frus:frus1936v01/d3",
+   "date": "1936-09-25",
+   "source": "FRUS frus1936v01",
+   "title": "The Minister in Switzerland (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d3"
+  },
+  {
+   "id": "frus:frus1936v01/d375",
+   "date": "1936-09-25",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in the United Kingdom (Bingham) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d375"
+  },
+  {
+   "id": "frus:frus1936v01/d457",
+   "date": "1936-09-25",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Chargé in France (Wilson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d457"
+  },
+  {
+   "id": "frus:frus1936v01/d459",
+   "date": "1936-09-25",
+   "source": "FRUS frus1936v01",
+   "title": "Statement by the Secretary of the Treasury (Morgenthau), September 25, 1936",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d459"
+  },
+  {
+   "id": "frus:frus1936v02/d227",
+   "date": "1936-09-25",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul General at Berlin (Jenkins) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d227"
+  },
+  {
+   "id": "frus:frus1936v02/d240",
+   "date": "1936-09-25",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Minister in Greece (MacVeagh)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d240"
+  },
+  {
+   "id": "frus:frus1936v02/d478",
+   "date": "1936-09-25",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul at Geneva (Gilbert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d478"
+  },
+  {
+   "id": "frus:frus1936v02/d746",
+   "date": "1936-09-25",
+   "source": "FRUS frus1936v02",
+   "title": "The Third Secretary of Embassy in Spain (Wendelin) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d746"
+  },
+  {
+   "id": "frus:frus1936v01/d376",
+   "date": "1936-09-26",
+   "source": "FRUS frus1936v01",
+   "title": "The Consul at Geneva (Gilbert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d376"
+  },
+  {
+   "id": "frus:frus1936v01/d4",
+   "date": "1936-09-26",
+   "source": "FRUS frus1936v01",
+   "title": "The Minister in Switzerland (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d4"
+  },
+  {
+   "id": "frus:frus1936v01/d419",
+   "date": "1936-09-26",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Ambassador in the United Kingdom (Bingham)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d419"
+  },
+  {
+   "id": "frus:frus1936v01/d458",
+   "date": "1936-09-26",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in France (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d458"
+  },
+  {
+   "id": "frus:frus1936v01/d460",
+   "date": "1936-09-26",
+   "source": "FRUS frus1936v01",
+   "title": "Statement by the Secretary of State Issued to the Press, September 26, 1936",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d460"
+  },
+  {
+   "id": "frus:frus1936v02/d228",
+   "date": "1936-09-26",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d228"
+  },
+  {
+   "id": "frus:frus1936v02/d747",
+   "date": "1936-09-26",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul General at Barcelona (Perkins) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d747"
+  },
+  {
+   "id": "frus:frus1936v02/d748",
+   "date": "1936-09-26",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Consul General at Barcelona (Perkins)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d748"
+  },
+  {
+   "id": "frus:frus1936v01/d276",
+   "date": "1936-09-28",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in Germany (Dodd) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d276"
+  },
+  {
+   "id": "frus:frus1936v01/d420",
+   "date": "1936-09-28",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in the United Kingdom (Bingham) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d420"
+  },
+  {
+   "id": "frus:frus1936v01/d421",
+   "date": "1936-09-28",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in the Netherlands (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d421"
+  },
+  {
+   "id": "frus:frus1936v01/d5",
+   "date": "1936-09-28",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Minister in Switzerland (Wilson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d5"
+  },
+  {
+   "id": "frus:frus1936v01/d662",
+   "date": "1936-09-28",
+   "source": "FRUS frus1936v01",
+   "title": "The Minister in Canada (Armour) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d662"
+  },
+  {
+   "id": "frus:frus1936v02/d229",
+   "date": "1936-09-28",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Ambassador in Germany (Dodd)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d229"
+  },
+  {
+   "id": "frus:frus1936v02/d230",
+   "date": "1936-09-28",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul General at Berlin (Jenkins) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d230"
+  },
+  {
+   "id": "frus:frus1936v02/d479",
+   "date": "1936-09-28",
+   "source": "FRUS frus1936v02",
+   "title": "The Consul at Geneva (Gilbert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d479"
+  },
+  {
+   "id": "frus:frus1936v01/d102",
+   "date": "1936-09-29",
+   "source": "FRUS frus1936v01",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d102"
+  },
+  {
+   "id": "frus:frus1936v01/d130",
+   "date": "1936-09-29",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Ambassador in the United Kingdom (Bingham)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d130"
+  },
+  {
+   "id": "frus:frus1936v01/d377",
+   "date": "1936-09-29",
+   "source": "FRUS frus1936v01",
+   "title": "The Consul at Geneva (Gilbert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d377"
+  },
+  {
+   "id": "frus:frus1936v01/d422",
+   "date": "1936-09-29",
+   "source": "FRUS frus1936v01",
+   "title": "The Chargé in the Netherlands (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d422"
+  },
+  {
+   "id": "frus:frus1936v01/d548",
+   "date": "1936-09-29",
+   "source": "FRUS frus1936v01",
+   "title": "Memorandum by the Chief of the Division of Trade Agreements (Hawkins)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d548"
+  },
+  {
+   "id": "frus:frus1936v01/d6",
+   "date": "1936-09-29",
+   "source": "FRUS frus1936v01",
+   "title": "The Minister in Switzerland (Wilson) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d6"
+  },
+  {
+   "id": "frus:frus1936v01/d7",
+   "date": "1936-09-29",
+   "source": "FRUS frus1936v01",
+   "title": "The Secretary of State to the Minister in Switzerland (Wilson)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d7"
+  },
+  {
+   "id": "frus:frus1936v02/d124",
+   "date": "1936-09-29",
+   "source": "FRUS frus1936v02",
+   "title": "Extract From Political Report of the Ambassador in Germany (Dodd)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d124"
+  },
+  {
+   "id": "frus:frus1936v02/d212",
+   "date": "1936-09-29",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Ambassador in Germany (Dodd)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d212"
+  },
+  {
+   "id": "frus:frus1936v02/d278",
+   "date": "1936-09-29",
+   "source": "FRUS frus1936v02",
+   "title": "The Ambassador in Italy (Phillips) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d278"
+  },
+  {
+   "id": "frus:frus1936v02/d749",
+   "date": "1936-09-29",
+   "source": "FRUS frus1936v02",
+   "title": "The Secretary of State to the Third Secretary of Embassy in Spain (Wendelin)",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v02/d749"
+  },
+  {
+   "id": "frus:frus1936v01/d378",
+   "date": "1936-09-30",
+   "source": "FRUS frus1936v01",
+   "title": "The Consul at Geneva (Gilbert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d378"
+  },
+  {
+   "id": "frus:frus1936v01/d379",
+   "date": "1936-09-30",
+   "source": "FRUS frus1936v01",
+   "title": "The Consul at Geneva (Gilbert) to the Secretary of State",
+   "url": "https://history.state.gov/historicaldocuments/frus1936v01/d379"
+  }
+ ],
+ "proposals": [
+  {
+   "id": "1936Q3-001",
+   "document": "frus:frus1936v01/d255",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d255:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-07-03",
+    "quote": "the obstacle which the Rhineland reoccupation constituted",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d255",
+    "rule": "deepseek backend: The passage reports the Rhineland reoccupation as an accomplished fact, which meets the remilitarized threshold of German troops garrisoned in the zone.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q3-002",
+   "document": "frus:frus1936v02/d101",
+   "proposal": {
+    "indicator_id": "frus:frus1936v02/d101:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-07-14",
+    "quote": "following the Rhineland occupation",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v02/d101",
+    "rule": "deepseek backend: The passage refers to the Rhineland occupation as an accomplished event, meeting the remilitarized threshold for German troops garrisoned in the zone.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q3-003",
+   "document": "frus:frus1936v01/d258",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d258:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1936-07-15",
+    "quote": "Italy’s essential feeling of independence as she did not want to take a chance of thus jeopardizing her relations with England and France to whom she may want to return once her present “parallelism” with Germany has helped solve difficulties with these countries",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d258",
+    "rule": "deepseek backend: The passage reports Italy as currently estranged from England and France, having to solve 'difficulties with these countries', while conducting a 'parallelism' with Germany after the Abyssinian conquest, which meets the italy_estranged threshold.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q3-004",
+   "document": "frus:frus1936v02/d364",
+   "proposal": {
+    "indicator_id": "frus:frus1936v02/d364:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1936-07-22",
+    "quote": "the Department, in the interest of international cooperation for the avoidance of complications, would not be disposed to support American nationals in Tangier in any efforts to furnish supplies to either side to the present conflict",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v02/d364",
+    "rule": "deepseek backend: The passage reports the executive's policy of refusing support to American nationals furnishing supplies to either belligerent in the Spanish conflict, i.e. non-involvement with an embargo-like stance toward belligerents.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q3-005",
+   "document": "frus:frus1936v01/d260",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d260:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-07-23",
+    "quote": "then the reoccupation of the demilitarized zone in the Rhineland",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d260",
+    "rule": "deepseek backend: The document reports, as an accomplished German move, the reoccupation of the Rhineland demilitarized zone, which meets the threshold of German troops garrisoned in the zone (from 7 Mar 1936).",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q3-006",
+   "document": "frus:frus1936v01/d264",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d264:commit_WEST=appease",
+    "variable": "commit_WEST",
+    "level": "appease",
+    "date": "1936-07-29",
+    "quote": "his Government had patently shown its desire for an opportunity to get Germany to the conference table and to give real consideration to her ideas.",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d264",
+    "rule": "deepseek backend: The passage reports the French government seeking a conference with Germany and real consideration of German ideas, a policy seeking settlement that meets the appease threshold; it is second-hand via the French Counsellor, so confidence is low.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q3-007",
+   "document": "frus:frus1936v02/d369",
+   "proposal": {
+    "indicator_id": "frus:frus1936v02/d369:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1936-07-30",
+    "quote": "Very strained relations developing between Italy and Germany on one side and French on the other side.",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v02/d369",
+    "rule": "deepseek backend: The threshold for estrangement is Italy's antagonism toward the Western powers; the ambassador reports strained relations developing between Italy (with Germany) and France, confirming Italy's estrangement from the West.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q3-008",
+   "document": "frus:frus1936v02/d385",
+   "proposal": {
+    "indicator_id": "frus:frus1936v02/d385:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1936-08-06",
+    "quote": "to declare war on those two schools of political thought is simultaneously an act of political aggression against Italy and Germany—two countries from which the French Government desires a declaration of neutrality",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v02/d385",
+    "rule": "deepseek backend: The Italian Government's spokesman treats France's posture as hostile to Italy and pairs Italy with Germany against it, which reports the estrangement from the West that the threshold rule requires for 1935-36.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q3-009",
+   "document": "frus:frus1936v02/d386",
+   "proposal": {
+    "indicator_id": "frus:frus1936v02/d386:commit_WEST=appease",
+    "variable": "commit_WEST",
+    "level": "appease",
+    "date": "1936-08-06",
+    "quote": "the French Government had not wished to put any obstacles in the way of the possibility of coming to some reasonable arrangement with Hitler",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v02/d386",
+    "rule": "deepseek backend: The passage reports a French government policy of seeking a settlement with Hitler, which meets the appease threshold's requirement that policy seek a settlement.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q3-010",
+   "document": "frus:frus1936v02/d386",
+   "proposal": {
+    "indicator_id": "frus:frus1936v02/d386:belief_WEST=limited",
+    "variable": "belief_WEST",
+    "level": "limited",
+    "date": "1936-08-06",
+    "quote": "the French Government had not wished to put any obstacles in the way of the possibility of coming to some reasonable arrangement with Hitler",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v02/d386",
+    "rule": "deepseek backend: The ministerial statement treats a negotiated arrangement with Hitler as possible and worth preserving, meeting the limited threshold's reading that German aims can be satisfied by a general settlement.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q3-011",
+   "document": "frus:frus1936v02/d389",
+   "proposal": {
+    "indicator_id": "frus:frus1936v02/d389:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1936-08-07",
+    "quote": "It is clear that our Neutrality Law with respect to embargo of arms, ammunition, and implements of war has no application in the present situation",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v02/d389",
+    "rule": "deepseek backend: The passage reports the mandatory arms-embargo Neutrality Law as in force (though inapplicable to civil strife) and a policy of scrupulous non-interference, meeting the isolationist threshold of the Neutrality Act regime.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q3-012",
+   "document": "frus:frus1936v02/d395",
+   "proposal": {
+    "indicator_id": "frus:frus1936v02/d395:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1936-08-10",
+    "quote": "our neutrality laws and to the fact that they have no application in the present Spanish situation, since they apply only in the event of war between or among nations",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v02/d395",
+    "rule": "deepseek backend: The letter reports that the neutrality laws are in force and applicable to war between nations (the Neutrality Act regime with its arms embargo), and reaffirms a policy of non-interference, meeting the isolationist level; only partial detail is given, so the reading is doubtful.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q3-013",
+   "document": "frus:frus1936v02/d414",
+   "proposal": {
+    "indicator_id": "frus:frus1936v02/d414:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1936-08-17",
+    "quote": "our policy, as already announced, is to “scrupulously refrain from any interference whatever in the unfortunate Spanish situation”.",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v02/d414",
+    "rule": "deepseek backend: The document explicitly states the American Government's policy of non-interference in the Spanish situation, which fits the isolationist level, though it does not cite the Neutrality Act.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q3-014",
+   "document": "frus:frus1936v02/d444",
+   "proposal": {
+    "indicator_id": "frus:frus1936v02/d444:treaty=eroded",
+    "variable": "treaty",
+    "level": "eroded",
+    "date": "1936-08-25",
+    "quote": "the other decision announced by the German Government yesterday, namely, the increase in the term of compulsory military service ... will give Germany a stronger standing army than she had had before the war",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v02/d444",
+    "rule": "deepseek backend: The passage reports an announced German military expansion (lengthened compulsory service producing an army far beyond Versailles Part V limits) with only spoken apprehension in Paris and no guarantor force, leaving the regime in the 'eroded' state; no protest or enforcement action is reported, so the reading is partial.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q3-015",
+   "document": "frus:frus1936v01/d268",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d268:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-09-03",
+    "quote": "Germany felt capable of throwing off the last of the Versailles military servitudes and marched into the demilitarized zone in the Rhineland.",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d268",
+    "rule": "deepseek backend: The dispatch reports as fact that German forces marched into the demilitarized zone, meeting the rule that the zone is remilitarized once German troops are garrisoned in it.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q3-016",
+   "document": "frus:frus1936v01/d268",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d268:treaty=dead",
+    "variable": "treaty",
+    "level": "dead",
+    "date": "1936-09-03",
+    "quote": "marched into the demilitarized zone in the Rhineland... materially unopposed by France",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d268",
+    "rule": "deepseek backend: The passage reports the reoccupation of the zone and that the guarantor France did not oppose it by force, which is the threshold for the Versailles/Locarno regime being dead.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q3-017",
+   "document": "frus:frus1936v01/d269",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d269:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1936-09-05",
+    "quote": "it was indisputable that Italy is not as strong as she once was ... her inevitable expenses in Abyssinia were a constant drain upon her treasury, and that she had been bled nearly white already",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d269",
+    "rule": "deepseek backend: The passage reports Italy's weakened, sanction- and Abyssinia-war-drained position and her inability to act over Austria, the condition that leaves Italy estranged from the West after Ethiopia (1935-1936).",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q3-018",
+   "document": "frus:frus1936v01/d270",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d270:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-03-07",
+    "quote": "culminated in the military reoccupation of the Rhineland on March 7, 1936",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d270",
+    "rule": "deepseek backend: The passage states outright that German troops militarily reoccupied the Rhineland on 7 March 1936, which meets the 'remilitarized' threshold (German troops garrisoned in the zone from 7 Mar 1936).",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q3-019",
+   "document": "frus:frus1936v01/d270",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d270:treaty=dead",
+    "variable": "treaty",
+    "level": "dead",
+    "date": "1936-03-07",
+    "quote": "the military reoccupation of the Rhineland on March 7, 1936. With that action Germany had thrown off all of the shackles of the Treaty of Versailles",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d270",
+    "rule": "deepseek backend: The passage reports the reoccupation of the demilitarized zone and states outright that the Versailles restraints were thrown off by that action with no restoration, meeting the 'dead' threshold as far as the document reports it (the guarantors' refusal to enforce is not separately described).",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q3-020",
+   "document": "frus:frus1936v01/d270",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d270:austria=independent",
+    "variable": "austria",
+    "level": "independent",
+    "date": "1936-07-11",
+    "quote": "committed Germany publicly to the recognition of Austrian sovereignty and non-immixtion in Austrian internal affairs",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d270",
+    "rule": "deepseek backend: The passage reports the Austro-German accord of 11 July 1936 by which Germany publicly recognized Austrian sovereignty, an explicit statement that Austria remained independent (no annexation reported).",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q3-021",
+   "document": "frus:frus1936v01/d270",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d270:belief_GER=uncertain",
+    "variable": "belief_GER",
+    "level": "uncertain",
+    "date": "1936-09-10",
+    "quote": "for fear of provoking a conflict for which Germany realized she was not ready",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d270",
+    "rule": "deepseek backend: The passage reports that Berlin held back its next moves out of fear of provoking a conflict with England, France and Poland for which it was not ready, i.e. German doubt about Western acquiescence that made it provide against intervention, meeting the 'uncertain' reading; it is a second-hand diplomatic analysis, not a German decision record.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q3-022",
+   "document": "frus:frus1936v02/d474",
+   "proposal": {
+    "indicator_id": "frus:frus1936v02/d474:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1936-09-14",
+    "quote": "the United States Government would certainly not be disposed to encourage the shipment of arms and munitions to either of the contending parties in Spain",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v02/d474",
+    "rule": "deepseek backend: Reed's statement reports the US Government's policy of refusing to supply arms to either belligerent party, matching the mandatory arms-embargo (isolationist) regime of the Neutrality Acts.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q3-023",
+   "document": "frus:frus1936v02/d475",
+   "proposal": {
+    "indicator_id": "frus:frus1936v02/d475:commit_US=isolationist",
+    "variable": "commit_US",
+    "level": "isolationist",
+    "date": "1936-09-15",
+    "quote": "this Government adopted a definite position regarding the shipment of arms and munitions to Spain long before the Mexican Government had broached the subject to it",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v02/d475",
+    "rule": "deepseek backend: The passage reports an arms-embargo position in force and adhered to, consistent with the isolationist Neutrality Act regime of a mandatory embargo rather than engagement with a belligerent, though it states the policy without citing the Act itself.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q3-024",
+   "document": "frus:frus1936v01/d276",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d276:rhineland=remilitarized",
+    "variable": "rhineland",
+    "level": "remilitarized",
+    "date": "1936-09-28",
+    "quote": "Forces in the Rhineland, former demilitarized zone, will be raised to 6 divisions or 70,000 men which is double the garrison established there last March.",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d276",
+    "rule": "deepseek backend: The passage reports a German garrison already established in the former demilitarized zone, meeting the remilitarized threshold.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1936Q3-025",
+   "document": "frus:frus1936v01/d102",
+   "proposal": {
+    "indicator_id": "frus:frus1936v01/d102:italy_estranged=true",
+    "variable": "italy_estranged",
+    "level": true,
+    "date": "1936-09-29",
+    "quote": "Italy could not in view of the seating of the Ethiopian delegation make any gesture at this time towards the European collaboration required by the treaty.",
+    "url": "https://history.state.gov/historicaldocuments/frus1936v01/d102",
+    "rule": "deepseek backend: The passage reports Italy withholding European collaboration because of the Ethiopian delegation at Geneva, meeting the threshold of estrangement from the West after Ethiopia.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  }
+ ],
+ "discarded": [],
+ "errors": []
+}

@@ -1,0 +1,170 @@
+{
+ "kind": "wave_front proposals",
+ "format": 1,
+ "label": "1959",
+ "until": "1958-12-31",
+ "since": null,
+ "corpus": {
+  "source": "crest",
+  "synthetic": false,
+  "root": "/home/khjtony/workspace/wave_front/data/cw/corpora/raw/crest"
+ },
+ "backend": {
+  "name": "claude",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "usage": {
+   "input_tokens": 159021,
+   "output_tokens": 5082,
+   "cache_read_input_tokens": 9165
+  },
+  "cache": {
+   "hits": 0,
+   "misses": 4
+  }
+ },
+ "harness_rules": [
+  "two-document",
+  "no-retrospective"
+ ],
+ "episode": "cw",
+ "documents": [
+  {
+   "id": "crest:SNIE_11-7-58_1958-06-05@steury1996",
+   "date": "1958-06-05",
+   "source": "CIA estimates: Steury 1996, no. 3, vol. pp. 47-53",
+   "title": "SNIE 11-7-58: Strength and Composition of the Soviet Long Range Bomber Force (as reproduced in Steury 1996, no. 3)",
+   "url": "https://www.cia.gov/resources/csi/static/Part-I-The-Riddle-Inside-the-Enigma-from-Intentions-and-Capabilities.pdf#page=45",
+   "work": "SNIE 11-7-58"
+  },
+  {
+   "id": "crest:NIE_11-5-58_1958-08-19",
+   "date": "1958-08-19",
+   "source": "CIA estimates: NIE_11-5-58_1958-08-19_Soviet_Capabilities_in_Guided_Missiles_and_Space_Vehicles_full.pdf, pp. 1-48",
+   "title": "NIE 11-5-58: Soviet Capabilities in Guided Missiles and Space Vehicles",
+   "url": "https://web.archive.org/web/20250329120101id_/https://www.cia.gov/readingroom/docs/1958-08-19.pdf",
+   "work": "NIE 11-5-58"
+  },
+  {
+   "id": "crest:NIE_11-5-58_1958-08-19@steury1996",
+   "date": "1958-08-19",
+   "source": "CIA estimates: Steury 1996, no. 6, vol. pp. 65-70",
+   "title": "NIE 11-5-58: Soviet Capabilities in Guided Missiles and Space Vehicles (as reproduced in Steury 1996, no. 6)",
+   "url": "https://www.cia.gov/resources/csi/static/Part-I-The-Riddle-Inside-the-Enigma-from-Intentions-and-Capabilities.pdf#page=61",
+   "work": "NIE 11-5-58"
+  },
+  {
+   "id": "crest:NIE_11-4-58_1958-12-23",
+   "date": "1958-12-23",
+   "source": "CIA estimates: NIE_11-4-58_1958-12-23_Main_Trends_in_Soviet_Capabilities_and_Policies_1958-1963.pdf, pp. 1-81",
+   "title": "NIE 11-4-58: Main Trends in Soviet Capabilities and Policies 1958-1963",
+   "url": "https://web.archive.org/web/20250404161311id_/https://www.cia.gov/readingroom/docs/1958-12-23.pdf",
+   "work": "NIE 11-4-58"
+  }
+ ],
+ "proposals": [
+  {
+   "id": "1959-001",
+   "document": "crest:SNIE_11-7-58_1958-06-05@steury1996",
+   "work": "SNIE 11-7-58",
+   "proposal": {
+    "indicator_id": "crest:SNIE_11-7-58_1958-06-05@steury1996:belief_force_USA=under_200",
+    "variable": "belief_force_USA",
+    "level": "under_200",
+    "date": "1958-06-05",
+    "quote": "Jet and Turboprop Heavy\nBambers and Tankers 100-125 100-150 100-200",
+    "url": "https://www.cia.gov/resources/csi/static/Part-I-The-Riddle-Inside-the-Enigma-from-Intentions-and-Capabilities.pdf#page=45",
+    "rule": "claude backend: The estimate projects heavy bombers and tankers at 100-200 for mid-1960 (middle about 150), rising toward 'about two or three hundred' by mid-1963, so roughly 150-185 two to three years out. That falls in the 1-199 band. The document gives no ICBM or SLBM numbers to add.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1959-002",
+   "document": "crest:NIE_11-5-58_1958-08-19",
+   "work": "NIE 11-5-58",
+   "proposal": {
+    "indicator_id": "crest:NIE_11-5-58_1958-08-19:belief_force_USA=under_1000",
+    "variable": "belief_force_USA",
+    "level": "under_1000",
+    "date": "1958-08-19",
+    "quote": "We believe the USSR has already decided to achieve a sizeable ICBM operational capability at the earliest date practicable. ... with 500 ICBMs 12 two or at most three years after first operational capability date (i.e. sometime in 1961, or at the latest 1962)",
+    "url": "https://web.archive.org/web/20250329120101id_/https://www.cia.gov/readingroom/docs/1958-08-19.pdf",
+    "rule": "claude backend: The estimate judges that Moscow intends a sizeable ICBM force as early as practicable and gives a capability of 500 ICBMs about two to three years out, which falls in the 200-999 band. Confidence is low for three reasons: a footnote calls these numbers arbitrary and says they are not a probable projection; heavy bombers are not counted in this document; and the 1961-63 SLBM prototype adds only a handful of launchers.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1959-003",
+   "document": "crest:NIE_11-5-58_1958-08-19@steury1996",
+   "work": "NIE 11-5-58",
+   "proposal": {
+    "indicator_id": "crest:NIE_11-5-58_1958-08-19@steury1996:belief_force_USA=under_1000",
+    "variable": "belief_force_USA",
+    "level": "under_1000",
+    "date": "1958-08-19",
+    "quote": "to have an operational capability with 100 ICBMs ... two or at most three years after first operational capability date (i.e. some time in 1961, or at the latest in 1962)",
+    "url": "https://www.cia.gov/resources/csi/static/Part-I-The-Riddle-Inside-the-Enigma-from-Intentions-and-Capabilities.pdf#page=61",
+    "rule": "claude backend: Washington's estimate puts a Soviet capability of 500 ICBMs about two to three years out, in 1961-62, and says Soviet planners intend a sizeable ICBM force at the earliest practicable date; read with any heavy bombers, this falls in the 200-999 band.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1959-004",
+   "document": "crest:NIE_11-4-58_1958-12-23",
+   "work": "NIE 11-4-58",
+   "proposal": {
+    "indicator_id": "crest:NIE_11-4-58_1958-12-23:belief_force_USA=under_1000",
+    "variable": "belief_force_USA",
+    "level": "under_1000",
+    "date": "1958-12-23",
+    "quote": "we therefore believe that a capability with 500 ICBMs could be achieved some time in 1962",
+    "url": "https://web.archive.org/web/20250404161311id_/https://www.cia.gov/readingroom/docs/1958-12-23.pdf",
+    "rule": "claude backend: Two to three years out (1961-62), the estimate projects ICBMs rising from 100 toward 500, plus a heavy bomber and tanker force of roughly 150-250; this sums to between 200 and 999 intercontinental vehicles. The ICBM figures are capability figures, which the estimate itself calls arbitrary, so the level rests on a threshold judgment.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  }
+ ],
+ "discarded": [
+  {
+   "document": "crest:NIE_11-4-58_1958-12-23",
+   "proposal": {
+    "indicator_id": "crest:NIE_11-4-58_1958-12-23:belief_USA_USSR=opportunist",
+    "variable": "belief_USA_USSR",
+    "level": "opportunist",
+    "date": "1958-12-23",
+    "quote": "Soviet leaders have no intention of deliberately initiating general war and still wish to avoid serious risks of such a war... they now seem disposed to test Western firmness and probe for weaknesses",
+    "url": "https://web.archive.org/web/20250404161311id_/https://www.cia.gov/readingroom/docs/1958-12-23.pdf",
+    "rule": "claude backend: Washington's estimate reads Soviet aims as expansion by pressure and probing where risk is low, not as a design pursued by war, which matches opportunist. The source is an NIE rather than a basic national security paper, hence medium confidence.",
+    "confidence": "medium"
+   },
+   "reasons": [
+    "the quote is not in the document"
+   ]
+  },
+  {
+   "document": "crest:NIE_11-4-58_1958-12-23",
+   "proposal": {
+    "indicator_id": "crest:NIE_11-4-58_1958-12-23:belief_USA_USSR=opportunist",
+    "variable": "belief_USA_USSR",
+    "level": "opportunist",
+    "date": "1958-12-23",
+    "quote": "the main strategy of Communist policy continues to be that of reducing the Western power position by gradualist means and enhancing that of the Bloc ... seizing whatever opportunities may offer for alignment of non-Communist states with the Bloc, and, where expedient, for outright territorial expansion of Communist power ... we continue to believe that they will not deliberately initiate general war",
+    "url": "https://web.archive.org/web/20250404161311id_/https://www.cia.gov/readingroom/docs/1958-12-23.pdf",
+    "rule": "claude backend: Washington's estimate reads Soviet aims as expansion by gradual pressure and opportunity where risks are acceptable, not deliberate war, which matches opportunist; this is an NIE rather than a basic national security paper, so the reading needs judgment.",
+    "confidence": "medium"
+   },
+   "reasons": [
+    "the quote is not in the document"
+   ]
+  }
+ ],
+ "errors": []
+}

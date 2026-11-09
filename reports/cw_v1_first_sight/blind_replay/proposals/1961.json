@@ -1,0 +1,204 @@
+{
+ "kind": "wave_front proposals",
+ "format": 1,
+ "label": "1961",
+ "until": "1960-12-31",
+ "since": null,
+ "corpus": {
+  "source": "crest",
+  "synthetic": false,
+  "root": "/home/khjtony/workspace/wave_front/data/cw/corpora/raw/crest"
+ },
+ "backend": {
+  "name": "claude",
+  "model": "claude-opus-5-5",
+  "effort": "high",
+  "usage": {
+   "input_tokens": 232991,
+   "output_tokens": 6836,
+   "cache_read_input_tokens": 12831
+  },
+  "cache": {
+   "hits": 0,
+   "misses": 6
+  }
+ },
+ "harness_rules": [
+  "two-document",
+  "no-retrospective"
+ ],
+ "episode": "cw",
+ "documents": [
+  {
+   "id": "crest:NIE_11-4-59_1960-02-09",
+   "date": "1960-02-09",
+   "source": "CIA estimates: NIE_11-4-59_1960-02-09_Main_Trends_in_Soviet_Capabilities_and_Policies_1959-1964.pdf, pp. 1-85",
+   "title": "NIE 11-4-59: Main Trends in Soviet Capabilities and Policies 1959-1964",
+   "url": "https://web.archive.org/web/20250324143820id_/https://www.cia.gov/readingroom/docs/1960-02-09b.pdf",
+   "work": "NIE 11-4-59"
+  },
+  {
+   "id": "crest:NIE_11-8-59_1960-02-09",
+   "date": "1960-02-09",
+   "source": "CIA estimates: NIE_11-8-59_1960-02-09_Soviet_Capabilities_for_Strategic_Attack_Through_Mid-1964_full.pdf, pp. 1-45",
+   "title": "NIE 11-8-59: Soviet Capabilities for Strategic Attack Through Mid-1964",
+   "url": "https://web.archive.org/web/20250326110419id_/https://www.cia.gov/readingroom/docs/1960-02-09a.pdf",
+   "work": "NIE 11-8-59"
+  },
+  {
+   "id": "crest:NIE_11-8-59_1960-02-09@steury1996",
+   "date": "1960-02-09",
+   "source": "CIA estimates: Steury 1996, no. 7, vol. pp. 71-106",
+   "title": "NIE 11-8-59: Soviet Capabilities for Strategic Attack Through Mid-1964 (as reproduced in Steury 1996, no. 7)",
+   "url": "https://www.cia.gov/resources/csi/static/Part-I-The-Riddle-Inside-the-Enigma-from-Intentions-and-Capabilities.pdf#page=67",
+   "work": "NIE 11-8-59"
+  },
+  {
+   "id": "crest:NIE_11-8-60_1960-08-01",
+   "date": "1960-08-01",
+   "source": "CIA estimates: NIE_11-8-60_1960-08-01_Soviet_Capabilities_for_Long_Range_Attack_Through_Mid-1965_full.pdf, pp. 1-39",
+   "title": "NIE 11-8-60: Soviet Capabilities for Long Range Attack Through Mid-1965",
+   "url": "https://web.archive.org/web/20250207191427id_/https://www.cia.gov/readingroom/docs/1960-08-01.pdf",
+   "work": "NIE 11-8-60"
+  },
+  {
+   "id": "crest:NIE_11-8-60_1960-08-01@steury1996",
+   "date": "1960-08-01",
+   "source": "CIA estimates: Steury 1996, no. 8, vol. pp. 109-113",
+   "title": "NIE 11-8-60: Soviet Capabilities for Long Range Attack Through Mid-1965 (as reproduced in Steury 1996, no. 8)",
+   "url": "https://www.cia.gov/resources/csi/static/Part-I-The-Riddle-Inside-the-Enigma-from-Intentions-and-Capabilities.pdf#page=103",
+   "work": "NIE 11-8-60"
+  },
+  {
+   "id": "crest:NIE_11-4-60_1960-12-01@steury1996",
+   "date": "1960-12-01",
+   "source": "CIA estimates: Steury 1996, no. 11, vol. pp. 141-146",
+   "title": "NIE 11-4-60: Main Trends in Soviet Capabilities and Policies, 1960-1965 (as reproduced in Steury 1996, no. 11)",
+   "url": "https://www.cia.gov/resources/csi/static/Part-II-Soviet-Strategic-Force-Development-from-Intentions-and-Capabilities.pdf#page=4",
+   "work": "NIE 11-4-60"
+  }
+ ],
+ "proposals": [
+  {
+   "id": "1961-001",
+   "document": "crest:NIE_11-4-59_1960-02-09",
+   "work": "NIE 11-4-59",
+   "proposal": {
+    "indicator_id": "crest:NIE_11-4-59_1960-02-09:belief_force_USA=under_1000",
+    "variable": "belief_force_USA",
+    "level": "under_1000",
+    "date": "1960-02-09",
+    "quote": "the most likely number of Soviet ICBMs on launcher in mid-1962 would be 250-350 and in mid-1963 would be 350-450",
+    "url": "https://web.archive.org/web/20250324143820id_/https://www.cia.gov/readingroom/docs/1960-02-09b.pdf",
+    "rule": "claude backend: The estimate's probable case for two to three years out is about 300 to 400 ICBMs on launcher, plus about 130 to 140 BISON and BEAR heavy bombers (per its table), for a total of roughly 430 to 540 intercontinental vehicles, which falls in the 200 to 999 band. (also read in 1 other part(s))",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1961-002",
+   "document": "crest:NIE_11-4-59_1960-02-09",
+   "work": "NIE 11-4-59",
+   "proposal": {
+    "indicator_id": "crest:NIE_11-4-59_1960-02-09:belief_USA_USSR=opportunist",
+    "variable": "belief_USA_USSR",
+    "level": "opportunist",
+    "date": "1960-02-09",
+    "quote": "they will have an opportunistic policy worldwide",
+    "url": "https://web.archive.org/web/20250324143820id_/https://www.cia.gov/readingroom/docs/1960-02-09b.pdf",
+    "rule": "claude backend: Washington's coordinated estimate reads Soviet aims as expansion by pressure where cheap: forces are 'probably not intended for any consistent and far-reaching policy of outright military conquest' and the USSR will not 'wittingly assume serious risks of general war'. This is an NIE rather than a basic national security paper, hence the low confidence.",
+    "confidence": "low"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1961-003",
+   "document": "crest:NIE_11-8-59_1960-02-09",
+   "work": "NIE 11-8-59",
+   "proposal": {
+    "indicator_id": "crest:NIE_11-8-59_1960-02-09:belief_force_USA=under_1000",
+    "variable": "belief_force_USA",
+    "level": "under_1000",
+    "date": "1960-02-09",
+    "quote": "the most likely number of Soviet ICBMs on launcher in mid-1962 would be 250-350 and in mid-1963 would be 350-450",
+    "url": "https://web.archive.org/web/20250326110419id_/https://www.cia.gov/readingroom/docs/1960-02-09a.pdf",
+    "rule": "claude backend: The estimate's probable case for two to three years ahead gives about 300-400 ICBMs on launcher. Adding about 130-140 heavy bombers and roughly 100 or more submarine missile launchers puts the summed intercontinental force between 200 and 999.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1961-004",
+   "document": "crest:NIE_11-8-59_1960-02-09@steury1996",
+   "work": "NIE 11-8-59",
+   "proposal": {
+    "indicator_id": "crest:NIE_11-8-59_1960-02-09@steury1996:belief_force_USA=under_1000",
+    "variable": "belief_force_USA",
+    "level": "under_1000",
+    "date": "1960-02-09",
+    "quote": "the most likely number of Soviet ICBMs on launcher in mid-1962 would be 250--350 and in rnid-1963 would be 350-450",
+    "url": "https://www.cia.gov/resources/csi/static/Part-I-The-Riddle-Inside-the-Enigma-from-Intentions-and-Capabilities.pdf#page=67",
+    "rule": "claude backend: belief_force_USA band rule: the estimate's most probable projection two to three years out (mid-1962 to mid-1963) is about 300-400 ICBMs on launcher plus 130-140 heavy bombers (para 73 table) plus missile submarines, a sum between 200 and 999.",
+    "confidence": "high"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1961-005",
+   "document": "crest:NIE_11-8-60_1960-08-01",
+   "work": "NIE 11-8-60",
+   "proposal": {
+    "indicator_id": "crest:NIE_11-8-60_1960-08-01:belief_force_USA=under_1000",
+    "variable": "belief_force_USA",
+    "level": "under_1000",
+    "date": "1960-08-01",
+    "quote": "The Director of Central Intelligence considers that program \"A\" should be regarded as the nearest approximation of the actual Soviet program.",
+    "url": "https://web.archive.org/web/20250207191427id_/https://www.cia.gov/readingroom/docs/1960-08-01.pdf",
+    "rule": "claude backend: Band rule (200 to 999): under the DCI's preferred Program A, the estimate projects 270 ICBM launchers in mid-1962 and 400 in mid-1963, plus about 130-140 heavy bombers and tankers and roughly 100-170 submarine missile launchers, a total of about 540-700 for two to three years after the date.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  },
+  {
+   "id": "1961-006",
+   "document": "crest:NIE_11-4-60_1960-12-01@steury1996",
+   "work": "NIE 11-4-60",
+   "proposal": {
+    "indicator_id": "crest:NIE_11-4-60_1960-12-01@steury1996:belief_USA_USSR=opportunist",
+    "variable": "belief_USA_USSR",
+    "level": "opportunist",
+    "date": "1960-12-01",
+    "quote": "Their policies will be marked by a persistent activism and opportunism ... a strategy to defeat the West without war.",
+    "url": "https://www.cia.gov/resources/csi/static/Part-II-Soviet-Strategic-Force-Development-from-Intentions-and-Capabilities.pdf#page=4",
+    "rule": "claude backend: Opportunist applies because the estimate reads Soviet aims as pressure and expansion by methods short of war, explicitly excluding deliberate serious risks of general war; confidence is medium because this is a National Intelligence Estimate rather than a basic national security paper, and a USAF footnote dissents toward expansionist.",
+    "confidence": "medium"
+   },
+   "status": "pending",
+   "decisions": []
+  }
+ ],
+ "discarded": [
+  {
+   "document": "crest:NIE_11-8-60_1960-08-01@steury1996",
+   "proposal": {
+    "indicator_id": "crest:NIE_11-8-60_1960-08-01@steury1996:belief_force_USA=under_1000",
+    "variable": "belief_force_USA",
+    "level": "under_1000",
+    "date": "1960-08-01",
+    "quote": "the Director of Central Intelligence considers that program \"A\" should be re-...garded as the nearest approximation of the actual Soviet program....either would provide sufficient ICBMs and launchers to threaten the SAC operational air base system",
+    "url": "https://www.cia.gov/resources/csi/static/Part-I-The-Riddle-Inside-the-Enigma-from-Intentions-and-Capabilities.pdf#page=103",
+    "rule": "claude backend: The estimate's planning case (program A) projects an ICBM force judged able to threaten SAC's bases by 1961-62. The chart's scale tops out at 600 launchers. Adding the projected heavy bombers (about 130-150) and submarine missiles gives a total for mid-1962/63 in the 200-999 band.",
+    "confidence": "medium"
+   },
+   "reasons": [
+    "the quote is not in the document"
+   ]
+  }
+ ],
+ "errors": []
+}

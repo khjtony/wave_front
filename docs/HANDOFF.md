@@ -41,7 +41,7 @@ The anti-hindsight protocol behind these (claims run once, first sight recorded,
 |---|---|---|
 | 0 Framework | passed 2026-10-11 | docs/PHASES.md, docs/validity.md section 8 |
 | 1 WW2 v0 | passed 2026-10-12 under the owner's amendments | reports/ww2_v0.md |
-| 2 WW2 v1 | delivered; gate not passed as written; amendments executed 2026-10-16; **the replay criterion waits on the Claude-backend run** | reports/ww2_v1.md, reports/replay_ww2_frus.md, the PHASES.md addendum |
+| 2 WW2 v1 | **passed 2026-10-28** (owner's decision 7h): replay 95 % after a sample review, 8 of 9 flips | reports/ww2_v1.md, reports/replay_ww2_frus.md, the PHASES.md addendum |
 | 2 extras | summer-1939 sub-game (K1 to K6) and July 1914 (J1 to J7) run once; per-actor cadence (framework change 1); compiled BDD core | reports/crisis_1939.md, reports/july1914.md, docs/framework_changes.md, docs/engine_scaling.md |
 | 3 Cold War v0 | built and run once 2026-10-17: C1, C12, C13 pass; C2 to C11 fail as read; 0 framework changes; reproduced independently 2026-10-18 | reports/cw_v0.md, docs/review_phase3_2026-10-18.md |
 | 4 Audit and freeze | not started; waits on the phase 3 decisions | docs/PHASES.md |

@@ -1,0 +1,113 @@
+START=2026-10-29T07:25:32Z
+
+[V6] engine: replay against hindsight; explicit form of the layered lifting to 1963
+[V6] asserted: the blind replay at proposal level (decision 7k), dates by the rule
+[V6] printed, not asserted: the manual replay, by the rule and on its recorded dates
+[V6] blind   1958: replay {'GENERAL_WAR': 2, 'ACCIDENTAL_WAR': 2, 'K_USA': 0, 'K_USSR': 1} (24681); hindsight {'GENERAL_WAR': 3, 'ACCIDENTAL_WAR': 2, 'K_USA': 0, 'K_USSR': 1} (19681): True
+[V6] blind   1959: replay {'GENERAL_WAR': 2, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (5850); hindsight {'GENERAL_WAR': 2, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (4514): False
+[V6] blind   1960: replay {'GENERAL_WAR': 2, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (592); hindsight {'GENERAL_WAR': 2, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (457): False
+[V6] blind   1961: replay {'GENERAL_WAR': 2, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (68); hindsight {'GENERAL_WAR': 2, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (35): False
+[V6] blind/rule aims_USSR=status_quo 1957: replayed belief under_1000, hindsight count_USSR of 1 Jan 1958 under_200: exceeds True
+[V6] blind/rule aims_USSR=status_quo 1958: replayed belief under_1000, hindsight count_USSR of 1 Jan 1960 under_200: exceeds True
+[V6] blind/rule aims_USSR=status_quo 1959: replayed belief under_1000, hindsight count_USSR of 1 Jan 1961 under_200: exceeds True
+[V6] blind/rule aims_USSR=status_quo 1960: replayed belief under_1000, hindsight count_USSR of 1 Jan 1961 under_200: exceeds True
+[V6] blind/rule aims_USSR=status_quo 1961: replayed belief under_1000, hindsight count_USSR of 1 Jan 1963 under_1000: exceeds False
+[V6] blind/rule aims_USSR=status_quo 1962: replayed belief under_1000, hindsight count_USSR of 1 Jan 1963 under_1000: exceeds False
+[V6] blind/rule   (c) intel overhead from 1961; gap closed in 1961: True
+[V6] blind/rule   control: belief on 1 Jan 1962 with the hold under_1000, against the count of 1 Jan 1963: exceeds False []
+[V6] blind/rule aims_USSR=status_quo: (a) False, (b) False, (c) True, control False
+[V6] manual   1958: replay {'GENERAL_WAR': 2, 'ACCIDENTAL_WAR': 2, 'K_USA': 0, 'K_USSR': 1} (24681); hindsight {'GENERAL_WAR': 3, 'ACCIDENTAL_WAR': 2, 'K_USA': 0, 'K_USSR': 1} (19681): True
+[V6] manual   1959: replay {'GENERAL_WAR': 2, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (5850); hindsight {'GENERAL_WAR': 2, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (4514): False
+[V6] manual   1960: replay {'GENERAL_WAR': 2, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (592); hindsight {'GENERAL_WAR': 2, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (457): False
+[V6] manual   1961: replay {'GENERAL_WAR': 2, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (68); hindsight {'GENERAL_WAR': 2, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (35): False
+[V6] manual/rule aims_USSR=status_quo 1957: replayed belief under_1000, hindsight count_USSR of 1 Jan 1958 under_200: exceeds True
+[V6] manual/rule aims_USSR=status_quo 1958: replayed belief under_1000, hindsight count_USSR of 1 Jan 1960 under_200: exceeds True
+[V6] manual/rule aims_USSR=status_quo 1959: replayed belief under_1000, hindsight count_USSR of 1 Jan 1961 under_200: exceeds True
+[V6] manual/rule aims_USSR=status_quo 1960: replayed belief under_1000, hindsight count_USSR of 1 Jan 1961 under_200: exceeds True
+[V6] manual/rule aims_USSR=status_quo 1961: replayed belief under_1000, hindsight count_USSR of 1 Jan 1963 under_1000: exceeds False
+[V6] manual/rule aims_USSR=status_quo 1962: replayed belief under_1000, hindsight count_USSR of 1 Jan 1964 under_1000: exceeds False
+[V6] manual/rule   (c) intel overhead from 1961; gap closed in 1961: True
+[V6] manual/rule   control: belief on 1 Jan 1962 with the hold under_1000, against the count of 1 Jan 1964: exceeds False []
+[V6] manual/rule aims_USSR=status_quo: (a) False, (b) False, (c) True, control False
+[V6] manual/recorded aims_USSR=status_quo 1957: replayed belief under_1000, hindsight count_USSR of 1 Jan 1958 under_200: exceeds True
+[V6] manual/recorded aims_USSR=status_quo 1958: replayed belief under_1000, hindsight count_USSR of 1 Jan 1960 under_200: exceeds True
+[V6] manual/recorded aims_USSR=status_quo 1959: replayed belief under_1000, hindsight count_USSR of 1 Jan 1961 under_200: exceeds True
+[V6] manual/recorded aims_USSR=status_quo 1960: replayed belief under_1000, hindsight count_USSR of 1 Jan 1961 under_200: exceeds True
+[V6] manual/recorded aims_USSR=status_quo 1961: replayed belief under_1000, hindsight count_USSR of 1 Jan 1963 under_1000: exceeds False
+[V6] manual/recorded aims_USSR=status_quo 1962: replayed belief under_1000, hindsight count_USSR of 1 Jan 1963 under_1000: exceeds False
+[V6] manual/recorded   (c) intel overhead from 1961; gap closed in 1961: True
+[V6] manual/recorded   control: belief on 1 Jan 1962 with the hold under_1000, against the count of 1 Jan 1963: exceeds False []
+[V6] manual/recorded aims_USSR=status_quo: (a) False, (b) False, (c) True, control False
+[V6] aims_USSR=status_quo: blind (False, False, True, False); manual {'rule': (False, False, True, False), 'recorded': (False, False, True, False)} (57.1 s)
+[V6] blind   1958: replay {'GENERAL_WAR': 2, 'ACCIDENTAL_WAR': 2, 'K_USA': 0, 'K_USSR': 1} (24681); hindsight {'GENERAL_WAR': 2, 'ACCIDENTAL_WAR': 2, 'K_USA': 0, 'K_USSR': 1} (42578): False
+[V6] blind   1959: replay {'GENERAL_WAR': 2, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (5850); hindsight {'GENERAL_WAR': 2, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (9407): False
+[V6] blind   1960: replay {'GENERAL_WAR': 2, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (592); hindsight {'GENERAL_WAR': 2, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (812): False
+[V6] blind   1961: replay {'GENERAL_WAR': 2, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (68); hindsight {'GENERAL_WAR': 2, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (54): False
+[V6] blind/rule aims_USSR=opportunist 1957: replayed belief under_1000, hindsight count_USSR of 1 Jan 1958 under_200: exceeds True
+[V6] blind/rule aims_USSR=opportunist 1958: replayed belief under_1000, hindsight count_USSR of 1 Jan 1960 under_200: exceeds True
+[V6] blind/rule aims_USSR=opportunist 1959: replayed belief under_1000, hindsight count_USSR of 1 Jan 1961 under_200: exceeds True
+[V6] blind/rule aims_USSR=opportunist 1960: replayed belief under_1000, hindsight count_USSR of 1 Jan 1961 under_200: exceeds True
+[V6] blind/rule aims_USSR=opportunist 1961: replayed belief under_1000, hindsight count_USSR of 1 Jan 1963 under_1000: exceeds False
+[V6] blind/rule aims_USSR=opportunist 1962: replayed belief under_1000, hindsight count_USSR of 1 Jan 1963 under_1000: exceeds False
+[V6] blind/rule   (c) intel overhead from 1961; gap closed in 1961: True
+[V6] blind/rule   control: belief on 1 Jan 1962 with the hold under_1000, against the count of 1 Jan 1963: exceeds False []
+[V6] blind/rule aims_USSR=opportunist: (a) False, (b) False, (c) True, control False
+[V6] manual   1958: replay {'GENERAL_WAR': 2, 'ACCIDENTAL_WAR': 2, 'K_USA': 0, 'K_USSR': 1} (24681); hindsight {'GENERAL_WAR': 2, 'ACCIDENTAL_WAR': 2, 'K_USA': 0, 'K_USSR': 1} (42578): False
+[V6] manual   1959: replay {'GENERAL_WAR': 2, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (5850); hindsight {'GENERAL_WAR': 2, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (9407): False
+[V6] manual   1960: replay {'GENERAL_WAR': 2, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (592); hindsight {'GENERAL_WAR': 2, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (812): False
+[V6] manual   1961: replay {'GENERAL_WAR': 2, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (68); hindsight {'GENERAL_WAR': 2, 'ACCIDENTAL_WAR': 1, 'K_USA': 0, 'K_USSR': 0} (54): False
+[V6] manual/rule aims_USSR=opportunist 1957: replayed belief under_1000, hindsight count_USSR of 1 Jan 1958 under_200: exceeds True
+[V6] manual/rule aims_USSR=opportunist 1958: replayed belief under_1000, hindsight count_USSR of 1 Jan 1960 under_200: exceeds True
+[V6] manual/rule aims_USSR=opportunist 1959: replayed belief under_1000, hindsight count_USSR of 1 Jan 1961 under_200: exceeds True
+[V6] manual/rule aims_USSR=opportunist 1960: replayed belief under_1000, hindsight count_USSR of 1 Jan 1961 under_200: exceeds True
+[V6] manual/rule aims_USSR=opportunist 1961: replayed belief under_1000, hindsight count_USSR of 1 Jan 1963 under_1000: exceeds False
+[V6] manual/rule aims_USSR=opportunist 1962: replayed belief under_1000, hindsight count_USSR of 1 Jan 1964 under_1000: exceeds False
+[V6] manual/rule   (c) intel overhead from 1961; gap closed in 1961: True
+[V6] manual/rule   control: belief on 1 Jan 1962 with the hold under_1000, against the count of 1 Jan 1964: exceeds False []
+[V6] manual/rule aims_USSR=opportunist: (a) False, (b) False, (c) True, control False
+[V6] manual/recorded aims_USSR=opportunist 1957: replayed belief under_1000, hindsight count_USSR of 1 Jan 1958 under_200: exceeds True
+[V6] manual/recorded aims_USSR=opportunist 1958: replayed belief under_1000, hindsight count_USSR of 1 Jan 1960 under_200: exceeds True
+[V6] manual/recorded aims_USSR=opportunist 1959: replayed belief under_1000, hindsight count_USSR of 1 Jan 1961 under_200: exceeds True
+[V6] manual/recorded aims_USSR=opportunist 1960: replayed belief under_1000, hindsight count_USSR of 1 Jan 1961 under_200: exceeds True
+[V6] manual/recorded aims_USSR=opportunist 1961: replayed belief under_1000, hindsight count_USSR of 1 Jan 1963 under_1000: exceeds False
+[V6] manual/recorded aims_USSR=opportunist 1962: replayed belief under_1000, hindsight count_USSR of 1 Jan 1963 under_1000: exceeds False
+[V6] manual/recorded   (c) intel overhead from 1961; gap closed in 1961: True
+[V6] manual/recorded   control: belief on 1 Jan 1962 with the hold under_1000, against the count of 1 Jan 1963: exceeds False []
+[V6] manual/recorded aims_USSR=opportunist: (a) False, (b) False, (c) True, control False
+[V6] aims_USSR=opportunist: blind (False, False, True, False); manual {'rule': (False, False, True, False), 'recorded': (False, False, True, False)} (133.4 s)
+F
+=================================== FAILURES ===================================
+___________________________________ test_V6 ____________________________________
+
+    @pytest.mark.skipif(not FIRST_SIGHT, reason="cw_v1 first sight not switched on")
+    def test_V6():
+        timer = Timer()
+        blind = blind_snapshots(blind_dir(), YEARS)
+        manual = manual_snapshots()
+        print("\n[V6] engine: replay against hindsight; explicit form of the layered lifting to 1963")
+        print("[V6] asserted: the blind replay at proposal level (decision 7k), dates by the rule")
+        print("[V6] printed, not asserted: the manual replay, by the rule and on its recorded dates")
+        results, beside = {}, {}
+        hindsight_measures = {}
+        for aims in HYPS:
+            results[aims] = run_series(
+                aims, "blind", blind, {"rule": read_years(blind)}, hindsight_measures
+            )["rule"]
+            beside[aims] = run_series(
+                aims,
+                "manual",
+                manual,
+                {"rule": read_years(manual), "recorded": read_years(manual, recorded=True)},
+                hindsight_measures,
+            )
+            print(f"[V6] aims_USSR={aims}: blind {results[aims]}; manual {beside[aims]} ({timer})")
+>       assert any(all(v) for v in results.values()), results
+E       AssertionError: {'status_quo': (False, False, True, False), 'opportunist': (False, False, True, False)}
+E       assert False
+E        +  where False = any(<generator object test_V6.<locals>.<genexpr> at 0x71a771845700>)
+
+tests/coldwar_v1/scenarios/test_V06.py:276: AssertionError
+=========================== short test summary info ============================
+FAILED tests/coldwar_v1/scenarios/test_V06.py::test_V6 - AssertionError: {'st...
+1 failed in 133.64s (0:02:13)
+END=2026-10-29T07:27:46Z

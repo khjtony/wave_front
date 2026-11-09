@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "wave_front state snapshot",
-  "description": "A dated estimate of the current state with provenance (DESIGN.md section 5.1, framework_spec.md section 9). Every variable carries a level, a confidence and the indicators it was read from; only a variable with confidence 'assumed' may have an empty indicator list. The optional builtins section sets the model's built-in variables (pending delayed decisions, last actions, latches, fairness counters; phase 2 decision F2) with the same provenance and a rule. Rates are validated here and are not part of the state.",
+  "description": "A dated estimate of the current state with provenance (DESIGN.md section 5.1, framework_spec.md section 9). Every variable carries a level, a confidence and the indicators it was read from (or, over a contested window, a set of such levels); only a variable with confidence 'assumed' may have an empty indicator list. The optional builtins section sets the model's built-in variables (pending delayed decisions, last actions, latches, fairness counters; phase 2 decision F2) with the same provenance and a rule. Rates are validated here and are not part of the state.",
   "type": "object",
   "required": ["date", "model", "variables"],
   "additionalProperties": false,
@@ -23,7 +23,9 @@
       "description": "Declared model variables by name. A variable declared with init=None in the model must be fixed here.",
       "type": "object",
       "propertyNames": { "$ref": "#/$defs/name" },
-      "additionalProperties": { "$ref": "#/$defs/variable" }
+      "additionalProperties": {
+        "oneOf": [{ "$ref": "#/$defs/variable" }, { "$ref": "#/$defs/variable_set" }]
+      }
     },
     "builtins": {
       "description": "Built-in variables of the model by name (decision F2): pending_<actor>_<action> with the ticks remaining until the delayed effect applies (0 to the action's delay), last_<actor> with an action name or 'none', a latch with one of its levels or 'unset', fair_<name> with its count (0 to the constraint's 'within'). The loader fills them into the state after the variables and refuses a name that is not a settable built-in of the model (tick included) and a value out of range. Declared variables cannot be set here, and built-ins cannot be set in variables.",
@@ -72,6 +74,24 @@
       },
       "then": {
         "properties": { "indicators": { "minItems": 1 } }
+      }
+    },
+    "variable_set": {
+      "description": "A set of levels over a contested window (docs/ambiguous_levels.md): the snapshot denotes one state per member level (the product over all set-valued variables), and an analysis reports each finding as robust (the same from every member) or fragile. Each member carries its own confidence and indicators; 'ambiguity' says why the threshold's crossing is a judgement here. Mutually exclusive with 'level'. The loader refuses a level given twice.",
+      "type": "object",
+      "required": ["levels", "ambiguity"],
+      "additionalProperties": false,
+      "properties": {
+        "levels": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "$ref": "#/$defs/variable" }
+        },
+        "ambiguity": {
+          "description": "Why the level is contested over this window: the threshold, the readings and their dates.",
+          "type": "string",
+          "minLength": 1
+        }
       }
     },
     "builtin": {

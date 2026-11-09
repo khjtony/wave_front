@@ -1,0 +1,16 @@
+START=2026-10-28T05:32:07Z
+
+[J9v1] engine: explicit, graph from the realized state at tick 32
+[J9v1] aims_GER=localize, aims_RUS=deter: (535 states) realized state at 32 in {RUS}'s kernel: True; departure along the realized path from 32: None (path to tick 32); from tick 0, realized states inside: 33 of ticks 0..32, last 32
+[J9v1] aims_GER=localize, aims_RUS=fight: (3872 states) realized state at 32 in {RUS}'s kernel: True; departure along the realized path from 32: 33 (path to tick 38); from tick 0, realized states inside: 33 of ticks 0..38, last 32
+[J9v1] aims_GER=continental, aims_RUS=deter: (17950 states) realized state at 32 in {RUS}'s kernel: True; departure along the realized path from 32: None (path to tick 32); from tick 0, realized states inside: 33 of ticks 0..32, last 32
+[J9v1]   (v0: {RUS}'s kernel kept to tick 32 under localize and to 31 under continental)
+[J9v1] aims_GER=continental, aims_RUS=fight: (18086 states) realized state at 32 in {RUS}'s kernel: True; departure along the realized path from 32: 33 (path to tick 38); from tick 0, realized states inside: 33 of ticks 0..38, last 32
+[J9v1]   (v0: {RUS}'s kernel kept to tick 32 under localize and to 31 under continental)
+[J9v1] done (13.8 s)
+.
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED tests/july1914_v1/test_J09v1.py::test_J9v1
+1 passed in 14.44s
+END=2026-10-28T05:32:23Z

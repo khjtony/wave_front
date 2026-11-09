@@ -1,0 +1,6 @@
+tick,date,USA,USSR,Nature,note,source
+0,1973-10-24,defcon3,idle,none,"Brezhnev's message delivered 21:35 EDT; the WSAG orders DEFCON 3 at 23:41 EDT.",Kissinger 1982; Blechman and Hart 1982
+1,1973-10-25,reply,accept_un_force,none,"Nixon's letter of 05:40 EDT; Resolution 340 adopted the same day ([SQR]: the Soviet vote and the reply fall on one day); the Politburo decides not to answer the alert.",Kissinger 1982; Israelyan 1995
+2,1973-10-26,restrain_israel,idle,none,Kissinger's demands on Israel to let supplies through to the Third Army.,Kissinger 1982; Garthoff 1994
+3,1973-10-27,idle,idle,none,"The convoy of 27 to 28 Oct; the ceasefire holds with the UN force (the sub-game's ending CEASEFIRE).",Garthoff 1994
+4,1973-10-28,idle,idle,none,,

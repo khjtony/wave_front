@@ -1,0 +1,62 @@
+START=2026-10-28T05:25:41Z
+
+[J2v1] engine: explicit, graph from the realized state at tick 32
+[J2v1] aims_GER=localize, aims_RUS=deter: realized path stops at tick 32 (RUS.mobilize_general); state at 32 in X's kernel: True
+[J2v1]   kernel of all five principals from tick 0: realized states inside 33 of ticks 0..32, last 32
+[J2v1] aims_GER=localize, aims_RUS=fight: graph from tick 32: 3872 states
+[J2v1]   C={}: departure 32
+[J2v1]   C={AUH}: departure 32
+[J2v1]   C={GER}: departure 32
+[J2v1]   C={FRA}: departure 32
+[J2v1]   C={GBR}: departure 32
+[J2v1]   C={AUH, GER}: departure 32
+[J2v1]   C={AUH, FRA}: departure 32
+[J2v1]   C={AUH, GBR}: departure 32
+[J2v1]   C={GER, FRA}: departure 32
+[J2v1]   C={GER, GBR}: departure 32
+[J2v1]   C={FRA, GBR}: departure 32
+[J2v1]   C={AUH, GER, FRA}: departure 32
+[J2v1]   C={AUH, GER, GBR}: departure 32
+[J2v1]   C={AUH, FRA, GBR}: departure 32
+[J2v1]   C={GER, FRA, GBR}: departure 32
+[J2v1]   C={AUH, GER, FRA, GBR}: departure 32
+[J2v1]   X's departure state: RUS with Nature forces war within 4 days
+[J2v1]   coupling relaxed: X's departure 35 (graph 4152 states); shift 3 days
+[J2v1]   relaxations whose model is ill-formed from tick 32: [('AUH.council:target', "monotone variable 'ultimatum' decreases from rejected to resolved in state {tick"), ('AUH.ultimatum:resolved', "monotone variable 'ultimatum' decreases from rejected to delivered in state {tic"), ('AUH.mobilize_partial:level', "monotone variable 'mob_AUH' decreases from general to partial in state {tick=36,"), ('GER.kriegsgefahr:level', "monotone variable 'mob_GER' decreases from general to kriegsgefahr in state {tic"), ('GER.ultimatum_belgium:target', "conflicting Set on 'belgium' in state {tick=37, aims_GER=localize, aims_RUS=figh"), ('FRA.covering_troops:level', "monotone variable 'mob_FRA' decreases from general to covering_troops in state {"), ('Nature.invade_belgium:demanded', "conflicting Set on 'belgium' in state {tick=36, aims_GER=localize, aims_RUS=figh")]
+[J2v1]   single relaxations restoring X's kernel at tick 32: ['GER.mobilize_east:coupling', 'mobilization_race']
+[J2v1]   sensitivity at tick 32 (membership flips): ['aims_RUS fight->deter', 'war_AUH_SER war->peace']
+[J2v1]   departure of X's kernel along the realized path from tick 0: 31 (realized states inside: ticks [0]..[30])
+[J2v1]   Russia's last exit: last realized state in the kernel of all five principals at tick 32 (inside: 33 of ticks 0..38); {RUS} alone: last inside at tick 32
+[J2v1] aims_GER=continental, aims_RUS=deter: realized path stops at tick 32 (RUS.mobilize_general); state at 32 in X's kernel: True
+[J2v1]   kernel of all five principals from tick 0: realized states inside 33 of ticks 0..32, last 32
+[J2v1] aims_GER=continental, aims_RUS=fight: graph from tick 32: 18086 states
+[J2v1]   C={}: departure 32
+[J2v1]   C={AUH}: departure 32
+[J2v1]   C={GER}: departure 32
+[J2v1]   C={FRA}: departure 32
+[J2v1]   C={GBR}: departure 32
+[J2v1]   C={AUH, GER}: departure 32
+[J2v1]   C={AUH, FRA}: departure 32
+[J2v1]   C={AUH, GBR}: departure 32
+[J2v1]   C={GER, FRA}: departure 32
+[J2v1]   C={GER, GBR}: departure 32
+[J2v1]   C={FRA, GBR}: departure 32
+[J2v1]   C={AUH, GER, FRA}: departure 32
+[J2v1]   C={AUH, GER, GBR}: departure 32
+[J2v1]   C={AUH, FRA, GBR}: departure 32
+[J2v1]   C={GER, FRA, GBR}: departure 32
+[J2v1]   C={AUH, GER, FRA, GBR}: departure 32
+[J2v1]   X's departure state: RUS with Nature forces war within 4 days
+[J2v1]   coupling relaxed: X's departure 35 (graph 19278 states); shift 3 days
+[J2v1]   relaxations whose model is ill-formed from tick 32: [('AUH.council:target', "monotone variable 'ultimatum' decreases from rejected to resolved in state {tick"), ('AUH.ultimatum:resolved', "monotone variable 'ultimatum' decreases from rejected to delivered in state {tic"), ('AUH.mobilize_partial:level', "monotone variable 'mob_AUH' decreases from general to partial in state {tick=36,"), ('GER.kriegsgefahr:level', "monotone variable 'mob_GER' decreases from general to kriegsgefahr in state {tic"), ('GER.ultimatum_belgium:target', "conflicting Set on 'belgium' in state {tick=36, aims_GER=continental, aims_RUS=f"), ('FRA.covering_troops:level', "monotone variable 'mob_FRA' decreases from general to covering_troops in state {"), ('Nature.invade_belgium:demanded', "conflicting Set on 'belgium' in state {tick=35, aims_GER=continental, aims_RUS=f")]
+[J2v1]   single relaxations restoring X's kernel at tick 32: ['GER.mobilize_east:coupling', 'mobilization_race']
+[J2v1]   sensitivity at tick 32 (membership flips): ['war_AUH_SER war->peace', 'aims_RUS fight->deter']
+[J2v1]   departure of X's kernel along the realized path from tick 0: 31 (realized states inside: ticks [0]..[30])
+[J2v1]   Russia's last exit: last realized state in the kernel of all five principals at tick 32 (inside: 33 of ticks 0..38); {RUS} alone: last inside at tick 32
+[J2v1] done (326.4 s)
+.
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED tests/july1914_v1/test_J02v1.py::test_J2v1
+1 passed in 326.74s (0:05:26)
+END=2026-10-28T05:31:19Z

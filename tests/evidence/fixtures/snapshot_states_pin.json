@@ -1,0 +1,851 @@
+{
+ "models": {
+  "cw_v0": "models.cw.v0",
+  "cw_v1": "models.cw.v1",
+  "two_power": "models.toy.two_power",
+  "ww2_v0": "models.ww2.v0",
+  "ww2_v1": "models.ww2.v1"
+ },
+ "snapshots": {
+  "snapshots/cw/hindsight/1947.json": {
+   "file": "2807b57354c7df83",
+   "model": "527d0f540ac6",
+   "state": "a7890f9a46438e7f"
+  },
+  "snapshots/cw/hindsight/1948.json": {
+   "file": "087176c5d93f5c5b",
+   "model": "527d0f540ac6",
+   "state": "ea5516a36f5ec366"
+  },
+  "snapshots/cw/hindsight/1949.json": {
+   "file": "d458a2ad0e162c70",
+   "model": "527d0f540ac6",
+   "state": "38354ad34cbd6e1d"
+  },
+  "snapshots/cw/hindsight/1950.json": {
+   "file": "01c8dfbc0267295c",
+   "model": "527d0f540ac6",
+   "state": "7826777fcdc9958a"
+  },
+  "snapshots/cw/hindsight/1951.json": {
+   "file": "9a9f9b4127bcbb2d",
+   "model": "527d0f540ac6",
+   "state": "f47d0969dae4e84a"
+  },
+  "snapshots/cw/hindsight/1952.json": {
+   "file": "d69769140a21f794",
+   "model": "527d0f540ac6",
+   "state": "f47d0969dae4e84a"
+  },
+  "snapshots/cw/hindsight/1953.json": {
+   "file": "0200a8feb7d638bc",
+   "model": "527d0f540ac6",
+   "state": "f47d0969dae4e84a"
+  },
+  "snapshots/cw/hindsight/1954.json": {
+   "file": "1aeb31b18576f8f1",
+   "model": "527d0f540ac6",
+   "state": "69871c37efc033f6"
+  },
+  "snapshots/cw/hindsight/1955.json": {
+   "file": "434367b46a0a0bdb",
+   "model": "527d0f540ac6",
+   "state": "13bc37bff9d30ef0"
+  },
+  "snapshots/cw/hindsight/1956.json": {
+   "file": "4e15cde7c63089b8",
+   "model": "527d0f540ac6",
+   "state": "85ae1af7d331eeef"
+  },
+  "snapshots/cw/hindsight/1957.json": {
+   "file": "7769c332daf3e4a4",
+   "model": "527d0f540ac6",
+   "state": "62e0ba6c987771b0"
+  },
+  "snapshots/cw/hindsight/1958.json": {
+   "file": "c0d068a63c965b21",
+   "model": "527d0f540ac6",
+   "state": "103ae5af1410736e"
+  },
+  "snapshots/cw/hindsight/1959.json": {
+   "file": "21d40f90e4114b5b",
+   "model": "527d0f540ac6",
+   "state": "d94c2a1fe6a476cc"
+  },
+  "snapshots/cw/hindsight/1960.json": {
+   "file": "8dbeea9e1707ffe7",
+   "model": "527d0f540ac6",
+   "state": "974d752ccee948f4"
+  },
+  "snapshots/cw/hindsight/1961.json": {
+   "file": "057d60d4a75adfa8",
+   "model": "527d0f540ac6",
+   "state": "8f3be9a51eabe404"
+  },
+  "snapshots/cw/hindsight/1962.json": {
+   "file": "820b6c5f6b33b1c9",
+   "model": "527d0f540ac6",
+   "state": "c378708098247f78"
+  },
+  "snapshots/cw/hindsight/1963.json": {
+   "file": "32d7f1d155809e12",
+   "model": "527d0f540ac6",
+   "state": "a8d6a1771c811df3"
+  },
+  "snapshots/cw/hindsight/1964.json": {
+   "file": "ab7298781c57b103",
+   "model": "527d0f540ac6",
+   "state": "78b01f0246454f59"
+  },
+  "snapshots/cw/hindsight/1965.json": {
+   "file": "b44a67107d8d3ac1",
+   "model": "527d0f540ac6",
+   "state": "a352c831153b8239"
+  },
+  "snapshots/cw/hindsight/1966.json": {
+   "file": "5276cae8443c0d75",
+   "model": "527d0f540ac6",
+   "state": "8c2a08da609282bc"
+  },
+  "snapshots/cw/hindsight/1967.json": {
+   "file": "7e338b99997194aa",
+   "model": "527d0f540ac6",
+   "state": "3989721842504bef"
+  },
+  "snapshots/cw/hindsight/1968.json": {
+   "file": "8b637e6e7ac2eeef",
+   "model": "527d0f540ac6",
+   "state": "aa16a334833596dd"
+  },
+  "snapshots/cw/hindsight/1969.json": {
+   "file": "bb3582dc428d001b",
+   "model": "527d0f540ac6",
+   "state": "aa16a334833596dd"
+  },
+  "snapshots/cw/hindsight/1970.json": {
+   "file": "ff38130cf29b3609",
+   "model": "527d0f540ac6",
+   "state": "b98a8a49c6f67ec0"
+  },
+  "snapshots/cw/hindsight/1971.json": {
+   "file": "ed69159ca6ff1374",
+   "model": "527d0f540ac6",
+   "state": "9f3389cc0750a7b5"
+  },
+  "snapshots/cw/hindsight/1972.json": {
+   "file": "00c01390ffe3c0f5",
+   "model": "527d0f540ac6",
+   "state": "36a4f027ad17a9ec"
+  },
+  "snapshots/cw/hindsight/1973.json": {
+   "file": "23f713ac4f931ba6",
+   "model": "527d0f540ac6",
+   "state": "a90700f65ff7bd76"
+  },
+  "snapshots/cw/hindsight/1974.json": {
+   "file": "32325f1e2ba14754",
+   "model": "527d0f540ac6",
+   "state": "f59834018876e05a"
+  },
+  "snapshots/cw/hindsight/1975.json": {
+   "file": "b9acf2bafcd29bca",
+   "model": "527d0f540ac6",
+   "state": "0fea348f7e3fc7b8"
+  },
+  "snapshots/cw/hindsight/1976.json": {
+   "file": "89431d77e1db8c2b",
+   "model": "527d0f540ac6",
+   "state": "c4739b4f3b7176b8"
+  },
+  "snapshots/cw/hindsight/1977.json": {
+   "file": "6479373927858050",
+   "model": "527d0f540ac6",
+   "state": "c4739b4f3b7176b8"
+  },
+  "snapshots/cw/hindsight/1978.json": {
+   "file": "496f47ad808ae175",
+   "model": "527d0f540ac6",
+   "state": "c4739b4f3b7176b8"
+  },
+  "snapshots/cw/hindsight/1979.json": {
+   "file": "721b9b728062bcdc",
+   "model": "527d0f540ac6",
+   "state": "c4739b4f3b7176b8"
+  },
+  "snapshots/cw/hindsight/1980.json": {
+   "file": "a5b761ab9731222f",
+   "model": "527d0f540ac6",
+   "state": "2247413121f3cb29"
+  },
+  "snapshots/cw/hindsight/1981.json": {
+   "file": "8531a3d50cf08694",
+   "model": "527d0f540ac6",
+   "state": "08269a3b438c3fc2"
+  },
+  "snapshots/cw/hindsight/1982.json": {
+   "file": "2545ccdc5150a882",
+   "model": "527d0f540ac6",
+   "state": "3cb7b32fb72cc56a"
+  },
+  "snapshots/cw/hindsight/1983.json": {
+   "file": "f81997e2ee608ec3",
+   "model": "527d0f540ac6",
+   "state": "25ceee7591d1356a"
+  },
+  "snapshots/cw/hindsight/1984.json": {
+   "file": "8fa9981c9d335990",
+   "model": "527d0f540ac6",
+   "state": "25ceee7591d1356a"
+  },
+  "snapshots/cw/hindsight/1985.json": {
+   "file": "2079e6183caf1543",
+   "model": "527d0f540ac6",
+   "state": "25ceee7591d1356a"
+  },
+  "snapshots/cw/hindsight/1986.json": {
+   "file": "4767c1e2dbf7a476",
+   "model": "527d0f540ac6",
+   "state": "25ceee7591d1356a"
+  },
+  "snapshots/cw/hindsight/1987.json": {
+   "file": "5a8cea1d9f311377",
+   "model": "527d0f540ac6",
+   "state": "a12e2351ec501cf2"
+  },
+  "snapshots/cw/hindsight/1988.json": {
+   "file": "afba57c3b5063934",
+   "model": "527d0f540ac6",
+   "state": "cb0b04b7b2197d73"
+  },
+  "snapshots/cw/hindsight/1989.json": {
+   "file": "b75c7094d138c454",
+   "model": "527d0f540ac6",
+   "state": "a08c5a8befc617fc"
+  },
+  "snapshots/cw/hindsight/1990.json": {
+   "file": "a2a16ee87b654a29",
+   "model": "527d0f540ac6",
+   "state": "ce86cb3db82c7c2a"
+  },
+  "snapshots/cw/hindsight/1991.json": {
+   "file": "6920977994151870",
+   "model": "527d0f540ac6",
+   "state": "7ffde728a0a3cae6"
+  },
+  "snapshots/cw/hindsight/1992.json": {
+   "file": "3d080d1b624df6f3",
+   "model": "527d0f540ac6",
+   "state": "946a28f3c305793c"
+  },
+  "snapshots/cw/replay/1957.json": {
+   "file": "f64cbdca1032d971",
+   "model": "527d0f540ac6",
+   "state": "62e0ba6c987771b0"
+  },
+  "snapshots/cw/replay/1958.json": {
+   "file": "729f0073b486ed63",
+   "model": "527d0f540ac6",
+   "state": "0c862fb13c646a1c"
+  },
+  "snapshots/cw/replay/1959.json": {
+   "file": "c51a67b792778a49",
+   "model": "527d0f540ac6",
+   "state": "7edcbcce56802ab8"
+  },
+  "snapshots/cw/replay/1960.json": {
+   "file": "1b32f6505508340b",
+   "model": "527d0f540ac6",
+   "state": "df5f738c91f8b08c"
+  },
+  "snapshots/cw/replay/1961.json": {
+   "file": "c58ec7a548f4153b",
+   "model": "527d0f540ac6",
+   "state": "7099e2476ad5e43b"
+  },
+  "snapshots/cw/replay/1962.json": {
+   "file": "90e531a1b0222252",
+   "model": "527d0f540ac6",
+   "state": "c378708098247f78"
+  },
+  "snapshots/cw/replay/1983.json": {
+   "file": "2ebf2e05a7e7d17d",
+   "model": "527d0f540ac6",
+   "state": "298f12b2445c3272"
+  },
+  "snapshots/cw_v1/hindsight/1947.json": {
+   "file": "139a75c464e0462e",
+   "model": "151787621ce1",
+   "state": "97123cf928d42c17"
+  },
+  "snapshots/cw_v1/hindsight/1948.json": {
+   "file": "bffed2cac3701016",
+   "model": "151787621ce1",
+   "state": "11d88b7bce964893"
+  },
+  "snapshots/cw_v1/hindsight/1949.json": {
+   "file": "40375e9384619352",
+   "model": "151787621ce1",
+   "state": "2b44bb1dc45cf073"
+  },
+  "snapshots/cw_v1/hindsight/1950.json": {
+   "file": "0d2551c31d34ca73",
+   "model": "151787621ce1",
+   "state": "dffb9d649ee77bcb"
+  },
+  "snapshots/cw_v1/hindsight/1951.json": {
+   "file": "0c5273923dba3027",
+   "model": "151787621ce1",
+   "state": "97d4a7e809304dda"
+  },
+  "snapshots/cw_v1/hindsight/1952.json": {
+   "file": "82c100bf630c0469",
+   "model": "151787621ce1",
+   "state": "97d4a7e809304dda"
+  },
+  "snapshots/cw_v1/hindsight/1953.json": {
+   "file": "102f8bd59a6dcc94",
+   "model": "151787621ce1",
+   "state": "97d4a7e809304dda"
+  },
+  "snapshots/cw_v1/hindsight/1954.json": {
+   "file": "e07a60e201d568b3",
+   "model": "151787621ce1",
+   "state": "a089ae780f45d15f"
+  },
+  "snapshots/cw_v1/hindsight/1955.json": {
+   "file": "9e7757506887ae79",
+   "model": "151787621ce1",
+   "state": "d033e7183bc2dd51"
+  },
+  "snapshots/cw_v1/hindsight/1956.json": {
+   "file": "05dd0eff3499e168",
+   "model": "151787621ce1",
+   "state": "5b22ea734b5c501b"
+  },
+  "snapshots/cw_v1/hindsight/1957.json": {
+   "file": "55edb925b67d7bc6",
+   "model": "151787621ce1",
+   "state": "8c3ff61f7ea67e07"
+  },
+  "snapshots/cw_v1/hindsight/1958.json": {
+   "file": "1b60d73e0098bca1",
+   "model": "151787621ce1",
+   "state": "67c897e5334aec31"
+  },
+  "snapshots/cw_v1/hindsight/1959.json": {
+   "file": "8e9f8667e841dd7e",
+   "model": "151787621ce1",
+   "state": "564a376eef38bd9a"
+  },
+  "snapshots/cw_v1/hindsight/1960.json": {
+   "file": "44fe068c1f167e68",
+   "model": "151787621ce1",
+   "state": "31829f20d045487d"
+  },
+  "snapshots/cw_v1/hindsight/1961.json": {
+   "file": "f9b2461428acd9b0",
+   "model": "151787621ce1",
+   "state": "bdbe72250b34007f"
+  },
+  "snapshots/cw_v1/hindsight/1962.json": {
+   "file": "4c3ef40154d17b29",
+   "model": "151787621ce1",
+   "state": "71ca5ac9c37be6a9"
+  },
+  "snapshots/cw_v1/hindsight/1963.json": {
+   "file": "55ef01332b4eaf49",
+   "model": "151787621ce1",
+   "state": "073c2325e3ca7edf"
+  },
+  "snapshots/cw_v1/hindsight/1964.json": {
+   "file": "e37e308285ea13dc",
+   "model": "151787621ce1",
+   "state": "04468ecf73d28cbf"
+  },
+  "snapshots/cw_v1/hindsight/1965.json": {
+   "file": "2abeaa717a3026f9",
+   "model": "151787621ce1",
+   "state": "f74330553dff05aa"
+  },
+  "snapshots/cw_v1/hindsight/1966.json": {
+   "file": "a59cdd4a6d8a51e4",
+   "model": "151787621ce1",
+   "state": "b95d2bc2f8385cf5"
+  },
+  "snapshots/cw_v1/hindsight/1967.json": {
+   "file": "d6dd72153b490c2e",
+   "model": "151787621ce1",
+   "state": "d0e190172e75e0bb"
+  },
+  "snapshots/cw_v1/hindsight/1968.json": {
+   "file": "c05db6b174d97c7a",
+   "model": "151787621ce1",
+   "state": "a3b5a887daaf0e1b"
+  },
+  "snapshots/cw_v1/hindsight/1969.json": {
+   "file": "8d1d5731fe27f4e0",
+   "model": "151787621ce1",
+   "state": "a3b5a887daaf0e1b"
+  },
+  "snapshots/cw_v1/hindsight/1970.json": {
+   "file": "cf300e6d3f246635",
+   "model": "151787621ce1",
+   "state": "4b52ce77fe369f47"
+  },
+  "snapshots/cw_v1/hindsight/1971.json": {
+   "file": "57defda427c97cf1",
+   "model": "151787621ce1",
+   "state": "47e9075d78baef7c"
+  },
+  "snapshots/cw_v1/hindsight/1972.json": {
+   "file": "8e717dc701fccc18",
+   "model": "151787621ce1",
+   "state": "d092e084da675128"
+  },
+  "snapshots/cw_v1/hindsight/1973.json": {
+   "file": "8f10fe63b4c03baa",
+   "model": "151787621ce1",
+   "state": "76c6dec7c9fb40c3"
+  },
+  "snapshots/cw_v1/hindsight/1974.json": {
+   "file": "bab751553cb4a559",
+   "model": "151787621ce1",
+   "state": "9e540cbac8cd0282"
+  },
+  "snapshots/cw_v1/hindsight/1975.json": {
+   "file": "c0d3c90a755b9878",
+   "model": "151787621ce1",
+   "state": "b8cda438e4418aaf"
+  },
+  "snapshots/cw_v1/hindsight/1976.json": {
+   "file": "ae892ca746ea6132",
+   "model": "151787621ce1",
+   "state": "b2aa76fd97de8918"
+  },
+  "snapshots/cw_v1/hindsight/1977.json": {
+   "file": "30201570d6e602ec",
+   "model": "151787621ce1",
+   "state": "b2aa76fd97de8918"
+  },
+  "snapshots/cw_v1/hindsight/1978.json": {
+   "file": "5961bc612531435f",
+   "model": "151787621ce1",
+   "state": "b2aa76fd97de8918"
+  },
+  "snapshots/cw_v1/hindsight/1979.json": {
+   "file": "f256ed61dfb31020",
+   "model": "151787621ce1",
+   "state": "b2aa76fd97de8918"
+  },
+  "snapshots/cw_v1/hindsight/1980.json": {
+   "file": "d441c924f9ffaba0",
+   "model": "151787621ce1",
+   "state": "1eff4fe8de4929a6"
+  },
+  "snapshots/cw_v1/hindsight/1981.json": {
+   "file": "3cc5845524076a45",
+   "model": "151787621ce1",
+   "state": "16b75339a5500009"
+  },
+  "snapshots/cw_v1/hindsight/1982.json": {
+   "file": "8aebd6a1a5cb3c8c",
+   "model": "151787621ce1",
+   "state": "0996c8d742f7579e"
+  },
+  "snapshots/cw_v1/hindsight/1983.json": {
+   "file": "88757142f57aeccf",
+   "model": "151787621ce1",
+   "state": "a7a9c2b62ff0fa97"
+  },
+  "snapshots/cw_v1/hindsight/1984.json": {
+   "file": "c566c05c70d8bbbe",
+   "model": "151787621ce1",
+   "state": "a7a9c2b62ff0fa97"
+  },
+  "snapshots/cw_v1/hindsight/1985.json": {
+   "file": "f682e63bb58b5d94",
+   "model": "151787621ce1",
+   "state": "a7a9c2b62ff0fa97"
+  },
+  "snapshots/cw_v1/hindsight/1986.json": {
+   "file": "eaa9420d5c03cffe",
+   "model": "151787621ce1",
+   "state": "a7a9c2b62ff0fa97"
+  },
+  "snapshots/cw_v1/hindsight/1987.json": {
+   "file": "980998ecaf96f51e",
+   "model": "151787621ce1",
+   "state": "d9dd82b114f81df5"
+  },
+  "snapshots/cw_v1/hindsight/1988.json": {
+   "file": "0fc48cead840a022",
+   "model": "151787621ce1",
+   "state": "fb33942b46fade92"
+  },
+  "snapshots/cw_v1/hindsight/1989.json": {
+   "file": "9436ac5d380e1c22",
+   "model": "151787621ce1",
+   "state": "85b17e3761963e5b"
+  },
+  "snapshots/cw_v1/hindsight/1990.json": {
+   "file": "fce49a4c05b52487",
+   "model": "151787621ce1",
+   "state": "ba3765c5ce34ff12"
+  },
+  "snapshots/cw_v1/hindsight/1991.json": {
+   "file": "64f37779123d279c",
+   "model": "151787621ce1",
+   "state": "80bf240fd670cec6"
+  },
+  "snapshots/cw_v1/hindsight/1992.json": {
+   "file": "1940298350661f95",
+   "model": "151787621ce1",
+   "state": "720161383d728004"
+  },
+  "snapshots/cw_v1/replay/1957.json": {
+   "file": "8ea8a0cd1b3eed40",
+   "model": "151787621ce1",
+   "state": "8c3ff61f7ea67e07"
+  },
+  "snapshots/cw_v1/replay/1958.json": {
+   "file": "2634d44cd7c904a2",
+   "model": "151787621ce1",
+   "state": "0e1df83b26b175e9"
+  },
+  "snapshots/cw_v1/replay/1959.json": {
+   "file": "9c216020985a5558",
+   "model": "151787621ce1",
+   "state": "068139e4b5fe9934"
+  },
+  "snapshots/cw_v1/replay/1960.json": {
+   "file": "41423b5cdab9b035",
+   "model": "151787621ce1",
+   "state": "6e3f296d3c00403e"
+  },
+  "snapshots/cw_v1/replay/1961.json": {
+   "file": "475ee2f6fb660cd3",
+   "model": "151787621ce1",
+   "state": "b06d9739fb0aaba9"
+  },
+  "snapshots/cw_v1/replay/1962.json": {
+   "file": "25a81ea2d6db4841",
+   "model": "151787621ce1",
+   "state": "71ca5ac9c37be6a9"
+  },
+  "snapshots/cw_v1/replay/1983.json": {
+   "file": "182dcc83fed63ca4",
+   "model": "151787621ce1",
+   "state": "4b7c8a9351fa6cc4"
+  },
+  "snapshots/toy/example.json": {
+   "file": "5c925757bd46cabc",
+   "model": "4cc4be4eea72",
+   "state": "a3be105f3ef3dfb8"
+  },
+  "snapshots/ww2/hindsight/1935Q4.json": {
+   "file": "63c0642af533e38b",
+   "model": "b43a8993ea82",
+   "state": "1af72f04789ec127"
+  },
+  "snapshots/ww2/hindsight/1936Q1.json": {
+   "file": "44e91d70a2af84de",
+   "model": "b43a8993ea82",
+   "state": "2a104817975cc079"
+  },
+  "snapshots/ww2/hindsight/1936Q2.json": {
+   "file": "8c286bf8fa6dd9de",
+   "model": "b43a8993ea82",
+   "state": "dfabad37eebd34ca"
+  },
+  "snapshots/ww2/hindsight/1936Q3.json": {
+   "file": "320d1a1cf23d9998",
+   "model": "b43a8993ea82",
+   "state": "8f24b764c7d5fe39"
+  },
+  "snapshots/ww2/hindsight/1936Q4.json": {
+   "file": "d1a0fc2d5f58b2ae",
+   "model": "b43a8993ea82",
+   "state": "8cedc4b363501ecf"
+  },
+  "snapshots/ww2/hindsight/1937Q1.json": {
+   "file": "3f3cf3cda5109219",
+   "model": "b43a8993ea82",
+   "state": "909535d5ee9ec7af"
+  },
+  "snapshots/ww2/hindsight/1937Q2.json": {
+   "file": "635e8c0db8aa48df",
+   "model": "b43a8993ea82",
+   "state": "a739e62567ae11a1"
+  },
+  "snapshots/ww2/hindsight/1937Q3.json": {
+   "file": "0ee70d6b0f1a4274",
+   "model": "b43a8993ea82",
+   "state": "6897d949dbc5bdf8"
+  },
+  "snapshots/ww2/hindsight/1937Q4.json": {
+   "file": "6a2ab5fd99cb9cb8",
+   "model": "b43a8993ea82",
+   "state": "2ce97fdd4bfed05c"
+  },
+  "snapshots/ww2/hindsight/1938Q1.json": {
+   "file": "493594262a3d3a16",
+   "model": "b43a8993ea82",
+   "state": "af81a04121310223"
+  },
+  "snapshots/ww2/hindsight/1938Q2.json": {
+   "file": "fcc0bb2bf2124a85",
+   "model": "b43a8993ea82",
+   "state": "89a641014f510a47"
+  },
+  "snapshots/ww2/hindsight/1938Q3.json": {
+   "file": "fa6a8241a385bb54",
+   "model": "b43a8993ea82",
+   "state": "c5b7a85cc93732e1"
+  },
+  "snapshots/ww2/hindsight/1938Q4.json": {
+   "file": "f2c8c6107b06977d",
+   "model": "b43a8993ea82",
+   "state": "3ad09e579cdff539"
+  },
+  "snapshots/ww2/hindsight/1939Q1.json": {
+   "file": "b056402f4fc1a28e",
+   "model": "b43a8993ea82",
+   "state": "390b9182f48572c8"
+  },
+  "snapshots/ww2/hindsight/1939Q2.json": {
+   "file": "f5b97d237ed65613",
+   "model": "b43a8993ea82",
+   "state": "0292c6d369de552e"
+  },
+  "snapshots/ww2/hindsight/1939Q3.json": {
+   "file": "1b0e95884c890424",
+   "model": "b43a8993ea82",
+   "state": "f90ee34d2b612e5f"
+  },
+  "snapshots/ww2/hindsight/1939Q4.json": {
+   "file": "48d0f812420da60f",
+   "model": "b43a8993ea82",
+   "state": "90bed03e6a6263db"
+  },
+  "snapshots/ww2/hindsight/1940Q1.json": {
+   "file": "a362e44dfcbbd908",
+   "model": "b43a8993ea82",
+   "state": "7f03dcb09487cf95"
+  },
+  "snapshots/ww2/hindsight/1940Q2.json": {
+   "file": "1b121cc694044075",
+   "model": "b43a8993ea82",
+   "state": "21ed71a80e2b1ab9"
+  },
+  "snapshots/ww2/hindsight/1940Q3.json": {
+   "file": "c68a228d0ba08f74",
+   "model": "b43a8993ea82",
+   "state": "cbbddc2a540bb74e"
+  },
+  "snapshots/ww2/hindsight/1940Q4.json": {
+   "file": "fcc37b6f19a658e2",
+   "model": "b43a8993ea82",
+   "state": "e091f6bd38684336"
+  },
+  "snapshots/ww2/hindsight_v1/1935Q4.json": {
+   "file": "d28599676fd3d299",
+   "model": "e7a0968964a7",
+   "state": "7d0c260a6e1e9e88"
+  },
+  "snapshots/ww2/hindsight_v1/1936Q1.json": {
+   "file": "ec272485c456b103",
+   "model": "e7a0968964a7",
+   "state": "65b4fa40537b3c1a"
+  },
+  "snapshots/ww2/hindsight_v1/1936Q2.json": {
+   "file": "f8cbff66635f57ae",
+   "model": "e7a0968964a7",
+   "state": "cf3a7ed51a5e1e59"
+  },
+  "snapshots/ww2/hindsight_v1/1936Q3.json": {
+   "file": "52085623a9e795bb",
+   "model": "e7a0968964a7",
+   "state": "49daa49c57ba07ee"
+  },
+  "snapshots/ww2/hindsight_v1/1936Q4.json": {
+   "file": "9d2e952f1f0ab524",
+   "model": "e7a0968964a7",
+   "state": "dc64fd548396bf29"
+  },
+  "snapshots/ww2/hindsight_v1/1937Q1.json": {
+   "file": "3c6b021191fd0a17",
+   "model": "e7a0968964a7",
+   "state": "0450218c9cbb6fa2"
+  },
+  "snapshots/ww2/hindsight_v1/1937Q2.json": {
+   "file": "7836ff9df5480e19",
+   "model": "e7a0968964a7",
+   "state": "5b7ce3882c34ee51"
+  },
+  "snapshots/ww2/hindsight_v1/1937Q3.json": {
+   "file": "190c6e8676fa4c3b",
+   "model": "e7a0968964a7",
+   "state": "69a0dc9c961545c9"
+  },
+  "snapshots/ww2/hindsight_v1/1937Q4.json": {
+   "file": "0914c71eef7b6569",
+   "model": "e7a0968964a7",
+   "state": "12711d82ca4092de"
+  },
+  "snapshots/ww2/hindsight_v1/1938Q1.json": {
+   "file": "8015f419ef1b73de",
+   "model": "e7a0968964a7",
+   "state": "f50af8aea859e6c5"
+  },
+  "snapshots/ww2/hindsight_v1/1938Q2.json": {
+   "file": "ce5f37a296d3a885",
+   "model": "e7a0968964a7",
+   "state": "63aa277597d0f2ca"
+  },
+  "snapshots/ww2/hindsight_v1/1938Q3.json": {
+   "file": "4f5870766cb025e6",
+   "model": "e7a0968964a7",
+   "state": "6439c2476b33fefd"
+  },
+  "snapshots/ww2/hindsight_v1/1938Q4.json": {
+   "file": "6b1ebd96aab334ee",
+   "model": "e7a0968964a7",
+   "state": "a8ee50ad3591dac9"
+  },
+  "snapshots/ww2/hindsight_v1/1939Q1.json": {
+   "file": "bd243cfe34998c5c",
+   "model": "e7a0968964a7",
+   "state": "18ed169f819ded13"
+  },
+  "snapshots/ww2/hindsight_v1/1939Q2.json": {
+   "file": "26a6bc56a4ab62e6",
+   "model": "e7a0968964a7",
+   "state": "1821106d91bcc958"
+  },
+  "snapshots/ww2/hindsight_v1/1939Q3.json": {
+   "file": "e94adb696792bf2f",
+   "model": "e7a0968964a7",
+   "state": "b3d201646440f7d5"
+  },
+  "snapshots/ww2/hindsight_v1/1939Q4.json": {
+   "file": "f84a49254460ed6f",
+   "model": "e7a0968964a7",
+   "state": "b1cfbbc929311e58"
+  },
+  "snapshots/ww2/hindsight_v1/1940Q1.json": {
+   "file": "89fd8675925daba8",
+   "model": "e7a0968964a7",
+   "state": "c4db487c83b7e605"
+  },
+  "snapshots/ww2/hindsight_v1/1940Q2.json": {
+   "file": "6b75370c7a12d71c",
+   "model": "e7a0968964a7",
+   "state": "c73c14947af86d9e"
+  },
+  "snapshots/ww2/hindsight_v1/1940Q3.json": {
+   "file": "8764592e46148197",
+   "model": "e7a0968964a7",
+   "state": "a6f7ad7905ffe9d0"
+  },
+  "snapshots/ww2/hindsight_v1/1940Q4.json": {
+   "file": "c2e3b9df5c6d9885",
+   "model": "e7a0968964a7",
+   "state": "5b8b849b40430697"
+  },
+  "snapshots/ww2/hindsight_v1/1941Q1.json": {
+   "file": "6f8c549d8f695ef1",
+   "model": "e7a0968964a7",
+   "state": "cab16eb906be01cc"
+  },
+  "snapshots/ww2/hindsight_v1/1941Q2.json": {
+   "file": "b9aee26136bf97c4",
+   "model": "e7a0968964a7",
+   "state": "4bd0608c04bf8a3e"
+  },
+  "snapshots/ww2/hindsight_v1/1941Q3.json": {
+   "file": "9fc9d849bd78c3d5",
+   "model": "e7a0968964a7",
+   "state": "88a93464be4256bd"
+  },
+  "snapshots/ww2/hindsight_v1/1941Q4.json": {
+   "file": "5f8414a9b5bbc15e",
+   "model": "e7a0968964a7",
+   "state": "92dec60a638b8eef"
+  },
+  "snapshots/ww2/hindsight_v1/1942Q1.json": {
+   "file": "3df1fde995501bf1",
+   "model": "e7a0968964a7",
+   "state": "a8b589e15780cb5b"
+  },
+  "snapshots/ww2/hindsight_v1/1942Q2.json": {
+   "file": "493daacbf1aaa6bd",
+   "model": "e7a0968964a7",
+   "state": "95fbee5b51aeea39"
+  },
+  "snapshots/ww2/hindsight_v1/1942Q3.json": {
+   "file": "1c1b892ff8e37376",
+   "model": "e7a0968964a7",
+   "state": "7cf63341eb9f0b72"
+  },
+  "snapshots/ww2/hindsight_v1/1942Q4.json": {
+   "file": "7edf71d0969e22bf",
+   "model": "e7a0968964a7",
+   "state": "0c7518aa2ec0913a"
+  },
+  "snapshots/ww2/hindsight_v1/1943Q1.json": {
+   "file": "33666d85f13457b1",
+   "model": "e7a0968964a7",
+   "state": "b38edb0ef281780f"
+  },
+  "snapshots/ww2/hindsight_v1/1943Q2.json": {
+   "file": "21f9092f462a7026",
+   "model": "e7a0968964a7",
+   "state": "a59478bb19150327"
+  },
+  "snapshots/ww2/hindsight_v1/1943Q3.json": {
+   "file": "1bc744515ca6150f",
+   "model": "e7a0968964a7",
+   "state": "136ef57f093f59a6"
+  },
+  "snapshots/ww2/hindsight_v1/1943Q4.json": {
+   "file": "98b2c39864d0d325",
+   "model": "e7a0968964a7",
+   "state": "0802663bcecfe9ea"
+  },
+  "snapshots/ww2/hindsight_v1/1944Q1.json": {
+   "file": "01c0447d08b97d19",
+   "model": "e7a0968964a7",
+   "state": "333215a466dd5b12"
+  },
+  "snapshots/ww2/hindsight_v1/1944Q2.json": {
+   "file": "fca8d260a4272bbe",
+   "model": "e7a0968964a7",
+   "state": "8adcf3e813f0dc95"
+  },
+  "snapshots/ww2/hindsight_v1/1944Q3.json": {
+   "file": "3d24e10153ec61da",
+   "model": "e7a0968964a7",
+   "state": "f8e96f99c45fe314"
+  },
+  "snapshots/ww2/hindsight_v1/1944Q4.json": {
+   "file": "7c587edc46bc166f",
+   "model": "e7a0968964a7",
+   "state": "154d9c4841d91cbd"
+  },
+  "snapshots/ww2/hindsight_v1/1945Q1.json": {
+   "file": "2ea39b04af069e59",
+   "model": "e7a0968964a7",
+   "state": "d57fdce086415cfd"
+  },
+  "snapshots/ww2/hindsight_v1/1945Q2.json": {
+   "file": "21fd5b9ba5dee17f",
+   "model": "e7a0968964a7",
+   "state": "00de2ea096f6154b"
+  },
+  "snapshots/ww2/hindsight_v1/1945Q3.json": {
+   "file": "2cd163bb27059bdd",
+   "model": "e7a0968964a7",
+   "state": "7af4a73260d545e7"
+  }
+ }
+}

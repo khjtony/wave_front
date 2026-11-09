@@ -14,6 +14,7 @@ from ..model.model import Model
 from ._common import complement, nearest_source, rest_of
 from .pivotal import PivotalResult, pivotal
 from .relax import DEFAULT_MAX_STATES, RelaxSets, relax_explicit
+from .robust import Robustness, members_of, robust_kernel, robust_pivotal, robust_status
 from .sensitivity import SensitivityRow, sensitivity_table
 from .uniform import UniformityResult, is_uniform, strategy_closure
 from .viability import Distance, distance_table, viability
@@ -134,6 +135,10 @@ class Analysis:
     max_relax: int
     fingerprint: str
     explicit_initial: bool = False
+    #: with ``members=`` (a snapshot with a set of levels): the robust/fragile verdict of
+    #: kernel membership, the shortest distance, each ending's status and the pivotal
+    #: coalitions, asked of each member state (docs/ambiguous_levels.md)
+    robustness: list[Robustness] = field(default_factory=list)
 
 
 def _normalize(g: Graph, coalitions: Iterable[Iterable[str]] | None) -> list[Coalition]:
@@ -173,6 +178,7 @@ def run_all(
     initial: Sequence[Sequence[int]] | None = None,
     max_relax: int = 2,
     max_states: int = DEFAULT_MAX_STATES,
+    members: object | None = None,
 ) -> Analysis:
     """Explore ``model`` once and compute, for each coalition (default: each declared
     actor alone and all declared actors together, Nature excluded), kernel membership and
@@ -182,9 +188,16 @@ def run_all(
     coalitions per ending, sensitivity rows per invariant and coalition, uniformity of
     every strategy a reported result rests on, the parameter budget and the speculative
     actions used by the reported witnesses. ``initial`` replaces the model's initial
-    states (for example a snapshot state)."""
+    states (for example a snapshot state). ``members`` (a
+    :class:`~wavefront.evidence.SnapshotStates`, or a sequence of states) replaces them with
+    the member states of a snapshot with a set of levels, and adds the robust/fragile
+    verdicts (``Analysis.robustness``); give one of ``initial`` and ``members``."""
     if profile is not None and not isinstance(profile, str):
         profile = tuple(profile)
+    if members is not None:
+        if initial is not None:
+            raise ValueError("give either initial states or members, not both")
+        initial = list(members_of(members)[0])
     cm = compile_model(model, profile=profile)
     g = explore(cm, initial=initial, max_states=max_states)
     groups = _normalize(g, coalitions)
@@ -243,6 +256,16 @@ def run_all(
     tables = sensitivity_table(cm, queries, initial=initial, max_states=max_states)
     sens = {(inv, c): rows for (inv, c, _), rows in zip(queries, tables, strict=True)}
 
+    robustness: list[Robustness] = []
+    if members is not None:
+        for inv in model.invariants:
+            for c in groups:
+                rk = robust_kernel(g, members, c, inv)
+                robustness += [rk.in_kernel, rk.distance]
+        for e in endings:
+            robustness += [robust_status(g, members, c, e) for c in groups]
+            robustness.append(robust_pivotal(g, members, e))
+
     return Analysis(
         model=model,
         cm=cm,
@@ -262,4 +285,5 @@ def run_all(
         max_relax=max_relax,
         fingerprint=fingerprint(model),
         explicit_initial=initial is not None,
+        robustness=robustness,
     )

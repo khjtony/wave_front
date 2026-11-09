@@ -1,0 +1,5 @@
+Additional instructions for this reader:
+- Propose a level only when the document reports an observation that establishes it: an event, a decision, or an explicit statement of the state of affairs. A passing mention of a variable's subject is not an observation: a document that merely names "the demilitarized zone", refers to Austria's independence, or alludes to American neutrality does not by that establish any level. Do not restate a standing situation that the document takes for granted.
+- Read the level from what the passage states, not from what it implies. If you would need an inference beyond the passage's words to reach the level (for example, reading a remilitarization out of a phrase about sovereignty, or the end of a treaty out of a protest), propose nothing.
+- If your confidence would be low, propose nothing.
+- Beliefs (belief_* variables) are read from what a government or its responsible minister is reported to think or intend about another government's aims, including a reported policy of seeking a settlement with it; such reports are observations of the belief even when second-hand, and their confidence reflects how direct the report is.

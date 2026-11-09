@@ -1,0 +1,39 @@
+tick,date,AUH,GER,RUS,FRA,GBR,Nature,note,source
+0,1914-06-28,idle,idle,idle,idle,idle,none,"Sarajevo: Franz Ferdinand and Sophie assassinated by Princip, 28 Jun 1914. No principal decision.","Dedijer, The Road to Sarajevo (1966); Clark 2012"
+1,1914-06-29,idle,idle,idle,idle,idle,none,,
+2,1914-06-30,idle,idle,idle,idle,idle,none,,
+3,1914-07-01,idle,idle,idle,idle,idle,none,,
+4,1914-07-02,idle,idle,idle,idle,idle,none,,
+5,1914-07-03,idle,idle,idle,idle,idle,none,,
+6,1914-07-04,idle,idle,idle,idle,idle,none,,
+7,1914-07-05,idle,blank_cheque,idle,idle,idle,none,"GER: Wilhelm II's assurance to Szogyeny at Potsdam, 5 Jul; confirmed by Bethmann and Zimmermann to Szogyeny and Hoyos on 6 Jul (one decision over two days; placed on its first day).","Szogyeny's telegrams of 5 and 6 Jul 1914 (Geiss (ed.), July 1914)"
+8,1914-07-06,idle,idle,idle,idle,idle,none,,
+9,1914-07-07,council,idle,idle,idle,idle,none,"AUH: Common Ministerial Council of 7 Jul: action against Serbia in principle, demands in a note, Tisza dissenting. (v1: tisza stays opposed.)",Council minutes of 7 Jul 1914 (Austrian documents; Geiss (ed.))
+10,1914-07-08,idle,idle,idle,idle,idle,none,,
+11,1914-07-09,idle,idle,idle,idle,idle,none,,
+12,1914-07-10,idle,idle,idle,idle,idle,none,,
+13,1914-07-11,idle,idle,idle,idle,idle,none,,
+14,1914-07-12,idle,idle,idle,idle,idle,none,,
+15,1914-07-13,idle,idle,idle,idle,idle,none,,
+16,1914-07-14,tisza_consent,idle,idle,idle,idle,none,"AUH (v1): Tisza's consent to the note, in conference with Berchtold, 14 Jul, after his memoranda of 1 and 8 Jul and his dissent at the Council of 7 Jul; the decision AUH.ultimatum:tisza reads (consented visible at tick 17). No [SQR]: it answers no decision of the same day. No [NSL]: Nature plays none.","Berchtold's report to Franz Joseph, 14 Jul 1914 (Geiss (ed.)); Albertini vol. II ch. 4; Clark 2012 ch. 9"
+17,1914-07-15,idle,idle,idle,idle,idle,none,,
+18,1914-07-16,idle,idle,idle,idle,idle,none,,
+19,1914-07-17,idle,idle,idle,idle,idle,none,,
+20,1914-07-18,idle,idle,idle,idle,idle,none,,
+21,1914-07-19,ultimatum,idle,idle,idle,idle,none,AUH: Common Ministerial Council of 19 Jul approves the text and fixes delivery for 23 Jul after Poincare's departure from St Petersburg (delay 4: delivered visible at tick 26).,Council minutes of 19 Jul 1914; Austrian Red Book
+22,1914-07-20,idle,idle,idle,idle,idle,none,,
+23,1914-07-21,idle,idle,idle,idle,idle,none,,
+24,1914-07-22,idle,idle,idle,idle,idle,none,,
+25,1914-07-23,idle,idle,idle,idle,idle,none,"Delivery of the note in Belgrade, 23 Jul 18:00 (the delayed effect of tick 21, visible at tick 26). Poincare and Viviani sail from Kronstadt that night.",Austrian Red Book; Albertini vol. II
+26,1914-07-24,idle,idle,idle,idle,idle,none,RUS: the Council of Ministers of 24 Jul deliberates (partial mobilization in principle); the decision is the Tsar's of 25 Jul (tick 27). GBR: Cabinet of 24 Jul hears the note; no decision. Grey's mediation proposal of 24 Jul is not an action.,Lieven 2015; British Documents vol. XI
+27,1914-07-25,mobilize_partial,idle,pre_mobilize,idle,idle,serbian_reply,"AUH: Franz Joseph's order of 25 Jul (evening) for the mobilization against Serbia; the guard reads the delivery of the note, so the order sits at its date. RUS: Krasnoe Selo council of 25 Jul, period preparatory to war from 26 Jul. Nature: the Serbian reply of 25 Jul 17:55 and the rupture (forced on this day by reply_deadline).",Albertini vol. II; Lieven 2015; Austrian Red Book
+28,1914-07-26,idle,idle,idle,idle,idle,none,"Period preparatory to war in force (26 Jul). GBR: First Fleet kept together (Battenberg and Churchill, 26 Jul; an Admiralty decision, not a Cabinet commitment). Grey's conference proposal of 26 Jul.","British Documents vol. XI; Churchill, The World Crisis vol. I"
+29,1914-07-27,idle,idle,idle,idle,idle,none,"GBR: Cabinet of 27 Jul, no decision. GER: Grey's proposal passed to Vienna without endorsement (27 Jul), not an action.",British Documents vol. XI; Geiss (ed.)
+30,1914-07-28,declare_war_SER,restrain_vienna,idle,idle,idle,none,"AUH: declaration of war on Serbia, 28 Jul about 11:00. GER: the Kaiser's Halt in Belgrade (morning) transmitted by Bethmann at 22:15 in weakened form (halt_in_belgrade proposed from tick 31).",Austrian Red Book; Kautsky documents; Geiss (ed.)
+31,1914-07-29,idle,idle,mobilize_partial,idle,idle,lichnowsky_warning,"RUS: partial mobilization announced 29 Jul and ordered in the night (the general order signed that day was countermanded about 21:40 in favour of the partial; revoke is not played: the countermand fell on the day of the order it changed). Nature: Lichnowsky's telegram reporting Grey's warning, received in Berlin the evening of 29 Jul (belief_GER_GBR fights from tick 32). GBR: Cabinet of 29 Jul refuses a commitment; warning telegram (precautionary period).",Lieven 2015; Albertini vol. II; Kautsky documents; British Documents vol. XI
+32,1914-07-30,idle,restrain_vienna,mobilize_general,covering_troops,idle,none,"RUS: general mobilization ordered about 17:00, 30 Jul. GER: Bethmann's telegrams to Tschirschky of 30 Jul 02:55 and 03:00 (after midnight, so on 30 Jul), suspended that night. FRA: covering troops with the ten-kilometre withdrawal, Council of 30 Jul.",Lieven 2015; Kautsky documents; DDF 3e serie vol. XI
+33,1914-07-31,mobilize_general,kriegsgefahr,idle,idle,idle,none,AUH: general mobilization signed 31 Jul 12:23 (Council of 31 Jul declines the Halt in Belgrade). GER: Kriegsgefahrzustand 31 Jul 13:00 (forced this day by mobilization_race) and the ultimatums to Russia and France.,Albertini vol. II; Mombauer 2001; Geiss (ed.)
+34,1914-08-01,idle,mobilize,idle,mobilize,idle,lichnowsky_offer,"GER: mobilization ordered about 17:00, 1 Aug, and war declared on Russia about 19:00. FRA: general mobilization 1 Aug 15:45 to 16:00. Nature: Lichnowsky's misread report of a British offer, received about 17:00, corrected by George V's telegram that night. The Kaiser's demand to deploy east and Moltke's refusal (mobilize_east unavailable: coupling). GBR: Cabinet of 1 Aug refuses a commitment.",Mombauer 2001; DDF 3e serie vol. XI; Kautsky documents
+35,1914-08-02,idle,ultimatum_belgium,idle,idle,naval_assurance,none,"GER: note to Belgium delivered 2 Aug 19:00 (forced this day by western_timetable); Luxembourg occupied. GBR: Cabinet of 2 Aug (morning), naval assurance to Cambon; the evening Cabinet's resolution on Belgium is played at tick 36 with Grey's statement (one action per day).","Geiss (ed.); British Documents vol. XI; Asquith's letters, 2 Aug"
+36,1914-08-03,idle,declare_war_FRA,idle,idle,guarantee_belgium,none,"GER: declaration of war on France, 3 Aug 18:45. GBR: Grey's statement in the Commons, 3 Aug. The Belgian refusal of 3 Aug 07:00 is inside Nature's invade_belgium (no separate level).",Geiss (ed.); Hansard 3 Aug 1914; Albertini vol. III
+37,1914-08-04,idle,idle,idle,idle,ultimatum_GER,invade_belgium,"Nature: German troops enter Belgium, 4 Aug about 08:00 (forced this day by liege). GBR: the demand and the ultimatum to Germany, expiring 23:00; Britain at war (commitment_GBR war at tick 38, GENERAL_WAR).",British Documents vol. XI; Albertini vol. III

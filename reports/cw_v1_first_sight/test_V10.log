@@ -1,0 +1,77 @@
+START=2026-10-29T08:07:27Z
+
+[V10] engine: composite (explicit to 1984, symbolic beyond) for K_USSR of bloc_intact
+[V10] aims_USSR=status_quo: {1975: True, 1976: True, 1977: True, 1978: True, 1979: True, 1980: True, 1981: False, 1982: True, 1983: True, 1984: True, 1985: True, 1986: True, 1987: False, 1988: False, 1989: False, 1990: False}
+[V10]   beside (fortune), safe({USSR, Nature}): {1975: True, 1976: True, 1977: True, 1978: True, 1979: True, 1980: True, 1981: True, 1982: True, 1983: True, 1984: True, 1985: True, 1986: True, 1987: True, 1988: True, 1989: True, 1990: False}; departure 1989
+F
+=================================== FAILURES ===================================
+___________________________________ test_V10 ___________________________________
+
+    @pytest.mark.skipif(not FIRST_SIGHT, reason="cw_v1 first sight not switched on")
+    def test_V10():
+        timer = Timer()
+        print("\n[V10] engine: composite (explicit to 1984, symbolic beyond) for K_USSR of bloc_intact")
+        rows = realized_rows(v1.REALIZED_MOVES)
+        results = {}
+        for aims in HYPS:
+            member, dep, luck, dep_luck = departure(aims, fortune=True)
+            print(f"[V10] aims_USSR={aims}: {member}")
+            print(f"[V10]   beside (fortune), safe({{USSR, Nature}}): {luck}; departure {dep_luck}")
+            a = dep is not None and 1979 <= dep <= 1989
+            found = []
+            if dep is not None:
+>               found = drivers(aims, dep)
+                        ^^^^^^^^^^^^^^^^^^
+
+tests/coldwar_v1/scenarios/test_V10.py:124: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/coldwar_v1/scenarios/test_V10.py:107: in drivers
+    back = inside(aims, dep + 1, [t for _, t in perts])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/coldwar_v1/scenarios/test_V10.py:72: in inside
+    g = composite_graph(aims, states, **build)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/coldwar_v1/common.py:265: in composite_graph
+    return explore(Cut(m, COMPOSITE_CUT), initial=list(starts), max_states=max_states)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+wavefront/engine/explore.py:84: in explore
+    for t in successors(s, av, mv):
+             ^^^^^^^^^^^^^^^^^^^^^
+wavefront/engine/multires.py:414: in successors
+    return [self._return(k, s, h)] * len(moves)
+            ^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = FlatModel('cw_v1', crises: berlin_1948, cuba_1962, sino_soviet_1969, alert_1973, able_archer_1983)
+k = 4, s = (36, 0, 3, 3, 2, 3, ...), h = (2, 2, 0, 1, 1, 0, ...)
+
+    def _return(self, k: int, s: State, h: State) -> State:
+        """One coarse transition from ``s`` whose only immediate effects are the exit
+        levels ``lambda(h, s)``."""
+        c = self.crises[k]
+        coarse = self.coarse
+        where = f"{self._context(k, s)}: the exit map"
+        values = c.exit(dict(c.sub.state_dict(h)), dict(coarse.state_dict(s)))
+        if not isinstance(values, Mapping):
+            raise ModelError(f"{where} must return a mapping, not {values!r}")
+        sets = []
+        for name, value in values.items():
+            i = coarse.index.get(name)
+            if i is None or coarse.variables[i].origin != "var":
+                raise ModelError(
+                    f"{where} names {name!r}, which is not a declared variable of {coarse.name!r}"
+                )
+            spec = coarse.variables[i]
+            x = _resolve(spec, value, where)
+            if spec.monotone and x < s[i]:
+>               raise ModelError(
+                    f"{where} lowers monotone variable {name!r} from "
+                    f"{spec.levels[s[i]]} to {spec.levels[x]}"
+                )
+E               wavefront.model.model.ModelError: crisis 'able_archer_1983' entered from {tick=36, aims_USSR=status_quo, nuke_USA=overkill, nuke_USSR=overkill, intel_USA=overhead, belief_force_USA=over_1000, belief_USA_USSR=status_quo, belief_USSR_USA=first_strike_intent, offer=limits, oversight=ntm, arms=capped, buildup=True, esc=peace, accidental=True, us_strike=False, berlin_wall=True, invasion_west=False, us_began_war=False, korea=armistice, afghan=war, econ_USSR=stagnant, legit_USSR=secure, perestroika=False, bloc_USSR=contested, align_PRC=us_aligned, china_opening=True, esc_sino=clash, esc_usprc=peace, sino_soviet_talks=True, count_USSR=over_1000, pending_USA_approve_u2=0, pending_USA_survivable_force=0, pending_USA_corona=0, pending_USA_strategic_buildup=0, pending_USSR_build_bomb=0, pending_USSR_icbm_buildup=0, pending_USSR_mirv=0, pending_USSR_first_icbms=0}: the exit map lowers monotone variable 'accidental' from True to False
+
+wavefront/engine/multires.py:338: ModelError
+=========================== short test summary info ============================
+FAILED tests/coldwar_v1/scenarios/test_V10.py::test_V10 - wavefront.model.mod...
+1 failed in 94.67s (0:01:34)
+END=2026-10-29T08:09:03Z

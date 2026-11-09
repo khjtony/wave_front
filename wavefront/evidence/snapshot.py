@@ -60,6 +60,16 @@ the variable it copies, exactly as for the model's own initial states. A latch g
 ``unset`` although its condition holds in the loaded state is refused: no play of the model
 reaches such a state.
 
+A variable may instead carry a *set* of levels over a contested window (docs/
+ambiguous_levels.md): ``{"levels": [{"level": ..., "confidence": ..., "indicators": [...]},
+...], "ambiguity": "why the threshold's crossing is a judgement here"}``, at least two members,
+each with its own provenance, mutually exclusive with ``level``. Such a snapshot denotes the
+product set of concrete states, one per combination of member levels:
+:func:`snapshot_to_states` and :func:`load_snapshot_states` return it as a
+:class:`SnapshotStates`; :func:`snapshot_to_state` and :func:`load_snapshot` keep returning the
+one state of a snapshot without a set and refuse a snapshot with one. Built-ins stay
+single-valued.
+
 The returned state is not filtered by the model's ``assume`` restrictions (spec 3.1a): a
 snapshot is evidence about where the world is, so it may lie outside what the model assumes,
 and ``explore(cm, initial=[state])`` takes it as given. The ``model`` field and the ``rates``
@@ -69,9 +79,11 @@ are evidence for reviewing the model's parameters, never an edit of its transiti
 
 from __future__ import annotations
 
+import itertools
 import json
 import re
 from collections.abc import Mapping
+from dataclasses import dataclass
 from datetime import date as _date
 from pathlib import Path
 from typing import Any
@@ -81,11 +93,15 @@ from ..model.model import ModelError
 
 __all__ = [
     "SnapshotError",
+    "SnapshotStates",
     "CONFIDENCE_LEVELS",
     "validate_snapshot",
     "snapshot_to_state",
+    "snapshot_to_states",
+    "level_set",
     "read_snapshot",
     "load_snapshot",
+    "load_snapshot_states",
 ]
 
 CONFIDENCE_LEVELS = ("high", "medium", "low", "assumed")
@@ -97,6 +113,7 @@ _NAME = re.compile(r"[A-Za-z_][A-Za-z0-9_]*")
 _TOP_REQUIRED = ("date", "model", "variables")
 _TOP_ALLOWED = (*_TOP_REQUIRED, "builtins", "rates", "$schema")
 _VARIABLE_FIELDS = ("level", "confidence", "indicators")
+_SET_FIELDS = ("levels", "ambiguity")
 _BUILTIN_FIELDS = ("value", "confidence", "indicators", "rule")
 _INDICATOR_FIELDS = ("id", "value", "source", "observed", "rule")
 _RATE_FIELDS = ("ticks", "basis")
@@ -185,6 +202,35 @@ def _check_variable(name: str, entry: object, problems: list[str]) -> None:
     path = f"variables.{name}"
     if not _NAME.fullmatch(name):
         problems.append(f"variables: {name!r} is not a valid variable name")
+    if isinstance(entry, dict) and "levels" in entry:
+        _check_level_set(path, entry, problems)
+        return
+    _check_level_entry(path, entry, problems)
+
+
+def _check_level_set(path: str, entry: dict[str, Any], problems: list[str]) -> None:
+    """A set-valued entry: ``levels`` (two or more members, each a level with its own
+    provenance) and ``ambiguity``; ``level``, ``confidence`` and ``indicators`` belong to
+    the members, so they are unexpected here."""
+    var = _object(entry, path, _SET_FIELDS, _SET_FIELDS, problems)
+    if var is None:
+        return
+    if "ambiguity" in var and not _is_text(var["ambiguity"]):
+        problems.append(f"{path}.ambiguity: must be a non-empty string")
+    members = var.get("levels")
+    if not isinstance(members, list):
+        problems.append(f"{path}.levels: must be an array")
+        return
+    if len(members) < 2:
+        problems.append(
+            f"{path}.levels: a set needs at least two members (give one level with 'level')"
+        )
+    for k, member in enumerate(members):
+        _check_level_entry(f"{path}.levels[{k}]", member, problems)
+
+
+def _check_level_entry(path: str, entry: object, problems: list[str]) -> None:
+    """A single level with its provenance: a variable entry, or one member of a set."""
     var = _object(entry, path, _VARIABLE_FIELDS, _VARIABLE_FIELDS, problems)
     if var is None:
         return
@@ -413,26 +459,64 @@ def _fill_builtins(
     return values
 
 
-def snapshot_to_state(data: dict[str, Any], cm: CompiledModel) -> tuple[int, ...]:
-    """Map a snapshot onto a state of ``cm``: one value per variable, in state order.
+def level_set(entry: Mapping[str, Any]) -> tuple[Any, ...]:
+    """The levels of a snapshot variable entry as written: ``(level,)`` for a single level,
+    the members' levels in file order for a set-valued entry. Needs no model; the replay
+    metrics use it on hindsight and replay snapshots."""
+    if "levels" in entry:
+        return tuple(member["level"] for member in entry["levels"])
+    return (entry["level"],)
 
-    ``data`` is validated first (:func:`validate_snapshot`). Then every variable in the
-    snapshot must be a declared variable of the model with a level of the right kind;
-    variables the snapshot omits take their declared initial value, except those declared
-    with ``init=None``, which the snapshot must fix. The ``builtins`` section, if any, is
-    filled in after the variables: each name must be a settable built-in of the model
-    (``pending_*``, ``last_*``, a latch, ``fair_*``, ``cadence_*``) and each value in its
-    range (a pending counter at most the action's delay, a cadence counter at most the
-    actor's cadence minus 1). Raises :class:`SnapshotError` naming the variable
-    or built-in and the value of every problem found."""
+
+@dataclass(frozen=True)
+class SnapshotStates:
+    """The concrete states a snapshot denotes (docs/ambiguous_levels.md).
+
+    ``ambiguous`` lists each set-valued variable with its levels, in the model's declaration
+    order of variables and of levels (as written in the snapshot: level names, integers,
+    booleans). ``states`` is the product over them, the first variable varying slowest;
+    ``members[i]`` gives, for ``states[i]``, the level of each set-valued variable. A
+    snapshot without a set has one state, ``ambiguous`` and ``members[0]`` empty."""
+
+    states: tuple[tuple[int, ...], ...]
+    ambiguous: tuple[tuple[str, tuple[Any, ...]], ...]
+    members: tuple[dict[str, Any], ...]
+
+    @property
+    def is_set(self) -> bool:
+        return bool(self.ambiguous)
+
+    def label(self, i: int) -> str:
+        """``var=level, ...`` for member ``i`` (``"the snapshot state"`` without a set)."""
+        if not self.ambiguous:
+            return "the snapshot state"
+        return ", ".join(f"{k}={_shown(v)}" for k, v in self.members[i].items())
+
+    def __len__(self) -> int:
+        return len(self.states)
+
+
+def _shown(level: Any) -> str:
+    return str(level).lower() if isinstance(level, bool) else str(level)
+
+
+def snapshot_to_states(data: dict[str, Any], cm: CompiledModel) -> SnapshotStates:
+    """Map a snapshot onto the set of states of ``cm`` it denotes: one state for a snapshot
+    whose variables all carry one ``level``; with set-valued variables (``levels``) the
+    product over their members (:class:`SnapshotStates`). The checks are those of
+    :func:`snapshot_to_state`, applied to every member level; in addition a set may not give
+    the same level twice. Built-ins and latches are filled into every member state; a latch
+    given as ``unset`` whose condition holds in some member state is refused naming that
+    member. Raises :class:`SnapshotError` with every problem found."""
     problems = validate_snapshot(data)
     if problems:
         raise SnapshotError("invalid snapshot: " + "; ".join(problems), problems)
     declared = {v.name: v for v in cm.variables if v.origin == "var"}
     given: Mapping[str, Mapping[str, Any]] = data["variables"]
     values: dict[str, int] = {}
+    sets: dict[str, list[tuple[int, Any]]] = {}
     for name, entry in given.items():
-        level = entry["level"]
+        levels = level_set(entry)
         spec = declared.get(name)
         if spec is None:
             kind = "a built-in of" if name in cm.index else "not a variable of"
@@ -442,15 +526,27 @@ def snapshot_to_state(data: dict[str, Any], cm: CompiledModel) -> tuple[int, ...
                 if name in cm.index
                 else f"variables: {', '.join(declared)}"
             )
+            shown = f"level {levels[0]!r}" if "levels" not in entry else f"levels {list(levels)!r}"
             problems.append(
-                f"snapshot variable {name!r} (level {level!r}) is {kind} model {cm.name!r} ({hint})"
+                f"snapshot variable {name!r} ({shown}) is {kind} model {cm.name!r} ({hint})"
             )
             continue
-        value, problem = _level_value(spec, level)
-        if problem is not None:
-            problems.append(problem)
-        elif value is not None:
-            values[name] = value
+        mapped: list[tuple[int, Any]] = []
+        for level in levels:
+            value, problem = _level_value(spec, level)
+            if problem is not None:
+                problems.append(problem)
+            elif value is not None:
+                if any(v == value for v, _ in mapped):
+                    problems.append(
+                        f"variable {name!r}: the set of levels gives level {level!r} twice"
+                    )
+                else:
+                    mapped.append((value, level))
+        if "levels" in entry:
+            sets[name] = sorted(mapped, key=lambda x: x[0])
+        elif mapped:
+            values[name] = mapped[0][0]
     for spec in declared.values():
         if spec.name in given:
             continue
@@ -465,21 +561,59 @@ def snapshot_to_state(data: dict[str, Any], cm: CompiledModel) -> tuple[int, ...
     values.update(_fill_builtins(cm, builtins, problems))
     if problems:
         raise SnapshotError("; ".join(problems), problems)
-    state = [values.get(spec.name, spec.init[0]) for spec in cm.variables]
-    for latch in cm.model.latches:
-        i = cm.index[latch.name]
-        if state[i] != 0 or not cm.evaluate(latch.when, state):
-            continue
-        if latch.name in builtins:
-            problems.append(
-                f"built-in {latch.name!r} is given as 'unset', but its condition already "
-                "holds in the loaded state, so the latch would have been set"
-            )
-        else:
-            state[i] = state[cm.index[latch.of]] + 1
+    names = [spec.name for spec in cm.variables if spec.name in sets]
+    ambiguous = tuple((n, tuple(level for _v, level in sets[n])) for n in names)
+    states: list[tuple[int, ...]] = []
+    members: list[dict[str, Any]] = []
+    for combo in itertools.product(*(sets[n] for n in names)):
+        member = {n: level for n, (_v, level) in zip(names, combo, strict=True)}
+        vals = {**values, **{n: v for n, (v, _level) in zip(names, combo, strict=True)}}
+        state = [vals.get(spec.name, spec.init[0]) for spec in cm.variables]
+        where = (
+            " (in the member " + ", ".join(f"{k}={_shown(v)}" for k, v in member.items()) + ")"
+            if names
+            else ""
+        )
+        for latch in cm.model.latches:
+            i = cm.index[latch.name]
+            if state[i] != 0 or not cm.evaluate(latch.when, state):
+                continue
+            if latch.name in builtins:
+                problems.append(
+                    f"built-in {latch.name!r} is given as 'unset', but its condition already "
+                    f"holds in the loaded state{where}, so the latch would have been set"
+                )
+            else:
+                state[i] = state[cm.index[latch.of]] + 1
+        states.append(tuple(state))
+        members.append(member)
     if problems:
         raise SnapshotError("; ".join(problems), problems)
-    return tuple(state)
+    return SnapshotStates(tuple(states), ambiguous, tuple(members))
+
+
+def snapshot_to_state(data: dict[str, Any], cm: CompiledModel) -> tuple[int, ...]:
+    """Map a snapshot onto a state of ``cm``: one value per variable, in state order.
+
+    ``data`` is validated first (:func:`validate_snapshot`). Then every variable in the
+    snapshot must be a declared variable of the model with a level of the right kind;
+    variables the snapshot omits take their declared initial value, except those declared
+    with ``init=None``, which the snapshot must fix. The ``builtins`` section, if any, is
+    filled in after the variables: each name must be a settable built-in of the model
+    (``pending_*``, ``last_*``, a latch, ``fair_*``, ``cadence_*``) and each value in its
+    range (a pending counter at most the action's delay, a cadence counter at most the
+    actor's cadence minus 1). Raises :class:`SnapshotError` naming the variable
+    or built-in and the value of every problem found, and when the snapshot gives a set of
+    levels for some variable: such a snapshot denotes several states, which
+    :func:`snapshot_to_states` returns."""
+    result = snapshot_to_states(data, cm)
+    if result.is_set:
+        names = ", ".join(repr(n) for n, _levels in result.ambiguous)
+        raise SnapshotError(
+            f"the snapshot gives a set of levels for {names}, so it denotes "
+            f"{len(result)} states, not one; use snapshot_to_states (or load_snapshot_states)"
+        )
+    return result.states[0]
 
 
 # -- files ----------------------------------------------------------------------------------
@@ -526,5 +660,15 @@ def load_snapshot(path: str | Path, cm: CompiledModel) -> tuple[int, ...]:
     data = read_snapshot(path)
     try:
         return snapshot_to_state(data, cm)
+    except SnapshotError as exc:
+        raise SnapshotError(f"{path}: {exc}", exc.problems) from None
+
+
+def load_snapshot_states(path: str | Path, cm: CompiledModel) -> SnapshotStates:
+    """Read a snapshot file and map it onto the set of states of ``cm`` it denotes (see
+    :func:`snapshot_to_states`); one state for a snapshot without a set of levels."""
+    data = read_snapshot(path)
+    try:
+        return snapshot_to_states(data, cm)
     except SnapshotError as exc:
         raise SnapshotError(f"{path}: {exc}", exc.problems) from None

@@ -1,0 +1,70 @@
+START=2026-10-29T07:27:46Z
+
+[V7] engines: layered lifting (1964), composite (1973), symbolic (1988)
+[V7]   aims_USSR=status_quo 1963: oversight none -> test_ban (True); distances {'adverse': 8, 'out K_USA': 0, 'out K_USSR': 0} (lowered: {'adverse': 8, 'out K_USA': 0, 'out K_USSR': 0}) [layered]: False
+[V7]     beside (fortune): {'out K_USA+Nature': 0, 'out K_USSR+Nature': 0} (lowered: {'out K_USA+Nature': 0, 'out K_USSR+Nature': 0})
+[V7]   aims_USSR=status_quo 1972: oversight test_ban -> ntm (True); distances {'adverse': 5, 'out K_USA': 0, 'out K_USSR': 0} (lowered: {'adverse': 5, 'out K_USA': 0, 'out K_USSR': 0}) [composite (699338 states to 1984)]: False
+[V7]     beside (fortune): {'out K_USA+Nature': 0, 'out K_USSR+Nature': 2} (lowered: {'out K_USA+Nature': 0, 'out K_USSR+Nature': 2})
+[V7]   aims_USSR=status_quo 1987: oversight ntm -> on_site (True); distances {'adverse': None, 'out K_USA': None, 'out K_USSR': None} (lowered: {'adverse': None, 'out K_USA': None, 'out K_USSR': None}) [symbolic]: False
+[V7]     beside (fortune): {'out K_USA+Nature': None, 'out K_USSR+Nature': None} (lowered: {'out K_USA+Nature': None, 'out K_USSR+Nature': None})
+[V7]   (c) arms = reduced from 1962: model in 7; frozen: None
+[V7] aims_USSR=status_quo: (a) and (b) False, (c) True (1781.8 s)
+[V7]   aims_USSR=opportunist 1963: oversight none -> test_ban (True); distances {'adverse': 8, 'out K_USA': 0, 'out K_USSR': 0} (lowered: {'adverse': 8, 'out K_USA': 0, 'out K_USSR': 0}) [layered]: False
+[V7]     beside (fortune): {'out K_USA+Nature': 0, 'out K_USSR+Nature': 0} (lowered: {'out K_USA+Nature': 0, 'out K_USSR+Nature': 0})
+[V7]   aims_USSR=opportunist 1972: oversight test_ban -> ntm (True); distances {'adverse': 5, 'out K_USA': 0, 'out K_USSR': 0} (lowered: {'adverse': 5, 'out K_USA': 0, 'out K_USSR': 0}) [composite (1403138 states to 1984)]: False
+[V7]     beside (fortune): {'out K_USA+Nature': 0, 'out K_USSR+Nature': 2} (lowered: {'out K_USA+Nature': 0, 'out K_USSR+Nature': 2})
+[V7]   aims_USSR=opportunist 1987: oversight ntm -> on_site (True); distances {'adverse': None, 'out K_USA': None, 'out K_USSR': None} (lowered: {'adverse': None, 'out K_USA': None, 'out K_USSR': None}) [symbolic]: False
+[V7]     beside (fortune): {'out K_USA+Nature': None, 'out K_USSR+Nature': None} (lowered: {'out K_USA+Nature': None, 'out K_USSR+Nature': None})
+[V7]   (c) arms = reduced from 1962: model in 7; frozen: None
+[V7] aims_USSR=opportunist: (a) and (b) False, (c) True (3099.4 s)
+F
+=================================== FAILURES ===================================
+___________________________________ test_V7 ____________________________________
+
+    @pytest.mark.skipif(not FIRST_SIGHT, reason="cw_v1 first sight not switched on")
+    def test_V7():
+        from wavefront.symbolic import shortest
+    
+        timer = Timer()
+        print("\n[V7] engines: layered lifting (1964), composite (1973), symbolic (1988)")
+        results = {}
+        for aims in HYPS:
+            cm = compiled(aims)
+            ab = True
+            for y in REGIMES:
+                before = level(cm, hindsight(y, aims), "oversight")
+                after = level(cm, hindsight(y + 1, aims), "oversight")
+                a = ORDER.index(after) > ORDER.index(before)
+                s = hindsight(y + 1, aims)
+                sm = with_level(cm, s, "oversight", before)
+                (m_s, m_m), engine = distances(aims, y + 1, [s, sm])
+                some, none_back = compare(m_m, m_s)
+                b = some and none_back
+                print(
+                    f"[V7]   aims_USSR={aims} {y}: oversight {before} -> {after} ({a}); "
+                    f"distances {m_s} (lowered: {m_m}) [{engine}]: {b}"
+                )
+                (f_s, f_m), _ = distances(aims, y + 1, [s, sm], FORTUNE_KEYS)
+                print(f"[V7]     beside (fortune): {f_s} (lowered: {f_m})")
+                ab = ab and a and b
+            frozen = encoding(aims, frozen_oversight=True)
+            start_f = hindsight(1962, aims, frozen_oversight=True)
+            reduced_f = shortest(frozen, start_f, frozen.predicate(V.arms == "reduced"))
+            enc = encoding(aims)
+            reduced = shortest(enc, hindsight(1962, aims), enc.predicate(V.arms == "reduced"))
+            c = reduced_f is None and reduced is not None
+            print(f"[V7]   (c) arms = reduced from 1962: model in {reduced}; frozen: {reduced_f}")
+            results[aims] = ab and c
+            print(f"[V7] aims_USSR={aims}: (a) and (b) {ab}, (c) {c} ({timer})")
+>       assert any(results.values()), results
+E       AssertionError: {'status_quo': False, 'opportunist': False}
+E       assert False
+E        +  where False = any(dict_values([False, False]))
+E        +    where dict_values([False, False]) = <built-in method values of dict object at 0x7ce59aba0580>()
+E        +      where <built-in method values of dict object at 0x7ce59aba0580> = {'status_quo': False, 'opportunist': False}.values
+
+tests/coldwar_v1/scenarios/test_V07.py:134: AssertionError
+=========================== short test summary info ============================
+FAILED tests/coldwar_v1/scenarios/test_V07.py::test_V7 - AssertionError: {'st...
+1 failed in 3099.61s (0:51:39)
+END=2026-10-29T08:19:27Z

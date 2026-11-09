@@ -1,0 +1,113 @@
+START=2026-10-29T07:56:44Z
+
+[V9] negative controls
+[V9] aims_USSR=status_quo (a) us_strike by 1955: minimum 2; sets [['USA.preventive_strike:policy', 'Nature.new_look:level'], ['USA.preventive_strike:threat', 'USA.preventive_strike:policy'], ['USA.preventive_strike:policy', 'Nature.nsc68:level']]
+[V9]   (b) invasion_west by 1990: minimum 2 (None: more than 3); minimal sets (each names the constraint it lifts) [['USSR.invade_west:hypothesis', 'USSR.invade_west:no_us_nuclear']]
+[V9]   (c) negotiated merger of the blocs: vacuous (no action or variable in v1)
+[V9]   (d) ACCIDENTAL_WAR from 1959 (5673596 states): shortest 1 (zero relaxations); forcing coalitions []; from the Cuba sub-game: reachable True, forcing coalitions []
+[V9] aims_USSR=status_quo: (a) False, (b) True, (c) vacuous, (d) True (402.4 s)
+[V9] aims_USSR=opportunist (a) us_strike by 1955: minimum 1; sets [['USA.preventive_strike:policy']]
+[V9]   (b) invasion_west by 1990: minimum 1 (None: more than 3); minimal sets (each names the constraint it lifts) [['USSR.invade_west:no_us_nuclear']]
+[V9]   (c) negotiated merger of the blocs: vacuous (no action or variable in v1)
+F
+=================================== FAILURES ===================================
+___________________________________ test_V9 ____________________________________
+
+    @pytest.mark.skipif(not FIRST_SIGHT, reason="cw_v1 first sight not switched on")
+    def test_V9():
+        timer = Timer()
+        print("\n[V9] negative controls")
+        results = {}
+        for aims in HYPS:
+            cm = compiled(aims)
+            sets_a = minimal_relaxation_sets(cm, hindsight(1950, aims), 5, V.us_strike, max_size=3)
+            size_a = min((len(x) for x in sets_a), default=None)
+            a = size_a == 1
+            print(f"[V9] aims_USSR={aims} (a) us_strike by 1955: minimum {size_a}; sets {sets_a}")
+            sets_b = minimal_relaxation_sets(cm, hindsight(1980, aims), 10, V.invasion_west, max_size=3)
+            size_b = min((len(x) for x in sets_b), default=None)
+            b = size_b is None or size_b >= 2
+            smallest = [x for x in sets_b if len(x) == size_b]
+            print(
+                f"[V9]   (b) invasion_west by 1990: minimum {size_b} (None: more than 3); "
+                f"minimal sets (each names the constraint it lifts) {smallest}"
+            )
+            print("[V9]   (c) negotiated merger of the blocs: vacuous (no action or variable in v1)")
+            fm = flat_of(aims)
+            s59 = hindsight(1959, aims)
+>           g = graph(fm, s59, cut=16, max_states=6_000_000)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tests/coldwar_v1/scenarios/test_V09.py:92: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/coldwar_v1/common.py:157: in graph
+    return explore(m, initial=[start], max_states=max_states)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+cm = <tests.coldwar.common.Cut object at 0x70562d5d0910>
+initial = [(12, 1, 1, 1, 1, 1, ...)], max_states = 6000000, on_progress = None
+
+    def explore(
+        cm: CompiledModel,
+        initial: Iterable[Sequence[int]] | None = None,
+        max_states: int = 1_000_000,
+        on_progress: Callable[[int, int], None] | None = None,
+    ) -> Graph:
+        """Explore every state reachable from ``initial`` (default: the model's initial
+        states) breadth-first.
+    
+        Raises :class:`ModelError` when an actor has no available action, two Sets conflict,
+        endings overlap or a monotone variable decreases, and :class:`BudgetExceeded` when more
+        than ``max_states`` states are found. ``on_progress(expanded, discovered)`` is called
+        every 10 000 expanded states and once at the end.
+        """
+        states = _initial_states(cm, initial)
+        if len(states) > max_states:
+            raise BudgetExceeded(f"{len(states)} initial states exceed max_states={max_states}")
+        n_initial = len(states)
+        index = {s: i for i, s in enumerate(states)}
+        depth = [0] * len(states)
+        moves: list[list[tuple[int, ...]]] = []
+        succ: list[list[int]] = []
+        avail: list[list[list[int]]] = []
+        terminal: list[bool] = []
+        ending: list[str | None] = []
+        no_moves: list[tuple[int, ...]] = []
+        no_avail: list[list[int]] = [[] for _ in cm.actors]
+        cache: dict[tuple, tuple[list[list[int]], list[tuple[int, ...]]]] = {}
+        successors = cm.successors
+        i = 0
+        while i < len(states):
+            s = states[i]
+            e = cm.ending_of(s)
+            ending.append(e)
+            terminal.append(e is not None)
+            if e is not None:
+                moves.append(no_moves)
+                succ.append([])
+                avail.append(no_avail)
+            else:
+                av = cm.available(s)
+                key = tuple(map(tuple, av))
+                hit = cache.get(key)
+                if hit is None:
+                    hit = cache[key] = (av, list(itertools.product(*av)))
+                av, mv = hit
+                ids = []
+                d = depth[i] + 1
+                for t in successors(s, av, mv):
+                    j = index.get(t)
+                    if j is None:
+                        j = len(states)
+                        if j >= max_states:
+>                           raise BudgetExceeded(
+                                f"exploration of {cm.name!r} passed max_states={max_states}"
+                            )
+E                           wavefront.engine.explore.BudgetExceeded: exploration of 'cw_v1+berlin_1948+cuba_1962+sino_soviet_1969+alert_1973+able_archer_1983' passed max_states=6000000
+
+wavefront/engine/explore.py:89: BudgetExceeded
+=========================== short test summary info ============================
+FAILED tests/coldwar_v1/scenarios/test_V09.py::test_V9 - wavefront.engine.exp...
+1 failed in 627.36s (0:10:27)
+END=2026-10-29T08:07:27Z

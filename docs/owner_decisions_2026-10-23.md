@@ -46,3 +46,36 @@ The owner allows a larger budget. The cadence change (framework change 1) is cou
 - 5b. J3: stays failing as amended; no further rewording.
 - 5c. `oil_GER`: the German-Soviet Credit Agreement of 19 Aug 1939 is not used as a source. The snapshot change made under 2d is withdrawn; the difference stays tabulated (docs/guard_changelog_ww2.md, row of 2026-10-23).
 - 5d. The branch is pushed and a pull request opened.
+
+## 6. Decisions of 2026-10-24 (morning, on docs/owner_questions_2026-10-24.md)
+
+- 6a. Item 7: the DeepSeek backend's default is `deepseek-flash` with guidance g2 (`DEFAULT_GUIDANCE`, the text of data/extract/deepseek_guidance_g2.txt); `--guidance-file` replaces it.
+- 6b. Item 8: OCR is installed by the owner on the owner's machine.
+- 6c. Item 9: the owner merges pull request #5.
+- Items 1 to 6 were explained to the owner and are open.
+
+## 7. Decisions of 2026-10-27 (on docs/owner_questions_2026-10-24.md items 1 to 6)
+
+- 7a. Item 1, phase 2 gate: review a sample first (the proposals behind the documented and the false flips and the disagreeing quarters), then re-measure with `--metrics-only` and decide.
+- 7b. Item 2: the owner asks how the framework represents the ambiguity of a continuous history read as discrete levels (answered in conversation; no change yet).
+- 7c. Item 3: the framework-change budget stays at five (1 used, the cadence).
+- 7d. Item 4: `belief_force_USA` is Washington's *projected* Soviet force (a reading fixed after the blind replay was seen, logged as such); the blind replay over the CIA estimates is rerun under that wording, with DeepSeek and with Claude as a second reader.
+- 7e. Item 5, July 1914 v1: (a) the Russian mobilization steps gain an Austrian-measures part, symmetric with decision 2h, before first sight; (b) go for the first sight of J1v1 to J9v1.
+- 7f. Item 6, Cold War v1: (a) the 1969 sub-game's exit carries the talks into the coarse game; (b) V8's composite years use the layered lifting instead of counting as undecided; (c) the R notes are reviewed and decided by a separate high-effort agent; (e) the owner asked what a crisis-initiating option is (answered in conversation; open); (f) C7 is not re-asked in v1. The go for cw_v1's first sight is not yet given.
+- 7g. C6 (2026-10-28, after the two-reader blind replay under 7d, reports/replay_cw_crest_projected.md): `belief_force_USA` gets its own scale, the projected **number** of Soviet intercontinental delivery vehicles in bands, with a hindsight counterpart on the same scale, because the missile gap was a gap in numbers that `nuke_USSR`'s survivability scale cannot express. Applied to cw_v1 before its first sight (V6's comparison is amended accordingly, before first sight) and to the Cold War replay episode. v0's C6 stays as recorded (total hold-out, decisions D9).
+- 7h. Phase 2 gate (2026-10-28): **accepted** by the owner on the replay criterion after the sample review (reports/replay_ww2_frus_claude/README.md, "Sample review"): 95 % agreement on the text-derived variables, 8 of 9 documented flips within one quarter, with the 17 rejected proposals of the delegated, blind review dropped. The hold-out part of the gate stands as recorded on 2026-10-14 and amended on the owner's decisions of 2026-10-15; the transfer hypotheses were committed before phase 3.
+- 7i. V6 (2026-10-28), before first sight: (A) the projected count is compared with the hindsight count **at the date the estimate projects** (two to three years after its own date), not with the count on the estimate's date; the 1990 edition of Norris and Cochran (NRDC WP 90-1, Table 2) throughout; cw_v1 does not read v0's survivability-scale replay rows; ranges read at their midpoints uniformly.
+- 7j. Ambiguous windows (2026-10-28): the four candidate windows of docs/ambiguous_levels.md are accepted as proposed, pending more reliable documents (the owner has none to hand). They are applied in a separate ambiguous layer of snapshots, so that the registered claims' start states and the single-state loaders are unchanged.
+- 7k. V6's replay input (2026-10-28): the blind replay over the CIA estimates (Claude backend, proposal level), run as part of cw_v1's first sight; the hand-coded replay is computed and printed beside it. Then the go for cw_v1's first sight (V1 to V10).
+
+## 8. Decisions of 2026-11-08 (on docs/owner_questions_2026-10-30.md)
+
+- 8a. Item 1, V10: the Able Archer and Cuba exit maps write `accidental` only when true (reports/cw_v1.md section 16, proposal 1, with its construction check); logged, V10 rerun and recorded beside the first-sight error.
+- 8b. Item 2, V9 (d): rerun under `opportunist` with a budget of 12,000,000 states, logged; the verdict stays a fail. The owner asked whether the budget puts the state in the `opportunist` position: it does not. `opportunist` is one of the two swept values of `aims_USSR`; the budget only caps the explicit exploration, whose graph under that hypothesis is 11,350,359 states (docs/cw_v1_decisions.md section S).
+- 8c. Item 3, V9 (b): no guard edit; the count of 1 stands as H6's packaging effect.
+- 8d. Item 4: V6a and V2a registered under new ids before they are run; V5a not taken. The first sights of V2, V5 and V6 stand.
+- 8e. Item 5: H7 recorded in docs/transfer_hypotheses.md as "held 1967 to 1973 on cw_v1, failed as stated", with V2's table.
+- 8f. Item 6, the July 1914 v1 proposals: open. The owner had not seen reports/july1914_v1.md, which was only on this branch until it reached `main`.
+- 8g. Item 7: the hand-coded 1958 replay row reads NIE 11-4-57's mid-1960 column, logged as a data correction.
+- 8h. Item 8, the phase 3 gate: not accepted as it stands. The owner wants to extend the model's capability and expand its strategy space, and asked for the list of what framework changes 1 and 2 added. The scope of the extension is open, and the go for phase 4 waits on it.
+- Item 9 (OCR) is unchanged (6b).

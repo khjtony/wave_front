@@ -6,6 +6,7 @@ Claude backend through a fake client (cache, resume, usage and the dry run inclu
 
 import json
 import re
+import shutil
 from datetime import date
 from pathlib import Path
 
@@ -277,6 +278,51 @@ def test_review_flags_a_retrospective_reading_and_only_a_reviewer_applies_it(tmp
     decide(files["1937Q1"], [zone], "accepted", note="read as the present", reviewer="h")
     snap = json.loads((out / "1937Q1.json").read_text())
     assert snap["variables"]["rhineland"]["level"] == "demilitarized"  # the reviewer decided
+    # A measurement without the rejected proposals applies it too (the reviewer accepted it);
+    # the plain measurement still does not count it.
+    dropped = measured_snapshots(out / "proposals", quarters, HINDSIGHT, drop_rejected=True)
+    assert dropped["1937Q1"]["variables"]["rhineland"]["level"] == "demilitarized"
+    measured = measured_snapshots(out / "proposals", quarters, HINDSIGHT)
+    assert measured["1937Q1"]["variables"]["rhineland"]["level"] == "remilitarized"
+
+
+def test_measurement_without_the_rejected_proposals(proposals, tmp_path):
+    """--drop-rejected: a partly reviewed run, where --metrics-only has no snapshot to read and
+    the plain measurement still counts a rejected proposal."""
+    out = tmp_path / "partial"
+    shutil.copytree(proposals / "proposals", out / "proposals")
+    plain = measured_snapshots(out / "proposals", QUARTERS, HINDSIGHT)
+    assert measured_snapshots(out / "proposals", QUARTERS, HINDSIGHT, drop_rejected=True) == plain
+    q1, q2 = (out / "proposals" / f"{q}.json" for q in ("1938Q1", "1938Q2"))
+    (second,) = _ids(q2, "austria")  # the second document of the Anschluss
+    decide(q2, [second], "rejected", note="not a report of the event", reviewer="h")
+    (belief,) = _ids(out / "proposals" / "1939Q2.json", "belief_GER")
+    decide(out / "proposals" / "1939Q2.json", [belief], "accepted", note="ok", reviewer="h")
+    assert not list(out.glob("*.json"))  # pending proposals everywhere: no reviewed snapshot
+    assert measured_snapshots(out / "proposals", QUARTERS, HINDSIGHT) == plain  # still counted
+    dropped = measured_snapshots(out / "proposals", QUARTERS, HINDSIGHT, drop_rejected=True)
+    assert set(_levels(dropped, "austria").values()) == {"independent"}  # one document left
+    assert _levels(dropped, "belief_GER") == _levels(plain, "belief_GER")
+    rule = dropped["1939Q2"]["variables"]["belief_GER"]["indicators"][0]["rule"]
+    assert "accepted by h on" in rule and "NOT REVIEWED" not in rule
+    assert _ids(q1, "austria")  # nothing was removed from the files
+    report = tmp_path / "partial.md"
+    args = ["replay", "--out", str(out), "--quarters", "1936Q1..1940Q1", "--report", str(report)]
+    assert main([*args, "--measure-proposals", "--drop-rejected"]) == 0
+    text = report.read_text()
+    first = text.splitlines()[0]
+    assert first.startswith("PROPOSAL-LEVEL MEASUREMENT, REJECTED PROPOSALS DROPPED")
+    assert (
+        "accepted by a reviewer 1, rejected 1, not reviewed" in first and "--drop-rejected" in text
+    )
+    m = compare(out, QUARTERS, HINDSIGHT, measure_proposals=True, drop_rejected=True)
+    assert m.review["rejected"] == 1 and sum(sum(c.values()) for c in m.counts.values()) == (
+        sum(m.review.values()) - 1
+    )
+    for bad in (["--drop-rejected"], ["--metrics-only", "--drop-rejected"]):
+        assert main([*args, *bad]) == 2
+    with pytest.raises(ReplayError, match="measure_proposals"):
+        compare(out, QUARTERS, HINDSIGHT, drop_rejected=True)
 
 
 def test_auto_accept_follows_the_rules_and_says_so(tmp_path):

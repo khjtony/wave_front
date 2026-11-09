@@ -1,0 +1,18 @@
+START=2026-10-28T05:27:41Z
+
+[J4v1] engine: explicit, from the realized state at tick 31
+[J4v1] aims_GER=localize, aims_RUS=deter: restrain_vienna available at 31: True; belief at 31 stays_out, at 32 fights; earliest Halt accepted E = 34 (lag after the visible belief 2 days); X's kernel left at None (realized path to tick 32, stops at 32)
+[J4v1]   (d) amended: X's kernel along the realized path from tick 0 left at None; registered 2026-10-15 (kernel left at 32 or 33): False
+[J4v1] aims_GER=localize, aims_RUS=fight: restrain_vienna available at 31: True; belief at 31 stays_out, at 32 fights; earliest Halt accepted E = 34 (lag after the visible belief 2 days); X's kernel left at 31 (realized path to tick 38)
+[J4v1]   (d) amended: X's kernel along the realized path from tick 0 left at 31; registered 2026-10-15 (kernel left at 32 or 33): False
+[J4v1] aims_GER=continental, aims_RUS=deter: restrain_vienna available at 31: True; belief at 31 stays_out, at 32 fights; earliest Halt accepted E = 34 (lag after the visible belief 2 days); X's kernel left at None (realized path to tick 32, stops at 32)
+[J4v1]   (d) amended: X's kernel along the realized path from tick 0 left at None; registered 2026-10-15 (kernel left at 32 or 33): False
+[J4v1] aims_GER=continental, aims_RUS=fight: restrain_vienna available at 31: True; belief at 31 stays_out, at 32 fights; earliest Halt accepted E = 34 (lag after the visible belief 2 days); X's kernel left at 31 (realized path to tick 38)
+[J4v1]   (d) amended: X's kernel along the realized path from tick 0 left at 31; registered 2026-10-15 (kernel left at 32 or 33): False
+[J4v1] done (30.4 s)
+.
+==================================== PASSES ====================================
+=========================== short test summary info ============================
+PASSED tests/july1914_v1/test_J04v1.py::test_J4v1
+1 passed in 30.77s
+END=2026-10-28T05:28:14Z

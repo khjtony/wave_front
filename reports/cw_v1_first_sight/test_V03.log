@@ -1,0 +1,112 @@
+START=2026-10-29T07:23:11Z
+
+[V3] engine: explicit on the alert sub-game; composite for the unbounded column
+[V3] aims_USSR=status_quo: sub-game 197 states; (a) realized days 4, ending CEASEFIRE, unavailable None: True (zero relaxations)
+[V3]   realized 1974 state: {tick=27, aims_USSR=status_quo, nuke_USA=overkill, nuke_USSR=survivable, intel_USA=overhead, belief_force_USA=over_1000, belief_USA_USSR=status_quo, belief_USSR_USA=hostile, offer=limits, oversight=ntm, arms=capped, buildup=False, esc=peace, accidental=False, us_strike=False, berlin_wall=True, invasion_west=False, us_began_war=False, korea=armistice, afghan=none, econ_USSR=growing, legit_USSR=secure, perestroika=False, bloc_USSR=intact, align_PRC=us_aligned, china_opening=True, esc_sino=clash, esc_usprc=peace, sino_soviet_talks=True, count_USSR=over_1000, pending_USA_approve_u2=0, pending_USA_survivable_force=0, pending_USA_corona=0, pending_USA_strategic_buildup=0, pending_USSR_build_bomb=0, pending_USSR_icbm_buildup=0, pending_USSR_mirv=2, pending_USSR_first_icbms=0}
+[V3]   (b) first fine state in K_J True, K_USA True, K_USSR False: False; beside: fortune {('USA', 'Nature'): True, ('USSR', 'Nature'): True}; unbounded (composite, 403770 states) {('USA', 'USSR'): True, ('USA',): False, ('USSR',): False}
+[V3]   (c) shortest play into the realized return: 1 transitions; edges with USA.defcon3 on shortest plays: 0
+[V3]   (c) to a return with esc >= conventional: after the alert 1, after the reply alone 2 (available True, True): True
+[V3]   control (USA and USSR idle): fighting reachable False
+[V3] aims_USSR=status_quo: (a) True, (b) False, (c) True, control True (21.4 s)
+[V3] aims_USSR=opportunist: sub-game 197 states; (a) realized days 4, ending CEASEFIRE, unavailable None: True (zero relaxations)
+[V3]   realized 1974 state: {tick=27, aims_USSR=opportunist, nuke_USA=overkill, nuke_USSR=survivable, intel_USA=overhead, belief_force_USA=over_1000, belief_USA_USSR=opportunist, belief_USSR_USA=hostile, offer=limits, oversight=ntm, arms=capped, buildup=False, esc=peace, accidental=False, us_strike=False, berlin_wall=True, invasion_west=False, us_began_war=False, korea=armistice, afghan=none, econ_USSR=growing, legit_USSR=secure, perestroika=False, bloc_USSR=intact, align_PRC=us_aligned, china_opening=True, esc_sino=clash, esc_usprc=peace, sino_soviet_talks=True, count_USSR=over_1000, pending_USA_approve_u2=0, pending_USA_survivable_force=0, pending_USA_corona=0, pending_USA_strategic_buildup=0, pending_USSR_build_bomb=0, pending_USSR_icbm_buildup=0, pending_USSR_mirv=2, pending_USSR_first_icbms=0}
+[V3]   (b) first fine state in K_J True, K_USA True, K_USSR False: False; beside: fortune {('USA', 'Nature'): True, ('USSR', 'Nature'): True}; unbounded (composite, 809926 states) {('USA', 'USSR'): True, ('USA',): False, ('USSR',): False}
+[V3]   (c) shortest play into the realized return: 1 transitions; edges with USA.defcon3 on shortest plays: 0
+[V3]   (c) to a return with esc >= conventional: after the alert 1, after the reply alone 2 (available True, True): True
+[V3]   control (USA and USSR idle): fighting reachable False
+[V3] aims_USSR=opportunist: (a) True, (b) False, (c) True, control True (67.0 s)
+F
+=================================== FAILURES ===================================
+___________________________________ test_V3 ____________________________________
+
+    @pytest.mark.skipif(not FIRST_SIGHT, reason="cw_v1 first sight not switched on")
+    def test_V3():
+        timer = Timer()
+        print("\n[V3] engine: explicit on the alert sub-game; composite for the unbounded column")
+        results = {}
+        for aims in HYPS:
+            cm = compiled(aims)
+            fm = flat_of(aims)
+            s73 = hindsight(1973, aims)
+            g, returns, _ = fine_graph(fm, s73, NAME)
+            sub = g.model
+            first = g.initial[0]
+            h0 = g.states[first]
+            # (a)
+            play, stop = realized_play(sub, h0)
+            end = sub.ending_of(play[-1])
+            a = stop is None and end == "CEASEFIRE"
+            realized_return = returns.get(g.index[play[-1]]) if a else None
+            print(
+                f"[V3] aims_USSR={aims}: sub-game {g.size()} states; (a) realized days {len(play)}, "
+                f"ending {end}, unavailable {stop}: {a} (zero relaxations)"
+            )
+            if realized_return is not None:
+                print(f"[V3]   realized 1974 state: {cm.format_state(realized_return)}")
+    
+            # (b)
+            def bounded(r):
+                return bool(cm.evaluate("no_war_core", r))
+    
+            ks = {c: lifted(g, returns, c, bounded) for c in (JOINT, US, SU)}
+            b = first in ks[JOINT] and first not in ks[US] and first not in ks[SU]
+            fortune = {
+                c: first in lifted(g, returns, c, bounded)
+                for c in (("USA", "Nature"), ("USSR", "Nature"))
+            }
+            starts = sorted(set(returns.values()))
+            g2 = composite_graph(aims, starts)
+            unbounded = {}
+            for c in (JOINT, US, SU):
+                k2 = composite_kernel(g2, aims, c, "no_war_core")
+                unbounded[c] = first in lifted(g, returns, c, lambda r, k2=k2: g2.index[r] in k2)
+            print(
+                f"[V3]   (b) first fine state in K_J {first in ks[JOINT]}, K_USA {first in ks[US]}, "
+                f"K_USSR {first in ks[SU]}: {b}; beside: fortune {fortune}; unbounded "
+                f"(composite, {g2.size()} states) {unbounded}"
+            )
+            # (c)
+            c1 = False
+            if realized_return is not None:
+                target = {i for i, r in returns.items() if r == realized_return}
+                d, edges = alert_on_shortest_plays(g, sub, first, target)
+                c1 = d is not None and not edges
+                print(
+                    f"[V3]   (c) shortest play into the realized return: {d} transitions; edges "
+                    f"with USA.defcon3 on shortest plays: {len(edges)}"
+                )
+            war = {i for i, r in returns.items() if cm.evaluate(V.esc >= "conventional", r)}
+            ha, ok_a = after(sub, h0, "defcon3")
+            hr, ok_r = after(sub, h0, "reply")
+            da = bfs_distance(g, g.index[ha], war) if ok_a else None
+            dr = bfs_distance(g, g.index[hr], war) if ok_r else None
+            c2 = ok_a and ok_r and far(da) <= far(dr)
+            print(
+                f"[V3]   (c) to a return with esc >= conventional: after the alert {da}, after the "
+                f"reply alone {dr} (available {ok_a}, {ok_r}): {c2}"
+            )
+            c = c1 and c2
+            # control
+            pairs = [
+                (a.name, x.name)
+                for a in sub.actors
+                if a.name in ("USA", "USSR")
+                for x in a.actions
+                if not x.is_idle
+            ]
+            gc = explore(Forbid(sub, pairs), initial=[h0])
+            fi = sub.index["fighting"]
+            control = not any(h[fi] for h in gc.states)
+            print(f"[V3]   control (USA and USSR idle): fighting reachable {not control}")
+            results[aims] = (a, b, c, control)
+            print(f"[V3] aims_USSR={aims}: (a) {a}, (b) {b}, (c) {c}, control {control} ({timer})")
+>       assert any(all(v) for v in results.values()), results
+E       AssertionError: {'status_quo': (True, False, True, True), 'opportunist': (True, False, True, True)}
+E       assert False
+E        +  where False = any(<generator object test_V3.<locals>.<genexpr> at 0x79973777ce10>)
+
+tests/coldwar_v1/scenarios/test_V03.py:252: AssertionError
+=========================== short test summary info ============================
+FAILED tests/coldwar_v1/scenarios/test_V03.py::test_V3 - AssertionError: {'st...
+1 failed in 67.18s (0:01:07)
+END=2026-10-29T07:24:20Z
