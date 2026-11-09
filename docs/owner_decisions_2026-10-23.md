@@ -67,3 +67,15 @@ The owner allows a larger budget. The cadence change (framework change 1) is cou
 - 7i. V6 (2026-10-28), before first sight: (A) the projected count is compared with the hindsight count **at the date the estimate projects** (two to three years after its own date), not with the count on the estimate's date; the 1990 edition of Norris and Cochran (NRDC WP 90-1, Table 2) throughout; cw_v1 does not read v0's survivability-scale replay rows; ranges read at their midpoints uniformly.
 - 7j. Ambiguous windows (2026-10-28): the four candidate windows of docs/ambiguous_levels.md are accepted as proposed, pending more reliable documents (the owner has none to hand). They are applied in a separate ambiguous layer of snapshots, so that the registered claims' start states and the single-state loaders are unchanged.
 - 7k. V6's replay input (2026-10-28): the blind replay over the CIA estimates (Claude backend, proposal level), run as part of cw_v1's first sight; the hand-coded replay is computed and printed beside it. Then the go for cw_v1's first sight (V1 to V10).
+
+## 8. Decisions of 2026-11-08 (on docs/owner_questions_2026-10-30.md)
+
+- 8a. Item 1, V10: the Able Archer and Cuba exit maps write `accidental` only when true (reports/cw_v1.md section 16, proposal 1, with its construction check); logged, V10 rerun and recorded beside the first-sight error.
+- 8b. Item 2, V9 (d): rerun under `opportunist` with a budget of 12,000,000 states, logged; the verdict stays a fail. The owner asked whether the budget puts the state in the `opportunist` position: it does not. `opportunist` is one of the two swept values of `aims_USSR`; the budget only caps the explicit exploration, whose graph under that hypothesis is 11,350,359 states (docs/cw_v1_decisions.md section S).
+- 8c. Item 3, V9 (b): no guard edit; the count of 1 stands as H6's packaging effect.
+- 8d. Item 4: V6a and V2a registered under new ids before they are run; V5a not taken. The first sights of V2, V5 and V6 stand.
+- 8e. Item 5: H7 recorded in docs/transfer_hypotheses.md as "held 1967 to 1973 on cw_v1, failed as stated", with V2's table.
+- 8f. Item 6, the July 1914 v1 proposals: open. The owner had not seen reports/july1914_v1.md, which was only on this branch until it reached `main`.
+- 8g. Item 7: the hand-coded 1958 replay row reads NIE 11-4-57's mid-1960 column, logged as a data correction.
+- 8h. Item 8, the phase 3 gate: not accepted as it stands. The owner wants to extend the model's capability and expand its strategy space, and asked for the list of what framework changes 1 and 2 added. The scope of the extension is open, and the go for phase 4 waits on it.
+- Item 9 (OCR) is unchanged (6b).
