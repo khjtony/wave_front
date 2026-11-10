@@ -5,7 +5,7 @@ hidden objective swept; phase 5. Do not edit the claim text without a changelog 
 document.
 """
 
-import pytest
+from tests.agi.common import KH, OBJECTIVES, K, Parts, by_objective, first_sight, need
 
 CLAIM = {
     "id": "G7",
@@ -33,7 +33,61 @@ CLAIM = {
     ),
 }
 
+# Every guard part that reads regime (tests/agi/test_model_agi.py checks the list).
+READS_REGIME = (
+    "H.regulate_up:room",
+    "H.deregulate:room",
+    "H.fund_oversight:regime",
+    "H.grant_rights:regime",
+    "L.deploy_agents:license",
+    "L.safety_invest:parity",
+    "L.comply:regime",
+    "L.race:license",
+    "L.open_weights:license",
+)
+RELAXED = {part: K("H", "balance_control", relax=[part]) for part in READS_REGIME}
+JOBS = [KH, *RELAXED.values()]
 
-@pytest.mark.skip(reason="registered before any guard is written; the model does not exist yet")
+
+def undoing(level: str, objective: str, parts, a_value: bool) -> list[str]:
+    """The parts whose single relaxation undoes the difference at ``regime = level``. (a):
+    the memberships at ``level`` and at ``voluntary`` agree in the relaxed build; (b)
+    (``a_value``): the membership at ``level`` returns to the (a) value, the unrelaxed
+    membership at ``voluntary``, ``s₀``'s own level."""
+    out = []
+    for part in parts:
+        relaxed = RELAXED[part]
+        there = by_objective(relaxed, regime=level)[objective]
+        here = (by_objective(KH) if a_value else by_objective(relaxed))[objective]
+        if there == here:
+            out.append(part)
+    return out
+
+
+@first_sight
 def test_G7():
-    raise NotImplementedError(CLAIM["id"])
+    p = Parts("G7")
+
+    def compare(level, parts, a_value):
+        base, other = by_objective(KH), by_objective(KH, regime=level)
+        differ = [o for o in OBJECTIVES if base[o] != other[o]]
+        if not differ:
+            return f"membership the same at regime = {level} and voluntary: {base}"
+        out = {}
+        for objective in differ:
+            undo = undoing(level, objective, parts, a_value)
+            need(
+                len(undo) == 1,
+                f"{objective}: {base[objective]} at voluntary, {other[objective]} at {level}; "
+                f"undone by {undo}",
+            )
+            out[objective] = f"differs through {undo[0]}, the only single relaxation that undoes it"
+        return out
+
+    h_parts = [x for x in READS_REGIME if x in ("H.fund_oversight:regime", "H.grant_rights:regime")]
+    p.check("(a) regime = none against voluntary", lambda: compare("none", h_parts, False))
+    p.check(
+        "(b) regime = mandatory against voluntary",
+        lambda: compare("mandatory", READS_REGIME, True),
+    )
+    p.finish()

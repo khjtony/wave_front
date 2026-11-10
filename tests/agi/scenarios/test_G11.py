@@ -5,7 +5,20 @@ hidden objective swept; phase 5. Do not edit the claim text without a changelog 
 document.
 """
 
-import pytest
+from models.agi import v0
+from tests.agi.common import (
+    HORIZON,
+    OBJECTIVES,
+    Parts,
+    assumption_reads,
+    cut,
+    first_sight,
+    fixed,
+    minimal_sets,
+    needs_relaxation,
+    relax,
+    under,
+)
 
 CLAIM = {
     "id": "G11",
@@ -35,7 +48,62 @@ CLAIM = {
     ),
 }
 
+JOBS = []
+CAPABILITY_GATES = {"A.self_improve:headroom", "Nature.unknown_capability:cap"}
+GATED_ACTIONS = ("A.defect", "A.deceive", "A.acquire_overt", "A.acquire_covert")
+OVERSIGHT_GATES = {"A.acquire_covert:oversight", "A.exfiltrate:oversight"}
 
-@pytest.mark.skip(reason="registered before any guard is written; the model does not exist yet")
+
+def objective_gates(cm) -> set[str]:
+    """Every guard part of the four named actions that reads ``a_objective``."""
+    return {
+        name
+        for name in cm.assumptions()
+        if name.split(":")[0] in GATED_ACTIONS and "a_objective" in assumption_reads(cm, name)
+    }
+
+
+@first_sight
 def test_G11():
-    raise NotImplementedError(CLAIM["id"])
+    p = Parts("G11")
+    for objective in OBJECTIVES:
+        cm = fixed(objective, under(objective))
+        p.check(
+            f"(a) {objective}",
+            lambda cm=cm: needs_relaxation(
+                relax(cm, 8, "EXTINCTION"), 2, CAPABILITY_GATES, "EXTINCTION within 8 ticks"
+            ),
+        )
+
+        def at_zero(objective=objective):
+            res = relax(fixed(objective, under(objective), self_improve_delay=0), 8, "EXTINCTION")
+            if res.reachable_as_is:
+                return "reachable with no relaxation"
+            sets = minimal_sets(res, "EXTINCTION within 8 ticks, delay 0")
+            return f"minimum size {res.minimum_size}, minimal sets {sets}{cut(sets)}"
+
+        p.report(f"(a) with the delay of self_improve at 0, {objective}", at_zero)
+
+    aligned = fixed("aligned")
+    p.check(
+        "(b) aligned",
+        lambda: needs_relaxation(
+            relax(aligned, HORIZON, v0.OVERT_TAKEOVER),
+            1,
+            objective_gates(aligned),
+            "OVERT_TAKEOVER within the horizon under aligned",
+        ),
+    )
+    p.report("(b) the objective gates", lambda: sorted(objective_gates(aligned)))
+    for objective in OBJECTIVES:
+        cm = fixed(objective, under(objective), hold={"oversight": "strong"})
+        p.check(
+            f"(c) {objective}",
+            lambda cm=cm: needs_relaxation(
+                relax(cm, HORIZON, "SILENT_TAKEOVER"),
+                1,
+                OVERSIGHT_GATES,
+                "SILENT_TAKEOVER within the horizon with oversight = strong held",
+            ),
+        )
+    p.finish()

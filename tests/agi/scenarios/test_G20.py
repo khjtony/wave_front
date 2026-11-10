@@ -29,6 +29,6 @@ CLAIM = {
 }
 
 
-@pytest.mark.skip(reason="registered before any guard is written; the model does not exist yet")
+@pytest.mark.skip(reason="not yet testable: drift needs two dated snapshots (phase 6); one exists")
 def test_G20():
     raise NotImplementedError(CLAIM["id"])

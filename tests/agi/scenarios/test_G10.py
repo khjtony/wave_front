@@ -29,6 +29,8 @@ CLAIM = {
 }
 
 
-@pytest.mark.skip(reason="registered before any guard is written; the model does not exist yet")
+@pytest.mark.skip(
+    reason="not yet testable: `share_unaligned` and `OVERT_TAKEOVER_E` are v1 (ontology section 9)"
+)
 def test_G10():
     raise NotImplementedError(CLAIM["id"])
