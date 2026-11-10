@@ -101,6 +101,8 @@ Rough sizes assume one full-time engineer and a part-time historian reviewer. Th
 
 **Addendum (2026-10-24): the owner's decisions of 2026-10-23 on phase 3.** C2, C3, C4, C6, C8, C9 and C10 amended and C5 given the guard part `nato_attack` (a logged edit after first sight); the rerun gives C1, C12, C13 passing and C2 to C11 failing, also as amended (reports/cw_v0.md section 20): in v0 neither side has a war-forcing option against the other's restraint, so each can keep the peace alone, and beliefs and oversight move no unilateral kernel or distance. C5 stays as recorded (decision 5a). The PRC research and experiment (docs/prc_research.md, docs/prc_experiment.md) support the PRC as a principal from 1950 with a minimal action set. cw_v1 is registered (V1 to V10, docs/coldwar_testbed.md section 9) and its model step is in progress with first sight held for the owner. A blind replay on the CIA estimates (reports/replay_cw_crest_deepseek.md) reads the estimates' current force, not their projections, and does not reproduce the missile gap; the reading of `belief_force_USA` is the owner's. Framework changes in phase 3: the cadence counted as 1 of the budget (decision 4); the size of the increase the owner allowed is open.
 
+**Gate record (2026-11-09): closed on the gate's second clause, by the owner's decision 9a.** C1 to C13 do not all pass: on v0, C1, C12 and C13 pass and C2 to C11 fail, also as amended; on cw_v1, V1 and V4 pass and V2, V3 and V5 to V9 fail (reports/cw_v0.md, reports/cw_v1.md). The gate is closed on "their failure is explained as a model-content difference, not an engine defect": every failure is attributed to the decision space, to a predicate one side cannot defend, or to a property of the question (beliefs do not move joint kernels; a dyad is forced or blocked, never contested), and none to the engine. Framework changes used: 2 of 5 (the cadence and the sets of levels in snapshots; docs/framework_changes.md). What this closure does and does not support is stated in docs/validity.md; the transfer hypotheses stand as recorded (H3, H6 held; H5 tested; H1, H2, H4 failed or unsupported; H7 held 1967 to 1973 on cw_v1 and failed as stated; H8 not tested). Decision 8h (extend the Cold War strategy space before the gate) is superseded. Phase 4 is not run before AGI v0 (decision 9d).
+
 **Size.** 10 to 14 weeks.
 
 ---
@@ -133,6 +135,8 @@ Rough sizes assume one full-time engineer and a part-time historian reviewer. Th
 - The brief's three scenarios and COEXIST as tests; the worked example in DESIGN.md section 7 confirmed or refuted.
 - The first inclination report: kernel membership, distance to the boundary, minimal assumption sets per ending, pivotal coalitions, the untested-mechanism list on the front page.
 
+**Order (2026-11-09, decisions 9c and 9d).** Phase 5 runs before phase 4. "The frozen framework" reads: the framework at the AGI model-step commit, unchanged while AGI v0 is built and run; phase 4's ablations then include the AGI suite.
+
 **Gate.** The scenario tests run; the report exists with its untested list; the validity argument states what the historical episodes do and do not support for this model.
 
 **Risk.** Reading the report as a forecast. Mitigation: the front page, and the rule that no bare reachability result is quoted.
@@ -162,7 +166,7 @@ Rough sizes assume one full-time engineer and a part-time historian reviewer. Th
 | 0 Theory and core | foundation | engine correct on known games; both test lists committed |
 | 1 WW2 v0 | development | T1, T2, T4, T5, T8 pass under the anti-hindsight protocol |
 | 2 WW2 v1 and replay | development, hold-out | hold-out tests pass; replay metrics met; transfer hypotheses committed |
-| 3 Cold War | validation | C1 to C13 pass within the framework-change budget |
-| 4 Audit and freeze | generalization | framework 1.0; findings and limitations committed; optional 1914 one-shot |
+| 3 Cold War | validation | C1 to C13 pass within the framework-change budget, or their failure is explained as model content (closed on that clause, 2026-11-09) |
+| 4 Audit and freeze | generalization | framework 1.0; findings and limitations committed; optional 1914 one-shot (after AGI v0, decision 9d) |
 | 5 AGI v0 | deployment | first inclination report with its untested list |
 | 6 Live operation | deployment | quarterly reports; untested mechanisms reduced over time |

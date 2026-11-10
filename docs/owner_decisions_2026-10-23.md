@@ -79,3 +79,17 @@ The owner allows a larger budget. The cadence change (framework change 1) is cou
 - 8g. Item 7: the hand-coded 1958 replay row reads NIE 11-4-57's mid-1960 column, logged as a data correction.
 - 8h. Item 8, the phase 3 gate: not accepted as it stands. The owner wants to extend the model's capability and expand its strategy space, and asked for the list of what framework changes 1 and 2 added. The scope of the extension is open, and the go for phase 4 waits on it.
 - Item 9 (OCR) is unchanged (6b).
+
+## 9. Decisions of 2026-11-09 (in conversation, on docs/review_2026-11-09.md)
+
+The owner's words on the review's recommended next step ("close phase 3 with the failures recorded as explained, write the disanalogies note, then build the AGI ontology and take first sight of G1 to G22"): "Let's go with the next step."
+
+- 9a. The phase 3 gate is **closed on its second clause**: the failures of C2 to C11 and of V2, V3 and V5 to V9 stand as recorded, each explained as model content or as the claim's reading, none as an engine defect (reports/cw_v0.md sections 15 to 20; reports/cw_v1.md). This supersedes 8h: the Cold War strategy space is not extended further. No claim, guard or result of the Cold War suites is edited by this decision.
+- 9b. The disanalogies note (docs/ww2_si_disanalogies.md) is written before any AGI guard; a testable claim it yields is registered as G23 onward first.
+- 9c. Go for the AGI ontology, the model step and the first sight of G1 to G22 under agi_testbed.md section 6.
+
+Consequences the session drew from 9a to 9c, stated here because the owner did not decide them in words; each can be reversed without touching a first-sight record:
+
+- 9d. Phase 4's audit, ablations and release 1.0 are **not run before AGI v0**. The AGI model is built on the framework as it stands at the model-step commit, with no framework change (2 of the budget of 5 used; docs/framework_changes.md). Phase 5's "frozen framework" reads "the framework at that commit, unchanged while AGI v0 is built and run"; the fingerprint of each report names the commit. Phase 4 stays open as written and runs after AGI v0's first report, when the ablations can include the AGI suite.
+- 9e. The judgment calls of the first AGI snapshot are the owner's (agi_testbed.md section 6). Until the owner makes them they are carried as set-valued levels (framework change 2), so that every snapshot-based finding reads robust or fragile across the open calls; none is settled by the session.
+- 9f. 8f (the July 1914 v1 proposals) stays open and blocks nothing here.

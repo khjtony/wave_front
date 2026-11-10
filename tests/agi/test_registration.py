@@ -1,10 +1,11 @@
 """The registered AGI claims and their test files carry the same text.
 
-docs/agi_testbed.md section 5 is the registration of record (G1 to G22, 2026-10-17); each
-``tests/agi/scenarios/test_G<nn>.py`` carries one claim as a ``CLAIM`` dict, verbatim. These
-checks keep the two from drifting apart: an edit to either side without the other shows up
-here, and the protocol (agi_testbed.md section 6) requires a changelog line for any edit. An
-amended claim is a new row ``G<n>a`` with its own file ``test_G<nn>a.py`` (section 6, item 2).
+docs/agi_testbed.md section 5 is the registration of record (G1 to G22, 2026-10-17; G23 to
+G25, 2026-11-09); each ``tests/agi/scenarios/test_G<nn>.py`` carries one claim as a ``CLAIM``
+dict, verbatim. These checks keep the two from drifting apart: an edit to either side without
+the other shows up here, and the protocol (agi_testbed.md section 6) requires a changelog line
+for any edit. An amended claim is a new row ``G<n>a`` with its own file ``test_G<nn>a.py``
+(section 6, item 2).
 
 The claim literal is read with ``ast``, not by importing the file, so that an un-skipped test
 file with model imports (the shape of tests/july1914/test_J01.py) is not executed here.
@@ -63,9 +64,9 @@ def norm(s: str) -> str:
 IDS = sorted(registered_rows(), key=lambda x: (int(re.match(r"G(\d+)", x).group(1)), x))
 
 
-def test_the_table_registers_g1_to_g22_in_order():
+def test_the_table_registers_g1_to_g25_in_order():
     base = [i for i in IDS if i[-1].isdigit()]
-    assert base == [f"G{i}" for i in range(1, 23)]
+    assert base == [f"G{i}" for i in range(1, 26)]
 
 
 def test_every_registered_claim_has_a_file_and_no_other():

@@ -44,7 +44,8 @@ The anti-hindsight protocol behind these (claims run once, first sight recorded,
 | 2 WW2 v1 | **passed 2026-10-28** (owner's decision 7h): replay 95 % after a sample review, 8 of 9 flips | reports/ww2_v1.md, reports/replay_ww2_frus.md, the PHASES.md addendum |
 | 2 extras | summer-1939 sub-game (K1 to K6) and July 1914 (J1 to J7) run once; per-actor cadence (framework change 1); compiled BDD core | reports/crisis_1939.md, reports/july1914.md, docs/framework_changes.md, docs/engine_scaling.md |
 | 3 Cold War v0 | built and run once 2026-10-17: C1, C12, C13 pass; C2 to C11 fail as read; 0 framework changes; reproduced independently 2026-10-18 | reports/cw_v0.md, docs/review_phase3_2026-10-18.md |
-| 4 Audit and freeze | not started; waits on the phase 3 decisions | docs/PHASES.md |
+| 3 gate | **closed 2026-11-09** on the gate's second clause (owner's decision 9a): the failures of C2 to C11 and of V2, V3, V5 to V9 stand, explained as model content or reading; 8h superseded | docs/PHASES.md, docs/owner_decisions_2026-10-23.md section 9, docs/review_2026-11-09.md |
+| 4 Audit and freeze | not started; runs after AGI v0 (decision 9d) | docs/PHASES.md |
 | 5 AGI v0 | claims G1 to G22 registered 2026-10-17 before any guard; no AGI model yet | docs/agi_testbed.md, tests/agi/ |
 
 Notes and side work an incoming session should know:
