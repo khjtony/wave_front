@@ -477,3 +477,6 @@ def test_the_job_runner_records_every_way_a_job_can_end(tmp_path, monkeypatch):
         line, again = one(end)
         assert line.startswith("NOT COMPUTED") and word in line and not again
         assert word in json.loads(common.failure_path(job).read_text())["reason"]
+    # The cap of the pass is named in the record of a job that fails under it.
+    common.failure_path(job).unlink()
+    assert "cap 26 GB" in one((1, "", "MemoryError"), memory_gb=26)[0]

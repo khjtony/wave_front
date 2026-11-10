@@ -46,7 +46,7 @@ The anti-hindsight protocol behind these (claims run once, first sight recorded,
 | 3 Cold War v0 | built and run once 2026-10-17: C1, C12, C13 pass; C2 to C11 fail as read; 0 framework changes; reproduced independently 2026-10-18 | reports/cw_v0.md, docs/review_phase3_2026-10-18.md |
 | 3 gate | **closed 2026-11-09** on the gate's second clause (owner's decision 9a): the failures of C2 to C11 and of V2, V3, V5 to V9 stand, explained as model content or reading; 8h superseded | docs/PHASES.md, docs/owner_decisions_2026-10-23.md section 9, docs/review_2026-11-09.md |
 | 4 Audit and freeze | not started; runs after AGI v0 (decision 9d) | docs/PHASES.md |
-| 5 AGI v0 | claims G1 to G22 registered 2026-10-17 before any guard; no AGI model yet | docs/agi_testbed.md, tests/agi/ |
+| 5 AGI v0 | claims G1 to G25 registered before any guard; model step committed 2026-11-10 (`f6937e4`); **first sight in progress**: the job list is computed in three passes (the first on the 30 GB machine, the second and third on the 64 GB machine), and no claim file has been run or looked at. Do not edit `tests/agi/common.py`, `models/agi/`, `snapshots/agi/` or `wavefront/` until the claim files have run: the job cache is named by their hash | docs/agi_v0_decisions.md section 2, docs/agi_testbed.md, tests/agi/ |
 
 Notes and side work an incoming session should know:
 
