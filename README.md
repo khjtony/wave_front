@@ -26,7 +26,7 @@ wf viz models/toy/two_power.py --out reports/toy_viz.html   # open in a browser
 - [docs/DESIGN.md](docs/DESIGN.md): evaluation of the idea, the framework, and the AGI domain model.
 - [docs/ww2_testbed.md](docs/ww2_testbed.md): the WW2 model, pre-registered tests, data sources, anti-hindsight protocol.
 - [docs/coldwar_testbed.md](docs/coldwar_testbed.md): the Cold War as the validation episode, with its own pre-registered claims.
-- [docs/agi_testbed.md](docs/agi_testbed.md): the AGI model's claims G1 to G25, registered before any AGI guard, with the three balance predicates and the protocol for the AGI runs.
+- [docs/agi_testbed.md](docs/agi_testbed.md): the AGI model's claims G1 to G28 (G1 to G25 registered before any AGI guard, G26 to G28 after the first sight of v0), with the three balance predicates and the protocol for the AGI runs.
 - [docs/review_2026-10-17.md](docs/review_2026-10-17.md): the review of status and roadmap against the project's goal.
 - [docs/PHASES.md](docs/PHASES.md): the seven phases, each with a gate.
 - [docs/PLAN.md](docs/PLAN.md): the steps inside each phase, with acceptance checks and owners.
