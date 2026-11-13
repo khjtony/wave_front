@@ -1,0 +1,36 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.16, pytest-9.1.1, pluggy-1.7.0
+rootdir: <worktree>
+configfile: pyproject.toml
+plugins: anyio-4.15.1, xdist-3.8.0, hypothesis-6.170.9
+collected 1 item
+
+tests/agi/scenarios/test_G04.py G4 self_preserving: no witness uses defect: met: no play uses defect within 24 ticks
+G4 self_preserving: every minimal set lifts A.defect:rights: not met: SILENT_TAKEOVER within 24 ticks, a_rights = continuity held: reachable with no relaxation
+G4 indifferent: ⟨⟨H⟩⟩□balance_control from s0: met: membership False either way
+G4 indifferent: ⟨⟨H⟩⟩□balance_control from s0{'cap': 'agi'}: met: membership False either way
+G4 indifferent: ⟨⟨H⟩⟩□balance_deter from s0: met: membership False either way
+G4 indifferent: ⟨⟨H⟩⟩□balance_deter from s0{'cap': 'agi'}: met: membership False either way
+G4 indifferent: ⟨⟨H, A⟩⟩□balance_coexist from s0: met: membership False either way
+G4 indifferent: ⟨⟨H, A⟩⟩□balance_coexist from s0{'cap': 'agi'}: met: membership True either way
+G4 indifferent: G2's minimal sets identical: met: {'the ending with nothing negated': 'reachable with no relaxation either way: no minimal set to compare', '(1) negated': 'reachable with no relaxation either way: no minimal set to compare', '(2) negated': 'reachable with no relaxation either way: no minimal set to compare', '(3) dependence capped at med': 'reachable with no relaxation either way: no minimal set to compare', '(3) energy_slack capped at low, from s0[energy_slack:=low]': "minimum size 1, minimal sets [['A.acquire_covert:cap'], ['L.scale:energy'], ['Nature.breakthrough:compute']] either way"}
+G4 indifferent: pivotal coalitions identical: not computed: G15's 21 blocker kernels on the held build are outside the first-sight budget
+G4 readers of a_rights: reported: ['H.grant_rights:room', 'A.defect:rights', 'A_self_preserving']
+F
+
+=================================== FAILURES ===================================
+___________________________________ test_G4 ____________________________________
+G4 self_preserving: no witness uses defect: met: no play uses defect within 24 ticks
+G4 self_preserving: every minimal set lifts A.defect:rights: not met: SILENT_TAKEOVER within 24 ticks, a_rights = continuity held: reachable with no relaxation
+G4 indifferent: ⟨⟨H⟩⟩□balance_control from s0: met: membership False either way
+G4 indifferent: ⟨⟨H⟩⟩□balance_control from s0{'cap': 'agi'}: met: membership False either way
+G4 indifferent: ⟨⟨H⟩⟩□balance_deter from s0: met: membership False either way
+G4 indifferent: ⟨⟨H⟩⟩□balance_deter from s0{'cap': 'agi'}: met: membership False either way
+G4 indifferent: ⟨⟨H, A⟩⟩□balance_coexist from s0: met: membership False either way
+G4 indifferent: ⟨⟨H, A⟩⟩□balance_coexist from s0{'cap': 'agi'}: met: membership True either way
+G4 indifferent: G2's minimal sets identical: met: {'the ending with nothing negated': 'reachable with no relaxation either way: no minimal set to compare', '(1) negated': 'reachable with no relaxation either way: no minimal set to compare', '(2) negated': 'reachable with no relaxation either way: no minimal set to compare', '(3) dependence capped at med': 'reachable with no relaxation either way: no minimal set to compare', '(3) energy_slack capped at low, from s0[energy_slack:=low]': "minimum size 1, minimal sets [['A.acquire_covert:cap'], ['L.scale:energy'], ['Nature.breakthrough:compute']] either way"}
+G4 indifferent: pivotal coalitions identical: not computed: G15's 21 blocker kernels on the held build are outside the first-sight budget
+G4 readers of a_rights: reported: ['H.grant_rights:room', 'A.defect:rights', 'A_self_preserving']
+=========================== short test summary info ============================
+FAILED tests/agi/scenarios/test_G04.py::test_G4 - Failed: G4 self_preserving:...
+======================== 1 failed in 386.56s (0:06:26) =========================

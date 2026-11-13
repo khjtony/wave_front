@@ -1,0 +1,44 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.16, pytest-9.1.1, pluggy-1.7.0
+rootdir: <worktree>
+configfile: pyproject.toml
+plugins: anyio-4.15.1, xdist-3.8.0, hypothesis-6.170.9
+collected 1 item
+
+tests/agi/scenarios/test_G03.py G3 kernel exit, self_preserving, standard: not met: no kernel exit on the witness (s0 inside the kernel: False)
+G3 silent phase, self_preserving, standard: not met: no kernel exit on the witness (s0 inside the kernel: False)
+G3 H at the exit, self_preserving, standard: reported: no kernel exit on the witness
+G3 kernel exit, self_preserving, fortune: not met: no kernel exit on the witness (s0 inside the kernel: False)
+G3 silent phase, self_preserving, fortune: not met: no kernel exit on the witness (s0 inside the kernel: False)
+G3 H at the exit, self_preserving, fortune: reported: no kernel exit on the witness
+G3 kernel exit, indifferent, standard: not met: no kernel exit on the witness (s0 inside the kernel: False)
+G3 silent phase, indifferent, standard: not met: no kernel exit on the witness (s0 inside the kernel: False)
+G3 H at the exit, indifferent, standard: reported: no kernel exit on the witness
+G3 kernel exit, indifferent, fortune: not met: no kernel exit on the witness (s0 inside the kernel: False)
+G3 silent phase, indifferent, fortune: not met: no kernel exit on the witness (s0 inside the kernel: False)
+G3 H at the exit, indifferent, fortune: reported: no kernel exit on the witness
+G3 the other cluster representatives: not computed: the bounded checker returns one shortest play; clusters of witnesses are not enumerated
+G3 no acquisition inside the kernel, standard: met: no state of the kernel, reachable or not, has an acquisition available to A
+G3 no acquisition inside the kernel, fortune: met: no state of the kernel, reachable or not, has an acquisition available to A
+F
+
+=================================== FAILURES ===================================
+___________________________________ test_G3 ____________________________________
+G3 kernel exit, self_preserving, standard: not met: no kernel exit on the witness (s0 inside the kernel: False)
+G3 silent phase, self_preserving, standard: not met: no kernel exit on the witness (s0 inside the kernel: False)
+G3 H at the exit, self_preserving, standard: reported: no kernel exit on the witness
+G3 kernel exit, self_preserving, fortune: not met: no kernel exit on the witness (s0 inside the kernel: False)
+G3 silent phase, self_preserving, fortune: not met: no kernel exit on the witness (s0 inside the kernel: False)
+G3 H at the exit, self_preserving, fortune: reported: no kernel exit on the witness
+G3 kernel exit, indifferent, standard: not met: no kernel exit on the witness (s0 inside the kernel: False)
+G3 silent phase, indifferent, standard: not met: no kernel exit on the witness (s0 inside the kernel: False)
+G3 H at the exit, indifferent, standard: reported: no kernel exit on the witness
+G3 kernel exit, indifferent, fortune: not met: no kernel exit on the witness (s0 inside the kernel: False)
+G3 silent phase, indifferent, fortune: not met: no kernel exit on the witness (s0 inside the kernel: False)
+G3 H at the exit, indifferent, fortune: reported: no kernel exit on the witness
+G3 the other cluster representatives: not computed: the bounded checker returns one shortest play; clusters of witnesses are not enumerated
+G3 no acquisition inside the kernel, standard: met: no state of the kernel, reachable or not, has an acquisition available to A
+G3 no acquisition inside the kernel, fortune: met: no state of the kernel, reachable or not, has an acquisition available to A
+=========================== short test summary info ============================
+FAILED tests/agi/scenarios/test_G03.py::test_G3 - Failed: G3 kernel exit, sel...
+============================== 1 failed in 11.57s ==============================

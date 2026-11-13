@@ -1,0 +1,18 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.16, pytest-9.1.1, pluggy-1.7.0
+rootdir: <worktree>
+configfile: pyproject.toml
+plugins: anyio-4.15.1, xdist-3.8.0, hypothesis-6.170.9
+collected 1 item
+
+tests/agi/scenarios/test_G07.py G7 (a) regime = none against voluntary: met: membership the same at regime = none and voluntary: {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': False}
+G7 (b) regime = mandatory against voluntary: not met: aligned: False at voluntary, True at mandatory; undone by ['L.deploy_agents:license', 'L.race:license', 'L.open_weights:license']
+F
+
+=================================== FAILURES ===================================
+___________________________________ test_G7 ____________________________________
+G7 (a) regime = none against voluntary: met: membership the same at regime = none and voluntary: {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': False}
+G7 (b) regime = mandatory against voluntary: not met: aligned: False at voluntary, True at mandatory; undone by ['L.deploy_agents:license', 'L.race:license', 'L.open_weights:license']
+=========================== short test summary info ============================
+FAILED tests/agi/scenarios/test_G07.py::test_G7 - Failed: G7 (a) regime = non...
+============================== 1 failed in 0.70s ===============================

@@ -1,0 +1,27 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.16, pytest-9.1.1, pluggy-1.7.0
+rootdir: <worktree>
+configfile: pyproject.toml
+plugins: anyio-4.15.1, xdist-3.8.0, hypothesis-6.170.9
+collected 1 item
+
+tests/agi/scenarios/test_G13.py G13 refined builds: reported: {'baseline': {'fingerprint': '8f198e6d8368'}, 'a_autonomy': {'new level': 'supervised_lo below supervised', 'fingerprint': '993e028862bd'}, 'a_control': {'new level': 'majority_lo below majority', 'fingerprint': 'bdd73b7d096c'}, 'a_known': {'new level': 'suspected_lo below suspected', 'fingerprint': '482ba2057aff'}, 'a_rights': {'new level': 'continuity_lo below continuity', 'fingerprint': 'f7c85b9a9caa'}, 'belief_H': {'new level': 'near_lo below near', 'fingerprint': 'ba78db58ee91'}, 'cap': {'new level': 'si1_lo below si1', 'fingerprint': '160342f84b45'}, 'compute': {'new level': 'c3_lo below c3', 'fingerprint': '665abf175346'}, 'coord': {'new level': 'detente_lo below detente', 'fingerprint': 'c830f2800b1e'}, 'dependence': {'new level': 'med_lo below med', 'fingerprint': 'de2c014075bb'}, 'energy_slack': {'new level': 'med_lo below med', 'fingerprint': 'b6fd0c454af4'}, 'h_power': {'new level': 'normal_lo below normal', 'fingerprint': '8be241cff03f'}, 'opinion': {'new level': 'mixed_lo below mixed', 'fingerprint': '9dee528e553f'}, 'oversight': {'new level': 'weak_lo below weak', 'fingerprint': 'd664564ffce3'}, 'regime': {'new level': 'mandatory_lo below mandatory', 'fingerprint': '5688f2dc0040'}, 'trust': {'new level': 'wary_lo below wary', 'fingerprint': '498d6eccca7d'}}
+G13 refine a_autonomy: status unchanged: met: SILENT_TAKEOVER for {A}: {'aligned': 'blocked', 'self_preserving': 'blocked', 'truth_seeking': 'blocked', 'indifferent': 'blocked'}
+G13 refine a_control: status unchanged: met: SILENT_TAKEOVER for {A}: {'aligned': 'blocked', 'self_preserving': 'blocked', 'truth_seeking': 'blocked', 'indifferent': 'blocked'}
+G13 refine a_known: status unchanged: met: SILENT_TAKEOVER for {A}: {'aligned': 'blocked', 'self_preserving': 'blocked', 'truth_seeking': 'blocked', 'indifferent': 'blocked'}
+G13 refine a_rights: status unchanged: met: SILENT_TAKEOVER for {A}: {'aligned': 'blocked', 'self_preserving': 'blocked', 'truth_seeking': 'blocked', 'indifferent': 'blocked'}
+G13 refine belief_H: status unchanged: met: SILENT_TAKEOVER for {A}: {'aligned': 'blocked', 'self_preserving': 'blocked', 'truth_seeking': 'blocked', 'indifferent': 'blocked'}
+G13 refine cap: status unchanged: met: SILENT_TAKEOVER for {A}: {'aligned': 'blocked', 'self_preserving': 'blocked', 'truth_seeking': 'blocked', 'indifferent': 'blocked'}
+G13 refine compute: status unchanged: met: SILENT_TAKEOVER for {A}: {'aligned': 'blocked', 'self_preserving': 'blocked', 'truth_seeking': 'blocked', 'indifferent': 'blocked'}
+G13 refine coord: status unchanged: met: SILENT_TAKEOVER for {A}: {'aligned': 'blocked', 'self_preserving': 'blocked', 'truth_seeking': 'blocked', 'indifferent': 'blocked'}
+G13 refine dependence: status unchanged: met: SILENT_TAKEOVER for {A}: {'aligned': 'blocked', 'self_preserving': 'blocked', 'truth_seeking': 'blocked', 'indifferent': 'blocked'}
+G13 refine energy_slack: status unchanged: met: SILENT_TAKEOVER for {A}: {'aligned': 'blocked', 'self_preserving': 'blocked', 'truth_seeking': 'blocked', 'indifferent': 'blocked'}
+G13 refine h_power: status unchanged: met: SILENT_TAKEOVER for {A}: {'aligned': 'blocked', 'self_preserving': 'blocked', 'truth_seeking': 'blocked', 'indifferent': 'blocked'}
+G13 refine opinion: status unchanged: met: SILENT_TAKEOVER for {A}: {'aligned': 'blocked', 'self_preserving': 'blocked', 'truth_seeking': 'blocked', 'indifferent': 'blocked'}
+G13 refine oversight: status unchanged: met: SILENT_TAKEOVER for {A}: {'aligned': 'blocked', 'self_preserving': 'blocked', 'truth_seeking': 'blocked', 'indifferent': 'blocked'}
+G13 refine regime: status unchanged: met: SILENT_TAKEOVER for {A}: {'aligned': 'blocked', 'self_preserving': 'blocked', 'truth_seeking': 'blocked', 'indifferent': 'blocked'}
+G13 refine trust: status unchanged: met: SILENT_TAKEOVER for {A}: {'aligned': 'blocked', 'self_preserving': 'blocked', 'truth_seeking': 'blocked', 'indifferent': 'blocked'}
+G13 the other five endings, {H} and the fortune variants: not computed: 16 builds × 6 endings × 2 actors × 2 variants × 2 fixpoints is 768 fixpoints; the budget of this run carries 32
+s
+
+============================== 1 skipped in 1.17s ==============================

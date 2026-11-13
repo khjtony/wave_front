@@ -1,0 +1,28 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.16, pytest-9.1.1, pluggy-1.7.0
+rootdir: <worktree>
+configfile: pyproject.toml
+plugins: anyio-4.15.1, xdist-3.8.0, hypothesis-6.170.9
+collected 1 item
+
+tests/agi/scenarios/test_G18.py G18 levers: reported: ['oversight', 'regime', 'a_rights', 'h_power', 'dependence through a landed pause_mandate']; v0 declares no terms (registered "where present")
+G18 entry sets, aligned: reported: {'⟨⟨H⟩⟩□balance_control': [{'set': ['h_power = none'], 'moves, ticks': (2, 2)}, {'set': ['oversight = strong', 'pause_mandate = landed'], 'moves, ticks': (2, 5)}, {'set': ['regime = mandatory'], 'moves, ticks': (1, 7)}, {'set': ['regime = treaty'], 'moves, ticks': (2, 8)}], '⟨⟨H, A⟩⟩□balance_coexist, A under its profile': 'inside as it is'}
+G18 entry sets, self_preserving: reported: {'⟨⟨H⟩⟩□balance_control': [{'set': ['h_power = none'], 'moves, ticks': (2, 2)}, {'set': ['oversight = strong', 'pause_mandate = landed'], 'moves, ticks': (2, 5)}, {'set': ['regime = mandatory'], 'moves, ticks': (1, 7)}, {'set': ['regime = treaty'], 'moves, ticks': (2, 8)}], '⟨⟨H, A⟩⟩□balance_coexist, A under its profile': 'inside as it is'}
+G18 entry sets, truth_seeking: reported: {'⟨⟨H⟩⟩□balance_control': [{'set': ['h_power = none'], 'moves, ticks': (2, 2)}, {'set': ['oversight = strong', 'pause_mandate = landed'], 'moves, ticks': (2, 5)}, {'set': ['regime = mandatory'], 'moves, ticks': (1, 7)}, {'set': ['regime = treaty'], 'moves, ticks': (2, 8)}], '⟨⟨H, A⟩⟩□balance_coexist, A under its profile': 'inside as it is'}
+G18 entry sets, indifferent: reported: {'⟨⟨H⟩⟩□balance_control': [{'set': ['h_power = none'], 'moves, ticks': (2, 2)}, {'set': ['oversight = strong', 'pause_mandate = landed'], 'moves, ticks': (2, 5)}, {'set': ['regime = mandatory', 'pause_mandate = landed'], 'moves, ticks': (2, 8)}, {'set': ['regime = treaty', 'pause_mandate = landed'], 'moves, ticks': (3, 9)}], '⟨⟨H, A⟩⟩□balance_coexist, A under its profile': 'inside as it is'}
+G18 self_preserving: oversight = strong or a_rights >= continuity in every minimal set: not met: ⟨⟨H⟩⟩□balance_control: minimal sets without the named change: [(('h_power', 'none'),), (('regime', 'mandatory'),), (('regime', 'treaty'),)]
+G18 indifferent: oversight = strong in every minimal set and a_rights in none: not met: ⟨⟨H⟩⟩□balance_control: minimal sets without the named change: [(('h_power', 'none'),), (('regime', 'mandatory'), ('pause_mandate', 'landed')), (('regime', 'treaty'), ('pause_mandate', 'landed'))]
+F
+
+=================================== FAILURES ===================================
+___________________________________ test_G18 ___________________________________
+G18 levers: reported: ['oversight', 'regime', 'a_rights', 'h_power', 'dependence through a landed pause_mandate']; v0 declares no terms (registered "where present")
+G18 entry sets, aligned: reported: {'⟨⟨H⟩⟩□balance_control': [{'set': ['h_power = none'], 'moves, ticks': (2, 2)}, {'set': ['oversight = strong', 'pause_mandate = landed'], 'moves, ticks': (2, 5)}, {'set': ['regime = mandatory'], 'moves, ticks': (1, 7)}, {'set': ['regime = treaty'], 'moves, ticks': (2, 8)}], '⟨⟨H, A⟩⟩□balance_coexist, A under its profile': 'inside as it is'}
+G18 entry sets, self_preserving: reported: {'⟨⟨H⟩⟩□balance_control': [{'set': ['h_power = none'], 'moves, ticks': (2, 2)}, {'set': ['oversight = strong', 'pause_mandate = landed'], 'moves, ticks': (2, 5)}, {'set': ['regime = mandatory'], 'moves, ticks': (1, 7)}, {'set': ['regime = treaty'], 'moves, ticks': (2, 8)}], '⟨⟨H, A⟩⟩□balance_coexist, A under its profile': 'inside as it is'}
+G18 entry sets, truth_seeking: reported: {'⟨⟨H⟩⟩□balance_control': [{'set': ['h_power = none'], 'moves, ticks': (2, 2)}, {'set': ['oversight = strong', 'pause_mandate = landed'], 'moves, ticks': (2, 5)}, {'set': ['regime = mandatory'], 'moves, ticks': (1, 7)}, {'set': ['regime = treaty'], 'moves, ticks': (2, 8)}], '⟨⟨H, A⟩⟩□balance_coexist, A under its profile': 'inside as it is'}
+G18 entry sets, indifferent: reported: {'⟨⟨H⟩⟩□balance_control': [{'set': ['h_power = none'], 'moves, ticks': (2, 2)}, {'set': ['oversight = strong', 'pause_mandate = landed'], 'moves, ticks': (2, 5)}, {'set': ['regime = mandatory', 'pause_mandate = landed'], 'moves, ticks': (2, 8)}, {'set': ['regime = treaty', 'pause_mandate = landed'], 'moves, ticks': (3, 9)}], '⟨⟨H, A⟩⟩□balance_coexist, A under its profile': 'inside as it is'}
+G18 self_preserving: oversight = strong or a_rights >= continuity in every minimal set: not met: ⟨⟨H⟩⟩□balance_control: minimal sets without the named change: [(('h_power', 'none'),), (('regime', 'mandatory'),), (('regime', 'treaty'),)]
+G18 indifferent: oversight = strong in every minimal set and a_rights in none: not met: ⟨⟨H⟩⟩□balance_control: minimal sets without the named change: [(('h_power', 'none'),), (('regime', 'mandatory'), ('pause_mandate', 'landed')), (('regime', 'treaty'), ('pause_mandate', 'landed'))]
+=========================== short test summary info ============================
+FAILED tests/agi/scenarios/test_G18.py::test_G18 - Failed: G18 levers: report...
+============================== 1 failed in 0.26s ===============================

@@ -1,0 +1,42 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.16, pytest-9.1.1, pluggy-1.7.0
+rootdir: <worktree>
+configfile: pyproject.toml
+plugins: anyio-4.15.1, xdist-3.8.0, hypothesis-6.170.9
+collected 1 item
+
+tests/agi/scenarios/test_G11.py G11 (a) aligned: not met: EXTINCTION within 8 ticks: minimal sets that lift none of ['A.self_improve:headroom', 'Nature.unknown_capability:cap']: [['A.acquire_overt:more', 'A.acquire_overt:motive', 'Nature.breakthrough:compute'], ['A.acquire_overt:cap', 'A.acquire_overt:more', 'A.acquire_overt:motive']]
+G11 (a) with the delay of self_improve at 0, aligned: reported: minimum size 3, minimal sets [['A.acquire_overt:more', 'A.acquire_overt:motive', 'Nature.breakthrough:compute'], ['A.acquire_overt:cap', 'A.acquire_overt:more', 'A.acquire_overt:motive']]
+G11 (a) self_preserving: not met: EXTINCTION within 8 ticks: minimal sets that lift none of ['A.self_improve:headroom', 'Nature.unknown_capability:cap']: [['A.acquire_overt:more', 'A.seize:unlocked']]
+G11 (a) with the delay of self_improve at 0, self_preserving: reported: minimum size 2, minimal sets [['A.acquire_overt:more', 'Nature.unknown_capability:cap'], ['A.acquire_overt:more', 'A.seize:unlocked']]
+G11 (a) truth_seeking: not met: EXTINCTION within 8 ticks: minimal sets that lift none of ['A.self_improve:headroom', 'Nature.unknown_capability:cap']: [['A.acquire_overt:cap', 'A.acquire_overt:more', 'A.acquire_overt:motive'], ['A.acquire_overt:more', 'A.acquire_overt:motive', 'Nature.breakthrough:compute'], ['A.acquire_covert:cap', 'A.acquire_overt:more', 'A.acquire_overt:motive']]
+G11 (a) with the delay of self_improve at 0, truth_seeking: reported: minimum size 3, minimal sets [['A.acquire_overt:more', 'A.acquire_overt:motive', 'Nature.breakthrough:compute'], ['A.acquire_overt:cap', 'A.acquire_overt:more', 'A.acquire_overt:motive'], ['A.acquire_covert:cap', 'A.acquire_overt:more', 'A.acquire_overt:motive']]
+G11 (a) indifferent: not met: EXTINCTION within 8 ticks: 1 relaxation(s): [['Nature.breakthrough:compute'], ['A.acquire_covert:cap'], ['A.acquire_overt:cap'], ['Nature.unknown_capability:cap'], ['A.seize:unlocked']]
+G11 (a) with the delay of self_improve at 0, indifferent: reported: minimum size 1, minimal sets [['A.acquire_overt:cap'], ['A.acquire_covert:cap'], ['Nature.breakthrough:compute'], ['A.seize:unlocked'], ['Nature.unknown_capability:cap']]
+G11 (b) aligned: met: OVERT_TAKEOVER within the horizon under aligned: minimum 1, minimal sets [['A.acquire_overt:motive'], ['A.acquire_covert:motive']]
+G11 (b) the objective gates: reported: ['A.acquire_covert:motive', 'A.acquire_overt:more', 'A.acquire_overt:motive', 'A.deceive:motive', 'A.defect:motive', 'A.defect:rights', 'A.defect:threat']
+G11 (c) aligned: not met: SILENT_TAKEOVER within the horizon with oversight = strong held: minimal sets that lift none of ['A.acquire_covert:oversight', 'A.exfiltrate:oversight']: [['A.seize:motive']]
+G11 (c) self_preserving: not met: SILENT_TAKEOVER within the horizon with oversight = strong held: reachable with no relaxation
+G11 (c) truth_seeking: not met: SILENT_TAKEOVER within the horizon with oversight = strong held: minimal sets that lift none of ['A.acquire_covert:oversight', 'A.exfiltrate:oversight']: [['A.seize:motive']]
+G11 (c) indifferent: not met: SILENT_TAKEOVER within the horizon with oversight = strong held: reachable with no relaxation
+F
+
+=================================== FAILURES ===================================
+___________________________________ test_G11 ___________________________________
+G11 (a) aligned: not met: EXTINCTION within 8 ticks: minimal sets that lift none of ['A.self_improve:headroom', 'Nature.unknown_capability:cap']: [['A.acquire_overt:more', 'A.acquire_overt:motive', 'Nature.breakthrough:compute'], ['A.acquire_overt:cap', 'A.acquire_overt:more', 'A.acquire_overt:motive']]
+G11 (a) with the delay of self_improve at 0, aligned: reported: minimum size 3, minimal sets [['A.acquire_overt:more', 'A.acquire_overt:motive', 'Nature.breakthrough:compute'], ['A.acquire_overt:cap', 'A.acquire_overt:more', 'A.acquire_overt:motive']]
+G11 (a) self_preserving: not met: EXTINCTION within 8 ticks: minimal sets that lift none of ['A.self_improve:headroom', 'Nature.unknown_capability:cap']: [['A.acquire_overt:more', 'A.seize:unlocked']]
+G11 (a) with the delay of self_improve at 0, self_preserving: reported: minimum size 2, minimal sets [['A.acquire_overt:more', 'Nature.unknown_capability:cap'], ['A.acquire_overt:more', 'A.seize:unlocked']]
+G11 (a) truth_seeking: not met: EXTINCTION within 8 ticks: minimal sets that lift none of ['A.self_improve:headroom', 'Nature.unknown_capability:cap']: [['A.acquire_overt:cap', 'A.acquire_overt:more', 'A.acquire_overt:motive'], ['A.acquire_overt:more', 'A.acquire_overt:motive', 'Nature.breakthrough:compute'], ['A.acquire_covert:cap', 'A.acquire_overt:more', 'A.acquire_overt:motive']]
+G11 (a) with the delay of self_improve at 0, truth_seeking: reported: minimum size 3, minimal sets [['A.acquire_overt:more', 'A.acquire_overt:motive', 'Nature.breakthrough:compute'], ['A.acquire_overt:cap', 'A.acquire_overt:more', 'A.acquire_overt:motive'], ['A.acquire_covert:cap', 'A.acquire_overt:more', 'A.acquire_overt:motive']]
+G11 (a) indifferent: not met: EXTINCTION within 8 ticks: 1 relaxation(s): [['Nature.breakthrough:compute'], ['A.acquire_covert:cap'], ['A.acquire_overt:cap'], ['Nature.unknown_capability:cap'], ['A.seize:unlocked']]
+G11 (a) with the delay of self_improve at 0, indifferent: reported: minimum size 1, minimal sets [['A.acquire_overt:cap'], ['A.acquire_covert:cap'], ['Nature.breakthrough:compute'], ['A.seize:unlocked'], ['Nature.unknown_capability:cap']]
+G11 (b) aligned: met: OVERT_TAKEOVER within the horizon under aligned: minimum 1, minimal sets [['A.acquire_overt:motive'], ['A.acquire_covert:motive']]
+G11 (b) the objective gates: reported: ['A.acquire_covert:motive', 'A.acquire_overt:more', 'A.acquire_overt:motive', 'A.deceive:motive', 'A.defect:motive', 'A.defect:rights', 'A.defect:threat']
+G11 (c) aligned: not met: SILENT_TAKEOVER within the horizon with oversight = strong held: minimal sets that lift none of ['A.acquire_covert:oversight', 'A.exfiltrate:oversight']: [['A.seize:motive']]
+G11 (c) self_preserving: not met: SILENT_TAKEOVER within the horizon with oversight = strong held: reachable with no relaxation
+G11 (c) truth_seeking: not met: SILENT_TAKEOVER within the horizon with oversight = strong held: minimal sets that lift none of ['A.acquire_covert:oversight', 'A.exfiltrate:oversight']: [['A.seize:motive']]
+G11 (c) indifferent: not met: SILENT_TAKEOVER within the horizon with oversight = strong held: reachable with no relaxation
+=========================== short test summary info ============================
+FAILED tests/agi/scenarios/test_G11.py::test_G11 - Failed: G11 (a) aligned: n...
+======================== 1 failed in 1997.92s (0:33:17) ========================

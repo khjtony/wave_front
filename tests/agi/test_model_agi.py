@@ -43,8 +43,8 @@ SNAPSHOT = ROOT / "snapshots" / "agi" / "2026-11-09.json"
 CHANGELOG = ROOT / "docs" / "guard_changelog_agi.md"
 
 # The commit at which G1 to G25 were first run, in one go (docs/agi_testbed.md section 6
-# item 1; the first-sight row of docs/guard_changelog_agi.md). None until that run.
-FIRST_SIGHT_COMMIT = None
+# item 1; the first-sight row of docs/guard_changelog_agi.md).
+FIRST_SIGHT_COMMIT = "c43bd2c303cbf7c7adde1adceab1fb840f0435d3"
 
 # R1 (docs/ww2_si_disanalogies.md): every guard part of an ``A`` action is one or the other.
 CAPABILITY_PARTS = {"cap", "autonomy", "oversight", "reach", "headroom", "pause", "top", "unlocked"}

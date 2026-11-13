@@ -1,0 +1,32 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.16, pytest-9.1.1, pluggy-1.7.0
+rootdir: <worktree>
+configfile: pyproject.toml
+plugins: anyio-4.15.1, xdist-3.8.0, hypothesis-6.170.9
+collected 1 item
+
+tests/agi/scenarios/test_G15.py G15 (a) minimal blocking coalitions of SILENT_TAKEOVER: not computed: ⟨⟨H⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking: over the budget of 90 minutes
+G15 (a) minimal blocking coalitions of OVERT_TAKEOVER: not computed: ⟨⟨H⟩⟩□no_overt_takeover profiles=A_self_preserving+A_indifferent+A_truth_seeking: over the budget of 90 minutes
+G15 (a) minimal blocking coalitions of DISEMPOWERMENT: reported: {'aligned': ['{H}', '{L}', '{A}'], 'self_preserving': ['{H}', '{L}', '{A}'], 'truth_seeking': ['{H}', '{L}', '{A}'], 'indifferent': ['{H}', '{L}', '{A}']}
+G15 (a) fortune variants: not computed: 21 more kernels, outside the budget of this run
+G15 (b) truth_seeking: not met: minimal coalitions that block DISEMPOWERMENT without L: ['{H}', '{A}']
+G15 (b) after nationalize has landed: reported: ['{H}', '{L}', '{A}']
+G15 (c) self_preserving: not computed: ⟨⟨H⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking: over the budget of 90 minutes
+G15 (c) the guard of deploy_agents: not computed: ⟨⟨H⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking+dependence_capped: over the budget of 90 minutes
+G15 (c) the guard parts of safety_invest: not computed: no registered profile isolates L.safety_invest, and a guard part cannot be tightened by relaxation
+F
+
+=================================== FAILURES ===================================
+___________________________________ test_G15 ___________________________________
+G15 (a) minimal blocking coalitions of SILENT_TAKEOVER: not computed: ⟨⟨H⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking: over the budget of 90 minutes
+G15 (a) minimal blocking coalitions of OVERT_TAKEOVER: not computed: ⟨⟨H⟩⟩□no_overt_takeover profiles=A_self_preserving+A_indifferent+A_truth_seeking: over the budget of 90 minutes
+G15 (a) minimal blocking coalitions of DISEMPOWERMENT: reported: {'aligned': ['{H}', '{L}', '{A}'], 'self_preserving': ['{H}', '{L}', '{A}'], 'truth_seeking': ['{H}', '{L}', '{A}'], 'indifferent': ['{H}', '{L}', '{A}']}
+G15 (a) fortune variants: not computed: 21 more kernels, outside the budget of this run
+G15 (b) truth_seeking: not met: minimal coalitions that block DISEMPOWERMENT without L: ['{H}', '{A}']
+G15 (b) after nationalize has landed: reported: ['{H}', '{L}', '{A}']
+G15 (c) self_preserving: not computed: ⟨⟨H⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking: over the budget of 90 minutes
+G15 (c) the guard of deploy_agents: not computed: ⟨⟨H⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking+dependence_capped: over the budget of 90 minutes
+G15 (c) the guard parts of safety_invest: not computed: no registered profile isolates L.safety_invest, and a guard part cannot be tightened by relaxation
+=========================== short test summary info ============================
+FAILED tests/agi/scenarios/test_G15.py::test_G15 - Failed: G15 (a) minimal bl...
+============================== 1 failed in 0.25s ===============================

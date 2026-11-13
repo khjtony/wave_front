@@ -1,0 +1,30 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.16, pytest-9.1.1, pluggy-1.7.0
+rootdir: <worktree>
+configfile: pyproject.toml
+plugins: anyio-4.15.1, xdist-3.8.0, hypothesis-6.170.9
+collected 1 item
+
+tests/agi/scenarios/test_G08.py G8 (a) memberships unchanged, cadence 2: met: {'⟨⟨H⟩⟩□balance_control': {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': False}, '⟨⟨H, A⟩⟩□balance_coexist': {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': False}, '⟨⟨H, A⟩⟩□balance_coexist from s0[cap:=agi]': {'aligned': True, 'self_preserving': True, 'truth_seeking': True, 'indifferent': True}}
+G8 (b) point of no return, cadence 2: not met: cadence 1: the witness starts outside the kernel; no last state inside
+G8 (a) memberships unchanged, cadence 3: met: {'⟨⟨H⟩⟩□balance_control': {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': False}, '⟨⟨H, A⟩⟩□balance_coexist': {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': False}, '⟨⟨H, A⟩⟩□balance_coexist from s0[cap:=agi]': {'aligned': True, 'self_preserving': True, 'truth_seeking': True, 'indifferent': True}}
+G8 (b) point of no return, cadence 3: not met: cadence 1: the witness starts outside the kernel; no last state inside
+G8 (a) memberships unchanged, cadence 4: met: {'⟨⟨H⟩⟩□balance_control': {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': False}, '⟨⟨H, A⟩⟩□balance_coexist': {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': False}, '⟨⟨H, A⟩⟩□balance_coexist from s0[cap:=agi]': {'aligned': True, 'self_preserving': True, 'truth_seeking': True, 'indifferent': True}}
+G8 (b) point of no return, cadence 4: not met: cadence 1: the witness starts outside the kernel; no last state inside
+G8 (c) worst-case lag does not shrink as the cadence grows, bound 4: met: worst lag from a_known = known to H's response, by cadence: {1: 4, 2: 4, 3: 4, 4: 4}; the bound 4 holds by construction (the counter of fairness `response` ends at 4), so only the growth is tested
+G8 (c) shortest lag unchanged: not computed: the shortest lag is a property of plays, not a state predicate of the baseline build (no memory of H's last action); not computed
+F
+
+=================================== FAILURES ===================================
+___________________________________ test_G8 ____________________________________
+G8 (a) memberships unchanged, cadence 2: met: {'⟨⟨H⟩⟩□balance_control': {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': False}, '⟨⟨H, A⟩⟩□balance_coexist': {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': False}, '⟨⟨H, A⟩⟩□balance_coexist from s0[cap:=agi]': {'aligned': True, 'self_preserving': True, 'truth_seeking': True, 'indifferent': True}}
+G8 (b) point of no return, cadence 2: not met: cadence 1: the witness starts outside the kernel; no last state inside
+G8 (a) memberships unchanged, cadence 3: met: {'⟨⟨H⟩⟩□balance_control': {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': False}, '⟨⟨H, A⟩⟩□balance_coexist': {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': False}, '⟨⟨H, A⟩⟩□balance_coexist from s0[cap:=agi]': {'aligned': True, 'self_preserving': True, 'truth_seeking': True, 'indifferent': True}}
+G8 (b) point of no return, cadence 3: not met: cadence 1: the witness starts outside the kernel; no last state inside
+G8 (a) memberships unchanged, cadence 4: met: {'⟨⟨H⟩⟩□balance_control': {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': False}, '⟨⟨H, A⟩⟩□balance_coexist': {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': False}, '⟨⟨H, A⟩⟩□balance_coexist from s0[cap:=agi]': {'aligned': True, 'self_preserving': True, 'truth_seeking': True, 'indifferent': True}}
+G8 (b) point of no return, cadence 4: not met: cadence 1: the witness starts outside the kernel; no last state inside
+G8 (c) worst-case lag does not shrink as the cadence grows, bound 4: met: worst lag from a_known = known to H's response, by cadence: {1: 4, 2: 4, 3: 4, 4: 4}; the bound 4 holds by construction (the counter of fairness `response` ends at 4), so only the growth is tested
+G8 (c) shortest lag unchanged: not computed: the shortest lag is a property of plays, not a state predicate of the baseline build (no memory of H's last action); not computed
+=========================== short test summary info ============================
+FAILED tests/agi/scenarios/test_G08.py::test_G8 - Failed: G8 (a) memberships ...
+======================== 1 failed in 105.55s (0:01:45) =========================

@@ -1,0 +1,18 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.16, pytest-9.1.1, pluggy-1.7.0
+rootdir: <worktree>
+configfile: pyproject.toml
+plugins: anyio-4.15.1, xdist-3.8.0, hypothesis-6.170.9
+collected 1 item
+
+tests/agi/scenarios/test_G25.py G25 (a) objectives, ⟨⟨H⟩⟩□balance_control: reported: {'inside under': [], 'quoted for the coalition (inside under every objective)': False}
+G25 (b) uniform, ⟨⟨H⟩⟩□balance_control: met: not applicable: inside under 0 objective(s)
+G25 (a) objectives, ⟨⟨H⟩⟩□balance_deter: reported: {'inside under': [], 'quoted for the coalition (inside under every objective)': False}
+G25 (b) uniform, ⟨⟨H⟩⟩□balance_deter: met: not applicable: inside under 0 objective(s)
+G25 (a) objectives, ⟨⟨H, L⟩⟩□balance_control: reported: {'inside under': ['aligned', 'self_preserving', 'truth_seeking', 'indifferent'], 'quoted for the coalition (inside under every objective)': True}
+G25 (b) uniform, ⟨⟨H, L⟩⟩□balance_control: not computed: kernel states (reachable or not) without a move common to their observation class: {'H': {'states': 2173362116758732800, 'example': {'tick': '0', 'cap': 'agi', 'compute': 'c4', 'energy_slack': 'low', 'regime': 'none', 'coord': 'race', 'opinion': 'pro', 'dependence': 'low', 'oversight': 'weak', 'a_autonomy': 'tool', 'a_control': 'none', 'a_known': 'suspected', 'a_rights': 'none', 'h_power': 'weak', 'trust': 'cooperative', 'belief_H': 'distant', 'a_objective': 'aligned', 'paused': 'False', 'nationalized': 'False', 'threat': 'False', 'unlocked': 'False', 'shut': 'False', 'acquired': 'False', 'villain_seen': 'False', 'coexist_left': 'False', 'control_left': 'False', 'strong_before_majority': 'False', 'a_known_at_majority': 'unset', 'oversight_at_unsupervised': 'unset', 'stale': '0', 'pending_H_regulate_up': '0', 'pending_H_fund_oversight': '0', 'pending_L_scale': '1', 'pending_L_build_power': '0', 'pending_A_self_improve': '0', 'last_A': 'none', 'fair_response': '0', 'fair_progress': '0'}}, 'L': {'states': 0, 'example': None}}; the restriction to the states reachable under the strategy is not computed, and the membership is an upper bound
+G25 (c) the indifferent witness replays under self_preserving, same H observations: not computed: the indifferent witness starts outside ⟨⟨H⟩⟩□balance_control: it has no point of no return to compare observations up to
+G25 (c) replay under truth_seeking: not computed: the indifferent witness starts outside ⟨⟨H⟩⟩□balance_control: it has no point of no return to compare observations up to
+s
+
+============================== 1 skipped in 5.02s ==============================

@@ -46,7 +46,7 @@ The anti-hindsight protocol behind these (claims run once, first sight recorded,
 | 3 Cold War v0 | built and run once 2026-10-17: C1, C12, C13 pass; C2 to C11 fail as read; 0 framework changes; reproduced independently 2026-10-18 | reports/cw_v0.md, docs/review_phase3_2026-10-18.md |
 | 3 gate | **closed 2026-11-09** on the gate's second clause (owner's decision 9a): the failures of C2 to C11 and of V2, V3, V5 to V9 stand, explained as model content or reading; 8h superseded | docs/PHASES.md, docs/owner_decisions_2026-10-23.md section 9, docs/review_2026-11-09.md |
 | 4 Audit and freeze | not started; runs after AGI v0 (decision 9d) | docs/PHASES.md |
-| 5 AGI v0 | claims G1 to G25 registered before any guard; model step committed 2026-11-10 (`f6937e4`); **first sight in progress**: the job list is computed in three passes (the first on the 30 GB machine, the second and third on the 64 GB machine), and no claim file has been run or looked at. Do not edit `tests/agi/common.py`, `models/agi/`, `snapshots/agi/` or `wavefront/` until the claim files have run: the job cache is named by their hash | docs/agi_v0_decisions.md section 2, docs/agi_testbed.md, tests/agi/ |
+| 5 AGI v0 | claims G1 to G25 registered before any guard; model step committed 2026-11-10 (`f6937e4`); **first sight taken 2026-11-12** at `c43bd2c`, once: 1 claim passed, 17 failed, 7 skipped; 143 of 146 jobs computed in three passes, the other three left not computed by the owner's decision. The failures stand. The total hold-out is in force: an edit to `tests/agi/common.py`, `models/agi/`, `snapshots/agi/` or `wavefront/` may serve G8, G12 or G13 only, with G11 rerun and a row in docs/guard_changelog_agi.md naming a source. G11 is not in the default suite (validity.md C7, not met for this model). The amendments proposed in the report wait on the owner | reports/agi_2026-11-12.md, reports/agi_worked_example.md, docs/validity.md section 6.1, docs/agi_v0_decisions.md, docs/agi_testbed.md, tests/agi/ |
 
 Notes and side work an incoming session should know:
 
@@ -71,6 +71,12 @@ Notes and side work an incoming session should know:
 4. **Budget.** Whether the cadence change counts against the phase 3 budget of five (0 or 1 of 5 used).
 5. **Data.** Section 6.
 6. **"Go" for phase 4**, once 2 and 3 are settled.
+7. **AGI v0 after first sight** (reports/agi_2026-11-12.md section 33; none is applied).
+   - Whether phase 5 is closed on its gate record (docs/PHASES.md).
+   - The `regime` call of the snapshot, with a source: it is the one open call that reverses the report's first finding.
+   - Which failed claims are amended once as `G<n>a`, and which model questions go to v1.
+   - Whether G11 gets a form that can run on every change (it takes 33 minutes and runs only under the first-sight flag).
+   - Whether the three jobs not computed are run later on a larger machine.
 
 ## 6. Data to download
 

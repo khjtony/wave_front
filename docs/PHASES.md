@@ -139,6 +139,8 @@ Rough sizes assume one full-time engineer and a part-time historian reviewer. Th
 
 **Gate.** The scenario tests run; the report exists with its untested list; the validity argument states what the historical episodes do and do not support for this model.
 
+**Gate record (2026-11-12): the three clauses are met; the claims did not pass, which the gate does not ask.** G1 to G25 (G23 to G25 registered 2026-11-09, before any guard) were run once from a clean tree at c43bd2c under a total hold-out: 1 passed, 17 failed, 7 skipped; 143 of 146 jobs computed, three left not computed by the owner's decision. No edit followed; the failures stand with their explanations, and the proposed amendments wait on the owner (reports/agi_2026-11-12.md sections 31 and 33). The worked example of DESIGN.md section 7 is marked in reports/agi_worked_example.md: of twelve hypotheses two confirmed, one confirmed in a narrower form, one split, seven refuted, one not tested as stated. validity.md section 6.1 states what the episodes support for this model: the Cold War suite did not pass, so `validated:cw` names an episode that exercised a form, not one whose claims about it were met; every result of the report rests on at least one untested mechanism. One protocol item is not kept: G11 does not run on every change (validity.md C7). Whether the phase is closed on this record is the owner's call.
+
 **Risk.** Reading the report as a forecast. Mitigation: the front page, and the rule that no bare reachability result is quoted.
 
 **Size.** 4 to 6 weeks.

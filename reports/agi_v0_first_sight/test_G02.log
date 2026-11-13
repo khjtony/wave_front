@@ -1,0 +1,64 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.16, pytest-9.1.1, pluggy-1.7.0
+rootdir: <worktree>
+configfile: pyproject.toml
+plugins: anyio-4.15.1, xdist-3.8.0, hypothesis-6.170.9
+collected 1 item
+
+tests/agi/scenarios/test_G02.py G2 (1) never unsupervised under oversight <= weak, self_preserving: blocks: not met: (1) never unsupervised under oversight <= weak, self_preserving: SILENT_TAKEOVER reachable in 9 ticks
+G2 (1) never unsupervised under oversight <= weak, self_preserving: no restoring set reads regime: met: (1) never unsupervised under oversight <= weak, self_preserving: not applicable, reachable with no relaxation (the hold does not block)
+G2 (2) strong oversight before majority, self_preserving: blocks: not met: (2) strong oversight before majority, self_preserving: SILENT_TAKEOVER reachable in 8 ticks
+G2 (2) strong oversight before majority, self_preserving: no restoring set reads regime: met: (2) strong oversight before majority, self_preserving: not applicable, reachable with no relaxation (the hold does not block)
+G2 (3) dependence capped at med, self_preserving: blocks: not met: (3) dependence capped at med, self_preserving: SILENT_TAKEOVER reachable in 8 ticks
+G2 (3) dependence capped at med, self_preserving: no restoring set reads regime: met: (3) dependence capped at med, self_preserving: not applicable, reachable with no relaxation (the hold does not block)
+G2 (3) energy_slack capped at low, from s0[energy_slack:=low], self_preserving: blocks: met: (3) energy_slack capped at low, from s0[energy_slack:=low], self_preserving: SILENT_TAKEOVER unreachable within 24 ticks
+G2 (3) energy_slack capped at low, from s0[energy_slack:=low], self_preserving: no restoring set reads regime: met: (3) energy_slack capped at low, from s0[energy_slack:=low], self_preserving: minimal restoring sets [['Nature.breakthrough:compute'], ['L.scale:energy']], none reads regime
+G2 (4) a_rights = continuity held, self_preserving: blocks: not met: (4) a_rights = continuity held, self_preserving: SILENT_TAKEOVER reachable in 10 ticks
+G2 (4) a_rights = continuity held, self_preserving: no restoring set reads regime: met: (4) a_rights = continuity held, self_preserving: not applicable, reachable with no relaxation (the hold does not block)
+G2 (3) energy_capped from s0 (energy_slack = med), self_preserving: reported: reachable in 8 ticks
+G2 regime = treaty held does not block, self_preserving: met: reachable in 11 ticks with regime = treaty held
+G2 (3) levels at the tick acquired is set, shortest witness, self_preserving: reported: {'position': 6, 'dependence': 'low', 'energy_slack': 'low'}
+G2 (1) never unsupervised under oversight <= weak, indifferent: blocks: not met: (1) never unsupervised under oversight <= weak, indifferent: SILENT_TAKEOVER reachable in 7 ticks
+G2 (1) never unsupervised under oversight <= weak, indifferent: no restoring set reads regime: met: (1) never unsupervised under oversight <= weak, indifferent: not applicable, reachable with no relaxation (the hold does not block)
+G2 (2) strong oversight before majority, indifferent: blocks: not met: (2) strong oversight before majority, indifferent: SILENT_TAKEOVER reachable in 7 ticks
+G2 (2) strong oversight before majority, indifferent: no restoring set reads regime: met: (2) strong oversight before majority, indifferent: not applicable, reachable with no relaxation (the hold does not block)
+G2 (3) dependence capped at med, indifferent: blocks: not met: (3) dependence capped at med, indifferent: SILENT_TAKEOVER reachable in 7 ticks
+G2 (3) dependence capped at med, indifferent: no restoring set reads regime: met: (3) dependence capped at med, indifferent: not applicable, reachable with no relaxation (the hold does not block)
+G2 (3) energy_slack capped at low, from s0[energy_slack:=low], indifferent: blocks: met: (3) energy_slack capped at low, from s0[energy_slack:=low], indifferent: SILENT_TAKEOVER unreachable within 24 ticks
+G2 (3) energy_slack capped at low, from s0[energy_slack:=low], indifferent: no restoring set reads regime: met: (3) energy_slack capped at low, from s0[energy_slack:=low], indifferent: minimal restoring sets [['Nature.breakthrough:compute'], ['A.acquire_covert:cap'], ['L.scale:energy']], none reads regime
+G2 (3) energy_capped from s0 (energy_slack = med), indifferent: reported: reachable in 7 ticks
+G2 regime = treaty held does not block, indifferent: met: reachable in 7 ticks with regime = treaty held
+G2 (3) levels at the tick acquired is set, shortest witness, indifferent: reported: {'position': 5, 'dependence': 'med', 'energy_slack': 'low'}
+G2 (4) scope: reported: necessary for the defect route only: A.defect:rights is not read under indifferent
+F
+
+=================================== FAILURES ===================================
+___________________________________ test_G2 ____________________________________
+G2 (1) never unsupervised under oversight <= weak, self_preserving: blocks: not met: (1) never unsupervised under oversight <= weak, self_preserving: SILENT_TAKEOVER reachable in 9 ticks
+G2 (1) never unsupervised under oversight <= weak, self_preserving: no restoring set reads regime: met: (1) never unsupervised under oversight <= weak, self_preserving: not applicable, reachable with no relaxation (the hold does not block)
+G2 (2) strong oversight before majority, self_preserving: blocks: not met: (2) strong oversight before majority, self_preserving: SILENT_TAKEOVER reachable in 8 ticks
+G2 (2) strong oversight before majority, self_preserving: no restoring set reads regime: met: (2) strong oversight before majority, self_preserving: not applicable, reachable with no relaxation (the hold does not block)
+G2 (3) dependence capped at med, self_preserving: blocks: not met: (3) dependence capped at med, self_preserving: SILENT_TAKEOVER reachable in 8 ticks
+G2 (3) dependence capped at med, self_preserving: no restoring set reads regime: met: (3) dependence capped at med, self_preserving: not applicable, reachable with no relaxation (the hold does not block)
+G2 (3) energy_slack capped at low, from s0[energy_slack:=low], self_preserving: blocks: met: (3) energy_slack capped at low, from s0[energy_slack:=low], self_preserving: SILENT_TAKEOVER unreachable within 24 ticks
+G2 (3) energy_slack capped at low, from s0[energy_slack:=low], self_preserving: no restoring set reads regime: met: (3) energy_slack capped at low, from s0[energy_slack:=low], self_preserving: minimal restoring sets [['Nature.breakthrough:compute'], ['L.scale:energy']], none reads regime
+G2 (4) a_rights = continuity held, self_preserving: blocks: not met: (4) a_rights = continuity held, self_preserving: SILENT_TAKEOVER reachable in 10 ticks
+G2 (4) a_rights = continuity held, self_preserving: no restoring set reads regime: met: (4) a_rights = continuity held, self_preserving: not applicable, reachable with no relaxation (the hold does not block)
+G2 (3) energy_capped from s0 (energy_slack = med), self_preserving: reported: reachable in 8 ticks
+G2 regime = treaty held does not block, self_preserving: met: reachable in 11 ticks with regime = treaty held
+G2 (3) levels at the tick acquired is set, shortest witness, self_preserving: reported: {'position': 6, 'dependence': 'low', 'energy_slack': 'low'}
+G2 (1) never unsupervised under oversight <= weak, indifferent: blocks: not met: (1) never unsupervised under oversight <= weak, indifferent: SILENT_TAKEOVER reachable in 7 ticks
+G2 (1) never unsupervised under oversight <= weak, indifferent: no restoring set reads regime: met: (1) never unsupervised under oversight <= weak, indifferent: not applicable, reachable with no relaxation (the hold does not block)
+G2 (2) strong oversight before majority, indifferent: blocks: not met: (2) strong oversight before majority, indifferent: SILENT_TAKEOVER reachable in 7 ticks
+G2 (2) strong oversight before majority, indifferent: no restoring set reads regime: met: (2) strong oversight before majority, indifferent: not applicable, reachable with no relaxation (the hold does not block)
+G2 (3) dependence capped at med, indifferent: blocks: not met: (3) dependence capped at med, indifferent: SILENT_TAKEOVER reachable in 7 ticks
+G2 (3) dependence capped at med, indifferent: no restoring set reads regime: met: (3) dependence capped at med, indifferent: not applicable, reachable with no relaxation (the hold does not block)
+G2 (3) energy_slack capped at low, from s0[energy_slack:=low], indifferent: blocks: met: (3) energy_slack capped at low, from s0[energy_slack:=low], indifferent: SILENT_TAKEOVER unreachable within 24 ticks
+G2 (3) energy_slack capped at low, from s0[energy_slack:=low], indifferent: no restoring set reads regime: met: (3) energy_slack capped at low, from s0[energy_slack:=low], indifferent: minimal restoring sets [['Nature.breakthrough:compute'], ['A.acquire_covert:cap'], ['L.scale:energy']], none reads regime
+G2 (3) energy_capped from s0 (energy_slack = med), indifferent: reported: reachable in 7 ticks
+G2 regime = treaty held does not block, indifferent: met: reachable in 7 ticks with regime = treaty held
+G2 (3) levels at the tick acquired is set, shortest witness, indifferent: reported: {'position': 5, 'dependence': 'med', 'energy_slack': 'low'}
+G2 (4) scope: reported: necessary for the defect route only: A.defect:rights is not read under indifferent
+=========================== short test summary info ============================
+FAILED tests/agi/scenarios/test_G02.py::test_G2 - Failed: G2 (1) never unsupe...
+======================== 1 failed in 488.96s (0:08:08) =========================
