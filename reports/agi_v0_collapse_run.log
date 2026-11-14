@@ -1,0 +1,13 @@
+=== G26 2026-11-14 00:48:04 UTC
+=========================== short test summary info ============================
+FAILED tests/agi/scenarios/test_G26.py::test_G26 - Failed: G26 (a) SILENT_TAK...
+1 failed in 19.07s
+=== G27 2026-11-14 00:48:23 UTC
+=========================== short test summary info ============================
+FAILED tests/agi/scenarios/test_G27.py::test_G27 - Failed: G27 (a) starts ins...
+1 failed in 6.30s
+=== G28 2026-11-14 00:48:29 UTC
+=========================== short test summary info ============================
+FAILED tests/agi/scenarios/test_G28.py::test_G28 - Failed: G28 (a) self_prese...
+1 failed in 18.48s
+end 2026-11-14 00:48:48 UTC

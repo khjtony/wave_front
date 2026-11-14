@@ -1,0 +1,8 @@
+# completion of jobs left not computed at first sight (agi_2026-11-12.md section 28), by the owner's decision of 2026-11-13
+# machine: KVM guest on a Ryzen 9 5900X, 20 cores, 30 GB; tree 3fa790a; started 2026-11-13 00:20:27 PST
+# budget fixed before the run: 720 minutes and 26 GB per job, one at a time
+# not run: 379c87f2e855bf62 (⟨⟨H⟩⟩□not:SILENT_TAKEOVER, three non-aligned profiles): it exhausted the 26 GB cap in pass 2 and the machine has 30 GB
+2 of 146 jobs, cache /home/khjtony/workspace/wave_front/.claude/worktrees/bridge-cse_01RTpGKupSSHRF2WjPvHeBXq/.cache/agi/30dcf53289fc, 1 at a time, 720 minutes, cap 26 GB
+done     ⟨⟨H⟩⟩□no_overt_takeover profiles=A_self_preserving+A_indifferent+A_truth_seeking: 12938.0s nodes 9173329 peak 745239172 core c
+done     ⟨⟨H⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking+dependence_capped: 10267.8s nodes 10350974 peak 657471564 core c
+finished
