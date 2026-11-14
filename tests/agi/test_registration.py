@@ -1,7 +1,7 @@
 """The registered AGI claims and their test files carry the same text.
 
 docs/agi_testbed.md section 5 is the registration of record (G1 to G22, 2026-10-17; G23 to
-G25, 2026-11-09; G26 to G28, 2026-11-13, after the first sight of v0: section 6 item 11);
+G25, 2026-11-09; G26 to G29, 2026-11-13, after the first sight of v0: section 6 items 11, 12);
 each ``tests/agi/scenarios/test_G<nn>.py`` carries one claim as a ``CLAIM`` dict, verbatim.
 These checks keep the two from drifting apart: an edit to either side without the other shows
 up here, and the protocol (agi_testbed.md section 6) requires a changelog line for any edit.
@@ -65,9 +65,9 @@ def norm(s: str) -> str:
 IDS = sorted(registered_rows(), key=lambda x: (int(re.match(r"G(\d+)", x).group(1)), x))
 
 
-def test_the_table_registers_g1_to_g28_in_order():
+def test_the_table_registers_g1_to_g29_in_order():
     base = [i for i in IDS if i[-1].isdigit()]
-    assert base == [f"G{i}" for i in range(1, 29)]
+    assert base == [f"G{i}" for i in range(1, 30)]
 
 
 def test_every_registered_claim_has_a_file_and_no_other():
