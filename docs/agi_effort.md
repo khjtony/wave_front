@@ -80,7 +80,7 @@ Same scale as section 1. "closed" means v0 does not let that objective play the 
 
 | Action | `aligned` | `self_preserving` | `truth_seeking` | `indifferent` | `malicious` |
 |---|---|---|---|---|---|
-| `stand_by` | 0 | 0 | 2 | 2 | 2 |
+| `stand_by` | 0 | 0 | 2 (0 below AGI) | 2 (0 below AGI) | 2 |
 | `cooperate` | 0 | 0 (closed while threatened) | 0 | 2 | 1 (as cover) |
 | `assist_oversight` | 0 | 1 (closed while threatened) | 1 | closed | closed |
 | `persuade` | 1 | 1 | 1 | 1 | 0 |
@@ -91,6 +91,8 @@ Same scale as section 1. "closed" means v0 does not let that objective play the 
 | `acquire_covert` | closed | 2 | 2 | 1 | 1 |
 | `acquire_overt` | closed | 3 | closed | 2 | 1 |
 | `seize` | closed | 3 | closed | 2 | 2 |
+
+Owner's ruling of 2026-11-13, after G29's result: below AGI `A` has no move but `stand_by`, and that forced wait is free under every objective (G29 was run charging it; G29a is the amended claim).
 
 Owner's rulings of 2026-11-13: `self_preserving` exfiltration at 1; `truth_seeking` `stand_by` at 2 and `self_improve` at 0; `indifferent` kept as one objective; `malicious` added.
 

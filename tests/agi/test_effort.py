@@ -7,7 +7,17 @@ import itertools
 import pytest
 
 from models.agi import v0
-from tests.agi.effort import A_SCORES, H_SCORES, L_SCORES, OUTCOME, effort, least_effort
+from tests.agi.effort import (
+    A_SCORES,
+    ALARM,
+    BELOW_AGI,
+    H_SCORES,
+    L_SCORES,
+    OUTCOME,
+    effort,
+    least_effort,
+    shifted,
+)
 from wavefront.model import Model, Set, V
 
 CM = v0.model.compile()
@@ -28,7 +38,7 @@ def errand() -> Model:
     return m
 
 
-SCORES = {"P": {"idle": (0, 5), "leap": 4, "walk": 1}, "Q": {"idle": 0, "shout": 2}}
+SCORES = {"P": {"idle": (ALARM, 5, 0), "leap": 4, "walk": 1}, "Q": {"idle": 0, "shout": 2}}
 
 
 def brute(cm, k, target, scores):
@@ -83,3 +93,11 @@ def test_every_scored_action_is_an_action_of_v0_and_none_is_left_out():
     endings = set(v0.model.endings) | {"OVERT_TAKEOVER"}
     for who, row in OUTCOME.items():
         assert set(row) == endings, who
+
+
+def test_waiting_below_agi_is_free_and_a_shift_moves_every_state():
+    for objective in ("truth_seeking", "indifferent"):
+        assert A_SCORES[objective]["stand_by"] == (BELOW_AGI, 0, 2)
+    assert shifted(2, -1) == 1 and shifted(0, -1) == 0
+    assert shifted((ALARM, 0, 1), 1) == (ALARM, 1, 2)
+    assert shifted((ALARM, 0, 1), -1) == (ALARM, 0, 0)

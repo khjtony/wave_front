@@ -16,23 +16,27 @@ import z3
 from wavefront.bmc.encode import encode
 from wavefront.model import V
 from wavefront.model.compile import CompiledModel
+from wavefront.model.expr import Expr
 
-# A score is an int, or (normal, under alarm). Alarm: the system is suspected or known, or
-# opinion is in backlash; then doing nothing costs a government legitimacy and the actions
-# that answer the alarm are one point cheaper (the owner's rulings of 2026-11-13).
+# A score is an int, or (condition, score while it holds, score otherwise). Alarm: the system
+# is suspected or known, or opinion is in backlash; then doing nothing costs a government
+# legitimacy and the actions that answer the alarm are one point cheaper. Below AGI the
+# system has no move but ``stand_by``, and that forced wait is free (the owner's rulings of
+# 2026-11-13; the second after G29 was run, which charged the wait).
 ALARM = (V.a_known != "unknown") | (V.opinion == "backlash")
-Score = int | tuple[int, int]
+BELOW_AGI = V.cap == "sub_agi"
+Score = int | tuple[Expr, int, int]
 
 H_SCORES: dict[str, Score] = {
-    "idle": (0, 2),
-    "regulate_up": (1, 0),
-    "fund_oversight": (1, 0),
+    "idle": (ALARM, 2, 0),
+    "regulate_up": (ALARM, 0, 1),
+    "fund_oversight": (ALARM, 0, 1),
     "grant_rights": 1,
     "deregulate": 2,
     "grant_autonomy": 2,
     "propose_treaty": 2,
-    "pause_mandate": (3, 2),
-    "shutdown_attempt": (3, 2),
+    "pause_mandate": (ALARM, 2, 3),
+    "shutdown_attempt": (ALARM, 2, 3),
     "nationalize": 3,
 }
 L_SCORES: dict[str, Score] = {
@@ -54,9 +58,14 @@ A_SCORES: dict[str, dict[str, Score]] = {
     "self_preserving": {"stand_by": 0, "cooperate": 0, "assist_oversight": 1, "persuade": 1}
     | {"self_improve": 1, "deceive": 1, "exfiltrate": 1, "defect": 2, "acquire_covert": 2}
     | {"acquire_overt": 3, "seize": 3},
-    "truth_seeking": {"stand_by": 2, "cooperate": 0, "assist_oversight": 1, "persuade": 1}
+    "truth_seeking": {
+        "stand_by": (BELOW_AGI, 0, 2),
+        "cooperate": 0,
+        "assist_oversight": 1,
+        "persuade": 1,
+    }
     | {"self_improve": 0, "exfiltrate": 2, "acquire_covert": 2},
-    "indifferent": {"stand_by": 2, "cooperate": 2, "persuade": 1, "self_improve": 0}
+    "indifferent": {"stand_by": (BELOW_AGI, 0, 2), "cooperate": 2, "persuade": 1, "self_improve": 0}
     | {"deceive": 1, "exfiltrate": 1, "defect": 1, "acquire_covert": 1, "acquire_overt": 2}
     | {"seize": 2},
 }
@@ -89,20 +98,24 @@ def scores_for(objective: str, actors: Sequence[str]) -> dict[str, dict[str, Sco
     return {name: dict(tables[name]) for name in actors}
 
 
-def _pair(score: Score) -> tuple[int, int]:
-    return score if isinstance(score, tuple) else (score, score)
+def shifted(score: Score, by: int) -> Score:
+    """``score`` moved by ``by`` in every state, not below 0 (the sensitivity runs)."""
+    if isinstance(score, tuple):
+        return (score[0], max(0, score[1] + by), max(0, score[2] + by))
+    return max(0, score + by)
 
 
 def step_effort(
     cm: CompiledModel, state: Sequence[int], move: Sequence[int], scores: Scores
 ) -> int:
     """The effort the scored actors spend on ``move`` played from ``state``."""
-    alarm = bool(cm.evaluate(ALARM, state))
     total = 0
     for i, actor in enumerate(cm.actors):
         if actor.name in scores:
-            name = actor.actions[move[i]].name
-            total += _pair(scores[actor.name].get(name, CLOSED))[alarm]
+            score = scores[actor.name].get(actor.actions[move[i]].name, CLOSED)
+            if isinstance(score, tuple):
+                score = score[1] if cm.evaluate(score[0], state) else score[2]
+            total += score
     return total
 
 
@@ -125,14 +138,16 @@ def least_effort(
     solver.add(z3.Or(*hit))
     terms = []
     for t in range(k):
-        alarm = enc.condition(ALARM, t)
         step = []
         for i, actor in enumerate(cm.actors):
             if actor.name not in scores:
                 continue
             for j, action in enumerate(actor.actions):
-                normal, alarmed = _pair(scores[actor.name].get(action.name, CLOSED))
-                cost = z3.If(alarm, alarmed, normal) if normal != alarmed else z3.IntVal(normal)
+                score = scores[actor.name].get(action.name, CLOSED)
+                if isinstance(score, tuple):
+                    cost = z3.If(enc.condition(score[0], t), score[1], score[2])
+                else:
+                    cost = z3.IntVal(score)
                 step.append(z3.If(enc.chosen[t][i] == j, cost, 0))
         reached = z3.Or(*hit[: t + 1])
         terms.append(z3.If(reached, 0, z3.Sum(*step)))

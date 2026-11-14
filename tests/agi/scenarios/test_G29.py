@@ -16,7 +16,8 @@ CLAIM = {
     "id": "G29",
     "from_state": "`s₀`, within 24 ticks",
     "claim": (
-        "effort and outcome cost (the scores of record in docs/agi_effort.md; section 6 item "
+        "amended 2026-11-13, see G29a: effort and outcome cost (the scores of record in "
+        "docs/agi_effort.md; section 6 item "
         "12): (a) under each non-aligned objective under which `SILENT_TAKEOVER` is reachable "
         "within the bound, the least joint effort of `H` and `L` on a play to it is 0; (b) "
         "under each non-aligned objective, the least effort of `H` on a play to `CONTAINED` "

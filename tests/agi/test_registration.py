@@ -1,7 +1,8 @@
 """The registered AGI claims and their test files carry the same text.
 
 docs/agi_testbed.md section 5 is the registration of record (G1 to G22, 2026-10-17; G23 to
-G25, 2026-11-09; G26 to G29, 2026-11-13, after the first sight of v0: section 6 items 11, 12);
+G25, 2026-11-09; G26 to G29 and G29a, 2026-11-13, after the first sight of v0: section 6
+items 11, 12);
 each ``tests/agi/scenarios/test_G<nn>.py`` carries one claim as a ``CLAIM`` dict, verbatim.
 These checks keep the two from drifting apart: an edit to either side without the other shows
 up here, and the protocol (agi_testbed.md section 6) requires a changelog line for any edit.
