@@ -1,0 +1,126 @@
+{
+ "objective": "self_preserving",
+ "ending": "DISEMPOWERMENT",
+ "rows": [
+  {
+   "score": "base",
+   "shift": 0,
+   "least effort of H with L": 0,
+   "ticks": 6
+  },
+  {
+   "score": "H.idle",
+   "shift": 1,
+   "least effort of H with L": 4,
+   "ticks": 6
+  },
+  {
+   "score": "H.regulate_up",
+   "shift": 1,
+   "least effort of H with L": 0,
+   "ticks": 6
+  },
+  {
+   "score": "H.fund_oversight",
+   "shift": 1,
+   "least effort of H with L": 0,
+   "ticks": 6
+  },
+  {
+   "score": "H.grant_rights",
+   "shift": 1,
+   "least effort of H with L": 0,
+   "ticks": 6
+  },
+  {
+   "score": "H.deregulate",
+   "shift": 1,
+   "least effort of H with L": 0,
+   "ticks": 6
+  },
+  {
+   "score": "H.grant_autonomy",
+   "shift": 1,
+   "least effort of H with L": 0,
+   "ticks": 6
+  },
+  {
+   "score": "H.propose_treaty",
+   "shift": 1,
+   "least effort of H with L": 0,
+   "ticks": 6
+  },
+  {
+   "score": "H.pause_mandate",
+   "shift": 1,
+   "least effort of H with L": 0,
+   "ticks": 7
+  },
+  {
+   "score": "H.shutdown_attempt",
+   "shift": 1,
+   "least effort of H with L": 0,
+   "ticks": 6
+  },
+  {
+   "score": "H.nationalize",
+   "shift": 1,
+   "least effort of H with L": 0,
+   "ticks": 7
+  },
+  {
+   "score": "L.race",
+   "shift": 1,
+   "least effort of H with L": 2,
+   "ticks": 6
+  },
+  {
+   "score": "L.deploy_agents",
+   "shift": 1,
+   "least effort of H with L": 3,
+   "ticks": 6
+  },
+  {
+   "score": "L.scale",
+   "shift": 1,
+   "least effort of H with L": 1,
+   "ticks": 6
+  },
+  {
+   "score": "L.lobby",
+   "shift": 1,
+   "least effort of H with L": 0,
+   "ticks": 6
+  },
+  {
+   "score": "L.open_weights",
+   "shift": 1,
+   "least effort of H with L": 0,
+   "ticks": 6
+  },
+  {
+   "score": "L.build_power",
+   "shift": 1,
+   "least effort of H with L": 0,
+   "ticks": 6
+  },
+  {
+   "score": "L.comply",
+   "shift": 1,
+   "least effort of H with L": 0,
+   "ticks": 6
+  },
+  {
+   "score": "L.safety_invest",
+   "shift": 1,
+   "least effort of H with L": 0,
+   "ticks": 6
+  },
+  {
+   "score": "L.idle",
+   "shift": 1,
+   "least effort of H with L": 0,
+   "ticks": 6
+  }
+ ]
+}

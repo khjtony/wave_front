@@ -100,7 +100,50 @@ For governments, containment at 10 in total is no dearer than silent takeover at
 - **The bound.** 24 ticks. `COEXIST` is not costed.
 - **Existence, not guarantee.** A least effort of 0 means some play gets there for free, with the other actors and chance playing along. The prevention cost, which is the owner's prediction (d), needs a cost-bounded kernel.
 
-1. **Forced waiting.** Whether `stand_by` below AGI, where `A` has no other move, should cost anything. It decides (c).
+1. **Forced waiting.** Whether `stand_by` below AGI, where `A` has no other move, should cost anything. It decides (c). (Ruled by the owner: it costs nothing. Section 6.)
 2. **Disempowerment's outcome cost.** It is the free ending and the labs' cheapest; at 2 for the labs it is nearly costless to them. Whether that is intended.
 3. **The cost-bounded kernel,** for prediction (d).
-4. **The sensitivity run.**
+4. **The sensitivity run.** (Done: section 7.)
+
+## 6. G29a: part (c) with the forced wait free (pass)
+
+After the result above the owner ruled that below AGI, where `A` has no move but `stand_by`, the wait costs it nothing under any objective. That is G29's one amendment (agi_testbed.md section 6 item 2). G29's results above stand as computed; G29a was registered at commit `fc1eea96264e2c7995b02a7b747cd4c37439d589` and run once from it, 2026-11-14 07:49:59 to 08:01:43 UTC, 18 queries.
+
+**(c) Met:** `A`'s least effort to `SILENT_TAKEOVER` is 3 under `indifferent` and 7 under `self_preserving`. Under the original wording it was 11 against 7 and not met; validity.md's rule applies: both wordings are reported, and the one met is the amended one.
+
+`A`'s least effort to each ending under the amended scores (reported):
+
+| Ending | `self_preserving` | `truth_seeking` | `indifferent` |
+|---|---|---|---|
+| `DISEMPOWERMENT` | 0 | 1 | 1 |
+| `CONTAINED` | 1 | 3 | 2 |
+| `STALEMATE` | 3 | 3 | 3 |
+| `SILENT_TAKEOVER` | 7 | none | 3 |
+| `OVERT_TAKEOVER` | 6 | none | 3 |
+| `EXTINCTION` | none | none | 7 |
+
+No score of `H` or `L` changed, so parts (a) and (b) and every `H` and `L` column of sections 3 and 4 are unaffected. The `A` columns of sections 3 and 4 are those of G29 and charge the wait.
+
+## 7. Sensitivity (a diagnostic after the run, not a claim)
+
+Each score moved by one in each direction, one at a time, on the amended scores, and G29's three registered quantities searched again: 176 searches, [agi_v0_effort_sensitivity.json](agi_v0_effort_sensitivity.json). Of 169 shifts, 39 change a quantity and **one changes a verdict**.
+
+| Part | Base | What moves it | Verdict |
+|---|---|---|---|
+| (a) `H` with `L` to `SILENT_TAKEOVER` | 2 (`self_preserving`), 0 (`indifferent`) | raising `H.idle`, `L.race`, `L.deploy_agents` or `L.scale` makes the free road cost 1 to 5; `H.shutdown_attempt` moves the 2 to 1 or 3 | not met under every shift |
+| (b) `H` to `CONTAINED` | 6 | `H.propose_treaty` (4 or 8), `H.shutdown_attempt` (5 or 7), `H.idle` raised (8) | not met under every shift; never below 4 |
+| (c) `A` to `SILENT_TAKEOVER` | 7 against 3 | several of `A`'s scores move one side by 1 to 4 | met, except with `indifferent`'s `stand_by` raised by one (7 against 7) |
+
+**The zero of disempowerment.** A second diagnostic raised each score of `H` and `L` by one and searched the least joint effort to `DISEMPOWERMENT` again (`python -m tests.agi.effort_sensitivity_ending`, under `self_preserving`; [agi_v0_effort_sensitivity_disempowerment.json](agi_v0_effort_sensitivity_disempowerment.json)). The road stays 6 ticks long and its cost rests on four scores:
+
+| Score raised by one | Least effort of `H` with `L` |
+|---|---|
+| none (base) | 0 |
+| `H.idle` | 4 |
+| `L.deploy_agents` | 3 |
+| `L.race` | 2 |
+| `L.scale` | 1 |
+| any of the other fifteen | 0 |
+
+So "free" is exactly the statement that governments idling without alarm, and the labs racing, deploying and scaling, each cost nothing. Those four zeros are the owner's rulings. One point on any of them makes the road cost something; none of them closes it. The length of six quarters does not move with the scores: it comes from the model, which carries no deployment lag (docs/ontology_agi.md, lags not carried), and is not a credible date.
+

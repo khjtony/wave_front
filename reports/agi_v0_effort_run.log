@@ -3,3 +3,10 @@
 FAILED tests/agi/scenarios/test_G29.py::test_G29 - Failed: G29 (a) SILENT_TAK...
 1 failed in 3969.14s (1:06:09)
 end 2026-11-14 06:58:43 UTC
+=== G29a fc1eea96264e2c7995b02a7b747cd4c37439d589 2026-11-14 07:49:59 UTC
+G29a (e) least effort of A under indifferent: reported: {'SILENT_TAKEOVER': 3, 'OVERT_TAKEOVER': 3, 'CONTAINED': 2, 'DISEMPOWERMENT': 1, 'EXTINCTION': 7, 'STALEMATE': 3}
+.
+1 passed in 703.96s (0:11:43)
+=== sensitivity 2026-11-14 08:01:43 UTC
+176 searches; 39 of 169 shifts change a quantity
+end 2026-11-14 08:52:00 UTC
