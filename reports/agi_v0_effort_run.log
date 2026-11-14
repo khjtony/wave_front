@@ -1,0 +1,5 @@
+=== G29 48e5326df7ec3f0d83c732a269fa60d7cb0acf73 2026-11-14 05:52:33 UTC
+=========================== short test summary info ============================
+FAILED tests/agi/scenarios/test_G29.py::test_G29 - Failed: G29 (a) SILENT_TAK...
+1 failed in 3969.14s (1:06:09)
+end 2026-11-14 06:58:43 UTC
