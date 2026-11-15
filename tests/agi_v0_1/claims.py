@@ -59,7 +59,9 @@ def first_wave_cancelled(objective: str):
         enc = encode(cm, 4)
         solver = enc.solver()
         solver.add(*enc.assume.values())
-        solver.add(*(enc.active[t] for t in range(4)))
+        # Every transition to tick 4 is enforced (``active[t]`` gates the transition into t;
+        # the first sight asserted ``active[0..3]`` only and left tick 4 free: a defect).
+        solver.add(*(enc.active[t] for t in range(1, 5)))
         solver.add(enc.condition(V.adoption == 3, 1), enc.condition(V.dependence == "low", 4))
         if solver.check() != z3.sat:
             return None

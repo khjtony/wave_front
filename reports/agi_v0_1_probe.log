@@ -1,0 +1,11 @@
+=== probe v0 cac9190 2026-11-15 10:25:16 UTC
+layer 0 530.403s nodes 116746
+done v0 ⟨⟨H⟩⟩□balance_control: 530.4s peak 174790145 core c maxrss_kb 5338508
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 8:50.93
+	Maximum resident set size (kbytes): 5338508
+=== probe v0.1 cac9190 2026-11-15 10:34:07 UTC
+layer 0 3870.21s nodes 156393
+done v0.1 ⟨⟨H⟩⟩□balance_control: 3871.7s peak 282488040 core c maxrss_kb 9598736
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:04:32
+	Maximum resident set size (kbytes): 9598736
+PROBE_DONE

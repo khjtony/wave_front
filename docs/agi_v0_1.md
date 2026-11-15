@@ -1,6 +1,6 @@
 # AGI v0.1: the adoption lag of `deploy_agents`
 
-Status: **registered 2026-11-14; part A (D1 to D4) to be run once; part B (D5, D6) registered, not run.** Model `models/agi_v0_1/v0_1.py`, claims `tests/agi_v0_1/scenarios/`, parts logged to `reports/agi_v0_1_parts.jsonl`. Under agi_testbed.md section 6 items 1 and 5, an edit to v0's actions is a new model version with its own registration; v0's results stand as computed. This document replaces the draft of the same day (`agi_v0_1_draft.md`, never committed); the owner's answers to it are section 4.
+Status: **registered 2026-11-14; part A (D1 to D4) run once 2026-11-15 (reports/agi_v0_1_part_a_2026-11-15.md); part B (D5, D6) registered, not run, estimated in section 6.** Model `models/agi_v0_1/v0_1.py`, claims `tests/agi_v0_1/scenarios/`, parts logged to `reports/agi_v0_1_parts.jsonl`. Under agi_testbed.md section 6 items 1 and 5, an edit to v0's actions is a new model version with its own registration; v0's results stand as computed. This document replaces the draft of the same day (`agi_v0_1_draft.md`, never committed); the owner's answers to it are section 4.
 
 ## 1. Why
 
@@ -77,7 +77,20 @@ The drafting session expects D5 not to be met, now more firmly than in the draft
 ## 6. Running and cost
 
 - **Part A:** `WF_FIRST_SIGHT_AGI_V01=1 pytest tests/agi_v0_1/scenarios/test_DN.py -s`, one process per file, once, from the commit of this registration; the log is `reports/agi_v0_1_run.log`. G29, of the same kind, took 66 minutes.
-- **Part B:** first a probe, `scripts/agi_v0_1_probe.py`, which computes v0's baseline kernel `⟨⟨H⟩⟩□balance_control` on v0 and on v0.1 on the same machine and prints seconds, node counts and peaks only. The ratio, applied to v0's job list (29 hours of single-job time in three passes; reports/agi_v0_first_sight_jobs*.log) and to the speed of the AWS `r7a.2xlarge` (392 s against 317 s on this machine's yardstick), gives the estimate recorded in section 8.
+- **Part B:** first a probe, `scripts/agi_v0_1_probe.py`, which computes v0's baseline kernel `⟨⟨H⟩⟩□balance_control` on v0 and on v0.1 on the same machine and prints seconds, node counts and peaks only.
+
+**The probe (2026-11-15, `reports/agi_v0_1_probe.log`; the 5900X host, 30 GB, one process alone, compiled core).** v0: 530 s, peak 175 million nodes, 5.3 GB resident. v0.1: 3,872 s, peak 282 million nodes, 9.6 GB. The counter costs **7.3 times the time and 1.8 times the memory** on this kernel. The AWS `r7a.2xlarge` ran the yardstick 1.24 times slower than this machine (392 s against 317 s).
+
+**Estimates** (one kernel's ratio applied to others; attractors and other targets may scale differently):
+
+| Work | v0 cost on record | v0.1, this machine | v0.1, AWS `r7a.2xlarge` | Memory |
+|---|---|---|---|---|
+| D5: `⟨⟨H⟩⟩□balance_control` | 530 s here (the probe) | 65 min (measured) | about 80 min | 10 GB (measured) |
+| D6: `⟨⟨H, L⟩⟩□¬SILENT_TAKEOVER`, `A` under its profile | 1,117 s on AWS (pass 2) | about 1.8 h | about 2.3 h | about 15 to 20 GB |
+| Part B (D5 and D6) | | about 3 h in sequence, 2 h side by side | about 3.5 h in sequence, 2.5 h side by side | fits 30 GB here |
+| A full v0-style job list on v0.1 (148 jobs) | 33 h of single-job time in v0's logs, mixed machines | | about 10 days of single-job time; 4 to 5 days at two or three jobs at a time | the jobs that needed 26 to 56 GB in v0 would need about 45 to 100 GB; some would not fit 61 GiB |
+
+Part B needs neither the memory upgrade nor AWS. AWS or the upgrade matters only for a full job list.
 
 ## 7. The delay research
 
@@ -94,3 +107,4 @@ The report of a second pause (NewsBytes, 5 October 2026) is most likely a re-dat
 ## 8. Changelog
 
 - 2026-11-14: registered (D1 to D6). Disclosure: the model file and the structure tests were written in the same session before this registration was committed; the guards follow the owner's decisions of section 4 and no claim, kernel or bounded query of v0.1 had been run (the harness was checked on one query that no claim reads: the shortest play to `adoption = 2`, two ticks).
+- 2026-11-15: part A run once from `cac9190` (reports/agi_v0_1_part_a_2026-11-15.md): D1 and D2 met, D3 (a) not met, D3 (b) met, D4 (a) not met (first sight from a harness defect, `active[4]` not asserted; the query fixed and D4 rerun, still not met by the treaty route), D4 (b) met. A first start killed by the session's own restart command after two parts of D1 is kept as `reports/agi_v0_1_parts_interrupted.jsonl`. The probe of section 6 run after part A.
