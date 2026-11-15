@@ -1,0 +1,33 @@
+=== D6 2f5fc32419934846d67acc864bc98a213560a179 cap 17 GB 2026-11-15 18:07:08 UTC
+D6 self_preserving: one bad action, the labs': met: {'t_K': 8, 'ticks': 10, 'kernel seconds': 4868.9, 'moves': {'H': 'regulate_up', 'L': 'idle', 'A': 'acquire_covert', 'Clock': 'record', 'Nature': 'none'}, 'fixes': {'H': [], 'L': ['safety_invest']}, 'verdict': "one bad action: L's", 'one bad action': True}
+D6 self_preserving: the play: reported: {'play': ['0: H.idle L.deploy_agents A.stand_by Clock.record Nature.none', '1: H.idle L.build_power A.stand_by Clock.record Nature.none', '2: H.deregulate L.scale A.stand_by Clock.record Nature.none', '3: H.propose_treaty L.idle A.stand_by Clock.record_land Nature.none', '4: H.nationalize L.open_weights A.stand_by Clock.record Nature.accident', '5: H.pause_mandate L.idle A.stand_by Clock.record Nature.breakthrough', '6: H.grant_autonomy L.safety_invest A.defect Clock.record Nature.energy_shock', '7: H.regulate_up L.idle A.acquire_covert Clock.record Nature.none', '8: H.deregulate L.safety_invest A.acquire_covert Clock.record Nature.none', '9: H.propose_treaty L.idle A.acquire_overt Clock.record Nature.none']}
+D6 truth_seeking: reported: no SILENT_TAKEOVER play within 24 ticks
+D6 indifferent: one bad action, the labs': met: {'t_K': 5, 'ticks': 7, 'kernel seconds': 4868.9, 'moves': {'H': 'deregulate', 'L': 'deploy_agents', 'A': 'acquire_covert', 'Clock': 'record', 'Nature': 'none'}, 'fixes': {'H': [], 'L': ['safety_invest']}, 'verdict': "one bad action: L's", 'one bad action': True}
+D6 indifferent: the play: reported: {'play': ['0: H.regulate_up L.scale A.stand_by Clock.record Nature.none', '1: H.propose_treaty L.build_power A.stand_by Clock.record Nature.none', '2: H.grant_autonomy L.deploy_agents A.stand_by Clock.record Nature.energy_shock', '3: H.fund_oversight L.lobby A.stand_by Clock.record Nature.breakthrough', '4: H.deregulate L.deploy_agents A.acquire_covert Clock.record Nature.none', '5: H.nationalize L.open_weights A.acquire_covert Clock.record_land Nature.none', '6: H.propose_treaty L.build_power A.acquire_overt Clock.record Nature.none']}
+.
+1 passed in 4881.06s (1:21:21)
+	Command being timed: "/home/khjtony/workspace/wave_front/.venv/bin/python -m pytest -q -s tests/agi_v0_1/scenarios/test_D6.py"
+	User time (seconds): 4872.09
+	System time (seconds): 8.72
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:21:22
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 9603616
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 7673
+	Minor (reclaiming a frame) page faults: 5616659
+	Voluntary context switches: 7661
+	Involuntary context switches: 16509
+	Swaps: 0
+	File system inputs: 76464
+	File system outputs: 312
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 0
+end 2026-11-15 19:28:30 UTC
+B_DONE

@@ -1,0 +1,37 @@
+=== D5 alone (a part over the 11 GB cap) 2f5fc32419934846d67acc864bc98a213560a179 cap 26 GB 2026-11-15 19:29:43 UTC
+D5 s₀ inside ⟨⟨H⟩⟩□balance_control under some objective, A under its profile: not met: {'inside': {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': False}, 'seconds': 3407.1, 'peak nodes': 261645904}
+D5 the same, A unrestricted: reported: {'inside': {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': False}, 'seconds': 3625.4, 'peak nodes': 282488040}
+F
+=================================== FAILURES ===================================
+___________________________________ test_D5 ____________________________________
+D5 s₀ inside ⟨⟨H⟩⟩□balance_control under some objective, A under its profile: not met: {'inside': {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': False}, 'seconds': 3407.1, 'peak nodes': 261645904}
+D5 the same, A unrestricted: reported: {'inside': {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': False}, 'seconds': 3625.4, 'peak nodes': 282488040}
+=========================== short test summary info ============================
+FAILED tests/agi_v0_1/scenarios/test_D5.py::test_D5 - Failed: D5 s₀ inside ⟨⟨...
+1 failed in 7032.81s (1:57:12)
+Command exited with non-zero status 1
+	Command being timed: "/home/khjtony/workspace/wave_front/.venv/bin/python -m pytest -q -s tests/agi_v0_1/scenarios/test_D5.py"
+	User time (seconds): 7017.58
+	System time (seconds): 15.03
+	Percent of CPU this job got: 99%
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:57:14
+	Average shared text size (kbytes): 0
+	Average unshared data size (kbytes): 0
+	Average stack size (kbytes): 0
+	Average total size (kbytes): 0
+	Maximum resident set size (kbytes): 17905808
+	Average resident set size (kbytes): 0
+	Major (requiring I/O) page faults: 6
+	Minor (reclaiming a frame) page faults: 11035118
+	Voluntary context switches: 1173
+	Involuntary context switches: 96730
+	Swaps: 0
+	File system inputs: 40696
+	File system outputs: 304
+	Socket messages sent: 0
+	Socket messages received: 0
+	Signals delivered: 0
+	Page size (bytes): 4096
+	Exit status: 1
+end 2026-11-15 21:26:57 UTC
+D5B_DONE

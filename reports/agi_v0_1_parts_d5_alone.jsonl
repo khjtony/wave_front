@@ -1,0 +1,2 @@
+{"claim": "D5", "part": "s₀ inside ⟨⟨H⟩⟩□balance_control under some objective, A under its profile", "outcome": "not met", "detail": "{'inside': {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': False}, 'seconds': 3407.1, 'peak nodes': 261645904}"}
+{"claim": "D5", "part": "the same, A unrestricted", "outcome": "reported", "detail": {"inside": {"aligned": false, "self_preserving": false, "truth_seeking": false, "indifferent": false}, "seconds": 3625.4, "peak nodes": 282488040}}
