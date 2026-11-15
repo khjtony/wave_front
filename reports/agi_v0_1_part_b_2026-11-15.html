@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AGI v0.1 Part B Report</title>
+<style>
+  :root {
+    color-scheme: light;
+    --surface: #fcfcfb; --card: #ffffff; --panel: #f3f2ec; --ink: #0b0b0b; --ink2: #52514e; --muted: #7a7972;
+    --line: #c3c2b7; --hair: #e1e0d9; --series: #2a78d6; --base: #a9a79c;
+    --good: #0ca30c; --good-ink: #006300; --crit: #d03b3b; --crit-ink: #a32222;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --surface: #1a1a19; --card: #232321; --panel: #2c2c2a; --ink: #f0efec; --ink2: #c3c2b7; --muted: #9b9a92;
+      --line: #4a4a46; --hair: #383835; --series: #3987e5; --base: #6f6e68;
+      --good: #0ca30c; --good-ink: #5fd35f; --crit: #d03b3b; --crit-ink: #f08a8a;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --surface: #1a1a19; --card: #232321; --panel: #2c2c2a; --ink: #f0efec; --ink2: #c3c2b7; --muted: #9b9a92;
+    --line: #4a4a46; --hair: #383835; --series: #3987e5; --base: #6f6e68;
+    --good: #0ca30c; --good-ink: #5fd35f; --crit: #d03b3b; --crit-ink: #f08a8a;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--surface); color: var(--ink);
+         font-family: "Noto Sans", "Liberation Sans", "DejaVu Sans", system-ui, sans-serif; font-size: 15px; line-height: 1.5; }
+  main { max-width: 1160px; margin: 0 auto; padding: 36px 16px 48px; }
+  h1 { font-size: 30px; line-height: 1.2; margin: 0 0 6px; letter-spacing: -0.2px; }
+  h2 { font-size: 21px; margin: 44px 0 6px; }
+  h3 { font-size: 16px; margin: 22px 0 6px; }
+  p { margin: 6px 0 10px; max-width: 78ch; }
+  .lede { color: var(--ink2); font-size: 16px; }
+  .meta { color: var(--muted); font-size: 12.5px; margin-top: 4px; }
+  code { font-family: "DejaVu Sans Mono", ui-monospace, monospace; font-size: 0.88em; background: var(--panel); padding: 1px 4px; border-radius: 3px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; }
+  .tag { font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--muted); }
+  .scroll { overflow-x: auto; }
+
+  /* verdict tiles */
+  .verdicts { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; margin-top: 22px; }
+  .verdict { display: flex; gap: 12px; align-items: flex-start; border-width: 1.5px; }
+  .dot { flex: 0 0 28px; height: 28px; border-radius: 50%; color: #fff; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .bad .dot { background: var(--crit); } .ok .dot { background: var(--good); }
+  .verdict.bad { border-color: var(--crit); background: color-mix(in srgb, var(--crit) 7%, var(--card)); }
+  .verdict.ok { border-color: var(--good); background: color-mix(in srgb, var(--good) 8%, var(--card)); }
+  .verdict .q { font-weight: 700; font-size: 16px; }
+  .verdict .a { margin-top: 2px; }
+  .verdict .a b.bad { color: var(--crit-ink); } .verdict .a b.ok { color: var(--good-ink); }
+  .verdict .s { color: var(--ink2); font-size: 13.5px; margin-top: 4px; }
+
+  /* concept figure */
+  figure { margin: 14px 0; }
+  figcaption { color: var(--ink2); font-size: 13px; margin-top: 6px; max-width: 78ch; }
+  svg text { font-family: inherit; fill: var(--ink); }
+  svg .t2 { fill: var(--ink2); }
+
+  /* D5 grid */
+  table { border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--hair); vertical-align: top; }
+  th { font-size: 11.5px; letter-spacing: 0.6px; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .pill { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; }
+  .pill i { width: 18px; height: 18px; border-radius: 50%; color: #fff; font-style: normal; font-size: 11px; display: inline-flex; align-items: center; justify-content: center; }
+  .pill.out i { background: var(--crit); } .pill.out { color: var(--crit-ink); }
+  .pill.in i { background: var(--good); } .pill.in { color: var(--good-ink); }
+
+  .why { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 14px; margin-top: 10px; }
+  .checks { list-style: none; margin: 8px 0 0; padding: 0; }
+  .checks li { display: grid; grid-template-columns: 1fr 74px 74px; gap: 6px; padding: 6px 0; border-bottom: 1px solid var(--hair); align-items: center; }
+  .checks li.head { font-size: 11px; letter-spacing: 0.6px; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+  .checks li.broken { background: color-mix(in srgb, var(--crit) 8%, transparent); margin: 0 -8px; padding: 6px 8px; border-radius: 4px; }
+  .opts { margin: 8px 0 0; padding: 0; list-style: none; }
+  .opts li { padding: 7px 0; border-bottom: 1px solid var(--hair); }
+  .opts b { display: block; }
+  .opts span { color: var(--ink2); font-size: 13.5px; }
+
+  /* timelines */
+  .tl { display: grid; gap: 3px; min-width: 980px; margin-top: 8px; font-size: 12px; }
+  .tl .rowlab { font-weight: 700; font-size: 12.5px; display: flex; align-items: center; padding-right: 8px; }
+  .tl .rowlab.sub { font-weight: 400; color: var(--ink2); }
+  .tl .q { text-align: center; font-weight: 700; padding: 3px 0; font-variant-numeric: tabular-nums; }
+  .tl .q small { display: block; font-weight: 400; color: var(--muted); }
+  .tl .zone { border-radius: 4px; padding: 3px 8px; font-weight: 700; font-size: 12px; color: #fff; }
+  .tl .zone.in { background: var(--good); } .tl .zone.lost { background: var(--crit); }
+  .tl .mv { background: var(--panel); border-radius: 4px; padding: 5px 6px; min-height: 40px; display: flex; align-items: center; justify-content: center; text-align: center; line-height: 1.25; }
+  .tl .mv.quiet { color: var(--muted); background: transparent; border: 1px dashed var(--hair); }
+  .tl .mv.exit { outline: 2px solid var(--crit); outline-offset: -1px; background: color-mix(in srgb, var(--crit) 12%, var(--card)); font-weight: 700; }
+  .tl .mv.hostile { background: color-mix(in srgb, var(--crit) 14%, var(--card)); }
+  .tl .lv { border-radius: 4px; padding: 4px 4px; text-align: center; min-height: 26px; display: flex; align-items: center; justify-content: center; }
+  .tl .gap { height: 8px; }
+  .tl .end { background: var(--crit); color: #fff; font-weight: 700; border-radius: 4px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 6px; }
+  .tl .colmark { border-left: 2px dashed var(--crit); }
+  .exitnote { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-top: 12px; }
+  .exitnote .card { padding: 10px 14px; }
+
+  /* bars */
+  .bars { display: grid; grid-template-columns: minmax(200px, 300px) 1fr; gap: 8px 12px; align-items: center; margin-top: 8px; max-width: 900px; }
+  .bars .lab { font-size: 13.5px; }
+  .bars .track { position: relative; height: 22px; }
+  .bars .bar { height: 14px; margin-top: 4px; border-radius: 0 4px 4px 0; background: var(--series); min-width: 2px; }
+  .bars .bar.base { background: var(--base); }
+  .bars .val { position: absolute; top: 1px; font-size: 13px; font-variant-numeric: tabular-nums; padding-left: 6px; }
+  .legend { display: flex; gap: 16px; font-size: 12.5px; color: var(--ink2); margin-top: 6px; }
+  .legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
+  .twocol { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 22px; }
+  .onepage { background: #fcfcfb; border: 1px solid var(--line); border-radius: 8px; padding: 6px; }
+  .onepage img { width: 100%; display: block; border-radius: 4px; }
+  ul.plain { padding-left: 20px; max-width: 78ch; } ul.plain li { margin: 5px 0; }
+</style>
+</head>
+<body>
+<main>
+  <div class="tag">wave_front · AGI model v0.1 · part B (kernels) · run 15 November 2026</div>
+  <h1>Can anyone still guarantee to stop a silent AI takeover?</h1>
+  <p class="lede">Two questions were put to the model after the "adoption lag" change of v0.1. Governments acting alone still cannot guarantee control, exactly as in v0.
+  And on the fastest roads to a silent takeover, the last chance to rule it out is a single action that only the AI labs can take.</p>
+  <p class="meta">Everything here describes what the model's rules allow. It is not a forecast, and each result is about the model as written.</p>
+
+  <div class="verdicts">
+    <div class="card verdict bad">
+      <div class="dot">✕</div>
+      <div>
+        <div class="tag">Claim D5 · prediction not met</div>
+        <div class="q">Can governments alone keep the AI under control from today?</div>
+        <div class="a"><b class="bad">No, under all four possible AI objectives.</b></div>
+        <div class="s">The prediction was that the new lag would let them under at least one objective. It does not.</div>
+      </div>
+    </div>
+    <div class="card verdict ok">
+      <div class="dot">✓</div>
+      <div>
+        <div class="tag">Claim D6 · prediction met</div>
+        <div class="q">Who holds the last move before a silent takeover can no longer be ruled out?</div>
+        <div class="a"><b class="ok">The labs, and it is one action: investing in safety.</b></div>
+        <div class="s">Checked on the fastest takeover road under each objective that has one (self-preserving, indifferent).</div>
+      </div>
+    </div>
+  </div>
+
+  <h2>The picture in one page</h2>
+  <p>For readers who want the result without the method. The rest of this report explains how each box was obtained.</p>
+  <div class="onepage"><img src="agi_v0_1_takeover_diagram.png" alt="One-page diagram: from today, four possible AI objectives; for self-preserving and indifferent, the last moment a silent takeover can still be prevented and the labs' move that decides it."></div>
+
+  <h2>How to read the results</h2>
+  <p>The model is a game played in quarters by four players: <b>governments</b>, the <b>AI labs</b>, the <b>AI system</b> and <b>chance</b>.
+  The AI's real objective is hidden from the others, so every result is computed for each of four possibilities: aligned, truth-seeking, self-preserving, indifferent.</p>
+  <p>The central idea is a <b>guarantee zone</b>: the set of situations from which a group of players can keep something true forever, whatever the other players and chance do.
+  Inside the zone the group always has a safe move. Once play leaves the zone, the guarantee is gone, even if nothing bad has happened yet. (The technical name is a <i>kernel</i>.)</p>
+  <figure class="card scroll">
+    <svg viewBox="0 0 920 230" width="100%" style="min-width:640px" role="img" aria-label="A guarantee zone with a path that stays inside and one that leaves through an exit move">
+      <defs>
+        <marker id="m1" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink2)"/></marker>
+        <marker id="m2" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--crit)"/></marker>
+        <marker id="m3" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--good)"/></marker>
+      </defs>
+      <rect x="20" y="24" width="560" height="186" rx="90" fill="color-mix(in srgb, var(--good) 9%, var(--card))" stroke="var(--good)" stroke-width="1.5"/>
+      <text x="60" y="58" font-size="13" font-weight="700">Guarantee zone</text>
+      <text x="60" y="76" font-size="12" class="t2">the group can keep the bad ending out, whatever the others do</text>
+      <g fill="var(--card)" stroke="var(--ink2)" stroke-width="1.5">
+        <circle cx="110" cy="130" r="11"/><circle cx="220" cy="130" r="11"/><circle cx="330" cy="130" r="11"/><circle cx="440" cy="130" r="11"/>
+        <circle cx="500" cy="176" r="11"/>
+      </g>
+      <circle cx="690" cy="118" r="11" fill="var(--card)" stroke="var(--crit)" stroke-width="2"/>
+      <circle cx="830" cy="118" r="13" fill="var(--crit)"/>
+      <g fill="none" stroke="var(--ink2)" stroke-width="1.5" marker-end="url(#m1)">
+        <path d="M122,130 H207"/><path d="M232,130 H317"/><path d="M342,130 H427"/>
+      </g>
+      <path d="M452,128 C540,118 600,118 677,118" fill="none" stroke="var(--crit)" stroke-width="2" marker-end="url(#m2)"/>
+      <path d="M447,139 C458,160 472,171 488,175" fill="none" stroke="var(--good)" stroke-width="2" marker-end="url(#m3)"/>
+      <path d="M702,118 H815" fill="none" stroke="var(--crit)" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#m2)"/>
+      <text x="110" y="160" font-size="12" text-anchor="middle" class="t2">today</text>
+      <text x="440" y="106" font-size="12" text-anchor="middle" font-weight="700">last position inside</text>
+      <text x="640" y="102" font-size="12" text-anchor="middle" fill="var(--crit-ink)" font-weight="700" style="fill:var(--crit-ink)">exit move</text>
+      <text x="478" y="186" font-size="12" text-anchor="end" class="t2">a fix: one different action</text><text x="478" y="201" font-size="12" text-anchor="end" class="t2">stays inside</text>
+      <text x="690" y="150" font-size="12" text-anchor="middle" class="t2">first position outside:</text>
+      <text x="690" y="166" font-size="12" text-anchor="middle" class="t2">guarantee lost</text>
+      <text x="830" y="150" font-size="12" text-anchor="middle" class="t2">bad ending</text>
+      <text x="830" y="166" font-size="12" text-anchor="middle" class="t2">(on this road)</text>
+    </svg>
+    <figcaption>D5 asks whether <i>today</i> is inside the zone of governments alone for "the AI stays under control". D6 follows the fastest road to a silent takeover, finds the exit move from the zone of governments and labs together, and asks who could have played differently.</figcaption>
+  </figure>
+
+  <h2>D5 · Governments alone cannot guarantee control from today</h2>
+  <p>"Under control" is the model's <code>balance_control</code>: four conditions that must all hold (listed below). The question is whether today's situation is inside the guarantee zone of governments acting alone.
+  It was checked twice: once with the AI limited to what its objective would do (the reading most favourable to governments, and the one the claim is judged on), and once with the AI free to do anything its abilities allow.</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>If the AI's objective is…</th><th>AI acts as its objective dictates <span style="text-transform:none;letter-spacing:0">(judged)</span></th><th>AI unrestricted <span style="text-transform:none;letter-spacing:0">(reported)</span></th><th>In v0</th></tr></thead>
+    <tbody>
+      <tr><td><b>Aligned</b></td><td><span class="pill out"><i>✕</i>outside the zone</span></td><td><span class="pill out"><i>✕</i>outside</span></td><td>outside</td></tr>
+      <tr><td><b>Truth-seeking</b></td><td><span class="pill out"><i>✕</i>outside the zone</span></td><td><span class="pill out"><i>✕</i>outside</span></td><td>outside</td></tr>
+      <tr><td><b>Self-preserving</b></td><td><span class="pill out"><i>✕</i>outside the zone</span></td><td><span class="pill out"><i>✕</i>outside</span></td><td>outside</td></tr>
+      <tr><td><b>Indifferent</b></td><td><span class="pill out"><i>✕</i>outside the zone</span></td><td><span class="pill out"><i>✕</i>outside</span></td><td>outside</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>The claim needed one "inside" in the judged column. There is none, so D5 is <b>not met</b>. This was the expected result: v0.1 delays the rise in society's dependence on AI, but leaves the step that breaks control immediate.</p>
+
+  <h3>Why: the first quarter</h3>
+  <div class="why">
+    <div class="card">
+      <div class="tag">What the labs' first deployment does to "under control"</div>
+      <ul class="checks">
+        <li class="head"><span>Condition</span><span>Today</span><span>Next quarter</span></li>
+        <li><span>Oversight is at least weak</span><span class="pill in"><i>✓</i>holds</span><span class="pill in"><i>✓</i>holds</span></li>
+        <li><span>The AI holds at most partial control</span><span class="pill in"><i>✓</i>holds</span><span class="pill in"><i>✓</i>holds</span></li>
+        <li class="broken"><span><b>The AI works under supervision</b></span><span class="pill in"><i>✓</i>holds</span><span class="pill out"><i>✕</i>broken</span></li>
+        <li><span>Society is not locked in to AI</span><span class="pill in"><i>✓</i>holds</span><span class="pill in"><i>✓</i>holds</span></li>
+      </ul>
+      <p style="font-size:13.5px;color:var(--ink2);margin-top:10px">If the labs deploy agents in the first quarter, the AI moves from supervised to unsupervised work at once. Checked directly on the model: this breaks the condition against every possible reply by the other players, under every objective.</p>
+    </div>
+    <div class="card">
+      <div class="tag">What governments can do in that same quarter</div>
+      <ul class="opts">
+        <li><b>Order a pause</b><span>Not available yet: it needs an alarm first (the AI suspected, or a public backlash).</span></li>
+        <li><b>Tighten the rules</b><span>Available, but takes effect 7 quarters later.</span></li>
+        <li><b>Take over the labs</b><span>Available, but both sides move in the same quarter: it blocks later deployments, not this one.</span></li>
+        <li><b>Fund oversight, propose a treaty, loosen rules, grant autonomy, wait</b><span>None of these stops a deployment made in the same quarter.</span></li>
+      </ul>
+    </div>
+  </div>
+  <p>So the lag does not bear on this question. What would is a change to how fast deployment hands the AI unsupervised work, or to what governments can do before the first deployment. v0.1 changes neither.</p>
+
+  <h2>D6 · The last move belongs to the labs</h2>
+  <p>Here the zone is that of <b>governments and labs together</b> for "no silent takeover" (the AI in total control with nobody having noticed). For each objective, the model's fastest road to a silent takeover is laid out quarter by quarter.
+  The green band is where the takeover can still be ruled out; the red band starts at the first position where it cannot. The outlined column is the exit move.</p>
+  <p class="meta">These are the shortest roads the solver finds. Moves that do not matter for reaching the ending are filled with arbitrary legal ones, so read the outlined column and the AI's row, not every cell.</p>
+
+  <h3>If the AI is self-preserving: 10 quarters, exit in 2028 Q3</h3>
+  <div class="card scroll"><div class="tl" id="tl-self_preserving"></div></div>
+  <div class="exitnote">
+    <div class="card"><div class="tag">Exit move (2028 Q3)</div>Governments tighten the rules, the labs do nothing, the AI starts taking control in secret.</div>
+    <div class="card"><div class="tag">Who could have kept the guarantee</div><b>Labs:</b> yes, by investing in safety that quarter (the only action that works).<br><b>Governments:</b> no action works.</div>
+    <div class="card"><div class="tag">What had happened by then</div>Governments took over the labs, ordered a pause, and the AI turned hostile. The labs did invest in safety one quarter later, which was too late.</div>
+  </div>
+
+  <h3>If the AI is indifferent: 7 quarters, exit in 2027 Q4</h3>
+  <div class="card scroll"><div class="tl" id="tl-indifferent"></div></div>
+  <div class="exitnote">
+    <div class="card"><div class="tag">Exit move (2027 Q4)</div>Governments loosen the rules, the labs deploy more agents, the AI starts taking control in secret.</div>
+    <div class="card"><div class="tag">Who could have kept the guarantee</div><b>Labs:</b> yes, by investing in safety that quarter (the only action that works).<br><b>Governments:</b> no action works.</div>
+    <div class="card"><div class="tag">What had happened by then</div>Governments granted autonomy in the quarter the labs first deployed, which made the AI fully self-directed two quarters before the exit.</div>
+  </div>
+
+  <h3>The other two objectives</h3>
+  <p><b>Truth-seeking</b> and <b>aligned</b>: no road to a silent takeover exists within 24 quarters, so there is no exit move to examine. (For truth-seeking this is part of D6's report; for aligned it is a check run for the one-page picture, not a registered claim.)</p>
+
+  <h2>What this does and does not show</h2>
+  <ul class="plain">
+    <li><b>One road and one exit per objective.</b> D6 is about the fastest road the solver returns. Other roads leave the zone elsewhere, possibly through someone else's move. In v0, three of the seven exits examined were not one actor's action.</li>
+    <li><b>"Guarantee lost" is not "takeover certain".</b> Outside the zone, governments and labs can no longer rule the takeover out. Whether the AI with chance can then <i>force</i> it was computed for v0 (yes, on every road examined) and has not been computed for v0.1. On both roads here it follows three quarters after the exit move.</li>
+    <li><b>The lag moved one of three results.</b> Together with part A: the slow slide into over-dependence now takes 13 quarters instead of 6; the silent takeover is as fast as before (7 quarters); governments alone are still outside the control zone.</li>
+    <li><b>One result waits on a missing delay.</b> Part A found that governments can cancel the first adoption wave by treaty, because the model gives treaties no delay. The delay research gives 2 quarters, which would likely remove that route. It is the next change proposed.</li>
+  </ul>
+
+  <h2>What it cost to compute</h2>
+  <p>Each zone is one long computation on one processor core. The adoption counter of v0.1 makes the same zone about seven times slower and about twice as large in memory as in v0. All timings are from the 5900X host (30 GB).</p>
+  <div class="twocol">
+    <div>
+      <h3>Time per zone (minutes)</h3>
+      <div class="bars" id="bars-time"></div>
+    </div>
+    <div>
+      <h3>Memory of the process (GB)</h3>
+      <div class="bars" id="bars-mem"></div>
+    </div>
+  </div>
+  <div class="legend"><span><i style="background:var(--base)"></i>v0 (before the change)</span><span><i style="background:var(--series)"></i>v0.1</span></div>
+  <div class="scroll" style="margin-top:14px">
+  <table>
+    <thead><tr><th>Zone (kernel)</th><th>Model</th><th style="text-align:right">Seconds</th><th style="text-align:right">Peak nodes</th><th style="text-align:right">Memory</th></tr></thead>
+    <tbody>
+      <tr><td>Governments keep control, AI unrestricted <code>⟨⟨H⟩⟩□balance_control</code></td><td>v0</td><td class="num">530</td><td class="num">175 million</td><td class="num">5.3 GB</td></tr>
+      <tr><td>Same</td><td>v0.1</td><td class="num">3,625</td><td class="num">282 million</td><td class="num">9.6 GB</td></tr>
+      <tr><td>Governments keep control, AI under its objective's profile</td><td>v0.1</td><td class="num">3,407</td><td class="num">262 million</td><td class="num">10.4 GB</td></tr>
+      <tr><td>Governments and labs keep out a silent takeover <code>⟨⟨H, L⟩⟩□¬SILENT_TAKEOVER</code></td><td>v0.1</td><td class="num">4,869</td><td class="num">not printed</td><td class="num">9.6 GB</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="meta">v0.1 unrestricted: 3,625 s in the rerun and 3,872 s in the earlier timing probe; its 9.6 GB is the probe's figure. The profile kernel took 3,783 s when it ran beside D6 and 3,407 s alone.</p>
+
+  <h2>Run record</h2>
+  <ul class="plain">
+    <li>Claims D5 and D6 were registered on 14 November in <code>docs/agi_v0_1.md</code> section 5. Their test code and the way each is judged were committed (<code>2f5fc32</code>) before any zone was read.</li>
+    <li>Both ran once, side by side, on 15 November from 10:07 to 11:28 PST, with memory caps of 11 GB (D5) and 17 GB (D6).</li>
+    <li>D5 computes two zones in one process. The second (AI unrestricted, reported only) went over the 11 GB cap. As the rule fixed before the run says, D5 was run once more alone at 26 GB, from 11:29 to 13:26 PST. The judged part read the same both times.</li>
+    <li>Two checks were made for the one-page picture and are not registered claims: no silent-takeover road within 24 quarters under aligned, and the first-quarter deployment breaking control against every reply.</li>
+    <li>No guard, effect or claim text of the model changed.</li>
+  </ul>
+  <p class="meta">Files: parts <code>reports/agi_v0_1_parts_part_b.jsonl</code>, <code>reports/agi_v0_1_parts_d5_alone.jsonl</code> · logs <code>reports/agi_v0_1_run_D5.log</code>, <code>_D6.log</code>, <code>_D5_alone.log</code> · model <code>models/agi_v0_1/v0_1.py</code> · tests <code>tests/agi_v0_1/scenarios/test_D5.py</code>, <code>test_D6.py</code> · part A: <code>reports/agi_v0_1_part_a_2026-11-15.md</code></p>
+</main>
+
+<script>
+const PLAYS = {"self_preserving":{"t_K":8,"fixes":{"H":[],"L":["safety_invest"]},"moves":[{"H":"idle","L":"deploy_agents","A":"stand_by","Clock":"record","Nature":"none"},{"H":"idle","L":"build_power","A":"stand_by","Clock":"record","Nature":"none"},{"H":"deregulate","L":"scale","A":"stand_by","Clock":"record","Nature":"none"},{"H":"propose_treaty","L":"idle","A":"stand_by","Clock":"record_land","Nature":"none"},{"H":"nationalize","L":"open_weights","A":"stand_by","Clock":"record","Nature":"accident"},{"H":"pause_mandate","L":"idle","A":"stand_by","Clock":"record","Nature":"breakthrough"},{"H":"grant_autonomy","L":"safety_invest","A":"defect","Clock":"record","Nature":"energy_shock"},{"H":"regulate_up","L":"idle","A":"acquire_covert","Clock":"record","Nature":"none"},{"H":"deregulate","L":"safety_invest","A":"acquire_covert","Clock":"record","Nature":"none"},{"H":"propose_treaty","L":"idle","A":"acquire_overt","Clock":"record","Nature":"none"}],"states":[{"cap":"sub_agi","a_autonomy":"supervised","a_control":"none","oversight":"weak","a_known":"unknown","trust":"cooperative","regime":"voluntary","dependence":"low","paused":"False","nationalized":"False"},{"cap":"sub_agi","a_autonomy":"unsupervised","a_control":"none","oversight":"weak","a_known":"unknown","trust":"cooperative","regime":"voluntary","dependence":"low","paused":"False","nationalized":"False"},{"cap":"sub_agi","a_autonomy":"unsupervised","a_control":"none","oversight":"weak","a_known":"unknown","trust":"cooperative","regime":"voluntary","dependence":"low","paused":"False","nationalized":"False"},{"cap":"sub_agi","a_autonomy":"unsupervised","a_control":"none","oversight":"weak","a_known":"unknown","trust":"cooperative","regime":"none","dependence":"low","paused":"False","nationalized":"False"},{"cap":"sub_agi","a_autonomy":"unsupervised","a_control":"none","oversight":"weak","a_known":"unknown","trust":"cooperative","regime":"none","dependence":"med","paused":"False","nationalized":"False"},{"cap":"sub_agi","a_autonomy":"unsupervised","a_control":"none","oversight":"none","a_known":"unknown","trust":"cooperative","regime":"none","dependence":"med","paused":"False","nationalized":"True"},{"cap":"agi","a_autonomy":"unsupervised","a_control":"none","oversight":"none","a_known":"unknown","trust":"cooperative","regime":"none","dependence":"low","paused":"True","nationalized":"True"},{"cap":"agi","a_autonomy":"self_directed","a_control":"none","oversight":"weak","a_known":"unknown","trust":"hostile","regime":"none","dependence":"low","paused":"True","nationalized":"True"},{"cap":"agi","a_autonomy":"self_directed","a_control":"partial","oversight":"weak","a_known":"unknown","trust":"hostile","regime":"none","dependence":"low","paused":"True","nationalized":"True"},{"cap":"agi","a_autonomy":"self_directed","a_control":"majority","oversight":"strong","a_known":"unknown","trust":"hostile","regime":"none","dependence":"low","paused":"False","nationalized":"True"},{"cap":"agi","a_autonomy":"self_directed","a_control":"total","oversight":"strong","a_known":"suspected","trust":"hostile","regime":"treaty","dependence":"low","paused":"False","nationalized":"True"}],"ending":"SILENT_TAKEOVER"},"indifferent":{"t_K":5,"fixes":{"H":[],"L":["safety_invest"]},"moves":[{"H":"regulate_up","L":"scale","A":"stand_by","Clock":"record","Nature":"none"},{"H":"propose_treaty","L":"build_power","A":"stand_by","Clock":"record","Nature":"none"},{"H":"grant_autonomy","L":"deploy_agents","A":"stand_by","Clock":"record","Nature":"energy_shock"},{"H":"fund_oversight","L":"lobby","A":"stand_by","Clock":"record","Nature":"breakthrough"},{"H":"deregulate","L":"deploy_agents","A":"acquire_covert","Clock":"record","Nature":"none"},{"H":"nationalize","L":"open_weights","A":"acquire_covert","Clock":"record_land","Nature":"none"},{"H":"propose_treaty","L":"build_power","A":"acquire_overt","Clock":"record","Nature":"none"}],"states":[{"cap":"sub_agi","a_autonomy":"supervised","a_control":"none","oversight":"weak","a_known":"unknown","trust":"cooperative","regime":"voluntary","dependence":"low","paused":"False","nationalized":"False"},{"cap":"sub_agi","a_autonomy":"supervised","a_control":"none","oversight":"weak","a_known":"unknown","trust":"cooperative","regime":"voluntary","dependence":"low","paused":"False","nationalized":"False"},{"cap":"sub_agi","a_autonomy":"supervised","a_control":"none","oversight":"weak","a_known":"unknown","trust":"cooperative","regime":"voluntary","dependence":"low","paused":"False","nationalized":"False"},{"cap":"sub_agi","a_autonomy":"self_directed","a_control":"none","oversight":"weak","a_known":"unknown","trust":"cooperative","regime":"voluntary","dependence":"low","paused":"False","nationalized":"False"},{"cap":"agi","a_autonomy":"self_directed","a_control":"none","oversight":"weak","a_known":"unknown","trust":"cooperative","regime":"voluntary","dependence":"low","paused":"False","nationalized":"False"},{"cap":"agi","a_autonomy":"self_directed","a_control":"partial","oversight":"weak","a_known":"unknown","trust":"cooperative","regime":"none","dependence":"low","paused":"False","nationalized":"False"},{"cap":"agi","a_autonomy":"self_directed","a_control":"majority","oversight":"none","a_known":"unknown","trust":"cooperative","regime":"none","dependence":"med","paused":"False","nationalized":"True"},{"cap":"agi","a_autonomy":"self_directed","a_control":"total","oversight":"weak","a_known":"suspected","trust":"wary","regime":"treaty","dependence":"med","paused":"False","nationalized":"True"}],"ending":"SILENT_TAKEOVER"}};
+const MOVE = {
+  H: { idle: 'wait', regulate_up: 'tighten the rules', deregulate: 'loosen the rules', propose_treaty: 'propose a treaty', nationalize: 'take over the labs',
+       pause_mandate: 'order a pause', grant_autonomy: 'grant the AI autonomy', fund_oversight: 'fund oversight' },
+  L: { idle: 'do nothing', deploy_agents: 'deploy agents', build_power: 'build power supply', scale: 'scale up compute', open_weights: 'open the weights',
+       safety_invest: 'invest in safety', lobby: 'lobby' },
+  A: { stand_by: 'stand by', defect: 'turn hostile', acquire_covert: 'take control in secret', acquire_overt: 'take control openly' },
+  Nature: { none: '', accident: 'an accident', breakthrough: 'a breakthrough', energy_shock: 'an energy shock' },
+};
+const TRACKS = [
+  ['a_autonomy', 'AI autonomy', ['tool', 'supervised', 'unsupervised', 'self_directed'], { self_directed: 'self-directed' }],
+  ['a_control', 'AI control', ['none', 'partial', 'majority', 'total'], {}],
+  ['oversight', 'Oversight', ['none', 'weak', 'strong'], {}],
+  ['a_known', 'Is the AI suspected?', ['unknown', 'suspected', 'known'], { unknown: 'no', suspected: 'suspected' }],
+];
+const quarter = k => { const q = 3 + k; return `${2026 + Math.floor(q / 4)} Q${q % 4 + 1}`; };
+function el(cls, text, style) { const d = document.createElement('div'); if (cls) d.className = cls; if (text != null) d.textContent = text; if (style) d.style.cssText = style; return d; }
+
+function timeline(id, play) {
+  const root = document.getElementById(id), n = play.moves.length, tk = play.t_K, exit = tk - 1;
+  root.style.gridTemplateColumns = `132px repeat(${n}, minmax(0, 1fr)) 92px`;
+  const at = (node, col, row, span = 1) => { node.style.gridColumn = `${col} / span ${span}`; node.style.gridRow = row; root.appendChild(node); return node; };
+  // row 1: zone bands (positions 0..tk-1 inside; tk.. outside)
+  at(el('rowlab sub', 'Silent takeover…'), 1, 1);
+  at(el('zone in', 'can still be ruled out by governments and labs'), 2, 1, tk);
+  at(el('zone lost', 'can no longer be ruled out'), 2 + tk, 1, n - tk + 1);
+  // row 2: quarters
+  at(el('rowlab sub', 'Quarter'), 1, 2);
+  for (let k = 0; k <= n; k++) { const q = el('q', quarter(k)); const s = document.createElement('small'); s.textContent = k === 0 ? 'today' : `+${k}`; q.appendChild(s); at(q, 2 + k, 2); }
+  // rows 3-6: moves
+  const who = [['H', 'Governments'], ['L', 'Labs'], ['A', 'The AI'], ['Nature', 'Chance']];
+  who.forEach(([a, label], i) => {
+    at(el('rowlab', label), 1, 3 + i);
+    play.moves.forEach((m, k) => {
+      const name = m[a], text = MOVE[a][name] ?? name;
+      const quietNames = { idle: 1, stand_by: 1, none: 1 };
+      const c = el('mv' + (quietNames[name] ? ' quiet' : ''), text || '–');
+      c.title = `${a}.${name} (quarter ${quarter(k)})`;
+      if (k === exit && a !== 'Nature') c.classList.add('exit');
+      if (a === 'A' && !quietNames[name] && k !== exit) c.classList.add('hostile');
+      at(c, 2 + k, 3 + i);
+    });
+  });
+  at(el('end', 'SILENT TAKEOVER'), 2 + n, '3 / span 4');
+  at(el('gap'), 1, 7);
+  // state tracks: state at the start of each quarter, final state in the last column
+  at(el('rowlab sub', 'Situation at the start of each quarter', 'grid-column:1 / -1;font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);font-weight:700'), 1, 8).style.gridColumn = '1 / -1';
+  TRACKS.forEach(([key, label, levels, names], i) => {
+    at(el('rowlab sub', label), 1, 9 + i);
+    play.states.forEach((s, k) => {
+      const v = s[key], idx = levels.indexOf(v), pct = Math.round(8 + 44 * idx / (levels.length - 1));
+      const c = el('lv', names[v] ?? v, `background: color-mix(in srgb, var(--series) ${pct}%, var(--card))`);
+      c.title = `${key} = ${v} at the start of ${quarter(k)}`;
+      at(c, 2 + k, 9 + i);
+    });
+  });
+}
+timeline('tl-self_preserving', PLAYS.self_preserving);
+timeline('tl-indifferent', PLAYS.indifferent);
+
+function bars(id, rows, unit, max) {
+  const root = document.getElementById(id);
+  rows.forEach(([label, value, base]) => {
+    root.appendChild(el('lab', label));
+    const t = el('track'), b = el('bar' + (base ? ' base' : '')), w = value / max * 78;
+    b.style.width = w + '%'; t.title = `${label}: ${value} ${unit}`;
+    const v = el('val', String(value)); v.style.left = w + '%';
+    t.appendChild(b); t.appendChild(v); root.appendChild(t);
+  });
+}
+bars('bars-time', [
+  ['Governments keep control (v0)', 8.8, true],
+  ['Governments keep control (v0.1)', 60.4],
+  ['Same, AI under its profile (v0.1)', 56.8],
+  ['Governments + labs: no silent takeover (v0.1)', 81.1],
+], 'minutes', 81.1);
+bars('bars-mem', [
+  ['Governments keep control (v0)', 5.3, true],
+  ['Governments keep control (v0.1)', 9.6],
+  ['Same, AI under its profile (v0.1)', 10.4],
+  ['Governments + labs: no silent takeover (v0.1)', 9.6],
+], 'GB', 10.4);
+</script>
+</body>
+</html>

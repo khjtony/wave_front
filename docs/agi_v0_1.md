@@ -1,6 +1,6 @@
 # AGI v0.1: the adoption lag of `deploy_agents`
 
-Status: **registered 2026-11-14; part A (D1 to D4) run once 2026-11-15 (reports/agi_v0_1_part_a_2026-11-15.md); part B (D5, D6) run once 2026-11-15 (reports/agi_v0_1_part_b_2026-11-15.md).** Model `models/agi_v0_1/v0_1.py`, claims `tests/agi_v0_1/scenarios/`, parts logged to `reports/agi_v0_1_parts.jsonl`. Under agi_testbed.md section 6 items 1 and 5, an edit to v0's actions is a new model version with its own registration; v0's results stand as computed. This document replaces the draft of the same day (`agi_v0_1_draft.md`, never committed); the owner's answers to it are section 4.
+Status: **registered 2026-11-14; part A (D1 to D4) run once 2026-11-15 (reports/agi_v0_1_part_a_2026-11-15.md); part B (D5, D6) run once 2026-11-15 (reports/agi_v0_1_part_b_2026-11-15.html).** Model `models/agi_v0_1/v0_1.py`, claims `tests/agi_v0_1/scenarios/`, parts logged to `reports/agi_v0_1_parts.jsonl`. Under agi_testbed.md section 6 items 1 and 5, an edit to v0's actions is a new model version with its own registration; v0's results stand as computed. This document replaces the draft of the same day (`agi_v0_1_draft.md`, never committed); the owner's answers to it are section 4.
 
 ## 1. Why
 
