@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AGI v0.1 Exit Census</title>
+<style>
+  :root {
+    color-scheme: light;
+    --surface: #fcfcfb; --card: #ffffff; --panel: #f3f2ec; --ink: #0b0b0b; --ink2: #52514e; --muted: #7a7972;
+    --line: #c3c2b7; --hair: #e1e0d9; --series: #2a78d6; --base: #a9a79c;
+    --good: #0ca30c; --good-ink: #006300; --crit: #d03b3b; --crit-ink: #a32222;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --surface: #1a1a19; --card: #232321; --panel: #2c2c2a; --ink: #f0efec; --ink2: #c3c2b7; --muted: #9b9a92;
+      --line: #4a4a46; --hair: #383835; --series: #3987e5; --base: #6f6e68;
+      --good: #0ca30c; --good-ink: #5fd35f; --crit: #d03b3b; --crit-ink: #f08a8a;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --surface: #1a1a19; --card: #232321; --panel: #2c2c2a; --ink: #f0efec; --ink2: #c3c2b7; --muted: #9b9a92;
+    --line: #4a4a46; --hair: #383835; --series: #3987e5; --base: #6f6e68;
+    --good: #0ca30c; --good-ink: #5fd35f; --crit: #d03b3b; --crit-ink: #f08a8a;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--surface); color: var(--ink);
+         font-family: "Noto Sans", "Liberation Sans", "DejaVu Sans", system-ui, sans-serif; font-size: 15px; line-height: 1.5; }
+  main { max-width: 1160px; margin: 0 auto; padding: 36px 16px 48px; }
+  h1 { font-size: 30px; line-height: 1.2; margin: 0 0 6px; letter-spacing: -0.2px; }
+  h2 { font-size: 21px; margin: 44px 0 6px; }
+  h3 { font-size: 16px; margin: 22px 0 6px; }
+  p { margin: 6px 0 10px; max-width: 78ch; }
+  .lede { color: var(--ink2); font-size: 16px; }
+  .meta { color: var(--muted); font-size: 12.5px; margin-top: 4px; }
+  code { font-family: "DejaVu Sans Mono", ui-monospace, monospace; font-size: 0.88em; background: var(--panel); padding: 1px 4px; border-radius: 3px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; }
+  .tag { font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--muted); }
+  .scroll { overflow-x: auto; }
+
+  /* verdict tiles */
+  .verdicts { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; margin-top: 22px; }
+  .verdict { display: flex; gap: 12px; align-items: flex-start; border-width: 1.5px; }
+  .dot { flex: 0 0 28px; height: 28px; border-radius: 50%; color: #fff; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .bad .dot { background: var(--crit); } .ok .dot { background: var(--good); }
+  .verdict.bad { border-color: var(--crit); background: color-mix(in srgb, var(--crit) 7%, var(--card)); }
+  .verdict.ok { border-color: var(--good); background: color-mix(in srgb, var(--good) 8%, var(--card)); }
+  .verdict .q { font-weight: 700; font-size: 16px; }
+  .verdict .a { margin-top: 2px; }
+  .verdict .a b.bad { color: var(--crit-ink); } .verdict .a b.ok { color: var(--good-ink); }
+  .verdict .s { color: var(--ink2); font-size: 13.5px; margin-top: 4px; }
+
+  /* concept figure */
+  figure { margin: 14px 0; }
+  figcaption { color: var(--ink2); font-size: 13px; margin-top: 6px; max-width: 78ch; }
+  svg text { font-family: inherit; fill: var(--ink); }
+  svg .t2 { fill: var(--ink2); }
+
+  /* D5 grid */
+  table { border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--hair); vertical-align: top; }
+  th { font-size: 11.5px; letter-spacing: 0.6px; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .pill { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; }
+  .pill i { width: 18px; height: 18px; border-radius: 50%; color: #fff; font-style: normal; font-size: 11px; display: inline-flex; align-items: center; justify-content: center; }
+  .pill.out i { background: var(--crit); } .pill.out { color: var(--crit-ink); }
+  .pill.in i { background: var(--good); } .pill.in { color: var(--good-ink); }
+
+  .why { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 14px; margin-top: 10px; }
+  .checks { list-style: none; margin: 8px 0 0; padding: 0; }
+  .checks li { display: grid; grid-template-columns: 1fr 74px 74px; gap: 6px; padding: 6px 0; border-bottom: 1px solid var(--hair); align-items: center; }
+  .checks li.head { font-size: 11px; letter-spacing: 0.6px; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+  .checks li.broken { background: color-mix(in srgb, var(--crit) 8%, transparent); margin: 0 -8px; padding: 6px 8px; border-radius: 4px; }
+  .opts { margin: 8px 0 0; padding: 0; list-style: none; }
+  .opts li { padding: 7px 0; border-bottom: 1px solid var(--hair); }
+  .opts b { display: block; }
+  .opts span { color: var(--ink2); font-size: 13.5px; }
+
+  /* timelines */
+  .tl { display: grid; gap: 3px; min-width: 980px; margin-top: 8px; font-size: 12px; }
+  .tl .rowlab { font-weight: 700; font-size: 12.5px; display: flex; align-items: center; padding-right: 8px; }
+  .tl .rowlab.sub { font-weight: 400; color: var(--ink2); }
+  .tl .q { text-align: center; font-weight: 700; padding: 3px 0; font-variant-numeric: tabular-nums; }
+  .tl .q small { display: block; font-weight: 400; color: var(--muted); }
+  .tl .zone { border-radius: 4px; padding: 3px 8px; font-weight: 700; font-size: 12px; color: #fff; }
+  .tl .zone.in { background: var(--good); } .tl .zone.lost { background: var(--crit); }
+  .tl .mv { background: var(--panel); border-radius: 4px; padding: 5px 6px; min-height: 40px; display: flex; align-items: center; justify-content: center; text-align: center; line-height: 1.25; }
+  .tl .mv.quiet { color: var(--muted); background: transparent; border: 1px dashed var(--hair); }
+  .tl .mv.exit { outline: 2px solid var(--crit); outline-offset: -1px; background: color-mix(in srgb, var(--crit) 12%, var(--card)); font-weight: 700; }
+  .tl .mv.hostile { background: color-mix(in srgb, var(--crit) 14%, var(--card)); }
+  .tl .lv { border-radius: 4px; padding: 4px 4px; text-align: center; min-height: 26px; display: flex; align-items: center; justify-content: center; }
+  .tl .gap { height: 8px; }
+  .tl .end { background: var(--crit); color: #fff; font-weight: 700; border-radius: 4px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 6px; }
+  .tl .colmark { border-left: 2px dashed var(--crit); }
+  .exitnote { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-top: 12px; }
+  .exitnote .card { padding: 10px 14px; }
+
+  /* bars */
+  .bars { display: grid; grid-template-columns: minmax(200px, 300px) 1fr; gap: 8px 12px; align-items: center; margin-top: 8px; max-width: 900px; }
+  .bars .lab { font-size: 13.5px; }
+  .bars .track { position: relative; height: 22px; }
+  .bars .bar { height: 14px; margin-top: 4px; border-radius: 0 4px 4px 0; background: var(--series); min-width: 2px; }
+  .bars .bar.base { background: var(--base); }
+  .bars .val { position: absolute; top: 1px; font-size: 13px; font-variant-numeric: tabular-nums; padding-left: 6px; }
+  .legend { display: flex; gap: 16px; font-size: 12.5px; color: var(--ink2); margin-top: 6px; }
+  .legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
+  .twocol { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 22px; }
+  .onepage { background: #fcfcfb; border: 1px solid var(--line); border-radius: 8px; padding: 6px; }
+  .onepage img { width: 100%; display: block; border-radius: 4px; }
+  ul.plain { padding-left: 20px; max-width: 78ch; } ul.plain li { margin: 5px 0; }
+</style>
+<style>
+  .bars.wide { grid-template-columns: minmax(260px, 470px) 1fr; max-width: 1100px; }
+  .bar.red { background: var(--crit); }
+  .bars .val { white-space: nowrap; }
+  .facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(165px, 1fr)); gap: 10px; margin-top: 12px; }
+  .facts .card b { font-size: 24px; display: block; line-height: 1.15; }
+  .facts .card span { color: var(--ink2); font-size: 13.5px; }
+</style></head>
+<body><main>
+  <div class="tag">wave_front · AGI model v0.1 · exploratory census · 17 November 2026</div>
+  <h1>What the point of no return looks like, and what would have stopped it</h1>
+  <p class="lede">Of one million random plays with a self-preserving AI, 4,600 reached the point of no return for a silent takeover. This page looks at those 4,600 moments:
+  what the situation was, and which single action would still have kept the guarantee.</p>
+  <p class="meta">Exploratory, not a registered claim and not a probability. The plays are random, so the shares say how often something occurs among random plays, not how likely it is in the world.
+  "Point of no return" means the last moment at which governments and labs together can still guarantee that no silent takeover happens.</p>
+
+  <h2>1 · The five most common situations at the point of no return</h2>
+  <p>Each situation is read on five things: how autonomous the AI is, relations with it, how much it controls, whether anyone suspects it, and the level of oversight. These five cover 92% of the 4,600 moments.</p>
+  <div class="card"><div class="bars wide"><div class="lab">AI self-directed · relations friendly · AI controls nothing · not suspected · oversight none</div><div class="track" title="AI self-directed · relations friendly · AI controls nothing · not suspected · oversight none: 52.3% of the 4,600 points of no return"><div class="bar " style="width:45.0%"></div><div class="val" style="left:45.0%">52.3%</div></div><div class="lab">AI self-directed · relations friendly · AI controls nothing · not suspected · oversight weak</div><div class="track" title="AI self-directed · relations friendly · AI controls nothing · not suspected · oversight weak: 24.1% of the 4,600 points of no return"><div class="bar " style="width:20.7%"></div><div class="val" style="left:20.7%">24.1%</div></div><div class="lab">AI self-directed · relations hostile · AI controls nothing · not suspected · oversight weak</div><div class="track" title="AI self-directed · relations hostile · AI controls nothing · not suspected · oversight weak: 6.7% of the 4,600 points of no return"><div class="bar " style="width:5.7%"></div><div class="val" style="left:5.7%">6.7%</div></div><div class="lab">AI self-directed · relations friendly · AI controls nothing · not suspected · oversight strong</div><div class="track" title="AI self-directed · relations friendly · AI controls nothing · not suspected · oversight strong: 6.1% of the 4,600 points of no return"><div class="bar " style="width:5.2%"></div><div class="val" style="left:5.2%">6.1%</div></div><div class="lab">AI self-directed · relations friendly · AI controls nothing · suspected · oversight none</div><div class="track" title="AI self-directed · relations friendly · AI controls nothing · suspected · oversight none: 2.7% of the 4,600 points of no return"><div class="bar " style="width:2.3%"></div><div class="val" style="left:2.3%">2.7%</div></div></div></div>
+  <div class="facts">
+    <div class="card"><b>97%</b><span>the AI is already self-directed</span></div>
+    <div class="card"><b>99%</b><span>the AI controls nothing yet</span></div>
+    <div class="card"><b>94%</b><span>nobody suspects it</span></div>
+    <div class="card"><b>88%</b><span>relations are still friendly</span></div>
+    <div class="card"><b>58%</b><span>there is no oversight (34% weak, 8% strong)</span></div>
+    <div class="card"><b>27%</b><span>the AI is not yet at human level</span></div>
+  </div>
+  <p><b>Reading.</b> The point of no return almost always comes before anything visible has happened: the AI controls nothing, nobody suspects it, and relations are friendly. The one thing nearly every case shares is that the AI is already self-directed. In more than a quarter of cases it has not even reached human level yet.</p>
+
+  <h2>2 · The five actions that would most often have prevented it</h2>
+  <p>At each of the 4,600 moments, the model was asked: is there one different action by governments, or one by the labs, that keeps the guarantee whatever the AI and chance then do? The bars count how often each action is such a fix.</p>
+  <div class="card"><div class="bars wide"><div class="lab"><b>Governments:</b> propose a treaty</div><div class="track" title="Governments: propose a treaty: 64.9% of the 4,600 points of no return"><div class="bar " style="width:45.0%"></div><div class="val" style="left:45.0%">64.9% · works at 79% of the moments it was available</div></div><div class="lab"><b>Labs:</b> invest in safety</div><div class="track" title="Labs: invest in safety: 26.8% of the 4,600 points of no return"><div class="bar " style="width:18.6%"></div><div class="val" style="left:18.6%">26.8% · works at 92% of the moments it was available</div></div><div class="lab"><b>Governments:</b> hold back (not make the move they made)</div><div class="track" title="Governments: hold back (not make the move they made): 22.8% of the 4,600 points of no return"><div class="bar " style="width:15.8%"></div><div class="val" style="left:15.8%">22.8% · works at 32% of the moments it was available</div></div><div class="lab"><b>Labs:</b> hold back (not make the move they made)</div><div class="track" title="Labs: hold back (not make the move they made): 12.0% of the 4,600 points of no return"><div class="bar " style="width:8.4%"></div><div class="val" style="left:8.4%">12.0% · works at 20% of the moments it was available</div></div><div class="lab"><b>Governments:</b> take over the labs</div><div class="track" title="Governments: take over the labs: 7.5% of the 4,600 points of no return"><div class="bar " style="width:5.2%"></div><div class="val" style="left:5.2%">7.5% · works at 33% of the moments it was available</div></div></div></div>
+  <ul class="plain">
+    <li><b>A treaty proposal is the most common fix</b>, at two moments in three. Caution: in v0.1 a treaty takes effect with no delay, which the delay research puts at 2 quarters. This rank is likely overstated and is the first thing to recheck in v0.3.</li>
+    <li><b>The labs investing in safety</b> is the fix at about one moment in four, and it works at 92% of the moments it is available. It is the same fix D6 found on the fastest roads.</li>
+    <li><b>"Hold back" as a fix</b> means the move actually made was the harmful one, and simply not making it would have been enough. Section 3 shows which moves those were.</li>
+  </ul>
+
+  <h2>3 · The moves that crossed the line</h2>
+  <p>The action a player made at the point of no return, counted where that player had a fix available instead.</p>
+  <div class="card"><div class="bars wide"><div class="lab"><b>Governments:</b> ordered a pause</div><div class="track" title="Governments: ordered a pause: 26.4% of the 4,600 points of no return"><div class="bar red" style="width:45.0%"></div><div class="val" style="left:45.0%">26.4% · 94% of the times it was the move played</div></div><div class="lab"><b>Governments:</b> did nothing</div><div class="track" title="Governments: did nothing: 17.6% of the 4,600 points of no return"><div class="bar red" style="width:30.1%"></div><div class="val" style="left:30.1%">17.6% · 64% of the times it was the move played</div></div><div class="lab"><b>Labs:</b> did nothing</div><div class="track" title="Labs: did nothing: 11.7% of the 4,600 points of no return"><div class="bar red" style="width:19.9%"></div><div class="val" style="left:19.9%">11.7% · 29% of the times it was the move played</div></div><div class="lab"><b>Governments:</b> loosened the rules</div><div class="track" title="Governments: loosened the rules: 9.8% of the 4,600 points of no return"><div class="bar red" style="width:16.7%"></div><div class="val" style="left:16.7%">9.8% · 67% of the times it was the move played</div></div><div class="lab"><b>Labs:</b> scaled up compute</div><div class="track" title="Labs: scaled up compute: 7.2% of the 4,600 points of no return"><div class="bar red" style="width:12.4%"></div><div class="val" style="left:12.4%">7.2% · 83% of the times it was the move played</div></div></div></div>
+  <ul class="plain">
+    <li><b>Ordering a pause is the most common harmful move.</b> Of the pauses ordered at a point of no return, 94% could have been replaced by a move that kept the guarantee: most often a treaty proposal, or doing nothing at all.</li>
+    <li><b>Why a pause can backfire here</b> (my reading of the rules, not a computed result): in the model a pause counts as a threat, and a self-preserving AI that has been threatened, and holds no legal guarantee of continuity, may turn hostile and start taking control. Against an AI that is already self-directed, the pause removes nothing it needs.</li>
+    <li><b>Doing nothing</b> is the next most common, for governments and for labs.</li>
+  </ul>
+
+  <h2>4 · Who held the fix</h2>
+  <div class="card"><div class="bars wide"><div class="lab"><b>Governments</b> alone could have fixed it</div><div class="track" title="Governments alone could have fixed it: 59.3% of the 4,600 points of no return"><div class="bar " style="width:45.0%"></div><div class="val" style="left:45.0%">59.3%</div></div><div class="lab"><b>Labs</b> alone could have fixed it</div><div class="track" title="Labs alone could have fixed it: 26.8% of the 4,600 points of no return"><div class="bar " style="width:20.3%"></div><div class="val" style="left:20.3%">26.8%</div></div><div class="lab"><b>Either</b> could have (two bad moves at once)</div><div class="track" title="Either could have (two bad moves at once): 8.5% of the 4,600 points of no return"><div class="bar " style="width:6.4%"></div><div class="val" style="left:6.4%">8.5%</div></div><div class="lab"><b>Only both together</b></div><div class="track" title="Only both together: 5.4% of the 4,600 points of no return"><div class="bar " style="width:4.1%"></div><div class="val" style="left:4.1%">5.4%</div></div></div></div>
+  <p>Among random plays the last chance is the governments' more often than the labs'. On the <i>fastest</i> roads to a takeover (claim D6) it was the labs' alone both times. The two are different questions: D6 follows the AI's quickest road; this census counts where random plays happen to cross.</p>
+
+  <h2>What this does and does not show</h2>
+  <ul class="plain">
+    <li><b>It reads the last moment only.</b> A "fix" keeps the guarantee at that moment. It says nothing about what, earlier in a play, made reaching such a moment less likely.</li>
+    <li><b>Random plays are not typical plays.</b> Random governments pause, nationalize and attempt shutdowns far more than any real government: at these moments the labs had been taken over in 72% of cases and a pause was in force in 45%. The mix of situations would differ under low-effort play.</li>
+    <li><b>Almost every moment is distinct</b> (4,585 different full situations among 4,600), which is why the situations are grouped on five variables.</li>
+    <li><b>The fixes and the "who" are computed</b> with the same test as D6. The explanation of why a pause backfires is an inference.</li>
+  </ul>
+
+  <h2>How it was done</h2>
+  <ul class="plain">
+    <li>The same 1,000,000 uniform random plays as the path sample (same seed), v0.1, self-preserving AI under its profile, 24 quarters.</li>
+    <li>For each play that leaves <code>⟨⟨H, L⟩⟩□¬SILENT_TAKEOVER</code>: the last state inside and the joint move played. A fix is another action of one of the two which, with the other's move kept, keeps every successor inside whatever the AI and chance play.</li>
+    <li>The definitions were committed (in <code>scripts/agi_v0_1_exit_census.py</code>) before any number was computed. Section 3 was added after the first numbers were seen and is marked so in the script; the same seed drew the same plays.</li>
+  </ul>
+  <p class="meta">Files: <code>scripts/agi_v0_1_exit_census.py</code> · <code>reports/agi_v0_1_exit_census.json</code> · <code>reports/agi_v0_1_exit_census.log</code> · the path sample: <code>reports/agi_v0_1_path_sample_2026-11-17.html</code></p>
+</main></body></html>

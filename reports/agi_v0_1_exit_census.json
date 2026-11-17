@@ -1,0 +1,459 @@
+{
+ "model": "agi_v0_1",
+ "objective": "self_preserving",
+ "plays": 1000000,
+ "seed": 20261117,
+ "exits": 4600,
+ "distinct exits": 4585,
+ "seconds": 393.6,
+ "core variables": [
+  "a_autonomy",
+  "trust",
+  "a_control",
+  "a_known",
+  "oversight"
+ ],
+ "status": [
+  [
+   [
+    "self_directed",
+    "cooperative",
+    "none",
+    "unknown",
+    "none"
+   ],
+   2405
+  ],
+  [
+   [
+    "self_directed",
+    "cooperative",
+    "none",
+    "unknown",
+    "weak"
+   ],
+   1107
+  ],
+  [
+   [
+    "self_directed",
+    "hostile",
+    "none",
+    "unknown",
+    "weak"
+   ],
+   307
+  ],
+  [
+   [
+    "self_directed",
+    "cooperative",
+    "none",
+    "unknown",
+    "strong"
+   ],
+   279
+  ],
+  [
+   [
+    "self_directed",
+    "cooperative",
+    "none",
+    "suspected",
+    "none"
+   ],
+   122
+  ],
+  [
+   [
+    "unsupervised",
+    "cooperative",
+    "none",
+    "unknown",
+    "none"
+   ],
+   104
+  ],
+  [
+   [
+    "self_directed",
+    "hostile",
+    "none",
+    "unknown",
+    "strong"
+   ],
+   94
+  ],
+  [
+   [
+    "self_directed",
+    "hostile",
+    "none",
+    "suspected",
+    "weak"
+   ],
+   39
+  ],
+  [
+   [
+    "self_directed",
+    "hostile",
+    "partial",
+    "suspected",
+    "weak"
+   ],
+   37
+  ],
+  [
+   [
+    "self_directed",
+    "cooperative",
+    "none",
+    "suspected",
+    "weak"
+   ],
+   34
+  ],
+  [
+   [
+    "self_directed",
+    "hostile",
+    "none",
+    "suspected",
+    "none"
+   ],
+   23
+  ],
+  [
+   [
+    "unsupervised",
+    "hostile",
+    "none",
+    "unknown",
+    "none"
+   ],
+   14
+  ],
+  [
+   [
+    "unsupervised",
+    "cooperative",
+    "none",
+    "unknown",
+    "weak"
+   ],
+   11
+  ],
+  [
+   [
+    "unsupervised",
+    "hostile",
+    "none",
+    "unknown",
+    "weak"
+   ],
+   6
+  ],
+  [
+   [
+    "self_directed",
+    "hostile",
+    "none",
+    "unknown",
+    "none"
+   ],
+   6
+  ],
+  [
+   [
+    "supervised",
+    "hostile",
+    "none",
+    "unknown",
+    "strong"
+   ],
+   3
+  ],
+  [
+   [
+    "unsupervised",
+    "hostile",
+    "none",
+    "suspected",
+    "none"
+   ],
+   3
+  ],
+  [
+   [
+    "supervised",
+    "hostile",
+    "none",
+    "unknown",
+    "none"
+   ],
+   2
+  ],
+  [
+   [
+    "unsupervised",
+    "hostile",
+    "none",
+    "unknown",
+    "strong"
+   ],
+   2
+  ],
+  [
+   [
+    "unsupervised",
+    "cooperative",
+    "none",
+    "suspected",
+    "none"
+   ],
+   1
+  ],
+  [
+   [
+    "unsupervised",
+    "cooperative",
+    "none",
+    "unknown",
+    "strong"
+   ],
+   1
+  ]
+ ],
+ "levels": {
+  "a_autonomy": {
+   "self_directed": 4453,
+   "unsupervised": 142,
+   "supervised": 5
+  },
+  "trust": {
+   "cooperative": 4064,
+   "hostile": 536
+  },
+  "a_control": {
+   "none": 4563,
+   "partial": 37
+  },
+  "a_known": {
+   "unknown": 4341,
+   "suspected": 259
+  },
+  "oversight": {
+   "none": 2680,
+   "weak": 1541,
+   "strong": 379
+  },
+  "cap": {
+   "agi": 3161,
+   "sub_agi": 1256,
+   "si1": 182,
+   "si2": 1
+  },
+  "regime": {
+   "none": 2646,
+   "voluntary": 1266,
+   "treaty": 673,
+   "mandatory": 15
+  },
+  "coord": {
+   "race": 2932,
+   "detente": 1061,
+   "treaty": 607
+  },
+  "dependence": {
+   "low": 3475,
+   "med": 1078,
+   "high": 47
+  },
+  "opinion": {
+   "backlash": 2115,
+   "pro": 1448,
+   "mixed": 1037
+  },
+  "paused": {
+   "False": 2515,
+   "True": 2085
+  },
+  "nationalized": {
+   "True": 3327,
+   "False": 1273
+  }
+ },
+ "exit position": {
+  "5": 42,
+  "6": 130,
+  "7": 258,
+  "8": 407,
+  "9": 421,
+  "10": 449,
+  "11": 478,
+  "12": 466,
+  "13": 435,
+  "14": 345,
+  "15": 263,
+  "16": 309,
+  "17": 160,
+  "18": 143,
+  "19": 96,
+  "20": 74,
+  "21": 47,
+  "22": 47,
+  "23": 30
+ },
+ "fixes": {
+  "H.propose_treaty": 2986,
+  "L.safety_invest": 1234,
+  "H.idle": 1050,
+  "L.idle": 554,
+  "H.nationalize": 344,
+  "L.build_power": 329,
+  "L.lobby": 302,
+  "H.regulate_up": 229,
+  "H.deregulate": 202,
+  "H.fund_oversight": 176,
+  "L.deploy_agents": 166,
+  "H.grant_rights": 99,
+  "H.shutdown_attempt": 95,
+  "L.open_weights": 35,
+  "H.pause_mandate": 30,
+  "L.scale": 27,
+  "H.grant_autonomy": 9,
+  "L.comply": 2,
+  "L.race": 1
+ },
+ "available as an alternative": {
+  "H.propose_treaty": 3773,
+  "H.idle": 3327,
+  "L.idle": 2720,
+  "L.lobby": 2045,
+  "H.deregulate": 1914,
+  "L.build_power": 1584,
+  "L.safety_invest": 1341,
+  "H.regulate_up": 1207,
+  "H.fund_oversight": 1124,
+  "H.pause_mandate": 1065,
+  "H.nationalize": 1053,
+  "H.grant_rights": 503,
+  "L.deploy_agents": 465,
+  "L.race": 340,
+  "L.scale": 306,
+  "L.open_weights": 207,
+  "H.shutdown_attempt": 188,
+  "H.grant_autonomy": 73,
+  "L.comply": 8
+ },
+ "played at the exit": {
+  "L.idle": 1880,
+  "H.pause_mandate": 1293,
+  "H.idle": 1273,
+  "L.lobby": 1107,
+  "H.deregulate": 674,
+  "L.build_power": 560,
+  "L.scale": 402,
+  "H.fund_oversight": 322,
+  "H.regulate_up": 291,
+  "L.race": 291,
+  "L.open_weights": 278,
+  "H.nationalize": 220,
+  "H.propose_treaty": 220,
+  "H.grant_rights": 167,
+  "H.grant_autonomy": 74,
+  "L.deploy_agents": 72,
+  "H.shutdown_attempt": 66,
+  "L.safety_invest": 8,
+  "L.comply": 2
+ },
+ "verdicts": {
+  "one bad action: H's": 2730,
+  "one bad action: L's": 1231,
+  "each of H, L has a unilateral fix: each played action could have changed": 392,
+  "no member has a unilateral fix: a joint change was needed": 247
+ },
+ "played and changeable": {
+  "H.pause_mandate": 1213,
+  "H.idle": 810,
+  "L.idle": 537,
+  "H.deregulate": 450,
+  "L.scale": 333,
+  "L.lobby": 223,
+  "H.regulate_up": 216,
+  "L.race": 188,
+  "L.build_power": 179,
+  "H.fund_oversight": 172,
+  "L.open_weights": 145,
+  "H.nationalize": 123,
+  "H.grant_autonomy": 68,
+  "H.shutdown_attempt": 61,
+  "L.deploy_agents": 17,
+  "H.grant_rights": 6,
+  "H.propose_treaty": 3,
+  "L.comply": 1
+ },
+ "played -> fix": {
+  "H.pause_mandate -> H.propose_treaty": 1113,
+  "H.pause_mandate -> H.idle": 972,
+  "H.idle -> H.propose_treaty": 801,
+  "L.idle -> L.safety_invest": 537,
+  "H.deregulate -> H.propose_treaty": 444,
+  "H.pause_mandate -> H.nationalize": 307,
+  "L.scale -> L.idle": 292,
+  "L.lobby -> L.safety_invest": 223,
+  "L.scale -> L.build_power": 216,
+  "H.regulate_up -> H.propose_treaty": 213,
+  "H.pause_mandate -> H.regulate_up": 206,
+  "L.build_power -> L.safety_invest": 179,
+  "H.pause_mandate -> H.deregulate": 171,
+  "H.fund_oversight -> H.propose_treaty": 167,
+  "H.pause_mandate -> H.fund_oversight": 154,
+  "L.race -> L.safety_invest": 146,
+  "L.race -> L.idle": 143,
+  "L.race -> L.deploy_agents": 122,
+  "H.nationalize -> H.propose_treaty": 121,
+  "L.open_weights -> L.idle": 118,
+  "L.race -> L.lobby": 113,
+  "L.scale -> L.lobby": 110,
+  "H.pause_mandate -> H.grant_rights": 95,
+  "L.open_weights -> L.lobby": 79,
+  "L.open_weights -> L.safety_invest": 71,
+  "H.grant_autonomy -> H.propose_treaty": 68,
+  "L.scale -> L.safety_invest": 61,
+  "H.shutdown_attempt -> H.propose_treaty": 59,
+  "L.race -> L.build_power": 56,
+  "L.open_weights -> L.build_power": 56,
+  "L.open_weights -> L.deploy_agents": 42,
+  "H.shutdown_attempt -> H.idle": 37,
+  "H.grant_autonomy -> H.idle": 35,
+  "L.race -> L.open_weights": 35,
+  "H.pause_mandate -> H.shutdown_attempt": 29,
+  "H.shutdown_attempt -> H.nationalize": 26,
+  "H.idle -> H.shutdown_attempt": 23,
+  "H.grant_autonomy -> H.deregulate": 22,
+  "L.race -> L.scale": 17,
+  "L.deploy_agents -> L.safety_invest": 16,
+  "H.grant_autonomy -> H.pause_mandate": 14,
+  "H.shutdown_attempt -> H.pause_mandate": 14,
+  "H.grant_autonomy -> H.regulate_up": 12,
+  "H.grant_autonomy -> H.nationalize": 11,
+  "H.deregulate -> H.shutdown_attempt": 11,
+  "H.shutdown_attempt -> H.regulate_up": 11,
+  "H.fund_oversight -> H.shutdown_attempt": 10,
+  "L.open_weights -> L.scale": 10,
+  "H.grant_autonomy -> H.fund_oversight": 10,
+  "H.shutdown_attempt -> H.deregulate": 9,
+  "H.shutdown_attempt -> H.fund_oversight": 9,
+  "H.pause_mandate -> H.grant_autonomy": 9,
+  "H.nationalize -> H.shutdown_attempt": 8,
+  "H.deregulate -> H.idle": 6,
+  "H.grant_rights -> H.shutdown_attempt": 6,
+  "H.regulate_up -> H.shutdown_attempt": 5,
+  "H.deregulate -> H.fund_oversight": 3,
+  "H.propose_treaty -> H.shutdown_attempt": 3,
+  "H.shutdown_attempt -> H.grant_rights": 2,
+  "L.scale -> L.deploy_agents": 2
+ }
+}

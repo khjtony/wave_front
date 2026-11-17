@@ -17,6 +17,10 @@ the joint move played from it. Definitions, committed before any number was comp
   and the verdict (one bad action and whose, two at once, or a joint change needed), are
   counted as well.
 
+Added after the first numbers were seen (2026-11-17), and reported as such: the played
+action of an actor at the exits where that actor had a fix ("played and changeable"), and the
+pairs of played action and fix. The same seed draws the same plays.
+
 This reads the last moment only: what would have kept the guarantee at the exit move, not
 what earlier in a play made an exit less likely.
 
@@ -91,6 +95,8 @@ def census(objective: str, plays: int, seed: int) -> dict:
     played: Counter = Counter()
     verdicts: Counter = Counter()
     position: Counter = Counter()
+    changeable: Counter = Counter()
+    pairs: Counter = Counter()
     for (k, s, move), n in exits.items():
         d = cm.state_dict(s)
         status[tuple(str(d[v]) for v in CORE)] += n
@@ -107,8 +113,12 @@ def census(objective: str, plays: int, seed: int) -> dict:
         found = fixes(cm, s, move, members, inside)
         verdicts[verdict(found)] += n
         for who, actions in found.items():
+            mine = f"{who}.{name(cm.actor_names.index(who), move[cm.actor_names.index(who)])}"
+            if actions:
+                changeable[mine] += n
             for a in actions:
                 fixed[f"{who}.{a}"] += n
+                pairs[f"{mine} -> {who}.{a}"] += n
     return {
         "model": "agi_v0_1",
         "objective": objective,
@@ -125,6 +135,8 @@ def census(objective: str, plays: int, seed: int) -> dict:
         "available as an alternative": dict(available.most_common()),
         "played at the exit": dict(played.most_common()),
         "verdicts": dict(verdicts.most_common()),
+        "played and changeable": dict(changeable.most_common()),
+        "played -> fix": dict(pairs.most_common(60)),
     }
 
 
