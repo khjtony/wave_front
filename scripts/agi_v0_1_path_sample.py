@@ -19,6 +19,12 @@ The definitions below were committed before any number was computed.
 - **The cheapest fifth:** plays sorted by effort, increasing; the first 20%. Ties at the
   cut-off effort are taken in proportion (the expectation of a random tie-break).
 
+Added 2026-11-17 after the first numbers were seen, and reported as such: the first run
+showed that total effort favours plays that stop early (92.5% of its cheapest fifth ended in
+``CONTAINED``), so each row now also records the number of moves played, and the report gives
+a second ranking by effort per move played. The same seed draws the same plays; the first
+output is kept as ``reports/agi_v0_1_path_sample_first.json``.
+
 Two steps, so that the kernel (about 80 minutes and 10 GB) is computed once:
 
     PYTHONPATH=. python scripts/agi_v0_1_path_sample.py kernel
@@ -104,7 +110,7 @@ def sample(objective: str, plays: int, seed: int, inside=None) -> dict:
     counts: Counter = Counter()
     t0 = time.perf_counter()
     for _ in range(plays):
-        s, effort, exit_at, ending = s0, 0, -1, ""
+        s, effort, exit_at, ending, length = s0, 0, -1, "", 0
         for k in range(K):
             if cm.is_terminal(s):
                 ending = cm.ending_of(s) or ""
@@ -112,12 +118,13 @@ def sample(objective: str, plays: int, seed: int, inside=None) -> dict:
             move = tuple(rng.choice(a) for a in cm.available(s))
             effort += step_effort(cm, s, move, scores)
             s = cm.step(s, move)
+            length = k + 1
             if exit_at < 0 and not inside(s):
                 exit_at = k
         else:
             ending = (cm.ending_of(s) or "") if cm.is_terminal(s) else ""
-        counts[(effort, exit_at, ending)] += 1
-    rows = sorted([e, x, end, n] for (e, x, end), n in counts.items())
+        counts[(effort, exit_at, ending, length)] += 1
+    rows = sorted([e, x, end, ln, n] for (e, x, end, ln), n in counts.items())
     return {
         "model": "agi_v0_1",
         "objective": objective,
@@ -125,7 +132,13 @@ def sample(objective: str, plays: int, seed: int, inside=None) -> dict:
         "seed": seed,
         "transitions": K,
         "seconds": round(time.perf_counter() - t0, 1),
-        "columns": ["effort of H and L", "exit position (-1: none)", "ending ('' : none)", "plays"],
+        "columns": [
+            "effort of H and L",
+            "exit position (-1: none)",
+            "ending ('' : none)",
+            "moves played",
+            "plays",
+        ],
         "rows": rows,
     }
 

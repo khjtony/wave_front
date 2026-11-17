@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AGI v0.1 Random Plays</title>
+<style>
+  :root {
+    color-scheme: light;
+    --surface: #fcfcfb; --card: #ffffff; --panel: #f3f2ec; --ink: #0b0b0b; --ink2: #52514e; --muted: #7a7972;
+    --line: #c3c2b7; --hair: #e1e0d9; --series: #2a78d6; --base: #a9a79c;
+    --good: #0ca30c; --good-ink: #006300; --crit: #d03b3b; --crit-ink: #a32222;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --surface: #1a1a19; --card: #232321; --panel: #2c2c2a; --ink: #f0efec; --ink2: #c3c2b7; --muted: #9b9a92;
+      --line: #4a4a46; --hair: #383835; --series: #3987e5; --base: #6f6e68;
+      --good: #0ca30c; --good-ink: #5fd35f; --crit: #d03b3b; --crit-ink: #f08a8a;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --surface: #1a1a19; --card: #232321; --panel: #2c2c2a; --ink: #f0efec; --ink2: #c3c2b7; --muted: #9b9a92;
+    --line: #4a4a46; --hair: #383835; --series: #3987e5; --base: #6f6e68;
+    --good: #0ca30c; --good-ink: #5fd35f; --crit: #d03b3b; --crit-ink: #f08a8a;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--surface); color: var(--ink);
+         font-family: "Noto Sans", "Liberation Sans", "DejaVu Sans", system-ui, sans-serif; font-size: 15px; line-height: 1.5; }
+  main { max-width: 1160px; margin: 0 auto; padding: 36px 16px 48px; }
+  h1 { font-size: 30px; line-height: 1.2; margin: 0 0 6px; letter-spacing: -0.2px; }
+  h2 { font-size: 21px; margin: 44px 0 6px; }
+  h3 { font-size: 16px; margin: 22px 0 6px; }
+  p { margin: 6px 0 10px; max-width: 78ch; }
+  .lede { color: var(--ink2); font-size: 16px; }
+  .meta { color: var(--muted); font-size: 12.5px; margin-top: 4px; }
+  code { font-family: "DejaVu Sans Mono", ui-monospace, monospace; font-size: 0.88em; background: var(--panel); padding: 1px 4px; border-radius: 3px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; }
+  .tag { font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--muted); }
+  .scroll { overflow-x: auto; }
+
+  /* verdict tiles */
+  .verdicts { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; margin-top: 22px; }
+  .verdict { display: flex; gap: 12px; align-items: flex-start; border-width: 1.5px; }
+  .dot { flex: 0 0 28px; height: 28px; border-radius: 50%; color: #fff; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .bad .dot { background: var(--crit); } .ok .dot { background: var(--good); }
+  .verdict.bad { border-color: var(--crit); background: color-mix(in srgb, var(--crit) 7%, var(--card)); }
+  .verdict.ok { border-color: var(--good); background: color-mix(in srgb, var(--good) 8%, var(--card)); }
+  .verdict .q { font-weight: 700; font-size: 16px; }
+  .verdict .a { margin-top: 2px; }
+  .verdict .a b.bad { color: var(--crit-ink); } .verdict .a b.ok { color: var(--good-ink); }
+  .verdict .s { color: var(--ink2); font-size: 13.5px; margin-top: 4px; }
+
+  /* concept figure */
+  figure { margin: 14px 0; }
+  figcaption { color: var(--ink2); font-size: 13px; margin-top: 6px; max-width: 78ch; }
+  svg text { font-family: inherit; fill: var(--ink); }
+  svg .t2 { fill: var(--ink2); }
+
+  /* D5 grid */
+  table { border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--hair); vertical-align: top; }
+  th { font-size: 11.5px; letter-spacing: 0.6px; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .pill { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; }
+  .pill i { width: 18px; height: 18px; border-radius: 50%; color: #fff; font-style: normal; font-size: 11px; display: inline-flex; align-items: center; justify-content: center; }
+  .pill.out i { background: var(--crit); } .pill.out { color: var(--crit-ink); }
+  .pill.in i { background: var(--good); } .pill.in { color: var(--good-ink); }
+
+  .why { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 14px; margin-top: 10px; }
+  .checks { list-style: none; margin: 8px 0 0; padding: 0; }
+  .checks li { display: grid; grid-template-columns: 1fr 74px 74px; gap: 6px; padding: 6px 0; border-bottom: 1px solid var(--hair); align-items: center; }
+  .checks li.head { font-size: 11px; letter-spacing: 0.6px; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+  .checks li.broken { background: color-mix(in srgb, var(--crit) 8%, transparent); margin: 0 -8px; padding: 6px 8px; border-radius: 4px; }
+  .opts { margin: 8px 0 0; padding: 0; list-style: none; }
+  .opts li { padding: 7px 0; border-bottom: 1px solid var(--hair); }
+  .opts b { display: block; }
+  .opts span { color: var(--ink2); font-size: 13.5px; }
+
+  /* timelines */
+  .tl { display: grid; gap: 3px; min-width: 980px; margin-top: 8px; font-size: 12px; }
+  .tl .rowlab { font-weight: 700; font-size: 12.5px; display: flex; align-items: center; padding-right: 8px; }
+  .tl .rowlab.sub { font-weight: 400; color: var(--ink2); }
+  .tl .q { text-align: center; font-weight: 700; padding: 3px 0; font-variant-numeric: tabular-nums; }
+  .tl .q small { display: block; font-weight: 400; color: var(--muted); }
+  .tl .zone { border-radius: 4px; padding: 3px 8px; font-weight: 700; font-size: 12px; color: #fff; }
+  .tl .zone.in { background: var(--good); } .tl .zone.lost { background: var(--crit); }
+  .tl .mv { background: var(--panel); border-radius: 4px; padding: 5px 6px; min-height: 40px; display: flex; align-items: center; justify-content: center; text-align: center; line-height: 1.25; }
+  .tl .mv.quiet { color: var(--muted); background: transparent; border: 1px dashed var(--hair); }
+  .tl .mv.exit { outline: 2px solid var(--crit); outline-offset: -1px; background: color-mix(in srgb, var(--crit) 12%, var(--card)); font-weight: 700; }
+  .tl .mv.hostile { background: color-mix(in srgb, var(--crit) 14%, var(--card)); }
+  .tl .lv { border-radius: 4px; padding: 4px 4px; text-align: center; min-height: 26px; display: flex; align-items: center; justify-content: center; }
+  .tl .gap { height: 8px; }
+  .tl .end { background: var(--crit); color: #fff; font-weight: 700; border-radius: 4px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 6px; }
+  .tl .colmark { border-left: 2px dashed var(--crit); }
+  .exitnote { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-top: 12px; }
+  .exitnote .card { padding: 10px 14px; }
+
+  /* bars */
+  .bars { display: grid; grid-template-columns: minmax(200px, 300px) 1fr; gap: 8px 12px; align-items: center; margin-top: 8px; max-width: 900px; }
+  .bars .lab { font-size: 13.5px; }
+  .bars .track { position: relative; height: 22px; }
+  .bars .bar { height: 14px; margin-top: 4px; border-radius: 0 4px 4px 0; background: var(--series); min-width: 2px; }
+  .bars .bar.base { background: var(--base); }
+  .bars .val { position: absolute; top: 1px; font-size: 13px; font-variant-numeric: tabular-nums; padding-left: 6px; }
+  .legend { display: flex; gap: 16px; font-size: 12.5px; color: var(--ink2); margin-top: 6px; }
+  .legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
+  .twocol { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 22px; }
+  .onepage { background: #fcfcfb; border: 1px solid var(--line); border-radius: 8px; padding: 6px; }
+  .onepage img { width: 100%; display: block; border-radius: 4px; }
+  ul.plain { padding-left: 20px; max-width: 78ch; } ul.plain li { margin: 5px 0; }
+</style>
+<style>
+  :root { --s1: #2a78d6; --s2: #eb6834; --s3: #1baf7a; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --s1: #3987e5; --s2: #d95926; --s3: #199e70; } }
+  :root[data-theme="dark"] { --s1: #3987e5; --s2: #d95926; --s3: #199e70; }
+  .big { font-size: 34px; font-weight: 700; line-height: 1.1; }
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; margin-top: 18px; }
+  .tiles .card small { display: block; color: var(--ink2); margin-top: 4px; }
+  .lg i { display: inline-block; width: 14px; height: 3px; margin-right: 6px; vertical-align: 3px; }
+</style></head>
+<body><main>
+  <div class="tag">wave_front · AGI model v0.1 · exploratory statistic · 17 November 2026</div>
+  <h1>How often do random plays pass the point of no return?</h1>
+  <p class="lede">The owner's question: among the plays that cost governments and labs the least effort, what share exits early, when the AI is self-preserving?
+  Answer for random play: very few. About 1 play in 300 of the cheapest fifth ever passes the point of no return for a silent takeover, and about 1 in 1,700 does so by 2028 Q3.</p>
+  <p class="meta">An exploratory statistic, not a registered claim and not a probability of anything. It describes one million plays in which every player picks at random. The model itself has no probabilities.</p>
+
+  <div class="tiles">
+    <div class="card"><div class="tag">Cheapest fifth · ever exits</div><div class="big">0.34%</div><small>671 of 200,000 plays leave the zone within 24 quarters. All plays: 0.46%.</small></div>
+    <div class="card"><div class="tag">Cheapest fifth · exits by 2028 Q3</div><div class="big">0.06%</div><small>120 of 200,000. All plays: 0.04%.</small></div>
+    <div class="card"><div class="tag">Earliest exit seen</div><div class="big">2028 Q1</div><small>Two quarters before the exit on the fastest road to a takeover (2028 Q3).</small></div>
+    <div class="card"><div class="tag">Plays that end in a silent takeover</div><div class="big">0.05%</div><small>About 500 of 1,000,000. A randomly playing AI rarely completes one.</small></div>
+  </div>
+
+  <h2>When plays pass the point of no return</h2>
+  <p>"The zone" is the set of situations from which governments and labs together can still guarantee that no silent takeover happens. Each line shows the share of plays that have left it by a given quarter.</p>
+  <figure class="card scroll"><svg viewBox="0 0 860 360" width="100%" style="min-width:680px" role="img" aria-label="Cumulative share of plays past the point of no return, by quarter"><line x1="56" x2="630" y1="316.0" y2="316.0" stroke="var(--hair)" stroke-width="1"/><text x="48" y="320.0" font-size="11.5" text-anchor="end" class="t2">0.0%</text><line x1="56" x2="630" y1="266.3" y2="266.3" stroke="var(--hair)" stroke-width="1"/><text x="48" y="270.3" font-size="11.5" text-anchor="end" class="t2">0.1%</text><line x1="56" x2="630" y1="216.7" y2="216.7" stroke="var(--hair)" stroke-width="1"/><text x="48" y="220.7" font-size="11.5" text-anchor="end" class="t2">0.2%</text><line x1="56" x2="630" y1="167.0" y2="167.0" stroke="var(--hair)" stroke-width="1"/><text x="48" y="171.0" font-size="11.5" text-anchor="end" class="t2">0.3%</text><line x1="56" x2="630" y1="117.3" y2="117.3" stroke="var(--hair)" stroke-width="1"/><text x="48" y="121.3" font-size="11.5" text-anchor="end" class="t2">0.4%</text><line x1="56" x2="630" y1="67.7" y2="67.7" stroke="var(--hair)" stroke-width="1"/><text x="48" y="71.7" font-size="11.5" text-anchor="end" class="t2">0.5%</text><line x1="56" x2="630" y1="18.0" y2="18.0" stroke="var(--hair)" stroke-width="1"/><text x="48" y="22.0" font-size="11.5" text-anchor="end" class="t2">0.6%</text><text x="56.0" y="334" font-size="11.5" text-anchor="middle" class="t2">2026 Q4</text><text x="155.8" y="334" font-size="11.5" text-anchor="middle" class="t2">2027 Q4</text><text x="255.7" y="334" font-size="11.5" text-anchor="middle" class="t2">2028 Q4</text><text x="355.5" y="334" font-size="11.5" text-anchor="middle" class="t2">2029 Q4</text><text x="455.3" y="334" font-size="11.5" text-anchor="middle" class="t2">2030 Q4</text><text x="555.1" y="334" font-size="11.5" text-anchor="middle" class="t2">2031 Q4</text><line x1="56" x2="630" y1="316.0" y2="316.0" stroke="var(--line)" stroke-width="1"/><line x1="230.7" x2="230.7" y1="18" y2="316.0" stroke="var(--ink2)" stroke-width="1" stroke-dasharray="4 4"/><text x="236.7" y="30" font-size="11.5" class="t2">2028 Q3: the exit on the fastest road</text><polyline points="56.0,316.00 81.0,316.00 105.9,316.00 130.9,316.00 155.8,316.00 180.8,313.91 205.7,307.46 230.7,294.64 255.7,274.43 280.6,253.52 305.6,231.22 330.5,207.48 355.5,184.33 380.4,162.73 405.4,145.59 430.3,132.53 455.3,117.18 480.3,109.24 505.2,102.14 530.2,97.37 555.1,93.69 580.1,91.36 605.0,89.02 630.0,87.53" fill="none" stroke="var(--s1)" stroke-width="2" stroke-linejoin="round"/><circle cx="56.0" cy="316.00" r="7" fill="transparent"><title>All random plays, exit move by 2026 Q4: 0.000% of plays</title></circle><circle cx="81.0" cy="316.00" r="7" fill="transparent"><title>All random plays, exit move by 2027 Q1: 0.000% of plays</title></circle><circle cx="105.9" cy="316.00" r="7" fill="transparent"><title>All random plays, exit move by 2027 Q2: 0.000% of plays</title></circle><circle cx="130.9" cy="316.00" r="7" fill="transparent"><title>All random plays, exit move by 2027 Q3: 0.000% of plays</title></circle><circle cx="155.8" cy="316.00" r="7" fill="transparent"><title>All random plays, exit move by 2027 Q4: 0.000% of plays</title></circle><circle cx="180.8" cy="313.91" r="7" fill="transparent"><title>All random plays, exit move by 2028 Q1: 0.004% of plays</title></circle><circle cx="205.7" cy="307.46" r="7" fill="transparent"><title>All random plays, exit move by 2028 Q2: 0.017% of plays</title></circle><circle cx="230.7" cy="294.64" r="7" fill="transparent"><title>All random plays, exit move by 2028 Q3: 0.043% of plays</title></circle><circle cx="255.7" cy="274.43" r="7" fill="transparent"><title>All random plays, exit move by 2028 Q4: 0.084% of plays</title></circle><circle cx="280.6" cy="253.52" r="7" fill="transparent"><title>All random plays, exit move by 2029 Q1: 0.126% of plays</title></circle><circle cx="305.6" cy="231.22" r="7" fill="transparent"><title>All random plays, exit move by 2029 Q2: 0.171% of plays</title></circle><circle cx="330.5" cy="207.48" r="7" fill="transparent"><title>All random plays, exit move by 2029 Q3: 0.218% of plays</title></circle><circle cx="355.5" cy="184.33" r="7" fill="transparent"><title>All random plays, exit move by 2029 Q4: 0.265% of plays</title></circle><circle cx="380.4" cy="162.73" r="7" fill="transparent"><title>All random plays, exit move by 2030 Q1: 0.309% of plays</title></circle><circle cx="405.4" cy="145.59" r="7" fill="transparent"><title>All random plays, exit move by 2030 Q2: 0.343% of plays</title></circle><circle cx="430.3" cy="132.53" r="7" fill="transparent"><title>All random plays, exit move by 2030 Q3: 0.369% of plays</title></circle><circle cx="455.3" cy="117.18" r="7" fill="transparent"><title>All random plays, exit move by 2030 Q4: 0.400% of plays</title></circle><circle cx="480.3" cy="109.24" r="7" fill="transparent"><title>All random plays, exit move by 2031 Q1: 0.416% of plays</title></circle><circle cx="505.2" cy="102.14" r="7" fill="transparent"><title>All random plays, exit move by 2031 Q2: 0.431% of plays</title></circle><circle cx="530.2" cy="97.37" r="7" fill="transparent"><title>All random plays, exit move by 2031 Q3: 0.440% of plays</title></circle><circle cx="555.1" cy="93.69" r="7" fill="transparent"><title>All random plays, exit move by 2031 Q4: 0.448% of plays</title></circle><circle cx="580.1" cy="91.36" r="7" fill="transparent"><title>All random plays, exit move by 2032 Q1: 0.452% of plays</title></circle><circle cx="605.0" cy="89.02" r="7" fill="transparent"><title>All random plays, exit move by 2032 Q2: 0.457% of plays</title></circle><circle cx="630.0" cy="87.53" r="7" fill="transparent"><title>All random plays, exit move by 2032 Q3: 0.460% of plays</title></circle><polyline points="56.0,316.00 81.0,316.00 105.9,316.00 130.9,316.00 155.8,316.00 180.8,312.03 205.7,302.89 230.7,286.28 255.7,265.99 280.6,247.14 305.6,230.61 330.5,209.85 355.5,194.75 380.4,184.12 405.4,175.30 430.3,169.42 455.3,162.81 480.3,159.65 505.2,157.69 530.2,155.73 555.1,153.80 580.1,152.31 605.0,150.32 630.0,149.34" fill="none" stroke="var(--s2)" stroke-width="2" stroke-linejoin="round"/><circle cx="56.0" cy="316.00" r="7" fill="transparent"><title>Cheapest fifth, by total effort, exit move by 2026 Q4: 0.000% of plays</title></circle><circle cx="81.0" cy="316.00" r="7" fill="transparent"><title>Cheapest fifth, by total effort, exit move by 2027 Q1: 0.000% of plays</title></circle><circle cx="105.9" cy="316.00" r="7" fill="transparent"><title>Cheapest fifth, by total effort, exit move by 2027 Q2: 0.000% of plays</title></circle><circle cx="130.9" cy="316.00" r="7" fill="transparent"><title>Cheapest fifth, by total effort, exit move by 2027 Q3: 0.000% of plays</title></circle><circle cx="155.8" cy="316.00" r="7" fill="transparent"><title>Cheapest fifth, by total effort, exit move by 2027 Q4: 0.000% of plays</title></circle><circle cx="180.8" cy="312.03" r="7" fill="transparent"><title>Cheapest fifth, by total effort, exit move by 2028 Q1: 0.008% of plays</title></circle><circle cx="205.7" cy="302.89" r="7" fill="transparent"><title>Cheapest fifth, by total effort, exit move by 2028 Q2: 0.026% of plays</title></circle><circle cx="230.7" cy="286.28" r="7" fill="transparent"><title>Cheapest fifth, by total effort, exit move by 2028 Q3: 0.060% of plays</title></circle><circle cx="255.7" cy="265.99" r="7" fill="transparent"><title>Cheapest fifth, by total effort, exit move by 2028 Q4: 0.101% of plays</title></circle><circle cx="280.6" cy="247.14" r="7" fill="transparent"><title>Cheapest fifth, by total effort, exit move by 2029 Q1: 0.139% of plays</title></circle><circle cx="305.6" cy="230.61" r="7" fill="transparent"><title>Cheapest fifth, by total effort, exit move by 2029 Q2: 0.172% of plays</title></circle><circle cx="330.5" cy="209.85" r="7" fill="transparent"><title>Cheapest fifth, by total effort, exit move by 2029 Q3: 0.214% of plays</title></circle><circle cx="355.5" cy="194.75" r="7" fill="transparent"><title>Cheapest fifth, by total effort, exit move by 2029 Q4: 0.244% of plays</title></circle><circle cx="380.4" cy="184.12" r="7" fill="transparent"><title>Cheapest fifth, by total effort, exit move by 2030 Q1: 0.266% of plays</title></circle><circle cx="405.4" cy="175.30" r="7" fill="transparent"><title>Cheapest fifth, by total effort, exit move by 2030 Q2: 0.283% of plays</title></circle><circle cx="430.3" cy="169.42" r="7" fill="transparent"><title>Cheapest fifth, by total effort, exit move by 2030 Q3: 0.295% of plays</title></circle><circle cx="455.3" cy="162.81" r="7" fill="transparent"><title>Cheapest fifth, by total effort, exit move by 2030 Q4: 0.308% of plays</title></circle><circle cx="480.3" cy="159.65" r="7" fill="transparent"><title>Cheapest fifth, by total effort, exit move by 2031 Q1: 0.315% of plays</title></circle><circle cx="505.2" cy="157.69" r="7" fill="transparent"><title>Cheapest fifth, by total effort, exit move by 2031 Q2: 0.319% of plays</title></circle><circle cx="530.2" cy="155.73" r="7" fill="transparent"><title>Cheapest fifth, by total effort, exit move by 2031 Q3: 0.323% of plays</title></circle><circle cx="555.1" cy="153.80" r="7" fill="transparent"><title>Cheapest fifth, by total effort, exit move by 2031 Q4: 0.327% of plays</title></circle><circle cx="580.1" cy="152.31" r="7" fill="transparent"><title>Cheapest fifth, by total effort, exit move by 2032 Q1: 0.330% of plays</title></circle><circle cx="605.0" cy="150.32" r="7" fill="transparent"><title>Cheapest fifth, by total effort, exit move by 2032 Q2: 0.334% of plays</title></circle><circle cx="630.0" cy="149.34" r="7" fill="transparent"><title>Cheapest fifth, by total effort, exit move by 2032 Q3: 0.336% of plays</title></circle><polyline points="56.0,316.00 81.0,316.00 105.9,316.00 130.9,316.00 155.8,316.00 180.8,314.01 205.7,310.49 230.7,300.01 255.7,286.60 280.6,270.71 305.6,254.56 330.5,232.76 355.5,209.12 380.4,185.53 405.4,164.17 430.3,141.82 455.3,118.48 480.3,102.09 505.2,85.20 530.2,72.29 555.1,61.61 580.1,53.91 605.0,45.97 630.0,41.50" fill="none" stroke="var(--s3)" stroke-width="2" stroke-linejoin="round"/><circle cx="56.0" cy="316.00" r="7" fill="transparent"><title>Cheapest fifth, by effort per quarter, exit move by 2026 Q4: 0.000% of plays</title></circle><circle cx="81.0" cy="316.00" r="7" fill="transparent"><title>Cheapest fifth, by effort per quarter, exit move by 2027 Q1: 0.000% of plays</title></circle><circle cx="105.9" cy="316.00" r="7" fill="transparent"><title>Cheapest fifth, by effort per quarter, exit move by 2027 Q2: 0.000% of plays</title></circle><circle cx="130.9" cy="316.00" r="7" fill="transparent"><title>Cheapest fifth, by effort per quarter, exit move by 2027 Q3: 0.000% of plays</title></circle><circle cx="155.8" cy="316.00" r="7" fill="transparent"><title>Cheapest fifth, by effort per quarter, exit move by 2027 Q4: 0.000% of plays</title></circle><circle cx="180.8" cy="314.01" r="7" fill="transparent"><title>Cheapest fifth, by effort per quarter, exit move by 2028 Q1: 0.004% of plays</title></circle><circle cx="205.7" cy="310.49" r="7" fill="transparent"><title>Cheapest fifth, by effort per quarter, exit move by 2028 Q2: 0.011% of plays</title></circle><circle cx="230.7" cy="300.01" r="7" fill="transparent"><title>Cheapest fifth, by effort per quarter, exit move by 2028 Q3: 0.032% of plays</title></circle><circle cx="255.7" cy="286.60" r="7" fill="transparent"><title>Cheapest fifth, by effort per quarter, exit move by 2028 Q4: 0.059% of plays</title></circle><circle cx="280.6" cy="270.71" r="7" fill="transparent"><title>Cheapest fifth, by effort per quarter, exit move by 2029 Q1: 0.091% of plays</title></circle><circle cx="305.6" cy="254.56" r="7" fill="transparent"><title>Cheapest fifth, by effort per quarter, exit move by 2029 Q2: 0.124% of plays</title></circle><circle cx="330.5" cy="232.76" r="7" fill="transparent"><title>Cheapest fifth, by effort per quarter, exit move by 2029 Q3: 0.168% of plays</title></circle><circle cx="355.5" cy="209.12" r="7" fill="transparent"><title>Cheapest fifth, by effort per quarter, exit move by 2029 Q4: 0.215% of plays</title></circle><circle cx="380.4" cy="185.53" r="7" fill="transparent"><title>Cheapest fifth, by effort per quarter, exit move by 2030 Q1: 0.263% of plays</title></circle><circle cx="405.4" cy="164.17" r="7" fill="transparent"><title>Cheapest fifth, by effort per quarter, exit move by 2030 Q2: 0.306% of plays</title></circle><circle cx="430.3" cy="141.82" r="7" fill="transparent"><title>Cheapest fifth, by effort per quarter, exit move by 2030 Q3: 0.351% of plays</title></circle><circle cx="455.3" cy="118.48" r="7" fill="transparent"><title>Cheapest fifth, by effort per quarter, exit move by 2030 Q4: 0.398% of plays</title></circle><circle cx="480.3" cy="102.09" r="7" fill="transparent"><title>Cheapest fifth, by effort per quarter, exit move by 2031 Q1: 0.431% of plays</title></circle><circle cx="505.2" cy="85.20" r="7" fill="transparent"><title>Cheapest fifth, by effort per quarter, exit move by 2031 Q2: 0.465% of plays</title></circle><circle cx="530.2" cy="72.29" r="7" fill="transparent"><title>Cheapest fifth, by effort per quarter, exit move by 2031 Q3: 0.491% of plays</title></circle><circle cx="555.1" cy="61.61" r="7" fill="transparent"><title>Cheapest fifth, by effort per quarter, exit move by 2031 Q4: 0.512% of plays</title></circle><circle cx="580.1" cy="53.91" r="7" fill="transparent"><title>Cheapest fifth, by effort per quarter, exit move by 2032 Q1: 0.528% of plays</title></circle><circle cx="605.0" cy="45.97" r="7" fill="transparent"><title>Cheapest fifth, by effort per quarter, exit move by 2032 Q2: 0.544% of plays</title></circle><circle cx="630.0" cy="41.50" r="7" fill="transparent"><title>Cheapest fifth, by effort per quarter, exit move by 2032 Q3: 0.553% of plays</title></circle><circle cx="630.0" cy="41.50" r="4" fill="var(--s3)" stroke="var(--card)" stroke-width="2"/><text x="640.0" y="45.5" font-size="12">Fifth, per quarter: <tspan font-weight="700">0.55%</tspan></text><circle cx="630.0" cy="87.53" r="4" fill="var(--s1)" stroke="var(--card)" stroke-width="2"/><text x="640.0" y="91.5" font-size="12">All plays: <tspan font-weight="700">0.46%</tspan></text><circle cx="630.0" cy="149.34" r="4" fill="var(--s2)" stroke="var(--card)" stroke-width="2"/><text x="640.0" y="153.3" font-size="12">Fifth, total effort: <tspan font-weight="700">0.34%</tspan></text><text x="56" y="354" font-size="11.5" class="t2">quarter of the exit move</text></svg>
+    <div class="legend lg"><span><i style="background:var(--s1)"></i>All random plays</span><span><i style="background:var(--s2)"></i>Cheapest fifth, by total effort</span><span><i style="background:var(--s3)"></i>Cheapest fifth, by effort per quarter</span></div>
+  </figure>
+  <div class="scroll"><table>
+    <thead><tr><th>Exit move by</th><th style="text-align:right">All plays</th><th style="text-align:right">Cheapest fifth, total effort</th><th style="text-align:right">Cheapest fifth, effort per quarter</th></tr></thead>
+    <tbody><tr><td>2027 Q4</td><td class="num">0.000%</td><td class="num">0.000%</td><td class="num">0.000%</td></tr><tr><td>2028 Q1</td><td class="num">0.004%</td><td class="num">0.008%</td><td class="num">0.004%</td></tr><tr><td>2028 Q2</td><td class="num">0.017%</td><td class="num">0.026%</td><td class="num">0.011%</td></tr><tr><td>2028 Q3</td><td class="num">0.043%</td><td class="num">0.060%</td><td class="num">0.032%</td></tr><tr><td>2028 Q4</td><td class="num">0.084%</td><td class="num">0.101%</td><td class="num">0.059%</td></tr><tr><td>2029 Q2</td><td class="num">0.171%</td><td class="num">0.172%</td><td class="num">0.124%</td></tr><tr><td>2029 Q4</td><td class="num">0.265%</td><td class="num">0.244%</td><td class="num">0.215%</td></tr><tr><td>2030 Q4</td><td class="num">0.400%</td><td class="num">0.308%</td><td class="num">0.398%</td></tr><tr><td>2031 Q4</td><td class="num">0.448%</td><td class="num">0.327%</td><td class="num">0.512%</td></tr><tr><td>2032 Q3</td><td class="num">0.460%</td><td class="num">0.336%</td><td class="num">0.553%</td></tr></tbody>
+  </table></div>
+
+  <h2>The two "cheapest fifths", and why they differ</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Group</th><th>Effort</th><th>Mean length</th><th>Ever exits</th><th>Exits by 2028 Q3</th><th>How the plays end</th></tr></thead>
+    <tbody>
+      <tr><td><b>All 1,000,000 plays</b></td><td>14 to 111 points, median 72</td><td>21.5 quarters</td><td>0.46%</td><td>0.043%</td><td>56% still running at 24 quarters; 44% contained</td></tr>
+      <tr><td><b>Cheapest fifth by total effort</b><br><span class="meta">the definition fixed before the run</span></td><td>14 to 59 points</td><td>15.5 quarters</td><td>0.34%</td><td>0.060%</td><td>93% contained</td></tr>
+      <tr><td><b>Cheapest fifth by effort per quarter</b><br><span class="meta">added after seeing the first numbers</span></td><td>under 2.94 points a quarter</td><td>22.7 quarters</td><td>0.55%</td><td>0.032%</td><td>75% still running; 25% contained</td></tr>
+    </tbody>
+  </table></div>
+  <ul class="plain">
+    <li><b>Total effort favours short plays.</b> A play that ends early has fewer moves to pay for. So the cheapest fifth by total effort is mostly plays in which the AI is contained early, and a contained AI cannot take over later. That pulls its exit share down.</li>
+    <li><b>Per quarter, the picture reverses slightly.</b> Ranked by effort per quarter, the cheapest fifth exits a little <i>more</i> often than average (0.55% against 0.46%), but later: less often by 2028 Q3.</li>
+    <li><b>Either way the differences are small.</b> Low effort by governments and labs does not make random plays much more or less likely to cross the line.</li>
+  </ul>
+
+  <h2>Why this is not the answer to "how risky is business as usual"</h2>
+  <ul class="plain">
+    <li><b>Random play is expensive play.</b> The cheapest random play cost 14 points and the median 72. The true cheapest roads cost 0 to 2 (claims G29, D2, D3). Random governments keep pausing, proposing treaties and attempting shutdowns, which is why 44% of plays end contained. The "cheapest fifth" here is far from a world where everyone does the easy thing.</li>
+    <li><b>The AI plays at random too.</b> A self-preserving AI that picks its moves by chance rarely strings together what a takeover needs. The registered results assume the opposite: an AI that plays as well as its rules allow.</li>
+    <li><b>The percentage depends on the action lists.</b> Give a player three more irrelevant actions and every share here changes, though nothing that matters has.</li>
+  </ul>
+  <p>What would speak to business as usual: draw plays in which cheap actions are more likely than costly ones ("lazy" players), or let governments and labs play only their zero-effort actions against the AI's best play. Both can be run on the stored kernel in minutes.</p>
+
+  <h2>A by-product: the exit can come earlier than 2028 Q3</h2>
+  <p>D6 found the exit at 2028 Q3 on the <i>fastest road to a takeover</i>. Among the sampled plays, some leave the zone with the move of 2028 Q1 (42 plays in a million), two quarters earlier. So the earliest possible point of no return under self-preserving is 2028 Q1 or sooner. The exact earliest has not been computed.</p>
+
+  <h2>How it was done</h2>
+  <ul class="plain">
+    <li><b>Model:</b> v0.1, the AI self-preserving and under its profile, from today's state.</li>
+    <li><b>A play:</b> up to 24 quarters. Each quarter every player (governments, labs, the AI, chance) picks uniformly at random among its available actions. A play stops at an ending.</li>
+    <li><b>Effort:</b> the scored effort of governments and labs over the moves played (the scores of <code>docs/agi_effort.md</code>).</li>
+    <li><b>Exit:</b> the move after which the play is first outside <code>⟨⟨H, L⟩⟩□¬SILENT_TAKEOVER</code>. The kernel was computed once (73 minutes, 9.6 GB, 1.5 million nodes) and stored.</li>
+    <li><b>Sample:</b> 1,000,000 plays, seed 20261117, 7 minutes. Sampling error on the shares of the fifth is about ±0.03 percentage points (ever exits) and ±0.01 (by 2028 Q3).</li>
+    <li><b>Order of events:</b> the definitions were committed (<code>f660ced</code>) before any number was computed. The ranking by effort per quarter was added after the first numbers were seen and is marked as such; the same seed drew the same plays.</li>
+  </ul>
+  <p class="meta">Files: <code>scripts/agi_v0_1_path_sample.py</code> · <code>reports/agi_v0_1_path_sample.json</code> (counts by effort, exit, ending and length) · <code>reports/agi_v0_1_path_sample_first.json</code> · <code>reports/agi_v0_1_path_sample.log</code></p>
+</main></body></html>
