@@ -59,7 +59,7 @@
   <h1>AGI v0.2: what an open-weight release does</h1>
   <p class="lede">v0 and v0.1 give an open-weight release one effect: oversight drops a level. That cannot answer whether open weights help or hurt.
   v0.2 adds the effects the question is really about, each as a switch, so the model can compare the world with and without them.</p>
-  <div class="status"><b>Registered 17 November 2026; nothing run.</b> Claims E1 to E6 (section 4) and their test files (<code>tests/agi_v0_2/scenarios/</code>) were committed before any guard of v0.2 was written. The model is <code>models/agi_v0_2/</code>; v0 and v0.1 results stand as computed. The owner's decisions are in section 6, the mechanics as built in section 3</div>
+  <div class="status"><b>Registered 17 November 2026; part A run the same day (all bounded parts met), kernels not run.</b> Claims E1 to E6 (section 4) and their test files (<code>tests/agi_v0_2/scenarios/</code>) were committed before any guard of v0.2 was written. The model is <code>models/agi_v0_2/</code>; v0 and v0.1 results stand as computed. The owner's decisions are in section 6, the mechanics as built in section 3</div>
 
   <h2>1 · Why</h2>
   <p>The owner's question of 17 November: within the model, does an open-weight release do more good or more harm, and can something like "it pushes the labs to deploy faster" be inferred?</p>
@@ -231,6 +231,7 @@
   <ul class="plain">
     <li>17 November 2026: drafted, the owner's decisions recorded, registered (E1 to E6 with test bodies) before any guard of v0.2 was written. A diagnostic had been run on v0.1 that day (section 1); no query of v0.2 had been run.</li>
     <li>17 November 2026: the model (<code>models/agi_v0_2/v0_2.py</code>), its structure tests (<code>tests/agi_v0_2/test_model_v0_2.py</code>: the all-off build equals v0.1 action by action except for the flag; each channel's rule) and the timing probe, committed after the registration. Before any claim was run, the harness was checked on two queries no claim reads (the shortest play to <code>weights_open</code>, 1 tick, in the all-off and all-on builds).</li>
+    <li>17 November 2026: part A run once from <code>ee07a9c</code> (reports/agi_v0_2_part_a_2026-11-17.html): the bounded parts of E1, E2, E3 (a) and E6 (a) all met, 37 parts; E6 (a): 7 quarters from the aligned start. The kernel parts read not computed. The timing probe started after it.</li>
   </ul>
 
   <p class="meta">Related: <code>docs/agi_v0_1.md</code> (the v0.1 registration and results), <code>docs/agi_delays_2026-11-14.md</code> (delay sources; <code>L.open_weights</code> is delay 0 there), <code>reports/agi_terms_and_claims_2026-11-15.html</code> (terms).</p>
