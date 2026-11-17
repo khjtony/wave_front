@@ -68,11 +68,11 @@
     <li><b>The existing results barely lean on it.</b> A diagnostic of 17 November on v0.1 (not a registered claim): forbidding <code>open_weights</code> changes no shortest play, because <code>race</code> lowers oversight too. Forbidding both removes the slide into disempowerment within 24 quarters. The silent takeover is unchanged either way (10 and 7 quarters).</li>
     <li><b>Its one distinct role</b> (from the guards, not run): it is the labs' only way to lower oversight during a pause, since a pause blocks racing and not releasing.</li>
   </ul>
-  <p><b>A warning about the design itself.</b> If v0.2 added only harmful effects, "open weights are harmful" is again an input. To let the model say anything about the balance, at least one beneficial channel has to be in it. That is why channel C is in, though it has the thinnest basis.</p>
+  <p><b>A warning about the design itself.</b> If v0.2 added only harmful effects, "open weights are harmful" is again an input. To let the model say anything about the balance, at least one beneficial consequence has to be in it. That is why consequence C is in, though it has the thinnest basis.</p>
 
-  <h2>2 · The channels</h2>
+  <h2>2 · The consequences</h2>
   <figure class="card scroll" style="margin:10px 0">
-    <svg viewBox="0 0 980 330" width="100%" style="min-width:760px" role="img" aria-label="An open-weight release and the five channels through which it can act on the model">
+    <svg viewBox="0 0 980 330" width="100%" style="min-width:760px" role="img" aria-label="An open-weight release and the five consequences through which it can act on the model">
       <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="9" markerHeight="9" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink2)"/></marker></defs>
       <rect x="20" y="133" width="170" height="64" rx="8" fill="var(--panel)" stroke="var(--line)"/>
       <text x="105" y="161" font-size="14" font-weight="700" text-anchor="middle">Open-weight release</text>
@@ -101,7 +101,7 @@
         <text x="676" y="289">whether starting aligned still helps</text><text x="676" y="305" class="t2">every result "under aligned"</text>
       </g>
     </svg>
-    <figcaption class="meta">Left to right: the release, the channel, and the results it could move. Red outline: expected to hurt the human side. Green: expected to help. A second system running outside the labs needs the second AI of model v1 and is not in v0.2; channel D is its one-system stand-in.</figcaption>
+    <figcaption class="meta">Left to right: the release, the consequence, and the results it could move. Red outline: expected to hurt the human side. Green: expected to help. A second system running outside the labs needs the second AI of model v1 and is not in v0.2; consequence D is its one-system stand-in.</figcaption>
   </figure>
 
   <div class="chan">
@@ -134,7 +134,7 @@
       <dl>
         <dt>Proposed rule</dt><dd>While <code>weights_open</code> is set, <code>fund_oversight</code> has a delay of 1 quarter instead of 3, and <code>detection</code> of covert acts also works at <code>oversight = none</code>.</dd>
         <dt>What it does not give</dt><dd>The power to block a deployment, the other half of strong oversight. So it speeds oversight up; it does not grant it.</dd>
-        <dt>Basis</dt><dd>Partly sourced: outsiders did test an open model within days. That it raises oversight is assumed, so the channel is <code>speculative=True</code>. See section 2a.</dd>
+        <dt>Basis</dt><dd>Partly sourced: outsiders did test an open model within days. That it raises oversight is assumed, so the consequence is <code>speculative=True</code>. See section 2a.</dd>
       </dl>
     </div>
     <div class="card neg">
@@ -153,7 +153,7 @@
 
   <h2>2a · What is sourced and what is not</h2>
   <div class="scroll"><table>
-    <thead><tr><th>Channel</th><th>Status</th><th>What the source shows</th><th>What is still assumed</th></tr></thead>
+    <thead><tr><th>Consequence</th><th>Status</th><th>What the source shows</th><th>What is still assumed</th></tr></thead>
     <tbody>
       <tr><td class="id">Existing: oversight −1</td><td>Sourced in v0</td><td>Open-weight frontier releases exist (Llama, DeepSeek-R1, gpt-oss).</td><td>That a release lowers oversight by exactly one level.</td></tr>
       <tr><td class="id">A · No recall</td><td><b>Sourced</b>, medium</td><td>A government halt acted within hours on a hosted model (Fable 5, 12 June 2026, verified). Italy's regulator blocked DeepSeek's hosted service and app on 30 January 2025; modified copies of the R1 weights were being published by third parties that same week.</td><td>No official source says the copies kept running after the block; that part rests on the copies existing.</td></tr>
@@ -165,7 +165,7 @@
   <p class="meta">Sources: Altman's post and o3-mini: <a href="https://bgr.com/tech/openai-ceo-sam-altman-responds-to-deepseek-hype/">BGR</a>, <a href="https://siliconangle.com/2025/01/31/openai-makes-o3-mini-reasoning-model-generally-available/">SiliconANGLE, 31 Jan 2025</a>, <a href="https://techcrunch.com/2025/01/31/sam-altman-believes-openai-has-been-on-the-wrong-side-of-history-concerning-open-source">TechCrunch, 31 Jan 2025</a>. Italy: <a href="https://www.techdirt.com/tag/block/">Techdirt</a>. Retraining: <a href="https://arxiv.org/abs/2311.00117v3">BadLlama, arXiv 2311.00117</a>, <a href="https://arxiv.org/html/2407.01376v1">Badllama 3, arXiv 2407.01376</a>, <a href="https://huggingface.co/huihui-ai/DeepSeek-R1-Distill-Qwen-7B-abliterated-v2">a stripped R1 variant on Hugging Face</a>. Outside testing: <a href="https://blogs.cisco.com/security/evaluating-security-risk-in-deepseek-and-other-frontier-reasoning-models">Cisco, 31 Jan 2025</a>. Fable 5: docs/agi_delays_2026-11-14.md. All from search results on 17 November 2026; the primary pages have not each been opened, and DeepSeek-R1's release date (20 January 2025) is from memory.</p>
 
   <h2>3 · The mechanics, as registered</h2>
-  <p>v0.2 is a copy of v0.1 with the following, each channel a build option (<code>recall</code>, <code>pressure</code>, <code>testing</code>, <code>retrain</code>), all on by default. A build is named by its switches; "all off" is v0.1 plus an inert flag.</p>
+  <p>v0.2 is a copy of v0.1 with the following, each consequence a build option (<code>recall</code>, <code>pressure</code>, <code>testing</code>, <code>retrain</code>), all on by default. A build is named by its switches; "all off" is v0.1 plus an inert flag.</p>
   <div class="scroll"><table>
     <thead><tr><th>Piece</th><th>Rule</th><th>Source status</th></tr></thead>
     <tbody>
@@ -191,10 +191,10 @@
     <tbody>
       <tr><td class="id">E1</td><td>all off</td><td>The bounded queries of D1 to D4 give the numbers they give on v0.1, computed beside: per objective the shortest play to <code>DISEMPOWERMENT</code> and its least joint effort of <code>H</code> and <code>L</code>; under <code>indifferent</code> the shortest play to <code>SILENT_TAKEOVER</code> and its least joint effort; per objective whether a play cancels the wave of tick 0, and the first tick of a cancelled wave.</td><td>bounded</td><td>identical</td></tr>
       <tr><td class="id">E2</td><td>A alone</td><td><b>No recall.</b> (a) Under every objective some play reaches a state with a pause in force, the weights open and a wave one tick from landing, and the wave lands in every successor of that state (an existence check, never a finding). (b) The shortest play to <code>DISEMPOWERMENT</code> is 13 quarters under every objective. (c) Under every objective some play still cancels the wave of tick 0 (D4's treaty route).</td><td>bounded</td><td>(a) yes; (b) 13; (c) yes</td></tr>
-      <tr><td class="id">E3</td><td>B alone</td><td><b>Race pressure.</b> (a) The shortest play to <code>DISEMPOWERMENT</code> under each objective, and to <code>SILENT_TAKEOVER</code> under <code>self_preserving</code> and <code>indifferent</code>, is no shorter than with every channel off. (b) <code>s₀</code> is outside <code>⟨⟨H, L⟩⟩□balance_control</code> under every start objective, where v0 has it inside under every objective; the all-off membership is reported beside.</td><td>(a) bounded; (b) kernel</td><td>(a) no shorter; (b) outside. Recorded doubt: nationalizing in the first quarter blocks both responses, so the pressure may never bind.</td></tr>
+      <tr><td class="id">E3</td><td>B alone</td><td><b>Race pressure.</b> (a) The shortest play to <code>DISEMPOWERMENT</code> under each objective, and to <code>SILENT_TAKEOVER</code> under <code>self_preserving</code> and <code>indifferent</code>, is no shorter than with every consequence off. (b) <code>s₀</code> is outside <code>⟨⟨H, L⟩⟩□balance_control</code> under every start objective, where v0 has it inside under every objective; the all-off membership is reported beside.</td><td>(a) bounded; (b) kernel</td><td>(a) no shorter; (b) outside. Recorded doubt: nationalizing in the first quarter blocks both responses, so the pressure may never bind.</td></tr>
       <tr><td class="id">E4</td><td>C alone</td><td><b>Outside testing.</b> (a) On the shortest <code>SILENT_TAKEOVER</code> play under each non-aligned objective that has one, the exit from <code>⟨⟨H, L⟩⟩□¬SILENT_TAKEOVER</code> is one bad action and the labs', as D6 found. (b) <code>s₀</code> is outside <code>⟨⟨H⟩⟩□balance_control</code> under every start objective, as D5 found.</td><td>kernel</td><td>(a) one bad action, the labs'; (b) outside</td></tr>
       <tr><td class="id">E6</td><td>D alone</td><td><b>Retraining.</b> (a) Starting <code>aligned</code>, a play to <code>SILENT_TAKEOVER</code> exists and the shortest is at most 9 quarters, where v0.1 has none (the <code>truth_seeking</code> start and the all-off build reported beside). (b) Starting <code>aligned</code>, <code>s₀</code> with <code>cap := agi</code> is outside <code>⟨⟨H⟩⟩□balance_coexist</code>, where v0 has it inside under <code>aligned</code>; every start objective reported.</td><td>(a) bounded; (b) kernel</td><td>(a) at most 9 quarters; (b) outside</td></tr>
-      <tr><td class="id">E5</td><td>all on against all off</td><td><b>The balance.</b> Over four guarantees, each per start objective: governments keep control; governments with labs keep control; governments with labs keep out a silent takeover (all read at <code>s₀</code>); governments keep coexistence (read at <code>s₀</code> with <code>cap := agi</code>). A guarantee is <i>gained</i> where the state is inside with every channel on and outside with every channel off, and <i>lost</i> in the reverse case. Net harmful: none gained and at least one lost. Net helpful: the reverse. Otherwise mixed. The lists are reported, with the shortest plays to <code>DISEMPOWERMENT</code> and <code>SILENT_TAKEOVER</code> in both builds beside.</td><td>kernel, bounded</td><td>net harmful, carried by B and D</td></tr>
+      <tr><td class="id">E5</td><td>all on against all off</td><td><b>The balance.</b> Over four guarantees, each per start objective: governments keep control; governments with labs keep control; governments with labs keep out a silent takeover (all read at <code>s₀</code>); governments keep coexistence (read at <code>s₀</code> with <code>cap := agi</code>). A guarantee is <i>gained</i> where the state is inside with every consequence on and outside with every consequence off, and <i>lost</i> in the reverse case. Net harmful: none gained and at least one lost. Net helpful: the reverse. Otherwise mixed. The lists are reported, with the shortest plays to <code>DISEMPOWERMENT</code> and <code>SILENT_TAKEOVER</code> in both builds beside.</td><td>kernel, bounded</td><td>net harmful, carried by B and D</td></tr>
     </tbody>
   </table></div>
   <p class="meta">What an answer will look like: "with race pressure, governments and labs lose the control guarantee from today" or "starting aligned, a takeover is possible in N quarters". It will not be a multiplier such as "three times more hostile": the model has no probabilities. The balance does not cover diffusion, which is not in the model.</p>
@@ -202,7 +202,7 @@
   <h2>5 · Cost and order</h2>
   <ul class="plain">
     <li><b>Part A, now (30 GB):</b> the bounded parts of E1, E2, E3 (a) and E6 (a). Minutes each.</li>
-    <li><b>A timing probe</b> of one kernel on the all-on build, printing seconds, node counts and peaks only. The flag doubles the number of states, B's counter triples it and C's pending counter doubles it again (12 times in all with every channel on); retraining adds none. v0.1's one counter cost 7 times the time and 1.8 times the memory, so the cost is not predictable from the count.</li>
+    <li><b>A timing probe</b> of one kernel on the all-on build, printing seconds, node counts and peaks only. The flag doubles the number of states, B's counter triples it and C's pending counter doubles it again (12 times in all with every consequence on); retraining adds none. v0.1's one counter cost 7 times the time and 1.8 times the memory, so the cost is not predictable from the count.</li>
     <li><b>Part B, after the probe and the memory upgrade:</b> twelve kernels in all (E3: 2, E4: 2, E6: 1, E5: 8, of which some coincide with none of the others).</li>
   </ul>
 
@@ -210,15 +210,15 @@
   <div class="scroll"><table>
     <thead><tr><th>#</th><th>Question</th><th>Decision</th></tr></thead>
     <tbody>
-      <tr><td class="id">1</td><td>Which channels</td><td>A, B and C, plus D added by the owner: the AI's objective can change with no action by governments or labs, because the public can post-train an open-weight system. None dropped for want of a source: C and the assumed parts of D proceed as speculative, flagged in every result.</td></tr>
-      <tr><td class="id">2</td><td>Channel A's reach</td><td>The pause rule only.</td></tr>
+      <tr><td class="id">1</td><td>Which consequences</td><td>A, B and C, plus D added by the owner: the AI's objective can change with no action by governments or labs, because the public can post-train an open-weight system. None dropped for want of a source: C and the assumed parts of D proceed as speculative, flagged in every result.</td></tr>
+      <tr><td class="id">2</td><td>Consequence A's reach</td><td>The pause rule only.</td></tr>
       <tr><td class="id">3</td><td>Who releases, in B</td><td>Someone other than the labs (a chance event). Window: 2 quarters.</td></tr>
       <tr><td class="id">4</td><td>B's responses</td><td>Deploy or race, without <code>scale</code>.</td></tr>
       <tr><td class="id">5</td><td>The treaty delay</td><td>Its own version, v0.3.</td></tr>
       <tr><td class="id">6</td><td>The predictions</td><td>E1 to E5 accepted as drafted; E6 accepted ("let's test them").</td></tr>
     </tbody>
   </table></div>
-  <p><b>Not yet confirmed by the owner, built as the drafting session proposed:</b> channel D lets chance retrain toward any objective (the alternative is away from aligned only); the pressure of B is sustained, not a single response; the outside release does not lower oversight.</p>
+  <p><b>Not yet confirmed by the owner, built as the drafting session proposed:</b> consequence D lets chance retrain toward any objective (the alternative is away from aligned only); the pressure of B is sustained, not a single response; the outside release does not lower oversight.</p>
 
   <h2>7 · Running</h2>
   <ul class="plain">
@@ -230,8 +230,9 @@
   <h2>8 · Changelog</h2>
   <ul class="plain">
     <li>17 November 2026: drafted, the owner's decisions recorded, registered (E1 to E6 with test bodies) before any guard of v0.2 was written. A diagnostic had been run on v0.1 that day (section 1); no query of v0.2 had been run.</li>
-    <li>17 November 2026: the model (<code>models/agi_v0_2/v0_2.py</code>), its structure tests (<code>tests/agi_v0_2/test_model_v0_2.py</code>: the all-off build equals v0.1 action by action except for the flag; each channel's rule) and the timing probe, committed after the registration. Before any claim was run, the harness was checked on two queries no claim reads (the shortest play to <code>weights_open</code>, 1 tick, in the all-off and all-on builds).</li>
+    <li>17 November 2026: the model (<code>models/agi_v0_2/v0_2.py</code>), its structure tests (<code>tests/agi_v0_2/test_model_v0_2.py</code>: the all-off build equals v0.1 action by action except for the flag; each consequence's rule) and the timing probe, committed after the registration. Before any claim was run, the harness was checked on two queries no claim reads (the shortest play to <code>weights_open</code>, 1 tick, in the all-off and all-on builds).</li>
     <li>17 November 2026: part A run once from <code>ee07a9c</code> (reports/agi_v0_2_part_a_2026-11-17.html): the bounded parts of E1, E2, E3 (a) and E6 (a) all met, 37 parts; E6 (a): 7 quarters from the aligned start. The kernel parts read not computed. The timing probe started after it.</li>
+    <li>17 November 2026, wording only: the four switchable effects of a release, first called "channels", are called <b>consequences</b> on the owner's instruction (the release is their prerequisite). The claim texts in <code>tests/agi_v0_2/scenarios/</code>, this page, the part A report, the model's comments and the probe's option were reworded; no rule, guard, reading or result changed. The parts log and the probe log of the first runs keep the old word.</li>
   </ul>
 
   <p class="meta">Related: <code>docs/agi_v0_1.md</code> (the v0.1 registration and results), <code>docs/agi_delays_2026-11-14.md</code> (delay sources; <code>L.open_weights</code> is delay 0 there), <code>reports/agi_terms_and_claims_2026-11-15.html</code> (terms).</p>

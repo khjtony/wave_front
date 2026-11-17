@@ -1,6 +1,6 @@
 """Shared machinery for the AGI v0.2 claims (docs/agi_v0_2.html).
 
-v0.2 is v0.1 with four switchable channels of an open-weight release: ``recall`` (A),
+v0.2 is v0.1 with four switchable consequences of an open-weight release: ``recall`` (A),
 ``pressure`` (B), ``testing`` (C) and ``retrain`` (D). A build is named by its switches. The
 bounded queries and the effort solver are v0's, the kernels are computed in forked processes
 (``tests/agi_v0_2/kernels.py``); nothing reads or writes the caches of v0. Parts are logged to
@@ -36,15 +36,15 @@ first_sight = pytest.mark.skipif(
 OBJECTIVES = v0_1.OBJECTIVES
 NON_ALIGNED = tuple(o for o in OBJECTIVES if o != "aligned")
 K = 24
-CHANNELS = ("recall", "pressure", "testing", "retrain")
-OFF: dict[str, bool] = dict.fromkeys(CHANNELS, False)
-ON: dict[str, bool] = dict.fromkeys(CHANNELS, True)
+CONSEQUENCES = ("recall", "pressure", "testing", "retrain")
+OFF: dict[str, bool] = dict.fromkeys(CONSEQUENCES, False)
+ON: dict[str, bool] = dict.fromkeys(CONSEQUENCES, True)
 KERNELS_LATER = "kernel part: run with WF_V02_KERNELS=1 after the timing probe"
 
 
-def only(channel: str) -> dict[str, bool]:
-    """The build with one channel on."""
-    return {**OFF, channel: True}
+def only(consequence: str) -> dict[str, bool]:
+    """The build with one consequence on."""
+    return {**OFF, consequence: True}
 
 
 def key(switches: Mapping[str, bool]) -> str:
@@ -52,8 +52,8 @@ def key(switches: Mapping[str, bool]) -> str:
 
 
 def name(switches: Mapping[str, bool]) -> str:
-    on = [c for c in CHANNELS if switches[c]]
-    return "all off" if not on else "all on" if len(on) == len(CHANNELS) else "+".join(on)
+    on = [c for c in CONSEQUENCES if switches[c]]
+    return "all off" if not on else "all on" if len(on) == len(CONSEQUENCES) else "+".join(on)
 
 
 @lru_cache(maxsize=None)

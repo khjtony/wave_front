@@ -1,4 +1,4 @@
-"""Structure of models/agi_v0_2/v0_2.py: the flag, the outside release and the four channels
+"""Structure of models/agi_v0_2/v0_2.py: the flag, the outside release and the four consequences
 (docs/agi_v0_2.html section 3). No claim query is run here."""
 
 from __future__ import annotations
@@ -9,7 +9,7 @@ import pytest
 
 from models.agi_v0_1 import v0_1
 from models.agi_v0_2 import v0_2
-from tests.agi_v0_2.common import CHANNELS, OFF, ON, only
+from tests.agi_v0_2.common import CONSEQUENCES, OFF, ON, only
 
 P = v0_2.OBJECTIVE_PROFILES
 
@@ -19,7 +19,7 @@ def compiled(switches):
 
 
 BUILDS = {name: compiled(sw) for name, sw in [("off", OFF), ("on", ON)]}
-BUILDS |= {c: compiled(only(c)) for c in CHANNELS}
+BUILDS |= {c: compiled(only(c)) for c in CONSEQUENCES}
 CM1 = v0_1.model.compile(profile=v0_1.OBJECTIVE_PROFILES)
 
 
@@ -78,7 +78,7 @@ def test_all_off_is_v0_1_plus_the_flag():
     assert len(ow_new.effects) == len(ow_old.effects) + 1
 
 
-def test_what_each_channel_adds():
+def test_what_each_consequence_adds():
     off = set(actions(BUILDS["off"]))
     assert set(actions(BUILDS["recall"])) == off
     assert set(actions(BUILDS["pressure"])) == off
@@ -88,7 +88,7 @@ def test_what_each_channel_adds():
     }
     extra = {
         c: [v.name for v in BUILDS[c].variables if v.name not in BUILDS["off"].index]
-        for c in CHANNELS
+        for c in CONSEQUENCES
     }
     assert extra == {
         "recall": [],

@@ -1,4 +1,4 @@
-"""AGI v0.2: AGI v0.1 with the channels of an open-weight release (docs/agi_v0_2.html).
+"""AGI v0.2: AGI v0.1 with the consequences of an open-weight release (docs/agi_v0_2.html).
 
 A copy of ``models/agi_v0_1/v0_1.py`` with one new permanent flag, ``weights_open``, set by
 ``L.open_weights`` (which keeps its effect on ``oversight``) and by the chance event
@@ -155,7 +155,7 @@ DELAYS: dict[str, int] = {
     "L.scale": 2,
     "L.build_power": 4,
     "A.self_improve": 2,
-    # v0.2, channel C: oversight capacity built with the weights open to outside testers.
+    # v0.2, consequence C: oversight capacity built with the weights open to outside testers.
     "H.fund_oversight_open": 1,
 }
 # Lags the record supports and v0 does not carry (docs/ontology_agi.md section 9): each pending
@@ -309,7 +309,7 @@ def build(
     m = Model(
         "agi_v0_2",
         horizon=HORIZON,
-        description="AGI v0.1 with the channels of an open-weight release, 2026Q4 to 2040Q4",
+        description="AGI v0.1 with the consequences of an open-weight release, 2026Q4 to 2040Q4",
     )
     for name, ls in levels.items():
         m.var(name, ls, init=init[name])
@@ -554,7 +554,7 @@ def build(
     declare(
         H,
         "fund_oversight",
-        # v0.2, channel C: with the weights open the faster action below takes its place.
+        # v0.2, consequence C: with the weights open the faster action below takes its place.
         {**fund, "closed": ~V.weights_open} if testing else fund,
         [Bump("oversight", 1)],
         source=src("aisi", "design"),
@@ -579,7 +579,7 @@ def build(
         [
             Set("paused", True),
             Set("threat", True),
-            # A pause rolls delegation back one level, short of lock-in. v0.2, channel A:
+            # A pause rolls delegation back one level, short of lock-in. v0.2, consequence A:
             # not once the weights are open (the halt reaches the hosted service only).
             SetIf(rollback, "dependence", V.dependence - 1),
         ],
@@ -741,7 +741,7 @@ def build(
         source=src("iea"),
     )
     overt = V.last_A == "acquire_overt"
-    # v0.2, channel C: outside testers also see a covert act with the weights open.
+    # v0.2, consequence C: outside testers also see a covert act with the weights open.
     watched = ge("oversight", "weak")
     if testing:
         watched = watched | V.weights_open
@@ -778,7 +778,7 @@ def build(
         source=src("open", "deepseek"),
     )
     if retrain:
-        # v0.2, channel D: the public post-trains the open system. Sourced for the removal of
+        # v0.2, consequence D: the public post-trains the open system. Sourced for the removal of
         # safety training, read as ``indifferent``; the other three targets are assumed.
         for target in OBJECTIVES:
             declare(
@@ -819,7 +819,7 @@ def build(
     # landing quarter composes with it as v0's same-quarter wave did (the pause rolls one
     # level back, the wave adds one). ``deploy_agents`` writes the counter only when it is 0
     # and ``Clock`` only when it is not, so the two never set it in one move.
-    # v0.2, channel A: with the weights open a pause no longer cancels a pending wave.
+    # v0.2, consequence A: with the weights open a pause no longer cancels a pending wave.
     halted = (V.paused & ~V.weights_open) if recall else V.paused
     cancel = halted | (ge("regime", "mandatory") & ne("oversight", "strong"))
     lands = (V.adoption == 1) & ~cancel
@@ -876,7 +876,7 @@ def build(
         ],
     )
     if pressure:
-        # v0.2, channel B: after a release the developers cannot wait. The trigger is the
+        # v0.2, consequence B: after a release the developers cannot wait. The trigger is the
         # availability of a response, so a binding restriction always has one (the engine
         # raises otherwise): no pressure under a pause, after nationalization, or where the
         # licence cannot be met.

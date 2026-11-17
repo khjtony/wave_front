@@ -16,7 +16,7 @@ from wavefront.bmc.queries import reach
 
 CLAIM = {
     "id": "E4",
-    "from_state": "`s₀`, channel C (`testing`) alone",
+    "from_state": "`s₀`, consequence C (`testing`) alone",
     "claim": (
         "outside testing: (a) on the bounded checker's shortest `SILENT_TAKEOVER` play "
         "within 24 ticks under each non-aligned objective that has one, the exit from "

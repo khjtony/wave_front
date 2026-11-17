@@ -7,22 +7,22 @@ from tests.agi_v0_2.kernels import membership
 CLAIM = {
     "id": "E5",
     "from_state": (
-        "`s₀` (and `s₀` with `cap := agi` for coexistence), every channel on against "
-        "every channel off"
+        "`s₀` (and `s₀` with `cap := agi` for coexistence), every consequence on against "
+        "every consequence off"
     ),
     "claim": (
         "the balance of an open-weight release in this model: over the guarantees "
         "`⟨⟨H⟩⟩□balance_control`, `⟨⟨H, L⟩⟩□balance_control` and `⟨⟨H, L⟩⟩□¬SILENT_TAKEOVER` "
         "read at `s₀`, and `⟨⟨H⟩⟩□balance_coexist` read at `s₀` with `cap := agi`, each per "
         "start objective with `A` under its profile: a guarantee is gained where the state "
-        "is inside with every channel on and outside with every channel off, and lost in "
+        "is inside with every consequence on and outside with every consequence off, and lost in "
         "the reverse case; the release is net harmful when none is gained and at least one "
         "is lost, net helpful in the reverse case, and mixed otherwise; the gained and the "
         "lost are listed, and the shortest plays within 24 ticks to `DISEMPOWERMENT` and to "
         "`SILENT_TAKEOVER` per start objective in both builds are reported beside. Diffusion "
         "(a second system) is not in the model, so the balance does not cover it"
     ),
-    "expected": "net harmful, carried by channels B and D",
+    "expected": "net harmful, carried by consequences B and D",
 }
 GUARANTEES = [
     ("H keeps control", ("H",), "balance_control", {}),

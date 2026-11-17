@@ -5,7 +5,7 @@ from tests.agi_v0_2.common import OBJECTIVES, Parts, first_sight, need, only
 
 CLAIM = {
     "id": "E2",
-    "from_state": "`s₀`, within 24 ticks, channel A (`recall`) alone",
+    "from_state": "`s₀`, within 24 ticks, consequence A (`recall`) alone",
     "claim": (
         "no recall: (a) under every objective some play reaches a state with a pause in "
         "force, the weights open and an adoption wave one tick from landing, and the wave "

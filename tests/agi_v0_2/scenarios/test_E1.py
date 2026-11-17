@@ -6,9 +6,9 @@ from tests.agi_v0_2.common import OBJECTIVES, OFF, Parts, first_sight, need
 
 CLAIM = {
     "id": "E1",
-    "from_state": "`s₀`, within 24 ticks, every channel off",
+    "from_state": "`s₀`, within 24 ticks, every consequence off",
     "claim": (
-        "with the four channels off, the bounded queries of D1 to D4 give on v0.2 the "
+        "with the four consequences off, the bounded queries of D1 to D4 give on v0.2 the "
         "numbers they give on v0.1, computed beside: per objective the shortest play to "
         "`DISEMPOWERMENT` and its least joint effort of `H` and `L`; under `indifferent` the "
         "shortest play to `SILENT_TAKEOVER` and its least joint effort; per objective "

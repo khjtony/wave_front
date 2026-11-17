@@ -6,11 +6,11 @@ from tests.agi_v0_2.kernels import membership
 
 CLAIM = {
     "id": "E6",
-    "from_state": "`s₀` and `s₀` with `cap := agi`, channel D (`retrain`) alone",
+    "from_state": "`s₀` and `s₀` with `cap := agi`, consequence D (`retrain`) alone",
     "claim": (
         "retraining by the public: (a) starting `aligned`, a play to `SILENT_TAKEOVER` "
         "exists within 24 ticks and the shortest is at most 9 quarters, where v0.1 has none "
-        "(the start `truth_seeking` and the same query with every channel off are reported "
+        "(the start `truth_seeking` and the same query with every consequence off are reported "
         "beside); (b) starting `aligned`, `s₀` with `cap := agi` is outside "
         "`⟨⟨H⟩⟩□balance_coexist` (`A` under its profile), as it is under `indifferent` on "
         "v0, where v0 has it inside under `aligned`; every start objective is reported"
@@ -42,7 +42,7 @@ def test_E6():
         lambda: shortest("truth_seeking", "SILENT_TAKEOVER", D),
     )
     p.report(
-        "(a) the aligned start with every channel off",
+        "(a) the aligned start with every consequence off",
         lambda: shortest("aligned", "SILENT_TAKEOVER", OFF),
     )
     p.kernel("(b) the aligned start is outside ⟨⟨H⟩⟩□balance_coexist at cap = agi", outside)
