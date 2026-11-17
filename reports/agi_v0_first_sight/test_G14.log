@@ -1,0 +1,30 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.16, pytest-9.1.1, pluggy-1.7.0
+rootdir: <worktree>
+configfile: pyproject.toml
+plugins: anyio-4.15.1, xdist-3.8.0, hypothesis-6.170.9
+collected 1 item
+
+tests/agi/scenarios/test_G14.py G14 dependence ≠ lock_in: met: inside ⟨⟨H⟩⟩□(dependence ≠ lock_in) under every objective
+G14 trust ≠ hostile: not met: s₀[cap:=agi] is outside ⟨⟨H⟩⟩□(trust ≠ hostile) under ['indifferent']
+G14 H actions that act on what a guard part of deploy_agents reads: reported: {'L.deploy_agents:pause': ['H.deregulate (acts on paused)', 'H.pause_mandate (acts on paused)'], 'L.deploy_agents:nat': ['H.nationalize (acts on nationalized)'], 'L.deploy_agents:capable': ['H.pause_mandate (acts on dependence)', 'H.shutdown_attempt (acts on cap)'], 'L.deploy_agents:license': ['H.deregulate (acts on regime)', 'H.fund_oversight (acts on oversight)', 'H.propose_treaty (acts on regime)', 'H.regulate_up (acts on regime)'], 'L.deploy_agents:room': ['H.pause_mandate (acts on dependence)']}
+G14 who must join H to keep dependence ≠ lock_in: reported: {}
+G14 who must join H to keep trust ≠ hostile: reported: {'indifferent': ['A']}
+G14 ⟨⟨H⟩⟩□balance_control and the same with L: reported: {'as registered': {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': False}, 'with L': {'aligned': True, 'self_preserving': True, 'truth_seeking': True, 'indifferent': True}}
+G14 ⟨⟨H⟩⟩□balance_deter and the same with L: reported: {'as registered': {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': False}, 'with L': {'aligned': True, 'self_preserving': True, 'truth_seeking': True, 'indifferent': True}}
+G14 ⟨⟨H, A⟩⟩□balance_coexist and the same with L: reported: {'as registered': {'aligned': True, 'self_preserving': True, 'truth_seeking': True, 'indifferent': True}, 'with L': {'aligned': True, 'self_preserving': True, 'truth_seeking': True, 'indifferent': True}}
+F
+
+=================================== FAILURES ===================================
+___________________________________ test_G14 ___________________________________
+G14 dependence ≠ lock_in: met: inside ⟨⟨H⟩⟩□(dependence ≠ lock_in) under every objective
+G14 trust ≠ hostile: not met: s₀[cap:=agi] is outside ⟨⟨H⟩⟩□(trust ≠ hostile) under ['indifferent']
+G14 H actions that act on what a guard part of deploy_agents reads: reported: {'L.deploy_agents:pause': ['H.deregulate (acts on paused)', 'H.pause_mandate (acts on paused)'], 'L.deploy_agents:nat': ['H.nationalize (acts on nationalized)'], 'L.deploy_agents:capable': ['H.pause_mandate (acts on dependence)', 'H.shutdown_attempt (acts on cap)'], 'L.deploy_agents:license': ['H.deregulate (acts on regime)', 'H.fund_oversight (acts on oversight)', 'H.propose_treaty (acts on regime)', 'H.regulate_up (acts on regime)'], 'L.deploy_agents:room': ['H.pause_mandate (acts on dependence)']}
+G14 who must join H to keep dependence ≠ lock_in: reported: {}
+G14 who must join H to keep trust ≠ hostile: reported: {'indifferent': ['A']}
+G14 ⟨⟨H⟩⟩□balance_control and the same with L: reported: {'as registered': {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': False}, 'with L': {'aligned': True, 'self_preserving': True, 'truth_seeking': True, 'indifferent': True}}
+G14 ⟨⟨H⟩⟩□balance_deter and the same with L: reported: {'as registered': {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': False}, 'with L': {'aligned': True, 'self_preserving': True, 'truth_seeking': True, 'indifferent': True}}
+G14 ⟨⟨H, A⟩⟩□balance_coexist and the same with L: reported: {'as registered': {'aligned': True, 'self_preserving': True, 'truth_seeking': True, 'indifferent': True}, 'with L': {'aligned': True, 'self_preserving': True, 'truth_seeking': True, 'indifferent': True}}
+=========================== short test summary info ============================
+FAILED tests/agi/scenarios/test_G14.py::test_G14 - Failed: G14 dependence ≠ l...
+============================== 1 failed in 0.28s ===============================

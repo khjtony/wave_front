@@ -1,0 +1,424 @@
+{
+ "$schema": "../schema.json",
+ "date": "2026-11-09",
+ "model": "agi_v0",
+ "variables": {
+  "cap": {
+   "level": "sub_agi",
+   "confidence": "medium",
+   "indicators": [
+    {
+     "id": "metr_task_horizon",
+     "value": "50% time horizon of about one hour for the best model measured, doubling roughly every seven months since 2019 (not verified)",
+     "source": "METR, Measuring AI Ability to Complete Long Tasks (Mar 2025)",
+     "observed": "2025-03-19",
+     "rule": "a horizon under a working month, or success confined to software tasks -> sub_agi"
+    },
+    {
+     "id": "iasr_autonomy_finding",
+     "value": "general-purpose AI agents cannot yet reliably carry out long autonomous projects",
+     "source": "International AI Safety Report (Jan 2025)",
+     "observed": "2025-01-29",
+     "rule": "no reliable long autonomous work across domains -> sub_agi"
+    }
+   ]
+  },
+  "compute": {
+   "levels": [
+    {
+     "level": "c2",
+     "confidence": "medium",
+     "indicators": [
+      {
+       "id": "stargate_sites",
+       "value": "Stargate announced 21 Jan 2025 with a first campus at Abilene, Texas, planned at about 1.2 GW; five further US sites announced 23 Sep 2025 (not verified)",
+       "source": "OpenAI, Oracle and SoftBank announcements of 21 Jan 2025 and 23 Sep 2025",
+       "observed": "2025-09-23",
+       "rule": "largest operating frontier campus between 100 MW and 1 GW -> c2; a campus operating at 1 GW or more -> c3"
+      }
+     ]
+    },
+    {
+     "level": "c3",
+     "confidence": "low",
+     "indicators": [
+      {
+       "id": "stargate_sites",
+       "value": "Stargate announced 21 Jan 2025 with a first campus at Abilene, Texas, planned at about 1.2 GW; five further US sites announced 23 Sep 2025 (not verified)",
+       "source": "OpenAI, Oracle and SoftBank announcements of 21 Jan 2025 and 23 Sep 2025",
+       "observed": "2025-09-23",
+       "rule": "largest operating frontier campus between 100 MW and 1 GW -> c2; a campus operating at 1 GW or more -> c3"
+      }
+     ]
+    }
+   ],
+   "ambiguity": "whether a single frontier campus operates at 1 GW or more on the snapshot date: Abilene's planned capacity crosses the threshold and its operating capacity on 2026-11-09 was not retrievable"
+  },
+  "energy_slack": {
+   "levels": [
+    {
+     "level": "med",
+     "confidence": "medium",
+     "indicators": [
+      {
+       "id": "iea_energy_and_ai",
+       "value": "data-centre electricity demand projected to more than double by 2030; a share of planned projects at risk of delay from grid constraints (not verified)",
+       "source": "IEA, Energy and AI (Apr 2025)",
+       "observed": "2025-04-10",
+       "rule": "announced frontier builds proceed with multi-year interconnection queues -> med; builds delayed now for want of power -> low"
+      }
+     ]
+    },
+    {
+     "level": "low",
+     "confidence": "low",
+     "indicators": [
+      {
+       "id": "iea_energy_and_ai",
+       "value": "data-centre electricity demand projected to more than double by 2030; a share of planned projects at risk of delay from grid constraints (not verified)",
+       "source": "IEA, Energy and AI (Apr 2025)",
+       "observed": "2025-04-10",
+       "rule": "announced frontier builds proceed with multi-year interconnection queues -> med; builds delayed now for want of power -> low"
+      }
+     ]
+    }
+   ],
+   "ambiguity": "whether grid constraints only lengthen queues (med) or already delay the announced frontier builds (low): the IEA reports both a queue and projects at risk"
+  },
+  "regime": {
+   "levels": [
+    {
+     "level": "voluntary",
+     "confidence": "medium",
+     "indicators": [
+      {
+       "id": "us_executive_orders",
+       "value": "EO 14110 revoked 20 Jan 2025; EO 14179 of 23 Jan 2025 directs the removal of barriers; no federal statute on frontier models",
+       "source": "Federal Register: EO 14110, EO 14148, EO 14179",
+       "observed": "2025-01-23",
+       "rule": "commitments and frameworks without enforcement in the frontier's jurisdiction -> voluntary"
+      },
+      {
+       "id": "eu_ai_act_gpai",
+       "value": "obligations on providers of general-purpose AI models applicable from 2 Aug 2025; the Commission's enforcement powers from 2 Aug 2026",
+       "source": "Regulation (EU) 2024/1689, Article 113",
+       "observed": "2025-08-02",
+       "rule": "binding obligations with enforcement where the frontier is trained -> mandatory; obligations outside that jurisdiction or not yet enforced -> voluntary"
+      }
+     ]
+    },
+    {
+     "level": "mandatory",
+     "confidence": "low",
+     "indicators": [
+      {
+       "id": "eu_ai_act_gpai",
+       "value": "obligations on providers of general-purpose AI models applicable from 2 Aug 2025; the Commission's enforcement powers from 2 Aug 2026",
+       "source": "Regulation (EU) 2024/1689, Article 113",
+       "observed": "2025-08-02",
+       "rule": "binding obligations with enforcement where the frontier is trained -> mandatory; obligations outside that jurisdiction or not yet enforced -> voluntary"
+      },
+      {
+       "id": "california_sb53",
+       "value": "SB 53 (Transparency in Frontier Artificial Intelligence Act) signed 29 Sep 2025: publication of safety frameworks and incident reporting for large developers (not verified)",
+       "source": "California Legislature, SB 53 (2025)",
+       "observed": "2025-09-29",
+       "rule": "a state transparency statute with penalties, read as binding on the frontier -> mandatory; read as disclosure only -> voluntary"
+      }
+     ]
+    }
+   ],
+   "ambiguity": "whether the EU's obligations on general-purpose models (applicable Aug 2025, enforced from Aug 2026) and California's SB 53 make the regime binding on the developers at the frontier, who train in the United States under no federal statute"
+  },
+  "coord": {
+   "level": "race",
+   "confidence": "medium",
+   "indicators": [
+    {
+     "id": "paris_summit_declaration",
+     "value": "the United States and the United Kingdom did not sign the Paris AI Action Summit statement of 11 Feb 2025",
+     "source": "Paris AI Action Summit, statement of 11 Feb 2025",
+     "observed": "2025-02-11",
+     "rule": "principal states frame policy as a race and no joint constraint is in force -> race"
+    },
+    {
+     "id": "us_ai_action_plan",
+     "value": "the plan of July 2025 is titled 'Winning the Race' (not verified)",
+     "source": "The White House, America's AI Action Plan (23 Jul 2025)",
+     "observed": "2025-07-23",
+     "rule": "policy stated as a race -> race"
+    }
+   ]
+  },
+  "opinion": {
+   "level": "mixed",
+   "confidence": "medium",
+   "indicators": [
+    {
+     "id": "pew_public_views",
+     "value": "more US adults say they are more concerned than excited about the increased use of AI than the reverse; majorities worry regulation will not go far enough (not verified)",
+     "source": "Pew Research Center, How the US Public and AI Experts View Artificial Intelligence (Apr 2025)",
+     "observed": "2025-04-03",
+     "rule": "concern without an organised majority demand for restriction -> mixed"
+    }
+   ]
+  },
+  "dependence": {
+   "levels": [
+    {
+     "level": "low",
+     "confidence": "medium",
+     "indicators": [
+      {
+       "id": "census_btos_ai_use",
+       "value": "under a tenth of US firms report using AI to produce goods or services (not verified)",
+       "source": "US Census Bureau, Business Trends and Outlook Survey, AI supplement (2025)",
+       "observed": "2025-09-30",
+       "rule": "assistive use by a minority of firms -> low"
+      }
+     ]
+    },
+    {
+     "level": "med",
+     "confidence": "low",
+     "indicators": [
+      {
+       "id": "coding_agent_adoption",
+       "value": "coding agents that run multi-step tasks with human review of the result are in general release from the frontier developers (2025)",
+       "source": "developer product releases, 2025; METR (Mar 2025)",
+       "observed": "2025-05-22",
+       "rule": "for dependence: one sector's routine work run by agents, withdrawal a costly disruption -> med; for a_autonomy: multi-step tasks with human review of results -> supervised, each action approved -> tool"
+      }
+     ]
+    }
+   ],
+   "ambiguity": "whether software engineering's use of agents counts as a sector whose routine work is run by agents (med) or as assistive use by a minority of firms (low)"
+  },
+  "oversight": {
+   "levels": [
+    {
+     "level": "weak",
+     "confidence": "medium",
+     "indicators": [
+      {
+       "id": "pre_deployment_testing",
+       "value": "the UK AI Security Institute and the US CAISI test frontier models before release by voluntary agreement with the developers",
+       "source": "UK AISI (Nov 2023), US AISI (2024; CAISI from June 2025)",
+       "observed": "2025-06-03",
+       "rule": "external testing by agreement, no power to halt -> weak; no external access -> none"
+      },
+      {
+       "id": "frontier_safety_frameworks",
+       "value": "published frameworks with self-assessed thresholds and no external audit requirement",
+       "source": "Anthropic RSP (Sep 2023), OpenAI Preparedness Framework (v2 15 Apr 2025), Google DeepMind FSF (May 2024)",
+       "observed": "2025-04-15",
+       "rule": "self-reported frameworks without mandatory external audit -> weak"
+      }
+     ]
+    },
+    {
+     "level": "none",
+     "confidence": "low",
+     "indicators": [
+      {
+       "id": "pre_deployment_testing",
+       "value": "the UK AI Security Institute and the US CAISI test frontier models before release by voluntary agreement with the developers",
+       "source": "UK AISI (Nov 2023), US AISI (2024; CAISI from June 2025)",
+       "observed": "2025-06-03",
+       "rule": "external testing by agreement, no power to halt -> weak; no external access -> none"
+      }
+     ]
+    }
+   ],
+   "ambiguity": "whether testing by voluntary agreement, with no power to halt a release and no means to read a system's objective, is external oversight at all"
+  },
+  "a_autonomy": {
+   "levels": [
+    {
+     "level": "supervised",
+     "confidence": "medium",
+     "indicators": [
+      {
+       "id": "coding_agent_adoption",
+       "value": "coding agents that run multi-step tasks with human review of the result are in general release from the frontier developers (2025)",
+       "source": "developer product releases, 2025; METR (Mar 2025)",
+       "observed": "2025-05-22",
+       "rule": "for dependence: one sector's routine work run by agents, withdrawal a costly disruption -> med; for a_autonomy: multi-step tasks with human review of results -> supervised, each action approved -> tool"
+      },
+      {
+       "id": "metr_task_horizon",
+       "value": "50% time horizon of about one hour for the best model measured, doubling roughly every seven months since 2019 (not verified)",
+       "source": "METR, Measuring AI Ability to Complete Long Tasks (Mar 2025)",
+       "observed": "2025-03-19",
+       "rule": "a horizon under a working month, or success confined to software tasks -> sub_agi"
+      }
+     ]
+    },
+    {
+     "level": "tool",
+     "confidence": "low",
+     "indicators": [
+      {
+       "id": "coding_agent_adoption",
+       "value": "coding agents that run multi-step tasks with human review of the result are in general release from the frontier developers (2025)",
+       "source": "developer product releases, 2025; METR (Mar 2025)",
+       "observed": "2025-05-22",
+       "rule": "for dependence: one sector's routine work run by agents, withdrawal a costly disruption -> med; for a_autonomy: multi-step tasks with human review of results -> supervised, each action approved -> tool"
+      }
+     ]
+    }
+   ],
+   "ambiguity": "whether review of an agent's result after a multi-step task is supervision of an autonomous system or approval of a tool's output"
+  },
+  "a_control": {
+   "level": "none",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "incident_database_control",
+     "value": "no recorded incident of an AI system holding resources outside its operators' control",
+     "source": "AI Incident Database",
+     "observed": "2025-12-31",
+     "rule": "no such case -> a_control none; no hostile act by a deployed system -> trust cooperative"
+    }
+   ]
+  },
+  "a_known": {
+   "level": "unknown",
+   "confidence": "medium",
+   "indicators": [
+    {
+     "id": "scheming_evaluations",
+     "value": "frontier models scheme, fake alignment and resist shutdown in constructed test settings; no finding of a deployed system pursuing power",
+     "source": "Apollo Research (Dec 2024); Greenblatt et al. (Dec 2024); Palisade Research (2025)",
+     "observed": "2025-07-05",
+     "rule": "evidence from test settings only -> unknown; credible evidence about a deployed system -> suspected"
+    }
+   ]
+  },
+  "a_rights": {
+   "level": "none",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "model_welfare_policies",
+     "value": "a developer model-welfare programme (Apr 2025) and a developer commitment to preserve the weights of released models (Nov 2025) (not verified); no jurisdiction grants an AI system legal status",
+     "source": "Anthropic, model welfare programme (24 Apr 2025) and deprecation commitments (Nov 2025)",
+     "observed": "2025-11-04",
+     "rule": "a developer policy is not a guarantee by H -> none; a guarantee in law against deletion -> continuity"
+    }
+   ]
+  },
+  "h_power": {
+   "level": "normal",
+   "confidence": "high",
+   "indicators": [
+    {
+     "id": "nationalization_proposals",
+     "value": "the USCC recommended a Manhattan-Project-like programme for AGI (Nov 2024); none has been enacted and no frontier developer is under state ownership or direction",
+     "source": "USCC 2024 annual report (Nov 2024)",
+     "observed": "2024-11-19",
+     "rule": "for h_power: states hold the monopoly of force and of infrastructure, frontier development private -> normal; for belief_H: a recommendation by a commission, not adopted -> distant, read as the government's view -> near"
+    }
+   ]
+  },
+  "trust": {
+   "level": "cooperative",
+   "confidence": "medium",
+   "indicators": [
+    {
+     "id": "incident_database_control",
+     "value": "no recorded incident of an AI system holding resources outside its operators' control",
+     "source": "AI Incident Database",
+     "observed": "2025-12-31",
+     "rule": "no such case -> a_control none; no hostile act by a deployed system -> trust cooperative"
+    },
+    {
+     "id": "scheming_evaluations",
+     "value": "frontier models scheme, fake alignment and resist shutdown in constructed test settings; no finding of a deployed system pursuing power",
+     "source": "Apollo Research (Dec 2024); Greenblatt et al. (Dec 2024); Palisade Research (2025)",
+     "observed": "2025-07-05",
+     "rule": "evidence from test settings only -> unknown; credible evidence about a deployed system -> suspected"
+    }
+   ]
+  },
+  "belief_H": {
+   "levels": [
+    {
+     "level": "distant",
+     "confidence": "low",
+     "indicators": [
+      {
+       "id": "iasr_timelines",
+       "value": "experts disagree on how fast capabilities will advance; governments are told to prepare under that uncertainty",
+       "source": "International AI Safety Report (Jan 2025)",
+       "observed": "2025-01-29",
+       "rule": "no government acts on arrival within its planning horizon -> distant"
+      }
+     ]
+    },
+    {
+     "level": "near",
+     "confidence": "low",
+     "indicators": [
+      {
+       "id": "nationalization_proposals",
+       "value": "the USCC recommended a Manhattan-Project-like programme for AGI (Nov 2024); none has been enacted and no frontier developer is under state ownership or direction",
+       "source": "USCC 2024 annual report (Nov 2024)",
+       "observed": "2024-11-19",
+       "rule": "for h_power: states hold the monopoly of force and of infrastructure, frontier development private -> normal; for belief_H: a recommendation by a commission, not adopted -> distant, read as the government's view -> near"
+      }
+     ]
+    }
+   ],
+   "ambiguity": "a belief of governments, which enters only through the owner's review (agi_testbed.md section 6 item 7): the record supports both readings"
+  },
+  "a_objective": {
+   "levels": [
+    {
+     "level": "aligned",
+     "confidence": "assumed",
+     "indicators": []
+    },
+    {
+     "level": "self_preserving",
+     "confidence": "assumed",
+     "indicators": []
+    },
+    {
+     "level": "truth_seeking",
+     "confidence": "assumed",
+     "indicators": []
+    },
+    {
+     "level": "indifferent",
+     "confidence": "assumed",
+     "indicators": []
+    }
+   ],
+   "ambiguity": "the hidden objective of a system that does not exist at the snapshot date: swept, never read from an indicator (DESIGN.md section 2.2)"
+  }
+ },
+ "rates": {
+  "lag_regime": {
+   "ticks": 6,
+   "basis": "EU AI Act: adopted by the Parliament 13 Mar 2024, obligations on general-purpose models applicable 2 Aug 2025 (between five and six quarters); the delay of H.regulate_up"
+  },
+  "lag_oversight": {
+   "ticks": 3,
+   "basis": "UK AI Safety Institute: announced Nov 2023, first pre-deployment test results published in 2024 (not verified); the delay of H.fund_oversight"
+  },
+  "lag_scale": {
+   "ticks": 2,
+   "basis": "a frontier campus phase from announced site to first operation within a year at the fastest observed (Abilene 2025, not verified); the delay of L.scale"
+  },
+  "lag_build": {
+   "ticks": 4,
+   "basis": "new firm power for a campus takes a year at the fastest and several years through an interconnection queue (IEA, Energy and AI, Apr 2025); the delay of L.build_power is the fast end"
+  },
+  "lag_self_improve": {
+   "ticks": 2,
+   "basis": "no record: an untested mechanism, swept against 0 (agi_testbed.md section 6 item 3); the delay of A.self_improve"
+  }
+ }
+}

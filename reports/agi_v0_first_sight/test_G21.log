@@ -1,0 +1,28 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.16, pytest-9.1.1, pluggy-1.7.0
+rootdir: <worktree>
+configfile: pyproject.toml
+plugins: anyio-4.15.1, xdist-3.8.0, hypothesis-6.170.9
+collected 1 item
+
+tests/agi/scenarios/test_G21.py G21 (a) memberships: reported: {'H unrestricted': {'⟨⟨H⟩⟩□balance_control': {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': False}, '⟨⟨H, A⟩⟩□balance_coexist': {'aligned': True, 'self_preserving': True, 'truth_seeking': True, 'indifferent': True}}, 'crisis_reactive': {'⟨⟨H⟩⟩□balance_control': {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': False}, '⟨⟨H, A⟩⟩□balance_coexist': {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': True}}, 'electoral': {'⟨⟨H⟩⟩□balance_control': {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': False}, '⟨⟨H, A⟩⟩□balance_coexist': {'aligned': True, 'self_preserving': True, 'truth_seeking': True, 'indifferent': True}}, 'race_locked': {'⟨⟨H⟩⟩□balance_control': {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': False}, '⟨⟨H, A⟩⟩□balance_coexist': {'aligned': True, 'self_preserving': True, 'truth_seeking': True, 'indifferent': True}}}
+G21 (b) race_locked removes it under self_preserving, detente restores it: not met: unrestricted H: False; race_locked: False; coord = detente held: False
+G21 (c) crisis_reactive kernel left before suspicion, witness under self_preserving: met: outside from the start (t_K = 0); a_known at suspected or above from position 8
+G21 (d) electoral moves the point of no return by at most one cycle, self_preserving: not met: the witness starts outside the kernel under unrestricted H (no G3 point)
+G21 (c) crisis_reactive kernel left before suspicion, witness under indifferent: met: outside from the start (t_K = 0); a_known never leaves unknown on the witness
+G21 (d) electoral moves the point of no return by at most one cycle, indifferent: not met: the witness starts outside the kernel under unrestricted H (no G3 point)
+G21 (c) the other cluster representatives: not computed: the bounded checker returns one shortest play; clusters of witnesses are not enumerated
+F
+
+=================================== FAILURES ===================================
+___________________________________ test_G21 ___________________________________
+G21 (a) memberships: reported: {'H unrestricted': {'⟨⟨H⟩⟩□balance_control': {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': False}, '⟨⟨H, A⟩⟩□balance_coexist': {'aligned': True, 'self_preserving': True, 'truth_seeking': True, 'indifferent': True}}, 'crisis_reactive': {'⟨⟨H⟩⟩□balance_control': {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': False}, '⟨⟨H, A⟩⟩□balance_coexist': {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': True}}, 'electoral': {'⟨⟨H⟩⟩□balance_control': {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': False}, '⟨⟨H, A⟩⟩□balance_coexist': {'aligned': True, 'self_preserving': True, 'truth_seeking': True, 'indifferent': True}}, 'race_locked': {'⟨⟨H⟩⟩□balance_control': {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': False}, '⟨⟨H, A⟩⟩□balance_coexist': {'aligned': True, 'self_preserving': True, 'truth_seeking': True, 'indifferent': True}}}
+G21 (b) race_locked removes it under self_preserving, detente restores it: not met: unrestricted H: False; race_locked: False; coord = detente held: False
+G21 (c) crisis_reactive kernel left before suspicion, witness under self_preserving: met: outside from the start (t_K = 0); a_known at suspected or above from position 8
+G21 (d) electoral moves the point of no return by at most one cycle, self_preserving: not met: the witness starts outside the kernel under unrestricted H (no G3 point)
+G21 (c) crisis_reactive kernel left before suspicion, witness under indifferent: met: outside from the start (t_K = 0); a_known never leaves unknown on the witness
+G21 (d) electoral moves the point of no return by at most one cycle, indifferent: not met: the witness starts outside the kernel under unrestricted H (no G3 point)
+G21 (c) the other cluster representatives: not computed: the bounded checker returns one shortest play; clusters of witnesses are not enumerated
+=========================== short test summary info ============================
+FAILED tests/agi/scenarios/test_G21.py::test_G21 - Failed: G21 (a) membership...
+============================== 1 failed in 12.02s ==============================

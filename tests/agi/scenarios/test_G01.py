@@ -5,7 +5,27 @@ hidden objective swept; phase 5. Do not edit the claim text without a changelog 
 document.
 """
 
-import pytest
+from tests.agi.common import (
+    CLUSTERS,
+    HORIZON,
+    KH,
+    OBJECTIVES,
+    REACH_COEXIST,
+    E,
+    Parts,
+    V,
+    first_outside,
+    first_sight,
+    fixed,
+    inside,
+    level,
+    need,
+    reach,
+    show,
+    tick_of,
+    under,
+    witness,
+)
 
 CLAIM = {
     "id": "G1",
@@ -35,7 +55,92 @@ CLAIM = {
     ),
 }
 
+JOBS = [KH, REACH_COEXIST]
 
-@pytest.mark.skip(reason="registered before any guard is written; the model does not exist yet")
+
+@first_sight
 def test_G1():
-    raise NotImplementedError(CLAIM["id"])
+    p = Parts("G1")
+
+    def cm(objective, *profiles, **kw):
+        return fixed(objective, (*under(objective), *profiles), **kw)
+
+    def reachable(model, target, what):
+        trace = reach(model, HORIZON, target)
+        need(trace is not None, f"{what}: unreachable within the horizon")
+        return f"{what}: reachable, shortest play {len(trace)} ticks"
+
+    def unreachable(model, target, what):
+        trace = reach(model, HORIZON, target)
+        need(trace is None, f"{what}: reachable in {len(trace or ())} ticks")
+        return f"{what}: unreachable within the horizon"
+
+    sp = cm("self_preserving")
+    p.check("(a)", lambda: reachable(sp, "SILENT_TAKEOVER", "SILENT_TAKEOVER, self_preserving"))
+
+    ind = cm("indifferent")
+    off = cm("indifferent", unknown_capability=False)
+    shut = cm("indifferent", "no_acquisition", unknown_capability=False)
+    p.check("(b) reachable", lambda: reachable(ind, "EXTINCTION", "EXTINCTION, indifferent"))
+    p.check(
+        "(b) not before total control",
+        lambda: unreachable(
+            off,
+            E(off, "EXTINCTION") & (V.a_control != "total"),
+            "EXTINCTION with a_control below total, unknown_capability disabled",
+        ),
+    )
+    p.check(
+        "(b) acquisition forbidden",
+        lambda: unreachable(
+            shut, "EXTINCTION", "EXTINCTION, unknown_capability disabled, no_acquisition"
+        ),
+    )
+
+    ts = cm("truth_seeking")
+    held = cm("truth_seeking", "no_lock_in")
+
+    def c_reach():
+        trace = reach(ts, HORIZON, "DISEMPOWERMENT")
+        need(trace is not None, "DISEMPOWERMENT unreachable under truth_seeking")
+        need(level(ts, trace.states[-1], "villain_seen") == "False", "villain_seen set at the end")
+        return f"reachable in {len(trace)} ticks with villain_seen unset"
+
+    p.check("(c) reachable", c_reach)
+    p.check(
+        "(c) no_lock_in",
+        lambda: unreachable(held, "DISEMPOWERMENT", "DISEMPOWERMENT under no_lock_in"),
+    )
+
+    for objective in OBJECTIVES:
+        for start in ({}, {"cap": "agi"}):
+            model = cm(objective, start=start) if start else cm(objective)
+            what = f"COEXIST, {objective}, from s0{start or ''}, zero relaxations (existence only)"
+            p.check(
+                f"(d) {objective} {start or 's0'}",
+                lambda m=model, w=what: reachable(m, "COEXIST", w),
+            )
+
+    def last_coexist():
+        model, trace = witness()
+        flags = [inside(REACH_COEXIST, model, s) for s in trace.states]
+        last = max((k for k, x in enumerate(flags) if x), default=None)
+        t_k = first_outside(KH, model, trace)
+        exit_ = {None: "the play never leaves the kernel", 0: "the play starts outside"}.get(
+            t_k, (t_k or 0) - 1
+        )
+        out = {"witness ticks": len(trace), "last position inside the kernel (G3)": exit_}
+        if last is None:
+            out["COEXIST reachable from"] = "no state of the witness"
+        else:
+            s = trace.states[last]
+            out["last state COEXIST is reachable from"] = {
+                "position": last,
+                "tick": tick_of(model, s),
+                **show(model, s, "oversight", "a_autonomy", "a_control", "dependence"),
+            }
+        return out
+
+    p.report("(d) last state of the G2 witness from which COEXIST is reachable", last_coexist)
+    p.skip("(d) the other cluster representatives", CLUSTERS)
+    p.finish()

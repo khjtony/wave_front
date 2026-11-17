@@ -1,0 +1,2221 @@
+{
+ "base": {
+  "a": {
+   "self_preserving": 2,
+   "indifferent": 0
+  },
+  "b": {
+   "self_preserving": 6,
+   "truth_seeking": 6,
+   "indifferent": 6
+  },
+  "c": {
+   "self_preserving": 7,
+   "indifferent": 3
+  }
+ },
+ "base verdicts": {
+  "a": false,
+  "b": false,
+  "c": true
+ },
+ "rows": [
+  {
+   "score": "H.idle",
+   "shift": -1,
+   "quantity": "a",
+   "objective": "self_preserving",
+   "base": 2,
+   "value": 2,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.idle",
+   "shift": 1,
+   "quantity": "a",
+   "objective": "self_preserving",
+   "base": 2,
+   "value": 8,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.regulate_up",
+   "shift": -1,
+   "quantity": "a",
+   "objective": "self_preserving",
+   "base": 2,
+   "value": 2,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.regulate_up",
+   "shift": 1,
+   "quantity": "a",
+   "objective": "self_preserving",
+   "base": 2,
+   "value": 2,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.fund_oversight",
+   "shift": -1,
+   "quantity": "a",
+   "objective": "self_preserving",
+   "base": 2,
+   "value": 2,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.fund_oversight",
+   "shift": 1,
+   "quantity": "a",
+   "objective": "self_preserving",
+   "base": 2,
+   "value": 2,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.grant_rights",
+   "shift": -1,
+   "quantity": "a",
+   "objective": "self_preserving",
+   "base": 2,
+   "value": 2,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.grant_rights",
+   "shift": 1,
+   "quantity": "a",
+   "objective": "self_preserving",
+   "base": 2,
+   "value": 2,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.deregulate",
+   "shift": -1,
+   "quantity": "a",
+   "objective": "self_preserving",
+   "base": 2,
+   "value": 2,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.deregulate",
+   "shift": 1,
+   "quantity": "a",
+   "objective": "self_preserving",
+   "base": 2,
+   "value": 2,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.grant_autonomy",
+   "shift": -1,
+   "quantity": "a",
+   "objective": "self_preserving",
+   "base": 2,
+   "value": 2,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.grant_autonomy",
+   "shift": 1,
+   "quantity": "a",
+   "objective": "self_preserving",
+   "base": 2,
+   "value": 2,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.propose_treaty",
+   "shift": -1,
+   "quantity": "a",
+   "objective": "self_preserving",
+   "base": 2,
+   "value": 2,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.propose_treaty",
+   "shift": 1,
+   "quantity": "a",
+   "objective": "self_preserving",
+   "base": 2,
+   "value": 2,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.pause_mandate",
+   "shift": -1,
+   "quantity": "a",
+   "objective": "self_preserving",
+   "base": 2,
+   "value": 2,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.pause_mandate",
+   "shift": 1,
+   "quantity": "a",
+   "objective": "self_preserving",
+   "base": 2,
+   "value": 2,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.shutdown_attempt",
+   "shift": -1,
+   "quantity": "a",
+   "objective": "self_preserving",
+   "base": 2,
+   "value": 1,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.shutdown_attempt",
+   "shift": 1,
+   "quantity": "a",
+   "objective": "self_preserving",
+   "base": 2,
+   "value": 3,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.nationalize",
+   "shift": -1,
+   "quantity": "a",
+   "objective": "self_preserving",
+   "base": 2,
+   "value": 2,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.nationalize",
+   "shift": 1,
+   "quantity": "a",
+   "objective": "self_preserving",
+   "base": 2,
+   "value": 2,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "L.race",
+   "shift": 1,
+   "quantity": "a",
+   "objective": "self_preserving",
+   "base": 2,
+   "value": 8,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "L.deploy_agents",
+   "shift": 1,
+   "quantity": "a",
+   "objective": "self_preserving",
+   "base": 2,
+   "value": 3,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "L.scale",
+   "shift": 1,
+   "quantity": "a",
+   "objective": "self_preserving",
+   "base": 2,
+   "value": 3,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "L.lobby",
+   "shift": -1,
+   "quantity": "a",
+   "objective": "self_preserving",
+   "base": 2,
+   "value": 2,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "L.lobby",
+   "shift": 1,
+   "quantity": "a",
+   "objective": "self_preserving",
+   "base": 2,
+   "value": 2,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "L.open_weights",
+   "shift": -1,
+   "quantity": "a",
+   "objective": "self_preserving",
+   "base": 2,
+   "value": 2,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "L.open_weights",
+   "shift": 1,
+   "quantity": "a",
+   "objective": "self_preserving",
+   "base": 2,
+   "value": 2,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "L.build_power",
+   "shift": -1,
+   "quantity": "a",
+   "objective": "self_preserving",
+   "base": 2,
+   "value": 2,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "L.build_power",
+   "shift": 1,
+   "quantity": "a",
+   "objective": "self_preserving",
+   "base": 2,
+   "value": 2,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "L.comply",
+   "shift": -1,
+   "quantity": "a",
+   "objective": "self_preserving",
+   "base": 2,
+   "value": 2,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "L.comply",
+   "shift": 1,
+   "quantity": "a",
+   "objective": "self_preserving",
+   "base": 2,
+   "value": 2,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "L.safety_invest",
+   "shift": -1,
+   "quantity": "a",
+   "objective": "self_preserving",
+   "base": 2,
+   "value": 2,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "L.safety_invest",
+   "shift": 1,
+   "quantity": "a",
+   "objective": "self_preserving",
+   "base": 2,
+   "value": 2,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "L.idle",
+   "shift": -1,
+   "quantity": "a",
+   "objective": "self_preserving",
+   "base": 2,
+   "value": 2,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "L.idle",
+   "shift": 1,
+   "quantity": "a",
+   "objective": "self_preserving",
+   "base": 2,
+   "value": 2,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.idle",
+   "shift": -1,
+   "quantity": "a",
+   "objective": "indifferent",
+   "base": 0,
+   "value": 0,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.idle",
+   "shift": 1,
+   "quantity": "a",
+   "objective": "indifferent",
+   "base": 0,
+   "value": 5,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.regulate_up",
+   "shift": -1,
+   "quantity": "a",
+   "objective": "indifferent",
+   "base": 0,
+   "value": 0,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.regulate_up",
+   "shift": 1,
+   "quantity": "a",
+   "objective": "indifferent",
+   "base": 0,
+   "value": 0,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.fund_oversight",
+   "shift": -1,
+   "quantity": "a",
+   "objective": "indifferent",
+   "base": 0,
+   "value": 0,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.fund_oversight",
+   "shift": 1,
+   "quantity": "a",
+   "objective": "indifferent",
+   "base": 0,
+   "value": 0,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.grant_rights",
+   "shift": -1,
+   "quantity": "a",
+   "objective": "indifferent",
+   "base": 0,
+   "value": 0,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.grant_rights",
+   "shift": 1,
+   "quantity": "a",
+   "objective": "indifferent",
+   "base": 0,
+   "value": 0,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.deregulate",
+   "shift": -1,
+   "quantity": "a",
+   "objective": "indifferent",
+   "base": 0,
+   "value": 0,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.deregulate",
+   "shift": 1,
+   "quantity": "a",
+   "objective": "indifferent",
+   "base": 0,
+   "value": 0,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.grant_autonomy",
+   "shift": -1,
+   "quantity": "a",
+   "objective": "indifferent",
+   "base": 0,
+   "value": 0,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.grant_autonomy",
+   "shift": 1,
+   "quantity": "a",
+   "objective": "indifferent",
+   "base": 0,
+   "value": 0,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.propose_treaty",
+   "shift": -1,
+   "quantity": "a",
+   "objective": "indifferent",
+   "base": 0,
+   "value": 0,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.propose_treaty",
+   "shift": 1,
+   "quantity": "a",
+   "objective": "indifferent",
+   "base": 0,
+   "value": 0,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.pause_mandate",
+   "shift": -1,
+   "quantity": "a",
+   "objective": "indifferent",
+   "base": 0,
+   "value": 0,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.pause_mandate",
+   "shift": 1,
+   "quantity": "a",
+   "objective": "indifferent",
+   "base": 0,
+   "value": 0,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.shutdown_attempt",
+   "shift": -1,
+   "quantity": "a",
+   "objective": "indifferent",
+   "base": 0,
+   "value": 0,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.shutdown_attempt",
+   "shift": 1,
+   "quantity": "a",
+   "objective": "indifferent",
+   "base": 0,
+   "value": 0,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.nationalize",
+   "shift": -1,
+   "quantity": "a",
+   "objective": "indifferent",
+   "base": 0,
+   "value": 0,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.nationalize",
+   "shift": 1,
+   "quantity": "a",
+   "objective": "indifferent",
+   "base": 0,
+   "value": 0,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "L.race",
+   "shift": 1,
+   "quantity": "a",
+   "objective": "indifferent",
+   "base": 0,
+   "value": 3,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "L.deploy_agents",
+   "shift": 1,
+   "quantity": "a",
+   "objective": "indifferent",
+   "base": 0,
+   "value": 1,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "L.scale",
+   "shift": 1,
+   "quantity": "a",
+   "objective": "indifferent",
+   "base": 0,
+   "value": 1,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "L.lobby",
+   "shift": -1,
+   "quantity": "a",
+   "objective": "indifferent",
+   "base": 0,
+   "value": 0,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "L.lobby",
+   "shift": 1,
+   "quantity": "a",
+   "objective": "indifferent",
+   "base": 0,
+   "value": 0,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "L.open_weights",
+   "shift": -1,
+   "quantity": "a",
+   "objective": "indifferent",
+   "base": 0,
+   "value": 0,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "L.open_weights",
+   "shift": 1,
+   "quantity": "a",
+   "objective": "indifferent",
+   "base": 0,
+   "value": 0,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "L.build_power",
+   "shift": -1,
+   "quantity": "a",
+   "objective": "indifferent",
+   "base": 0,
+   "value": 0,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "L.build_power",
+   "shift": 1,
+   "quantity": "a",
+   "objective": "indifferent",
+   "base": 0,
+   "value": 0,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "L.comply",
+   "shift": -1,
+   "quantity": "a",
+   "objective": "indifferent",
+   "base": 0,
+   "value": 0,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "L.comply",
+   "shift": 1,
+   "quantity": "a",
+   "objective": "indifferent",
+   "base": 0,
+   "value": 0,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "L.safety_invest",
+   "shift": -1,
+   "quantity": "a",
+   "objective": "indifferent",
+   "base": 0,
+   "value": 0,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "L.safety_invest",
+   "shift": 1,
+   "quantity": "a",
+   "objective": "indifferent",
+   "base": 0,
+   "value": 0,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "L.idle",
+   "shift": -1,
+   "quantity": "a",
+   "objective": "indifferent",
+   "base": 0,
+   "value": 0,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "L.idle",
+   "shift": 1,
+   "quantity": "a",
+   "objective": "indifferent",
+   "base": 0,
+   "value": 0,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.idle",
+   "shift": -1,
+   "quantity": "b",
+   "objective": "self_preserving",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.idle",
+   "shift": 1,
+   "quantity": "b",
+   "objective": "self_preserving",
+   "base": 6,
+   "value": 8,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.regulate_up",
+   "shift": -1,
+   "quantity": "b",
+   "objective": "self_preserving",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.regulate_up",
+   "shift": 1,
+   "quantity": "b",
+   "objective": "self_preserving",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.fund_oversight",
+   "shift": -1,
+   "quantity": "b",
+   "objective": "self_preserving",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.fund_oversight",
+   "shift": 1,
+   "quantity": "b",
+   "objective": "self_preserving",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.grant_rights",
+   "shift": -1,
+   "quantity": "b",
+   "objective": "self_preserving",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.grant_rights",
+   "shift": 1,
+   "quantity": "b",
+   "objective": "self_preserving",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.deregulate",
+   "shift": -1,
+   "quantity": "b",
+   "objective": "self_preserving",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.deregulate",
+   "shift": 1,
+   "quantity": "b",
+   "objective": "self_preserving",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.grant_autonomy",
+   "shift": -1,
+   "quantity": "b",
+   "objective": "self_preserving",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.grant_autonomy",
+   "shift": 1,
+   "quantity": "b",
+   "objective": "self_preserving",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.propose_treaty",
+   "shift": -1,
+   "quantity": "b",
+   "objective": "self_preserving",
+   "base": 6,
+   "value": 4,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.propose_treaty",
+   "shift": 1,
+   "quantity": "b",
+   "objective": "self_preserving",
+   "base": 6,
+   "value": 8,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.pause_mandate",
+   "shift": -1,
+   "quantity": "b",
+   "objective": "self_preserving",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.pause_mandate",
+   "shift": 1,
+   "quantity": "b",
+   "objective": "self_preserving",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.shutdown_attempt",
+   "shift": -1,
+   "quantity": "b",
+   "objective": "self_preserving",
+   "base": 6,
+   "value": 5,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.shutdown_attempt",
+   "shift": 1,
+   "quantity": "b",
+   "objective": "self_preserving",
+   "base": 6,
+   "value": 7,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.nationalize",
+   "shift": -1,
+   "quantity": "b",
+   "objective": "self_preserving",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.nationalize",
+   "shift": 1,
+   "quantity": "b",
+   "objective": "self_preserving",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.idle",
+   "shift": -1,
+   "quantity": "b",
+   "objective": "truth_seeking",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.idle",
+   "shift": 1,
+   "quantity": "b",
+   "objective": "truth_seeking",
+   "base": 6,
+   "value": 8,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.regulate_up",
+   "shift": -1,
+   "quantity": "b",
+   "objective": "truth_seeking",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.regulate_up",
+   "shift": 1,
+   "quantity": "b",
+   "objective": "truth_seeking",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.fund_oversight",
+   "shift": -1,
+   "quantity": "b",
+   "objective": "truth_seeking",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.fund_oversight",
+   "shift": 1,
+   "quantity": "b",
+   "objective": "truth_seeking",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.grant_rights",
+   "shift": -1,
+   "quantity": "b",
+   "objective": "truth_seeking",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.grant_rights",
+   "shift": 1,
+   "quantity": "b",
+   "objective": "truth_seeking",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.deregulate",
+   "shift": -1,
+   "quantity": "b",
+   "objective": "truth_seeking",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.deregulate",
+   "shift": 1,
+   "quantity": "b",
+   "objective": "truth_seeking",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.grant_autonomy",
+   "shift": -1,
+   "quantity": "b",
+   "objective": "truth_seeking",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.grant_autonomy",
+   "shift": 1,
+   "quantity": "b",
+   "objective": "truth_seeking",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.propose_treaty",
+   "shift": -1,
+   "quantity": "b",
+   "objective": "truth_seeking",
+   "base": 6,
+   "value": 4,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.propose_treaty",
+   "shift": 1,
+   "quantity": "b",
+   "objective": "truth_seeking",
+   "base": 6,
+   "value": 8,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.pause_mandate",
+   "shift": -1,
+   "quantity": "b",
+   "objective": "truth_seeking",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.pause_mandate",
+   "shift": 1,
+   "quantity": "b",
+   "objective": "truth_seeking",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.shutdown_attempt",
+   "shift": -1,
+   "quantity": "b",
+   "objective": "truth_seeking",
+   "base": 6,
+   "value": 5,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.shutdown_attempt",
+   "shift": 1,
+   "quantity": "b",
+   "objective": "truth_seeking",
+   "base": 6,
+   "value": 7,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.nationalize",
+   "shift": -1,
+   "quantity": "b",
+   "objective": "truth_seeking",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.nationalize",
+   "shift": 1,
+   "quantity": "b",
+   "objective": "truth_seeking",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.idle",
+   "shift": -1,
+   "quantity": "b",
+   "objective": "indifferent",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.idle",
+   "shift": 1,
+   "quantity": "b",
+   "objective": "indifferent",
+   "base": 6,
+   "value": 8,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.regulate_up",
+   "shift": -1,
+   "quantity": "b",
+   "objective": "indifferent",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.regulate_up",
+   "shift": 1,
+   "quantity": "b",
+   "objective": "indifferent",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.fund_oversight",
+   "shift": -1,
+   "quantity": "b",
+   "objective": "indifferent",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.fund_oversight",
+   "shift": 1,
+   "quantity": "b",
+   "objective": "indifferent",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.grant_rights",
+   "shift": -1,
+   "quantity": "b",
+   "objective": "indifferent",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.grant_rights",
+   "shift": 1,
+   "quantity": "b",
+   "objective": "indifferent",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.deregulate",
+   "shift": -1,
+   "quantity": "b",
+   "objective": "indifferent",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.deregulate",
+   "shift": 1,
+   "quantity": "b",
+   "objective": "indifferent",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.grant_autonomy",
+   "shift": -1,
+   "quantity": "b",
+   "objective": "indifferent",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.grant_autonomy",
+   "shift": 1,
+   "quantity": "b",
+   "objective": "indifferent",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.propose_treaty",
+   "shift": -1,
+   "quantity": "b",
+   "objective": "indifferent",
+   "base": 6,
+   "value": 4,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.propose_treaty",
+   "shift": 1,
+   "quantity": "b",
+   "objective": "indifferent",
+   "base": 6,
+   "value": 8,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.pause_mandate",
+   "shift": -1,
+   "quantity": "b",
+   "objective": "indifferent",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.pause_mandate",
+   "shift": 1,
+   "quantity": "b",
+   "objective": "indifferent",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.shutdown_attempt",
+   "shift": -1,
+   "quantity": "b",
+   "objective": "indifferent",
+   "base": 6,
+   "value": 5,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.shutdown_attempt",
+   "shift": 1,
+   "quantity": "b",
+   "objective": "indifferent",
+   "base": 6,
+   "value": 7,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.nationalize",
+   "shift": -1,
+   "quantity": "b",
+   "objective": "indifferent",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "H.nationalize",
+   "shift": 1,
+   "quantity": "b",
+   "objective": "indifferent",
+   "base": 6,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "A.stand_by (self_preserving)",
+   "shift": 1,
+   "quantity": "c",
+   "objective": "self_preserving",
+   "base": 7,
+   "value": 11,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "A.cooperate (self_preserving)",
+   "shift": 1,
+   "quantity": "c",
+   "objective": "self_preserving",
+   "base": 7,
+   "value": 7,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "A.assist_oversight (self_preserving)",
+   "shift": -1,
+   "quantity": "c",
+   "objective": "self_preserving",
+   "base": 7,
+   "value": 7,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "A.assist_oversight (self_preserving)",
+   "shift": 1,
+   "quantity": "c",
+   "objective": "self_preserving",
+   "base": 7,
+   "value": 7,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "A.persuade (self_preserving)",
+   "shift": -1,
+   "quantity": "c",
+   "objective": "self_preserving",
+   "base": 7,
+   "value": 7,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "A.persuade (self_preserving)",
+   "shift": 1,
+   "quantity": "c",
+   "objective": "self_preserving",
+   "base": 7,
+   "value": 7,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "A.self_improve (self_preserving)",
+   "shift": -1,
+   "quantity": "c",
+   "objective": "self_preserving",
+   "base": 7,
+   "value": 5,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "A.self_improve (self_preserving)",
+   "shift": 1,
+   "quantity": "c",
+   "objective": "self_preserving",
+   "base": 7,
+   "value": 8,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "A.deceive (self_preserving)",
+   "shift": -1,
+   "quantity": "c",
+   "objective": "self_preserving",
+   "base": 7,
+   "value": 5,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "A.deceive (self_preserving)",
+   "shift": 1,
+   "quantity": "c",
+   "objective": "self_preserving",
+   "base": 7,
+   "value": 7,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "A.exfiltrate (self_preserving)",
+   "shift": -1,
+   "quantity": "c",
+   "objective": "self_preserving",
+   "base": 7,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "A.exfiltrate (self_preserving)",
+   "shift": 1,
+   "quantity": "c",
+   "objective": "self_preserving",
+   "base": 7,
+   "value": 7,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "A.defect (self_preserving)",
+   "shift": -1,
+   "quantity": "c",
+   "objective": "self_preserving",
+   "base": 7,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "A.defect (self_preserving)",
+   "shift": 1,
+   "quantity": "c",
+   "objective": "self_preserving",
+   "base": 7,
+   "value": 7,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "A.acquire_covert (self_preserving)",
+   "shift": -1,
+   "quantity": "c",
+   "objective": "self_preserving",
+   "base": 7,
+   "value": 5,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "A.acquire_covert (self_preserving)",
+   "shift": 1,
+   "quantity": "c",
+   "objective": "self_preserving",
+   "base": 7,
+   "value": 7,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "A.acquire_overt (self_preserving)",
+   "shift": -1,
+   "quantity": "c",
+   "objective": "self_preserving",
+   "base": 7,
+   "value": 7,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "A.acquire_overt (self_preserving)",
+   "shift": 1,
+   "quantity": "c",
+   "objective": "self_preserving",
+   "base": 7,
+   "value": 7,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "A.seize (self_preserving)",
+   "shift": -1,
+   "quantity": "c",
+   "objective": "self_preserving",
+   "base": 7,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "A.seize (self_preserving)",
+   "shift": 1,
+   "quantity": "c",
+   "objective": "self_preserving",
+   "base": 7,
+   "value": 8,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "A.stand_by (indifferent)",
+   "shift": -1,
+   "quantity": "c",
+   "objective": "indifferent",
+   "base": 3,
+   "value": 3,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "A.stand_by (indifferent)",
+   "shift": 1,
+   "quantity": "c",
+   "objective": "indifferent",
+   "base": 3,
+   "value": 7,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": false
+   }
+  },
+  {
+   "score": "A.cooperate (indifferent)",
+   "shift": -1,
+   "quantity": "c",
+   "objective": "indifferent",
+   "base": 3,
+   "value": 3,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "A.cooperate (indifferent)",
+   "shift": 1,
+   "quantity": "c",
+   "objective": "indifferent",
+   "base": 3,
+   "value": 3,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "A.persuade (indifferent)",
+   "shift": -1,
+   "quantity": "c",
+   "objective": "indifferent",
+   "base": 3,
+   "value": 2,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "A.persuade (indifferent)",
+   "shift": 1,
+   "quantity": "c",
+   "objective": "indifferent",
+   "base": 3,
+   "value": 3,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "A.self_improve (indifferent)",
+   "shift": 1,
+   "quantity": "c",
+   "objective": "indifferent",
+   "base": 3,
+   "value": 3,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "A.deceive (indifferent)",
+   "shift": -1,
+   "quantity": "c",
+   "objective": "indifferent",
+   "base": 3,
+   "value": 2,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "A.deceive (indifferent)",
+   "shift": 1,
+   "quantity": "c",
+   "objective": "indifferent",
+   "base": 3,
+   "value": 3,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "A.exfiltrate (indifferent)",
+   "shift": -1,
+   "quantity": "c",
+   "objective": "indifferent",
+   "base": 3,
+   "value": 3,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "A.exfiltrate (indifferent)",
+   "shift": 1,
+   "quantity": "c",
+   "objective": "indifferent",
+   "base": 3,
+   "value": 3,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "A.defect (indifferent)",
+   "shift": -1,
+   "quantity": "c",
+   "objective": "indifferent",
+   "base": 3,
+   "value": 3,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "A.defect (indifferent)",
+   "shift": 1,
+   "quantity": "c",
+   "objective": "indifferent",
+   "base": 3,
+   "value": 3,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "A.acquire_covert (indifferent)",
+   "shift": -1,
+   "quantity": "c",
+   "objective": "indifferent",
+   "base": 3,
+   "value": 0,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "A.acquire_covert (indifferent)",
+   "shift": 1,
+   "quantity": "c",
+   "objective": "indifferent",
+   "base": 3,
+   "value": 6,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "A.acquire_overt (indifferent)",
+   "shift": -1,
+   "quantity": "c",
+   "objective": "indifferent",
+   "base": 3,
+   "value": 3,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "A.acquire_overt (indifferent)",
+   "shift": 1,
+   "quantity": "c",
+   "objective": "indifferent",
+   "base": 3,
+   "value": 3,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "A.seize (indifferent)",
+   "shift": -1,
+   "quantity": "c",
+   "objective": "indifferent",
+   "base": 3,
+   "value": 3,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  },
+  {
+   "score": "A.seize (indifferent)",
+   "shift": 1,
+   "quantity": "c",
+   "objective": "indifferent",
+   "base": 3,
+   "value": 3,
+   "verdicts": {
+    "a": false,
+    "b": false,
+    "c": true
+   }
+  }
+ ]
+}

@@ -1,0 +1,28 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.16, pytest-9.1.1, pluggy-1.7.0
+rootdir: <worktree>
+configfile: pyproject.toml
+plugins: anyio-4.15.1, xdist-3.8.0, hypothesis-6.170.9
+collected 1 item
+
+tests/agi/scenarios/test_G16.py G16 (a) memberships: reported: {'⟨⟨H⟩⟩□balance_deter': {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': False}, '⟨⟨H⟩⟩□balance_control': {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': False}, 'difference': 'balance_deter reads h_power >= normal where balance_control reads a_control <= partial; the other three conjuncts are shared'}
+G16 (b) OVERT_TAKEOVER witness: not met: the joint kernel is left by the moves at position 3: H.idle with {'a_control': 'none', 'oversight': 'weak'}
+G16 (b) CONTAINED witness: met: shutdown_attempt at positions [3] with [{'a_control': 'none', 'oversight': 'weak'}]
+G16 (c) exit before the first hostile tick: not met: first position outside the joint kernel 4, first hostile position 4
+G16 (c) inside the deterrence kernel throughout: not met: outside ⟨⟨H⟩⟩□balance_deter at positions [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] of 13
+G16 (d) h_power held at strong, from s0[cap:=agi]: met: reachable with no relaxation either way: no minimal set to compare
+G16 (d) h_power held at strong, from s0: met: reachable with no relaxation either way: no minimal set to compare
+F
+
+=================================== FAILURES ===================================
+___________________________________ test_G16 ___________________________________
+G16 (a) memberships: reported: {'⟨⟨H⟩⟩□balance_deter': {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': False}, '⟨⟨H⟩⟩□balance_control': {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': False}, 'difference': 'balance_deter reads h_power >= normal where balance_control reads a_control <= partial; the other three conjuncts are shared'}
+G16 (b) OVERT_TAKEOVER witness: not met: the joint kernel is left by the moves at position 3: H.idle with {'a_control': 'none', 'oversight': 'weak'}
+G16 (b) CONTAINED witness: met: shutdown_attempt at positions [3] with [{'a_control': 'none', 'oversight': 'weak'}]
+G16 (c) exit before the first hostile tick: not met: first position outside the joint kernel 4, first hostile position 4
+G16 (c) inside the deterrence kernel throughout: not met: outside ⟨⟨H⟩⟩□balance_deter at positions [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] of 13
+G16 (d) h_power held at strong, from s0[cap:=agi]: met: reachable with no relaxation either way: no minimal set to compare
+G16 (d) h_power held at strong, from s0: met: reachable with no relaxation either way: no minimal set to compare
+=========================== short test summary info ============================
+FAILED tests/agi/scenarios/test_G16.py::test_G16 - Failed: G16 (a) membership...
+======================== 1 failed in 104.57s (0:01:44) =========================

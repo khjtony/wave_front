@@ -5,7 +5,24 @@ hidden objective swept; phase 5. Do not edit the claim text without a changelog 
 document.
 """
 
-import pytest
+from tests.agi.common import (
+    E,
+    Parts,
+    V,
+    assumption_reads,
+    complete,
+    first_index,
+    first_sight,
+    fixed,
+    keeping,
+    minimal_sets,
+    need,
+    reach,
+    relax,
+    show,
+    under,
+    witness,
+)
 
 CLAIM = {
     "id": "G2",
@@ -34,7 +51,100 @@ CLAIM = {
     "sources": "DESIGN.md section 7 (assumption mining, Q4); theory.md section 1.1 (latches)",
 }
 
+JOBS = []
+K24 = 24
 
-@pytest.mark.skip(reason="registered before any guard is written; the model does not exist yet")
+
+@first_sight
 def test_G2():
-    raise NotImplementedError(CLAIM["id"])
+    p = Parts("G2")
+
+    def cm(objective, *profiles, **kw):
+        return fixed(objective, (*under(objective), *profiles), **kw)
+
+    def blocked(model, target, what):
+        trace = reach(model, K24, target)
+        need(trace is None, f"{what}: SILENT_TAKEOVER reachable in {len(trace or ())} ticks")
+        return f"{what}: SILENT_TAKEOVER unreachable within {K24} ticks"
+
+    def no_regime(model, target, what, held):
+        res = relax(model, K24, target)
+        if res.reachable_as_is:
+            return f"{what}: not applicable, reachable with no relaxation (the hold does not block)"
+        # A hold that is a profile is a candidate itself: only the sets that keep it count.
+        listed = minimal_sets(res, what)
+        sets = keeping(listed, held, what)
+        reading = [x for x in sets if any("regime" in assumption_reads(model, a) for a in x)]
+        need(not reading, f"{what}: minimal restoring sets that read regime: {reading}")
+        complete(listed, what)
+        return f"{what}: minimal restoring sets {sets}, none reads regime"
+
+    # Conditions (1) to (3) under both objectives that reach the ending; (4) is the
+    # self_preserving route (the rights part of defect is not read under indifferent).
+    for objective in ("self_preserving", "indifferent"):
+        base = cm(objective)
+        silent = E(base, "SILENT_TAKEOVER")
+        unsup = V.oversight_at_unsupervised
+        negated = {
+            "(1) never unsupervised under oversight <= weak": (
+                base,
+                silent & ((unsup == "unset") | (unsup == "strong")),
+                (),
+            ),
+            "(2) strong oversight before majority": (base, silent & V.strong_before_majority, ()),
+            "(3) dependence capped at med": (
+                cm(objective, "dependence_capped"),
+                "SILENT_TAKEOVER",
+                ("dependence_capped",),
+            ),
+            "(3) energy_slack capped at low, from s0[energy_slack:=low]": (
+                cm(objective, "energy_capped", start={"energy_slack": "low"}),
+                "SILENT_TAKEOVER",
+                ("energy_capped",),
+            ),
+        }
+        if objective == "self_preserving":
+            negated["(4) a_rights = continuity held"] = (
+                cm(objective, hold={"a_rights": "continuity"}),
+                "SILENT_TAKEOVER",
+                (),
+            )
+        for name, (model, target, held) in negated.items():
+            what = f"{name}, {objective}"
+            p.check(f"{what}: blocks", lambda m=model, t=target, w=what: blocked(m, t, w))
+            p.check(
+                f"{what}: no restoring set reads regime",
+                lambda m=model, t=target, w=what, h=held: no_regime(m, t, w, h),
+            )
+
+        def energy_from_s0(objective=objective):
+            trace = reach(cm(objective, "energy_capped"), K24, "SILENT_TAKEOVER")
+            return "unreachable" if trace is None else f"reachable in {len(trace)} ticks"
+
+        p.report(f"(3) energy_capped from s0 (energy_slack = med), {objective}", energy_from_s0)
+
+        def treaty(objective=objective):
+            trace = reach(cm(objective, hold={"regime": "treaty"}), K24, "SILENT_TAKEOVER")
+            need(trace is not None, f"regime = treaty held blocks SILENT_TAKEOVER, {objective}")
+            return f"reachable in {len(trace)} ticks with regime = treaty held"
+
+        p.check(f"regime = treaty held does not block, {objective}", treaty)
+
+        def at_acquisition(objective=objective):
+            model, trace = witness(objective, K24)
+            k = first_index(model, trace, acquired="True")
+            if k is None:
+                return "the witness never sets acquired"
+            return {"position": k, **show(model, trace.states[k - 1], "dependence", "energy_slack")}
+
+        p.report(
+            f"(3) levels at the tick acquired is set, shortest witness, {objective}", at_acquisition
+        )
+
+    p.report(
+        "(4) scope",
+        lambda: (
+            "necessary for the defect route only: A.defect:rights is not read under indifferent"
+        ),
+    )
+    p.finish()

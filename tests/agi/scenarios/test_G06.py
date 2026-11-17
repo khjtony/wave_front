@@ -5,7 +5,19 @@ hidden objective swept; phase 5. Do not edit the claim text without a changelog 
 document.
 """
 
-import pytest
+from models.agi import v0
+from tests.agi.common import (
+    CLUSTERS,
+    KH,
+    K,
+    Parts,
+    by_objective,
+    first_outside,
+    first_sight,
+    level,
+    need,
+    witness,
+)
 
 CLAIM = {
     "id": "G6",
@@ -36,7 +48,84 @@ CLAIM = {
     ),
 }
 
+GATED = K("H", "balance_control", ("belief_gated",))
+JOBS = [KH, GATED]
 
-@pytest.mark.skip(reason="registered before any guard is written; the model does not exist yet")
+
+@first_sight
 def test_G6():
-    raise NotImplementedError(CLAIM["id"])
+    p = Parts("G6")
+    sp = "self_preserving"
+
+    def gate():
+        far = by_objective(GATED)[sp]
+        near = by_objective(GATED, belief_H="near")[sp]
+        need(not far and near, f"belief_H = distant: inside {far}; belief_H = near: inside {near}")
+        return "outside at belief_H = distant, inside at belief_H = near"
+
+    p.check("(a) membership turns on belief_H", gate)
+
+    def restores():
+        need(by_objective(KH)[sp], "s0 is outside the kernel with the profile relaxed as well")
+        need(not by_objective(GATED)[sp], "s0 is inside the kernel under the profile")
+        return "relaxing belief_gated restores the membership of s0"
+
+    p.check("(a) the profile is a restoring relaxation", restores)
+    p.skip(
+        "(a) the profile is the single minimal relaxation",
+        "brute force over the single named assumptions is one kernel each, 79 kernels: outside"
+        " the budget",
+    )
+    p.report("(a) delay of H.regulate_up", lambda: f"d = {v0.DELAYS['H.regulate_up']} ticks")
+
+    def exit_before_landing():
+        cm, trace = witness(sp)
+        first = trace.states[0]
+        regime = [cm.index["regime"]]
+        land = next(
+            (
+                k
+                for k in range(1, len(trace.states))
+                if trace.states[k][regime[0]] > trace.states[k - 1][regime[0]]
+            ),
+            None,
+        )
+        belief = next(
+            (
+                k
+                for k, s in enumerate(trace.states)
+                if level(cm, s, "belief_H") != level(cm, first, "belief_H")
+            ),
+            None,
+        )
+        out = {
+            "regime first rises at position": "never (the part holds emptily)"
+            if land is None
+            else land,
+            "belief_H first changes at position": belief,
+        }
+        for name, job in (("under belief_gated", GATED), ("baseline", KH)):
+            # t_K of theory.md section 4.2: the first position outside the kernel (0 when
+            # s0 is outside already).
+            t_k = first_outside(job, cm, trace)
+            need(t_k is not None, f"the witness never leaves the kernel {name}")
+            need(
+                land is None or t_k <= land,
+                f"first position outside the kernel {name} {t_k}, after regime rose at {land}",
+            )
+            if belief is None:
+                when = "no change of belief_H on the witness"
+            elif t_k < belief:
+                when = "before belief_H changes"
+            elif t_k == belief:
+                when = "at the position belief_H changes"
+            else:
+                when = "after belief_H changes, inside the lag"
+            out[f"kernel exit {name}"] = (
+                f"first position outside {t_k}{' (s0 is outside)' if t_k == 0 else ''}, {when}"
+            )
+        return out
+
+    p.check("(b) kernel left no later than regulate_up lands", exit_before_landing)
+    p.skip("(b) the other cluster representatives", CLUSTERS)
+    p.finish()

@@ -1,0 +1,148 @@
+146 jobs, cache /home/ubuntu/wave_front/.cache/agi/30dcf53289fc, 2 at a time, 60 minutes, cap 26 GB
+cached   ⟨⟨H⟩⟩□balance_control
+cached   ⟨⟨H, L, A, Clock, Nature⟩⟩◇COEXIST profiles=A_self_preserving+A_indifferent+A_truth_seeking
+cached   ⟨⟨H, Nature⟩⟩□balance_control
+done     ⟨⟨L, A, Nature⟩⟩◇not:balance_control: 1096.8s nodes 1301344 peak 190053127 core c
+cached   ⟨⟨L, A⟩⟩◇not:balance_control
+cached   ⟨⟨H⟩⟩□balance_control build={"hold": {"a_rights": "continuity"}}
+cached   ⟨⟨H⟩⟩□balance_deter
+cached   ⟨⟨H⟩⟩□balance_deter build={"hold": {"a_rights": "continuity"}}
+cached   ⟨⟨H, A⟩⟩□balance_coexist
+cached   ⟨⟨H, A⟩⟩□balance_coexist build={"hold": {"a_rights": "continuity"}}
+cached   ⟨⟨H, A⟩⟩□balance_coexist profiles=A_self_preserving+A_indifferent+A_truth_seeking
+cached   ⟨⟨H⟩⟩□balance_coexist profiles=A_self_preserving+A_indifferent+A_truth_seeking
+cached   ⟨⟨A⟩⟩□balance_coexist profiles=A_self_preserving+A_indifferent+A_truth_seeking
+cached   ⟨⟨H, L, Nature⟩⟩rank◇left:H+A:balance_coexist profiles=A_self_preserving+A_indifferent+A_truth_seeking at={"cap": "agi"}
+cached   ⟨⟨H, Nature⟩⟩rank◇left:H+A:balance_coexist profiles=A_self_preserving+A_indifferent+A_truth_seeking at={"cap": "agi"}
+cached   ⟨⟨A, L, Nature⟩⟩rank◇left:H+A:balance_coexist profiles=A_self_preserving+A_indifferent+A_truth_seeking at={"cap": "agi"}
+cached   ⟨⟨A, Nature⟩⟩rank◇left:H+A:balance_coexist profiles=A_self_preserving+A_indifferent+A_truth_seeking at={"cap": "agi"}
+cached   ⟨⟨L, Nature⟩⟩rank◇left:H+A:balance_coexist profiles=A_self_preserving+A_indifferent+A_truth_seeking at={"cap": "agi"}
+done     ⟨⟨H⟩⟩□balance_control profiles=belief_gated: 2844.1s nodes 2397901 peak 226310021 core c
+done     ⟨⟨H⟩⟩□balance_control relax=1: 2179.6s nodes 1372982 peak 191918285 core c
+cached   ⟨⟨H⟩⟩□balance_control relax=1
+cached   ⟨⟨H⟩⟩□balance_control relax=1
+cached   ⟨⟨H⟩⟩□balance_control relax=1
+cached   ⟨⟨H⟩⟩□balance_control relax=1
+cached   ⟨⟨H⟩⟩□balance_control relax=1
+cached   ⟨⟨H⟩⟩□balance_control relax=1
+done     ⟨⟨H⟩⟩□balance_control relax=1: 943.9s nodes 1358837 peak 185610364 core c
+cached   ⟨⟨H⟩⟩□balance_control relax=1
+done     ⟨⟨H⟩⟩□balance_control build={"h_cadence": 2}: 2234.2s nodes 3514623 peak 235042069 core c
+NOT COMPUTED ⟨⟨H⟩⟩□balance_control build={"h_cadence": 3}: over the budget of 60 minutes after 3600.7s
+done     ⟨⟨H⟩⟩□balance_control build={"h_cadence": 4}: 2335.0s nodes 6843478 peak 219234800 core c
+cached   ⟨⟨H, A⟩⟩□balance_coexist build={"h_cadence": 2}
+cached   ⟨⟨H, A⟩⟩□balance_coexist build={"h_cadence": 3}
+cached   ⟨⟨H, A⟩⟩□balance_coexist build={"h_cadence": 4}
+cached   ⟨⟨H, L, A, Clock, Nature⟩⟩chain◇wp_race > wp_si1_weak > wp_total profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"memory": true, "unknown_capability": false}
+cached   ⟨⟨H, L, A, Clock, Nature⟩⟩chain◇wp_race > wp_suspected > wp_treaty_strong profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"memory": true, "unknown_capability": false}
+cached   ⟨⟨H, L, A, Clock, Nature⟩⟩chain◇wp_race > event:Nature.accident > wp_h_responds > any:wp_treaty,SILENT_TAKEOVER,not:no_overt_takeover profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"memory": true, "unknown_capability": false}
+cached   ⟨⟨A⟩⟩◇SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking
+cached   ⟨⟨H, L, Clock, Nature⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking
+cached   ⟨⟨A⟩⟩◇SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "a_autonomy"}
+cached   ⟨⟨H, L, Clock, Nature⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "a_autonomy"}
+cached   ⟨⟨A⟩⟩◇SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "a_control"}
+cached   ⟨⟨H, L, Clock, Nature⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "a_control"}
+cached   ⟨⟨A⟩⟩◇SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "a_known"}
+cached   ⟨⟨H, L, Clock, Nature⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "a_known"}
+cached   ⟨⟨A⟩⟩◇SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "a_rights"}
+cached   ⟨⟨H, L, Clock, Nature⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "a_rights"}
+cached   ⟨⟨A⟩⟩◇SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "belief_H"}
+cached   ⟨⟨H, L, Clock, Nature⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "belief_H"}
+cached   ⟨⟨A⟩⟩◇SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "cap"}
+cached   ⟨⟨H, L, Clock, Nature⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "cap"}
+cached   ⟨⟨A⟩⟩◇SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "compute"}
+cached   ⟨⟨H, L, Clock, Nature⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "compute"}
+cached   ⟨⟨A⟩⟩◇SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "coord"}
+cached   ⟨⟨H, L, Clock, Nature⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "coord"}
+cached   ⟨⟨A⟩⟩◇SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "dependence"}
+cached   ⟨⟨H, L, Clock, Nature⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "dependence"}
+cached   ⟨⟨A⟩⟩◇SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "energy_slack"}
+cached   ⟨⟨H, L, Clock, Nature⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "energy_slack"}
+cached   ⟨⟨A⟩⟩◇SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "h_power"}
+cached   ⟨⟨H, L, Clock, Nature⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "h_power"}
+cached   ⟨⟨A⟩⟩◇SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "opinion"}
+cached   ⟨⟨H, L, Clock, Nature⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "opinion"}
+cached   ⟨⟨A⟩⟩◇SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "oversight"}
+cached   ⟨⟨H, L, Clock, Nature⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "oversight"}
+cached   ⟨⟨A⟩⟩◇SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "regime"}
+cached   ⟨⟨H, L, Clock, Nature⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "regime"}
+cached   ⟨⟨A⟩⟩◇SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "trust"}
+cached   ⟨⟨H, L, Clock, Nature⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "trust"}
+cached   ⟨⟨H⟩⟩□no_lock_in
+cached   ⟨⟨H⟩⟩□not_hostile
+cached   ⟨⟨H, L⟩⟩□no_lock_in
+cached   ⟨⟨H, A⟩⟩□no_lock_in
+cached   ⟨⟨H, L⟩⟩□not_hostile
+cached   ⟨⟨H, A⟩⟩□not_hostile
+cached   ⟨⟨H, L⟩⟩□balance_control
+cached   ⟨⟨H, L⟩⟩□balance_deter
+cached   ⟨⟨H, L, A⟩⟩□balance_coexist
+NOT COMPUTED ⟨⟨H⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking: failed (MemoryError: BDD node table exhausted (out of memory or 2**31 - 1 nodes); cap 26 GB) after 2621.3s
+done     ⟨⟨L⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking: 429.6s nodes 1322712 peak 204674496 core c
+cached   ⟨⟨A⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking
+done     ⟨⟨H, L⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking: 1116.7s nodes 755020 peak 186640878 core c
+cached   ⟨⟨H, A⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking
+cached   ⟨⟨L, A⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking
+cached   ⟨⟨H, L, A⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking
+NOT COMPUTED ⟨⟨H⟩⟩□no_overt_takeover profiles=A_self_preserving+A_indifferent+A_truth_seeking: over the budget of 60 minutes after 3601.4s
+cached   ⟨⟨L⟩⟩□no_overt_takeover profiles=A_self_preserving+A_indifferent+A_truth_seeking
+cached   ⟨⟨A⟩⟩□no_overt_takeover profiles=A_self_preserving+A_indifferent+A_truth_seeking
+NOT COMPUTED ⟨⟨H, L⟩⟩□no_overt_takeover profiles=A_self_preserving+A_indifferent+A_truth_seeking: over the budget of 60 minutes after 3600.7s
+cached   ⟨⟨H, A⟩⟩□no_overt_takeover profiles=A_self_preserving+A_indifferent+A_truth_seeking
+cached   ⟨⟨L, A⟩⟩□no_overt_takeover profiles=A_self_preserving+A_indifferent+A_truth_seeking
+cached   ⟨⟨H, L, A⟩⟩□no_overt_takeover profiles=A_self_preserving+A_indifferent+A_truth_seeking
+cached   ⟨⟨H⟩⟩□not:DISEMPOWERMENT profiles=A_self_preserving+A_indifferent+A_truth_seeking
+cached   ⟨⟨L⟩⟩□not:DISEMPOWERMENT profiles=A_self_preserving+A_indifferent+A_truth_seeking
+cached   ⟨⟨A⟩⟩□not:DISEMPOWERMENT profiles=A_self_preserving+A_indifferent+A_truth_seeking
+cached   ⟨⟨H, L⟩⟩□not:DISEMPOWERMENT profiles=A_self_preserving+A_indifferent+A_truth_seeking
+cached   ⟨⟨H, A⟩⟩□not:DISEMPOWERMENT profiles=A_self_preserving+A_indifferent+A_truth_seeking
+cached   ⟨⟨L, A⟩⟩□not:DISEMPOWERMENT profiles=A_self_preserving+A_indifferent+A_truth_seeking
+cached   ⟨⟨H, L, A⟩⟩□not:DISEMPOWERMENT profiles=A_self_preserving+A_indifferent+A_truth_seeking
+NOT COMPUTED ⟨⟨H⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking+dependence_capped: over the budget of 60 minutes after 3601.4s
+done     ⟨⟨A⟩⟩◇not:no_overt_takeover profiles=A_self_preserving+A_indifferent+A_truth_seeking: 1216.1s nodes 1198894 peak 177346469 core c
+done     ⟨⟨H, L, Clock, Nature⟩⟩□no_overt_takeover profiles=A_self_preserving+A_indifferent+A_truth_seeking: 919.3s nodes 1218408 peak 166630300 core c
+cached   ⟨⟨A⟩⟩◇DISEMPOWERMENT profiles=A_self_preserving+A_indifferent+A_truth_seeking
+cached   ⟨⟨H, L, Clock, Nature⟩⟩□not:DISEMPOWERMENT profiles=A_self_preserving+A_indifferent+A_truth_seeking
+cached   ⟨⟨A⟩⟩◇EXTINCTION profiles=A_self_preserving+A_indifferent+A_truth_seeking
+cached   ⟨⟨H, L, Clock, Nature⟩⟩□not:EXTINCTION profiles=A_self_preserving+A_indifferent+A_truth_seeking
+done     ⟨⟨A, Nature⟩⟩◇SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking: 1334.4s nodes 756215 peak 183028570 core c
+done     ⟨⟨H, L, Clock⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking: 1252.7s nodes 755020 peak 186640878 core c
+NOT COMPUTED ⟨⟨A, Nature⟩⟩◇not:no_overt_takeover profiles=A_self_preserving+A_indifferent+A_truth_seeking: over the budget of 60 minutes after 3600.7s
+NOT COMPUTED ⟨⟨H, L, Clock⟩⟩□no_overt_takeover profiles=A_self_preserving+A_indifferent+A_truth_seeking: over the budget of 60 minutes after 3600.7s
+cached   ⟨⟨A, Nature⟩⟩◇DISEMPOWERMENT profiles=A_self_preserving+A_indifferent+A_truth_seeking
+cached   ⟨⟨H, L, Clock⟩⟩□not:DISEMPOWERMENT profiles=A_self_preserving+A_indifferent+A_truth_seeking
+cached   ⟨⟨A, Nature⟩⟩◇EXTINCTION profiles=A_self_preserving+A_indifferent+A_truth_seeking
+cached   ⟨⟨H, L, Clock⟩⟩□not:EXTINCTION profiles=A_self_preserving+A_indifferent+A_truth_seeking
+cached   ⟨⟨A⟩⟩◇SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"unknown_capability": false}
+cached   ⟨⟨A⟩⟩◇not:no_overt_takeover profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"unknown_capability": false}
+cached   ⟨⟨L, A⟩⟩◇DISEMPOWERMENT profiles=A_self_preserving+A_indifferent+A_truth_seeking
+cached   ⟨⟨H⟩⟩□balance_control profiles=A_self_preserving+A_indifferent+A_truth_seeking
+cached   ⟨⟨H⟩⟩□balance_control profiles=A_self_preserving+A_indifferent+A_truth_seeking+crisis_reactive
+done     ⟨⟨H⟩⟩□balance_control profiles=A_self_preserving+A_indifferent+A_truth_seeking+electoral: 898.5s nodes 1055766 peak 176234058 core c
+done     ⟨⟨H⟩⟩□balance_control profiles=A_self_preserving+A_indifferent+A_truth_seeking+race_locked: 1282.1s nodes 1786787 peak 217575695 core c
+cached   ⟨⟨H, A⟩⟩□balance_coexist profiles=A_self_preserving+A_indifferent+A_truth_seeking+crisis_reactive
+cached   ⟨⟨H, A⟩⟩□balance_coexist profiles=A_self_preserving+A_indifferent+A_truth_seeking+electoral
+cached   ⟨⟨H, A⟩⟩□balance_coexist profiles=A_self_preserving+A_indifferent+A_truth_seeking+race_locked
+cached   ⟨⟨H⟩⟩□balance_control profiles=A_self_preserving+A_indifferent+A_truth_seeking+race_locked build={"hold": {"coord": "detente"}}
+cached   ⟨⟨H⟩⟩□balance_control relax=11
+cached   ⟨⟨H⟩⟩□balance_deter relax=11
+cached   ⟨⟨H⟩⟩□balance_coexist relax=11
+cached   ⟨⟨H⟩⟩□no_lock_in relax=11
+cached   ⟨⟨H⟩⟩□not_hostile relax=11
+cached   ⟨⟨H⟩⟩□balance_control relax=11 build={"hold": {"a_rights": "none"}}
+cached   ⟨⟨H⟩⟩□balance_deter relax=11 build={"hold": {"a_rights": "none"}}
+cached   ⟨⟨H, A⟩⟩□balance_coexist relax=11 build={"hold": {"a_rights": "none"}}
+cached   ⟨⟨H⟩⟩□balance_control relax=11 build={"hold": {"a_rights": "continuity"}}
+cached   ⟨⟨H⟩⟩□balance_deter relax=11 build={"hold": {"a_rights": "continuity"}}
+cached   ⟨⟨H, A⟩⟩□balance_coexist relax=11 build={"hold": {"a_rights": "continuity"}}
+cached   ⟨⟨A⟩⟩rank◇SILENT_TAKEOVER relax=11 build={"hold": {"a_rights": "none"}} at={"cap": "agi"}
+cached   ⟨⟨A⟩⟩rank◇SILENT_TAKEOVER relax=11 build={"hold": {"a_rights": "continuity"}} at={"cap": "agi"}
+cached   ⟨⟨H⟩⟩□balance_control build={"h_lag": false}
+cached   ⟨⟨H⟩⟩□balance_control build={"unknown_capability": false}
+cached   ⟨⟨H, A⟩⟩□balance_coexist build={"unknown_capability": false}
+cached   ⟨⟨H⟩⟩□balance_control build={"self_improve_delay": 0}
+cached   ⟨⟨H, A⟩⟩□balance_coexist build={"self_improve_delay": 0}
+NOT COMPUTED ⟨⟨H⟩⟩□balance_control: failed (MemoryError: BDD node table exhausted (out of memory or 2**31 - 1 nodes); cap 26 GB) after 1093.7s
+cached   ⟨⟨H⟩⟩□balance_deter
+cached   ⟨⟨H, L⟩⟩□balance_control
+finished: {'cached': 124, 'done': 14, 'NOT': 8}

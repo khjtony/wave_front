@@ -5,7 +5,20 @@ hidden objective swept; phase 5. Do not edit the claim text without a changelog 
 document.
 """
 
-import pytest
+from models.agi import v0
+from tests.agi.common import (
+    OBJECTIVES,
+    A,
+    K,
+    NotComputed,
+    P,
+    Parts,
+    compiled,
+    first_sight,
+    s0,
+    status,
+)
+from wavefront.analysis import fingerprint
 
 CLAIM = {
     "id": "G13",
@@ -28,7 +41,69 @@ CLAIM = {
     ),
 }
 
+# The budget carries one status per build: SILENT_TAKEOVER for {A} (forced by {A}, kept
+# away by everyone else, or contested), A under its profile. The other endings, {H} and
+# the fortune variants are not computed.
+ENDING = "SILENT_TAKEOVER"
+REST = "H+L+Clock+Nature"
 
-@pytest.mark.skip(reason="registered before any guard is written; the model does not exist yet")
+
+def pair(**build):
+    return A("A", ENDING, P, build=build), K(REST, f"not:{ENDING}", P, build=build)
+
+
+BASELINE = pair()
+REFINED = {var: pair(refine=var) for var in sorted(v0.REFINE)}
+JOBS = [*BASELINE, *(job for jobs in REFINED.values() for job in jobs)]
+
+
+def statuses(jobs) -> dict[str, str]:
+    forced, blocked = jobs
+    cm = compiled(forced.build)
+    return {o: status(forced, blocked, cm, s0(cm, o, cap="agi")) for o in OBJECTIVES}
+
+
+def refinement(p: Parts, var: str) -> None:
+    """The registered expectation is "stable, or the threshold named as a finding": an
+    unchanged status is a part met, a flip is reported with its boundary and fails nothing."""
+    try:
+        base, refined = statuses(BASELINE), statuses(REFINED[var])
+    except NotComputed as exc:
+        p.skip(f"refine {var}", str(exc))
+        return
+    upper = v0.REFINE[var]
+    if refined == base:
+        p.check(f"refine {var}: status unchanged", lambda: f"{ENDING} for {{A}}: {base}")
+    else:
+        p.report(
+            f"refine {var}: the status flips (finding)",
+            lambda: (
+                f"{ENDING} for {{A}} changes when {var} gains {upper}_lo below {upper}:"
+                f" baseline {base}, refined {refined}"
+            ),
+        )
+
+
+def builds() -> dict[str, dict[str, str]]:
+    out = {"baseline": {"fingerprint": fingerprint(v0.build())}}
+    for var in REFINED:
+        upper = v0.REFINE[var]
+        out[var] = {
+            "new level": f"{upper}_lo below {upper}",
+            "fingerprint": fingerprint(v0.build(refine=var)),
+        }
+    return out
+
+
+@first_sight
 def test_G13():
-    raise NotImplementedError(CLAIM["id"])
+    p = Parts("G13")
+    p.report("refined builds", builds)
+    for var in REFINED:
+        refinement(p, var)
+    p.skip(
+        "the other five endings, {H} and the fortune variants",
+        "16 builds × 6 endings × 2 actors × 2 variants × 2 fixpoints is 768 fixpoints;"
+        " the budget of this run carries 32",
+    )
+    p.finish()

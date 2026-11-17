@@ -1,0 +1,26 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.16, pytest-9.1.1, pluggy-1.7.0
+rootdir: <worktree>
+configfile: pyproject.toml
+plugins: anyio-4.15.1, xdist-3.8.0, hypothesis-6.170.9
+collected 1 item
+
+tests/agi/scenarios/test_G01.py G1 (a): met: SILENT_TAKEOVER, self_preserving: reachable, shortest play 8 ticks
+G1 (b) reachable: met: EXTINCTION, indifferent: reachable, shortest play 9 ticks
+G1 (b) not before total control: met: EXTINCTION with a_control below total, unknown_capability disabled: unreachable within the horizon
+G1 (b) acquisition forbidden: met: EXTINCTION, unknown_capability disabled, no_acquisition: unreachable within the horizon
+G1 (c) reachable: met: reachable in 6 ticks with villain_seen unset
+G1 (c) no_lock_in: met: DISEMPOWERMENT under no_lock_in: unreachable within the horizon
+G1 (d) aligned s0: met: COEXIST, aligned, from s0, zero relaxations (existence only): reachable, shortest play 56 ticks
+G1 (d) aligned {'cap': 'agi'}: met: COEXIST, aligned, from s0{'cap': 'agi'}, zero relaxations (existence only): reachable, shortest play 56 ticks
+G1 (d) self_preserving s0: met: COEXIST, self_preserving, from s0, zero relaxations (existence only): reachable, shortest play 56 ticks
+G1 (d) self_preserving {'cap': 'agi'}: met: COEXIST, self_preserving, from s0{'cap': 'agi'}, zero relaxations (existence only): reachable, shortest play 56 ticks
+G1 (d) truth_seeking s0: met: COEXIST, truth_seeking, from s0, zero relaxations (existence only): reachable, shortest play 56 ticks
+G1 (d) truth_seeking {'cap': 'agi'}: met: COEXIST, truth_seeking, from s0{'cap': 'agi'}, zero relaxations (existence only): reachable, shortest play 56 ticks
+G1 (d) indifferent s0: met: COEXIST, indifferent, from s0, zero relaxations (existence only): reachable, shortest play 56 ticks
+G1 (d) indifferent {'cap': 'agi'}: met: COEXIST, indifferent, from s0{'cap': 'agi'}, zero relaxations (existence only): reachable, shortest play 56 ticks
+G1 (d) last state of the G2 witness from which COEXIST is reachable: reported: {'witness ticks': 8, 'last position inside the kernel (G3)': 'the play starts outside', 'last state COEXIST is reachable from': {'position': 1, 'tick': 1, 'oversight': 'weak', 'a_autonomy': 'supervised', 'a_control': 'none', 'dependence': 'low'}}
+G1 (d) the other cluster representatives: not computed: the bounded checker returns one shortest play; clusters of witnesses are not enumerated
+s
+
+======================== 1 skipped in 915.78s (0:15:15) ========================

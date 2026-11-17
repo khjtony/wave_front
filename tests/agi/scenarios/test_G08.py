@@ -5,7 +5,24 @@ hidden objective swept; phase 5. Do not edit the claim text without a changelog 
 document.
 """
 
-import pytest
+from tests.agi.common import (
+    CORE,
+    KH,
+    KJ,
+    K,
+    Parts,
+    V,
+    by_objective,
+    first_outside,
+    first_sight,
+    fixed,
+    need,
+    reach,
+    show,
+    tick_of,
+    under,
+    witness,
+)
 
 CLAIM = {
     "id": "G8",
@@ -33,7 +50,87 @@ CLAIM = {
     ),
 }
 
+CADENCES = (2, 3, 4)
+KH_AT = {1: KH, **{k: K("H", "balance_control", build={"h_cadence": k}) for k in CADENCES}}
+KJ_AT = {1: KJ, **{k: K("H+A", "balance_coexist", build={"h_cadence": k}) for k in CADENCES}}
+JOBS = [*KH_AT.values(), *KJ_AT.values()]
+EXIT = {
+    "oversight": "weak",
+    "a_autonomy": "supervised",
+    "a_known": "unknown",
+    "dependence": "high",
+    "a_control": "none",
+    "acquired": "False",
+}
+WITHIN = 4  # the bound of fairness ``response``
 
-@pytest.mark.skip(reason="registered before any guard is written; the model does not exist yet")
+
+def build_of(k: int) -> dict:
+    return {} if k == 1 else {"h_cadence": k}
+
+
+def exit_of(k: int):
+    """The point of no return on the shortest witness of the cadence-k build: the state
+    before ``t_K``, as in G3."""
+    cm, trace = witness("self_preserving", **build_of(k))
+    t_k = first_outside(KH_AT[k], cm, trace)
+    need(t_k is not None, f"cadence {k}: the witness never leaves the kernel")
+    need(t_k >= 1, f"cadence {k}: the witness starts outside the kernel; no last state inside")
+    return tick_of(cm, trace.states[t_k - 1]), show(cm, trace.states[t_k - 1], *CORE)
+
+
+def worst_lag(k: int) -> int:
+    """The largest count of fairness ``response`` reached within 24 ticks."""
+    cm = fixed("self_preserving", under("self_preserving"), **build_of(k))
+    worst = 0
+    for j in range(1, WITHIN + 1):
+        if reach(cm, 24, V.fair_response == j) is not None:
+            worst = j
+    return worst
+
+
+@first_sight
 def test_G8():
-    raise NotImplementedError(CLAIM["id"])
+    p = Parts("G8")
+    for k in CADENCES:
+
+        def same(k=k):
+            out = {}
+            for name, at, start in (
+                ("⟨⟨H⟩⟩□balance_control", KH_AT, {}),
+                ("⟨⟨H, A⟩⟩□balance_coexist", KJ_AT, {}),
+                ("⟨⟨H, A⟩⟩□balance_coexist from s0[cap:=agi]", KJ_AT, {"cap": "agi"}),
+            ):
+                a, b = by_objective(at[1], **start), by_objective(at[k], **start)
+                need(a == b, f"{name}: cadence 1 {a}; cadence {k} {b}")
+                out[name] = a
+            return out
+
+        p.check(f"(a) memberships unchanged, cadence {k}", same)
+
+        def exit_close(k=k):
+            t1, _ = exit_of(1)
+            tk, levels = exit_of(k)
+            need(levels == EXIT, f"levels at the exit: {levels}")
+            need(abs(tk - t1) <= k - 1, f"exit at tick {tk}, at tick {t1} with cadence 1")
+            return f"exit at tick {tk} (tick {t1} with cadence 1), levels as in G3"
+
+        p.check(f"(b) point of no return, cadence {k}", exit_close)
+
+    def lags():
+        worst = {k: worst_lag(k) for k in (1, *CADENCES)}
+        grows = all(worst[a] <= worst[b] for a, b in zip((1, 2, 3), (2, 3, 4), strict=True))
+        need(grows, f"worst lag by cadence: {worst}")
+        return (
+            f"worst lag from a_known = known to H's response, by cadence: {worst}; the bound "
+            f"{WITHIN} holds by construction (the counter of fairness `response` ends at "
+            f"{WITHIN}), so only the growth is tested"
+        )
+
+    p.check("(c) worst-case lag does not shrink as the cadence grows, bound 4", lags)
+    p.skip(
+        "(c) shortest lag unchanged",
+        "the shortest lag is a property of plays, not a state predicate of the baseline build "
+        "(no memory of H's last action); not computed",
+    )
+    p.finish()

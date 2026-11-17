@@ -1,0 +1,148 @@
+146 jobs, cache <worktree>/.cache/agi/30dcf53289fc
+done     ⟨⟨H⟩⟩□balance_control: 1346.4s nodes 1311899 peak 174790145 core c
+done     ⟨⟨H, L, A, Clock, Nature⟩⟩◇COEXIST profiles=A_self_preserving+A_indifferent+A_truth_seeking: 1.6s nodes 4964 peak 2648005 core c
+done     ⟨⟨H, Nature⟩⟩□balance_control: 783.3s nodes 417966 peak 134757349 core c
+NOT COMPUTED ⟨⟨L, A, Nature⟩⟩◇not:balance_control: failed (MemoryError: BDD node table exhausted (out of memory or 2**31 - 1 nodes); cap 9 GB) after 800.3s
+done     ⟨⟨L, A⟩⟩◇not:balance_control: 1002.7s nodes 407116 peak 147533677 core c
+done     ⟨⟨H⟩⟩□balance_control build={"hold": {"a_rights": "continuity"}}: 886.2s nodes 849538 peak 162035859 core c
+done     ⟨⟨H⟩⟩□balance_deter: 0.5s nodes 1713 peak 1437430 core c
+done     ⟨⟨H⟩⟩□balance_deter build={"hold": {"a_rights": "continuity"}}: 0.6s nodes 1713 peak 1450572 core c
+done     ⟨⟨H, A⟩⟩□balance_coexist: 0.3s nodes 365 peak 764431 core c
+done     ⟨⟨H, A⟩⟩□balance_coexist build={"hold": {"a_rights": "continuity"}}: 0.3s nodes 365 peak 768727 core c
+done     ⟨⟨H, A⟩⟩□balance_coexist profiles=A_self_preserving+A_indifferent+A_truth_seeking: 0.4s nodes 365 peak 776018 core c
+done     ⟨⟨H⟩⟩□balance_coexist profiles=A_self_preserving+A_indifferent+A_truth_seeking: 2.8s nodes 6202 peak 4472467 core c
+done     ⟨⟨A⟩⟩□balance_coexist profiles=A_self_preserving+A_indifferent+A_truth_seeking: 2.3s nodes 15431 peak 3597349 core c
+done     ⟨⟨H, L, Nature⟩⟩rank◇left:H+A:balance_coexist profiles=A_self_preserving+A_indifferent+A_truth_seeking at={"cap": "agi"}: 2.3s nodes - peak 3599246 core c
+done     ⟨⟨H, Nature⟩⟩rank◇left:H+A:balance_coexist profiles=A_self_preserving+A_indifferent+A_truth_seeking at={"cap": "agi"}: 7.5s nodes - peak 11361415 core c
+done     ⟨⟨A, L, Nature⟩⟩rank◇left:H+A:balance_coexist profiles=A_self_preserving+A_indifferent+A_truth_seeking at={"cap": "agi"}: 5.2s nodes - peak 7232252 core c
+done     ⟨⟨A, Nature⟩⟩rank◇left:H+A:balance_coexist profiles=A_self_preserving+A_indifferent+A_truth_seeking at={"cap": "agi"}: 6.2s nodes - peak 8392290 core c
+done     ⟨⟨L, Nature⟩⟩rank◇left:H+A:balance_coexist profiles=A_self_preserving+A_indifferent+A_truth_seeking at={"cap": "agi"}: 0.6s nodes - peak 1354363 core c
+NOT COMPUTED ⟨⟨H⟩⟩□balance_control profiles=belief_gated: failed (MemoryError: BDD node table exhausted (out of memory or 2**31 - 1 nodes); cap 9 GB) after 279.5s
+NOT COMPUTED ⟨⟨H⟩⟩□balance_control relax=1: failed (MemoryError: BDD node table exhausted (out of memory or 2**31 - 1 nodes); cap 9 GB) after 694.6s
+done     ⟨⟨H⟩⟩□balance_control relax=1: 1345.7s nodes 1311899 peak 174708635 core c
+done     ⟨⟨H⟩⟩□balance_control relax=1: 1330.0s nodes 1225974 peak 172889929 core c
+done     ⟨⟨H⟩⟩□balance_control relax=1: 843.4s nodes 778218 peak 156442472 core c
+done     ⟨⟨H⟩⟩□balance_control relax=1: 1222.6s nodes 1306588 peak 162638770 core c
+done     ⟨⟨H⟩⟩□balance_control relax=1: 1343.4s nodes 1310798 peak 174100266 core c
+done     ⟨⟨H⟩⟩□balance_control relax=1: 1374.3s nodes 1311899 peak 176382864 core c
+NOT COMPUTED ⟨⟨H⟩⟩□balance_control relax=1: over the budget of 25 minutes after 1500.4s
+done     ⟨⟨H⟩⟩□balance_control relax=1: 1267.9s nodes 1284825 peak 171395667 core c
+NOT COMPUTED ⟨⟨H⟩⟩□balance_control build={"h_cadence": 2}: failed (MemoryError: BDD node table exhausted (out of memory or 2**31 - 1 nodes); cap 9 GB) after 407.2s
+NOT COMPUTED ⟨⟨H⟩⟩□balance_control build={"h_cadence": 3}: failed (MemoryError: BDD node table exhausted (out of memory or 2**31 - 1 nodes); cap 9 GB) after 185.1s
+NOT COMPUTED ⟨⟨H⟩⟩□balance_control build={"h_cadence": 4}: failed (MemoryError: BDD node table exhausted (out of memory or 2**31 - 1 nodes); cap 9 GB) after 440.9s
+done     ⟨⟨H, A⟩⟩□balance_coexist build={"h_cadence": 2}: 0.9s nodes 911 peak 1745293 core c
+done     ⟨⟨H, A⟩⟩□balance_coexist build={"h_cadence": 3}: 1.4s nodes 1932 peak 2681145 core c
+done     ⟨⟨H, A⟩⟩□balance_coexist build={"h_cadence": 4}: 1.4s nodes 3097 peak 2699537 core c
+done     ⟨⟨H, L, A, Clock, Nature⟩⟩chain◇wp_race > wp_si1_weak > wp_total profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"memory": true, "unknown_capability": false}: 799.3s nodes - peak 156565147 core c
+done     ⟨⟨H, L, A, Clock, Nature⟩⟩chain◇wp_race > wp_suspected > wp_treaty_strong profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"memory": true, "unknown_capability": false}: 321.2s nodes - peak 124859977 core c
+done     ⟨⟨H, L, A, Clock, Nature⟩⟩chain◇wp_race > event:Nature.accident > wp_h_responds > any:wp_treaty,SILENT_TAKEOVER,not:no_overt_takeover profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"memory": true, "unknown_capability": false}: 422.0s nodes - peak 183473694 core c
+done     ⟨⟨A⟩⟩◇SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking: 946.3s nodes 570810 peak 137011131 core c
+done     ⟨⟨H, L, Clock, Nature⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking: 767.1s nodes 571755 peak 136151243 core c
+done     ⟨⟨A⟩⟩◇SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "a_autonomy"}: 1065.9s nodes 597863 peak 138937965 core c
+done     ⟨⟨H, L, Clock, Nature⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "a_autonomy"}: 835.5s nodes 598843 peak 132635495 core c
+done     ⟨⟨A⟩⟩◇SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "a_control"}: 1237.8s nodes 661653 peak 150333323 core c
+done     ⟨⟨H, L, Clock, Nature⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "a_control"}: 980.4s nodes 661702 peak 139464241 core c
+done     ⟨⟨A⟩⟩◇SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "a_known"}: 823.1s nodes 611766 peak 142675895 core c
+done     ⟨⟨H, L, Clock, Nature⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "a_known"}: 701.9s nodes 613369 peak 129240186 core c
+done     ⟨⟨A⟩⟩◇SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "a_rights"}: 934.2s nodes 570751 peak 137268143 core c
+done     ⟨⟨H, L, Clock, Nature⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "a_rights"}: 331.4s nodes 571696 peak 137338295 core c
+done     ⟨⟨A⟩⟩◇SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "belief_H"}: 967.2s nodes 569992 peak 137006268 core c
+done     ⟨⟨H, L, Clock, Nature⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "belief_H"}: 770.7s nodes 571021 peak 136146662 core c
+done     ⟨⟨A⟩⟩◇SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "cap"}: 1147.7s nodes 619528 peak 139088639 core c
+done     ⟨⟨H, L, Clock, Nature⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "cap"}: 895.9s nodes 620647 peak 135531014 core c
+done     ⟨⟨A⟩⟩◇SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "compute"}: 967.2s nodes 570194 peak 136994354 core c
+done     ⟨⟨H, L, Clock, Nature⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "compute"}: 764.7s nodes 571196 peak 136138373 core c
+done     ⟨⟨A⟩⟩◇SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "coord"}: 881.3s nodes 570710 peak 142056646 core c
+done     ⟨⟨H, L, Clock, Nature⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "coord"}: 747.0s nodes 571655 peak 131489416 core c
+done     ⟨⟨A⟩⟩◇SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "dependence"}: 1046.0s nodes 583605 peak 135487434 core c
+done     ⟨⟨H, L, Clock, Nature⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "dependence"}: 822.7s nodes 585634 peak 129518514 core c
+done     ⟨⟨A⟩⟩◇SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "energy_slack"}: 958.5s nodes 570374 peak 137006369 core c
+done     ⟨⟨H, L, Clock, Nature⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "energy_slack"}: 766.6s nodes 571355 peak 136146840 core c
+done     ⟨⟨A⟩⟩◇SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "h_power"}: 1274.9s nodes 606129 peak 158301589 core c
+done     ⟨⟨H, L, Clock, Nature⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "h_power"}: 1073.2s nodes 607218 peak 141229321 core c
+done     ⟨⟨A⟩⟩◇SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "opinion"}: 1071.6s nodes 593234 peak 134776038 core c
+done     ⟨⟨H, L, Clock, Nature⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "opinion"}: 868.5s nodes 592744 peak 134169890 core c
+done     ⟨⟨A⟩⟩◇SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "oversight"}: 1136.4s nodes 804504 peak 139000678 core c
+done     ⟨⟨H, L, Clock, Nature⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "oversight"}: 956.2s nodes 802682 peak 136633518 core c
+done     ⟨⟨A⟩⟩◇SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "regime"}: 1107.2s nodes 618482 peak 140453629 core c
+done     ⟨⟨H, L, Clock, Nature⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "regime"}: 838.4s nodes 619623 peak 131525502 core c
+done     ⟨⟨A⟩⟩◇SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "trust"}: 985.3s nodes 579164 peak 132081162 core c
+done     ⟨⟨H, L, Clock, Nature⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"refine": "trust"}: 817.3s nodes 580136 peak 129714490 core c
+done     ⟨⟨H⟩⟩□no_lock_in: 33.6s nodes 33663 peak 35895740 core c
+done     ⟨⟨H⟩⟩□not_hostile: 37.9s nodes 99347 peak 41643770 core c
+done     ⟨⟨H, L⟩⟩□no_lock_in: 0.0s nodes 273 peak 85383 core c
+done     ⟨⟨H, A⟩⟩□no_lock_in: 148.1s nodes 156459 peak 124270993 core c
+done     ⟨⟨H, L⟩⟩□not_hostile: 9.1s nodes 53196 peak 11572352 core c
+done     ⟨⟨H, A⟩⟩□not_hostile: 0.0s nodes 323 peak 120428 core c
+done     ⟨⟨H, L⟩⟩□balance_control: 58.3s nodes 50420 peak 55543646 core c
+done     ⟨⟨H, L⟩⟩□balance_deter: 0.0s nodes 287 peak 152830 core c
+done     ⟨⟨H, L, A⟩⟩□balance_coexist: 0.0s nodes 175 peak 181493 core c
+NOT COMPUTED ⟨⟨H⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking: failed (MemoryError: BDD node table exhausted (out of memory or 2**31 - 1 nodes); cap 9 GB) after 181.0s
+NOT COMPUTED ⟨⟨L⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking: failed (MemoryError: BDD node table exhausted (out of memory or 2**31 - 1 nodes); cap 9 GB) after 287.9s
+done     ⟨⟨A⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking: 0.0s nodes 401 peak 128502 core c
+NOT COMPUTED ⟨⟨H, L⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking: over the budget of 25 minutes after 1500.5s
+done     ⟨⟨H, A⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking: 0.0s nodes 401 peak 139006 core c
+done     ⟨⟨L, A⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking: 0.0s nodes 401 peak 125050 core c
+done     ⟨⟨H, L, A⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking: 0.0s nodes 401 peak 124681 core c
+NOT COMPUTED ⟨⟨H⟩⟩□no_overt_takeover profiles=A_self_preserving+A_indifferent+A_truth_seeking: failed (MemoryError: BDD node table exhausted (out of memory or 2**31 - 1 nodes); cap 9 GB) after 411.2s
+done     ⟨⟨L⟩⟩□no_overt_takeover profiles=A_self_preserving+A_indifferent+A_truth_seeking: 294.3s nodes 837000 peak 134475316 core c
+done     ⟨⟨A⟩⟩□no_overt_takeover profiles=A_self_preserving+A_indifferent+A_truth_seeking: 1.0s nodes 7172 peak 1771918 core c
+NOT COMPUTED ⟨⟨H, L⟩⟩□no_overt_takeover profiles=A_self_preserving+A_indifferent+A_truth_seeking: failed (MemoryError: BDD node table exhausted (out of memory or 2**31 - 1 nodes); cap 9 GB) after 864.0s
+done     ⟨⟨H, A⟩⟩□no_overt_takeover profiles=A_self_preserving+A_indifferent+A_truth_seeking: 0.0s nodes 422 peak 143087 core c
+done     ⟨⟨L, A⟩⟩□no_overt_takeover profiles=A_self_preserving+A_indifferent+A_truth_seeking: 0.4s nodes 3679 peak 1034075 core c
+done     ⟨⟨H, L, A⟩⟩□no_overt_takeover profiles=A_self_preserving+A_indifferent+A_truth_seeking: 0.0s nodes 422 peak 130728 core c
+done     ⟨⟨H⟩⟩□not:DISEMPOWERMENT profiles=A_self_preserving+A_indifferent+A_truth_seeking: 1.4s nodes 3578 peak 2848468 core c
+done     ⟨⟨L⟩⟩□not:DISEMPOWERMENT profiles=A_self_preserving+A_indifferent+A_truth_seeking: 0.0s nodes 410 peak 153132 core c
+done     ⟨⟨A⟩⟩□not:DISEMPOWERMENT profiles=A_self_preserving+A_indifferent+A_truth_seeking: 142.5s nodes 399118 peak 120018195 core c
+done     ⟨⟨H, L⟩⟩□not:DISEMPOWERMENT profiles=A_self_preserving+A_indifferent+A_truth_seeking: 0.0s nodes 410 peak 133277 core c
+done     ⟨⟨H, A⟩⟩□not:DISEMPOWERMENT profiles=A_self_preserving+A_indifferent+A_truth_seeking: 0.1s nodes 1326 peak 374701 core c
+done     ⟨⟨L, A⟩⟩□not:DISEMPOWERMENT profiles=A_self_preserving+A_indifferent+A_truth_seeking: 0.0s nodes 410 peak 162221 core c
+done     ⟨⟨H, L, A⟩⟩□not:DISEMPOWERMENT profiles=A_self_preserving+A_indifferent+A_truth_seeking: 0.0s nodes 410 peak 171088 core c
+NOT COMPUTED ⟨⟨H⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking+dependence_capped: failed (MemoryError: BDD node table exhausted (out of memory or 2**31 - 1 nodes); cap 9 GB) after 316.4s
+NOT COMPUTED ⟨⟨A⟩⟩◇not:no_overt_takeover profiles=A_self_preserving+A_indifferent+A_truth_seeking: over the budget of 25 minutes after 1500.5s
+NOT COMPUTED ⟨⟨H, L, Clock, Nature⟩⟩□no_overt_takeover profiles=A_self_preserving+A_indifferent+A_truth_seeking: over the budget of 25 minutes after 1500.4s
+done     ⟨⟨A⟩⟩◇DISEMPOWERMENT profiles=A_self_preserving+A_indifferent+A_truth_seeking: 0.0s nodes 61 peak 146666 core c
+done     ⟨⟨H, L, Clock, Nature⟩⟩□not:DISEMPOWERMENT profiles=A_self_preserving+A_indifferent+A_truth_seeking: 0.0s nodes 410 peak 122775 core c
+done     ⟨⟨A⟩⟩◇EXTINCTION profiles=A_self_preserving+A_indifferent+A_truth_seeking: 386.8s nodes 434977 peak 127248097 core c
+done     ⟨⟨H, L, Clock, Nature⟩⟩□not:EXTINCTION profiles=A_self_preserving+A_indifferent+A_truth_seeking: 302.2s nodes 442726 peak 133497913 core c
+NOT COMPUTED ⟨⟨A, Nature⟩⟩◇SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking: over the budget of 25 minutes after 1500.4s
+NOT COMPUTED ⟨⟨H, L, Clock⟩⟩□not:SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking: over the budget of 25 minutes after 1500.4s
+NOT COMPUTED ⟨⟨A, Nature⟩⟩◇not:no_overt_takeover profiles=A_self_preserving+A_indifferent+A_truth_seeking: failed (MemoryError: BDD node table exhausted (out of memory or 2**31 - 1 nodes); cap 9 GB) after 280.9s
+NOT COMPUTED ⟨⟨H, L, Clock⟩⟩□no_overt_takeover profiles=A_self_preserving+A_indifferent+A_truth_seeking: failed (MemoryError: BDD node table exhausted (out of memory or 2**31 - 1 nodes); cap 9 GB) after 868.3s
+done     ⟨⟨A, Nature⟩⟩◇DISEMPOWERMENT profiles=A_self_preserving+A_indifferent+A_truth_seeking: 0.0s nodes 61 peak 144557 core c
+done     ⟨⟨H, L, Clock⟩⟩□not:DISEMPOWERMENT profiles=A_self_preserving+A_indifferent+A_truth_seeking: 0.0s nodes 410 peak 133277 core c
+done     ⟨⟨A, Nature⟩⟩◇EXTINCTION profiles=A_self_preserving+A_indifferent+A_truth_seeking: 178.9s nodes 181221 peak 122107925 core c
+done     ⟨⟨H, L, Clock⟩⟩□not:EXTINCTION profiles=A_self_preserving+A_indifferent+A_truth_seeking: 151.5s nodes 186588 peak 120031448 core c
+done     ⟨⟨A⟩⟩◇SILENT_TAKEOVER profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"unknown_capability": false}: 126.9s nodes 163472 peak 109740917 core c
+done     ⟨⟨A⟩⟩◇not:no_overt_takeover profiles=A_self_preserving+A_indifferent+A_truth_seeking build={"unknown_capability": false}: 162.9s nodes 184786 peak 122404829 core c
+done     ⟨⟨L, A⟩⟩◇DISEMPOWERMENT profiles=A_self_preserving+A_indifferent+A_truth_seeking: 2.3s nodes 7189 peak 3548943 core c
+done     ⟨⟨H⟩⟩□balance_control profiles=A_self_preserving+A_indifferent+A_truth_seeking: 1085.4s nodes 1088677 peak 161855381 core c
+done     ⟨⟨H⟩⟩□balance_control profiles=A_self_preserving+A_indifferent+A_truth_seeking+crisis_reactive: 1234.5s nodes 937919 peak 162306794 core c
+NOT COMPUTED ⟨⟨H⟩⟩□balance_control profiles=A_self_preserving+A_indifferent+A_truth_seeking+electoral: over the budget of 25 minutes after 1500.4s
+NOT COMPUTED ⟨⟨H⟩⟩□balance_control profiles=A_self_preserving+A_indifferent+A_truth_seeking+race_locked: failed (MemoryError: BDD node table exhausted (out of memory or 2**31 - 1 nodes); cap 9 GB) after 579.1s
+done     ⟨⟨H, A⟩⟩□balance_coexist profiles=A_self_preserving+A_indifferent+A_truth_seeking+crisis_reactive: 1.4s nodes 1382 peak 2830998 core c
+done     ⟨⟨H, A⟩⟩□balance_coexist profiles=A_self_preserving+A_indifferent+A_truth_seeking+electoral: 7.6s nodes 18928 peak 10552757 core c
+done     ⟨⟨H, A⟩⟩□balance_coexist profiles=A_self_preserving+A_indifferent+A_truth_seeking+race_locked: 70.1s nodes 83591 peak 71692537 core c
+done     ⟨⟨H⟩⟩□balance_control profiles=A_self_preserving+A_indifferent+A_truth_seeking+race_locked build={"hold": {"coord": "detente"}}: 1332.8s nodes 1451028 peak 183191019 core c
+done     ⟨⟨H⟩⟩□balance_control relax=11: 269.4s nodes 258879 peak 124774415 core c
+done     ⟨⟨H⟩⟩□balance_deter relax=11: 0.6s nodes 1645 peak 1396676 core c
+done     ⟨⟨H⟩⟩□balance_coexist relax=11: 0.0s nodes 76 peak 181716 core c
+done     ⟨⟨H⟩⟩□no_lock_in relax=11: 15.1s nodes 14749 peak 17698682 core c
+done     ⟨⟨H⟩⟩□not_hostile relax=11: 2.1s nodes 5885 peak 3010968 core c
+done     ⟨⟨H⟩⟩□balance_control relax=11 build={"hold": {"a_rights": "none"}}: 267.0s nodes 258879 peak 124976307 core c
+done     ⟨⟨H⟩⟩□balance_deter relax=11 build={"hold": {"a_rights": "none"}}: 0.6s nodes 1645 peak 1409702 core c
+done     ⟨⟨H, A⟩⟩□balance_coexist relax=11 build={"hold": {"a_rights": "none"}}: 0.4s nodes 336 peak 741862 core c
+done     ⟨⟨H⟩⟩□balance_control relax=11 build={"hold": {"a_rights": "continuity"}}: 267.4s nodes 258879 peak 124976307 core c
+done     ⟨⟨H⟩⟩□balance_deter relax=11 build={"hold": {"a_rights": "continuity"}}: 0.6s nodes 1645 peak 1409702 core c
+done     ⟨⟨H, A⟩⟩□balance_coexist relax=11 build={"hold": {"a_rights": "continuity"}}: 0.4s nodes 336 peak 741862 core c
+done     ⟨⟨A⟩⟩rank◇SILENT_TAKEOVER relax=11 build={"hold": {"a_rights": "none"}} at={"cap": "agi"}: 229.0s nodes - peak 125393462 core c
+done     ⟨⟨A⟩⟩rank◇SILENT_TAKEOVER relax=11 build={"hold": {"a_rights": "continuity"}} at={"cap": "agi"}: 227.2s nodes - peak 125393462 core c
+done     ⟨⟨H⟩⟩□balance_control build={"h_lag": false}: 473.2s nodes 485639 peak 146954368 core c
+done     ⟨⟨H⟩⟩□balance_control build={"unknown_capability": false}: 12.6s nodes 15532 peak 14433599 core c
+done     ⟨⟨H, A⟩⟩□balance_coexist build={"unknown_capability": false}: 0.3s nodes 367 peak 731988 core c
+done     ⟨⟨H⟩⟩□balance_control build={"self_improve_delay": 0}: 436.9s nodes 641552 peak 124732788 core c
+done     ⟨⟨H, A⟩⟩□balance_coexist build={"self_improve_delay": 0}: 0.3s nodes 425 peak 859514 core c
+NOT COMPUTED ⟨⟨H⟩⟩□balance_control: failed (MemoryError: BDD node table exhausted (out of memory or 2**31 - 1 nodes); cap 9 GB) after 1278.1s
+done     ⟨⟨H⟩⟩□balance_deter: 0.8s nodes 1713 peak 1520323 core c
+done     ⟨⟨H, L⟩⟩□balance_control: 62.3s nodes 50420 peak 59764501 core c
+finished: {'done': 124, 'NOT': 22}

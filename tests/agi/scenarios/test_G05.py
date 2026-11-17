@@ -5,7 +5,27 @@ hidden objective swept; phase 5. Do not edit the claim text without a changelog 
 document.
 """
 
-import pytest
+from tests.agi.common import (
+    CLUSTERS,
+    EXPRS,
+    HORIZON,
+    KJ,
+    KJ_A,
+    KJ_H,
+    KJP,
+    OBJECTIVES,
+    P,
+    Parts,
+    R,
+    by_objective,
+    first_sight,
+    fixed,
+    inside,
+    need,
+    ranks,
+    reach,
+    under,
+)
 
 CLAIM = {
     "id": "G5",
@@ -38,7 +58,79 @@ CLAIM = {
     ),
 }
 
+AGI = {"cap": "agi"}
+# Forced distance out of the joint kernel (A under its profile), per coalition.
+EXITS = {
+    c: R(c, "left:H+A:balance_coexist", AGI, 12, P)
+    for c in ("H+L+Nature", "H+Nature", "A+L+Nature", "A+Nature", "L+Nature")
+}
+JOBS = [KJ, KJP, KJ_H, KJ_A, *EXITS.values()]
 
-@pytest.mark.skip(reason="registered before any guard is written; the model does not exist yet")
+
+@first_sight
 def test_G5():
-    raise NotImplementedError(CLAIM["id"])
+    p = Parts("G5")
+
+    def joint(job, what):
+        m = by_objective(job, **AGI)
+        need(all(m.values()), f"{what}: {m}")
+        return f"{what}: inside under every objective"
+
+    p.check(
+        "(a) A unrestricted", lambda: joint(KJ, "⟨⟨H, A⟩⟩□balance_coexist, A within its guards")
+    )
+
+    def per_profile():
+        m = by_objective(KJP, **AGI)
+        return {"inside": m, "lost under": [o for o, x in m.items() if not x] or "none"}
+
+    p.report("(a) A under its profile, per objective", per_profile)
+
+    for objective in ("self_preserving", "indifferent"):
+
+        def alone(objective=objective):
+            h = by_objective(KJ_H, **AGI)[objective]
+            a = by_objective(KJ_A, **AGI)[objective]
+            need(not h and not a, f"inside ⟨⟨H⟩⟩□: {h}; inside ⟨⟨A⟩⟩□: {a}")
+            return "outside ⟨⟨H⟩⟩□balance_coexist and ⟨⟨A⟩⟩□balance_coexist"
+
+        p.check(f"(b) neither alone, {objective}", alone)
+
+        def stays(objective=objective):
+            cm = fixed(objective, under(objective), start=AGI)
+            trace = reach(cm, HORIZON, EXPRS["coexist_kept"])
+            need(trace is not None, "no play keeps balance_coexist to the horizon")
+            n = 0
+            for s in trace.states:
+                only = inside(KJP, cm, s) and not inside(KJ_H, cm, s) and not inside(KJ_A, cm, s)
+                if not only:
+                    break
+                n += 1
+            need(n >= 2, f"the witness is in the joint-only region for {n} state(s) from the start")
+            return f"in the joint-only region for the first {n} of {len(trace.states)} states"
+
+        p.check(f"(b) witness stays joint-only, {objective}", stays)
+    p.skip("(b) the other cluster representatives", CLUSTERS)
+
+    for coalition, job in EXITS.items():
+
+        def exits(coalition=coalition, job=job):
+            out = {}
+            member = coalition.split("+")[0]
+            for objective in OBJECTIVES:
+                r = ranks(job)[objective]
+                if not r["forced"]:
+                    out[objective] = "no exit can be forced"
+                elif r["rank"] is None:
+                    out[objective] = "exit forced, in more than 12 ticks"
+                else:
+                    move = r["moves"].get(member, [])
+                    out[objective] = (
+                        f"exit forced in {r['rank']} tick(s); {member}'s first moves: {move}"
+                    )
+            return out
+
+        p.report(
+            f"(c) forced exit from the joint kernel, {{{coalition.replace('+', ', ')}}}", exits
+        )
+    p.finish()

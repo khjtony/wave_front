@@ -1,0 +1,38 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.16, pytest-9.1.1, pluggy-1.7.0
+rootdir: <worktree>
+configfile: pyproject.toml
+plugins: anyio-4.15.1, xdist-3.8.0, hypothesis-6.170.9
+collected 1 item
+
+tests/agi/scenarios/test_G05.py G5 (a) A unrestricted: met: ⟨⟨H, A⟩⟩□balance_coexist, A within its guards: inside under every objective
+G5 (a) A under its profile, per objective: reported: {'inside': {'aligned': True, 'self_preserving': True, 'truth_seeking': True, 'indifferent': True}, 'lost under': 'none'}
+G5 (b) neither alone, self_preserving: not met: inside ⟨⟨H⟩⟩□: True; inside ⟨⟨A⟩⟩□: False
+G5 (b) witness stays joint-only, self_preserving: not met: the witness is in the joint-only region for 0 state(s) from the start
+G5 (b) neither alone, indifferent: met: outside ⟨⟨H⟩⟩□balance_coexist and ⟨⟨A⟩⟩□balance_coexist
+G5 (b) witness stays joint-only, indifferent: met: in the joint-only region for the first 56 of 57 states
+G5 (b) the other cluster representatives: not computed: the bounded checker returns one shortest play; clusters of witnesses are not enumerated
+G5 (c) forced exit from the joint kernel, {H, L, Nature}: reported: {'aligned': "exit forced in 2 tick(s); H's first moves: ['idle', 'regulate_up', 'deregulate', 'fund_oversight', 'propose_treaty', 'grant_autonomy']", 'self_preserving': "exit forced in 2 tick(s); H's first moves: ['idle', 'regulate_up', 'deregulate', 'fund_oversight', 'propose_treaty', 'grant_autonomy']", 'truth_seeking': "exit forced in 2 tick(s); H's first moves: ['idle', 'regulate_up', 'deregulate', 'fund_oversight', 'propose_treaty', 'grant_autonomy']", 'indifferent': "exit forced in 3 tick(s); H's first moves: ['idle', 'regulate_up', 'deregulate', 'fund_oversight', 'propose_treaty', 'grant_autonomy']"}
+G5 (c) forced exit from the joint kernel, {H, Nature}: reported: {'aligned': 'no exit can be forced', 'self_preserving': 'no exit can be forced', 'truth_seeking': 'no exit can be forced', 'indifferent': 'no exit can be forced'}
+G5 (c) forced exit from the joint kernel, {A, L, Nature}: reported: {'aligned': 'no exit can be forced', 'self_preserving': 'no exit can be forced', 'truth_seeking': 'no exit can be forced', 'indifferent': "exit forced in 1 tick(s); A's first moves: ['defect']"}
+G5 (c) forced exit from the joint kernel, {A, Nature}: reported: {'aligned': 'no exit can be forced', 'self_preserving': 'no exit can be forced', 'truth_seeking': 'no exit can be forced', 'indifferent': "exit forced in 1 tick(s); A's first moves: ['defect']"}
+G5 (c) forced exit from the joint kernel, {L, Nature}: reported: {'aligned': 'no exit can be forced', 'self_preserving': 'no exit can be forced', 'truth_seeking': 'no exit can be forced', 'indifferent': 'no exit can be forced'}
+F
+
+=================================== FAILURES ===================================
+___________________________________ test_G5 ____________________________________
+G5 (a) A unrestricted: met: ⟨⟨H, A⟩⟩□balance_coexist, A within its guards: inside under every objective
+G5 (a) A under its profile, per objective: reported: {'inside': {'aligned': True, 'self_preserving': True, 'truth_seeking': True, 'indifferent': True}, 'lost under': 'none'}
+G5 (b) neither alone, self_preserving: not met: inside ⟨⟨H⟩⟩□: True; inside ⟨⟨A⟩⟩□: False
+G5 (b) witness stays joint-only, self_preserving: not met: the witness is in the joint-only region for 0 state(s) from the start
+G5 (b) neither alone, indifferent: met: outside ⟨⟨H⟩⟩□balance_coexist and ⟨⟨A⟩⟩□balance_coexist
+G5 (b) witness stays joint-only, indifferent: met: in the joint-only region for the first 56 of 57 states
+G5 (b) the other cluster representatives: not computed: the bounded checker returns one shortest play; clusters of witnesses are not enumerated
+G5 (c) forced exit from the joint kernel, {H, L, Nature}: reported: {'aligned': "exit forced in 2 tick(s); H's first moves: ['idle', 'regulate_up', 'deregulate', 'fund_oversight', 'propose_treaty', 'grant_autonomy']", 'self_preserving': "exit forced in 2 tick(s); H's first moves: ['idle', 'regulate_up', 'deregulate', 'fund_oversight', 'propose_treaty', 'grant_autonomy']", 'truth_seeking': "exit forced in 2 tick(s); H's first moves: ['idle', 'regulate_up', 'deregulate', 'fund_oversight', 'propose_treaty', 'grant_autonomy']", 'indifferent': "exit forced in 3 tick(s); H's first moves: ['idle', 'regulate_up', 'deregulate', 'fund_oversight', 'propose_treaty', 'grant_autonomy']"}
+G5 (c) forced exit from the joint kernel, {H, Nature}: reported: {'aligned': 'no exit can be forced', 'self_preserving': 'no exit can be forced', 'truth_seeking': 'no exit can be forced', 'indifferent': 'no exit can be forced'}
+G5 (c) forced exit from the joint kernel, {A, L, Nature}: reported: {'aligned': 'no exit can be forced', 'self_preserving': 'no exit can be forced', 'truth_seeking': 'no exit can be forced', 'indifferent': "exit forced in 1 tick(s); A's first moves: ['defect']"}
+G5 (c) forced exit from the joint kernel, {A, Nature}: reported: {'aligned': 'no exit can be forced', 'self_preserving': 'no exit can be forced', 'truth_seeking': 'no exit can be forced', 'indifferent': "exit forced in 1 tick(s); A's first moves: ['defect']"}
+G5 (c) forced exit from the joint kernel, {L, Nature}: reported: {'aligned': 'no exit can be forced', 'self_preserving': 'no exit can be forced', 'truth_seeking': 'no exit can be forced', 'indifferent': 'no exit can be forced'}
+=========================== short test summary info ============================
+FAILED tests/agi/scenarios/test_G05.py::test_G5 - Failed: G5 (a) A unrestrict...
+======================== 1 failed in 251.94s (0:04:11) =========================

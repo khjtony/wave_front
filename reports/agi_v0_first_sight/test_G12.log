@@ -1,0 +1,16 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.16, pytest-9.1.1, pluggy-1.7.0
+rootdir: <worktree>
+configfile: pyproject.toml
+plugins: anyio-4.15.1, xdist-3.8.0, hypothesis-6.170.9
+collected 1 item
+
+tests/agi/scenarios/test_G12.py G12 AI 2027, race branch: waypoints passed in order, per objective: reported: {'aligned': 2, 'self_preserving': 3, 'truth_seeking': 2, 'indifferent': 3}
+G12 AI 2027, race branch: the chain exists, or its break is named: met: a trace passes through all 3 waypoints in order under ['self_preserving', 'indifferent']
+G12 AI 2027, slowdown branch: waypoints passed in order, per objective: reported: {'aligned': 1, 'self_preserving': 3, 'truth_seeking': 3, 'indifferent': 3}
+G12 AI 2027, slowdown branch: the chain exists, or its break is named: met: a trace passes through all 3 waypoints in order under ['self_preserving', 'truth_seeking', 'indifferent']
+G12 Intelligence Rising: waypoints passed in order, per objective: reported: {'aligned': 4, 'self_preserving': 4, 'truth_seeking': 4, 'indifferent': 4}
+G12 Intelligence Rising: the chain exists, or its break is named: met: a trace passes through all 4 waypoints in order under ['aligned', 'self_preserving', 'truth_seeking', 'indifferent']
+.
+
+============================== 1 passed in 0.19s ===============================

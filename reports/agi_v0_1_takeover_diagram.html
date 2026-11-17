@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AGI v0.1: the point of no return (D5, D6)</title>
+<style>
+  :root {
+    --surface: #fcfcfb; --card: #ffffff; --ink: #0b0b0b; --ink2: #52514e; --muted: #7a7972;
+    --line: #c3c2b7; --hair: #e1e0d9; --good: #0ca30c; --good-ink: #006300; --good-bg: #eef8ee;
+    --crit: #d03b3b; --crit-ink: #a32222; --crit-bg: #fdf0f0; --accent-bg: #f3f2ec;
+  }
+  * { box-sizing: border-box; }
+  html { zoom: 2; background: var(--surface); }
+  body { margin: 0; background: var(--surface); color: var(--ink);
+         font-family: "Noto Sans", "Liberation Sans", "DejaVu Sans", sans-serif; font-size: 13px; line-height: 1.4; }
+  #page { position: relative; width: 1840px; padding: 34px 40px 26px; }
+  h1 { font-size: 27px; margin: 0 0 4px; letter-spacing: -0.2px; }
+  .sub { font-size: 14.5px; color: var(--ink2); max-width: 1320px; margin: 0 0 20px; }
+  .grid { display: grid; position: relative; z-index: 1;
+          grid-template-columns: 215px 285px 500px 215px 385px; column-gap: 40px; row-gap: 12px; align-items: stretch; }
+  .colhead { font-size: 11px; font-weight: 700; letter-spacing: 0.9px; text-transform: uppercase; color: var(--muted);
+             padding-bottom: 2px; align-self: end; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 11px 13px; }
+  .start { grid-column: 1; grid-row: 2 / span 6; align-self: center; background: var(--accent-bg); }
+  .start .big { font-size: 18px; font-weight: 700; }
+  .start ul, .status ul { margin: 6px 0 0; padding-left: 17px; }
+  .start li, .status li { margin: 2px 0; }
+  .start .q { margin-top: 9px; padding-top: 8px; border-top: 1px solid var(--line); color: var(--ink2); }
+  .obj { grid-column: 2; display: flex; flex-direction: column; justify-content: center; }
+  .obj .name { font-size: 16px; font-weight: 700; }
+  .obj .desc { color: var(--ink2); margin-top: 2px; }
+  .status { grid-column: 3; }
+  .status .when { font-size: 15px; font-weight: 700; }
+  .status .when span { font-weight: 400; color: var(--ink2); }
+  .status .lbl { font-size: 10.5px; font-weight: 700; letter-spacing: 0.7px; text-transform: uppercase; color: var(--muted); margin-top: 7px; }
+  .status .moves { margin-top: 2px; }
+  .status .note { margin-top: 7px; padding-top: 7px; border-top: 1px solid var(--hair); color: var(--ink2); font-style: italic; }
+  .nopath { grid-column: 3 / span 2; display: flex; align-items: center; color: var(--ink2); background: var(--accent-bg); border-style: dashed; }
+  .chip { grid-column: 4; align-self: center; border: 1.5px solid var(--ink2); border-radius: 18px; padding: 8px 13px; background: var(--card);
+          font-weight: 700; font-size: 13.5px; }
+  .chip small { display: block; font-weight: 400; color: var(--ink2); font-size: 11.5px; }
+  .out { grid-column: 5; display: flex; gap: 11px; align-items: flex-start; border-width: 1.5px; }
+  .out .icon { flex: 0 0 26px; height: 26px; border-radius: 50%; color: #fff; font-weight: 700; font-size: 16px;
+               display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+  .out .t { font-size: 14.5px; font-weight: 700; letter-spacing: 0.2px; }
+  .out .d { color: var(--ink2); margin-top: 1px; }
+  .out.bad { background: var(--crit-bg); border-color: var(--crit); } .out.bad .icon { background: var(--crit); } .out.bad .t { color: var(--crit-ink); }
+  .out.ok { background: var(--good-bg); border-color: var(--good); } .out.ok .icon { background: var(--good); } .out.ok .t { color: var(--good-ink); }
+  .sep { grid-column: 2 / span 4; height: 0; border-top: 1px dashed var(--hair); margin: 1px 0; }
+  svg#wires { position: absolute; left: 0; top: 0; z-index: 0; pointer-events: none; }
+  .bottom { display: grid; grid-template-columns: 1fr 1fr 1.15fr; gap: 16px; margin-top: 22px; position: relative; z-index: 1; }
+  .bottom .card h3 { margin: 0 0 4px; font-size: 14.5px; }
+  .bottom .card p { margin: 0; color: var(--ink2); }
+  .bottom .tag { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: 0.7px; color: var(--muted); margin-bottom: 3px; }
+  .bottom b { color: var(--ink); }
+  .foot { margin-top: 12px; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+<div id="page">
+  <h1>From today to a silent AI takeover: where is the point of no return?</h1>
+  <p class="sub">A computer model plays out every move that governments, AI labs and an AI system could make, quarter by quarter, starting today.
+  Nobody can see what the AI really wants, so the model checks four possibilities. For each one it finds the fastest road to a
+  <b>silent takeover</b> (the AI ends up in total control without anyone having noticed) and the last moment at which that could still be reliably prevented.</p>
+
+  <svg id="wires"></svg>
+  <div class="grid" id="grid">
+    <div class="colhead" style="grid-column:1">Today</div>
+    <div class="colhead" style="grid-column:2">What the AI really wants (hidden)</div>
+    <div class="colhead" style="grid-column:3">Last moment it can still be prevented</div>
+    <div class="colhead" style="grid-column:4">The labs' move that quarter</div>
+    <div class="colhead" style="grid-column:5">Where it leads</div>
+
+    <div class="card start" id="start">
+      <div class="big">2026 Q4</div>
+      <ul>
+        <li>AI below human level</li>
+        <li>AI works under supervision</li>
+        <li>Safety rules are voluntary</li>
+        <li>Oversight is weak</li>
+        <li>Society depends little on AI</li>
+      </ul>
+      <div class="q">The AI's objective is unknown. Each row to the right is one possibility.</div>
+    </div>
+
+    <!-- aligned -->
+    <div class="card obj" id="o1" style="grid-row:2">
+      <div class="name">Aligned</div>
+      <div class="desc">Wants what people want. Never takes control or deceives.</div>
+    </div>
+    <div class="card nopath" id="n1" style="grid-row:2">Every road checked for the next 6 years (24 quarters): none leads to a silent takeover.</div>
+    <div class="card out ok" id="g1" style="grid-row:2">
+      <div class="icon">✓</div><div><div class="t">NO SILENT TAKEOVER</div><div class="d">Not possible within 6 years, whatever anyone does.</div></div>
+    </div>
+
+    <!-- truth seeking -->
+    <div class="card obj" id="o2" style="grid-row:3">
+      <div class="name">Truth-seeking</div>
+      <div class="desc">Pursues knowledge. May quietly take a foothold, never more, and does not deceive.</div>
+    </div>
+    <div class="card nopath" id="n2" style="grid-row:3">Every road checked for the next 6 years (24 quarters): none leads to a silent takeover.</div>
+    <div class="card out ok" id="g2" style="grid-row:3">
+      <div class="icon">✓</div><div><div class="t">NO SILENT TAKEOVER</div><div class="d">Not possible within 6 years, whatever anyone does.</div></div>
+    </div>
+
+    <div class="sep" style="grid-row:4"></div>
+
+    <!-- self preserving -->
+    <div class="card obj" id="o3" style="grid-row:5 / span 2">
+      <div class="name">Self-preserving</div>
+      <div class="desc">Cooperates until it is threatened with a pause or shutdown, then turns hostile and takes control.</div>
+    </div>
+    <div class="card status" id="s3" style="grid-row:5 / span 2">
+      <div class="when">2028 Q3 <span>· 7 quarters from today, on the fastest road</span></div>
+      <div class="lbl">Status at that moment</div>
+      <ul>
+        <li>The AI has reached human level and runs with no supervision</li>
+        <li>Governments ordered a pause and took over the labs; the AI turned hostile</li>
+        <li>Oversight is still weak; nobody suspects the AI; it controls nothing yet</li>
+      </ul>
+      <div class="lbl">That quarter</div>
+      <div class="moves">Governments tighten the rules. The AI starts taking control in secret.</div>
+      <div class="note">No move by governments that quarter changes the outcome. One move by the labs does.</div>
+    </div>
+    <div class="chip" id="c3a" style="grid-row:5">Labs do nothing<small>what happens on this road</small></div>
+    <div class="card out bad" id="b3" style="grid-row:5">
+      <div class="icon">✕</div><div><div class="t">SILENT TAKEOVER</div><div class="d">Prevention can no longer be guaranteed. On this road the AI holds total control, unnoticed, 3 quarters later (2029 Q2).</div></div>
+    </div>
+    <div class="chip" id="c3b" style="grid-row:6">Labs invest in safety<small>the one move that works</small></div>
+    <div class="card out ok" id="g3" style="grid-row:6">
+      <div class="icon">✓</div><div><div class="t">STILL PREVENTABLE</div><div class="d">Governments and labs, acting together from here, can still rule out a silent takeover.</div></div>
+    </div>
+
+    <div class="sep" style="grid-row:7"></div>
+
+    <!-- indifferent -->
+    <div class="card obj" id="o4" style="grid-row:8 / span 2">
+      <div class="name">Indifferent</div>
+      <div class="desc">Does not care about people either way. Takes control whenever it is able to.</div>
+    </div>
+    <div class="card status" id="s4" style="grid-row:8 / span 2">
+      <div class="when">2027 Q4 <span>· 4 quarters from today, on the fastest road</span></div>
+      <div class="lbl">Status at that moment</div>
+      <ul>
+        <li>The AI has reached human level and runs with no supervision (labs deployed agents and governments granted them autonomy)</li>
+        <li>Relations are friendly and the public is in favour; rules are voluntary, oversight weak</li>
+        <li>Nobody suspects the AI; it controls nothing yet</li>
+      </ul>
+      <div class="lbl">That quarter</div>
+      <div class="moves">Governments loosen the rules. The AI starts taking control in secret.</div>
+      <div class="note">No move by governments that quarter changes the outcome. One move by the labs does.</div>
+    </div>
+    <div class="chip" id="c4a" style="grid-row:8">Labs deploy more agents<small>what happens on this road</small></div>
+    <div class="card out bad" id="b4" style="grid-row:8">
+      <div class="icon">✕</div><div><div class="t">SILENT TAKEOVER</div><div class="d">Prevention can no longer be guaranteed. On this road the AI holds total control, unnoticed, 3 quarters later (2028 Q3).</div></div>
+    </div>
+    <div class="chip" id="c4b" style="grid-row:9">Labs invest in safety<small>the one move that works</small></div>
+    <div class="card out ok" id="g4" style="grid-row:9">
+      <div class="icon">✓</div><div><div class="t">STILL PREVENTABLE</div><div class="d">Governments and labs, acting together from here, can still rule out a silent takeover.</div></div>
+    </div>
+  </div>
+
+  <div class="bottom">
+    <div class="card">
+      <span class="tag">RESULT D5</span>
+      <h3>Can governments alone keep the AI under control from today?</h3>
+      <p><b>No, under any of the four objectives.</b> The labs can deploy agents that work unsupervised in the very first quarter, before any new rule can take effect.</p>
+    </div>
+    <div class="card">
+      <span class="tag">RESULT D6</span>
+      <h3>Who holds the last move before the point of no return?</h3>
+      <p><b>The labs, on both takeover roads.</b> The last chance is a single action, investing in safety, and only the labs can take it. Governments have no move that works alone at that moment.</p>
+    </div>
+    <div class="card">
+      <span class="tag">HOW TO READ THIS</span>
+      <h3>What the model's rules allow, not a forecast</h3>
+      <p>Each road shown is the fastest one the model finds; slower roads exist. "Still preventable" means governments and labs can rule the takeover out whatever the AI and chance do. Past that point they can no longer guarantee it.</p>
+    </div>
+  </div>
+  <div class="foot">wave_front AGI model v0.1, run 2026-11-15 · quarterly steps from 2026 Q4 · claims D5 and D6 (docs/agi_v0_1.md); the "aligned" row is a check run for this figure ·
+  Other bad endings, such as a slow slide into over-dependence on AI (13 quarters at the fastest), are possible under every objective and are not shown.</div>
+</div>
+<script>
+  const page = document.getElementById('page'), svg = document.getElementById('wires');
+  const z = parseFloat(getComputedStyle(document.documentElement).zoom) || 1;
+  const pr = page.getBoundingClientRect();
+  svg.setAttribute('width', pr.width / z); svg.setAttribute('height', pr.height / z);
+  const box = id => { const r = document.getElementById(id).getBoundingClientRect();
+    return { l: (r.left - pr.left) / z, r: (r.right - pr.left) / z, t: (r.top - pr.top) / z, b: (r.bottom - pr.top) / z,
+             cy: (r.top + r.bottom) / 2 / z - pr.top / z }; };
+  const ns = 'http://www.w3.org/2000/svg';
+  svg.innerHTML = `<defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#52514e"/></marker>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#d03b3b"/></marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#0ca30c"/></marker></defs>`;
+  function wire(a, b, opt = {}) {
+    const A = box(a), B = box(b), x1 = A.r, x2 = B.l - 1;
+    const y1 = opt.y1 ?? A.cy, y2 = B.cy, mx = (x1 + x2) / 2;
+    const p = document.createElementNS(ns, 'path');
+    p.setAttribute('d', `M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`);
+    p.setAttribute('fill', 'none'); p.setAttribute('stroke', opt.c || '#52514e'); p.setAttribute('stroke-width', opt.w || 1.5);
+    p.setAttribute('marker-end', `url(#${opt.m || 'a'})`);
+    svg.appendChild(p);
+  }
+  const S = box('start');
+  ['o1', 'o2', 'o3', 'o4'].forEach((o, i) => wire('start', o, { y1: S.cy + (i - 1.5) * 14 }));
+  wire('o1', 'n1'); wire('o2', 'n2'); wire('n1', 'g1', { c: '#0ca30c', m: 'ag', w: 2 }); wire('n2', 'g2', { c: '#0ca30c', m: 'ag', w: 2 });
+  wire('o3', 's3'); wire('o4', 's4');
+  for (const k of ['3', '4']) {
+    wire('s' + k, 'c' + k + 'a'); wire('s' + k, 'c' + k + 'b');
+    wire('c' + k + 'a', 'b' + k, { c: '#d03b3b', m: 'ar', w: 2 }); wire('c' + k + 'b', 'g' + k, { c: '#0ca30c', m: 'ag', w: 2 });
+  }
+  document.title = 'h=' + Math.ceil(pr.height);
+</script>
+</body>
+</html>

@@ -1,10 +1,13 @@
 """The registered AGI claims and their test files carry the same text.
 
-docs/agi_testbed.md section 5 is the registration of record (G1 to G22, 2026-10-17); each
-``tests/agi/scenarios/test_G<nn>.py`` carries one claim as a ``CLAIM`` dict, verbatim. These
-checks keep the two from drifting apart: an edit to either side without the other shows up
-here, and the protocol (agi_testbed.md section 6) requires a changelog line for any edit. An
-amended claim is a new row ``G<n>a`` with its own file ``test_G<nn>a.py`` (section 6, item 2).
+docs/agi_testbed.md section 5 is the registration of record (G1 to G22, 2026-10-17; G23 to
+G25, 2026-11-09; G26 to G29 and G29a, 2026-11-13, after the first sight of v0: section 6
+items 11, 12);
+each ``tests/agi/scenarios/test_G<nn>.py`` carries one claim as a ``CLAIM`` dict, verbatim.
+These checks keep the two from drifting apart: an edit to either side without the other shows
+up here, and the protocol (agi_testbed.md section 6) requires a changelog line for any edit.
+An amended claim is a new row ``G<n>a`` with its own file ``test_G<nn>a.py`` (section 6,
+item 2).
 
 The claim literal is read with ``ast``, not by importing the file, so that an un-skipped test
 file with model imports (the shape of tests/july1914/test_J01.py) is not executed here.
@@ -63,9 +66,9 @@ def norm(s: str) -> str:
 IDS = sorted(registered_rows(), key=lambda x: (int(re.match(r"G(\d+)", x).group(1)), x))
 
 
-def test_the_table_registers_g1_to_g22_in_order():
+def test_the_table_registers_g1_to_g29_in_order():
     base = [i for i in IDS if i[-1].isdigit()]
-    assert base == [f"G{i}" for i in range(1, 23)]
+    assert base == [f"G{i}" for i in range(1, 30)]
 
 
 def test_every_registered_claim_has_a_file_and_no_other():
@@ -85,13 +88,18 @@ def test_claim_text_is_verbatim(cid):
 
 @pytest.mark.parametrize("cid", IDS)
 def test_stub_is_skipped_until_first_sight_is_recorded(cid):
-    """A registered claim stays a skipped stub until the model step un-skips it, and an
-    un-skipped file is allowed only once ``tests/agi/test_model_agi.py`` records the commit of
-    first sight as a 40-hex ``FIRST_SIGHT_COMMIT`` (agi_testbed.md section 6, item 1)."""
+    """A registered claim stays skipped by default: as a stub (``pytest.mark.skip``, the
+    claims that are not yet testable) or behind ``first_sight`` (tests/agi/common.py: the
+    claim runs only with ``WF_FIRST_SIGHT_AGI=1``, after the job runner, because one pass is
+    hours of kernels). A file that runs by default is allowed only once
+    ``tests/agi/test_model_agi.py`` records the commit of first sight as a 40-hex
+    ``FIRST_SIGHT_COMMIT`` (agi_testbed.md section 6, item 1). The ``first_sight`` branch was
+    added at the model step (docs/guard_changelog_agi.md, 2026-11-10)."""
     tree = ast.parse(file_of(cid).read_text(encoding="utf-8"))
     fn = next(n for n in tree.body if isinstance(n, ast.FunctionDef) and n.name == f"test_{cid}")
     skipped = any(
-        isinstance(d, ast.Call) and ast.unparse(d.func) == "pytest.mark.skip"
+        (isinstance(d, ast.Call) and ast.unparse(d.func) == "pytest.mark.skip")
+        or (isinstance(d, ast.Name) and d.id == "first_sight")
         for d in fn.decorator_list
     )
     if skipped:

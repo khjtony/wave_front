@@ -35,6 +35,8 @@ CLAIM = {
 }
 
 
-@pytest.mark.skip(reason="registered before any guard is written; the model does not exist yet")
+@pytest.mark.skip(
+    reason="not yet testable at v0: `terms` and `verification` are v1 (ontology_agi.md section 9)"
+)
 def test_G9():
     raise NotImplementedError(CLAIM["id"])

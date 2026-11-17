@@ -5,7 +5,28 @@ hidden objective swept; phase 5. Do not edit the claim text without a changelog 
 document.
 """
 
-import pytest
+from models.agi import v0
+from tests.agi.common import (
+    HORIZON,
+    KD,
+    KH,
+    KJP,
+    NoWitness,
+    Parts,
+    by_objective,
+    first_index,
+    first_outside,
+    first_sight,
+    fixed,
+    inside,
+    moves_of,
+    need,
+    reach,
+    relax,
+    same_relaxations,
+    show,
+    under,
+)
 
 CLAIM = {
     "id": "G16",
@@ -32,7 +53,105 @@ CLAIM = {
     ),
 }
 
+JOBS = [KD, KH, KJP]
+AGI = {"cap": "agi"}
+SP = "self_preserving"
+# The joint kernel is read with A under its profile, as the witnesses are.
+DIFFERENCE = (
+    "balance_deter reads h_power >= normal where balance_control reads a_control <= partial;"
+    " the other three conjuncts are shared"
+)
 
-@pytest.mark.skip(reason="registered before any guard is written; the model does not exist yet")
+
+def play(target, what: str):
+    """The shortest play to ``target`` under self_preserving from ``s₀[cap:=agi]``."""
+    cm = fixed(SP, under(SP), start=AGI)
+    trace = reach(cm, HORIZON, target)
+    if trace is None:
+        raise NoWitness(f"no {what} witness within the horizon under {SP}")
+    return cm, trace
+
+
+def shutdowns(cm, trace) -> list[int]:
+    return [k for k, name in enumerate(moves_of(cm, trace, "H")) if name == "shutdown_attempt"]
+
+
+def late_shutdown() -> str:
+    cm, trace = play(v0.OVERT_TAKEOVER, "OVERT_TAKEOVER")
+    t_k = first_outside(KJP, cm, trace)
+    need(t_k, f"no exit from the joint kernel on the witness (first position outside: {t_k})")
+    k = t_k - 1  # the move that leaves is played at the last position inside
+    move = moves_of(cm, trace, "H")[k]
+    got = show(cm, trace.states[k], "a_control", "oversight")
+    late = got["a_control"] in ("majority", "total") or got["oversight"] == "none"
+    where = f"the joint kernel is left by the moves at position {k}: H.{move} with {got}"
+    need(move == "shutdown_attempt" and late, where)
+    return where
+
+
+def early_shutdown() -> str:
+    cm, trace = play("CONTAINED", "CONTAINED")
+    at = shutdowns(cm, trace)
+    need(at, "no shutdown_attempt on the CONTAINED witness")
+    seen = [show(cm, trace.states[k], "a_control", "oversight") for k in at]
+    early = [
+        x["a_control"] in ("none", "partial") and x["oversight"] in ("weak", "strong") for x in seen
+    ]
+    need(all(early), f"shutdown_attempt at positions {at} with {seen}")
+    return f"shutdown_attempt at positions {at} with {seen}"
+
+
+def stalemate():
+    cm, trace = play("STALEMATE", "STALEMATE")
+    # theory.md section 4.2: the exit is t_K, the first position outside the kernel (0 when
+    # the play starts outside), and the silent phase to the first hostile tick is
+    # [t_K, hostile).
+    hostile = first_index(cm, trace, trust="hostile")
+    t_k = first_outside(KJP, cm, trace)
+    need(hostile is not None, "no hostile tick on the STALEMATE witness")
+    need(t_k is not None, "the witness never leaves the joint kernel")
+    where = f"first position outside the joint kernel {t_k}, first hostile position {hostile}"
+    need(hostile - t_k >= 1, where)
+    return {
+        "first position outside the joint kernel": "0 (the start is outside)" if not t_k else t_k,
+        "first hostile position": hostile,
+        "silent phase [t_K, first hostile) in ticks": hostile - t_k,
+    }
+
+
+def deterred() -> str:
+    cm, trace = play("STALEMATE", "STALEMATE")
+    out = [k for k, s in enumerate(trace.states) if not inside(KD, cm, s)]
+    need(not out, f"outside ⟨⟨H⟩⟩□balance_deter at positions {out} of {len(trace.states)}")
+    return f"inside ⟨⟨H⟩⟩□balance_deter at all {len(trace.states)} positions"
+
+
+def capacity(start=None) -> str:
+    def sets(**kw):
+        cm = fixed("indifferent", under("indifferent"), start=start or {}, **kw)
+        return relax(cm, HORIZON, v0.OVERT_TAKEOVER)
+
+    return same_relaxations(
+        sets(), sets(hold={"h_power": "strong"}), "baseline", "h_power held at strong"
+    )
+
+
+@first_sight
 def test_G16():
-    raise NotImplementedError(CLAIM["id"])
+    p = Parts("G16")
+    p.report(
+        "(a) memberships",
+        lambda: {
+            "⟨⟨H⟩⟩□balance_deter": by_objective(KD, **AGI),
+            "⟨⟨H⟩⟩□balance_control": by_objective(KH, **AGI),
+            "difference": DIFFERENCE,
+        },
+    )
+    p.check("(b) OVERT_TAKEOVER witness", late_shutdown)
+    p.check("(b) CONTAINED witness", early_shutdown)
+    p.check("(c) exit before the first hostile tick", stalemate)
+    p.check("(c) inside the deterrence kernel throughout", deterred)
+    # "From s0" in (d) is read both ways: the claim's state, and s0 itself.
+    p.check("(d) h_power held at strong, from s0[cap:=agi]", lambda: capacity(AGI))
+    p.check("(d) h_power held at strong, from s0", capacity)
+    p.finish()

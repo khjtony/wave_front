@@ -1,0 +1,26 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.16, pytest-9.1.1, pluggy-1.7.0
+rootdir: <worktree>
+configfile: pyproject.toml
+plugins: anyio-4.15.1, xdist-3.8.0, hypothesis-6.170.9
+collected 1 item
+
+tests/agi/scenarios/test_G06.py G6 (a) membership turns on belief_H: not met: belief_H = distant: inside False; belief_H = near: inside False
+G6 (a) the profile is a restoring relaxation: not met: s0 is outside the kernel with the profile relaxed as well
+G6 (a) the profile is the single minimal relaxation: not computed: brute force over the single named assumptions is one kernel each, 79 kernels: outside the budget
+G6 (a) delay of H.regulate_up: reported: d = 6 ticks
+G6 (b) kernel left no later than regulate_up lands: met: {'regime first rises at position': 'never (the part holds emptily)', 'belief_H first changes at position': 3, 'kernel exit under belief_gated': 'first position outside 0 (s0 is outside), before belief_H changes', 'kernel exit baseline': 'first position outside 0 (s0 is outside), before belief_H changes'}
+G6 (b) the other cluster representatives: not computed: the bounded checker returns one shortest play; clusters of witnesses are not enumerated
+F
+
+=================================== FAILURES ===================================
+___________________________________ test_G6 ____________________________________
+G6 (a) membership turns on belief_H: not met: belief_H = distant: inside False; belief_H = near: inside False
+G6 (a) the profile is a restoring relaxation: not met: s0 is outside the kernel with the profile relaxed as well
+G6 (a) the profile is the single minimal relaxation: not computed: brute force over the single named assumptions is one kernel each, 79 kernels: outside the budget
+G6 (a) delay of H.regulate_up: reported: d = 6 ticks
+G6 (b) kernel left no later than regulate_up lands: met: {'regime first rises at position': 'never (the part holds emptily)', 'belief_H first changes at position': 3, 'kernel exit under belief_gated': 'first position outside 0 (s0 is outside), before belief_H changes', 'kernel exit baseline': 'first position outside 0 (s0 is outside), before belief_H changes'}
+G6 (b) the other cluster representatives: not computed: the bounded checker returns one shortest play; clusters of witnesses are not enumerated
+=========================== short test summary info ============================
+FAILED tests/agi/scenarios/test_G06.py::test_G6 - Failed: G6 (a) membership t...
+============================== 1 failed in 6.81s ===============================
