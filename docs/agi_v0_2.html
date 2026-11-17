@@ -202,7 +202,7 @@
   <h2>5 · Cost and order</h2>
   <ul class="plain">
     <li><b>Part A, now (30 GB):</b> the bounded parts of E1, E2, E3 (a) and E6 (a). Minutes each.</li>
-    <li><b>A timing probe</b> of one kernel on the all-on build, printing seconds, node counts and peaks only. The flag doubles the number of states and B's counter triples it; retraining adds none. v0.1's one counter cost 7 times the time and 1.8 times the memory, so the cost is not predictable from the count.</li>
+    <li><b>A timing probe</b> of one kernel on the all-on build, printing seconds, node counts and peaks only. The flag doubles the number of states, B's counter triples it and C's pending counter doubles it again (12 times in all with every channel on); retraining adds none. v0.1's one counter cost 7 times the time and 1.8 times the memory, so the cost is not predictable from the count.</li>
     <li><b>Part B, after the probe and the memory upgrade:</b> twelve kernels in all (E3: 2, E4: 2, E6: 1, E5: 8, of which some coincide with none of the others).</li>
   </ul>
 
@@ -230,6 +230,7 @@
   <h2>8 · Changelog</h2>
   <ul class="plain">
     <li>17 November 2026: drafted, the owner's decisions recorded, registered (E1 to E6 with test bodies) before any guard of v0.2 was written. A diagnostic had been run on v0.1 that day (section 1); no query of v0.2 had been run.</li>
+    <li>17 November 2026: the model (<code>models/agi_v0_2/v0_2.py</code>), its structure tests (<code>tests/agi_v0_2/test_model_v0_2.py</code>: the all-off build equals v0.1 action by action except for the flag; each channel's rule) and the timing probe, committed after the registration. Before any claim was run, the harness was checked on two queries no claim reads (the shortest play to <code>weights_open</code>, 1 tick, in the all-off and all-on builds).</li>
   </ul>
 
   <p class="meta">Related: <code>docs/agi_v0_1.md</code> (the v0.1 registration and results), <code>docs/agi_delays_2026-11-14.md</code> (delay sources; <code>L.open_weights</code> is delay 0 there), <code>reports/agi_terms_and_claims_2026-11-15.html</code> (terms).</p>
