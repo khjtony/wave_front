@@ -203,7 +203,9 @@
   <ul class="plain">
     <li><b>Part A, now (30 GB):</b> the bounded parts of E1, E2, E3 (a) and E6 (a). Minutes each.</li>
     <li><b>A timing probe</b> of one kernel on the all-on build, printing seconds, node counts and peaks only. The flag doubles the number of states, B's counter triples it and C's pending counter doubles it again (12 times in all with every consequence on); retraining adds none. v0.1's one counter cost 7 times the time and 1.8 times the memory, so the cost is not predictable from the count.</li>
-    <li><b>Part B, after the probe and the memory upgrade:</b> twelve kernels in all (E3: 2, E4: 2, E6: 1, E5: 8, of which some coincide with none of the others).</li>
+    <li><b>The probe, 17 November</b> (<code>reports/agi_v0_2_probe.log</code>; the 5900X host, 30 GB, one process alone; <code>⟨⟨H⟩⟩□balance_control</code>, <code>A</code> under its profile): every consequence off, 1,584 s and 9.6 GB (peak 223 million nodes); every consequence on, 4,864 s and 18.1 GB (peak 428 million nodes). Twelve times the states cost 3.1 times the time and 1.9 times the memory. One kernel at a time therefore fits the present 30 GB.</li>
+    <li><b>Part B's run, fixed 17 November on the probe alone:</b> the kernel parts run now, without waiting for the memory upgrade: E6, E3, E4, E5 in that order, one pytest process at a time, each kernel in a child of its own with a cap of 26 GB and 600 minutes. A kernel over either reads not computed and is run once more after the upgrade with a higher cap, logged here.</li>
+    <li><b>Part B:</b> twelve kernels in all (E3: 2, E4: 2, E6: 1, E5: 8, of which some coincide with none of the others).</li>
   </ul>
 
   <h2>6 · The owner's decisions of 17 November</h2>
@@ -232,6 +234,7 @@
     <li>17 November 2026: drafted, the owner's decisions recorded, registered (E1 to E6 with test bodies) before any guard of v0.2 was written. A diagnostic had been run on v0.1 that day (section 1); no query of v0.2 had been run.</li>
     <li>17 November 2026: the model (<code>models/agi_v0_2/v0_2.py</code>), its structure tests (<code>tests/agi_v0_2/test_model_v0_2.py</code>: the all-off build equals v0.1 action by action except for the flag; each consequence's rule) and the timing probe, committed after the registration. Before any claim was run, the harness was checked on two queries no claim reads (the shortest play to <code>weights_open</code>, 1 tick, in the all-off and all-on builds).</li>
     <li>17 November 2026: part A run once from <code>ee07a9c</code> (reports/agi_v0_2_part_a_2026-11-17.html): the bounded parts of E1, E2, E3 (a) and E6 (a) all met, 37 parts; E6 (a): 7 quarters from the aligned start. The kernel parts read not computed. The timing probe started after it.</li>
+    <li>17 November 2026: the timing probe (section 5): all off 1,584 s and 9.6 GB, all on 4,864 s and 18.1 GB. It printed time and memory only. On that, part B is run on the present machine, one kernel at a time, in the order E6, E3, E4, E5.</li>
     <li>17 November 2026, wording only: the four switchable effects of a release, first called "channels", are called <b>consequences</b> on the owner's instruction (the release is their prerequisite). The claim texts in <code>tests/agi_v0_2/scenarios/</code>, this page, the part A report, the model's comments and the probe's option were reworded; no rule, guard, reading or result changed. The parts log and the probe log of the first runs keep the old word.</li>
   </ul>
 

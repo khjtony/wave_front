@@ -1,0 +1,13 @@
+=== probe channels=none ee07a9c 2026-11-17 19:49:13 UTC
+layer 0 1582.101s nodes 122930
+done v0.2 channels=none ⟨⟨H⟩⟩□balance_control: 1583.6s peak 223089738 core c maxrss_kb 9588764
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 26:24.26
+	Maximum resident set size (kbytes): 9588764
+exit 0 2026-11-17 20:15:38 UTC
+=== probe channels=all 4b5d30d 2026-11-17 20:15:38 UTC
+layer 0 4861.91s nodes 252487
+done v0.2 channels=all ⟨⟨H⟩⟩□balance_control: 4864.1s peak 427715239 core c maxrss_kb 18099832
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:21:05
+	Maximum resident set size (kbytes): 18099832
+exit 0 2026-11-17 21:36:43 UTC
+PROBE_DONE
