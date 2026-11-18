@@ -26,6 +26,11 @@ merely common everywhere): "moments inside by status", the number of moves made 
 of each status while the play was still inside ``K``, so that the exits from a status can be
 set against the time random plays spend in it.
 
+Extended 2026-11-17 (the owner's next question) to the other bad endings: ``--ending E`` reads
+the exits from ``⟨⟨H, L⟩⟩□¬E`` against the kernel stored by
+``scripts/agi_v0_1_endings_census.py kernel --ending E``, and ``--transitions`` sets the
+length of a play (56 for the horizon). The defaults reproduce the first census.
+
 This reads the last moment only: what would have kept the guarantee at the exit move, not
 what earlier in a play made an exit less likely.
 
@@ -70,10 +75,19 @@ def _sampler():
     return mod
 
 
-def census(objective: str, plays: int, seed: int) -> dict:
+def _module(name: str):
+    spec = importlib.util.spec_from_file_location(name, ROOT / "scripts" / f"{name}.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def census(
+    objective: str, plays: int, seed: int, ending: str = "SILENT_TAKEOVER", transitions: int = 24
+) -> dict:
     ps = _sampler()
     cm = ps.game()
-    with gzip.open(ps.STORE, "rb") as fh:
+    with gzip.open(_module("agi_v0_1_endings_census").store(ending), "rb") as fh:
         inside = ps.reader(pickle.load(fh), cm)
     (s0,) = [s for s in cm.initial_states() if cm.state_dict(s)["a_objective"] == objective]
     rng = random.Random(seed)
@@ -83,7 +97,7 @@ def census(objective: str, plays: int, seed: int) -> dict:
     t0 = time.perf_counter()
     for _ in range(plays):
         s, out = s0, False
-        for k in range(ps.K):
+        for k in range(transitions):
             if cm.is_terminal(s):
                 break
             if not out:
@@ -131,6 +145,8 @@ def census(objective: str, plays: int, seed: int) -> dict:
     return {
         "model": "agi_v0_1",
         "objective": objective,
+        "ending": ending,
+        "transitions": transitions,
         "plays": plays,
         "seed": seed,
         "exits": total,
@@ -158,9 +174,11 @@ def main() -> None:
     ap.add_argument("--objective", default="self_preserving")
     ap.add_argument("--plays", type=int, default=1_000_000)
     ap.add_argument("--seed", type=int, default=20261117)
+    ap.add_argument("--ending", default="SILENT_TAKEOVER")
+    ap.add_argument("--transitions", type=int, default=24)
     ap.add_argument("--out", type=Path, default=OUT)
     args = ap.parse_args()
-    result = census(args.objective, args.plays, args.seed)
+    result = census(args.objective, args.plays, args.seed, args.ending, args.transitions)
     args.out.write_text(json.dumps(result, indent=1) + "\n")
     print(f"{result['exits']} exits of {args.plays} plays in {result['seconds']}s -> {args.out}")
 
