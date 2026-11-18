@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AGI v0.3 Draft: Open-Weight Gap</title>
+<style>
+  :root {
+    color-scheme: light;
+    --surface: #fcfcfb; --card: #ffffff; --panel: #f3f2ec; --ink: #0b0b0b; --ink2: #52514e; --muted: #7a7972;
+    --line: #c3c2b7; --hair: #e1e0d9; --series: #2a78d6; --base: #a9a79c;
+    --good: #0ca30c; --good-ink: #006300; --crit: #d03b3b; --crit-ink: #a32222;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --surface: #1a1a19; --card: #232321; --panel: #2c2c2a; --ink: #f0efec; --ink2: #c3c2b7; --muted: #9b9a92;
+      --line: #4a4a46; --hair: #383835; --series: #3987e5; --base: #6f6e68;
+      --good: #0ca30c; --good-ink: #5fd35f; --crit: #d03b3b; --crit-ink: #f08a8a;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --surface: #1a1a19; --card: #232321; --panel: #2c2c2a; --ink: #f0efec; --ink2: #c3c2b7; --muted: #9b9a92;
+    --line: #4a4a46; --hair: #383835; --series: #3987e5; --base: #6f6e68;
+    --good: #0ca30c; --good-ink: #5fd35f; --crit: #d03b3b; --crit-ink: #f08a8a;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--surface); color: var(--ink);
+         font-family: "Noto Sans", "Liberation Sans", "DejaVu Sans", system-ui, sans-serif; font-size: 15px; line-height: 1.5; }
+  main { max-width: 1160px; margin: 0 auto; padding: 36px 16px 48px; }
+  h1 { font-size: 30px; line-height: 1.2; margin: 0 0 6px; letter-spacing: -0.2px; }
+  h2 { font-size: 21px; margin: 44px 0 6px; }
+  h3 { font-size: 16px; margin: 22px 0 6px; }
+  p { margin: 6px 0 10px; max-width: 78ch; }
+  .lede { color: var(--ink2); font-size: 16px; }
+  .meta { color: var(--muted); font-size: 12.5px; margin-top: 4px; }
+  code { font-family: "DejaVu Sans Mono", ui-monospace, monospace; font-size: 0.88em; background: var(--panel); padding: 1px 4px; border-radius: 3px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; }
+  .tag { font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--muted); }
+  .scroll { overflow-x: auto; }
+
+  /* verdict tiles */
+  .verdicts { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; margin-top: 22px; }
+  .verdict { display: flex; gap: 12px; align-items: flex-start; border-width: 1.5px; }
+  .dot { flex: 0 0 28px; height: 28px; border-radius: 50%; color: #fff; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .bad .dot { background: var(--crit); } .ok .dot { background: var(--good); }
+  .verdict.bad { border-color: var(--crit); background: color-mix(in srgb, var(--crit) 7%, var(--card)); }
+  .verdict.ok { border-color: var(--good); background: color-mix(in srgb, var(--good) 8%, var(--card)); }
+  .verdict .q { font-weight: 700; font-size: 16px; }
+  .verdict .a { margin-top: 2px; }
+  .verdict .a b.bad { color: var(--crit-ink); } .verdict .a b.ok { color: var(--good-ink); }
+  .verdict .s { color: var(--ink2); font-size: 13.5px; margin-top: 4px; }
+
+  /* concept figure */
+  figure { margin: 14px 0; }
+  figcaption { color: var(--ink2); font-size: 13px; margin-top: 6px; max-width: 78ch; }
+  svg text { font-family: inherit; fill: var(--ink); }
+  svg .t2 { fill: var(--ink2); }
+
+  /* D5 grid */
+  table { border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--hair); vertical-align: top; }
+  th { font-size: 11.5px; letter-spacing: 0.6px; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .pill { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; }
+  .pill i { width: 18px; height: 18px; border-radius: 50%; color: #fff; font-style: normal; font-size: 11px; display: inline-flex; align-items: center; justify-content: center; }
+  .pill.out i { background: var(--crit); } .pill.out { color: var(--crit-ink); }
+  .pill.in i { background: var(--good); } .pill.in { color: var(--good-ink); }
+
+  .why { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 14px; margin-top: 10px; }
+  .checks { list-style: none; margin: 8px 0 0; padding: 0; }
+  .checks li { display: grid; grid-template-columns: 1fr 74px 74px; gap: 6px; padding: 6px 0; border-bottom: 1px solid var(--hair); align-items: center; }
+  .checks li.head { font-size: 11px; letter-spacing: 0.6px; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+  .checks li.broken { background: color-mix(in srgb, var(--crit) 8%, transparent); margin: 0 -8px; padding: 6px 8px; border-radius: 4px; }
+  .opts { margin: 8px 0 0; padding: 0; list-style: none; }
+  .opts li { padding: 7px 0; border-bottom: 1px solid var(--hair); }
+  .opts b { display: block; }
+  .opts span { color: var(--ink2); font-size: 13.5px; }
+
+  /* timelines */
+  .tl { display: grid; gap: 3px; min-width: 980px; margin-top: 8px; font-size: 12px; }
+  .tl .rowlab { font-weight: 700; font-size: 12.5px; display: flex; align-items: center; padding-right: 8px; }
+  .tl .rowlab.sub { font-weight: 400; color: var(--ink2); }
+  .tl .q { text-align: center; font-weight: 700; padding: 3px 0; font-variant-numeric: tabular-nums; }
+  .tl .q small { display: block; font-weight: 400; color: var(--muted); }
+  .tl .zone { border-radius: 4px; padding: 3px 8px; font-weight: 700; font-size: 12px; color: #fff; }
+  .tl .zone.in { background: var(--good); } .tl .zone.lost { background: var(--crit); }
+  .tl .mv { background: var(--panel); border-radius: 4px; padding: 5px 6px; min-height: 40px; display: flex; align-items: center; justify-content: center; text-align: center; line-height: 1.25; }
+  .tl .mv.quiet { color: var(--muted); background: transparent; border: 1px dashed var(--hair); }
+  .tl .mv.exit { outline: 2px solid var(--crit); outline-offset: -1px; background: color-mix(in srgb, var(--crit) 12%, var(--card)); font-weight: 700; }
+  .tl .mv.hostile { background: color-mix(in srgb, var(--crit) 14%, var(--card)); }
+  .tl .lv { border-radius: 4px; padding: 4px 4px; text-align: center; min-height: 26px; display: flex; align-items: center; justify-content: center; }
+  .tl .gap { height: 8px; }
+  .tl .end { background: var(--crit); color: #fff; font-weight: 700; border-radius: 4px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 6px; }
+  .tl .colmark { border-left: 2px dashed var(--crit); }
+  .exitnote { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-top: 12px; }
+  .exitnote .card { padding: 10px 14px; }
+
+  /* bars */
+  .bars { display: grid; grid-template-columns: minmax(200px, 300px) 1fr; gap: 8px 12px; align-items: center; margin-top: 8px; max-width: 900px; }
+  .bars .lab { font-size: 13.5px; }
+  .bars .track { position: relative; height: 22px; }
+  .bars .bar { height: 14px; margin-top: 4px; border-radius: 0 4px 4px 0; background: var(--series); min-width: 2px; }
+  .bars .bar.base { background: var(--base); }
+  .bars .val { position: absolute; top: 1px; font-size: 13px; font-variant-numeric: tabular-nums; padding-left: 6px; }
+  .legend { display: flex; gap: 16px; font-size: 12.5px; color: var(--ink2); margin-top: 6px; }
+  .legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
+  .twocol { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 22px; }
+  .onepage { background: #fcfcfb; border: 1px solid var(--line); border-radius: 8px; padding: 6px; }
+  .onepage img { width: 100%; display: block; border-radius: 4px; }
+  ul.plain { padding-left: 20px; max-width: 78ch; } ul.plain li { margin: 5px 0; }
+</style>
+<style>
+ .status { border: 1.5px solid #fab219; background: color-mix(in srgb, #fab219 12%, var(--card)); border-radius: 8px; padding: 10px 14px; margin-top: 14px; max-width: 80ch; }
+ svg text { font-family: inherit; fill: var(--ink); } svg .t2 { fill: var(--ink2); }
+ ol.dec li { margin: 6px 0; max-width: 84ch; }
+</style></head>
+<body><main>
+  <div class="tag">wave_front · AGI model · proposal for the owner's review · 18 November 2026</div>
+  <h1>AGI v0.3 (draft): the open-weight gap</h1>
+  <p class="lede">v0.2 treats an open-weight release as one event. On the owner's decisions of 18 November, v0.3 replaces it with a standing gap: an open-weight system follows the labs' system a quarter or two behind, a shutdown cannot reach it, and it presses the closed labs to race.</p>
+  <div class="status"><b>Draft.</b> No guard, model file, claim or job exists for v0.3 and nothing has been run. v0, v0.1 and v0.2 results stand as computed. Basis: <code>docs/agi_open_weights_review.html</code> and the survey behind it.</div>
+
+  <h2>1 · The idea</h2>
+  <figure class="card scroll">
+    <svg viewBox="0 0 940 250" width="100%" style="min-width:720px" role="img" aria-label="The labs' capability rises in steps; the open system follows each step after the gap; a treaty freezes it">
+      <line x1="60" y1="210" x2="900" y2="210" stroke="var(--line)"/><line x1="60" y1="20" x2="60" y2="210" stroke="var(--line)"/>
+      <g font-size="12" class="t2"><text x="52" y="184" text-anchor="end">pre-AGI</text><text x="52" y="124" text-anchor="end">AGI</text><text x="52" y="64" text-anchor="end">beyond</text><text x="900" y="230" text-anchor="end">quarters</text></g>
+      <path d="M70,180 H300 V120 H620 V60 H890" fill="none" stroke="var(--series)" stroke-width="2.5"/>
+      <path d="M70,186 H390 V126 H710 V66 H890" fill="none" stroke="var(--crit)" stroke-width="2.5"/>
+      <text x="180" y="170" font-size="13" font-weight="700">labs' system</text><text x="400" y="150" font-size="13" font-weight="700">open-weight system</text>
+      <rect x="300" y="96" width="90" height="16" rx="3" fill="color-mix(in srgb, var(--good) 22%, var(--card))"/><text x="345" y="108" font-size="11.5" text-anchor="middle">the gap</text>
+      <rect x="620" y="36" width="90" height="16" rx="3" fill="color-mix(in srgb, var(--good) 22%, var(--card))"/><text x="665" y="48" font-size="11.5" text-anchor="middle">the gap</text>
+      <text x="300" y="226" font-size="12" text-anchor="middle" class="t2">labs reach AGI</text><text x="390" y="240" font-size="12" text-anchor="middle" class="t2">an open system reaches AGI</text>
+      <line x1="390" y1="126" x2="390" y2="210" stroke="var(--ink2)" stroke-dasharray="4 4"/><line x1="300" y1="120" x2="300" y2="210" stroke="var(--ink2)" stroke-dasharray="4 4"/>
+    </svg>
+    <figcaption>Each time the labs' system steps up a level, an open-weight system reaches the same level after the gap. Inside the gap the most capable system exists only in the labs, where a pause or a shutdown can still reach it. A treaty in force stops the open system from following.</figcaption>
+  </figure>
+
+  <h2>2 · The mechanics proposed</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Piece</th><th>Rule</th><th>From</th></tr></thead>
+    <tbody>
+      <tr><td><b>The open system's level</b></td><td>A new variable on the same four levels as the labs' capability, never above it, starting equal to it (both below AGI today). It replaces v0.2's switch.</td><td>decision 1</td></tr>
+      <tr><td><b>The gap</b></td><td>When the labs' system is a level ahead, the open system reaches that level <b>1 quarter</b> later (run beside <b>2 quarters</b>). The record keeper counts it down, as it does the adoption wave. No player chooses it.</td><td>Epoch AI: 3.5 to 4 months; UK AISI on cyber: 4 to 7 months</td></tr>
+      <tr><td><b>What stops it following</b></td><td>Only a treaty in force. A pause, a mandatory regime or taking over the labs does not, because the open frontier is released by developers outside their reach.</td><td>v0.2 decision 3; the survey</td></tr>
+      <tr><td><b>The labs' own release</b></td><td>Still a move of the labs: it closes the gap at once and lowers oversight one level.</td><td>v0</td></tr>
+      <tr><td><b>A · No recall</b></td><td>While an open system at AGI level or above exists: a pause no longer rolls back dependence or cancels a pending adoption wave (v0.2); <b>and a shutdown attempt can no longer contain</b>. It removes the labs' system only, so capability falls back to the open system's level, the AI's control is not reset, and the "contained" ending is unavailable.</td><td>decision 2</td></tr>
+      <tr><td><b>B · Race pressure</b></td><td>While the open system is at the labs' own level, the labs must deploy or race at least every third quarter, whenever one of the two is available. Once the labs are a level ahead again, the pressure lifts until the open system catches up. Today the two are level, so the pressure is on from the start.</td><td>decision 3 (the owner's reasoning: supremacy has to be shown to investors)</td></tr>
+      <tr><td><b>D · Retraining</b></td><td>While an open system is at the labs' level and that level is AGI or above, chance may change the AI's objective. Inside the gap the most capable system is closed and cannot be retrained.</td><td>v0.2, with the gap applied</td></tr>
+      <tr><td><b>C · Outside testing</b></td><td>As in v0.2 until the owner answers the open question below.</td><td>v0.2</td></tr>
+    </tbody>
+  </table></div>
+  <p>The one AI of the model still stands for the most capable system in existence. The gap decides who holds it: only the labs inside the gap, everyone outside it.</p>
+
+  <h2>3 · The second system (model v1, moved up)</h2>
+  <p>On the owner's reading, the copies outside the labs are the <b>third-party providers serving open-weight models</b>. That gives the second system a concrete shape, and one distinction the survey supports:</p>
+  <ul class="plain">
+    <li><b>Hosted copies</b>, run by providers. Governments can reach these: a service can be licensed, restricted or closed. Most use of the top open models goes through providers, because the models are too large for ordinary hardware (0.9 to 1.6 terabytes).</li>
+    <li><b>Private copies</b>, on privately owned computing power. Governments cannot reach these (decision 2). What runs on ordinary hardware trails the frontier by about a year, against one to two quarters for hosted open models.</li>
+  </ul>
+  <p>So in v1 a government move against providers would not remove the open system; it would push the unreachable part of it back from a gap of 1 to 2 quarters to about 4. That is a real lever, and v0.3 does not have it. v0.3 keeps one AI and treats the open system as a level that follows; v1 gives it its own moves, its own objective and its providers.</p>
+
+  <h2>4 · What I expect it to change</h2>
+  <ul class="plain">
+    <li><b>A window after each step.</b> For one or two quarters after the labs reach AGI, a shutdown can still contain and the system cannot be retrained by the public. v0.2 had no such window: chance could open the weights in the first quarter.</li>
+    <li><b>The treaty becomes a race against the gap.</b> A treaty before the open system reaches AGI keeps it below AGI. In the model a treaty takes two quarters and has no delay, which is as long as the gap. The treaty delay from the delay research (2 quarters) would decide this, so it should be in the same version.</li>
+    <li><b>Containment has a deadline.</b> The "contained" ending needs a shutdown before the open system reaches AGI.</li>
+    <li><b>Pressure from the first quarter.</b> E3 (b) found governments and labs keep the control guarantee under pressure, probably by taking over the labs at once. With pressure on from the start, that is the only way from today.</li>
+  </ul>
+  <p class="meta">These are expectations to be turned into registered predictions, not results.</p>
+
+  <h2>5 · Cost</h2>
+  <p>Two new counters and one new four-level variable on top of v0.2, whose largest kernel already went over 26 GB. v0.3's kernels need the 128 GB machine, and a timing probe first. The bounded claims (fastest roads, existence checks) stay cheap.</p>
+
+  <h2>6 · What the owner decides</h2>
+  <ol class="dec">
+    <li><b>The gap: 1 quarter as the baseline with 2 beside it</b> (proposed), or the reverse. One quarter is the general figure, two the figure for cyber capability. A shorter gap is worse for the human side.</li>
+    <li><b>What a shutdown does once an open AGI-level system exists.</b> Proposed: it removes the labs' system only (capability falls to the open level, control is not reset, no containment). The harsher alternative: it fails outright and turns the AI hostile, as a failed shutdown does in v0.</li>
+    <li><b>Race pressure's trigger.</b> Proposed: on while the open system is level with the labs', off while the labs are a level ahead. The alternative is v0.2's: on for good once any open system exists.</li>
+    <li><b>The treaty delay in the same version</b> (proposed, as a switch), since the gap and the treaty race each other. On 17 November the owner put it in its own version.</li>
+    <li><b>Outside testing:</b> keep only faster evaluation and detection (proposed), or keep it as in v0.2.</li>
+    <li><b>Retraining toward aligned:</b> drop it (proposed; nothing supports it), or keep it flagged as assumed.</li>
+    <li><b>Order of work:</b> v0.3 first, then the second system (proposed), or the second system directly.</li>
+  </ol>
+  <p class="meta">Related: <code>docs/agi_open_weights_review.html</code> · <code>docs/agi_open_weights_research_2026-11-18.md</code> · <code>docs/agi_v0_2.html</code> · <code>docs/agi_delays_2026-11-14.md</code></p>
+</main></body></html>

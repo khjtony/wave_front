@@ -122,7 +122,7 @@
   <div class="tag">wave_front · AGI model · review for the owner · 18 November 2026</div>
   <h1>Open weights: what the model assumes, and what the world looks like</h1>
   <p class="lede">The owner's point: good open-weight models already exist today. The research confirms it and sharpens it. In the model an open-weight release is a single event that has not happened yet. In the world, a downloadable model has trailed the best closed one by about four months for nearly two years, and the best closed model has never been released. The model should carry a <b>gap</b>, not a switch.</p>
-  <p class="meta">This page sets the model's open-weight assumptions against a web survey of 18 November 2026 (<code>docs/agi_open_weights_research_2026-11-18.md</code>, with a verification label on every fact). Nothing here has been changed in any model. Section 4 lists what the owner would decide.</p>
+  <p class="meta">This page sets the model's open-weight assumptions against a web survey of 18 November 2026 (<code>docs/agi_open_weights_research_2026-11-18.md</code>, with a verification label on every fact). Nothing here has been changed in any model. Section 4 records the owner's decisions of the same day.</p>
 
   <h2>1 · The mismatch</h2>
   <figure class="card scroll">
@@ -182,16 +182,20 @@
   </ul>
   <p>Put beside section 2: the model's sharpest open-weight result rests on the factor with the best evidence (D), and its weakest factor (B) turned out not to matter. That is reassuring about the results so far. The flag itself is the part that is wrong.</p>
 
-  <h2>4 · What the owner would decide</h2>
-  <ol class="plain" style="padding-left:22px">
-    <li><b>Replace the switch with a gap.</b> Proposed: a variable for how many quarters the best open system trails the labs' system (none open; 3 or more; 1 to 2; level), starting at 1 to 2. The consequences then apply to the open system at <i>its</i> capability, so retraining an open system matters only once the open system is itself at the level in question. This is a new model version.<br><span class="src">A cheaper first step: keep the switch and add "already open at the start" as an open call of the snapshot, run beside "closed at the start".</span></li>
-    <li><b>Extend "no recall" to shutdown?</b> The evidence supports it. On 17 November the owner chose the pause rule only.</li>
-    <li><b>Race pressure:</b> keep as it is, re-specify, or drop. Proposed: drop it from the next version; it is weakly supported and changes nothing.</li>
-    <li><b>Outside testing:</b> proposed: keep faster evaluation and detection, remove faster oversight-building.</li>
-    <li><b>Retraining:</b> keep. Proposed: drop the direction toward aligned, for which nothing was found.</li>
-    <li><b>The second system (model v1):</b> move it up. It is the faithful form of both retraining and copies outside the labs.</li>
-    <li><b>A wording correction in our own documents.</b> The June 2026 action against Fable 5 was a licence requirement for access by foreign persons (an "Is-Informed" letter), not an order to suspend the models; the lab disabled them worldwide because it could not check nationality. <code>docs/agi_v0_1.md</code> and <code>docs/agi_delays_2026-11-14.md</code> describe it more loosely. The conclusion drawn from it (a halt within days on a hosted model) stands.</li>
-  </ol>
+  <h2>4 · The owner's decisions of 18 November</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>#</th><th>Question</th><th>Decision</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Replace the switch with a gap</td><td><b>Yes.</b></td></tr>
+      <tr><td>2</td><td>Extend "no recall" to shutdown</td><td><b>Yes.</b> It is almost impossible to shut down privately owned computing power running open-weight models.</td></tr>
+      <tr><td>3</td><td>Drop race pressure</td><td><b>No, keep it.</b> The owner's reasoning: closed-weight labs have to prove their supremacy to investors, so an open model close behind pushes them to race.</td></tr>
+      <tr><td>4</td><td>Move the second AI system (model v1) up</td><td><b>Yes.</b></td></tr>
+      <tr><td>5</td><td>What "copies outside the labs" are</td><td>The owner's reading: <b>all third-party AI service providers serving open-weight models.</b></td></tr>
+    </tbody>
+  </table></div>
+  <p><b>Not yet answered:</b> whether outside testing keeps only faster evaluation and detection (and loses faster oversight-building), and whether retraining toward aligned is dropped.</p>
+  <p><b>Withdrawn:</b> the wording correction proposed here for our own documents. On re-reading, <code>docs/agi_v0_1.md</code> and <code>docs/agi_delays_2026-11-14.md</code> already describe the June 2026 action as a directive restricting access by foreign nationals, after which the lab disabled the models. Nothing needs changing.</p>
+  <p>The design that follows from these decisions is drafted in <code>docs/agi_v0_3_draft.html</code>.</p>
 
   <h2>How far to trust the survey</h2>
   <ul class="plain">
