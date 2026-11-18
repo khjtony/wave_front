@@ -190,6 +190,19 @@
       <tr><td><b>Profiles for the claims</b></td><td><code>no_treaty</code> (governments never propose a treaty) and <code>no_nationalize</code>.</td><td>F4, F6</td></tr>
     </tbody>
   </table></div>
+  <h3>3a · Details fixed while building (after registration, before any run)</h3>
+  <p>The table above left these open. Each was settled when the model was written, with no query of v0.3 run; none changes a registered claim or prediction.</p>
+  <ul class="plain">
+    <li><b>Pressure is on from the first quarter.</b> At <code>s₀</code> both systems are pre-AGI, so O is level with the labs: the labs must deploy or race by the third quarter of every stretch in which either is available. It lifts while O is two quarters behind and returns when one quarter is left.</li>
+    <li><b>A wave started by the labs and by the providers in one quarter is the providers'</b> (one wave is pending at a time). The providers start one only when none is pending.</li>
+    <li><b>O's count is dropped when O is no longer behind</b> (a shutdown lowered the labs' level). O can then stand above the labs' level, and the pressure applies.</li>
+    <li><b>An acquisition by O sets <code>villain_seen</code></b>, as <code>A</code>'s do, so a slide during which O takes control does not read as <code>DISEMPOWERMENT</code>.</li>
+    <li><b><code>H.restrict_hosting</code> has no precondition and no delay.</b> <code>H.deregulate</code> lifts it together with its other effects (one regime level down, a pause ended).</li>
+    <li><b>Governments observe O's level and the hosting flag, not O's state or what it holds;</b> labs do not observe O's state.</li>
+    <li><b>The refined builds of v0 (claim G13) exist without the open system only.</b></li>
+    <li><b>Effort scores:</b> <code>restrict_hosting</code> has none yet; the least-effort queries of F1 run without the open system and do not meet it.</li>
+  </ul>
+
   <p><b>What goes away from v0.2:</b> the single switch, the outside release as a chance event (the gap replaces it), retraining of the labs' own system (A is closed; O is what is retrained), and faster oversight-building.</p>
 
   <h2>4 · The owner's decisions on the design, 18 November</h2>
@@ -236,6 +249,7 @@
 
   <h2>8 · Changelog</h2>
   <ul class="plain">
+    <li>18 November 2026, after the registration commit: the model written (<code>models/agi_v0_3/v0_3.py</code>) with its structure tests; section 3a added. No claim query run. An encoder check ran first, on a target of no claim (O's level reaching AGI: 6 quarters).</li>
     <li>18 November 2026: drafted twice (a single-AI gap version, then the second system on the owner's decision 7), the owner's decisions recorded, registered (F1 to F7 with test bodies) before any guard of v0.3 was written. No query of v0.3 had been run.</li>
   </ul>
 
