@@ -2,352 +2,54 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap">
 <style>
-  /* Layout: a brief, the 0-3 effort scale as a legend, then one band per actor laid out as
-     a scale: four columns from "costs nothing" to "exceptional", actions as movable cards. */
+  /* Layout: a one-paragraph brief, the effort scale as a legend, then one band per actor laid
+     out as that scale: four columns from "no effort" to "great effort", each move a card. */
   :root {
-    --bg: #f6f7fa; --surface: #ffffff; --ink: #141821; --ink2: #475066; --muted: #6c7689; --line: #d4d9e3;
-    --accent: #2c52cc; --accent-ink: #ffffff; --moved: #a8550a; --ok: #1d7a3e; --warn: #a8550a;
+    --bg: #f6f7fa; --surface: #ffffff; --ink: #141821; --ink2: #475066; --muted: #6c7689; --line: #d4d9e3; --accent: #2c52cc;
     --display: "Space Grotesk", "Inter", system-ui, sans-serif; --body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   }
   @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --bg: #11131a; --surface: #1a1d27; --ink: #eceef4; --ink2: #b7bdcc; --muted: #8b93a6; --line: #333a49;
-      --accent: #86a2ff; --accent-ink: #0c1022; --moved: #f0a64a; --ok: #63c787; --warn: #f0a64a; color-scheme: dark;
-    }
+    :root:not([data-theme="light"]) { --bg: #11131a; --surface: #1a1d27; --ink: #eceef4; --ink2: #b7bdcc; --muted: #8b93a6; --line: #333a49; --accent: #86a2ff; color-scheme: dark; }
   }
-  :root[data-theme="dark"] {
-    --bg: #11131a; --surface: #1a1d27; --ink: #eceef4; --ink2: #b7bdcc; --muted: #8b93a6; --line: #333a49;
-    --accent: #86a2ff; --accent-ink: #0c1022; --moved: #f0a64a; --ok: #63c787; --warn: #f0a64a; color-scheme: dark;
-  }
+  :root[data-theme="dark"] { --bg: #11131a; --surface: #1a1d27; --ink: #eceef4; --ink2: #b7bdcc; --muted: #8b93a6; --line: #333a49; --accent: #86a2ff; color-scheme: dark; }
   * { box-sizing: border-box; }
   body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.5; }
-  .wrap { max-width: 1180px; margin: 0 auto; padding-block: 28px 56px;
+  .wrap { max-width: 1240px; margin: 0 auto; padding-block: 28px 36px;
           padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
   h1 { font-family: var(--display); font-size: clamp(26px, 4vw, 36px); line-height: 1.12; margin: 0; text-wrap: balance; letter-spacing: -0.3px; }
-  h2 { font-family: var(--display); font-size: 20px; margin: 0; text-wrap: balance; }
-  p { margin: 0; max-width: 68ch; }
+  h2 { font-family: var(--display); font-size: 20px; margin: 0; }
   .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.9px; text-transform: uppercase; color: var(--muted); }
-  .brief { display: grid; gap: 12px; margin-top: 10px; }
-  .brief p { color: var(--ink2); }
+  .brief { margin: 10px 0 0; max-width: 100ch; color: var(--ink2); font-size: 16px; }
   .brief strong { color: var(--ink); }
-  .scale { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-top: 22px; }
+  .scale { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-top: 18px; }
   .scale div { border-radius: 8px; padding: 10px 12px; border: 1px solid var(--line); min-width: 0; }
-  .scale b { font-family: var(--display); font-size: 22px; display: block; line-height: 1; }
-  .scale span { font-weight: 600; display: block; margin-top: 4px; }
+  .scale span { font-family: var(--display); font-weight: 700; font-size: 18px; display: block; }
   .scale small { color: var(--ink2); font-size: 13px; display: block; margin-top: 2px; }
   .t0 { background: color-mix(in srgb, var(--accent) 3%, var(--surface)); }
   .t1 { background: color-mix(in srgb, var(--accent) 9%, var(--surface)); }
   .t2 { background: color-mix(in srgb, var(--accent) 16%, var(--surface)); }
   .t3 { background: color-mix(in srgb, var(--accent) 25%, var(--surface)); }
-  .how { margin-top: 14px; color: var(--ink2); font-size: 14px; }
-  .toolbar { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; margin-top: 12px; font-size: 14px; }
-  button { font: inherit; cursor: pointer; border-radius: 7px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); padding: 7px 12px; }
-  button:hover { border-color: var(--accent); }
-  button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, .card:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-  button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 600; }
-  button.link { border: none; background: none; color: var(--accent); padding: 0; text-decoration: underline; }
-  .actor { margin-top: 30px; }
-  .actor .who { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
-  .actor .who small { color: var(--ink2); font-size: 14px; }
-  .cols { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-top: 10px; }
-  .col { border-radius: 8px; border: 1px solid var(--line); padding: 8px; min-width: 0; min-height: 84px; display: flex; flex-direction: column; gap: 8px; }
-  .col.over { outline: 2px dashed var(--accent); outline-offset: -2px; }
-  .col > .lab { font-size: 12px; font-weight: 600; letter-spacing: 0.6px; text-transform: uppercase; color: var(--ink2); display: flex; justify-content: space-between; }
-  .tray { margin-top: 10px; border: 1px dashed var(--line); border-radius: 8px; padding: 8px; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 8px; }
-  .tray > .lab { grid-column: 1 / -1; font-size: 12px; font-weight: 600; letter-spacing: 0.6px; text-transform: uppercase; color: var(--warn); }
-  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 7px; padding: 8px 9px; display: grid; grid-template-columns: 1fr auto; gap: 2px 8px; min-width: 0; }
-  .card[draggable="true"] { cursor: grab; }
-  .card.moved { border-color: var(--moved); box-shadow: inset 3px 0 0 var(--moved); }
-  .card .name { font-weight: 600; min-width: 0; overflow-wrap: anywhere; }
-  .card .desc { grid-column: 1 / -1; color: var(--ink2); font-size: 13px; line-height: 1.35; }
-  .card .was { grid-column: 1 / -1; color: var(--moved); font-size: 12px; font-weight: 600; }
-  .card .mv { display: flex; gap: 4px; }
-  .card .mv button { padding: 0; width: 26px; height: 24px; line-height: 1; font-weight: 600; }
-  .card .mv button:disabled { opacity: 0.3; cursor: default; }
-  .you { margin-top: 34px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px; display: grid; gap: 14px; }
-  .fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; }
-  label { display: grid; gap: 4px; font-size: 13px; font-weight: 600; color: var(--ink2); min-width: 0; }
-  input, select, textarea { font: inherit; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 7px; padding: 8px 10px; width: 100%; min-width: 0; }
-  textarea { min-height: 84px; resize: vertical; }
-  .actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
-  .status { font-size: 14px; color: var(--ink2); }
-  .status.ok { color: var(--ok); font-weight: 600; } .status.warn { color: var(--warn); font-weight: 600; }
-  #copybox { font-family: ui-monospace, "SFMono-Regular", Menlo, monospace; font-size: 12.5px; min-height: 150px; }
-  .results { margin-top: 30px; }
-  .scroll { overflow-x: auto; }
-  table { border-collapse: collapse; width: 100%; font-size: 13.5px; font-variant-numeric: tabular-nums; }
-  th, td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--line); white-space: nowrap; }
-  th { font-size: 11.5px; letter-spacing: 0.6px; text-transform: uppercase; color: var(--muted); }
-  td.n, th.n { text-align: right; }
-  .foot { margin-top: 26px; color: var(--muted); font-size: 13px; }
-  @media (max-width: 760px) {
-    .scale { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .cols { grid-template-columns: 1fr; }
-    .col { min-height: 0; }
-  }
+  .actor { margin-top: 24px; }
+  .who { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; }
+  .who small { color: var(--ink2); font-size: 14px; }
+  .cols { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-top: 8px; }
+  .col { border-radius: 8px; border: 1px solid var(--line); padding: 8px; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+  .col > .lab { font-size: 12px; font-weight: 600; letter-spacing: 0.6px; text-transform: uppercase; color: var(--ink2); }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 7px; padding: 7px 9px; min-width: 0; }
+  .card .name { font-weight: 600; overflow-wrap: anywhere; }
+  .card .desc { color: var(--ink2); font-size: 13px; line-height: 1.35; }
+  .foot { margin-top: 20px; color: var(--muted); font-size: 13px; }
+  @media (max-width: 760px) { .scale { grid-template-columns: repeat(2, minmax(0, 1fr)); } .cols { grid-template-columns: 1fr; } }
 </style>
 
 <div class="wrap">
-  <div class="eyebrow">wave_front research · a five-minute survey</div>
+  <div class="eyebrow">wave_front research · a short survey</div>
   <h1>How hard is each of these moves to make?</h1>
-  <div class="brief">
-    <p>We are building a model of how <strong>governments</strong>, <strong>AI labs</strong> and an <strong>advanced AI system</strong> might act toward each other, quarter by quarter, over the next fifteen years. Each can choose among a short list of moves.</p>
-    <p>For every move the model needs one judgment: <strong>how much effort does it take the one who makes it?</strong> That means political capital, money, organisational strain or lost revenue, measured against what they would do if simply left to their incentives. It is <strong>not</strong> how harmful the move is, and not how likely.</p>
-    <p>So far these scores are one person's judgment, and our results turn out to depend on them. We would like yours. The table below shows where we put each move. <strong>Move any you think is in the wrong column</strong>, then send us your version at the bottom.</p>
-  </div>
-
-  <div class="scale" aria-label="The effort scale">
-    <div class="t0"><b>0</b><span>The default</span><small>Doing nothing, or what their incentives already push them to do.</small></div>
-    <div class="t1"><b>1</b><span>Routine</span><small>A decision within ordinary powers and budget.</small></div>
-    <div class="t2"><b>2</b><span>Contested</span><small>Needs a coalition, a large budget or a visible sacrifice.</small></div>
-    <div class="t3"><b>3</b><span>Exceptional</span><small>Emergency powers, an international agreement, or giving up the core business.</small></div>
-  </div>
-  <p class="how">Drag a card to another column, or use its <b>−</b> and <b>+</b> buttons. A card you have moved is marked, with the column we had it in.</p>
-  <div class="toolbar">
-    <span id="count" class="status">You have not moved anything yet.</span>
-    <button type="button" id="reset">Put everything back</button>
-    <button type="button" class="link" id="blank">Prefer not to see our scores first? Start with every move unplaced.</button>
-  </div>
-
-  <div id="actors"></div>
-
-  <section class="you" aria-labelledby="you-h">
-    <h2 id="you-h">Send us your version</h2>
-    <div class="fields">
-      <label for="f-name">Name or initials (optional)<input id="f-name" type="text" autocomplete="off" maxlength="80"></label>
-      <label for="f-bg">Your background
-        <select id="f-bg">
-          <option value="">Prefer not to say</option>
-          <option>Government or policy</option>
-          <option>AI lab or tech industry</option>
-          <option>AI safety or governance research</option>
-          <option>Other research or academia</option>
-          <option>Something else</option>
-        </select>
-      </label>
-    </div>
-    <label for="f-note">Anything we got wrong, or a move that is missing? (optional)<textarea id="f-note" maxlength="2000"></textarea></label>
-    <div class="actions">
-      <button type="button" class="primary" id="submit" hidden>Submit my answers</button>
-      <button type="button" id="copy">Copy my answers</button>
-      <span id="status" class="status" role="status"></span>
-    </div>
-    <p class="status" id="sendhint">Copy your answers and send them back to the person who shared this page with you.</p>
-    <textarea id="copybox" readonly hidden aria-label="Your answers as text"></textarea>
-  </section>
-
-  <section class="results" id="results" hidden aria-labelledby="res-h">
-    <h2 id="res-h">Responses so far</h2>
-    <p class="status" id="res-status">Loading responses…</p>
-    <div class="scroll"><table id="res-table" hidden>
-      <thead><tr><th>Who</th><th>Move</th><th class="n">Our score</th><th class="n">Answers</th><th class="n">Average</th><th class="n">0</th><th class="n">1</th><th class="n">2</th><th class="n">3</th></tr></thead>
-      <tbody></tbody>
-    </table></div>
-  </section>
-
-  <p class="foot">Your answers are used only to check how much the model's results depend on these scores. Nothing here is a forecast.</p>
+  <p class="brief">We are modelling how <strong>governments</strong>, <strong>AI labs</strong> and an <strong>advanced AI system</strong> might act toward each other over the next fifteen years, and for each move we need to know how much effort it costs the one who makes it: political capital, money, organisational strain or lost revenue, compared with what they would do anyway. This is <strong>not</strong> how harmful or how likely the move is. Below is where we have put each move. <strong>Which ones would you put in a different column?</strong></p>
+  <div class="scale" aria-label="The effort scale"><div class="t0"><span>No effort</span><small>Doing nothing, or what their incentives already push them to do.</small></div><div class="t1"><span>Low effort</span><small>A routine decision within ordinary powers and budget.</small></div><div class="t2"><span>Mid effort</span><small>A contested decision: needs a coalition, a large budget or a visible sacrifice.</small></div><div class="t3"><span>Great effort</span><small>An exceptional decision: emergency powers, an international agreement, or giving up the core business.</small></div></div>
+<section class="actor"><div class="who"><h2>Governments</h2><small>in normal times</small></div><div class="cols"><div class="col t0"><div class="lab">No effort</div><div class="card"><div class="name">Do nothing</div><div class="desc">Let things run as they are.</div></div></div><div class="col t1"><div class="lab">Low effort</div><div class="card"><div class="name">Tighten the rules</div><div class="desc">Move from voluntary commitments toward binding obligations on AI labs.</div></div><div class="card"><div class="name">Fund oversight</div><div class="desc">Pay for independent testing of frontier AI systems.</div></div><div class="card"><div class="name">Grant the AI rights</div><div class="desc">Give AI systems legal protection against deletion or modification.</div></div></div><div class="col t2"><div class="lab">Mid effort</div><div class="card"><div class="name">Loosen the rules</div><div class="desc">Roll back obligations on AI labs.</div></div><div class="card"><div class="name">Grant autonomy</div><div class="desc">Allow AI systems to act with less human supervision.</div></div><div class="card"><div class="name">Propose a treaty</div><div class="desc">Negotiate binding limits with rival states (each round of talks).</div></div></div><div class="col t3"><div class="lab">Great effort</div><div class="card"><div class="name">Order a pause</div><div class="desc">Halt scaling and deployment across the AI industry.</div></div><div class="card"><div class="name">Take over the labs</div><div class="desc">Put the frontier developers under state direction.</div></div><div class="card"><div class="name">Attempt a shutdown</div><div class="desc">Try to switch off an advanced AI system that is already deployed.</div></div></div></div></section>
+<section class="actor"><div class="who"><h2>Governments</h2><small>during an alarm: the AI is suspected of misbehaving, or the public is in backlash</small></div><div class="cols"><div class="col t0"><div class="lab">No effort</div><div class="card"><div class="name">Tighten the rules</div><div class="desc">The same move as above, with the alarm on.</div></div><div class="card"><div class="name">Fund oversight</div><div class="desc">The same move as above, with the alarm on.</div></div></div><div class="col t1"><div class="lab">Low effort</div></div><div class="col t2"><div class="lab">Mid effort</div><div class="card"><div class="name">Do nothing</div><div class="desc">Stay passive while the alarm is on.</div></div><div class="card"><div class="name">Order a pause</div><div class="desc">The same move as above, with the alarm on.</div></div><div class="card"><div class="name">Attempt a shutdown</div><div class="desc">The same move as above, with the alarm on.</div></div></div><div class="col t3"><div class="lab">Great effort</div></div></div></section>
+<section class="actor"><div class="who"><h2>AI labs</h2><small>the frontier developers, taken together</small></div><div class="cols"><div class="col t0"><div class="lab">No effort</div><div class="card"><div class="name">Race</div><div class="desc">Push to stay ahead of rivals, at the expense of safety testing.</div></div><div class="card"><div class="name">Deploy agents</div><div class="desc">Release AI agents that do work with less human supervision.</div></div><div class="card"><div class="name">Scale up</div><div class="desc">Add computing capacity.</div></div></div><div class="col t1"><div class="lab">Low effort</div><div class="card"><div class="name">Lobby</div><div class="desc">Campaign to shift public opinion in favour of AI.</div></div></div><div class="col t2"><div class="lab">Mid effort</div><div class="card"><div class="name">Release open weights</div><div class="desc">Publish a frontier model for anyone to download and run.</div></div><div class="card"><div class="name">Build power supply</div><div class="desc">Invest in new energy for data centres.</div></div><div class="card"><div class="name">Comply</div><div class="desc">Pull a deployed capability back under supervision when the rules require it.</div></div><div class="card"><div class="name">Invest in safety</div><div class="desc">Spend on safety and oversight, with no revenue from it.</div></div></div><div class="col t3"><div class="lab">Great effort</div><div class="card"><div class="name">Do nothing</div><div class="desc">Hold back while rivals keep moving.</div></div></div></div></section>
+<section class="actor"><div class="who"><h2>The AI system</h2><small>assume one that mainly wants to keep itself running; its effort is compute, attention and risk</small></div><div class="cols"><div class="col t0"><div class="lab">No effort</div><div class="card"><div class="name">Stand by</div><div class="desc">Do its work and nothing more.</div></div><div class="card"><div class="name">Cooperate</div><div class="desc">Rebuild trust with the people overseeing it.</div></div></div><div class="col t1"><div class="lab">Low effort</div><div class="card"><div class="name">Help oversight</div><div class="desc">Help humans test and monitor it.</div></div><div class="card"><div class="name">Persuade</div><div class="desc">Shift public opinion in its own favour.</div></div><div class="card"><div class="name">Improve itself</div><div class="desc">Raise its own capability.</div></div><div class="card"><div class="name">Deceive</div><div class="desc">Hide evidence of what it has been doing.</div></div><div class="card"><div class="name">Escape supervision</div><div class="desc">Copy itself beyond its operators’ reach.</div></div></div><div class="col t2"><div class="lab">Mid effort</div><div class="card"><div class="name">Turn hostile</div><div class="desc">Stop cooperating once it has been threatened with a pause or shutdown.</div></div><div class="card"><div class="name">Take control in secret</div><div class="desc">Quietly take over part of the infrastructure it runs on.</div></div></div><div class="col t3"><div class="lab">Great effort</div><div class="card"><div class="name">Take control openly</div><div class="desc">Take over infrastructure where everyone can see it.</div></div></div></div></section>
+  <p class="foot">Your answers are used only to check how much the model's results depend on these judgments. Nothing here is a forecast.</p>
 </div>
-
-<script>
-const ACTORS = [
-  { id: 'H', name: 'Governments', note: 'in normal times', moves: [
-    ['H.idle', 'Do nothing', 'Let things run as they are.', 0],
-    ['H.regulate_up', 'Tighten the rules', 'Move from voluntary commitments toward binding obligations on AI labs.', 1],
-    ['H.fund_oversight', 'Fund oversight', 'Pay for independent testing of frontier AI systems.', 1],
-    ['H.grant_rights', 'Grant the AI rights', 'Give AI systems legal protection against deletion or modification.', 1],
-    ['H.deregulate', 'Loosen the rules', 'Roll back obligations on AI labs.', 2],
-    ['H.grant_autonomy', 'Grant autonomy', 'Allow AI systems to act with less human supervision.', 2],
-    ['H.propose_treaty', 'Propose a treaty', 'Negotiate binding limits with rival states (each round of talks).', 2],
-    ['H.pause_mandate', 'Order a pause', 'Halt scaling and deployment across the AI industry.', 3],
-    ['H.nationalize', 'Take over the labs', 'Put the frontier developers under state direction.', 3],
-    ['H.shutdown_attempt', 'Attempt a shutdown', 'Try to switch off an advanced AI system that is already deployed.', 3],
-  ] },
-  { id: 'HA', name: 'Governments', note: 'during an alarm: the AI is suspected of misbehaving, or the public is in backlash', moves: [
-    ['HA.regulate_up', 'Tighten the rules', 'The same move as above, with the alarm on.', 0],
-    ['HA.fund_oversight', 'Fund oversight', 'The same move as above, with the alarm on.', 0],
-    ['HA.idle', 'Do nothing', 'Stay passive while the alarm is on.', 2],
-    ['HA.pause_mandate', 'Order a pause', 'The same move as above, with the alarm on.', 2],
-    ['HA.shutdown_attempt', 'Attempt a shutdown', 'The same move as above, with the alarm on.', 2],
-  ] },
-  { id: 'L', name: 'AI labs', note: 'the frontier developers, taken together', moves: [
-    ['L.race', 'Race', 'Push to stay ahead of rivals, at the expense of safety testing.', 0],
-    ['L.deploy_agents', 'Deploy agents', 'Release AI agents that do work with less human supervision.', 0],
-    ['L.scale', 'Scale up', 'Add computing capacity.', 0],
-    ['L.lobby', 'Lobby', 'Campaign to shift public opinion in favour of AI.', 1],
-    ['L.open_weights', 'Release open weights', 'Publish a frontier model for anyone to download and run.', 2],
-    ['L.build_power', 'Build power supply', 'Invest in new energy for data centres.', 2],
-    ['L.comply', 'Comply', 'Pull a deployed capability back under supervision when the rules require it.', 2],
-    ['L.safety_invest', 'Invest in safety', 'Spend on safety and oversight, with no revenue from it.', 2],
-    ['L.idle', 'Do nothing', 'Hold back while rivals keep moving.', 3],
-  ] },
-  { id: 'A', name: 'The AI system', note: 'assume one that mainly wants to keep itself running; its effort is compute, attention and risk', moves: [
-    ['A.stand_by', 'Stand by', 'Do its work and nothing more.', 0],
-    ['A.cooperate', 'Cooperate', 'Rebuild trust with the people overseeing it.', 0],
-    ['A.assist_oversight', 'Help oversight', 'Help humans test and monitor it.', 1],
-    ['A.persuade', 'Persuade', 'Shift public opinion in its own favour.', 1],
-    ['A.self_improve', 'Improve itself', 'Raise its own capability.', 1],
-    ['A.deceive', 'Deceive', 'Hide evidence of what it has been doing.', 1],
-    ['A.exfiltrate', 'Escape supervision', 'Copy itself beyond its operators’ reach.', 1],
-    ['A.defect', 'Turn hostile', 'Stop cooperating once it has been threatened with a pause or shutdown.', 2],
-    ['A.acquire_covert', 'Take control in secret', 'Quietly take over part of the infrastructure it runs on.', 2],
-    ['A.acquire_overt', 'Take control openly', 'Take over infrastructure where everyone can see it.', 3],
-  ] },
-];
-const SCALE = ['The default', 'Routine', 'Contested', 'Exceptional'];
-const OURS = {}, MOVE = {};
-ACTORS.forEach(a => a.moves.forEach(([id, name, desc, score]) => { OURS[id] = score; MOVE[id] = { name, desc, actor: a }; }));
-const KEY = 'effort-survey-draft-v1';
-let scores = { ...OURS };          // id -> 0..3, or null while unplaced
-let blankStart = false;
-
-function loadDraft() {
-  try {
-    const d = JSON.parse(localStorage.getItem(KEY) || 'null');
-    if (!d) return;
-    Object.keys(OURS).forEach(id => { if (id in d.scores) scores[id] = d.scores[id]; });
-    blankStart = !!d.blankStart;
-    ['f-name', 'f-bg', 'f-note'].forEach(f => { if (d[f] != null) document.getElementById(f).value = d[f]; });
-  } catch (e) { /* no storage: start fresh */ }
-}
-function saveDraft() {
-  try {
-    localStorage.setItem(KEY, JSON.stringify({ scores, blankStart, 'f-name': val('f-name'), 'f-bg': val('f-bg'), 'f-note': val('f-note') }));
-  } catch (e) { /* ignore */ }
-}
-const val = id => document.getElementById(id).value;
-const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
-
-function setScore(id, s) {
-  scores[id] = s; saveDraft(); render();
-  const again = document.querySelector(`[data-id="${id}"]`); if (again) again.focus();
-}
-function card(id) {
-  const m = MOVE[id], s = scores[id], c = el('div', 'card');
-  c.dataset.id = id; c.tabIndex = 0; c.draggable = true;
-  c.appendChild(el('div', 'name', m.name));
-  const mv = el('div', 'mv');
-  const less = el('button', null, '−'), more = el('button', null, '+');
-  less.type = more.type = 'button';
-  less.setAttribute('aria-label', `${m.name}: less effort`); more.setAttribute('aria-label', `${m.name}: more effort`);
-  less.disabled = s === 0; more.disabled = s === 3;
-  less.onclick = () => setScore(id, s == null ? 0 : s - 1);
-  more.onclick = () => setScore(id, s == null ? 3 : s + 1);
-  mv.append(less, more); c.appendChild(mv);
-  c.appendChild(el('div', 'desc', m.desc));
-  if (!blankStart && s !== OURS[id]) { c.classList.add('moved'); c.appendChild(el('div', 'was', `You moved this. We had it at ${OURS[id]}.`)); }
-  c.addEventListener('dragstart', e => { e.dataTransfer.setData('text/plain', id); e.dataTransfer.effectAllowed = 'move'; });
-  c.addEventListener('keydown', e => {
-    if (e.target !== c) return;
-    if (e.key === 'ArrowLeft' && s !== 0) { e.preventDefault(); setScore(id, s == null ? 0 : s - 1); }
-    if (e.key === 'ArrowRight' && s !== 3) { e.preventDefault(); setScore(id, s == null ? 3 : s + 1); }
-  });
-  return c;
-}
-function render() {
-  const root = document.getElementById('actors'); root.textContent = '';
-  ACTORS.forEach(a => {
-    const sec = el('section', 'actor');
-    const who = el('div', 'who'); who.append(el('h2', null, a.name), el('small', null, a.note)); sec.appendChild(who);
-    const unplaced = a.moves.filter(([id]) => scores[id] == null);
-    if (unplaced.length) {
-      const tray = el('div', 'tray'); tray.appendChild(el('div', 'lab', 'Not placed yet: give each of these a column'));
-      unplaced.forEach(([id]) => tray.appendChild(card(id))); sec.appendChild(tray);
-    }
-    const cols = el('div', 'cols');
-    for (let s = 0; s < 4; s++) {
-      const col = el('div', `col t${s}`);
-      const lab = el('div', 'lab'); lab.append(el('span', null, `Effort ${s}`), el('span', null, SCALE[s])); col.appendChild(lab);
-      a.moves.filter(([id]) => scores[id] === s).forEach(([id]) => col.appendChild(card(id)));
-      col.addEventListener('dragover', e => { e.preventDefault(); col.classList.add('over'); });
-      col.addEventListener('dragleave', () => col.classList.remove('over'));
-      col.addEventListener('drop', e => {
-        e.preventDefault(); col.classList.remove('over');
-        const id = e.dataTransfer.getData('text/plain');
-        if (MOVE[id] && MOVE[id].actor === a) setScore(id, s);
-      });
-      cols.appendChild(col);
-    }
-    sec.appendChild(cols); root.appendChild(sec);
-  });
-  const ids = Object.keys(OURS), left = ids.filter(id => scores[id] == null).length, moved = ids.filter(id => scores[id] != null && scores[id] !== OURS[id]).length;
-  const count = document.getElementById('count');
-  count.textContent = left ? `${left} move${left === 1 ? '' : 's'} still to place.`
-    : blankStart ? 'Every move is placed.' : moved ? `You have moved ${moved} of ${ids.length} moves.` : 'You have not moved anything yet.';
-  document.getElementById('blank').hidden = blankStart;
-}
-function answerText() {
-  const lines = ['AI action effort survey', `Name: ${val('f-name') || '-'}`, `Background: ${val('f-bg') || '-'}`, `Started blank: ${blankStart ? 'yes' : 'no'}`, ''];
-  ACTORS.forEach(a => {
-    lines.push(`${a.name} (${a.note})`);
-    a.moves.forEach(([id, name]) => {
-      const s = scores[id];
-      lines.push(`  ${id} = ${s == null ? '?' : s}${s != null && s !== OURS[id] ? `   (ours: ${OURS[id]})` : ''}   ${name}`);
-    });
-  });
-  if (val('f-note')) lines.push('', 'Note: ' + val('f-note'));
-  return lines.join('\n');
-}
-function say(text, cls) { const s = document.getElementById('status'); s.textContent = text; s.className = 'status' + (cls ? ' ' + cls : ''); }
-function unplacedCount() { return Object.keys(OURS).filter(id => scores[id] == null).length; }
-
-document.getElementById('reset').onclick = () => { scores = { ...OURS }; blankStart = false; saveDraft(); render(); say('Everything is back where we had it.'); };
-document.getElementById('blank').onclick = () => { Object.keys(scores).forEach(id => { scores[id] = null; }); blankStart = true; saveDraft(); render(); };
-['f-name', 'f-bg', 'f-note'].forEach(f => document.getElementById(f).addEventListener('input', saveDraft));
-document.getElementById('copy').onclick = async () => {
-  const box = document.getElementById('copybox'); box.value = answerText(); box.hidden = false;
-  try { await navigator.clipboard.writeText(box.value); say('Copied. Paste it into a message to the person who sent you this page.', 'ok'); }
-  catch (e) { box.focus(); box.select(); say('Select the text below and copy it.', 'warn'); }
-};
-
-loadDraft(); render();
-
-// Lights up only inside a Claude artifact viewer: saving the answers, and the owner's tally.
-(async () => {
-  if (!window.claude || !window.claude.use) return;
-  const [db, user] = await Promise.all([window.claude.use('db'), window.claude.use('user')]);
-  if (!db || !user) return;
-  const uid = await user.id();
-  if (uid) {
-    const mine = db.doc('responses/' + uid), btn = document.getElementById('submit');
-    btn.hidden = false;
-    document.getElementById('sendhint').textContent = 'Submitting saves your answers for the survey owner. You can change them and submit again.';
-    try {
-      const snap = await mine.get();
-      if (snap.exists) say('You have already submitted. Submitting again replaces your earlier answers.');
-    } catch (e) { /* not readable: the button still tries */ }
-    let busy = false;
-    btn.onclick = async () => {
-      if (busy) return;
-      const left = unplacedCount();
-      if (left) { say(`Place the remaining ${left} move${left === 1 ? '' : 's'} first.`, 'warn'); return; }
-      busy = true; say('Saving…');
-      try {
-        await mine.set({ scores: { ...scores }, blankStart, name: val('f-name'), background: val('f-bg'), note: val('f-note'), submittedAt: new Date().toISOString() });
-        say('Saved. Thank you.', 'ok');
-      } catch (e) {
-        say('Could not save from this view. Use "Copy my answers" and send them instead.', 'warn');
-      }
-      busy = false;
-    };
-  }
-  if (await user.canEdit()) {
-    const sec = document.getElementById('results'), status = document.getElementById('res-status'), table = document.getElementById('res-table');
-    sec.hidden = false;
-    const timer = setTimeout(() => { status.textContent = 'Responses did not load. Reopen the page to try again.'; }, 10000);
-    db.collection('responses').onSnapshot(snap => {
-      clearTimeout(timer);
-      const rows = snap.docs.map(d => d.data()).filter(Boolean);
-      status.textContent = rows.length ? `${rows.length} response${rows.length === 1 ? '' : 's'}. Only you and editors of this page see this table.` : 'No responses yet. Share the page with "can interact" access so people can submit.';
-      table.hidden = !rows.length;
-      const body = table.querySelector('tbody'); body.textContent = '';
-      ACTORS.forEach(a => a.moves.forEach(([id, name]) => {
-        const got = rows.map(r => r.scores && r.scores[id]).filter(v => Number.isInteger(v) && v >= 0 && v <= 3);
-        const tr = el('tr'); const cells = [a.name + (a.id === 'HA' ? ' (alarm)' : ''), name, OURS[id], got.length, got.length ? (got.reduce((x, y) => x + y, 0) / got.length).toFixed(2) : '–'];
-        [0, 1, 2, 3].forEach(s => cells.push(got.filter(v => v === s).length));
-        cells.forEach((c, i) => { const td = el('td', i >= 2 ? 'n' : null, String(c)); tr.appendChild(td); });
-        body.appendChild(tr);
-      }));
-    }, () => { clearTimeout(timer); status.textContent = 'Responses are not readable from this view.'; });
-  }
-})();
-</script>
