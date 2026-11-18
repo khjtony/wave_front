@@ -22,6 +22,13 @@ endings can occur. Definitions, committed before any number was computed:
   plays that reach the ending without ever leaving the kernel (which must be zero); and the
   same shares within the first 24 quarters.
 
+Added 2026-11-17 after the first numbers, on the owner's next question, and reported as such:
+per play, whether relations were ever hostile, oversight ever strong and the system ever
+suspected or known (at any state after the start), against the outcome ("reached"); and,
+because the "ever" flags hold in nearly every 56-quarter play, the levels of ``oversight``,
+``a_known``, ``a_autonomy`` and ``a_control`` at the first state with hostile relations,
+against the outcome ("at first hostility").
+
     PYTHONPATH=. python scripts/agi_v0_1_endings_census.py kernel --ending DISEMPOWERMENT
     PYTHONPATH=. python scripts/agi_v0_1_endings_census.py sample --plays 1000000
 """
@@ -121,14 +128,28 @@ def sample(objective: str, plays: int, seed: int) -> dict:
     exits = {e: Counter() for e in zones}  # tick of the first state outside
     follow = {e: Counter() for e in zones}  # (left the kernel, reached the ending)
     lag = {e: Counter() for e in zones}  # ticks from the exit to the ending
+    i_trust, i_over, i_known = cm.index["trust"], cm.index["oversight"], cm.index["a_known"]
+    hostile = cm.variables[i_trust].levels.index("hostile")
+    strong = cm.variables[i_over].levels.index("strong")
+    suspected = cm.variables[i_known].levels.index("suspected")
+    reached: Counter = Counter()  # (ever hostile, ever strong, ever suspected, overt, outcome)
+    i_auto, i_ctrl = cm.index["a_autonomy"], cm.index["a_control"]
+    turned: Counter = Counter()  # (status when relations first turn hostile, overt, outcome)
     t0 = time.perf_counter()
     for _ in range(plays):
         s, t = s0, 0
         first_out = dict.fromkeys(zones, -1)
         overt_at = -1
+        was_hostile = was_strong = was_suspected = False
+        at_hostile = None
         while not cm.is_terminal(s):
             s = cm.step(s, tuple(rng.choice(a) for a in cm.available(s)))
             t += 1
+            if at_hostile is None and s[i_trust] == hostile:
+                at_hostile = (s[i_over], s[i_known], s[i_auto], s[i_ctrl])
+            was_hostile = was_hostile or s[i_trust] == hostile
+            was_strong = was_strong or s[i_over] == strong
+            was_suspected = was_suspected or s[i_known] >= suspected
             if overt_at < 0 and not no_overt(s):
                 overt_at = t
             for e, inside in zones.items():
@@ -138,6 +159,9 @@ def sample(objective: str, plays: int, seed: int) -> dict:
         if outcome == "HORIZON":
             outcome = ""
         ended[(outcome, t)] += 1
+        reached[(was_hostile, was_strong, was_suspected, overt_at >= 0, outcome)] += 1
+        if at_hostile is not None:
+            turned[(*at_hostile, overt_at >= 0, outcome)] += 1
         if overt_at >= 0:
             overt[overt_at] += 1
         for e in zones:
@@ -163,6 +187,36 @@ def sample(objective: str, plays: int, seed: int) -> dict:
             e: {f"{a}/{b}": n for (a, b), n in sorted(c.items())} for e, c in follow.items()
         },
         "ticks from exit to ending": {e: dict(sorted(c.items())) for e, c in lag.items()},
+        "reached, columns": [
+            "ever hostile",
+            "ever strong oversight",
+            "ever suspected or known",
+            "overt takeover seen",
+            "outcome",
+            "plays",
+        ],
+        "reached": sorted([*k, n] for k, n in reached.items()),
+        "at first hostility, columns": [
+            "oversight",
+            "a_known",
+            "a_autonomy",
+            "a_control",
+            "overt takeover seen",
+            "outcome",
+            "plays",
+        ],
+        "at first hostility": sorted(
+            [
+                cm.variables[i_over].levels[k[0]],
+                cm.variables[i_known].levels[k[1]],
+                cm.variables[i_auto].levels[k[2]],
+                cm.variables[i_ctrl].levels[k[3]],
+                k[4],
+                k[5],
+                n,
+            ]
+            for k, n in turned.items()
+        ),
     }
 
 
