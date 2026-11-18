@@ -29,6 +29,11 @@ because the "ever" flags hold in nearly every 56-quarter play, the levels of ``o
 ``a_known``, ``a_autonomy`` and ``a_control`` at the first state with hostile relations,
 against the outcome ("at first hostility").
 
+Added 2026-11-17 on the owner's proposal, before any number under it was computed:
+``--policy effort`` draws the moves of ``H`` and ``L`` with probability proportional to the
+standard normal density at each action's effort score, so that low-effort plays weigh more
+(see :func:`chooser`); the default ``uniform`` reproduces the earlier runs draw for draw.
+
     PYTHONPATH=. python scripts/agi_v0_1_endings_census.py kernel --ending DISEMPOWERMENT
     PYTHONPATH=. python scripts/agi_v0_1_endings_census.py sample --plays 1000000
 """
@@ -119,8 +124,47 @@ def reader(rec: dict, cm):
     return inside
 
 
-def sample(objective: str, plays: int, seed: int) -> dict:
+def chooser(cm, objective: str, policy: str):
+    """``draw(state, rng)``: the joint move of one transition.
+
+    ``uniform``: every actor draws uniformly among its available actions. ``effort``: ``H`` and
+    ``L`` draw an available action with probability proportional to the standard normal
+    density at its effort score (docs/agi_effort.md; score 0, 1, 2, 3 in the proportions
+    1 : 0.61 : 0.14 : 0.011), so that a play's weight falls with the effort it costs them;
+    ``A``, ``Clock`` and Nature stay uniform."""
+    if policy == "uniform":
+        return lambda s, rng: tuple(rng.choice(a) for a in cm.available(s))
+    import math
+
+    from tests.agi.effort import CLOSED, scores_for
+
+    tables = scores_for(objective, ("H", "L"))
+    scored = [
+        (i, [tables[actor.name].get(x.name, CLOSED) for x in actor.actions])
+        for i, actor in enumerate(cm.actors)
+        if actor.name in tables
+    ]
+    density = [math.exp(-k * k / 2) for k in range(8)]
+
+    def draw(s, rng):
+        avail = cm.available(s)
+        move = [rng.choice(a) for a in avail]
+        for i, row in scored:
+            weights = []
+            for j in avail[i]:
+                score = row[j]
+                if isinstance(score, tuple):
+                    score = score[1] if cm.evaluate(score[0], s) else score[2]
+                weights.append(density[score])
+            move[i] = rng.choices(avail[i], weights)[0]
+        return tuple(move)
+
+    return draw
+
+
+def sample(objective: str, plays: int, seed: int, policy: str = "uniform") -> dict:
     cm = game()
+    draw = chooser(cm, objective, policy)
     zones = {}
     for ending in BAD:
         if store(ending).exists():
@@ -151,7 +195,7 @@ def sample(objective: str, plays: int, seed: int) -> dict:
         was_hostile = was_strong = was_suspected = False
         at_hostile = None
         while not cm.is_terminal(s):
-            s = cm.step(s, tuple(rng.choice(a) for a in cm.available(s)))
+            s = cm.step(s, draw(s, rng))
             t += 1
             if at_hostile is None and s[i_trust] == hostile:
                 at_hostile = (s[i_over], s[i_known], s[i_auto], s[i_ctrl])
@@ -182,6 +226,7 @@ def sample(objective: str, plays: int, seed: int) -> dict:
     return {
         "model": "agi_v0_2, every consequence on" if MODEL == "v0.2" else "agi_v0_1",
         "objective": objective,
+        "policy": policy,
         "plays": plays,
         "seed": seed,
         "horizon": horizon,
@@ -235,12 +280,13 @@ def main() -> None:
     ap.add_argument("--objective", default="self_preserving", choices=v0_1.OBJECTIVES)
     ap.add_argument("--plays", type=int, default=1_000_000)
     ap.add_argument("--seed", type=int, default=20261117)
+    ap.add_argument("--policy", default="uniform", choices=["uniform", "effort"])
     ap.add_argument("--out", type=Path, default=OUT)
     args = ap.parse_args()
     if args.step == "kernel":
         compute_kernel(args.ending)
         return
-    result = sample(args.objective, args.plays, args.seed)
+    result = sample(args.objective, args.plays, args.seed, args.policy)
     args.out.write_text(json.dumps(result) + "\n")
     print(f"{args.plays} plays in {result['seconds']}s -> {args.out}", flush=True)
 

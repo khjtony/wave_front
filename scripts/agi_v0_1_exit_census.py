@@ -85,7 +85,12 @@ def _module(name: str):
 
 
 def census(
-    objective: str, plays: int, seed: int, ending: str = "SILENT_TAKEOVER", transitions: int = 24
+    objective: str,
+    plays: int,
+    seed: int,
+    ending: str = "SILENT_TAKEOVER",
+    transitions: int = 24,
+    policy: str = "uniform",
 ) -> dict:
     ps = _sampler()
     ends = _module("agi_v0_1_endings_census")  # its game() follows WF_CENSUS_MODEL
@@ -93,6 +98,7 @@ def census(
     with gzip.open(ends.store(ending), "rb") as fh:
         inside = ps.reader(pickle.load(fh), cm)
     (s0,) = [s for s in cm.initial_states() if cm.state_dict(s)["a_objective"] == objective]
+    draw = ends.chooser(cm, objective, policy)
     rng = random.Random(seed)
     exits: Counter = Counter()
     visits: Counter = Counter()
@@ -105,7 +111,7 @@ def census(
                 break
             if not out:
                 visits[tuple(s[i] for i in core)] += 1
-            move = tuple(rng.choice(a) for a in cm.available(s))
+            move = draw(s, rng)
             nxt = cm.step(s, move)
             if not out and not inside(nxt):
                 out = True
@@ -150,6 +156,7 @@ def census(
         "objective": objective,
         "ending": ending,
         "transitions": transitions,
+        "policy": policy,
         "plays": plays,
         "seed": seed,
         "exits": total,
@@ -179,9 +186,12 @@ def main() -> None:
     ap.add_argument("--seed", type=int, default=20261117)
     ap.add_argument("--ending", default="SILENT_TAKEOVER")
     ap.add_argument("--transitions", type=int, default=24)
+    ap.add_argument("--policy", default="uniform", choices=["uniform", "effort"])
     ap.add_argument("--out", type=Path, default=OUT)
     args = ap.parse_args()
-    result = census(args.objective, args.plays, args.seed, args.ending, args.transitions)
+    result = census(
+        args.objective, args.plays, args.seed, args.ending, args.transitions, args.policy
+    )
     args.out.write_text(json.dumps(result, indent=1) + "\n")
     print(f"{result['exits']} exits of {args.plays} plays in {result['seconds']}s -> {args.out}")
 
