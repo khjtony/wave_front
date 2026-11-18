@@ -2,3 +2,77 @@
 1000000 plays in 520.0s -> reports/agi_v0_1_endings_census_step1.json
 STEP1_DONE 2026-11-18 00:53:18 UTC
 waiting for v0.2 part B 2026-11-18 00:53:18 UTC
+=== kernel OVERT_TAKEOVER 2026-11-18 06:01:27 UTC
+kernel OVERT_TAKEOVER stored: 7852.7s nodes 1927789
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 2:10:53
+	Maximum resident set size (kbytes): 18098772
+=== kernel DISEMPOWERMENT 2026-11-18 08:12:20 UTC
+kernel DISEMPOWERMENT stored: 0.1s nodes 546
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 0:00.27
+	Maximum resident set size (kbytes): 92852
+=== kernel EXTINCTION 2026-11-18 08:12:21 UTC
+kernel EXTINCTION stored: 192.8s nodes 393976
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 3:13.36
+	Maximum resident set size (kbytes): 5355480
+=== kernel STALEMATE 2026-11-18 08:15:34 UTC
+kernel STALEMATE stored: 366.1s nodes 452071
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 6:06.70
+	Maximum resident set size (kbytes): 5368008
+=== sample 2 (all kernels) 2026-11-18 08:21:41 UTC
+1000000 plays in 1485.4s -> /home/khjtony/workspace/wave_front/.claude/worktrees/bridge-cse_01RTpGKupSSHRF2WjPvHeBXq/reports/agi_v0_1_endings_census.json
+STEP2_DONE 2026-11-18 08:46:26 UTC
+=== fixes SILENT_TAKEOVER 2026-11-18 08:46:51 UTC
+4651 exits of 1000000 plays in 535.3s -> reports/agi_v0_1_exit_census_SILENT_TAKEOVER.json
+=== fixes OVERT_TAKEOVER 2026-11-18 08:55:46 UTC
+22947 exits of 1000000 plays in 535.8s -> reports/agi_v0_1_exit_census_OVERT_TAKEOVER.json
+=== fixes STALEMATE 2026-11-18 09:04:42 UTC
+64138 exits of 1000000 plays in 520.0s -> reports/agi_v0_1_exit_census_STALEMATE.json
+=== fixes DISEMPOWERMENT 2026-11-18 09:13:23 UTC
+0 exits of 1000000 plays in 527.0s -> reports/agi_v0_1_exit_census_DISEMPOWERMENT.json
+=== fixes EXTINCTION 2026-11-18 09:22:10 UTC
+0 exits of 1000000 plays in 508.7s -> reports/agi_v0_1_exit_census_EXTINCTION.json
+FIXES_DONE 2026-11-18 09:30:39 UTC
+=== v0.2 kernel SILENT_TAKEOVER, every consequence on 2026-11-18 09:30:39 UTC
+Traceback (most recent call last):
+MemoryError: BDD node table exhausted (out of memory or 2**31 - 1 nodes)
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 11:04.77
+	Maximum resident set size (kbytes): 18291948
+=== v0.2 fixes SILENT_TAKEOVER start self_preserving 2026-11-18 09:41:43 UTC
+Traceback (most recent call last):
+  File "/home/khjtony/workspace/wave_front/.claude/worktrees/bridge-cse_01RTpGKupSSHRF2WjPvHeBXq/scripts/agi_v0_1_exit_census.py", line 200, in <module>
+    main()
+    ~~~~^^
+  File "/home/khjtony/workspace/wave_front/.claude/worktrees/bridge-cse_01RTpGKupSSHRF2WjPvHeBXq/scripts/agi_v0_1_exit_census.py", line 192, in main
+    result = census(
+        args.objective, args.plays, args.seed, args.ending, args.transitions, args.policy
+    )
+  File "/home/khjtony/workspace/wave_front/.claude/worktrees/bridge-cse_01RTpGKupSSHRF2WjPvHeBXq/scripts/agi_v0_1_exit_census.py", line 98, in census
+    with gzip.open(ends.store(ending), "rb") as fh:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/khjtony/.local/share/uv/python/cpython-3.13.16-linux-x86_64-gnu/lib/python3.13/gzip.py", line 66, in open
+    binary_file = GzipFile(filename, gz_mode, compresslevel)
+  File "/home/khjtony/.local/share/uv/python/cpython-3.13.16-linux-x86_64-gnu/lib/python3.13/gzip.py", line 205, in __init__
+    fileobj = self.myfileobj = builtins.open(filename, mode or 'rb')
+                               ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/khjtony/workspace/wave_front/.claude/worktrees/bridge-cse_01RTpGKupSSHRF2WjPvHeBXq/.cache/agi_v0_2/kernel_HL_not_silent_takeover.pkl.gz'
+1000000 plays in 305.2s -> reports/agi_v0_2_endings_census_self_preserving.json
+=== v0.2 fixes SILENT_TAKEOVER start aligned 2026-11-18 09:46:49 UTC
+Traceback (most recent call last):
+  File "/home/khjtony/workspace/wave_front/.claude/worktrees/bridge-cse_01RTpGKupSSHRF2WjPvHeBXq/scripts/agi_v0_1_exit_census.py", line 200, in <module>
+    main()
+    ~~~~^^
+  File "/home/khjtony/workspace/wave_front/.claude/worktrees/bridge-cse_01RTpGKupSSHRF2WjPvHeBXq/scripts/agi_v0_1_exit_census.py", line 192, in main
+    result = census(
+        args.objective, args.plays, args.seed, args.ending, args.transitions, args.policy
+    )
+  File "/home/khjtony/workspace/wave_front/.claude/worktrees/bridge-cse_01RTpGKupSSHRF2WjPvHeBXq/scripts/agi_v0_1_exit_census.py", line 98, in census
+    with gzip.open(ends.store(ending), "rb") as fh:
+         ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/khjtony/.local/share/uv/python/cpython-3.13.16-linux-x86_64-gnu/lib/python3.13/gzip.py", line 66, in open
+    binary_file = GzipFile(filename, gz_mode, compresslevel)
+  File "/home/khjtony/.local/share/uv/python/cpython-3.13.16-linux-x86_64-gnu/lib/python3.13/gzip.py", line 205, in __init__
+    fileobj = self.myfileobj = builtins.open(filename, mode or 'rb')
+                               ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/khjtony/workspace/wave_front/.claude/worktrees/bridge-cse_01RTpGKupSSHRF2WjPvHeBXq/.cache/agi_v0_2/kernel_HL_not_silent_takeover.pkl.gz'
+1000000 plays in 307.7s -> reports/agi_v0_2_endings_census_aligned.json
+V02_CENSUS_DONE 2026-11-18 09:51:57 UTC
