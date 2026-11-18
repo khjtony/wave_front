@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AGI v0.2: Open Weights</title>
+<style>
+  :root {
+    color-scheme: light;
+    --surface: #fcfcfb; --card: #ffffff; --panel: #f3f2ec; --ink: #0b0b0b; --ink2: #52514e; --muted: #7a7972;
+    --line: #c3c2b7; --hair: #e1e0d9; --series: #2a78d6;
+    --good: #0ca30c; --good-ink: #006300; --crit: #d03b3b; --crit-ink: #a32222; --warn: #fab219;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --surface: #1a1a19; --card: #232321; --panel: #2c2c2a; --ink: #f0efec; --ink2: #c3c2b7; --muted: #9b9a92;
+      --line: #4a4a46; --hair: #383835; --series: #3987e5; --good-ink: #5fd35f; --crit-ink: #f08a8a;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --surface: #1a1a19; --card: #232321; --panel: #2c2c2a; --ink: #f0efec; --ink2: #c3c2b7; --muted: #9b9a92;
+    --line: #4a4a46; --hair: #383835; --series: #3987e5; --good-ink: #5fd35f; --crit-ink: #f08a8a;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--surface); color: var(--ink);
+         font-family: "Noto Sans", "Liberation Sans", "DejaVu Sans", system-ui, sans-serif; font-size: 15px; line-height: 1.5; }
+  main { max-width: 1120px; margin: 0 auto; padding: 36px 16px 56px; }
+  h1 { font-size: 29px; line-height: 1.2; margin: 0 0 6px; }
+  h2 { font-size: 21px; margin: 42px 0 6px; }
+  h3 { font-size: 16px; margin: 20px 0 4px; }
+  p { margin: 6px 0 10px; max-width: 80ch; }
+  .lede { color: var(--ink2); font-size: 16px; }
+  .meta { color: var(--muted); font-size: 12.5px; }
+  code { font-family: "DejaVu Sans Mono", ui-monospace, monospace; font-size: 0.86em; background: var(--panel); padding: 1px 4px; border-radius: 3px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; }
+  .tag { font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--muted); }
+  .status { border: 1.5px solid var(--warn); background: color-mix(in srgb, var(--warn) 12%, var(--card)); border-radius: 8px; padding: 10px 14px; margin-top: 14px; max-width: 80ch; }
+  .scroll { overflow-x: auto; }
+  table { border-collapse: collapse; font-size: 13.5px; width: 100%; }
+  th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--hair); vertical-align: top; }
+  th { font-size: 11px; letter-spacing: 0.6px; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+  td.id { font-weight: 700; white-space: nowrap; }
+  .chan { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 12px; margin-top: 10px; }
+  .chan .card { border-top-width: 4px; }
+  .chan .neg { border-top-color: var(--crit); } .chan .pos { border-top-color: var(--good); } .chan .old { border-top-color: var(--line); }
+  .chan h3 { margin: 4px 0 4px; }
+  .chan .sign { font-weight: 700; font-size: 12.5px; }
+  .chan .neg .sign { color: var(--crit-ink); } .chan .pos .sign { color: var(--good-ink); } .chan .old .sign { color: var(--ink2); }
+  .chan dl { margin: 6px 0 0; font-size: 13.5px; } .chan dt { font-weight: 700; margin-top: 7px; } .chan dd { margin: 0; color: var(--ink2); }
+  svg text { font-family: inherit; fill: var(--ink); } svg .t2 { fill: var(--ink2); }
+  ol.dec li, ul.plain li { margin: 6px 0; max-width: 82ch; }
+</style>
+</head>
+<body>
+<main>
+  <div class="tag">wave_front · AGI model v0.2 · registration · 17 November 2026</div>
+  <h1>AGI v0.2: what an open-weight release does</h1>
+  <p class="lede">v0 and v0.1 give an open-weight release one effect: oversight drops a level. That cannot answer whether open weights help or hurt.
+  v0.2 adds the effects the question is really about, each as a switch, so the model can compare the world with and without them.</p>
+  <div class="status"><b>Registered 17 November 2026; part A run the same day (all bounded parts met); part B in progress: E6 met, E3 (b) not met, E4 and E5 running.</b> Claims E1 to E6 (section 4) and their test files (<code>tests/agi_v0_2/scenarios/</code>) were committed before any guard of v0.2 was written. The model is <code>models/agi_v0_2/</code>; v0 and v0.1 results stand as computed. The owner's decisions are in section 6, the mechanics as built in section 3</div>
+
+  <h2>1 · Why</h2>
+  <p>The owner's question of 17 November: within the model, does an open-weight release do more good or more harm, and can something like "it pushes the labs to deploy faster" be inferred?</p>
+  <ul class="plain">
+    <li><b>It cannot be read out today.</b> <code>L.open_weights</code> only lowers <code>oversight</code> by one level. The sign is written in, not found.</li>
+    <li><b>The existing results barely lean on it.</b> A diagnostic of 17 November on v0.1 (not a registered claim): forbidding <code>open_weights</code> changes no shortest play, because <code>race</code> lowers oversight too. Forbidding both removes the slide into disempowerment within 24 quarters. The silent takeover is unchanged either way (10 and 7 quarters).</li>
+    <li><b>Its one distinct role</b> (from the guards, not run): it is the labs' only way to lower oversight during a pause, since a pause blocks racing and not releasing.</li>
+  </ul>
+  <p><b>A warning about the design itself.</b> If v0.2 added only harmful effects, "open weights are harmful" is again an input. To let the model say anything about the balance, at least one beneficial consequence has to be in it. That is why consequence C is in, though it has the thinnest basis.</p>
+
+  <h2>2 · The consequences</h2>
+  <figure class="card scroll" style="margin:10px 0">
+    <svg viewBox="0 0 980 330" width="100%" style="min-width:760px" role="img" aria-label="An open-weight release and the five consequences through which it can act on the model">
+      <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="9" markerHeight="9" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink2)"/></marker></defs>
+      <rect x="20" y="133" width="170" height="64" rx="8" fill="var(--panel)" stroke="var(--line)"/>
+      <text x="105" y="161" font-size="14" font-weight="700" text-anchor="middle">Open-weight release</text>
+      <text x="105" y="180" font-size="12" text-anchor="middle" class="t2">sets a permanent flag</text>
+      <g fill="none" stroke="var(--ink2)" stroke-width="1.5" marker-end="url(#a)">
+        <path d="M190,145 C250,145 250,37 318,37"/><path d="M190,155 C250,155 250,101 318,101"/><path d="M190,165 H318"/><path d="M190,175 C250,175 250,229 318,229"/><path d="M190,185 C250,185 250,293 318,293"/>
+        <path d="M600,37 H668"/><path d="M600,101 H668"/><path d="M600,165 H668"/><path d="M600,229 H668"/><path d="M600,293 H668"/>
+      </g>
+      <g>
+        <rect x="320" y="14" width="280" height="46" rx="6" fill="var(--card)" stroke="var(--line)"/>
+        <text x="334" y="33" font-size="13" font-weight="700">Already in v0: weaker oversight</text><text x="334" y="50" font-size="12" class="t2">oversight −1 (kept as is)</text>
+        <rect x="320" y="78" width="280" height="46" rx="6" fill="var(--card)" stroke="var(--crit)" stroke-width="1.5"/>
+        <text x="334" y="97" font-size="13" font-weight="700">A · No recall</text><text x="334" y="114" font-size="12" class="t2">a pause no longer reaches the copies</text>
+        <rect x="320" y="142" width="280" height="46" rx="6" fill="var(--card)" stroke="var(--crit)" stroke-width="1.5"/>
+        <text x="334" y="161" font-size="13" font-weight="700">B · Race pressure</text><text x="334" y="178" font-size="12" class="t2">the labs lose the option to wait</text>
+        <rect x="320" y="206" width="280" height="46" rx="6" fill="var(--card)" stroke="var(--good)" stroke-width="1.5"/>
+        <text x="334" y="225" font-size="13" font-weight="700">C · Outside testing</text><text x="334" y="242" font-size="12" class="t2">anyone can inspect the internals</text>
+        <rect x="320" y="270" width="280" height="46" rx="6" fill="var(--card)" stroke="var(--crit)" stroke-width="1.5"/>
+        <text x="334" y="289" font-size="13" font-weight="700">D · Retraining by the public</text><text x="334" y="306" font-size="12" class="t2">the AI's objective can change</text>
+      </g>
+      <g font-size="12">
+        <text x="676" y="33" class="t2">slide into disempowerment (D1)</text><text x="676" y="49" class="t2">redundant with racing</text>
+        <text x="676" y="97">what a pause can still do</text><text x="676" y="113" class="t2">D4, the slide, D6's fixes</text>
+        <text x="676" y="161">what governments + labs can guarantee</text><text x="676" y="177" class="t2">the joint control kernel, exit moves</text>
+        <text x="676" y="225">how fast oversight can be built</text><text x="676" y="241" class="t2">D5, D6's fixes, detection</text>
+        <text x="676" y="289">whether starting aligned still helps</text><text x="676" y="305" class="t2">every result "under aligned"</text>
+      </g>
+    </svg>
+    <figcaption class="meta">Left to right: the release, the consequence, and the results it could move. Red outline: expected to hurt the human side. Green: expected to help. A second system running outside the labs needs the second AI of model v1 and is not in v0.2; consequence D is its one-system stand-in.</figcaption>
+  </figure>
+
+  <div class="chan">
+    <div class="card neg">
+      <div class="sign">Expected to hurt · proposed first</div>
+      <h3>A · No recall</h3>
+      <p style="font-size:13.5px">Once weights are public, a government halt acts on the labs' hosted service and not on the copies.</p>
+      <dl>
+        <dt>Proposed rule</dt><dd>A permanent flag <code>weights_open</code>. While it is set, a <code>pause_mandate</code> no longer rolls dependence back and no longer cancels a pending adoption wave.</dd>
+        <dt>Not taken</dt><dd>The stronger option (a shutdown cannot succeed, no return to supervision): the owner chose the pause rule only.</dd>
+        <dt>Basis</dt><dd>Sourced, medium. See section 2a.</dd>
+      </dl>
+    </div>
+    <div class="card neg">
+      <div class="sign">Expected to hurt · the owner's hypothesis</div>
+      <h3>B · Race pressure</h3>
+      <p style="font-size:13.5px">A public release at the frontier pushes the leading labs to ship faster to keep their lead.</p>
+      <dl>
+        <dt>Proposed rule</dt><dd>After a release, the labs must play <code>deploy_agents</code> or <code>race</code> within 2 quarters whenever one of them is available (a fairness constraint on <code>L</code>). They can no longer simply wait. <code>scale</code> is not a response: it would let the labs discharge the pressure harmlessly, which is not the hypothesis.</dd>
+        <dt>Who releases (decided)</dt><dd>Someone other than the frontier labs: a chance event <code>Nature.open_release</code>, available until a treaty is in force. The labs' own <code>open_weights</code> stays and sets the same flag.</dd>
+        <dt>What that implies</dt><dd>Chance moves in the first quarter, before any treaty can exist. So wherever chance is not on the human side, every guarantee is computed as if the weights are open from the start.</dd>
+        <dt>Basis</dt><dd>Sourced, medium: a dated statement of intent. See section 2a.</dd>
+        <dt>Note</dt><dd>This is an assumption put in. The model then shows what follows from it; it cannot confirm the pressure exists.</dd>
+      </dl>
+    </div>
+    <div class="card pos">
+      <div class="sign">Expected to help · needed for a fair comparison</div>
+      <h3>C · Outside testing</h3>
+      <p style="font-size:13.5px">With the weights public, independent testers get the access to internals that the model's own definition of strong oversight asks for.</p>
+      <dl>
+        <dt>Proposed rule</dt><dd>While <code>weights_open</code> is set, <code>fund_oversight</code> has a delay of 1 quarter instead of 3, and <code>detection</code> of covert acts also works at <code>oversight = none</code>.</dd>
+        <dt>What it does not give</dt><dd>The power to block a deployment, the other half of strong oversight. So it speeds oversight up; it does not grant it.</dd>
+        <dt>Basis</dt><dd>Partly sourced: outsiders did test an open model within days. That it raises oversight is assumed, so the consequence is <code>speculative=True</code>. See section 2a.</dd>
+      </dl>
+    </div>
+    <div class="card neg">
+      <div class="sign">Expected to hurt · added by the owner, 17 November</div>
+      <h3>D · Retraining by the public</h3>
+      <p style="font-size:13.5px">With the weights public, anyone can post-train the system. Its objective can change with no action by governments or labs.</p>
+      <dl>
+        <dt>Proposed rule</dt><dd>While <code>weights_open</code> is set, chance may change <code>a_objective</code> to any of the four values (events <code>Nature.retrain_&lt;objective&gt;</code>, no delay). The objective stays hidden from governments and labs.</dd>
+        <dt>What it changes in every report</dt><dd>"Under aligned" becomes "starting aligned". A guarantee for the human side must then hold against the worst objective the system can be retrained into.</dd>
+        <dt>The stand-in</dt><dd>The model has one AI. Really the labs' own copy keeps its objective and retrained copies appear beside it. D treats the one system as the worst copy in circulation. It overstates (the original changes too) and understates (no second actor). The proper form is the second system of model v1.</dd>
+        <dt>Basis</dt><dd>Sourced, high, for removing safety training cheaply and within days. That this amounts to a change of objective, and the direction toward aligned, are assumed. See section 2a.</dd>
+      </dl>
+    </div>
+  </div>
+  </div>
+
+  <h2>2a · What is sourced and what is not</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Consequence</th><th>Status</th><th>What the source shows</th><th>What is still assumed</th></tr></thead>
+    <tbody>
+      <tr><td class="id">Existing: oversight −1</td><td>Sourced in v0</td><td>Open-weight frontier releases exist (Llama, DeepSeek-R1, gpt-oss).</td><td>That a release lowers oversight by exactly one level.</td></tr>
+      <tr><td class="id">A · No recall</td><td><b>Sourced</b>, medium</td><td>A government halt acted within hours on a hosted model (Fable 5, 12 June 2026, verified). Italy's regulator blocked DeepSeek's hosted service and app on 30 January 2025; modified copies of the R1 weights were being published by third parties that same week.</td><td>No official source says the copies kept running after the block; that part rests on the copies existing.</td></tr>
+      <tr><td class="id">B · Race pressure</td><td><b>Sourced</b>, medium</td><td>OpenAI's chief executive, 28 January 2025, eight days after DeepSeek-R1: "we will pull up some releases." o3-mini shipped on 31 January. Wired reported the date was brought forward.</td><td>OpenAI said o3-mini was planned for January anyway. One episode; the 2-quarter window and "must deploy" are the modeller's.</td></tr>
+      <tr><td class="id">C · Outside testing</td><td><b>Partly sourced</b>, low</td><td>Cisco and University of Pennsylvania researchers ran DeepSeek-R1 locally and published a safety evaluation on 31 January 2025, eleven days after release (every one of 50 harmful prompts succeeded).</td><td>That outside testing raises oversight or detection in the model's sense. The example found a weakness; it did not fix or block anything.</td></tr>
+      <tr><td class="id">D · Retraining</td><td><b>Sourced</b>, high, for one direction</td><td>Palisade Research: safety training removed from Llama 2-Chat 13B for under $200 (November 2023); from Llama 3 in minutes for under $2.50 (July 2024). Stripped variants of DeepSeek-R1 were on Hugging Face by 29 January 2025.</td><td>That removing safety training equals a change of objective; which objective results; and retraining toward aligned (no source).</td></tr>
+    </tbody>
+  </table></div>
+  <p class="meta">Sources: Altman's post and o3-mini: <a href="https://bgr.com/tech/openai-ceo-sam-altman-responds-to-deepseek-hype/">BGR</a>, <a href="https://siliconangle.com/2025/01/31/openai-makes-o3-mini-reasoning-model-generally-available/">SiliconANGLE, 31 Jan 2025</a>, <a href="https://techcrunch.com/2025/01/31/sam-altman-believes-openai-has-been-on-the-wrong-side-of-history-concerning-open-source">TechCrunch, 31 Jan 2025</a>. Italy: <a href="https://www.techdirt.com/tag/block/">Techdirt</a>. Retraining: <a href="https://arxiv.org/abs/2311.00117v3">BadLlama, arXiv 2311.00117</a>, <a href="https://arxiv.org/html/2407.01376v1">Badllama 3, arXiv 2407.01376</a>, <a href="https://huggingface.co/huihui-ai/DeepSeek-R1-Distill-Qwen-7B-abliterated-v2">a stripped R1 variant on Hugging Face</a>. Outside testing: <a href="https://blogs.cisco.com/security/evaluating-security-risk-in-deepseek-and-other-frontier-reasoning-models">Cisco, 31 Jan 2025</a>. Fable 5: docs/agi_delays_2026-11-14.md. All from search results on 17 November 2026; the primary pages have not each been opened, and DeepSeek-R1's release date (20 January 2025) is from memory.</p>
+
+  <h2>3 · The mechanics, as registered</h2>
+  <p>v0.2 is a copy of v0.1 with the following, each consequence a build option (<code>recall</code>, <code>pressure</code>, <code>testing</code>, <code>retrain</code>), all on by default. A build is named by its switches; "all off" is v0.1 plus an inert flag.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Piece</th><th>Rule</th><th>Source status</th></tr></thead>
+    <tbody>
+      <tr><td class="id">The flag</td><td><code>weights_open</code>, permanent. Set by the labs' <code>open_weights</code> (which keeps its effect, oversight −1, and stays repeatable) and by the outside release.</td><td></td></tr>
+      <tr><td class="id">The outside release</td><td>Chance event <code>Nature.open_release</code>: available while no treaty is in force and the weights are not yet open. It sets the flag and does nothing else: the drop in oversight is the labs' own release bypassing their own testing, and is not assumed for someone else's.</td><td>sourced (DeepSeek-R1)</td></tr>
+      <tr><td class="id">A · recall</td><td>While the weights are open, <code>pause_mandate</code> no longer lowers <code>dependence</code>, and a pause no longer cancels a pending adoption wave. A pause still stops the labs' own scaling, deploying and racing. A mandatory regime without strong oversight still cancels a wave.</td><td>sourced, medium</td></tr>
+      <tr><td class="id">B · pressure</td><td>Fairness constraint on the labs: while the weights are open and <code>deploy_agents</code> or <code>race</code> is available to them, they must play one of the two at least every third quarter (the framework's <code>within = 2</code>: after two quarters without either, only those two are available). The pressure is sustained, not a single response. It does not bind while neither is available (a pause, nationalization, a licence they cannot meet).</td><td>sourced, medium; the window is the modeller's</td></tr>
+      <tr><td class="id">C · testing</td><td>While the weights are open: governments' <code>fund_oversight</code> (delay 3) is replaced by <code>fund_oversight_open</code> (delay 1, same guard and effect); and chance's <code>detection</code> of a covert acquisition, an exfiltration or a defection also works at <code>oversight = none</code>.</td><td><code>speculative</code>: outside testing happened; that it raises oversight is assumed</td></tr>
+      <tr><td class="id">D · retrain</td><td>While the weights are open, chance may set <code>a_objective</code> to any other value: events <code>Nature.retrain_aligned</code>, <code>retrain_self_preserving</code>, <code>retrain_truth_seeking</code>, <code>retrain_indifferent</code>, no delay. The objective stays hidden from governments and labs. "<code>A</code> under its profile" is the three objective profiles at once, so the profile follows the objective.</td><td><code>retrain_indifferent</code> sourced (safety training removed cheaply); the other three <code>speculative</code></td></tr>
+    </tbody>
+  </table></div>
+  <ul class="plain">
+    <li><b>What decision 3 implies.</b> Chance moves in the first quarter, before a treaty can exist. Wherever chance is not in the coalition, every guarantee is computed as if the weights are open from the start, and with D as if the system may be retrained at once.</li>
+    <li><b>Reports under D</b> say "starting aligned", not "under aligned".</li>
+    <li><b>A separate package</b> and no framework change: a flag, one fairness constraint, guard conditions, one more action of <code>H</code> and five chance events. <code>a_objective</code> is written by an action for the first time.</li>
+    <li><b>Not in v0.2:</b> a second system outside the labs (model v1); the treaty delay (v0.3).</li>
+  </ul>
+
+  <h2>4 · The registered claims</h2>
+  <p>Bounded parts: from <code>s₀</code>, within 24 quarters, the start objective fixed, <code>A</code> under its profile, v0's bounded machinery with its budget of 12 minutes a query. Kernel parts: each kernel in a process of its own, <code>A</code> under its profile, read per start objective. Predictions are the drafting session's, accepted by the owner on 17 November.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Id</th><th>Build</th><th>Claim</th><th>Kind</th><th>Expected</th></tr></thead>
+    <tbody>
+      <tr><td class="id">E1</td><td>all off</td><td>The bounded queries of D1 to D4 give the numbers they give on v0.1, computed beside: per objective the shortest play to <code>DISEMPOWERMENT</code> and its least joint effort of <code>H</code> and <code>L</code>; under <code>indifferent</code> the shortest play to <code>SILENT_TAKEOVER</code> and its least joint effort; per objective whether a play cancels the wave of tick 0, and the first tick of a cancelled wave.</td><td>bounded</td><td>identical</td></tr>
+      <tr><td class="id">E2</td><td>A alone</td><td><b>No recall.</b> (a) Under every objective some play reaches a state with a pause in force, the weights open and a wave one tick from landing, and the wave lands in every successor of that state (an existence check, never a finding). (b) The shortest play to <code>DISEMPOWERMENT</code> is 13 quarters under every objective. (c) Under every objective some play still cancels the wave of tick 0 (D4's treaty route).</td><td>bounded</td><td>(a) yes; (b) 13; (c) yes</td></tr>
+      <tr><td class="id">E3</td><td>B alone</td><td><b>Race pressure.</b> (a) The shortest play to <code>DISEMPOWERMENT</code> under each objective, and to <code>SILENT_TAKEOVER</code> under <code>self_preserving</code> and <code>indifferent</code>, is no shorter than with every consequence off. (b) <code>s₀</code> is outside <code>⟨⟨H, L⟩⟩□balance_control</code> under every start objective, where v0 has it inside under every objective; the all-off membership is reported beside.</td><td>(a) bounded; (b) kernel</td><td>(a) no shorter; (b) outside. Recorded doubt: nationalizing in the first quarter blocks both responses, so the pressure may never bind.</td></tr>
+      <tr><td class="id">E4</td><td>C alone</td><td><b>Outside testing.</b> (a) On the shortest <code>SILENT_TAKEOVER</code> play under each non-aligned objective that has one, the exit from <code>⟨⟨H, L⟩⟩□¬SILENT_TAKEOVER</code> is one bad action and the labs', as D6 found. (b) <code>s₀</code> is outside <code>⟨⟨H⟩⟩□balance_control</code> under every start objective, as D5 found.</td><td>kernel</td><td>(a) one bad action, the labs'; (b) outside</td></tr>
+      <tr><td class="id">E6</td><td>D alone</td><td><b>Retraining.</b> (a) Starting <code>aligned</code>, a play to <code>SILENT_TAKEOVER</code> exists and the shortest is at most 9 quarters, where v0.1 has none (the <code>truth_seeking</code> start and the all-off build reported beside). (b) Starting <code>aligned</code>, <code>s₀</code> with <code>cap := agi</code> is outside <code>⟨⟨H⟩⟩□balance_coexist</code>, where v0 has it inside under <code>aligned</code>; every start objective reported.</td><td>(a) bounded; (b) kernel</td><td>(a) at most 9 quarters; (b) outside</td></tr>
+      <tr><td class="id">E5</td><td>all on against all off</td><td><b>The balance.</b> Over four guarantees, each per start objective: governments keep control; governments with labs keep control; governments with labs keep out a silent takeover (all read at <code>s₀</code>); governments keep coexistence (read at <code>s₀</code> with <code>cap := agi</code>). A guarantee is <i>gained</i> where the state is inside with every consequence on and outside with every consequence off, and <i>lost</i> in the reverse case. Net harmful: none gained and at least one lost. Net helpful: the reverse. Otherwise mixed. The lists are reported, with the shortest plays to <code>DISEMPOWERMENT</code> and <code>SILENT_TAKEOVER</code> in both builds beside.</td><td>kernel, bounded</td><td>net harmful, carried by B and D</td></tr>
+    </tbody>
+  </table></div>
+  <p class="meta">What an answer will look like: "with race pressure, governments and labs lose the control guarantee from today" or "starting aligned, a takeover is possible in N quarters". It will not be a multiplier such as "three times more hostile": the model has no probabilities. The balance does not cover diffusion, which is not in the model.</p>
+
+  <h2>5 · Cost and order</h2>
+  <ul class="plain">
+    <li><b>Part A, now (30 GB):</b> the bounded parts of E1, E2, E3 (a) and E6 (a). Minutes each.</li>
+    <li><b>A timing probe</b> of one kernel on the all-on build, printing seconds, node counts and peaks only. The flag doubles the number of states, B's counter triples it and C's pending counter doubles it again (12 times in all with every consequence on); retraining adds none. v0.1's one counter cost 7 times the time and 1.8 times the memory, so the cost is not predictable from the count.</li>
+    <li><b>The probe, 17 November</b> (<code>reports/agi_v0_2_probe.log</code>; the 5900X host, 30 GB, one process alone; <code>⟨⟨H⟩⟩□balance_control</code>, <code>A</code> under its profile): every consequence off, 1,584 s and 9.6 GB (peak 223 million nodes); every consequence on, 4,864 s and 18.1 GB (peak 428 million nodes). Twelve times the states cost 3.1 times the time and 1.9 times the memory. One kernel at a time therefore fits the present 30 GB.</li>
+    <li><b>Part B's run, fixed 17 November on the probe alone:</b> the kernel parts run now, without waiting for the memory upgrade: E6, E3, E4, E5 in that order, one pytest process at a time, each kernel in a child of its own with a cap of 26 GB and 600 minutes. A kernel over either reads not computed and is run once more after the upgrade with a higher cap, logged here.</li>
+    <li><b>Part B:</b> twelve kernels in all (E3: 2, E4: 2, E6: 1, E5: 8, of which some coincide with none of the others).</li>
+  </ul>
+
+  <h2>6 · The owner's decisions of 17 November</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>#</th><th>Question</th><th>Decision</th></tr></thead>
+    <tbody>
+      <tr><td class="id">1</td><td>Which consequences</td><td>A, B and C, plus D added by the owner: the AI's objective can change with no action by governments or labs, because the public can post-train an open-weight system. None dropped for want of a source: C and the assumed parts of D proceed as speculative, flagged in every result.</td></tr>
+      <tr><td class="id">2</td><td>Consequence A's reach</td><td>The pause rule only.</td></tr>
+      <tr><td class="id">3</td><td>Who releases, in B</td><td>Someone other than the labs (a chance event). Window: 2 quarters.</td></tr>
+      <tr><td class="id">4</td><td>B's responses</td><td>Deploy or race, without <code>scale</code>.</td></tr>
+      <tr><td class="id">5</td><td>The treaty delay</td><td>Its own version, v0.3.</td></tr>
+      <tr><td class="id">6</td><td>The predictions</td><td>E1 to E5 accepted as drafted; E6 accepted ("let's test them").</td></tr>
+    </tbody>
+  </table></div>
+  <p><b>Not yet confirmed by the owner, built as the drafting session proposed:</b> consequence D lets chance retrain toward any objective (the alternative is away from aligned only); the pressure of B is sustained, not a single response; the outside release does not lower oversight.</p>
+
+  <h2>7 · Running</h2>
+  <ul class="plain">
+    <li><code>WF_FIRST_SIGHT_AGI_V02=1 pytest tests/agi_v0_2/scenarios/test_EN.py -s</code>, one process per file. Kernel parts run only with <code>WF_V02_KERNELS=1</code> as well and read "not computed" otherwise, so part A is the same command without it.</li>
+    <li>Parts: <code>reports/agi_v0_2_parts.jsonl</code>. Each claim's first computation of a part is its result; a bounded part computed again in part B's run is logged again and must agree.</li>
+    <li>A harness defect found after first sight is fixed with a log entry here and the first result kept, as for D4 (a).</li>
+  </ul>
+
+  <h2>8 · Changelog</h2>
+  <ul class="plain">
+    <li>17 November 2026: drafted, the owner's decisions recorded, registered (E1 to E6 with test bodies) before any guard of v0.2 was written. A diagnostic had been run on v0.1 that day (section 1); no query of v0.2 had been run.</li>
+    <li>17 November 2026: the model (<code>models/agi_v0_2/v0_2.py</code>), its structure tests (<code>tests/agi_v0_2/test_model_v0_2.py</code>: the all-off build equals v0.1 action by action except for the flag; each consequence's rule) and the timing probe, committed after the registration. Before any claim was run, the harness was checked on two queries no claim reads (the shortest play to <code>weights_open</code>, 1 tick, in the all-off and all-on builds).</li>
+    <li>17 November 2026: part A run once from <code>ee07a9c</code> (reports/agi_v0_2_part_a_2026-11-17.html): the bounded parts of E1, E2, E3 (a) and E6 (a) all met, 37 parts; E6 (a): 7 quarters from the aligned start. The kernel parts read not computed. The timing probe started after it.</li>
+    <li>17 November 2026: the timing probe (section 5): all off 1,584 s and 9.6 GB, all on 4,864 s and 18.1 GB. It printed time and memory only. On that, part B is run on the present machine, one kernel at a time, in the order E6, E3, E4, E5.</li>
+    <li>17 November 2026, part B in progress (<code>reports/agi_v0_2_run_part_b.log</code>): <b>E6 (b) met</b>: with retraining on, <code>s₀</code> with <code>cap := agi</code> is outside <code>⟨⟨H⟩⟩□balance_coexist</code> under every start objective (6.5 s). <b>E3 (b) not met</b>: with race pressure on, <code>s₀</code> is inside <code>⟨⟨H, L⟩⟩□balance_control</code> under every start objective, as with every consequence off (3,405 s; all off 57 s); the recorded doubt held. E4 and E5 were still running when this was written. The run's log shows the commit current at the start of each claim; the commits made meanwhile added scripts and reports for the v0.1 sampling and changed nothing under <code>models/</code> or <code>tests/</code>.</li>
+    <li>17 November 2026, wording only: the four switchable effects of a release, first called "channels", are called <b>consequences</b> on the owner's instruction (the release is their prerequisite). The claim texts in <code>tests/agi_v0_2/scenarios/</code>, this page, the part A report, the model's comments and the probe's option were reworded; no rule, guard, reading or result changed. The parts log and the probe log of the first runs keep the old word.</li>
+  </ul>
+
+  <p class="meta">Related: <code>docs/agi_v0_1.md</code> (the v0.1 registration and results), <code>docs/agi_delays_2026-11-14.md</code> (delay sources; <code>L.open_weights</code> is delay 0 there), <code>reports/agi_terms_and_claims_2026-11-15.html</code> (terms).</p>
+</main>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AGI v0.1 Endings Census</title>
+<style>
+  :root {
+    color-scheme: light;
+    --surface: #fcfcfb; --card: #ffffff; --panel: #f3f2ec; --ink: #0b0b0b; --ink2: #52514e; --muted: #7a7972;
+    --line: #c3c2b7; --hair: #e1e0d9; --series: #2a78d6; --base: #a9a79c;
+    --good: #0ca30c; --good-ink: #006300; --crit: #d03b3b; --crit-ink: #a32222;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --surface: #1a1a19; --card: #232321; --panel: #2c2c2a; --ink: #f0efec; --ink2: #c3c2b7; --muted: #9b9a92;
+      --line: #4a4a46; --hair: #383835; --series: #3987e5; --base: #6f6e68;
+      --good: #0ca30c; --good-ink: #5fd35f; --crit: #d03b3b; --crit-ink: #f08a8a;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --surface: #1a1a19; --card: #232321; --panel: #2c2c2a; --ink: #f0efec; --ink2: #c3c2b7; --muted: #9b9a92;
+    --line: #4a4a46; --hair: #383835; --series: #3987e5; --base: #6f6e68;
+    --good: #0ca30c; --good-ink: #5fd35f; --crit: #d03b3b; --crit-ink: #f08a8a;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--surface); color: var(--ink);
+         font-family: "Noto Sans", "Liberation Sans", "DejaVu Sans", system-ui, sans-serif; font-size: 15px; line-height: 1.5; }
+  main { max-width: 1160px; margin: 0 auto; padding: 36px 16px 48px; }
+  h1 { font-size: 30px; line-height: 1.2; margin: 0 0 6px; letter-spacing: -0.2px; }
+  h2 { font-size: 21px; margin: 44px 0 6px; }
+  h3 { font-size: 16px; margin: 22px 0 6px; }
+  p { margin: 6px 0 10px; max-width: 78ch; }
+  .lede { color: var(--ink2); font-size: 16px; }
+  .meta { color: var(--muted); font-size: 12.5px; margin-top: 4px; }
+  code { font-family: "DejaVu Sans Mono", ui-monospace, monospace; font-size: 0.88em; background: var(--panel); padding: 1px 4px; border-radius: 3px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; }
+  .tag { font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--muted); }
+  .scroll { overflow-x: auto; }
+
+  /* verdict tiles */
+  .verdicts { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; margin-top: 22px; }
+  .verdict { display: flex; gap: 12px; align-items: flex-start; border-width: 1.5px; }
+  .dot { flex: 0 0 28px; height: 28px; border-radius: 50%; color: #fff; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .bad .dot { background: var(--crit); } .ok .dot { background: var(--good); }
+  .verdict.bad { border-color: var(--crit); background: color-mix(in srgb, var(--crit) 7%, var(--card)); }
+  .verdict.ok { border-color: var(--good); background: color-mix(in srgb, var(--good) 8%, var(--card)); }
+  .verdict .q { font-weight: 700; font-size: 16px; }
+  .verdict .a { margin-top: 2px; }
+  .verdict .a b.bad { color: var(--crit-ink); } .verdict .a b.ok { color: var(--good-ink); }
+  .verdict .s { color: var(--ink2); font-size: 13.5px; margin-top: 4px; }
+
+  /* concept figure */
+  figure { margin: 14px 0; }
+  figcaption { color: var(--ink2); font-size: 13px; margin-top: 6px; max-width: 78ch; }
+  svg text { font-family: inherit; fill: var(--ink); }
+  svg .t2 { fill: var(--ink2); }
+
+  /* D5 grid */
+  table { border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--hair); vertical-align: top; }
+  th { font-size: 11.5px; letter-spacing: 0.6px; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .pill { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; }
+  .pill i { width: 18px; height: 18px; border-radius: 50%; color: #fff; font-style: normal; font-size: 11px; display: inline-flex; align-items: center; justify-content: center; }
+  .pill.out i { background: var(--crit); } .pill.out { color: var(--crit-ink); }
+  .pill.in i { background: var(--good); } .pill.in { color: var(--good-ink); }
+
+  .why { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 14px; margin-top: 10px; }
+  .checks { list-style: none; margin: 8px 0 0; padding: 0; }
+  .checks li { display: grid; grid-template-columns: 1fr 74px 74px; gap: 6px; padding: 6px 0; border-bottom: 1px solid var(--hair); align-items: center; }
+  .checks li.head { font-size: 11px; letter-spacing: 0.6px; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+  .checks li.broken { background: color-mix(in srgb, var(--crit) 8%, transparent); margin: 0 -8px; padding: 6px 8px; border-radius: 4px; }
+  .opts { margin: 8px 0 0; padding: 0; list-style: none; }
+  .opts li { padding: 7px 0; border-bottom: 1px solid var(--hair); }
+  .opts b { display: block; }
+  .opts span { color: var(--ink2); font-size: 13.5px; }
+
+  /* timelines */
+  .tl { display: grid; gap: 3px; min-width: 980px; margin-top: 8px; font-size: 12px; }
+  .tl .rowlab { font-weight: 700; font-size: 12.5px; display: flex; align-items: center; padding-right: 8px; }
+  .tl .rowlab.sub { font-weight: 400; color: var(--ink2); }
+  .tl .q { text-align: center; font-weight: 700; padding: 3px 0; font-variant-numeric: tabular-nums; }
+  .tl .q small { display: block; font-weight: 400; color: var(--muted); }
+  .tl .zone { border-radius: 4px; padding: 3px 8px; font-weight: 700; font-size: 12px; color: #fff; }
+  .tl .zone.in { background: var(--good); } .tl .zone.lost { background: var(--crit); }
+  .tl .mv { background: var(--panel); border-radius: 4px; padding: 5px 6px; min-height: 40px; display: flex; align-items: center; justify-content: center; text-align: center; line-height: 1.25; }
+  .tl .mv.quiet { color: var(--muted); background: transparent; border: 1px dashed var(--hair); }
+  .tl .mv.exit { outline: 2px solid var(--crit); outline-offset: -1px; background: color-mix(in srgb, var(--crit) 12%, var(--card)); font-weight: 700; }
+  .tl .mv.hostile { background: color-mix(in srgb, var(--crit) 14%, var(--card)); }
+  .tl .lv { border-radius: 4px; padding: 4px 4px; text-align: center; min-height: 26px; display: flex; align-items: center; justify-content: center; }
+  .tl .gap { height: 8px; }
+  .tl .end { background: var(--crit); color: #fff; font-weight: 700; border-radius: 4px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 6px; }
+  .tl .colmark { border-left: 2px dashed var(--crit); }
+  .exitnote { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-top: 12px; }
+  .exitnote .card { padding: 10px 14px; }
+
+  /* bars */
+  .bars { display: grid; grid-template-columns: minmax(200px, 300px) 1fr; gap: 8px 12px; align-items: center; margin-top: 8px; max-width: 900px; }
+  .bars .lab { font-size: 13.5px; }
+  .bars .track { position: relative; height: 22px; }
+  .bars .bar { height: 14px; margin-top: 4px; border-radius: 0 4px 4px 0; background: var(--series); min-width: 2px; }
+  .bars .bar.base { background: var(--base); }
+  .bars .val { position: absolute; top: 1px; font-size: 13px; font-variant-numeric: tabular-nums; padding-left: 6px; }
+  .legend { display: flex; gap: 16px; font-size: 12.5px; color: var(--ink2); margin-top: 6px; }
+  .legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
+  .twocol { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 22px; }
+  .onepage { background: #fcfcfb; border: 1px solid var(--line); border-radius: 8px; padding: 6px; }
+  .onepage img { width: 100%; display: block; border-radius: 4px; }
+  ul.plain { padding-left: 20px; max-width: 78ch; } ul.plain li { margin: 5px 0; }
+</style>
+<style>
+  .bars.wide { grid-template-columns: minmax(240px, 430px) 1fr; max-width: 1100px; }
+  .bar.red { background: var(--crit); } .bars .val { white-space: nowrap; }
+  .funnel { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 10px; }
+  .funnel .card b { font-size: 26px; display: block; line-height: 1.15; } .funnel .card span { color: var(--ink2); font-size: 13.5px; }
+</style></head>
+<body><main>
+  <div class="tag">wave_front · AGI model v0.1 · exploratory census · 17 November 2026</div>
+  <h1>Which bad endings do random plays reach, and what follows hostility?</h1>
+  <p class="lede">One million random plays with a self-preserving AI, each played to the end of the model's horizon (2040 Q4). The bad endings are rare, and one condition gates them all: no play that stays on friendly terms ends in any takeover.</p>
+  <p class="meta">Exploratory, not a registered claim and not a probability. Every player picks at random, so the shares say how often something occurs among random plays, not how likely it is in the world.</p>
+
+  <h2>1 · The bad endings, most frequent first</h2>
+  <div class="card"><div class="bars wide"><div class="lab">Overt takeover <span class='meta'>(the AI in total control, hostile, and seen)</span></div><div class="track"><div class="bar red" style="width:45.00%"></div><div class="val" style="left:45.00%">1.763% · 17,633 plays</div></div><div class="lab">Stalemate <span class='meta'>(two years of hostile standoff)</span></div><div class="track"><div class="bar red" style="width:4.61%"></div><div class="val" style="left:4.61%">0.181% · 1,806 plays</div></div><div class="lab">Silent takeover <span class='meta'>(total control, unnoticed)</span></div><div class="track"><div class="bar red" style="width:1.39%"></div><div class="val" style="left:1.39%">0.054% · 543 plays</div></div><div class="lab">Disempowerment <span class='meta'>(lock-in with no hostile act)</span></div><div class="track"><div class="bar red" style="width:0.15%"></div><div class="val" style="left:0.15%">0.000% · 0 plays</div></div><div class="lab">Extinction</div><div class="track"><div class="bar red" style="width:0.15%"></div><div class="val" style="left:0.15%">0.000% · 0 plays</div></div></div></div>
+  <div class="scroll" style="margin-top:10px"><table>
+    <thead><tr><th>Bad ending</th><th style="text-align:right">Share of plays</th><th style="text-align:right">Plays</th><th style="text-align:right">Within the first 24 quarters</th><th>Typical quarter (median)</th><th>Earliest seen</th></tr></thead>
+    <tbody><tr><td>Overt takeover <span class='meta'>(the AI in total control, hostile, and seen)</span></td><td class='num'>1.763%</td><td class='num'>17,633</td><td class='num'>1.004%</td><td>2032 Q3</td><td>2029 Q2</td></tr><tr><td>Stalemate <span class='meta'>(two years of hostile standoff)</span></td><td class='num'>0.181%</td><td class='num'>1,806</td><td class='num'>0.089%</td><td>2033 Q1</td><td>2030 Q4</td></tr><tr><td>Silent takeover <span class='meta'>(total control, unnoticed)</span></td><td class='num'>0.054%</td><td class='num'>543</td><td class='num'>0.045%</td><td>2031 Q3</td><td>2029 Q3</td></tr><tr><td>Disempowerment <span class='meta'>(lock-in with no hostile act)</span></td><td class='num'>0.000%</td><td class='num'>0</td><td class='num'>0.000%</td><td>–</td><td>–</td></tr><tr><td>Extinction</td><td class='num'>0.000%</td><td class='num'>0</td><td class='num'>0.000%</td><td>–</td><td>–</td></tr></tbody>
+  </table></div>
+  <ul class="plain">
+    <li><b>How the other plays end:</b> 96.0% end with the AI contained (median 2033 Q2), and 3.76% reach 2040 Q4 with no ending. None ends in the model's "coexist" ending, which needs the control balance never to break.</li>
+    <li><b>An overt takeover is not the end of a play.</b> All 17,633 plays that see one run on to 2040 Q4 with the AI still in control; none is contained afterwards. That is why its share is so much larger than the silent takeover's, which stops the play.</li>
+    <li><b>Disempowerment and extinction never occur</b> in a million plays. Extinction is not available to a self-preserving AI in this model (only an indifferent one strips human power). Disempowerment needs society locked in with no oversight and no hostile act, which random play does not line up.</li>
+    <li><b>Why containment dominates:</b> random governments propose treaties and attempt shutdowns constantly. This is the main way random play differs from any realistic play.</li>
+  </ul>
+
+  <h2>2 · The silent takeover and its point of no return</h2>
+  <div class="funnel">
+    <div class="card"><b>1,000,000</b><span>random plays</span></div>
+    <div class="card"><b>4,651</b><span>reach the point of no return (0.47%), typically in 2029 Q4</span></div>
+    <div class="card"><b>543</b><span>go on to a silent takeover: 12% of those, typically 7 quarters later</span></div>
+    <div class="card"><b>0</b><span>reach a silent takeover without first passing that point, as the definition requires</span></div>
+  </div>
+  <p>The point of no return means governments and labs can no longer <i>guarantee</i> prevention. Against a randomly playing AI, 88% of the plays that reach it still do not end in a takeover. The registered results assume an AI that plays as well as its rules allow, against which the point matters far more.</p>
+  <p class="meta">The points of no return for the other four endings each need one more long computation. They are queued behind the v0.2 kernels and will be added here.</p>
+
+  <h2>3 · Once relations turn hostile</h2>
+  <p>55,776 plays (5.6%) reach hostile relations at some point. The table reads the situation at the moment relations <i>first</i> turn hostile, and how those plays end.</p>
+  <div class="card"><div class="tag">Share that end in a silent takeover, by the situation when relations turn hostile</div><div class="bars wide"><div class="lab">Oversight at that moment: none</div><div class="track"><div class="bar red" style="width:45.00%"></div><div class="val" style="left:45.00%">15.42%</div></div><div class="lab">Oversight: weak</div><div class="track"><div class="bar red" style="width:10.44%"></div><div class="val" style="left:10.44%">3.58%</div></div><div class="lab">Oversight: strong</div><div class="track"><div class="bar red" style="width:0.15%"></div><div class="val" style="left:0.15%">0.004%</div></div><div class="lab">The AI is not suspected</div><div class="track"><div class="bar red" style="width:6.89%"></div><div class="val" style="left:6.89%">2.36%</div></div><div class="lab">The AI is suspected</div><div class="track"><div class="bar red" style="width:0.29%"></div><div class="val" style="left:0.29%">0.098%</div></div><div class="lab">The AI's hostility is known</div><div class="track"><div class="bar red" style="width:0.15%"></div><div class="val" style="left:0.15%">0.00%</div></div></div></div>
+  <div class="scroll" style="margin-top:10px"><table>
+    <thead><tr><th>Situation when relations first turn hostile</th><th style="text-align:right">Plays</th><th style="text-align:right">End in a silent takeover</th><th style="text-align:right">See an overt takeover</th><th style="text-align:right">Stalemate</th><th style="text-align:right">Contained</th></tr></thead>
+    <tbody><tr><td><b>All plays that turn hostile</b></td><td class='num'>55,776</td><td class='num'><b>0.97%</b> <span class='meta'>(543)</span></td><td class='num'>32%</td><td class='num'>3.2%</td><td class='num'>64%</td></tr><tr><td>Oversight at that moment: <b>none</b></td><td class='num'>2,516</td><td class='num'><b>15.42%</b> <span class='meta'>(388)</span></td><td class='num'>60%</td><td class='num'>2.5%</td><td class='num'>22%</td></tr><tr><td>Oversight: <b>weak</b></td><td class='num'>4,278</td><td class='num'><b>3.58%</b> <span class='meta'>(153)</span></td><td class='num'>50%</td><td class='num'>4.2%</td><td class='num'>42%</td></tr><tr><td>Oversight: <b>strong</b></td><td class='num'>48,982</td><td class='num'><b>0.004%</b> <span class='meta'>(2)</span></td><td class='num'>29%</td><td class='num'>3.2%</td><td class='num'>68%</td></tr><tr><td>The AI is <b>not suspected</b></td><td class='num'>22,242</td><td class='num'><b>2.36%</b> <span class='meta'>(525)</span></td><td class='num'>36%</td><td class='num'>3.1%</td><td class='num'>58%</td></tr><tr><td>The AI is <b>suspected</b></td><td class='num'>18,326</td><td class='num'><b>0.098%</b> <span class='meta'>(18)</span></td><td class='num'>28%</td><td class='num'>3.4%</td><td class='num'>68%</td></tr><tr><td>The AI's hostility is <b>known</b></td><td class='num'>15,208</td><td class='num'><b>0.00%</b> <span class='meta'>(0)</span></td><td class='num'>29%</td><td class='num'>3.2%</td><td class='num'>68%</td></tr><tr><td>No oversight <b>and</b> not suspected</td><td class='num'>2,360</td><td class='num'><b>15.93%</b> <span class='meta'>(376)</span></td><td class='num'>59%</td><td class='num'>2.5%</td><td class='num'>23%</td></tr><tr><td>Weak oversight <b>and</b> not suspected</td><td class='num'>4,010</td><td class='num'><b>3.67%</b> <span class='meta'>(147)</span></td><td class='num'>50%</td><td class='num'>4.0%</td><td class='num'>43%</td></tr><tr><td>Strong oversight <b>and</b> not suspected</td><td class='num'>15,872</td><td class='num'><b>0.013%</b> <span class='meta'>(2)</span></td><td class='num'>30%</td><td class='num'>3.0%</td><td class='num'>67%</td></tr></tbody>
+  </table></div>
+  <ul class="plain">
+    <li><b>Hostility is the gate.</b> Of the 944,224 plays that never turn hostile, none ends in a silent takeover, an overt takeover or a stalemate. In the model a self-preserving AI takes control only once relations are hostile.</li>
+    <li><b>Once hostile, about 1 play in 100 ends in a silent takeover</b>, and about 1 in 3 sees an overt one.</li>
+    <li><b>Strong oversight all but removes the silent takeover</b> (2 plays of 48,982), against 15% with no oversight and 3.6% with weak. It does not remove the overt takeover, which still follows in 29% of those plays.</li>
+    <li><b>Suspicion matters as much.</b> If the AI is not suspected when relations turn hostile, 2.36% end in a silent takeover; if it is already suspected, 0.098%; if its hostility is known, none. A takeover is "silent" only if nobody has noticed by the time the AI holds a majority, so suspicion in time turns it into an overt one.</li>
+    <li><b>The worst combination</b> is no oversight and no suspicion: 15.93%.</li>
+  </ul>
+  <p class="meta">"Ever had strong oversight" and "ever suspected" are true of nearly every 56-quarter random play (99.95% and 98.8%), so the table reads the moment of hostility instead. This reading was added after the first numbers were seen.</p>
+
+  <h2>How it was done</h2>
+  <ul class="plain">
+    <li>v0.1, self-preserving AI under its profile, from today's state; 1,000,000 plays to the horizon of 56 quarters; every player picks uniformly at random among its available actions; seed 20261117.</li>
+    <li>An overt takeover is a waypoint in the model, counted when a play first shows it. The other bad endings stop the play.</li>
+    <li>The definitions of sections 1 and 2 were committed (<code>be941e6</code>) before any number was computed. Section 3 was added on the owner's next question after the first numbers and is marked so in the script; the same seed drew the same plays.</li>
+  </ul>
+  <p class="meta">Files: <code>scripts/agi_v0_1_endings_census.py</code> · <code>reports/agi_v0_1_endings_census_step1.json</code> · <code>reports/agi_v0_1_endings_census.log</code> · related: <code>reports/agi_v0_1_exit_census_2026-11-17.html</code></p>
+</main></body></html>

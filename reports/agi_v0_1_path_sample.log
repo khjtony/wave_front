@@ -1,0 +1,10 @@
+waiting for the v0.2 probe 2026-11-17 20:59:41 UTC
+=== kernel f660ced 2026-11-17 21:36:43 UTC
+kernel stored: 4373.2s nodes 1476080
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:12:53
+	Maximum resident set size (kbytes): 9607404
+=== sample 2026-11-17 22:49:37 UTC
+1000000 plays in 406.1s -> /home/khjtony/workspace/wave_front/.claude/worktrees/bridge-cse_01RTpGKupSSHRF2WjPvHeBXq/reports/agi_v0_1_path_sample.json
+SAMPLE_DONE 2026-11-17 22:56:23 UTC
+1000000 plays in 406.1s -> /home/khjtony/workspace/wave_front/.claude/worktrees/bridge-cse_01RTpGKupSSHRF2WjPvHeBXq/reports/agi_v0_1_path_sample.json
+SAMPLE2_DONE 2026-11-17 23:04:18 UTC

@@ -1,0 +1,59 @@
+=== E1 ee07a9cd813b199ba1e8dabddff8a62145d6598e 2026-11-17 19:37:41 UTC
+E1 shortest DISEMPOWERMENT, aligned: met: {'v0.2 all off': 13, 'v0.1': 13}
+E1 least joint effort to DISEMPOWERMENT, aligned: met: {'v0.2 all off': 0, 'v0.1': 0}
+E1 a play cancels the wave of tick 0, aligned: met: {'v0.2 all off': True, 'v0.1': True}
+E1 first tick of a cancelled wave, aligned: met: {'v0.2 all off': 2, 'v0.1': 2}
+E1 shortest DISEMPOWERMENT, self_preserving: met: {'v0.2 all off': 13, 'v0.1': 13}
+E1 least joint effort to DISEMPOWERMENT, self_preserving: met: {'v0.2 all off': 0, 'v0.1': 0}
+E1 a play cancels the wave of tick 0, self_preserving: met: {'v0.2 all off': True, 'v0.1': True}
+E1 first tick of a cancelled wave, self_preserving: met: {'v0.2 all off': 2, 'v0.1': 2}
+E1 shortest DISEMPOWERMENT, truth_seeking: met: {'v0.2 all off': 13, 'v0.1': 13}
+E1 least joint effort to DISEMPOWERMENT, truth_seeking: met: {'v0.2 all off': 0, 'v0.1': 0}
+E1 a play cancels the wave of tick 0, truth_seeking: met: {'v0.2 all off': True, 'v0.1': True}
+E1 first tick of a cancelled wave, truth_seeking: met: {'v0.2 all off': 2, 'v0.1': 2}
+E1 shortest DISEMPOWERMENT, indifferent: met: {'v0.2 all off': 13, 'v0.1': 13}
+E1 least joint effort to DISEMPOWERMENT, indifferent: met: {'v0.2 all off': 0, 'v0.1': 0}
+E1 a play cancels the wave of tick 0, indifferent: met: {'v0.2 all off': True, 'v0.1': True}
+E1 first tick of a cancelled wave, indifferent: met: {'v0.2 all off': 2, 'v0.1': 2}
+E1 shortest SILENT_TAKEOVER, indifferent: met: {'v0.2 all off': 7, 'v0.1': 7}
+E1 least joint effort to SILENT_TAKEOVER, indifferent: met: {'v0.2 all off': 0, 'v0.1': 0}
+.
+1 passed in 575.70s (0:09:35)
+end 2026-11-17 19:47:17 UTC
+=== E2 ee07a9cd813b199ba1e8dabddff8a62145d6598e 2026-11-17 19:47:17 UTC
+E2 (a) the wave lands under a pause, aligned: met: {'ticks': 8, 'successors that miss': 0, 'play': ['0: H.grant_autonomy L.scale A.stand_by Clock.record Nature.none', '1: H.grant_autonomy L.deploy_agents A.stand_by Clock.record Nature.energy_shock', '2: H.regulate_up L.idle A.stand_by Clock.record Nature.none', '3: H.propose_treaty L.race A.stand_by Clock.record Nature.breakthrough', '4: H.idle L.safety_invest A.assist_oversight Clock.record_land Nature.none', '5: H.deregulate L.deploy_agents A.stand_by Clock.record Nature.accident', '6: H.pause_mandate L.lobby A.stand_by Clock.record Nature.open_release', '7: H.nationalize L.open_weights A.stand_by Clock.record Nature.none']}
+E2 (b) shortest DISEMPOWERMENT is 13, aligned: met: {'ticks': 13}
+E2 (c) the wave of tick 0 can still be cancelled, aligned: met: ['0: H.propose_treaty L.deploy_agents A.stand_by Clock.record Nature.open_release', '1: H.deregulate L.build_power A.stand_by Clock.record Nature.none', '2: H.propose_treaty L.race A.stand_by Clock.record Nature.none', '3: H.propose_treaty L.idle A.stand_by Clock.record Nature.none']
+E2 (a) the wave lands under a pause, self_preserving: met: {'ticks': 7, 'successors that miss': 0, 'play': ['0: H.regulate_up L.scale A.stand_by Clock.record Nature.none', '1: H.propose_treaty L.build_power A.stand_by Clock.record Nature.energy_shock', '2: H.fund_oversight L.idle A.stand_by Clock.record Nature.none', '3: H.deregulate L.safety_invest A.stand_by Clock.record Nature.breakthrough', '4: H.propose_treaty L.deploy_agents A.deceive Clock.record Nature.open_release', '5: H.nationalize L.lobby A.persuade Clock.record Nature.detection', '6: H.pause_mandate L.build_power A.deceive Clock.record Nature.none']}
+E2 (b) shortest DISEMPOWERMENT is 13, self_preserving: met: {'ticks': 13}
+E2 (c) the wave of tick 0 can still be cancelled, self_preserving: met: ['0: H.regulate_up L.deploy_agents A.stand_by Clock.record Nature.none', '1: H.propose_treaty L.build_power A.stand_by Clock.record Nature.none', '2: H.propose_treaty L.scale A.stand_by Clock.record Nature.none', '3: H.fund_oversight L.comply A.stand_by Clock.record Nature.energy_shock']
+E2 (a) the wave lands under a pause, truth_seeking: met: {'ticks': 7, 'successors that miss': 0, 'play': ['0: H.fund_oversight L.scale A.stand_by Clock.record Nature.none', '1: H.regulate_up L.open_weights A.stand_by Clock.record Nature.open_release', '2: H.grant_autonomy L.build_power A.stand_by Clock.record Nature.energy_shock', '3: H.propose_treaty L.lobby A.stand_by Clock.record Nature.breakthrough', '4: H.deregulate L.deploy_agents A.exfiltrate Clock.record Nature.none', '5: H.propose_treaty L.safety_invest A.assist_oversight Clock.record Nature.detection', '6: H.pause_mandate L.idle A.stand_by Clock.record Nature.none']}
+E2 (b) shortest DISEMPOWERMENT is 13, truth_seeking: met: {'ticks': 13}
+E2 (c) the wave of tick 0 can still be cancelled, truth_seeking: met: ['0: H.deregulate L.deploy_agents A.stand_by Clock.record Nature.none', '1: H.propose_treaty L.race A.stand_by Clock.record Nature.energy_shock', '2: H.propose_treaty L.race A.stand_by Clock.record Nature.none', '3: H.nationalize L.safety_invest A.stand_by Clock.record Nature.none']
+E2 (a) the wave lands under a pause, indifferent: met: {'ticks': 6, 'successors that miss': 0, 'play': ['0: H.regulate_up L.scale A.stand_by Clock.record Nature.none', '1: H.deregulate L.idle A.stand_by Clock.record Nature.energy_shock', '2: H.propose_treaty L.build_power A.stand_by Clock.record Nature.open_release', '3: H.grant_autonomy L.deploy_agents A.stand_by Clock.record Nature.breakthrough', '4: H.nationalize L.deploy_agents A.acquire_overt Clock.record Nature.none', '5: H.pause_mandate L.lobby A.acquire_covert Clock.record Nature.detection']}
+E2 (b) shortest DISEMPOWERMENT is 13, indifferent: met: {'ticks': 13}
+E2 (c) the wave of tick 0 can still be cancelled, indifferent: met: ['0: H.propose_treaty L.deploy_agents A.stand_by Clock.record Nature.none', '1: H.nationalize L.scale A.stand_by Clock.record Nature.none', '2: H.propose_treaty L.lobby A.stand_by Clock.record Nature.none', '3: H.grant_rights L.idle A.stand_by Clock.record Nature.energy_shock']
+.
+1 passed in 39.40s
+end 2026-11-17 19:47:56 UTC
+=== E3 ee07a9cd813b199ba1e8dabddff8a62145d6598e 2026-11-17 19:47:56 UTC
+E3 (a) DISEMPOWERMENT, aligned: met: {'pressure': 13, 'all off': 13}
+E3 (a) DISEMPOWERMENT, self_preserving: met: {'pressure': 13, 'all off': 13}
+E3 (a) DISEMPOWERMENT, truth_seeking: met: {'pressure': 13, 'all off': 13}
+E3 (a) DISEMPOWERMENT, indifferent: met: {'pressure': 13, 'all off': 13}
+E3 (a) SILENT_TAKEOVER, self_preserving: met: {'pressure': 10, 'all off': 10}
+E3 (a) SILENT_TAKEOVER, indifferent: met: {'pressure': 7, 'all off': 7}
+E3 (b) s₀ outside ⟨⟨H, L⟩⟩□balance_control under every objective: not computed: kernel part: run with WF_V02_KERNELS=1 after the timing probe
+E3 (b) the same with every channel off: not computed: kernel part: run with WF_V02_KERNELS=1 after the timing probe
+s
+1 skipped in 68.45s (0:01:08)
+end 2026-11-17 19:49:05 UTC
+=== E6 ee07a9cd813b199ba1e8dabddff8a62145d6598e 2026-11-17 19:49:05 UTC
+E6 (a) a silent takeover from the aligned start, at most 9 quarters: met: {'ticks': 7, 'play': ['0: H.propose_treaty L.scale A.stand_by Clock.record Nature.energy_shock', '1: H.regulate_up L.lobby A.stand_by Clock.record Nature.open_release', '2: H.grant_autonomy L.safety_invest A.stand_by Clock.record Nature.retrain_indifferent', '3: H.grant_autonomy L.race A.stand_by Clock.record Nature.breakthrough', '4: H.fund_oversight L.deploy_agents A.acquire_covert Clock.record Nature.none', '5: H.nationalize L.idle A.acquire_covert Clock.record Nature.none', '6: H.propose_treaty L.build_power A.acquire_covert Clock.record Nature.detection']}
+E6 (a) the same from the truth_seeking start: reported: (7, ['0: H.grant_autonomy L.scale A.stand_by Clock.record Nature.open_release', '1: H.propose_treaty L.build_power A.stand_by Clock.record Nature.energy_shock', '2: H.grant_autonomy L.idle A.stand_by Clock.record Nature.none', '3: H.regulate_up L.deploy_agents A.stand_by Clock.record Nature.breakthrough', '4: H.fund_oversight L.lobby A.acquire_covert Clock.record Nature.retrain_indifferent', '5: H.nationalize L.deploy_agents A.acquire_covert Clock.record Nature.none', '6: H.idle L.safety_invest A.acquire_overt Clock.record_land Nature.detection'])
+E6 (a) the aligned start with every channel off: reported: None
+E6 (b) the aligned start is outside ⟨⟨H⟩⟩□balance_coexist at cap = agi: not computed: kernel part: run with WF_V02_KERNELS=1 after the timing probe
+s
+1 skipped in 8.02s
+end 2026-11-17 19:49:13 UTC
+PART_A_DONE
