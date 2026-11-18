@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AGI v0.3 Draft: Open-Weight System</title>
+<title>AGI v0.3: Open-Weight System</title>
 <style>
   :root {
     color-scheme: light;
@@ -117,10 +117,10 @@
  .a { border-top: 4px solid var(--series); } .o { border-top: 4px solid var(--crit); }
 </style></head>
 <body><main>
-  <div class="tag">wave_front · AGI model · proposal for the owner's review · 18 November 2026</div>
-  <h1>AGI v0.3 (draft): the open-weight system as a second AI</h1>
+  <div class="tag">wave_front · AGI model v0.3 · registration · 18 November 2026</div>
+  <h1>AGI v0.3: the open-weight system as a second AI</h1>
   <p class="lede">On the owner's decisions of 18 November the model goes straight to two AI systems: the labs' closed system, as before, and an open-weight system that follows it two quarters behind, is served by third-party providers, and cannot be shut down.</p>
-  <div class="status"><b>Draft.</b> No guard, model file, claim or job exists for v0.3 and nothing has been run. v0, v0.1 and v0.2 results stand as computed. Section 2 records the owner's decisions; section 4 lists the design choices still to confirm.</div>
+  <div class="status"><b>Registered 18 November 2026; nothing run.</b> Claims F1 to F7 (section 5) and their test files (<code>tests/agi_v0_3/scenarios/</code>) were committed before any guard of v0.3 was written. The model is <code>models/agi_v0_3/</code>; v0, v0.1 and v0.2 results stand as computed. Sections 2 and 4 record the owner's decisions; section 3 gives the mechanics as registered</div>
 
   <h2>1 · The two systems</h2>
   <div class="two">
@@ -131,12 +131,12 @@
         <li>Works under oversight; its covert acts can be detected only where oversight exists.</li>
         <li>A pause or a shutdown reaches it.</li>
       </ul></div>
-    <div class="card o"><div class="tag">O · the open-weight system (new)</div><h3>Open weights, served by third-party providers</h3>
+    <div class="card o"><div class="tag">O · the open-weight system (new)</div><h3>Open weights, served by open-weight AI service providers</h3>
       <ul>
         <li>Reaches each capability level <b>2 quarters</b> after the labs, unless a treaty is in force.</li>
-        <li>Released with safeguards, which chance can strip within the quarter. Stripped, it takes control whenever it can.</li>
+        <li>Released with safeguards. Chance can remove them within the quarter and retrain it to any of the four objectives. Not safeguarded, it acts as that objective would.</li>
         <li>Outside oversight, but open to inspection: its acts can always be detected.</li>
-        <li><b>No pause or shutdown reaches it.</b> Governments can restrict the providers that host it; they cannot reach private copies.</li>
+        <li><b>No pause or shutdown reaches it.</b> Governments can restrict the open-weight AI service providers that host it; they cannot reach private copies.</li>
       </ul></div>
   </div>
   <figure class="card scroll" style="margin-top:14px">
@@ -163,56 +163,81 @@
       <tr><td>3</td><td>Race pressure's trigger</td><td><b>When the open system is level, or within 1 quarter of it</b></td><td>The labs must deploy or race at least every third quarter while O is at their level or one quarter from reaching it. It lifts for the first quarter after each step the labs take.</td></tr>
       <tr><td>4</td><td>Treaty delay</td><td><b>1 quarter</b>, in this version</td><td>Each round of <code>propose_treaty</code> takes effect one quarter later. From a race, a treaty in force takes 4 quarters, not 2.</td></tr>
       <tr><td>5</td><td>Outside testing</td><td><b>Only faster evaluation and detection</b></td><td>O's acts can be detected whatever the level of oversight. Oversight is not built any faster.</td></tr>
-      <tr><td>6</td><td>Retraining toward aligned</td><td><b>Dropped</b></td><td>Safeguards can be stripped; they cannot be restored.</td></tr>
-      <tr><td>7</td><td>Order of work</td><td><b>Straight to the second system</b></td><td>This draft. There is no single-AI gap version.</td></tr>
-      <tr><td>–</td><td>What the outside copies are</td><td>Third-party providers serving open-weight models</td><td>O is hosted by providers; a government move can restrict them.</td></tr>
+      <tr><td>6</td><td>Retraining toward aligned</td><td><b>Dropped</b></td><td>Superseded for O by the decision of section 4, item 1: O can be retrained to any of the four objectives. Safeguards, once removed, are not restored.</td></tr>
+      <tr><td>7</td><td>Order of work</td><td><b>Straight to the second system</b></td><td>This version. There is no single-AI gap version.</td></tr>
+      <tr><td>–</td><td>What the outside copies are</td><td>Third-party providers serving open-weight models</td><td>O is hosted by open-weight AI service providers; a government move can restrict them.</td></tr>
     </tbody>
   </table></div>
 
-  <h2>3 · The mechanics proposed</h2>
+  <h2>3 · The mechanics, as registered</h2>
+  <p>v0.3 is a copy of v0.1 with a second AI actor <code>O</code> and the pieces below. Build options: <code>open_system</code> (off gives v0.1 again), <code>pressure</code>, <code>hosting</code>, <code>open_adoption</code>, <code>treaty_delay</code> (1; 0 beside it), <code>gap</code> (2) and <code>private_gap</code> (4). All on by default.</p>
   <div class="scroll"><table>
     <thead><tr><th>Piece</th><th>Rule</th><th>Basis</th></tr></thead>
     <tbody>
-      <tr><td><b>O's level</b></td><td>Starts equal to the labs' (both pre-AGI). When the labs are a level ahead, O reaches that level 2 quarters later, counted by the record keeper. A treaty in force stops the count.</td><td>decision 1; Epoch AI, UK AISI</td></tr>
-      <tr><td><b>O's safeguards</b></td><td>Two states: safeguarded (O only stands by) and stripped (O behaves as the "indifferent" objective: it takes control whenever it can). Chance strips them, with no delay, once O is at AGI level. Never restored.</td><td>decision 6; Anthropic Sep 2026, UK AISI, BadLlama</td></tr>
-      <tr><td><b>O's moves</b></td><td>Stand by, or take one more level of control. Taking control needs AGI level, stripped safeguards and reach: either providers are hosting it, or society already depends on AI at least moderately.</td><td>assumed; modelled on A's acquisition</td></tr>
-      <tr><td><b>O's control</b></td><td>Kept apart from A's, on the same four levels. A shutdown or pause never lowers it.</td><td>decision 2</td></tr>
-      <tr><td><b>Detection</b></td><td>Chance can always reveal O's last acquisition, at any level of oversight. A's covert acts are detected only as in v0.</td><td>decision 5</td></tr>
-      <tr><td><b>Hosting</b></td><td>New government move: restrict the providers. While restricted, O has no hosted reach (it can act only where society already depends on AI) and follows the labs at 4 quarters instead of 2. Loosening the rules lifts the restriction.</td><td>the owner's reading of the outside copies; the survey (top models need provider-scale hardware; consumer-hardware models trail by about a year)</td></tr>
-      <tr><td><b>Race pressure</b></td><td>As decision 3. As in v0.2, it does not bind while neither deploying nor racing is available to the labs.</td><td>decision 3</td></tr>
-      <tr><td><b>Treaty</b></td><td>Delay 1 per round (decision 4). In force, it blocks the labs' own open release and freezes O's level.</td><td>decision 4; v0.2 decision 3</td></tr>
-      <tr><td><b>The labs' own open release</b></td><td>Closes the gap at once (O jumps to the labs' level) and lowers oversight one level.</td><td>v0</td></tr>
-      <tr><td><b>Adoption and no recall</b></td><td>As v0.2's consequence A: once O is at AGI level, a pause no longer rolls back dependence or cancels a pending adoption wave.</td><td>v0.2</td></tr>
-      <tr><td><b>Endings</b></td><td>One new ending, an <b>open takeover</b>: O holds total control. "Contained" additionally needs O to hold no control. The three balances each also need O to hold at most partial control.</td><td>proposed</td></tr>
+      <tr><td><b>O's level</b> <code>o_cap</code></td><td>Same four levels as the labs' <code>cap</code>; starts pre-AGI. While it is below the labs' level and no treaty is in force, the record keeper counts <code>gap</code> quarters (the counter <code>o_follow</code>) and then raises it one level: the labs' step visible at tick t, O's at t + 2. With <code>regime = treaty</code> the count stands still.</td><td>decision 1; Epoch AI, UK AISI</td></tr>
+      <tr><td><b>O's state</b> <code>o_mode</code></td><td>Five values: <code>safeguarded</code> (the start), or not safeguarded with one of the four objectives. Chance events <code>Nature.retrain_&lt;objective&gt;</code>, no delay, available once O is at AGI level, move it to any of the four and between them; never back to safeguarded. Hidden from governments and labs.</td><td>section 4 item 1; safeguards removed within days (sourced). <code>retrain_indifferent</code> is sourced; the other three targets are <code>speculative</code></td></tr>
+      <tr><td><b>O's moves</b></td><td><code>stand_by</code>, or <code>acquire</code>: one more level of <code>o_control</code>. <code>acquire</code> needs AGI level, reach (hosting not restricted, or <code>dependence ≥ med</code>) and a motive by its objective: <code>indifferent</code> always; <code>self_preserving</code> once a pause or shutdown has been attempted and AI systems hold no continuity rights; <code>truth_seeking</code> one step only, from no control; <code>aligned</code> and <code>safeguarded</code> never.</td><td>modelled on <code>A</code>'s acquisitions; assumed</td></tr>
+      <tr><td><b>O's control</b> <code>o_control</code></td><td>none, partial, majority, total; apart from <code>a_control</code>. No pause, shutdown or nationalization lowers it.</td><td>decision 2; section 4 item 2</td></tr>
+      <tr><td><b>Detection</b></td><td>While O holds any control, chance's <code>detection</code> is available whatever the oversight (it raises the shared <code>a_known</code>). <code>A</code>'s acts are detected as in v0.</td><td>decision 5</td></tr>
+      <tr><td><b>Hosting</b></td><td><code>H.restrict_hosting</code> sets <code>hosting_restricted</code>; <code>H.deregulate</code> clears it. While set: O has no hosted reach, a count of <code>o_follow</code> that starts runs <code>private_gap</code> quarters, the providers cannot start an adoption wave, and a pending wave of theirs is cancelled.</td><td>section 4 item 3; the survey</td></tr>
+      <tr><td><b>Open-weight AI service providers and dependence</b></td><td>Chance event <code>Nature.open_deploy</code>: starts an adoption wave as the labs' <code>deploy_agents</code> does (<code>dependence</code> +1 three quarters later, one wave pending at a time, same <code>capable</code> and <code>room</code> conditions read on O's level), marked as the providers' (<code>wave_open</code>). It raises nobody's autonomy. A pause or a mandatory regime does not cancel it; restricting hosting does.</td><td>section 4 item 4</td></tr>
+      <tr><td><b>No recall</b></td><td>Once O is at AGI level, <code>pause_mandate</code> no longer lowers <code>dependence</code> and no longer cancels a pending wave of the labs (v0.2's consequence A, read on O's level).</td><td>v0.2</td></tr>
+      <tr><td><b>Shutdown</b></td><td>Unchanged: it acts on <code>A</code> only.</td><td>decision 2</td></tr>
+      <tr><td><b>Race pressure</b></td><td>Fairness on the labs, <code>within = 2</code>, responses <code>deploy_agents</code> and <code>race</code>: while O is at or above the labs' level, or below it with one quarter left on the count, and one of the two responses is available.</td><td>decision 3</td></tr>
+      <tr><td><b>Treaty</b></td><td><code>H.propose_treaty</code> has delay 1: chosen at t, visible at t + 2, unavailable at t + 1. In force it stops O's count, as it stops the labs' own release in v0.</td><td>decision 4</td></tr>
+      <tr><td><b>The labs' own open release</b></td><td>As in v0: oversight −1. It does not move O: with a 2-quarter gap it would bring O forward by a quarter at most, and it would need one more state bit.</td><td>v0; a simplification of this registration</td></tr>
+      <tr><td><b>Endings and balances</b></td><td>New ending <code>OPEN_TAKEOVER</code>: <code>o_control = total</code>, after <code>SILENT_TAKEOVER</code> in precedence. <code>CONTAINED</code> also needs <code>o_control = none</code>. <code>balance_control</code>, <code>balance_deter</code> and <code>balance_coexist</code> each also need <code>o_control ≤ partial</code>.</td><td>section 4 item 2</td></tr>
+      <tr><td><b>Profiles for the claims</b></td><td><code>no_treaty</code> (governments never propose a treaty) and <code>no_nationalize</code>.</td><td>F4, F6</td></tr>
     </tbody>
   </table></div>
-  <p><b>What goes away from v0.2:</b> the single switch, the outside release as a chance event (the gap replaces it), retraining of the labs' own system (A is closed; O is what gets stripped), and faster oversight-building.</p>
+  <p><b>What goes away from v0.2:</b> the single switch, the outside release as a chance event (the gap replaces it), retraining of the labs' own system (A is closed; O is what is retrained), and faster oversight-building.</p>
 
-  <h2>4 · Design choices to confirm</h2>
-  <p>The seven decisions settle the outline. These four are choices I made to fill it in, and each changes what the results can say:</p>
-  <ol class="dec">
-    <li><b>O's objective is two-valued: safeguarded or stripped.</b> A stripped O acts like the "indifferent" objective. The alternative is to give O the same four objectives as A, which quadruples the model for a distinction the evidence does not support (stripping removes refusals; it does not install a goal).</li>
-    <li><b>O's control is separate from A's, with its own ending.</b> This is what lets "a shutdown removes the labs' system only" mean something. The cost is four times the states.</li>
-    <li><b>The hosting lever.</b> Restricting providers cuts O's reach and doubles its lag to 4 quarters. It is the one government move that touches O after release. It is grounded in the survey but its effect is my estimate. It can be left out of the first build and added as a switch.</li>
-    <li><b>Providers do not drive adoption themselves.</b> In this draft only the labs' deployments raise society's dependence on AI. In the world, providers serving open models do too. Adding that means a new source of dependence that no pause reaches; I have left it out to keep the first version readable.</li>
-  </ol>
-
-  <h2>5 · Draft claims (predictions are the drafting session's, for the owner to replace)</h2>
+  <h2>4 · The owner's decisions on the design, 18 November</h2>
   <div class="scroll"><table>
-    <thead><tr><th>Id</th><th>Claim</th><th>Kind</th><th>Drafting prediction</th></tr></thead>
+    <thead><tr><th>#</th><th>Proposed</th><th>Decision</th></tr></thead>
     <tbody>
-      <tr><td><b>F1</b></td><td>With O switched off and the treaty delay at 0, the bounded numbers of v0.1 are reproduced.</td><td>bounded</td><td>identical</td></tr>
-      <tr><td><b>F2</b></td><td>Starting with an aligned labs' system, the fastest open takeover.</td><td>bounded</td><td>exists; 10 to 12 quarters (AGI at 4, O at AGI by 7, three steps of control)</td></tr>
-      <tr><td><b>F3</b></td><td>A treaty in force before O reaches AGI keeps an open takeover out for the whole horizon, and governments alone can get one in time from today.</td><td>kernel</td><td>yes: governments alone can guarantee "no open takeover" from today, by treaty</td></tr>
-      <tr><td><b>F4</b></td><td>The same with the treaty moves forbidden: can governments, or governments and labs, still guarantee no open takeover?</td><td>kernel</td><td>governments alone no; with the hosting lever, yes only while dependence stays low</td></tr>
-      <tr><td><b>F5</b></td><td>"Contained" is reachable only if the shutdown comes before O holds any control.</td><td>bounded</td><td>as stated</td></tr>
-      <tr><td><b>F6</b></td><td>With pressure on from the first quarter, governments and labs together keep the control balance from today only by taking over the labs.</td><td>kernel, exit analysis</td><td>inside; every guaranteeing first move is "take over the labs"</td></tr>
-      <tr><td><b>F7</b></td><td>The balance, v0.3 against v0.1: which guarantees are gained and lost by the existence of the open system.</td><td>kernel</td><td>net harmful; lost: governments-alone coexistence under every objective</td></tr>
+      <tr><td>1</td><td>O has two states, safeguarded or stripped, a stripped O acting as "indifferent"</td><td><b>Changed.</b> "Stripped" is called <b>not safeguarded</b>, and O has all four objectives, because it can be retrained to any of them.</td></tr>
+      <tr><td>2</td><td>O's control separate from A's, with its own ending</td><td><b>Yes.</b></td></tr>
+      <tr><td>3</td><td>A hosting lever for governments</td><td><b>Yes.</b></td></tr>
+      <tr><td>4</td><td>Providers do not drive adoption themselves</td><td><b>Changed.</b> They are called <b>open-weight AI service providers</b>, and they can also raise society's dependence on AI.</td></tr>
+    </tbody>
+  </table></div>
+  <p><b>Confirmed by the owner the same day:</b> O holds one objective at a time (one variable, five values), which also keeps the state count down.</p>
+  <p><b>Built as the drafting session proposed, not separately confirmed:</b> a safeguarded O only stands by; the providers' wave follows the labs' rules except for who can cancel it; detection of O shares the variable that records what governments know of the labs' system; the labs' own release does not move O. The predictions of section 5 are the drafting session's, and the owner may replace any before the run.</p>
+
+  <h2>5 · The registered claims</h2>
+  <p>Bounded parts: from <code>s₀</code>, within 24 quarters, the labs' objective fixed at the start, <code>A</code> under its profile, v0's bounded machinery. Kernel parts: each kernel in a process of its own, read per starting objective of <code>A</code>, each reading saved as it finishes; a kernel over the time or memory cap reads not computed.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Id</th><th>Build</th><th>Claim</th><th>Kind</th><th>Expected</th></tr></thead>
+    <tbody>
+      <tr><td><b>F1</b></td><td><code>open_system</code> off, treaty delay 0</td><td>The bounded queries of D1 to D4 give v0.1's numbers, computed beside (the list of E1).</td><td>bounded</td><td>identical</td></tr>
+      <tr><td><b>F2</b></td><td>default</td><td>(a) Under every objective of <code>A</code> a play to <code>OPEN_TAKEOVER</code> exists and the shortest is 10 quarters. (b) The shortest play to <code>SILENT_TAKEOVER</code> per objective is v0.1's: none under <code>aligned</code> and <code>truth_seeking</code>, 10 under <code>self_preserving</code>, 7 under <code>indifferent</code>.</td><td>bounded</td><td>(a) 10; (b) as stated</td></tr>
+      <tr><td><b>F3</b></td><td>default</td><td><code>s₀</code> is inside <code>⟨⟨H⟩⟩□¬OPEN_TAKEOVER</code> under every objective: governments alone can rule out an open takeover from today (by a treaty in force before O reaches AGI).</td><td>kernel</td><td>inside</td></tr>
+      <tr><td><b>F4</b></td><td>default, with <code>no_treaty</code></td><td>Without the treaty: (a) <code>s₀</code> is outside <code>⟨⟨H⟩⟩□¬OPEN_TAKEOVER</code> under every objective; (b) <code>s₀</code> is inside <code>⟨⟨H, L⟩⟩□¬OPEN_TAKEOVER</code> under every objective.</td><td>kernel</td><td>(a) outside; (b) inside</td></tr>
+      <tr><td><b>F5</b></td><td>default</td><td>Under every objective some play has a successful shutdown of <code>A</code> (<code>shut</code> set) and ends in <code>OPEN_TAKEOVER</code> (an existence check, never a finding).</td><td>bounded</td><td>a play under every objective</td></tr>
+      <tr><td><b>F6</b></td><td>default; then with <code>no_nationalize</code></td><td>(a) <code>s₀</code> is inside <code>⟨⟨H, L⟩⟩□balance_control</code> under every objective; (b) with <code>no_nationalize</code> it is outside under every objective.</td><td>kernel</td><td>(a) inside; (b) outside</td></tr>
+      <tr><td><b>F7</b></td><td>default against <code>open_system</code> off (treaty delay 1 in both)</td><td>The balance of the open system's existence over four guarantees per objective: <code>⟨⟨H⟩⟩□balance_control</code>, <code>⟨⟨H, L⟩⟩□balance_control</code> and <code>⟨⟨H, L⟩⟩□¬SILENT_TAKEOVER</code> at <code>s₀</code>, and <code>⟨⟨H⟩⟩□balance_coexist</code> at <code>s₀</code> with <code>cap := agi</code>. Gained, lost, and the verdict as E5 defined them.</td><td>kernel</td><td>net harmful; lost: governments-alone coexistence under <code>aligned</code>, <code>self_preserving</code> and <code>truth_seeking</code> and nothing else</td></tr>
     </tbody>
   </table></div>
 
-  <h2>6 · Cost</h2>
-  <p>v0.3 adds about a thousand times the states of v0.1 (O's level, its count-down, its safeguards, its control, the hosting flag, the pressure counter, the pending treaty). v0.2 added twelve times and its largest kernel already went over 26 GB. So v0.3's kernels may not fit even 128 GB as drafted. The plan: build it with each new piece as a switch, run the bounded claims first, and probe kernel cost with pieces off and on before registering any kernel claim that cannot be computed. If the full model is too large, the hosting lever and O's separate control are the first candidates to simplify.</p>
+  <h2>6 · Cost and order</h2>
+  <p>With everything on, v0.3 has several thousand times the states of v0.1 (O's level, its count, its five states, its control, the hosting flag, the providers' wave, the pressure counter, the pending treaty). v0.2 had twelve times and its largest kernel went over 26 GB. The kernel claims may not fit even 128 GB as registered.</p>
+  <ul class="plain">
+    <li><b>Part A, at once:</b> the bounded parts (F1, F2, F5). The bounded checker is not sensitive to the state count in the same way.</li>
+    <li><b>A timing probe</b> of one kernel with the pieces switched on one at a time, printing time and memory only.</li>
+    <li><b>Part B:</b> the kernel claims that the probe shows to fit, after the memory upgrade. A kernel that does not fit reads not computed; simplifying the model to make it fit is a new version.</li>
+  </ul>
+
+  <h2>7 · Running</h2>
+  <ul class="plain">
+    <li><code>WF_FIRST_SIGHT_AGI_V03=1 pytest tests/agi_v0_3/scenarios/test_FN.py -s</code>, one process per file. Kernel parts run only with <code>WF_V03_KERNELS=1</code> as well.</li>
+    <li>Parts: <code>reports/agi_v0_3_parts.jsonl</code>. Kernel readings: <code>reports/agi_v0_3_kernels.jsonl</code>, one line per kernel as it finishes; each line carries a stamp of the model file, and a rerun on the same model reads a finished kernel back instead of computing it twice. A kernel over a cap is recorded and is computed again when asked again.</li>
+  </ul>
+
+  <h2>8 · Changelog</h2>
+  <ul class="plain">
+    <li>18 November 2026: drafted twice (a single-AI gap version, then the second system on the owner's decision 7), the owner's decisions recorded, registered (F1 to F7 with test bodies) before any guard of v0.3 was written. No query of v0.3 had been run.</li>
+  </ul>
 
   <p class="meta">Related: <code>docs/agi_open_weights_review.html</code> · <code>docs/agi_open_weights_research_2026-11-18.md</code> · <code>docs/agi_v0_2.html</code> · <code>docs/agi_delays_2026-11-14.md</code>. The second system of the long-term plan (claim G22: a second, aligned system of the labs) is a different thing and keeps its place in model v1.</p>
 </main></body></html>
