@@ -34,6 +34,11 @@ Added 2026-11-17 on the owner's proposal, before any number under it was compute
 standard normal density at each action's effort score, so that low-effort plays weigh more
 (see :func:`chooser`); the default ``uniform`` reproduces the earlier runs draw for draw.
 
+Sensitivity of the effort policy (added 2026-11-17 on the owner's go, before any of its
+numbers): ``--sigma`` (the width of the density: larger is nearer uniform), ``--shift`` (one
+effort score moved by one point) and ``--ai`` (the system drawing by its own effort scores,
+or "determined": always taking the first available step of a fixed takeover order).
+
     PYTHONPATH=. python scripts/agi_v0_1_endings_census.py kernel --ending DISEMPOWERMENT
     PYTHONPATH=. python scripts/agi_v0_1_endings_census.py sample --plays 1000000
 """
@@ -124,27 +129,59 @@ def reader(rec: dict, cm):
     return inside
 
 
-def chooser(cm, objective: str, policy: str):
+# The order in which a "determined" system takes a step towards a takeover when one is
+# available (a hand-written heuristic, not best play): acquire, else turn hostile, else leave
+# supervision, else hide, else grow.
+DETERMINED = (
+    "acquire_covert",
+    "acquire_overt",
+    "seize",
+    "defect",
+    "exfiltrate",
+    "deceive",
+    "self_improve",
+)
+
+
+def chooser(
+    cm,
+    objective: str,
+    policy: str,
+    sigma: float = 1.0,
+    shift: tuple[str, str, int] | None = None,
+    ai: str = "uniform",
+):
     """``draw(state, rng)``: the joint move of one transition.
 
     ``uniform``: every actor draws uniformly among its available actions. ``effort``: ``H`` and
-    ``L`` draw an available action with probability proportional to the standard normal
-    density at its effort score (docs/agi_effort.md; score 0, 1, 2, 3 in the proportions
-    1 : 0.61 : 0.14 : 0.011), so that a play's weight falls with the effort it costs them;
-    ``A``, ``Clock`` and Nature stay uniform."""
+    ``L`` draw an available action with probability proportional to a normal density of
+    width ``sigma`` at its effort score (docs/agi_effort.md; with ``sigma = 1``, scores 0, 1,
+    2, 3 in the proportions 1 : 0.61 : 0.14 : 0.011), so that a play's weight falls with the
+    effort it costs them. ``shift = (actor, action, by)`` moves one score by ``by`` first
+    (``tests.agi.effort.shifted``, not below 0). ``ai``: how ``A`` draws under ``effort``:
+    ``uniform``; ``effort`` (by the same density on its own scores for the objective); or
+    ``determined`` (the first available action of :data:`DETERMINED`, else uniform). ``Clock``
+    and Nature are always uniform."""
     if policy == "uniform":
         return lambda s, rng: tuple(rng.choice(a) for a in cm.available(s))
     import math
 
-    from tests.agi.effort import CLOSED, scores_for
+    from tests.agi.effort import CLOSED, scores_for, shifted
 
-    tables = scores_for(objective, ("H", "L"))
+    actors = ("H", "L", "A") if ai == "effort" else ("H", "L")
+    tables = scores_for(objective, actors)
+    if shift is not None:
+        who, action, by = shift
+        tables[who][action] = shifted(tables[who].get(action, CLOSED), by)
     scored = [
         (i, [tables[actor.name].get(x.name, CLOSED) for x in actor.actions])
         for i, actor in enumerate(cm.actors)
         if actor.name in tables
     ]
-    density = [math.exp(-k * k / 2) for k in range(8)]
+    density = [math.exp(-k * k / (2 * sigma * sigma)) for k in range(8)]
+    a_index = cm.actor_names.index("A")
+    a_names = [x.name for x in cm.actors[a_index].actions]
+    ranked = [a_names.index(n) for n in DETERMINED if n in a_names]
 
     def draw(s, rng):
         avail = cm.available(s)
@@ -157,14 +194,25 @@ def chooser(cm, objective: str, policy: str):
                     score = score[1] if cm.evaluate(score[0], s) else score[2]
                 weights.append(density[score])
             move[i] = rng.choices(avail[i], weights)[0]
+        if ai == "determined":
+            mine = avail[a_index]
+            move[a_index] = next((j for j in ranked if j in mine), move[a_index])
         return tuple(move)
 
     return draw
 
 
-def sample(objective: str, plays: int, seed: int, policy: str = "uniform") -> dict:
+def sample(
+    objective: str,
+    plays: int,
+    seed: int,
+    policy: str = "uniform",
+    sigma: float = 1.0,
+    shift: tuple[str, str, int] | None = None,
+    ai: str = "uniform",
+) -> dict:
     cm = game()
-    draw = chooser(cm, objective, policy)
+    draw = chooser(cm, objective, policy, sigma, shift, ai)
     zones = {}
     for ending in BAD:
         if store(ending).exists():
@@ -227,6 +275,9 @@ def sample(objective: str, plays: int, seed: int, policy: str = "uniform") -> di
         "model": "agi_v0_2, every consequence on" if MODEL == "v0.2" else "agi_v0_1",
         "objective": objective,
         "policy": policy,
+        "sigma": sigma,
+        "shift": list(shift) if shift else None,
+        "ai": ai,
         "plays": plays,
         "seed": seed,
         "horizon": horizon,
@@ -281,12 +332,19 @@ def main() -> None:
     ap.add_argument("--plays", type=int, default=1_000_000)
     ap.add_argument("--seed", type=int, default=20261117)
     ap.add_argument("--policy", default="uniform", choices=["uniform", "effort"])
+    ap.add_argument("--sigma", type=float, default=1.0)
+    ap.add_argument("--shift", help="one score moved, as ACTOR.ACTION=+1 or ACTOR.ACTION=-1")
+    ap.add_argument("--ai", default="uniform", choices=["uniform", "effort", "determined"])
     ap.add_argument("--out", type=Path, default=OUT)
     args = ap.parse_args()
     if args.step == "kernel":
         compute_kernel(args.ending)
         return
-    result = sample(args.objective, args.plays, args.seed, args.policy)
+    shift = None
+    if args.shift:
+        name, by = args.shift.split("=")
+        shift = (*name.split("."), int(by))
+    result = sample(args.objective, args.plays, args.seed, args.policy, args.sigma, shift, args.ai)
     args.out.write_text(json.dumps(result) + "\n")
     print(f"{args.plays} plays in {result['seconds']}s -> {args.out}", flush=True)
 
