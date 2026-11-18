@@ -21,6 +21,11 @@ Added after the first numbers were seen (2026-11-17), and reported as such: the 
 action of an actor at the exits where that actor had a fix ("played and changeable"), and the
 pairs of played action and fix. The same seed draws the same plays.
 
+Also added after the first numbers (the owner's question whether the common statuses are
+merely common everywhere): "moments inside by status", the number of moves made from a state
+of each status while the play was still inside ``K``, so that the exits from a status can be
+set against the time random plays spend in it.
+
 This reads the last moment only: what would have kept the guarantee at the exit move, not
 what earlier in a play made an exit less likely.
 
@@ -73,12 +78,16 @@ def census(objective: str, plays: int, seed: int) -> dict:
     (s0,) = [s for s in cm.initial_states() if cm.state_dict(s)["a_objective"] == objective]
     rng = random.Random(seed)
     exits: Counter = Counter()
+    visits: Counter = Counter()
+    core = [cm.index[v] for v in CORE]
     t0 = time.perf_counter()
     for _ in range(plays):
         s, out = s0, False
         for k in range(ps.K):
             if cm.is_terminal(s):
                 break
+            if not out:
+                visits[tuple(s[i] for i in core)] += 1
             move = tuple(rng.choice(a) for a in cm.available(s))
             nxt = cm.step(s, move)
             if not out and not inside(nxt):
@@ -129,6 +138,10 @@ def census(objective: str, plays: int, seed: int) -> dict:
         "seconds": round(time.perf_counter() - t0, 1),
         "core variables": list(CORE),
         "status": [[list(k), n] for k, n in status.most_common()],
+        "moments inside by status": [
+            [[cm.variables[i].levels[x] for i, x in zip(core, k, strict=True)], n]
+            for k, n in visits.most_common()
+        ],
         "levels": {v: dict(c.most_common()) for v, c in levels.items()},
         "exit position": dict(sorted(position.items())),
         "fixes": dict(fixed.most_common()),
