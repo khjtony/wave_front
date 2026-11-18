@@ -29,7 +29,9 @@ set against the time random plays spend in it.
 Extended 2026-11-17 (the owner's next question) to the other bad endings: ``--ending E`` reads
 the exits from ``⟨⟨H, L⟩⟩□¬E`` against the kernel stored by
 ``scripts/agi_v0_1_endings_census.py kernel --ending E``, and ``--transitions`` sets the
-length of a play (56 for the horizon). The defaults reproduce the first census.
+length of a play (56 for the horizon). The defaults reproduce the first census. With
+``WF_CENSUS_MODEL=v0.2`` the plays and the kernel are AGI v0.2's with its four consequences
+on, where the objective named is the start objective (retraining may change it).
 
 This reads the last moment only: what would have kept the guarantee at the exit move, not
 what earlier in a play made an exit less likely.
@@ -86,8 +88,9 @@ def census(
     objective: str, plays: int, seed: int, ending: str = "SILENT_TAKEOVER", transitions: int = 24
 ) -> dict:
     ps = _sampler()
-    cm = ps.game()
-    with gzip.open(_module("agi_v0_1_endings_census").store(ending), "rb") as fh:
+    ends = _module("agi_v0_1_endings_census")  # its game() follows WF_CENSUS_MODEL
+    cm = ends.game()
+    with gzip.open(ends.store(ending), "rb") as fh:
         inside = ps.reader(pickle.load(fh), cm)
     (s0,) = [s for s in cm.initial_states() if cm.state_dict(s)["a_objective"] == objective]
     rng = random.Random(seed)
@@ -143,7 +146,7 @@ def census(
                 fixed[f"{who}.{a}"] += n
                 pairs[f"{mine} -> {who}.{a}"] += n
     return {
-        "model": "agi_v0_1",
+        "model": "agi_v0_2, every consequence on" if ends.MODEL == "v0.2" else "agi_v0_1",
         "objective": objective,
         "ending": ending,
         "transitions": transitions,

@@ -38,6 +38,7 @@ from __future__ import annotations
 import argparse
 import gzip
 import json
+import os
 import pickle
 import random
 import time
@@ -47,7 +48,10 @@ from pathlib import Path
 from models.agi_v0_1 import v0_1
 
 ROOT = Path(__file__).resolve().parents[1]
-CACHE = ROOT / ".cache" / "agi_v0_1"
+# ``WF_CENSUS_MODEL=v0.2`` reads AGI v0.2 with its four consequences on instead of v0.1
+# (added 2026-11-17 on the owner's question whether the censuses include open weights).
+MODEL = os.environ.get("WF_CENSUS_MODEL", "v0.1")
+CACHE = ROOT / ".cache" / ("agi_v0_2" if MODEL == "v0.2" else "agi_v0_1")
 OUT = ROOT / "reports" / "agi_v0_1_endings_census.json"
 P = tuple(v0_1.OBJECTIVE_PROFILES)
 # ending -> (the target of its kernel, the name of its store)
@@ -66,6 +70,10 @@ def store(ending: str) -> Path:
 
 
 def game():
+    if MODEL == "v0.2":
+        from models.agi_v0_2 import v0_2
+
+        return v0_2.build().compile(profile=v0_2.OBJECTIVE_PROFILES)
     return v0_1.build().compile(profile=P)
 
 
@@ -172,7 +180,7 @@ def sample(objective: str, plays: int, seed: int) -> dict:
                 if hit_at >= 0:
                     lag[e][hit_at - first_out[e]] += 1
     return {
-        "model": "agi_v0_1",
+        "model": "agi_v0_2, every consequence on" if MODEL == "v0.2" else "agi_v0_1",
         "objective": objective,
         "plays": plays,
         "seed": seed,
