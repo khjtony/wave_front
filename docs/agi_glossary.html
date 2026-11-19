@@ -55,7 +55,7 @@
 <div class="wrap">
   <div class="eyebrow">wave_front · AGI model v0 to v0.3 · 18 November 2026</div>
   <h1>Glossary of the AGI model</h1>
-  <p class="lede">Every term used in the reports, the code and our conversations, with its meaning. Each entry gives the plain word, the name in the code, and the other words that have been used for the same thing. Search matches all three. Plain names follow the two rounds of renames of 18 November 2026; the earlier word stays under “Also called”. Names in the code are unchanged.</p>
+  <p class="lede">Every term used in the reports, the code and our conversations, with its meaning. Each entry gives the plain word, the name in the code, and the other words that have been used for the same thing. Search matches all three. Plain names follow the renames of 18 November 2026; the earlier word stays under “Also called”. Names in the code are unchanged.</p>
 
   <div class="bar">
     <div class="find">
@@ -89,7 +89,7 @@ const CATS = [
     ["State",[],["situation","status"],"The value of every variable at one quarter.",""],
     ["Level",[],[],"One value of a variable. Levels are ordered, for example oversight `none` < `weak` < `strong`.",""],
     ["Start state",["s₀"],["today","the start"],"2026 Q4 as read from the real world snapshot of 9 November 2026.",""],
-    ["AGI start",["s₀[cap := agi]"],["s₀ with cap := agi"],"The start state with the frontier AI system already at AGI level. Used for questions that only make sense once AGI exists.",""],
+    ["AGI since s₀",["s₀[cap := agi]"],["AGI start","s₀ with cap := agi"],"The start state with the frontier AI system already at AGI level. Used for questions that only make sense once AGI exists.",""],
     ["Uncertain reading",["OPEN_CALLS"],["open call"],"A level the real world snapshot could not pin down, kept as two candidates. There are seven.",""],
     ["Action",[],["move (of one player)"],"One thing a player can do in a quarter. It has a action condition, an effect, sometimes a delay, and a source.",""],
     ["Round",[],["joint move","move"],"Every player picks one action in the same quarter without seeing the others' pick. The result shows at the next quarter.",""],
@@ -127,11 +127,11 @@ const CATS = [
     ["Human power",["h_power"],[],"`none`, `weak`, `normal`, `strong`. At `none` the ending is extinction.",""],
     ["Human-AI relation",["trust"],["relations","hostility","hostile relations"],"Between people and the frontier AI system: `cooperative`, `wary`, `hostile`.",""],
     ["Governments' AGI expectation",["belief_H"],["governments' belief"],"How near governments think AGI is: `distant`, `near`, `arrived`.",""],
-    ["Pause in force",["paused"],[],"A flag set by a pause mandate and cleared by deregulation.",""],
+    ["Paused",["paused"],["pause in force","pause active"],"A flag: a pause ordered by governments is in effect. Set by a pause mandate and cleared by deregulation.",""],
     ["Companies nationalized",["nationalized"],["nationalized"],"A permanent flag: governments have taken over the frontier AI companies.",""],
     ["Threat to AI",["threat"],["threat"],"A permanent flag: a pause or a shutdown attempt has been made once. A self-preserving AI reacts to it.",""],
-    ["Shutdown AI",["shut"],["shut"],"A permanent flag: a shutdown of the frontier AI system has succeeded once.",""],
-    ["Villain seen",["villain_seen"],[],"A permanent flag: an AI has done something adversarial. The disempowerment ending needs it to be off.",""],
+    ["Shutdown succeeded once",["shut"],["shutdown AI","shut"],"A permanent flag: a shutdown of the frontier AI system has succeeded once.",""],
+    ["Hostile AI act happened",["villain_seen"],["villain seen"],"A permanent flag: an AI has done something adversarial at least once, whether or not anyone saw it. The disempowerment ending needs it to be off.",""],
     ["Deployment countdown",["adoption"],["adoption wave","wave","adoption counter"],"The delayed rise in society's reliance on AI after a deployment, counted down quarter by quarter; 0 when none is pending. One countdown runs at a time.",""],
     ["Weights open",["weights_open"],[],"v0.2 only: a permanent flag that an open-weight release at the frontier has happened.","Replaced in v0.3 by the open system `O`."],
     ["Open system intelligence",["o_cap"],["level of the open system","O's level"],"v0.3: the same four levels as the frontier AI system.",""],
@@ -216,7 +216,7 @@ const CATS = [
     ["With luck",["{A, Nature}"],["fortune variant"],"The same question with chance on the alliance's side.",""],
     ["Point of no return",["t_K"],["exit","early exit","no-return moment"],"The position on a path where it first stands outside a guarantee zone. From there the alliance can no longer guarantee the condition.","It is always for one alliance and one condition."],
     ["No-return move",[],["exit move","no-return action","the bad move"],"The round that takes a path out of a guarantee zone.",""],
-    ["Exit condition",[],["the condition","φ"],"The condition whose guarantee zone is being left: a safe condition, or that an ending never happens.",""],
+    ["Favored condition",["φ"],["exit condition","protected condition","the condition"],"The condition an alliance is trying to keep, and whose guarantee zone a path leaves at the point of no return: a safe condition, or that an ending never happens.",""],
     ["Certain loss",["t_L"],[],"The position from which the bad ending can be forced against the alliance. Between the point of no return and here the outcome is contested.",""],
     ["Violation",["t_φ"],[],"The position where the condition itself first fails.",""],
     ["Preventing action",[],["fix","unilateral fix"],"A different action by one alliance member at the no-return move that would have stayed inside, with the others' actions kept.",""],
@@ -255,7 +255,7 @@ const CATS = [
     ["Cheapest path cost",["c_reach(E)"],["slide cost","least joint effort"],"The least effort governments and frontier AI companies spend on any path that reaches an ending. Zero means they get there by doing what comes easiest.",""],
     ["Prevention cost",["c_prevent(E)"],[],"The least effort that guarantees an ending never happens. Not computed yet.",""],
     ["Extra cost of prevention",[],["slip margin"],"Prevention cost minus cheapest path cost: how much more it costs to hold an ending off than to drift into it.",""],
-    ["Outcome cost",["OUTCOME"],[],"What an ending costs the player who lives with it.",""],
+    ["Cost of the ending",["OUTCOME"],["outcome cost"],"What an ending costs the player who lives with it.",""],
     ["Random-path sampling",[],["random-play sampling","census","sampling","path sample"],"Playing the model many times with moves drawn at random and counting what happens. A description of the model's space of paths, not a probability of anything in the world.",""],
     ["Equal-chance sampling",["--policy uniform"],["uniform path sampling","uniform play"],"Every available action is equally likely.",""],
     ["Effort-weighted path sampling",["--policy effort","--sigma"],["effort-weighted play","weighted plays"],"Governments and frontier AI companies pick cheap actions more often: the weight of an action is the standard normal density at its action effort.",""],

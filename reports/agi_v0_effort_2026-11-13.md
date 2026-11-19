@@ -1,10 +1,10 @@
-# AGI v0: effort and outcome cost (G29)
+# AGI v0: effort and the cost of the ending (G29)
 
 > Terms updated on 18 November 2026 to match docs/agi_glossary.html. Numbers and findings are unchanged.
 
 > Every result is conditional on the model version and the initial state; no bare reachability result is a finding. The deliverables are minimal assumption sets, guarantee zone readings (inside or outside) and distance, and pivotal players; each is given with its engine.
 
-> Nothing in this report is a forecast. Every number rests on action efforts and outcome costs that are the owner's judgment, without a contemporaneous source ([docs/agi_effort.md](../docs/agi_effort.md)). A cheapest path cost says that a path exists; it says nothing of how likely the path is, and the model's actors do not choose by cost. The caveats of the first-run report ([agi_2026-11-12.md](agi_2026-11-12.md), front page and section 30) apply unchanged.
+> Nothing in this report is a forecast. Every number rests on action efforts and costs of the endings that are the owner's judgment, without a contemporaneous source ([docs/agi_effort.md](../docs/agi_effort.md)). A cheapest path cost says that a path exists; it says nothing of how likely the path is, and the model's actors do not choose by cost. The caveats of the first-run report ([agi_2026-11-12.md](agi_2026-11-12.md), front page and section 30) apply unchanged.
 
 Model `agi_v0`, unchanged since the first run. Pre-registered claim: [docs/agi_testbed.md](../docs/agi_testbed.md) section 5, row G29, with section 6 item 12. Run procedure: [docs/agi_v0_decisions.md](../docs/agi_v0_decisions.md) section 9. Engine: the bounded checker's encoding with a cost objective (`tests/agi/effort.py`), within the search length (24 quarters) from `s₀`.
 
@@ -21,8 +21,8 @@ Model `agi_v0`, unchanged since the first run. Pre-registered claim: [docs/agi_t
 | Effort of a path | The sum of the scored actors' action efforts over the rounds before the target is first reached. |
 | Cheapest path cost | The smallest effort of the named actors over all paths of at most 24 quarters from `s₀` that reach the target. The cheapest path cost of the draft, where it is called the slide cost. |
 | Payers | The actors whose effort is being minimised: `H` with `L`, `H`, `L`, or `A`. Each is a separate search and may find a different path. |
-| Outcome cost | What an ending costs the actor who lives with it. |
-| Total cost | An actor's effort on a path plus the outcome cost of its ending. |
+| Cost of the ending | What an ending costs the actor who lives with it. |
+| Total cost | An actor's effort on a path plus the cost of its ending. |
 | Prevention cost | The least effort that guarantees an ending never happens, whatever the others do. Not computable yet. |
 | Within the search length | Within 24 quarters. An ending that needs longer reads unreachable within the search length; `COEXIST` exists only at quarter 56 and is not costed. |
 
@@ -75,7 +75,7 @@ What the table shows, on these action efforts and within this search length:
 
 ## 4. Total cost on the cheapest path of `H` with `L` (reported)
 
-Effort on that path, plus outcome cost, per actor.
+Effort on that path, plus the cost of the ending, per actor.
 
 | Ending | Goal | `H` | `L` | `A` |
 |---|---|---|---|---|
@@ -103,7 +103,7 @@ For governments, AI contained at 10 in total is no dearer than silent takeover a
 - **Existence, not guarantee.** A cheapest path cost of 0 means some path gets there for free, with the other actors and chance going along. The prevention cost, which is the owner's predicted result (d), needs a cost-bounded guarantee zone.
 
 1. **Forced waiting.** Whether `stand_by` below AGI, where `A` has no other action, should cost anything. It decides (c). (Ruled by the owner: it costs nothing. Section 6.)
-2. **Disempowerment's outcome cost.** It is the free ending and the frontier AI companies' cheapest; at 2 for the companies it is nearly costless to them. Whether that is intended.
+2. **The cost of the disempowerment ending.** It is the free ending and the frontier AI companies' cheapest; at 2 for the companies it is nearly costless to them. Whether that is intended.
 3. **The cost-bounded guarantee zone,** for predicted result (d).
 4. **The action effort change run.** (Done: section 7.)
 
