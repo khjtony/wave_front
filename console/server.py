@@ -2,7 +2,10 @@
 
     python -m console.server            # http://127.0.0.1:8770
 
-It listens on this machine only. It reads the repository on every request, writes only the
+It listens on this machine only unless ``--host`` says otherwise (the container of
+console/compose.yaml listens inside itself and Docker publishes the port on the addresses
+named there). There is no password: whoever can reach the port can read the repository's
+reports and add requests. It reads the repository on every request, writes only the
 owner's requests, the news inbox and the exploration log under research/, and runs model
 code only through the fixed questions of console/sim.py.
 """
@@ -122,9 +125,10 @@ class Handler(BaseHTTPRequestHandler):
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--port", type=int, default=8770)
+    ap.add_argument("--host", default="127.0.0.1")
     args = ap.parse_args()
-    server = ThreadingHTTPServer(("127.0.0.1", args.port), Handler)
-    print(f"wave_front console on http://127.0.0.1:{args.port}", flush=True)
+    server = ThreadingHTTPServer((args.host, args.port), Handler)
+    print(f"wave_front console on http://{args.host}:{args.port}", flush=True)
     server.serve_forever()
 
 
