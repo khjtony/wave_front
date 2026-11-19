@@ -124,11 +124,13 @@ def membership(
     coalition: Sequence[str],
     target: str,
     profiles: Sequence[str] = (),
+    only: Sequence[str] | None = None,
     **levels: str,
 ) -> dict:
     """``{"inside": {start objective: bool}, "seconds", "peak nodes"}`` for ``s₀`` with
     ``levels`` overridden, in ``⟨⟨coalition⟩⟩□target`` of the build under ``profiles``; the
-    seconds and the peak are per start objective unless ``WF_V03_JOINT=1``."""
+    seconds and the peak are per start objective unless ``WF_V03_JOINT=1``. ``only`` asks
+    for some start objectives (the queue of scripts/agi_v0_3_kernel_queue.py)."""
 
     def run(spec: str, objective: str | None):
         from wavefront.model import V
@@ -153,7 +155,7 @@ def membership(
     if JOINT:
         return forked(json.dumps(["membership", *asked], sort_keys=True), run, spec, None)
     out: dict = {"inside": {}, "seconds": {}, "peak nodes": {}}
-    for o in OBJECTIVES:
+    for o in only or OBJECTIVES:
         got = forked(json.dumps(["membership", *asked, o], sort_keys=True), run, spec, o)
         out["inside"][o] = got["inside"][o]
         out["seconds"][o] = got["seconds"]
