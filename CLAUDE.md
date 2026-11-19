@@ -6,3 +6,4 @@
 - Reports never quote a bare reachability result as a finding. The deliverables are minimal assumption sets, kernel membership and distance, and pivotal coalitions.
 - No identifiers of the AI model or session that authored a change in code, docs or commits (attribution lines excepted). API model names used as configuration values, such as the extraction backend's default model, are fine.
 - `pytest -q`, `ruff check .` and `ruff format --check .` must pass before a commit.
+- Reports and docs on the AGI model use the plain terms of `docs/agi_glossary.html` (the owner's renames of 2026-11-18, such as path, alliance, frontier AI companies). Code identifiers keep their names; a new term goes into the glossary in the same commit.
