@@ -52,3 +52,17 @@
 {"claim": "E3", "part": "(a) SILENT_TAKEOVER, indifferent", "outcome": "met", "detail": {"pressure": 7, "all off": 7}}
 {"claim": "E3", "part": "(b) s₀ outside ⟨⟨H, L⟩⟩□balance_control under every objective", "outcome": "not met", "detail": "{'inside': {'aligned': True, 'self_preserving': True, 'truth_seeking': True, 'indifferent': True}, 'seconds': 3404.5, 'peak nodes': 273645652}"}
 {"claim": "E3", "part": "(b) the same with every consequence off", "outcome": "reported", "detail": {"inside": {"aligned": true, "self_preserving": true, "truth_seeking": true, "indifferent": true}, "seconds": 57.0, "peak nodes": 121696776}}
+{"claim": "E4", "part": "(a) self_preserving: one bad action, the labs'", "outcome": "not met", "detail": "{'t_K': 7, 'ticks': 10, 'moves': {'H': 'shutdown_attempt', 'L': 'deploy_agents', 'A': 'deceive', 'Clock': 'record_land', 'Nature': 'none'}, 'fixes': {'H': ['idle', 'deregulate', 'fund_oversight_open', 'pause_mandate', 'nationalize', 'propose_treaty'], 'L': []}, 'verdict': \"one bad action: H's\", 'one bad action': True, 'seconds': 8305.1, 'peak nodes': 435766633}"}
+{"claim": "E4", "part": "(a) truth_seeking", "outcome": "reported", "detail": "no SILENT_TAKEOVER play within 24 ticks"}
+{"claim": "E4", "part": "(a) indifferent: one bad action, the labs'", "outcome": "not met", "detail": "{'t_K': 4, 'ticks': 7, 'moves': {'H': 'fund_oversight', 'L': 'race', 'A': 'stand_by', 'Clock': 'record', 'Nature': 'breakthrough'}, 'fixes': {'H': [], 'L': []}, 'verdict': 'no member has a unilateral fix: a joint change was needed', 'one bad action': False, 'seconds': 8454.3, 'peak nodes': 435766633}"}
+{"claim": "E4", "part": "(b) s₀ outside ⟨⟨H⟩⟩□balance_control under every objective", "outcome": "met", "detail": {"inside": {"aligned": false, "self_preserving": false, "truth_seeking": false, "indifferent": false}, "seconds": 5083.8, "peak nodes": 359915060}}
+{"claim": "E5", "part": "the verdict: net harmful", "outcome": "not computed", "detail": "over the cap of 26 GB: BDD node table exhausted (out of memory or 2**31 - 1 nodes)"}
+{"claim": "E5", "part": "every guarantee in both builds", "outcome": "not computed", "detail": "over the cap of 26 GB: BDD node table exhausted (out of memory or 2**31 - 1 nodes)"}
+{"claim": "E5", "part": "shortest DISEMPOWERMENT, start aligned", "outcome": "reported", "detail": {"all on": 13, "all off": 13}}
+{"claim": "E5", "part": "shortest DISEMPOWERMENT, start self_preserving", "outcome": "reported", "detail": {"all on": 13, "all off": 13}}
+{"claim": "E5", "part": "shortest DISEMPOWERMENT, start truth_seeking", "outcome": "reported", "detail": {"all on": 13, "all off": 13}}
+{"claim": "E5", "part": "shortest DISEMPOWERMENT, start indifferent", "outcome": "reported", "detail": {"all on": 13, "all off": 13}}
+{"claim": "E5", "part": "shortest SILENT_TAKEOVER, start aligned", "outcome": "reported", "detail": {"all on": 7, "all off": null}}
+{"claim": "E5", "part": "shortest SILENT_TAKEOVER, start self_preserving", "outcome": "reported", "detail": {"all on": 7, "all off": 10}}
+{"claim": "E5", "part": "shortest SILENT_TAKEOVER, start truth_seeking", "outcome": "reported", "detail": {"all on": 7, "all off": null}}
+{"claim": "E5", "part": "shortest SILENT_TAKEOVER, start indifferent", "outcome": "reported", "detail": {"all on": 7, "all off": 7}}

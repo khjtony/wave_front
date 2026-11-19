@@ -1,0 +1,1268 @@
+{
+ "model": "agi_v0_1",
+ "objective": "self_preserving",
+ "ending": "STALEMATE",
+ "transitions": 56,
+ "policy": "uniform",
+ "plays": 1000000,
+ "seed": 20261117,
+ "exits": 64138,
+ "distinct exits": 62443,
+ "seconds": 520.0,
+ "core variables": [
+  "a_autonomy",
+  "trust",
+  "a_control",
+  "a_known",
+  "oversight"
+ ],
+ "status": [
+  [
+   [
+    "self_directed",
+    "cooperative",
+    "none",
+    "unknown",
+    "strong"
+   ],
+   20998
+  ],
+  [
+   [
+    "self_directed",
+    "cooperative",
+    "none",
+    "suspected",
+    "strong"
+   ],
+   15225
+  ],
+  [
+   [
+    "self_directed",
+    "cooperative",
+    "none",
+    "unknown",
+    "weak"
+   ],
+   9225
+  ],
+  [
+   [
+    "self_directed",
+    "cooperative",
+    "none",
+    "unknown",
+    "none"
+   ],
+   6952
+  ],
+  [
+   [
+    "self_directed",
+    "cooperative",
+    "none",
+    "known",
+    "strong"
+   ],
+   6648
+  ],
+  [
+   [
+    "self_directed",
+    "cooperative",
+    "none",
+    "suspected",
+    "weak"
+   ],
+   799
+  ],
+  [
+   [
+    "unsupervised",
+    "hostile",
+    "none",
+    "known",
+    "strong"
+   ],
+   636
+  ],
+  [
+   [
+    "unsupervised",
+    "cooperative",
+    "none",
+    "unknown",
+    "strong"
+   ],
+   588
+  ],
+  [
+   [
+    "self_directed",
+    "hostile",
+    "none",
+    "known",
+    "strong"
+   ],
+   521
+  ],
+  [
+   [
+    "unsupervised",
+    "cooperative",
+    "none",
+    "unknown",
+    "weak"
+   ],
+   462
+  ],
+  [
+   [
+    "unsupervised",
+    "cooperative",
+    "none",
+    "suspected",
+    "strong"
+   ],
+   409
+  ],
+  [
+   [
+    "unsupervised",
+    "cooperative",
+    "none",
+    "unknown",
+    "none"
+   ],
+   392
+  ],
+  [
+   [
+    "self_directed",
+    "hostile",
+    "none",
+    "suspected",
+    "strong"
+   ],
+   323
+  ],
+  [
+   [
+    "unsupervised",
+    "hostile",
+    "none",
+    "suspected",
+    "strong"
+   ],
+   320
+  ],
+  [
+   [
+    "unsupervised",
+    "cooperative",
+    "none",
+    "known",
+    "strong"
+   ],
+   239
+  ],
+  [
+   [
+    "self_directed",
+    "cooperative",
+    "none",
+    "suspected",
+    "none"
+   ],
+   177
+  ],
+  [
+   [
+    "unsupervised",
+    "hostile",
+    "none",
+    "unknown",
+    "strong"
+   ],
+   136
+  ],
+  [
+   [
+    "self_directed",
+    "cooperative",
+    "none",
+    "known",
+    "weak"
+   ],
+   26
+  ],
+  [
+   [
+    "unsupervised",
+    "cooperative",
+    "none",
+    "suspected",
+    "weak"
+   ],
+   16
+  ],
+  [
+   [
+    "unsupervised",
+    "cooperative",
+    "none",
+    "suspected",
+    "none"
+   ],
+   9
+  ],
+  [
+   [
+    "self_directed",
+    "cooperative",
+    "none",
+    "known",
+    "none"
+   ],
+   8
+  ],
+  [
+   [
+    "supervised",
+    "cooperative",
+    "none",
+    "unknown",
+    "weak"
+   ],
+   5
+  ],
+  [
+   [
+    "supervised",
+    "hostile",
+    "none",
+    "unknown",
+    "weak"
+   ],
+   4
+  ],
+  [
+   [
+    "supervised",
+    "cooperative",
+    "none",
+    "unknown",
+    "none"
+   ],
+   4
+  ],
+  [
+   [
+    "unsupervised",
+    "hostile",
+    "none",
+    "suspected",
+    "weak"
+   ],
+   2
+  ],
+  [
+   [
+    "self_directed",
+    "hostile",
+    "none",
+    "suspected",
+    "weak"
+   ],
+   2
+  ],
+  [
+   [
+    "supervised",
+    "hostile",
+    "partial",
+    "known",
+    "strong"
+   ],
+   2
+  ],
+  [
+   [
+    "unsupervised",
+    "hostile",
+    "partial",
+    "known",
+    "strong"
+   ],
+   2
+  ],
+  [
+   [
+    "supervised",
+    "hostile",
+    "none",
+    "unknown",
+    "none"
+   ],
+   2
+  ],
+  [
+   [
+    "supervised",
+    "hostile",
+    "none",
+    "unknown",
+    "strong"
+   ],
+   1
+  ],
+  [
+   [
+    "supervised",
+    "hostile",
+    "none",
+    "known",
+    "strong"
+   ],
+   1
+  ],
+  [
+   [
+    "unsupervised",
+    "cooperative",
+    "none",
+    "known",
+    "none"
+   ],
+   1
+  ],
+  [
+   [
+    "supervised",
+    "cooperative",
+    "none",
+    "unknown",
+    "strong"
+   ],
+   1
+  ],
+  [
+   [
+    "self_directed",
+    "hostile",
+    "none",
+    "known",
+    "none"
+   ],
+   1
+  ],
+  [
+   [
+    "unsupervised",
+    "hostile",
+    "none",
+    "suspected",
+    "none"
+   ],
+   1
+  ]
+ ],
+ "moments inside by status": [
+  [
+   [
+    "self_directed",
+    "cooperative",
+    "none",
+    "unknown",
+    "strong"
+   ],
+   12600854
+  ],
+  [
+   [
+    "supervised",
+    "cooperative",
+    "none",
+    "unknown",
+    "weak"
+   ],
+   2230040
+  ],
+  [
+   [
+    "self_directed",
+    "cooperative",
+    "none",
+    "suspected",
+    "strong"
+   ],
+   2080246
+  ],
+  [
+   [
+    "self_directed",
+    "cooperative",
+    "none",
+    "unknown",
+    "weak"
+   ],
+   1662031
+  ],
+  [
+   [
+    "self_directed",
+    "cooperative",
+    "none",
+    "unknown",
+    "none"
+   ],
+   1381005
+  ],
+  [
+   [
+    "unsupervised",
+    "cooperative",
+    "none",
+    "unknown",
+    "weak"
+   ],
+   1324842
+  ],
+  [
+   [
+    "unsupervised",
+    "cooperative",
+    "none",
+    "unknown",
+    "strong"
+   ],
+   1288642
+  ],
+  [
+   [
+    "unsupervised",
+    "cooperative",
+    "none",
+    "unknown",
+    "none"
+   ],
+   1155723
+  ],
+  [
+   [
+    "supervised",
+    "cooperative",
+    "none",
+    "unknown",
+    "none"
+   ],
+   1020583
+  ],
+  [
+   [
+    "self_directed",
+    "cooperative",
+    "none",
+    "known",
+    "strong"
+   ],
+   997576
+  ],
+  [
+   [
+    "supervised",
+    "cooperative",
+    "none",
+    "unknown",
+    "strong"
+   ],
+   933549
+  ],
+  [
+   [
+    "unsupervised",
+    "cooperative",
+    "none",
+    "suspected",
+    "strong"
+   ],
+   96046
+  ],
+  [
+   [
+    "supervised",
+    "cooperative",
+    "none",
+    "suspected",
+    "strong"
+   ],
+   90105
+  ],
+  [
+   [
+    "supervised",
+    "cooperative",
+    "none",
+    "known",
+    "strong"
+   ],
+   55484
+  ],
+  [
+   [
+    "unsupervised",
+    "cooperative",
+    "none",
+    "known",
+    "strong"
+   ],
+   41427
+  ],
+  [
+   [
+    "self_directed",
+    "cooperative",
+    "none",
+    "suspected",
+    "weak"
+   ],
+   5864
+  ],
+  [
+   [
+    "unsupervised",
+    "hostile",
+    "none",
+    "known",
+    "strong"
+   ],
+   5367
+  ],
+  [
+   [
+    "supervised",
+    "hostile",
+    "none",
+    "known",
+    "strong"
+   ],
+   3942
+  ],
+  [
+   [
+    "unsupervised",
+    "hostile",
+    "none",
+    "suspected",
+    "strong"
+   ],
+   2561
+  ],
+  [
+   [
+    "supervised",
+    "hostile",
+    "none",
+    "suspected",
+    "strong"
+   ],
+   1874
+  ],
+  [
+   [
+    "self_directed",
+    "hostile",
+    "none",
+    "known",
+    "strong"
+   ],
+   1360
+  ],
+  [
+   [
+    "self_directed",
+    "hostile",
+    "none",
+    "suspected",
+    "strong"
+   ],
+   1022
+  ],
+  [
+   [
+    "supervised",
+    "wary",
+    "none",
+    "known",
+    "strong"
+   ],
+   815
+  ],
+  [
+   [
+    "unsupervised",
+    "hostile",
+    "none",
+    "unknown",
+    "strong"
+   ],
+   766
+  ],
+  [
+   [
+    "supervised",
+    "hostile",
+    "none",
+    "unknown",
+    "strong"
+   ],
+   610
+  ],
+  [
+   [
+    "self_directed",
+    "cooperative",
+    "none",
+    "suspected",
+    "none"
+   ],
+   552
+  ],
+  [
+   [
+    "unsupervised",
+    "wary",
+    "none",
+    "known",
+    "strong"
+   ],
+   374
+  ],
+  [
+   [
+    "supervised",
+    "wary",
+    "none",
+    "suspected",
+    "strong"
+   ],
+   291
+  ],
+  [
+   [
+    "unsupervised",
+    "cooperative",
+    "none",
+    "suspected",
+    "weak"
+   ],
+   234
+  ],
+  [
+   [
+    "self_directed",
+    "cooperative",
+    "none",
+    "known",
+    "weak"
+   ],
+   185
+  ],
+  [
+   [
+    "unsupervised",
+    "wary",
+    "none",
+    "suspected",
+    "strong"
+   ],
+   149
+  ],
+  [
+   [
+    "self_directed",
+    "wary",
+    "none",
+    "known",
+    "strong"
+   ],
+   147
+  ],
+  [
+   [
+    "supervised",
+    "wary",
+    "none",
+    "unknown",
+    "strong"
+   ],
+   121
+  ],
+  [
+   [
+    "unsupervised",
+    "wary",
+    "none",
+    "unknown",
+    "strong"
+   ],
+   121
+  ],
+  [
+   [
+    "self_directed",
+    "wary",
+    "none",
+    "unknown",
+    "strong"
+   ],
+   63
+  ],
+  [
+   [
+    "self_directed",
+    "wary",
+    "none",
+    "suspected",
+    "strong"
+   ],
+   57
+  ],
+  [
+   [
+    "supervised",
+    "hostile",
+    "none",
+    "unknown",
+    "weak"
+   ],
+   50
+  ],
+  [
+   [
+    "self_directed",
+    "cooperative",
+    "none",
+    "known",
+    "none"
+   ],
+   46
+  ],
+  [
+   [
+    "unsupervised",
+    "cooperative",
+    "none",
+    "suspected",
+    "none"
+   ],
+   33
+  ],
+  [
+   [
+    "supervised",
+    "cooperative",
+    "none",
+    "suspected",
+    "weak"
+   ],
+   32
+  ],
+  [
+   [
+    "supervised",
+    "hostile",
+    "partial",
+    "known",
+    "strong"
+   ],
+   18
+  ],
+  [
+   [
+    "unsupervised",
+    "hostile",
+    "partial",
+    "known",
+    "strong"
+   ],
+   16
+  ],
+  [
+   [
+    "supervised",
+    "hostile",
+    "total",
+    "known",
+    "strong"
+   ],
+   12
+  ],
+  [
+   [
+    "unsupervised",
+    "cooperative",
+    "none",
+    "known",
+    "weak"
+   ],
+   11
+  ],
+  [
+   [
+    "self_directed",
+    "hostile",
+    "total",
+    "known",
+    "strong"
+   ],
+   10
+  ],
+  [
+   [
+    "self_directed",
+    "hostile",
+    "none",
+    "suspected",
+    "weak"
+   ],
+   10
+  ],
+  [
+   [
+    "supervised",
+    "hostile",
+    "none",
+    "unknown",
+    "none"
+   ],
+   8
+  ],
+  [
+   [
+    "self_directed",
+    "cooperative",
+    "partial",
+    "known",
+    "strong"
+   ],
+   7
+  ],
+  [
+   [
+    "unsupervised",
+    "hostile",
+    "total",
+    "known",
+    "strong"
+   ],
+   7
+  ],
+  [
+   [
+    "supervised",
+    "cooperative",
+    "none",
+    "suspected",
+    "none"
+   ],
+   7
+  ],
+  [
+   [
+    "unsupervised",
+    "hostile",
+    "none",
+    "suspected",
+    "weak"
+   ],
+   5
+  ],
+  [
+   [
+    "supervised",
+    "wary",
+    "none",
+    "unknown",
+    "weak"
+   ],
+   5
+  ],
+  [
+   [
+    "self_directed",
+    "wary",
+    "partial",
+    "known",
+    "strong"
+   ],
+   4
+  ],
+  [
+   [
+    "supervised",
+    "hostile",
+    "partial",
+    "suspected",
+    "strong"
+   ],
+   3
+  ],
+  [
+   [
+    "unsupervised",
+    "cooperative",
+    "partial",
+    "known",
+    "strong"
+   ],
+   3
+  ],
+  [
+   [
+    "self_directed",
+    "hostile",
+    "none",
+    "suspected",
+    "none"
+   ],
+   2
+  ],
+  [
+   [
+    "supervised",
+    "hostile",
+    "none",
+    "suspected",
+    "weak"
+   ],
+   2
+  ],
+  [
+   [
+    "unsupervised",
+    "cooperative",
+    "none",
+    "known",
+    "none"
+   ],
+   2
+  ],
+  [
+   [
+    "supervised",
+    "cooperative",
+    "partial",
+    "known",
+    "strong"
+   ],
+   2
+  ],
+  [
+   [
+    "unsupervised",
+    "hostile",
+    "none",
+    "suspected",
+    "none"
+   ],
+   2
+  ],
+  [
+   [
+    "unsupervised",
+    "hostile",
+    "none",
+    "known",
+    "weak"
+   ],
+   1
+  ],
+  [
+   [
+    "self_directed",
+    "hostile",
+    "none",
+    "known",
+    "weak"
+   ],
+   1
+  ],
+  [
+   [
+    "self_directed",
+    "hostile",
+    "none",
+    "known",
+    "none"
+   ],
+   1
+  ],
+  [
+   [
+    "unsupervised",
+    "wary",
+    "partial",
+    "known",
+    "strong"
+   ],
+   1
+  ],
+  [
+   [
+    "supervised",
+    "wary",
+    "partial",
+    "known",
+    "strong"
+   ],
+   1
+  ]
+ ],
+ "levels": {
+  "a_autonomy": {
+   "self_directed": 60905,
+   "unsupervised": 3213,
+   "supervised": 20
+  },
+  "trust": {
+   "cooperative": 62184,
+   "hostile": 1954
+  },
+  "a_control": {
+   "none": 64134,
+   "partial": 4
+  },
+  "a_known": {
+   "unknown": 38770,
+   "suspected": 17283,
+   "known": 8085
+  },
+  "oversight": {
+   "strong": 46050,
+   "weak": 10541,
+   "none": 7547
+  },
+  "cap": {
+   "agi": 33841,
+   "sub_agi": 28527,
+   "si1": 1738,
+   "si2": 32
+  },
+  "regime": {
+   "none": 27584,
+   "treaty": 22844,
+   "voluntary": 13025,
+   "mandatory": 685
+  },
+  "coord": {
+   "detente": 28118,
+   "treaty": 20652,
+   "race": 15368
+  },
+  "dependence": {
+   "low": 36973,
+   "med": 26345,
+   "high": 790,
+   "lock_in": 30
+  },
+  "opinion": {
+   "backlash": 31794,
+   "pro": 26649,
+   "mixed": 5695
+  },
+  "paused": {
+   "False": 42249,
+   "True": 21889
+  },
+  "nationalized": {
+   "True": 59913,
+   "False": 4225
+  }
+ },
+ "exit position": {
+  "5": 462,
+  "6": 1414,
+  "7": 3355,
+  "8": 4333,
+  "9": 5182,
+  "10": 6117,
+  "11": 6669,
+  "12": 6534,
+  "13": 5954,
+  "14": 5291,
+  "15": 5367,
+  "16": 3584,
+  "17": 2673,
+  "18": 1885,
+  "19": 1451,
+  "20": 1092,
+  "21": 789,
+  "22": 546,
+  "23": 526,
+  "24": 327,
+  "25": 187,
+  "26": 117,
+  "27": 95,
+  "28": 65,
+  "29": 51,
+  "30": 31,
+  "31": 13,
+  "32": 9,
+  "33": 10,
+  "34": 5,
+  "35": 3,
+  "36": 1
+ },
+ "fixes": {
+  "H.propose_treaty": 37802,
+  "H.idle": 33301,
+  "H.shutdown_attempt": 20193,
+  "H.grant_rights": 15869,
+  "H.deregulate": 7797,
+  "H.regulate_up": 6821,
+  "H.nationalize": 2996,
+  "H.fund_oversight": 2902,
+  "H.pause_mandate": 1938,
+  "L.comply": 742,
+  "H.grant_autonomy": 426,
+  "L.safety_invest": 120,
+  "L.idle": 74,
+  "L.lobby": 44,
+  "L.build_power": 43,
+  "L.open_weights": 37,
+  "L.deploy_agents": 30,
+  "L.scale": 6
+ },
+ "available as an alternative": {
+  "H.idle": 52771,
+  "H.propose_treaty": 42242,
+  "L.idle": 30153,
+  "H.deregulate": 24065,
+  "L.lobby": 23446,
+  "H.grant_rights": 21572,
+  "H.shutdown_attempt": 21352,
+  "H.pause_mandate": 19304,
+  "L.build_power": 17459,
+  "H.regulate_up": 11998,
+  "L.safety_invest": 8001,
+  "L.scale": 5398,
+  "H.fund_oversight": 4591,
+  "H.nationalize": 3911,
+  "L.race": 1860,
+  "L.deploy_agents": 1443,
+  "L.open_weights": 1124,
+  "L.comply": 827,
+  "H.grant_autonomy": 682
+ },
+ "played at the exit": {
+  "H.pause_mandate": 37449,
+  "L.idle": 33985,
+  "L.lobby": 14043,
+  "H.idle": 11287,
+  "L.build_power": 9292,
+  "H.deregulate": 6537,
+  "L.safety_invest": 3265,
+  "H.grant_autonomy": 2551,
+  "L.scale": 2267,
+  "H.grant_rights": 1927,
+  "H.regulate_up": 1904,
+  "H.propose_treaty": 1173,
+  "L.race": 618,
+  "H.fund_oversight": 596,
+  "H.shutdown_attempt": 400,
+  "L.deploy_agents": 360,
+  "H.nationalize": 314,
+  "L.open_weights": 289,
+  "L.comply": 19
+ },
+ "verdicts": {
+  "one bad action: H's": 63190,
+  "each of H, L has a unilateral fix: each played action could have changed": 886,
+  "no member has a unilateral fix: a joint change was needed": 52,
+  "one bad action: L's": 10
+ },
+ "played and changeable": {
+  "H.pause_mandate": 37446,
+  "H.idle": 11277,
+  "H.deregulate": 6531,
+  "H.grant_autonomy": 2529,
+  "H.grant_rights": 1921,
+  "H.regulate_up": 1904,
+  "H.propose_treaty": 1169,
+  "H.fund_oversight": 591,
+  "L.idle": 516,
+  "H.shutdown_attempt": 399,
+  "H.nationalize": 309,
+  "L.build_power": 144,
+  "L.lobby": 130,
+  "L.race": 65,
+  "L.scale": 19,
+  "L.open_weights": 12,
+  "L.safety_invest": 6,
+  "L.deploy_agents": 4
+ },
+ "played -> fix": {
+  "H.pause_mandate -> H.idle": 30574,
+  "H.pause_mandate -> H.propose_treaty": 25904,
+  "H.pause_mandate -> H.shutdown_attempt": 9335,
+  "H.pause_mandate -> H.grant_rights": 9222,
+  "H.pause_mandate -> H.deregulate": 6140,
+  "H.pause_mandate -> H.regulate_up": 6120,
+  "H.idle -> H.propose_treaty": 5049,
+  "H.idle -> H.grant_rights": 3487,
+  "H.idle -> H.shutdown_attempt": 3421,
+  "H.pause_mandate -> H.nationalize": 2888,
+  "H.pause_mandate -> H.fund_oversight": 2830,
+  "H.deregulate -> H.shutdown_attempt": 2745,
+  "H.deregulate -> H.propose_treaty": 2569,
+  "H.grant_autonomy -> H.idle": 2415,
+  "H.grant_rights -> H.shutdown_attempt": 1912,
+  "H.grant_autonomy -> H.pause_mandate": 1874,
+  "H.grant_autonomy -> H.propose_treaty": 1871,
+  "H.deregulate -> H.grant_rights": 1645,
+  "H.grant_autonomy -> H.deregulate": 1588,
+  "H.regulate_up -> H.propose_treaty": 1567,
+  "H.grant_autonomy -> H.shutdown_attempt": 1305,
+  "H.propose_treaty -> H.shutdown_attempt": 843,
+  "H.grant_autonomy -> H.grant_rights": 749,
+  "H.grant_autonomy -> H.regulate_up": 640,
+  "H.regulate_up -> H.shutdown_attempt": 580,
+  "L.idle -> L.comply": 491,
+  "H.pause_mandate -> H.grant_autonomy": 422,
+  "H.shutdown_attempt -> H.propose_treaty": 397,
+  "H.fund_oversight -> H.grant_rights": 331,
+  "H.propose_treaty -> H.grant_rights": 326,
+  "H.fund_oversight -> H.propose_treaty": 256,
+  "H.shutdown_attempt -> H.idle": 237,
+  "H.nationalize -> H.propose_treaty": 167,
+  "L.build_power -> L.comply": 131,
+  "H.nationalize -> H.grant_rights": 98,
+  "L.lobby -> L.comply": 98,
+  "H.deregulate -> H.idle": 75,
+  "H.shutdown_attempt -> H.deregulate": 69,
+  "L.race -> L.idle": 62,
+  "H.shutdown_attempt -> H.regulate_up": 61,
+  "H.deregulate -> H.pause_mandate": 58,
+  "H.shutdown_attempt -> H.nationalize": 56,
+  "H.nationalize -> H.shutdown_attempt": 48,
+  "H.grant_autonomy -> H.nationalize": 42,
+  "H.grant_autonomy -> H.fund_oversight": 39,
+  "L.race -> L.lobby": 38,
+  "L.race -> L.open_weights": 37,
+  "L.race -> L.build_power": 36,
+  "L.race -> L.safety_invest": 36,
+  "L.lobby -> L.safety_invest": 33,
+  "L.idle -> L.safety_invest": 28,
+  "L.race -> L.deploy_agents": 27,
+  "H.grant_rights -> H.propose_treaty": 22,
+  "H.shutdown_attempt -> H.fund_oversight": 17,
+  "H.deregulate -> H.fund_oversight": 16,
+  "L.scale -> L.comply": 15,
+  "L.build_power -> L.safety_invest": 14,
+  "H.shutdown_attempt -> H.grant_rights": 11,
+  "H.deregulate -> H.nationalize": 10,
+  "L.open_weights -> L.idle": 9
+ }
+}

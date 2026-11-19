@@ -1,0 +1,272 @@
+<title>Glossary Rename Proposals</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  /* Layout: a sticky tally with the copy button, then one row per proposal grouped as the glossary is:
+     current name, proposed name, the reason, and three ways to decide. */
+  :root {
+    --bg: #f6f7fa; --surface: #ffffff; --ink: #141821; --ink2: #475066; --muted: #6c7689; --line: #d4d9e3;
+    --accent: #2c52cc; --good: #1d7a3a; --warn: #a15c00; --warn-bg: #fdf3e1;
+    --display: "Space Grotesk", "Inter", system-ui, sans-serif;
+    --body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "DejaVu Sans Mono", monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg: #11131a; --surface: #1a1d27; --ink: #eceef4; --ink2: #b7bdcc; --muted: #8b93a6; --line: #333a49; --accent: #86a2ff; --good: #6fcf8c; --warn: #f0b860; --warn-bg: #2e2516; color-scheme: dark; }
+  }
+  :root[data-theme="dark"] { --bg: #11131a; --surface: #1a1d27; --ink: #eceef4; --ink2: #b7bdcc; --muted: #8b93a6; --line: #333a49; --accent: #86a2ff; --good: #6fcf8c; --warn: #f0b860; --warn-bg: #2e2516; color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.5; }
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+  .wrap { max-width: 980px; margin: 0 auto; padding-block: 28px 48px;
+          padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.9px; text-transform: uppercase; color: var(--muted); }
+  h1 { font-family: var(--display); font-size: clamp(26px, 4vw, 34px); line-height: 1.15; margin: 4px 0 0; text-wrap: balance; letter-spacing: -0.3px; }
+  .lede { margin: 10px 0 0; max-width: 70ch; color: var(--ink2); font-size: 16px; }
+  .bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); padding-block: 12px 10px; margin-top: 14px; border-bottom: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; }
+  #tally { font-weight: 600; font-variant-numeric: tabular-nums; margin-right: auto; }
+  #tally small { font-weight: 400; color: var(--muted); }
+  button { font: inherit; cursor: pointer; }
+  button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .act { font-size: 14px; padding: 7px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
+  .act.main { background: var(--accent); border-color: var(--accent); color: var(--bg); font-weight: 600; }
+  h2 { font-family: var(--display); font-size: 20px; margin: 30px 0 2px; display: flex; align-items: baseline; gap: 10px; }
+  h2 small { font-family: var(--body); font-size: 13px; font-weight: 400; color: var(--muted); }
+  .row { border-top: 1px solid var(--line); padding: 12px 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 250px); gap: 6px 18px; align-items: start; }
+  .row.done-accept .new { color: var(--good); }
+  .row.done-keep .new { text-decoration: line-through; color: var(--muted); }
+  .lab { font-size: 11px; font-weight: 600; letter-spacing: 0.7px; text-transform: uppercase; color: var(--muted); }
+  .old, .new { font-family: var(--display); font-size: 16px; font-weight: 700; overflow-wrap: anywhere; }
+  .old { font-weight: 500; color: var(--ink2); }
+  .id { font-family: var(--mono); font-size: 12px; background: color-mix(in srgb, var(--accent) 9%, var(--surface)); border-radius: 4px; padding: 1px 5px; overflow-wrap: anywhere; }
+  .why { color: var(--ink2); font-size: 13.5px; margin-top: 3px; }
+  .pick { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+  .seg { display: flex; gap: 6px; }
+  .seg button { flex: 1 1 0; font-size: 13.5px; padding: 6px 8px; border-radius: 7px; border: 1px solid var(--line); background: var(--surface); color: var(--ink2); }
+  .seg button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg); font-weight: 600; }
+  .own { font: inherit; font-size: 14px; width: 100%; min-width: 0; padding: 6px 9px; border-radius: 7px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
+  .flag { background: var(--warn-bg); border: 1px solid color-mix(in srgb, var(--warn) 35%, var(--line)); border-radius: 8px; padding: 0 14px; margin-top: 6px; }
+  .flag .row:first-child { border-top: 0; }
+  .out { margin-top: 30px; }
+  #result { width: 100%; min-height: 220px; font-family: var(--mono); font-size: 12.5px; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
+  .foot { margin-top: 14px; color: var(--muted); font-size: 13px; max-width: 72ch; }
+  @media (max-width: 760px) { .row { grid-template-columns: 1fr; } }
+</style>
+
+<div class="wrap">
+  <div class="eyebrow">wave_front · AGI model glossary · proposals for review · 18 November 2026</div>
+  <h1>Proposed names for the rest of the glossary</h1>
+  <p class="lede">Your 23 renames are in. These are my proposals for the remaining terms, written in the same plain style. For each one choose <b>Accept</b>, <b>Keep</b> the current name, or type your own. Then copy the list at the bottom and paste it to me. Names in the code do not change.</p>
+
+  <div class="bar">
+    <span id="tally"></span>
+    <button class="act" id="acceptAll" type="button">Accept all undecided</button>
+    <button class="act main" id="copy" type="button">Copy my decisions</button>
+  </div>
+
+  <div id="list"></div>
+
+  <div class="out">
+    <h2>Your decisions</h2>
+    <textarea id="result" readonly aria-label="Your decisions, ready to paste"></textarea>
+    <p class="foot">If the copy button does nothing in your app, select the text in the box and copy it by hand. Your choices are remembered in this browser only. Terms not listed here (about 110, such as Governments, Quarter, Oversight, Silent takeover, Point of no return, Guarantee zone) I would keep as they are.</p>
+  </div>
+</div>
+
+<script>
+// [current name, name in code, proposed name, reason]
+const GROUPS = [
+  ["Four of your renames I would adjust", "flag", [
+    ["Reachable state", "guard", "Action condition", "It is the condition for an action to be available, not a state; 'reachable' already means a path exists."],
+    ["Reachable state condition", "A.defect:threat", "Action condition part", "Follows from the line above."],
+    ["Simulation length", "K = 24", "Search length", "24 quarters is only how far path searches look; simulations run all 56."],
+    ["Live on", "dependence = lock_in", "Living on AI", "'Live on' alone reads as 'survive'."],
+    ["Shutdown AI", "shut", "AI was shut down", "It records a shutdown that succeeded; the action is 'Attempt a shutdown'."],
+  ]],
+  ["Words with two meanings", "", [
+    ["Open takeover", "OPEN_TAKEOVER", "Open-weight AI takeover", "'Open' also reads as overt; this says who takes over."],
+    ["Overt takeover", "OVERT_TAKEOVER", "Visible takeover", "Pairs with 'Silent takeover' and stays clear of 'open'."],
+    ["Open call", "OPEN_CALLS", "Uncertain reading", "A level of today's state that could not be pinned down; nothing to do with open weights."],
+    ["Memory cap", "WF_V03_MEMORY_GB", "Memory limit", "The code already uses cap for AI intelligence."],
+    ["Consequences A, B, C, D", "recall, pressure, testing, retrain", "No recall, Race pressure, Outside testing, Retraining (no letters)", "A is the AI system and D1–D6 are claims."],
+    ["Treaty (level of regulation strictness)", "regime = treaty", "Treaty-backed regulation", "Separates it from the treaty between states."],
+    ["Treaty (level of coordination)", "coord = treaty", "Treaty between states", "Same reason."],
+    ["Race (level of coordination)", "coord = race", "Rivalry between states", "'Race' is also an action of the companies."],
+    ["Race", "L.race", "Race rivals", "Says who races whom."],
+    ["Level with (the frontier AI system)", "", "Equal to", "'Level' already means one value of a variable."],
+    ["Effort score", "H_SCORES, L_SCORES, A_SCORES", "Action effort", "One name for what you call slip cost; frees 'slip' and 'slide'."],
+    ["Slide cost", "c_reach(E)", "Cheapest path cost", "The least effort on any path to an ending."],
+    ["Slip margin", "", "Extra cost of prevention", "Prevention cost minus cheapest path cost."],
+  ]],
+  ["Players", "", [
+    ["The open-weight system", "O", "The open-weight AI system", "Parallel to 'The frontier AI system'."],
+  ]],
+  ["Time and structure", "", [
+    ["Start state", "s₀", "Today's state", "It is 2026 Q4 as read from the real world snapshot."],
+    ["AGI start", "s₀[cap := agi]", "Today's state with AGI", "Today's state with the frontier AI system already at AGI."],
+    ["Joint move", "", "Round", "One round: every player picks one action in the same quarter."],
+    ["Capability part / motive part", "MOTIVE_PARTS", "Ability condition / Intention condition", "What the AI can do, and what it wants to do."],
+    ["Build option", "build(...)", "Model switch", "It switches a piece of the model on or off."],
+    ["Build", "", "Model variant", "One combination of switches."],
+    ["Composition rule", "", "Same-quarter conflict rule", "It settles two players changing one thing in the same quarter."],
+    ["Hidden", "hidden_from", "Hidden information", "What a player cannot see."],
+    ["State facts", "control_left, a_known_at_majority, …", "History records", "Notes the record writer keeps about the past."],
+    ["A under its behavior pattern", "OBJECTIVE_PROFILES", "AI true to its goal", "The AI also avoids moves that go against what it wants."],
+  ]],
+  ["State variables", "", [
+    ["Coordination between states", "coord", "International coordination", "Shorter."],
+    ["Dependence", "dependence", "Society's reliance on AI", "Says whose dependence on what."],
+    ["Control held by the frontier AI system", "a_control", "Frontier AI's control", "Shorter."],
+    ["Suspicion", "a_known", "Government suspicion", "Says who suspects."],
+    ["Governments' belief", "belief_H", "Governments' AGI expectation", "How near they think AGI is; keeps 'belief' free."],
+    ["Pause in force", "paused", "Pause active", "Plainer."],
+    ["Nationalized", "nationalized", "Companies nationalized", "Says what was nationalized."],
+    ["Villain seen", "villain_seen", "Hostile AI act on record", "An AI has done something adversarial at least once."],
+    ["Weights open", "weights_open", "Open-weight release happened", "v0.2 flag."],
+    ["Level of the open system", "o_cap", "Open system intelligence", "Parallel to 'AI intelligence'."],
+    ["State of the open system", "o_mode", "Open system goal", "Safeguarded, or one of the four goals."],
+    ["Control held by the open system", "o_control", "Open system's control", "Shorter."],
+    ["Providers' wave mark", "wave_open", "Wave started by providers", "Plainer."],
+  ]],
+  ["What an AI wants", "", [
+    ["Objective", "a_objective", "AI goal", "What the AI wants. You have said 'belief', but a belief is what it thinks is true."],
+    ["Indifferent", "indifferent", "Indifferent to humans", "Says to what."],
+  ]],
+  ["Actions", "", [
+    ["Tighten the rules", "H.regulate_up", "Tighten regulation", "Matches 'Regulation strictness'."],
+    ["Loosen the rules", "H.deregulate", "Loosen regulation", "Same."],
+    ["Grant autonomy", "H.grant_autonomy", "Grant the AI autonomy", "Says to whom."],
+    ["Deploy agents", "L.deploy_agents", "Deploy AI agents", "Plainer."],
+    ["Scale up", "L.scale", "Add computing power", "Matches 'Computing power'."],
+    ["Comply", "L.comply", "Comply with regulation", "Says with what."],
+    ["Seize", "A.seize", "Seize everything", "It jumps to total control."],
+    ["Acquire (open system)", "O.acquire", "Open system takes control", "Plainer."],
+    ["Breakthrough", "Nature.breakthrough", "AGI breakthrough", "Says which breakthrough."],
+    ["Detection", "Nature.detection", "Hostile act detected", "Says what is detected."],
+    ["Outside release", "Nature.open_release", "Third-party open-weight release", "v0.2: someone other than the companies releases."],
+    ["Providers' deployment", "Nature.open_deploy", "Providers deploy", "Shorter."],
+  ]],
+  ["Endings and balances", "", [
+    ["Contained", "CONTAINED", "AI contained", "Says what is contained."],
+    ["Coexistence to the end of the simulation", "COEXIST", "Lasting coexistence", "Shorter."],
+    ["Waypoint", "", "Milestone", "A named condition a path passes through."],
+    ["Balance", "", "Safe condition", "A condition treated as safe for now."],
+    ["Control balance", "balance_control", "Humans in control", "Plainer, and separate from the AI's control."],
+    ["Deterrence balance", "balance_deter", "Humans can deter", "Plainer."],
+    ["Coexistence balance", "balance_coexist", "Peaceful coexistence", "Plainer."],
+  ]],
+  ["Questions asked of the model", "", [
+    ["Exit move", "", "No-return move", "The move that passes the point of no return."],
+    ["Exit condition", "φ", "Protected condition", "The condition the alliance is trying to guarantee."],
+    ["Violation", "t_φ", "Condition broken", "The quarter the condition first fails."],
+    ["Fix", "", "Preventing action", "Your word for it in the census questions."],
+    ["Harmful move", "", "Most common no-return action", "What it is in the counts."],
+    ["Distance", "", "Fastest forcing time", "Fewest quarters in which an alliance can force its goal."],
+    ["Relaxation", "relax", "Switching off an assumption", "Plainer."],
+    ["Minimal assumption set", "", "Smallest set of deciding assumptions", "The fewest assumptions a result rests on."],
+    ["Bounded query", "", "Limited-length search", "A search for paths within the search length."],
+    ["Reachability", "", "Possibility (a path exists)", "It says possible, not likely and not preventable."],
+    ["Upper bound", "", "Best case for governments", "Alliances are assumed to see everything."],
+  ]],
+  ["Mechanics added since v0", "", [
+    ["Adoption wave", "adoption", "Deployment wave", "Matches your 'Deployment countdown'."],
+    ["Adoption lag", "ADOPTION_LAG = 3", "Deployment wave delay", "Same."],
+    ["Land", "Clock.record_land", "Wave arrives", "Plainer."],
+    ["Cancel", "cancel", "Wave cancelled", "Says what is cancelled."],
+    ["Licence", "license", "Deployment permit", "The condition under which companies may deploy."],
+    ["No recall", "recall", "Cannot be recalled", "Reads as a sentence."],
+    ["Gap", "gap = 2", "Open-weight lag", "Quarters by which the open system follows."],
+    ["Private gap", "private_gap = 4", "Open-weight lag on private machines", "The lag when service is restricted."],
+    ["Reach", "reach", "AI's reach", "What an AI is in a position to take over."],
+  ]],
+  ["Effort and statistics", "", [
+    ["Outcome cost", "OUTCOME", "Cost of the ending", "Plainer."],
+    ["Uniform path sampling", "--policy uniform", "Equal-chance sampling", "Every available action equally likely."],
+    ["Shift", "--shift", "One-score change", "One action effort moved by one."],
+    ["AI policy", "--ai", "AI playing style", "How the AI picks moves in the counts."],
+    ["Path sample", "agi_v0_1_path_sample.py", "Point-of-no-return count", "It counts how many paths reach it and when."],
+    ["Exit census", "agi_v0_1_exit_census.py", "Point-of-no-return census", "States, actions and preventing actions there."],
+  ]],
+  ["Process", "", [
+    ["Registration", "", "Pre-registration", "The usual research word for committing a prediction first."],
+    ["Expected", "", "Predicted result", "Plainer."],
+    ["First sight", "WF_FIRST_SIGHT_…", "First run", "Plainer."],
+    ["Met / not met", "", "Prediction held / did not hold", "Makes clear it grades the prediction, not the run."],
+    ["Not computed", "", "Did not fit", "Over the time or memory limit."],
+    ["Content check", "", "Wiring check", "It checks the model is wired as intended."],
+    ["Diagnostic", "", "Follow-up analysis", "Done after a run to explain it."],
+    ["Harness", "", "Test code", "Plainer."],
+    ["Speculative", "speculative=True", "Unsourced (assumed)", "An action with no record behind it."],
+    ["Part A / part B", "", "Quick claims / Heavy claims", "Seconds-to-minutes searches, and hour-long guarantee zones."],
+    ["Timing probe", "agi_v0_3_probe.py", "Cost test", "One run to see time and memory."],
+    ["Reading", "agi_v0_3_kernels.jsonl", "Zone reading", "What one guarantee zone says at the named states."],
+    ["Guard changelog", "docs/guard_changelog_agi.md", "Model edit log", "Follows from renaming guard."],
+    ["Historical suites", "models/ww2, models/cw", "History test cases", "1930s Europe and the Cold War."],
+  ]],
+  ["Engine and compute", "", [
+    ["Symbolic engine", "wavefront.symbolic", "Guarantee engine", "The part that computes guarantee zones."],
+    ["Bounded checker", "wavefront.bmc", "Path searcher", "The part that searches for paths."],
+    ["Node", "peak nodes", "Memory unit", "The unit of the guarantee engine's memory."],
+    ["Layer", "", "Computation step", "One step of a guarantee-zone computation."],
+  ]],
+];
+
+const KEY = "wf-glossary-proposals-v1";
+let saved = {};
+try { saved = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { saved = {}; }
+const rows = [];
+const list = document.getElementById("list"), tally = document.getElementById("tally"), result = document.getElementById("result");
+
+function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+function persist() { try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) { /* choices stay for this visit only */ } }
+
+GROUPS.forEach(([name, kind, items], g) => {
+  const h = el("h2", "", name); h.appendChild(el("small", "", items.length + (items.length === 1 ? " proposal" : " proposals"))); list.appendChild(h);
+  const box = el("div", kind === "flag" ? "flag" : "");
+  items.forEach(([cur, code, prop, why], i) => {
+    const id = "r" + g + "_" + i, state = saved[id] || { pick: "", own: "" };
+    const row = el("div", "row"), a = el("div"), b = el("div"), c = el("div", "pick");
+    a.appendChild(el("div", "lab", "Current")); a.appendChild(el("div", "old", cur));
+    if (code) a.appendChild(el("span", "id", code));
+    b.appendChild(el("div", "lab", "Proposed")); b.appendChild(el("div", "new", prop)); b.appendChild(el("div", "why", why));
+    const seg = el("div", "seg"), yes = el("button", "", "Accept"), no = el("button", "", "Keep");
+    yes.type = no.type = "button";
+    const own = el("input", "own"); own.type = "text"; own.id = "own_" + id; own.placeholder = "or your own name"; own.value = state.own || "";
+    own.setAttribute("aria-label", "Your own name for " + cur);
+    const r = { id, cur, prop, row, yes, no, own, state };
+    yes.addEventListener("click", () => set(r, r.state.pick === "accept" ? "" : "accept"));
+    no.addEventListener("click", () => set(r, r.state.pick === "keep" ? "" : "keep"));
+    own.addEventListener("input", () => { r.state.own = own.value; if (own.value.trim()) r.state.pick = "own"; else if (r.state.pick === "own") r.state.pick = ""; commit(r); });
+    seg.appendChild(yes); seg.appendChild(no); c.appendChild(seg); c.appendChild(own);
+    row.appendChild(a); row.appendChild(b); row.appendChild(c); box.appendChild(row); rows.push(r); paint(r);
+  });
+  list.appendChild(box);
+});
+
+function set(r, pick) { r.state.pick = pick; if (pick !== "own") { r.state.own = ""; r.own.value = ""; } commit(r); }
+function commit(r) { saved[r.id] = r.state; persist(); paint(r); summary(); }
+function paint(r) {
+  r.yes.setAttribute("aria-pressed", String(r.state.pick === "accept"));
+  r.no.setAttribute("aria-pressed", String(r.state.pick === "keep"));
+  r.row.className = "row" + (r.state.pick === "accept" ? " done-accept" : r.state.pick === "keep" ? " done-keep" : "");
+}
+function summary() {
+  const acc = rows.filter(r => r.state.pick === "accept"), keep = rows.filter(r => r.state.pick === "keep");
+  const own = rows.filter(r => r.state.pick === "own"), open = rows.filter(r => !r.state.pick);
+  tally.textContent = (rows.length - open.length) + " of " + rows.length + " decided ";
+  tally.appendChild(el("small", "", "· " + acc.length + " accepted, " + keep.length + " kept, " + own.length + " your own"));
+  const lines = ["Glossary rename decisions"];
+  if (acc.length) lines.push("", "ACCEPT", ...acc.map(r => "  " + r.cur + " -> " + r.prop));
+  if (own.length) lines.push("", "MY OWN NAME", ...own.map(r => "  " + r.cur + " -> " + r.state.own.trim()));
+  if (keep.length) lines.push("", "KEEP AS IS", ...keep.map(r => "  " + r.cur));
+  if (open.length) lines.push("", "UNDECIDED (" + open.length + ")", ...open.map(r => "  " + r.cur));
+  result.value = lines.join("\n");
+}
+document.getElementById("acceptAll").addEventListener("click", () => { rows.filter(r => !r.state.pick).forEach(r => { r.state.pick = "accept"; saved[r.id] = r.state; paint(r); }); persist(); summary(); });
+document.getElementById("copy").addEventListener("click", ev => {
+  const b = ev.currentTarget, done = msg => { b.textContent = msg; setTimeout(() => { b.textContent = "Copy my decisions"; }, 1800); };
+  const fallback = () => { result.focus(); result.select(); done("Selected: press copy"); };
+  try { navigator.clipboard.writeText(result.value).then(() => done("Copied"), fallback); } catch (e) { fallback(); }
+});
+summary();
+</script>

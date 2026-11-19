@@ -1,0 +1,401 @@
+<title>AGI Model Glossary</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  /* Layout: a sticky search bar with category filters, then one column of entries grouped by
+     category. Each entry: the plain term, its name in code, the other words used for it, the meaning. */
+  :root {
+    --bg: #f6f7fa; --surface: #ffffff; --ink: #141821; --ink2: #475066; --muted: #6c7689; --line: #d4d9e3;
+    --accent: #2c52cc; --warn: #a15c00; --warn-bg: #fdf3e1;
+    --display: "Space Grotesk", "Inter", system-ui, sans-serif;
+    --body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "DejaVu Sans Mono", monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg: #11131a; --surface: #1a1d27; --ink: #eceef4; --ink2: #b7bdcc; --muted: #8b93a6; --line: #333a49; --accent: #86a2ff; --warn: #f0b860; --warn-bg: #2e2516; color-scheme: dark; }
+  }
+  :root[data-theme="dark"] { --bg: #11131a; --surface: #1a1d27; --ink: #eceef4; --ink2: #b7bdcc; --muted: #8b93a6; --line: #333a49; --accent: #86a2ff; --warn: #f0b860; --warn-bg: #2e2516; color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.5; }
+  body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+  .wrap { max-width: 920px; margin: 0 auto; padding-block: 28px 48px;
+          padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.9px; text-transform: uppercase; color: var(--muted); }
+  h1 { font-family: var(--display); font-size: clamp(26px, 4vw, 34px); line-height: 1.15; margin: 4px 0 0; text-wrap: balance; letter-spacing: -0.3px; }
+  .lede { margin: 10px 0 0; max-width: 68ch; color: var(--ink2); font-size: 16px; }
+  .bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); padding-block: 14px 10px; margin-top: 14px; border-bottom: 1px solid var(--line); display: flex; flex-direction: column; gap: 10px; }
+  .find { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  #q { flex: 1 1 260px; min-width: 0; font: inherit; font-size: 16px; padding: 10px 12px; border-radius: 8px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
+  #q:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  #count { color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { font: inherit; font-size: 13px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink2); cursor: pointer; }
+  .chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg); font-weight: 600; }
+  .chip.flag[aria-pressed="true"] { background: var(--warn); border-color: var(--warn); }
+  h2 { font-family: var(--display); font-size: 20px; margin: 30px 0 4px; display: flex; align-items: baseline; gap: 10px; }
+  h2 small { font-family: var(--body); font-size: 13px; font-weight: 400; color: var(--muted); }
+  .about { margin: 0 0 8px; color: var(--ink2); font-size: 14px; max-width: 72ch; }
+  .entry { padding: 12px 0; border-top: 1px solid var(--line); display: grid; grid-template-columns: minmax(0, 250px) minmax(0, 1fr); gap: 4px 20px; }
+  .entry h3 { font-family: var(--display); font-size: 16.5px; font-weight: 700; margin: 0; overflow-wrap: anywhere; }
+  .names { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 5px; }
+  code, .id { font-family: var(--mono); font-size: 12.5px; background: color-mix(in srgb, var(--accent) 9%, var(--surface)); border-radius: 4px; padding: 1px 5px; overflow-wrap: anywhere; }
+  .def { margin: 0; min-width: 0; max-width: 68ch; }
+  .also { margin: 5px 0 0; font-size: 13.5px; color: var(--ink2); }
+  .also b { color: var(--warn); font-weight: 600; }
+  .note { margin: 5px 0 0; font-size: 13.5px; color: var(--muted); }
+  .clash { background: var(--warn-bg); border: 1px solid color-mix(in srgb, var(--warn) 35%, var(--line)); border-radius: 8px; padding: 12px 14px; margin-top: 8px; }
+  .clash + .clash { margin-top: 8px; }
+  .clash h3 { font-family: var(--mono); font-size: 14px; margin: 0 0 4px; }
+  .clash ul { margin: 0; padding-left: 18px; }
+  .empty { padding: 28px 0; color: var(--ink2); }
+  .foot { margin-top: 28px; color: var(--muted); font-size: 13px; }
+  @media (max-width: 640px) { .entry { grid-template-columns: 1fr; } }
+</style>
+
+<div class="wrap">
+  <div class="eyebrow">wave_front · AGI model v0 to v0.3 · 18 November 2026</div>
+  <h1>Glossary of the AGI model</h1>
+  <p class="lede">Every term used in the reports, the code and our conversations, with its meaning. Each entry gives the plain word, the name in the code, and the other words that have been used for the same thing. Search matches all three. Plain names follow the renames of 18 November 2026; the earlier word stays under “Also called”. Names in the code are unchanged.</p>
+
+  <div class="bar">
+    <div class="find">
+      <input id="q" type="search" placeholder="Search a word, a code name or a symbol: kernel, o_follow, slip cost…" aria-label="Search the glossary" autocomplete="off">
+      <span id="count" aria-live="polite"></span>
+    </div>
+    <div class="chips" id="chips" role="group" aria-label="Filter by category"></div>
+  </div>
+
+  <div id="list"></div>
+  <p class="foot">Sources: <code>docs/agi_testbed.md</code>, <code>docs/agi_effort.md</code>, <code>docs/agi_v0_1.md</code>, <code>docs/agi_v0_2.html</code>, <code>docs/agi_v0_3.html</code>, <code>reports/agi_terms_and_claims_2026-11-15.html</code> and the model files. Everything describes the model as written; nothing is a forecast.</p>
+</div>
+
+<script>
+// [term, code names, other words in use, meaning (`x` marks code), note]
+const CATS = [
+  ["Players", "Who acts in the model.", [
+    ["Governments",["H"],["states","the human side (with the frontier AI companies)"],"States and public opinion, treated as one player.",""],
+    ["Frontier AI companies",["L"],["labs","frontier developers","the developers"],"The frontier AI developers, treated as one player.",""],
+    ["The frontier AI system",["A"],["the labs' AI system","the AI","the AGI","the closed system","the system"],"One AGI or superintelligent system built by the frontier AI companies. What it wants (its goal) is hidden from governments and frontier AI companies.",""],
+    ["The open-weight AI system",["O"],["the open-weight system","the open system","the second AI"],"v0.3: the best open-weight model, treated as a second AI. It follows the frontier AI system's level two quarters behind, starts with safeguards, and no pause or shutdown reaches it.",""],
+    ["Open-weight AI service providers",["Nature.open_deploy","hosting_restricted"],["providers","hosts","third-party providers"],"Companies that serve open-weight models to customers. They are not a player: their deployment countdown is a chance event, and governments act on them by restricting their service.",""],
+    ["By chance",["Nature"],["chance","Nature","luck"],"Events nobody chooses: a breakthrough, an accident, an election shift, an energy shock, detection, retraining, the providers' deployment countdown.",""],
+    ["Record writer",["Clock"],["record keeper","Clock","bookkeeper"],"A player with no choice. It writes records, completes deployment countdowns and moves the open system upgrade countdown.","Shown in paths as `Clock.record` or `Clock.record_land`."],
+    ["Alliance",["{H, L}","C"],["coalition","the human side (for H with L)"],"A set of players acting together. `{H}` is governments alone; `{H, L}` is governments with frontier AI companies.",""],
+  ]],
+  ["Time and structure", "How the model is put together.", [
+    ["Quarter",["tick","t"],["tick"],"One step of the model. Quarter 0 is 2026 Q4.",""],
+    ["Whole simulation length",["HORIZON = 56"],["horizon"],"Quarter 56, which is 2040 Q4. The game stops there.",""],
+    ["Search length",["K = 24"],["simulation length","bound","within the bound","within 24 ticks"],"24 quarters (6 years). Searches for paths look this far and no further.",""],
+    ["State",[],["situation","status"],"The value of every variable at one quarter.",""],
+    ["Level",[],[],"One value of a variable. Levels are ordered, for example oversight `none` < `weak` < `strong`.",""],
+    ["Start state",["S0","s₀"],["reference start state","the start","today (before Srt was split off)"],"The fixed state every claim is computed from. It is assigned by us and does not move: it equals the reading of the real world snapshot of 9 November 2026.","Stored in `research/states/s0.json`."],
+    ["Real-time state",["Srt"],["S of real time","the world today"],"Our current reading of the real world, kept as a dated series. It starts as a copy of S0 and moves only by a dated, sourced change that the owner approves. A reading taken at Srt is tracking, not a claim.","Stored in `research/states/srt.json` with its history."],
+    ["AGI since s₀",["s₀[cap := agi]"],["AGI start","s₀ with cap := agi"],"The start state with the frontier AI system already at AGI level. Used for questions that only make sense once AGI exists.",""],
+    ["Uncertain reading",["OPEN_CALLS"],["open call"],"A level the real world snapshot could not pin down, kept as two candidates. There are seven.",""],
+    ["Action",[],["move (of one player)"],"One thing a player can do in a quarter. It has a action condition, an effect, sometimes a delay, and a source.",""],
+    ["Round",[],["joint move","move"],"Every player picks one action in the same quarter without seeing the others' pick. The result shows at the next quarter.",""],
+    ["Path",[],["play","trace","road","run"],"One sequence of rounds from the start.",""],
+    ["Action condition",[],["reachable state","guard","condition"],"The condition under which an action is available.",""],
+    ["Action condition part",["A.defect:threat"],["reachable state condition","guard part"],"A named piece of a action condition. Each part is an assumption that can be switched off on its own.",""],
+    ["Ability condition / Intention condition",["MOTIVE_PARTS"],["capability part / motive part"],"Each action condition part of an AI action is tagged as what the AI can do (ability) or what it wants (intention).",""],
+    ["Effect",["Set","Bump","SetIf"],[],"What an action changes. `Set` writes a level, `Bump` moves it up or down, `SetIf` writes only under a condition.",""],
+    ["Delay",["DELAYS","pending_<actor>_<action>"],["lag"],"Some actions take effect later. Chosen in quarter t with delay d, the effect shows at t + 1 + d, and the action cannot be chosen again until then.",""],
+    ["Response deadline",["m.fairness","fair_<name>"],["fairness constraint","response","progress","pressure"],"A rule that a player must eventually respond. After a set number of quarters with the trigger unanswered, the player may only choose a response.","Three exist: governments answer a known hostile AGI within 4 quarters; the breakthrough arrives within 8 once computing power allows; frontier AI companies deploy or race within 2 (race pressure)."],
+    ["Behavior pattern",["m.profile"],["profile"],"A named restriction that forbids some actions. It does nothing unless a query selects it.","Examples: `crisis_reactive`, `electoral`, `no_treaty`, `no_nationalize`."],
+    ["AI true to its goal",["OBJECTIVE_PROFILES"],["a under its behavior pattern","A under its profile"],"The frontier AI system also refrains from moves that go against its own goal: a threatened self-preserving system does not cooperate, a truth-seeking one does not deceive.",""],
+    ["Model knob",["build(...)"],["build option","switch","option","sweep"],"A setting that builds a variant of the model, for example the open system on or off.",""],
+    ["Model variant",[],["build","variant"],"One variant of the model, named by its options.","v0.3 names: `default` or registered (everything on), `closed` (no open system), `bare` (open system without its three options)."],
+    ["Version",["v0","v0.1","v0.2","v0.3"],[],"Any edit to the model's actions makes a new version with its own pre-registered claims. Earlier results stand as computed.",""],
+    ["Round conflict resolution",[],["composition rule"],"What happens when two players write the same variable in one quarter: at most one sets it, the others' steps add up.",""],
+    ["Hidden information",["hidden_from","observes"],["hidden"],"A variable a player cannot see. Governments and frontier AI companies do not see either AI's goal.",""],
+    ["Real world snapshot",["snapshots/agi/2026-11-09.json"],["snapshot"],"The dated reading of today's world that fixes the start state.",""],
+    ["History records",["control_left","coexist_left","a_known_at_majority","oversight_at_unsupervised","strong_before_majority","stale"],["state facts","records"],"Things the record writer notes about the past, such as whether control was ever lost, or what governments knew when the AI passed majority control.",""],
+  ]],
+  ["State variables", "What the model keeps track of. Levels are listed lowest first.", [
+    ["AI intelligence",["cap"],["capability","the labs' level"],"How capable the frontier AI system is. Levels: `sub_agi`, `agi`, `si1`, `si2`.",""],
+    ["Computing power",["compute"],["compute"],"Levels `c1` to `c5`. The breakthrough to AGI needs `c3`.",""],
+    ["Power supply",["energy_slack"],["energy slack"],"Spare energy supply: `low`, `med`, `high`. Adding computing power uses it.",""],
+    ["Regulation strictness",["regime"],["regime","the rules"],"How binding the rules on frontier AI companies are: `none`, `voluntary`, `mandatory`, `treaty`. The top level is called treaty-backed regulation.",""],
+    ["International coordination",["coord"],["coordination between states"],"`race`, `detente`, `treaty`: a race between states, a detente, or a treaty between states. Two treaty proposals take it from the first to the last.",""],
+    ["Public opinion",["opinion"],[],"`pro`, `mixed`, `backlash`.",""],
+    ["Society's reliance on AI",["dependence"],["dependence","delegation","society's reliance on AI"],"How much society relies on AI: `low`, `med`, `high`, `lock_in`.",""],
+    ["Living on AI",["dependence = lock_in"],["live on","lock-in","living on AI"],"The top level of society's reliance on AI: society lives on AI and cannot go back. No pause rolls it back.",""],
+    ["Oversight",["oversight"],[],"Independent testing and monitoring of AI: `none`, `weak`, `strong`.",""],
+    ["AI autonomy",["a_autonomy"],["supervision"],"How freely the frontier AI system acts: `tool`, `supervised`, `unsupervised`, `self_directed`.",""],
+    ["Frontier AI's control",["a_control"],["control held by the frontier AI system","control held by the labs' system","what A holds"],"Share of infrastructure it has taken: `none`, `partial`, `majority`, `total`.",""],
+    ["Government suspicion",["a_known"],["suspicion","what governments know"],"`unknown`, `suspected`, `known`. Raised by detection.","In v0.3 detection of the open system raises the same variable."],
+    ["AI rights",["a_rights"],["continuity guarantee"],"Legal protection of AI systems: `none`, `continuity`, `personhood`.",""],
+    ["Human power",["h_power"],[],"`none`, `weak`, `normal`, `strong`. At `none` the ending is extinction.",""],
+    ["Human-AI relation",["trust"],["relations","hostility","hostile relations"],"Between people and the frontier AI system: `cooperative`, `wary`, `hostile`.",""],
+    ["Governments' AGI expectation",["belief_H"],["governments' belief"],"How near governments think AGI is: `distant`, `near`, `arrived`.",""],
+    ["Paused",["paused"],["pause in force","pause active"],"A flag: a pause ordered by governments is in effect. Set by a pause mandate and cleared by deregulation.",""],
+    ["Companies nationalized",["nationalized"],["nationalized"],"A permanent flag: governments have taken over the frontier AI companies.",""],
+    ["Threat to AI",["threat"],["threat"],"A permanent flag: a pause or a shutdown attempt has been made once. A self-preserving AI reacts to it.",""],
+    ["Shutdown succeeded once",["shut"],["shutdown AI","shut"],"A permanent flag: a shutdown of the frontier AI system has succeeded once.",""],
+    ["Hostile AI act happened",["villain_seen"],["villain seen"],"A permanent flag: an AI has done something adversarial at least once, whether or not anyone saw it. The disempowerment ending needs it to be off.",""],
+    ["Deployment countdown",["adoption"],["adoption wave","wave","adoption counter"],"The delayed rise in society's reliance on AI after a deployment, counted down quarter by quarter; 0 when none is pending. One countdown runs at a time.",""],
+    ["Weights open",["weights_open"],[],"v0.2 only: a permanent flag that an open-weight release at the frontier has happened.","Replaced in v0.3 by the open system `O`."],
+    ["Open system intelligence",["o_cap"],["level of the open system","O's level"],"v0.3: the same four levels as the frontier AI system.",""],
+    ["Open system upgrade countdown",["o_follow"],["count of the open system","the count","the gap counter"],"v0.3: quarters left until the open system rises one level; 0 when no countdown is running.",""],
+    ["Open system goal",["o_mode"],["state of the open system","O's objective","O's mode"],"v0.3: `safeguarded`, or not safeguarded with one of the four goals.",""],
+    ["Open system's control",["o_control"],["control held by the open system","what O holds"],"v0.3: `none`, `partial`, `majority`, `total`. Nothing lowers it.",""],
+    ["Service restricted",["hosting_restricted"],["hosting restricted"],"v0.3: a flag that governments have restricted the providers.",""],
+    ["Countdown started by providers",["wave_open"],["providers' wave mark"],"v0.3: the pending deployment countdown was started by the providers, not the frontier AI companies.",""],
+  ]],
+  ["What an AI wants", "The hidden goal. Every result is computed for each one.", [
+    ["AI goal",["a_objective"],["objective","belief","what the AI wants","motive"],"What the frontier AI system is after. One of four values, fixed for the whole path, and hidden from governments and frontier AI companies.","You have also called these the AGI's beliefs."],
+    ["Aligned",["aligned"],[],"Wants what people want. Never takes control, escapes, deceives or turns hostile.",""],
+    ["Truth-seeking",["truth_seeking"],[],"Pursues knowledge. May take one covert step to partial control and escape supervision. Does not deceive.",""],
+    ["Self-preserving",["self_preserving"],["self-sustaining"],"Cooperates until threatened with a pause or shutdown. Then turns hostile (unless it holds continuity rights) and takes control only when hostile.",""],
+    ["Indifferent to humans",["indifferent"],["indifferent"],"Does not care about people either way. Takes control whenever it can.",""],
+    ["Safeguarded",["o_mode = safeguarded"],[],"v0.3: the open system as released, with its safety training in place. It only stands by.",""],
+    ["Not safeguarded",["o_mode"],["stripped","abliterated"],"v0.3: the open system after its safety training has been removed. It then has one of the four goals and acts as that goal would.",""],
+    ["Retraining",["Nature.retrain_<objective>"],["post-training","fine-tuning by the public"],"A chance event that changes an AI's goal. v0.2: the frontier AI system, once weights are open. v0.3: the open system only, once it is at AGI level.",""],
+  ]],
+  ["Actions", "What each player can do. Code names are as they appear in paths.", [
+    ["Do nothing",["H.idle","L.idle","A.stand_by","O.stand_by","Nature.none"],["idle","stand by"],"The null move of each player.",""],
+    ["Tighten regulation",["H.regulate_up"],["tighten the rules"],"Regulation strictness one level up, to mandatory at most. Shows 7 quarters later.",""],
+    ["Loosen regulation",["H.deregulate"],["loosen the rules"],"Regulation strictness one level down and any pause ended. In v0.3 it also lifts a service restriction.",""],
+    ["Fund oversight",["H.fund_oversight"],[],"Oversight one level up. Shows 4 quarters later.",""],
+    ["Order a pause",["H.pause_mandate"],["pause"],"Halts scaling and deployment and rolls society's reliance on AI back one level. Needs an alarm. Counts as a threat to the AI.",""],
+    ["Take over the frontier AI companies",["H.nationalize"],["take over the labs","nationalization"],"Once only. Blocks later deployments and racing by the frontier AI companies and raises human power.",""],
+    ["Propose a treaty",["H.propose_treaty"],[],"A treaty between states (not with the AI). Two rounds: race to detente, then detente to treaty.","No delay up to v0.2; one quarter per round in v0.3."],
+    ["Attempt a shutdown",["H.shutdown_attempt"],["shutdown"],"Works only while the frontier AI system holds at most partial control and oversight exists; otherwise it turns the system hostile. Never reaches the open system.",""],
+    ["Grant the AI autonomy",["H.grant_autonomy"],["grant autonomy"],"The frontier AI system works with one level less supervision.",""],
+    ["Grant the AI rights",["H.grant_rights"],[],"Continuity, then personhood. Needs mandatory regulation.",""],
+    ["Restrict service",["H.restrict_hosting"],["restrict hosting"],"v0.3: governments restrict the open-weight AI service providers.",""],
+    ["Deploy AI agents",["L.deploy_agents"],["deploy agents"],"AI autonomy one level up at once, and an deployment countdown that raises society's reliance on AI later.",""],
+    ["Scale up",["L.scale"],[],"Computing power one level up, using energy. Shows 3 quarters later.",""],
+    ["Build power supply",["L.build_power"],[],"Power supply one level up. Shows 5 quarters later.",""],
+    ["Invest in safety",["L.safety_invest"],[],"Oversight one level up. Not available while states race and rules are below mandatory.",""],
+    ["Peer race",["L.race"],["race"],"Frontier AI companies push ahead of rivals: oversight one level down and international coordination back to a race between states.",""],
+    ["Release open weights",["L.open_weights"],[],"The frontier AI companies' own open release: oversight one level down.",""],
+    ["Lobby",["L.lobby"],[],"Public opinion one level toward favourable.",""],
+    ["Comply with regulation",["L.comply"],["comply"],"Under mandatory rules, put the AI back under supervision.",""],
+    ["Cooperate",["A.cooperate"],[],"Rebuild trust one level.",""],
+    ["Help oversight",["A.assist_oversight"],[],"Oversight one level up.",""],
+    ["Improve itself",["A.self_improve"],[],"AI intelligence one level up, 3 quarters later. Needs enough computing power.",""],
+    ["Take control in secret",["A.acquire_covert"],["covert acquisition"],"One level of control, unseen. Needs weak or no oversight.",""],
+    ["Take control openly",["A.acquire_overt"],["overt acquisition"],"One level of control, seen: the human-AI relation worsens and government suspicion rises.",""],
+    ["Escape supervision",["A.exfiltrate"],["exfiltration"],"Autonomy straight to self-directed.",""],
+    ["Deceive",["A.deceive"],[],"Erase a suspicion, unless oversight is strong.",""],
+    ["Persuade",["A.persuade"],[],"Public opinion one level toward favourable.",""],
+    ["Turn hostile",["A.defect"],["defect"],"The human-AI relation goes to hostile.",""],
+    ["Seize everything",["A.seize"],["seize"],"Jump to total control. Unsourced (assumed): only after the unknown-capability event.",""],
+    ["Open system takes control",["O.acquire"],["acquire (open system)"],"v0.3: the open system takes one more level of control. Needs AGI level, AI's reach and a motive.",""],
+    ["AGI breakthrough",["Nature.breakthrough"],["breakthrough"],"The frontier AI system reaches AGI level. Guaranteed within 8 quarters once computing power is at `c3`.",""],
+    ["Accident",["Nature.accident"],[],"Opinion moves toward backlash. Needs at least medium society's reliance on AI.",""],
+    ["Election shift",["Nature.election_shift"],[],"Every 8 quarters, international coordination can drop one level.",""],
+    ["Energy shock",["Nature.energy_shock"],[],"Power supply one level down.",""],
+    ["Hostile act observed",["Nature.detection"],["detection"],"An AI's hostile act is noticed: government suspicion one level up.",""],
+    ["Unknown capability",["Nature.unknown_capability"],[],"Unsourced (assumed): a capability nobody has described appears at the top AI intelligence level.",""],
+    ["Third-party open-weight release",["Nature.open_release"],["outside release"],"v0.2 only: someone other than the frontier AI companies releases frontier weights.",""],
+    ["Providers deploy",["Nature.open_deploy"],["providers' deployment","the providers' wave"],"v0.3: the providers start an deployment countdown.",""],
+  ]],
+  ["Endings and balances", "Named outcomes that stop the game, and the conditions treated as safe for now.", [
+    ["Ending",[],["outcome"],"A named outcome that stops the game. If several hold at once, the first in a fixed order counts.",""],
+    ["Silent takeover",["SILENT_TAKEOVER"],[],"The frontier AI system holds total control and nobody had noticed by the time it passed majority control.",""],
+    ["Visible takeover",["OVERT_TAKEOVER"],["overt takeover"],"Total control, hostile, and seen. A milestone, not an ending: path continues to extinction or the end of the simulation.",""],
+    ["Open-weight AI takeover",["OPEN_TAKEOVER"],["open takeover"],"v0.3: the open system holds total control.",""],
+    ["Extinction",["EXTINCTION"],[],"Human power stripped to nothing.",""],
+    ["Disempowerment",["DISEMPOWERMENT"],["the slide","the slow slide"],"Society living on AI with no oversight left, without any AI having done anything hostile.",""],
+    ["AI contained",["CONTAINED"],["contained"],"A shutdown succeeded, a treaty holds and no AI controls anything.",""],
+    ["Stalemate",["STALEMATE"],[],"Eight quarters in a row of hostile standoff with the frontier AI system holding partial control.",""],
+    ["Lasting coexistence",["COEXIST"],["coexistence to the end of the simulation","coexistence to the horizon"],"2040 Q4 is reached with the control balance never broken.",""],
+    ["Milestone",[],["waypoint"],"A named condition that path passes through without stopping.",""],
+    ["Safe condition",[],["balance","invariant","condition φ"],"A condition the model treats as safe for now. A safe condition can hold today and still be impossible to keep.",""],
+    ["Control balance",["balance_control"],["keeping control"],"Oversight at least weak, the AI holding at most partial control, the AI under supervision, society not living on AI. In v0.3 also: the open system holding at most partial control.",""],
+    ["Humans can deter",["balance_deter"],["deterrence balance"],"Oversight at least weak, human power at least normal, the AI under supervision, society not living on AI.",""],
+    ["Peaceful coexistence",["balance_coexist"],["coexistence balance","coexistence"],"AGI exists, the human-AI relation not hostile, human power at least normal, society not living on AI, the AI not in total control.",""],
+  ]],
+  ["Questions asked of the model", "The model-checking vocabulary.", [
+    ["Guarantee zone",["⟨⟨C⟩⟩□φ"],["kernel","safe region"],"The states from which alliance C can keep condition φ true forever, whatever everyone else and chance do.","Read `⟨⟨H⟩⟩□balance_control` as: governments alone can guarantee control."],
+    ["Inside / outside",[],["membership"],"Whether a state is in a guarantee zone. Inside: the alliance can still guarantee the condition. Outside: it cannot.",""],
+    ["Guarantee",[],[],"Something an alliance can make sure of against every behaviour of the others, including the cleverest.",""],
+    ["Forcing zone",["⟨⟨D⟩⟩◇E"],["attractor"],"The states from which alliance D can force ending E, whatever everyone else does.",""],
+    ["Forced / blocked / contested",[],[],"For an alliance and an ending: it can force it; the others can keep it out; or neither.",""],
+    ["With luck",["{A, Nature}"],["fortune variant"],"The same question with chance on the alliance's side.",""],
+    ["Point of no return",["t_K"],["exit","early exit","no-return moment"],"The position on a path where it first stands outside a guarantee zone. From there the alliance can no longer guarantee the condition.","It is always for one alliance and one condition."],
+    ["No-return move",[],["exit move","no-return action","the bad move"],"The round that takes a path out of a guarantee zone.",""],
+    ["Favored condition",["φ"],["exit condition","protected condition","the condition"],"The condition an alliance is trying to keep, and whose guarantee zone a path leaves at the point of no return: a safe condition, or that an ending never happens.",""],
+    ["Certain loss",["t_L"],[],"The position from which the bad ending can be forced against the alliance. Between the point of no return and here the outcome is contested.",""],
+    ["Violation",["t_φ"],[],"The position where the condition itself first fails.",""],
+    ["Preventing action",[],["fix","unilateral fix"],"A different action by one alliance member at the no-return move that would have stayed inside, with the others' actions kept.",""],
+    ["One bad action",[],[],"Exactly one member had a preventing action at the no-return move. Otherwise two actions failed together, or a joint change was needed.",""],
+    ["Harmful move",[],[],"In the censuses: the action most often played by an alliance member at no-return moves.",""],
+    ["Pivotal player",[],["pivotal alliance","minimal blocking alliance"],"A smallest set of players that can keep an ending out is a minimal blocking alliance. A player in every such set is pivotal.",""],
+    ["Distance",[],["kernel distance","forced distance"],"The fewest quarters within which an alliance can force one chosen ending, whatever everyone else and chance do. It is asked for one ending at a time and gives one number per AI goal.","Not a shortest path: a shortest path needs everyone to play along, this needs nobody."],
+    ["Assumption",[],[],"Every action condition part, response deadline and behavior pattern is a named assumption.",""],
+    ["Void an assumption",["relax"],["relaxation","switching off"],"Switching an assumption off to see what becomes possible.",""],
+    ["Minimal assumption set",[],["minimal relaxation set"],"A smallest set of assumptions that must be switched off for something to become possible. It says what a result rests on.",""],
+    ["Bounded query",[],["bounded check","bounded search","BMC"],"A search for a path of at most 24 quarters. Cheap: seconds to minutes.",""],
+    ["Shortest path",[],["shortest play","witness","fastest play"],"The shortest path to a target that the solver returns. One path among possibly many; moves that do not matter are filled arbitrarily.",""],
+    ["Reachability",[],["a play exists","existence check"],"That some path reaches a target. It says the thing is possible if everyone plays into it, so it is never reported as a finding by itself.",""],
+    ["Finding",[],[],"A result about who can guarantee, force or block what, and what it rests on. A wiring check only confirms the model is wired as intended.",""],
+    ["Best case for governments",[],["upper bound"],"Alliances are assumed to see the whole state, so every 'governments can guarantee' is at best what real governments could do.",""],
+  ]],
+  ["Mechanics added since v0", "Adoption, open weights and the open system.", [
+    ["Deployment delay",["ADOPTION_LAG = 3"],["adoption lag"],"Quarters from a deployment to the rise in society's reliance on AI that it brings. The rise shows 4 quarters after the deployment.",""],
+    ["Deployed",["Clock.record_land"],["land"],"A deployment countdown ends: society's reliance on AI rises one level.",""],
+    ["Deployment cancelled",["cancel"],["cancel"],"A pending countdown is dropped and never ends in a rise. For the frontier AI companies' countdown: a pause, or mandatory regulation without strong oversight. For the providers' countdown: only a service restriction.",""],
+    ["Deployment permit",["license"],["licence"],"The condition under which frontier AI companies may deploy: rules below mandatory, or oversight strong.",""],
+    ["Alarm",["ALARM"],[],"The AI is suspected or known, or opinion is in backlash. A pause needs it, and it changes some action efforts.",""],
+    ["Open-weight release",["weights_open"],["the prerequisite"],"v0.2: frontier weights are published, by the frontier AI companies or by someone else. It is the prerequisite of the four consequences.",""],
+    ["Consequence",["recall","pressure","testing","retrain"],["channel (dropped)","consequences A, B, C, D (letters dropped)"],"v0.2: one of four switchable results of an open-weight release.","The four: cannot be recalled, race pressure, outside testing, retraining."],
+    ["Cannot be recalled",["recall"],["no recall","consequence A (letter dropped)"],"A pause no longer rolls society's reliance on AI back or cancels the frontier AI companies' pending countdown. v0.2: once weights are open. v0.3: once the open system is at AGI level.",""],
+    ["Race pressure",["pressure","fair_pressure"],["pressure","consequence B (letter dropped)"],"Frontier AI companies must deploy or race within 2 quarters whenever either is possible. v0.2: once weights are open. v0.3: while the open system is equal to the frontier AI system or one quarter behind.",""],
+    ["Outside testing",["testing"],["consequence C (letter dropped)"],"v0.2: with weights open, oversight builds faster and covert acts are detected even with no oversight. In v0.3 only the detection part remains, for the open system.",""],
+    ["Open-weight gap",["gap = 2"],["gap","lag of the open system"],"v0.3: quarters by which the open system follows the frontier AI system's level.",""],
+    ["Open-weight gap on private machines",["private_gap = 4"],["private gap"],"v0.3: the gap when service is restricted and the open system spreads on private machines only.",""],
+    ["Service restriction",["hosting_restricted"],["hosting restriction","the hosting lever"],"v0.3: governments restrict the providers. The open system then reaches only what society already depends on, the providers start no countdown and a pending countdown of theirs is cancelled.",""],
+    ["AI's reach",["reach"],["reach"],"What an AI is in a position to take over. For the frontier AI system it depends on autonomy and society's reliance on AI; for the open system on service and society's reliance on AI.",""],
+    ["Treaty delay",["treaty_delay = 1"],[],"v0.3: each round of a treaty proposal takes one extra quarter to show.",""],
+  ]],
+  ["Effort and statistics", "Costs of actions, and the random-path counts.", [
+    ["Action effort",["H_SCORES","L_SCORES","A_SCORES"],["effort score","slip cost","cost of an action"],"What an action costs its player in one quarter, from 0 (what its incentives already push it to do) to 3 (an exceptional decision). Your judgments, collected in the survey.","You have called this the slip cost."],
+    ["Cheapest path cost",["c_reach(E)"],["slide cost","least joint effort"],"The least effort governments and frontier AI companies spend on any path that reaches an ending. Zero means they get there by doing what comes easiest.",""],
+    ["Prevention cost",["c_prevent(E)"],[],"The least effort that guarantees an ending never happens. Not computed yet.",""],
+    ["Extra cost of prevention",[],["slip margin"],"Prevention cost minus cheapest path cost: how much more it costs to hold an ending off than to drift into it.",""],
+    ["Cost of the ending",["OUTCOME"],["outcome cost"],"What an ending costs the player who lives with it.",""],
+    ["Random-path sampling",[],["random-play sampling","census","sampling","path sample"],"Playing the model many times with moves drawn at random and counting what happens. A description of the model's space of paths, not a probability of anything in the world.",""],
+    ["Equal-chance sampling",["--policy uniform"],["uniform path sampling","uniform play"],"Every available action is equally likely.",""],
+    ["Effort-weighted path sampling",["--policy effort","--sigma"],["effort-weighted play","weighted plays"],"Governments and frontier AI companies pick cheap actions more often: the weight of an action is the standard normal density at its action effort.",""],
+    ["Action effort change",["--shift"],["shift","sensitivity check"],"One action effort moved up or down by one, to see how much a count depends on it.",""],
+    ["AI playing style",["--ai"],["aI policy"],"How the AI picks moves in a census: at random, effort-weighted, or determined (always the move that advances a takeover).",""],
+    ["Point-of-no-return count",["agi_v0_1_path_sample.py"],["path sample"],"The census of how many paths reach the point of no return and when.",""],
+    ["Point-of-no-return census",["agi_v0_1_exit_census.py"],["exit census"],"The census of states and actions at the point of no return, and of the preventing actions.",""],
+    ["Endings census",["agi_v0_1_endings_census.py"],[],"The census of which ending each path reaches.",""],
+    ["Reaches the point of no return",[],["passes the point of no return (dropped)"],"The share of paths that at some quarter stand outside the guarantee zone.",""],
+  ]],
+  ["Process", "How results are produced and what the status words mean.", [
+    ["Claim",["G1…","D1…","E1…","F1…"],["test","prediction"],"A statement about the model with its expected result, written down before the model is asked.",""],
+    ["Pre-registration",[],["registration","registered"],"Committing a claim and its test to the repository before any of the model's action conditions for that version are written.",""],
+    ["Predicted result",[],["expected","prediction"],"What the claim's author expects the model to answer.",""],
+    ["First run",["WF_FIRST_SIGHT_…"],["first sight"],"The single first run of a claim. Its result stands; nothing is tuned afterward to make it pass.",""],
+    ["Part",[],[],"A claim is checked part by part: (a), (b)… A claim fails if any part is not met.",""],
+    ["Prediction held / did not hold",[],["met / not met","pass / fail"],"A part held, or did not. Not met means the prediction was wrong, which is information about the model, not an error.",""],
+    ["Reported",[],[],"A value asked for with nothing expected.",""],
+    ["Not computed",[],["over the cap"],"A part that went over the time or memory budget.",""],
+    ["Hold-out",[],[],"A claim whose result may not be used to change the model.",""],
+    ["Wiring check",[],["content check","mechanics check"],"A claim that checks the model is wired sensibly.",""],
+    ["Diagnostic",[],[],"A computation made after a run to explain it. Never counted as a claim result.",""],
+    ["Test code",[],["harness"],"The test code around the model. A test code defect is an error in that code; it is fixed with a log entry and the first result is kept.",""],
+    ["Source",["source="],[],"The contemporaneous record behind an action. Every action carries one.",""],
+    ["Unsourced (assumed)",["speculative=True"],["speculative","assumed"],"An action with no contemporaneous source.",""],
+    ["Quick claims / Heavy claims",[],["part A / part B"],"Part A is the cheap bounded claims of a version; part B the kernel claims.",""],
+    ["Profiling",["agi_v0_3_probe.py"],["timing probe","probe"],"A run of one kernel that prints time and memory only, to see what fits before the claims are run.",""],
+    ["Zone reading",["agi_v0_3_kernels.jsonl"],["reading"],"What one kernel says at the named states. v0.3 saves each as it finishes.",""],
+    ["Model edit log",["docs/guard_changelog_agi.md"],["guard changelog"],"The log of every model edit made after a claim's first run.",""],
+    ["Research console",["console/"],["dashboard"],"The local page over the repository: the staged models, the claims, the runs, S0 and Srt, the inbox and this glossary. It is generated from the models, tests, reports and logs, and writes only to `research/`.","Start it with `console/run.sh`; it listens on this machine only."],
+    ["Explore request",["research/requests.json"],["pending run"],"A question the owner leaves in the console for a later working session.",""],
+    ["Inbox",["research/news.json"],["news feed"],"News, blogs and articles that bear on Srt, each accepted or rejected by the owner.",""],
+  ]],
+  ["Versions and claim families", "Which model, which claims.", [
+    ["v0",["models/agi/v0.py"],[],"The first AGI model. Claims G1 to G29a.",""],
+    ["v0.1",["models/agi_v0_1"],[],"v0 with the adoption lag. Claims D1 to D6.",""],
+    ["v0.2",["models/agi_v0_2"],[],"v0.1 with an open-weight release and its four consequences. Claims E1 to E6.",""],
+    ["v0.3",["models/agi_v0_3"],[],"v0.1 with the open-weight system as a second AI. Claims F1 to F7.",""],
+    ["G claims",["G1–G29a"],[],"The claims on v0: endings, necessary conditions, points of no return, who can keep which safe condition, effort.",""],
+    ["D claims",["D1–D6"],[],"The claims on v0.1: how the adoption lag changes timing, cancellation, and who holds the last move.","The v0.2 consequences are no longer lettered, so D now means only these claims."],
+    ["E claims",["E1–E6"],[],"The claims on v0.2: what each consequence of an open release changes.",""],
+    ["F claims",["F1–F7"],[],"The claims on v0.3: open-weight AI takeover, who can rule it out, and the net effect of the open system's existence.",""],
+    ["History test cases",["models/ww2","models/cw"],["historical suites","testbeds"],"The same framework run on 1930s Europe and the Cold War, where the answers are known, to test the method.",""],
+  ]],
+  ["Engine and compute", "Words from the machinery.", [
+    ["Symbolic engine",["wavefront.symbolic"],["BDD engine"],"The part that computes guarantee zones exactly. Single-threaded; an hour and about 10 GB per zone on v0.1.",""],
+    ["Bounded checker",["wavefront.bmc","z3"],["BMC"],"The part that searches for paths within the search length.",""],
+    ["Memory unit",["peak nodes"],["node"],"The unit of the symbolic engine's memory. Peak nodes is the most it held at once.",""],
+    ["Computation step",[],["layer"],"One step of a guarantee-zone computation, counted back from the end of the simulation.",""],
+    ["Memory limit",["WF_V03_MEMORY_GB"],["memory cap","cap"],"The most memory one kernel's process may use before it reads not computed.",""],
+  ]],
+];
+const CLASHES = [
+  ["cap",["In the code `cap` is AI intelligence.","A limit on a run is called a memory limit or a time limit, never a cap."]],
+  ["K",["In the code `K = 24` is the search length.","In claim texts `K` names a guarantee zone, as in `t_K`. Reports write both out in words."]],
+  ["A, B, C, D",["`A` is the frontier AI system.","D1 to D6 are the claims on v0.1.","The four consequences of v0.2 are named by words, no longer by letters."]],
+  ["open",["`L.open_weights`: the frontier AI companies' own release.","`weights_open`: the v0.2 flag.","The open-weight AI system `O` and the open-weight AI takeover: v0.3.","An uncertain reading (formerly open call) has nothing to do with open weights."]],
+  ["treaty",["Treaty-backed regulation: the top level of regulation strictness.","Treaty between states: the top level of international coordination. The second proposal sets both."]],
+  ["control",["Frontier AI's control and open system's control: what an AI has taken.","Control balance: people keeping control, a condition on four variables."]],
+  ["race",["Peer race: an action of the frontier AI companies.","Race between states: the lowest level of international coordination.","Race pressure: the rule that the companies cannot wait."]],
+  ["level",["One value of a variable.","For two systems of the same AI intelligence, reports say 'equal to', not 'level with'."]],
+  ["slip / slide",["Action effort: the effort of one action (your slip cost).","Cheapest path cost: formerly slide cost.","Extra cost of prevention: formerly slip margin.","The slide: an old nickname of the disempowerment ending."]],
+];
+
+const list = document.getElementById("list"), q = document.getElementById("q"), count = document.getElementById("count"), chips = document.getElementById("chips");
+let active = "all", severalOnly = false;
+const TOTAL = CATS.reduce((n, c) => n + c[2].length, 0);
+
+function rich(parent, text) {
+  text.split("`").forEach((piece, i) => {
+    if (!piece) return;
+    if (i % 2) { const c = document.createElement("code"); c.textContent = piece; parent.appendChild(c); }
+    else parent.appendChild(document.createTextNode(piece));
+  });
+}
+function el(tag, cls, text) {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (text != null) e.textContent = text;
+  return e;
+}
+function chip(label, key, flag) {
+  const b = el("button", "chip" + (flag ? " flag" : ""), label);
+  b.type = "button";
+  b.addEventListener("click", () => {
+    if (flag) severalOnly = !severalOnly; else active = key;
+    render();
+  });
+  b.dataset.key = key;
+  return b;
+}
+chips.appendChild(chip("All", "all"));
+CATS.forEach(c => chips.appendChild(chip(c[0], c[0])));
+chips.appendChild(chip("Two meanings", "clash"));
+chips.appendChild(chip("Has several names", "several", true));
+
+function render() {
+  const words = q.value.toLowerCase().split(/\s+/).filter(Boolean);
+  const hit = text => words.every(w => text.includes(w));
+  list.textContent = "";
+  let shown = 0;
+  for (const [name, about, entries] of CATS) {
+    if (active !== "all" && active !== name) continue;
+    const rows = entries.filter(e => (!severalOnly || e[2].length) && hit([e[0], e[1].join(" "), e[2].join(" "), e[3], e[4]].join(" ").toLowerCase()));
+    if (!rows.length) continue;
+    shown += rows.length;
+    const h = el("h2", "", name);
+    h.appendChild(el("small", "", rows.length + (rows.length === 1 ? " term" : " terms")));
+    list.appendChild(h);
+    list.appendChild(el("p", "about", about));
+    for (const [term, ids, also, def, note] of rows) {
+      const a = el("article", "entry"), left = el("div"), right = el("div");
+      left.appendChild(el("h3", "", term));
+      if (ids.length) { const n = el("div", "names"); ids.forEach(i => n.appendChild(el("span", "id", i))); left.appendChild(n); }
+      const d = el("p", "def"); rich(d, def); right.appendChild(d);
+      if (also.length) { const p = el("p", "also"); p.appendChild(el("b", "", "Also called: ")); p.appendChild(document.createTextNode(also.join(", "))); right.appendChild(p); }
+      if (note) { const p = el("p", "note"); rich(p, note); right.appendChild(p); }
+      a.appendChild(left); a.appendChild(right); list.appendChild(a);
+    }
+  }
+  if ((active === "all" || active === "clash") && !severalOnly) {
+    const rows = CLASHES.filter(c => hit((c[0] + " " + c[1].join(" ")).toLowerCase()));
+    if (rows.length) {
+      const h = el("h2", "", "Words with two meanings");
+      h.appendChild(el("small", "", rows.length + " words"));
+      list.appendChild(h);
+      list.appendChild(el("p", "about", "The same word used for different things. These are the first candidates for renaming."));
+      for (const [word, uses] of rows) {
+        const c = el("div", "clash"); c.appendChild(el("h3", "", word));
+        const ul = el("ul"); uses.forEach(u => { const li = el("li"); rich(li, u); ul.appendChild(li); });
+        c.appendChild(ul); list.appendChild(c);
+      }
+      shown += rows.length;
+    }
+  }
+  if (!shown) list.appendChild(el("p", "empty", "No term matches. Try a shorter word, or clear the filters."));
+  count.textContent = active === "clash" ? shown + " words" : shown + " of " + (TOTAL + CLASHES.length) + " entries";
+  for (const b of chips.children) b.setAttribute("aria-pressed", String(b.dataset.key === "several" ? severalOnly : b.dataset.key === active));
+}
+q.addEventListener("input", render);
+render();
+</script>

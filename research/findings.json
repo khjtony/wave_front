@@ -1,0 +1,65 @@
+[
+ {
+  "id": 1,
+  "version": "v0",
+  "claim": "G3",
+  "kind": "guarantee-zone reading",
+  "prediction": "did not hold",
+  "statement": "At S0, governments alone are already outside the control guarantee zone under every AI goal, so there is no later point of no return for them to watch for.",
+  "evidence": "reports/agi_2026-11-12.md"
+ },
+ {
+  "id": 2,
+  "version": "v0",
+  "claim": "G7",
+  "kind": "guarantee-zone reading",
+  "prediction": "did not hold",
+  "statement": "One uncertain reading decides it: with regulation strictness read as mandatory instead of voluntary, governments alone are inside the control guarantee zone under three of the four AI goals. No regulation and voluntary regulation read the same.",
+  "evidence": "reports/agi_v0_regime_call.md"
+ },
+ {
+  "id": 3,
+  "version": "v0",
+  "claim": "G5",
+  "kind": "guarantee-zone reading",
+  "prediction": "did not hold",
+  "statement": "With AGI since s₀, governments alone can guarantee peaceful coexistence under three AI goals; under the indifferent goal it takes governments and the AI together.",
+  "evidence": "reports/agi_2026-11-12.md"
+ },
+ {
+  "id": 4,
+  "version": "v0.1",
+  "claim": "D5",
+  "kind": "guarantee-zone reading",
+  "prediction": "did not hold",
+  "statement": "With the deployment delay added, governments alone are still outside the control guarantee zone at S0 under all four AI goals: frontier AI companies can deploy unsupervised AI agents in the first quarter, before any new regulation takes effect.",
+  "evidence": "reports/agi_v0_1_part_b_2026-11-15.html"
+ },
+ {
+  "id": 5,
+  "version": "v0.1",
+  "claim": "D6",
+  "kind": "no-return analysis",
+  "prediction": "held",
+  "statement": "On both shortest paths to a silent takeover, the last preventing action before the point of no return belongs to the frontier AI companies (invest in safety). No action by governments in that quarter changes the outcome.",
+  "evidence": "reports/agi_v0_1_takeover_diagram.html"
+ },
+ {
+  "id": 6,
+  "version": "v0.2",
+  "claim": "E3",
+  "kind": "guarantee-zone reading",
+  "prediction": "did not hold",
+  "statement": "Race pressure after an open-weight release does not take the control guarantee away from governments acting with the frontier AI companies: S0 stays inside their zone.",
+  "evidence": "reports/agi_v0_2_part_b_2026-11-18.html"
+ },
+ {
+  "id": 7,
+  "version": "v0.2",
+  "claim": "E6",
+  "kind": "guarantee-zone reading",
+  "prediction": "held",
+  "statement": "If the public can retrain an open frontier system, starting aligned no longer protects coexistence: with AGI since s₀, the aligned start is outside the zone where governments alone guarantee peaceful coexistence.",
+  "evidence": "reports/agi_v0_2_part_b_2026-11-18.html"
+ }
+]

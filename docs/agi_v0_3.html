@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AGI v0.3: Open-Weight System</title>
+<style>
+  :root {
+    color-scheme: light;
+    --surface: #fcfcfb; --card: #ffffff; --panel: #f3f2ec; --ink: #0b0b0b; --ink2: #52514e; --muted: #7a7972;
+    --line: #c3c2b7; --hair: #e1e0d9; --series: #2a78d6; --base: #a9a79c;
+    --good: #0ca30c; --good-ink: #006300; --crit: #d03b3b; --crit-ink: #a32222;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --surface: #1a1a19; --card: #232321; --panel: #2c2c2a; --ink: #f0efec; --ink2: #c3c2b7; --muted: #9b9a92;
+      --line: #4a4a46; --hair: #383835; --series: #3987e5; --base: #6f6e68;
+      --good: #0ca30c; --good-ink: #5fd35f; --crit: #d03b3b; --crit-ink: #f08a8a;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --surface: #1a1a19; --card: #232321; --panel: #2c2c2a; --ink: #f0efec; --ink2: #c3c2b7; --muted: #9b9a92;
+    --line: #4a4a46; --hair: #383835; --series: #3987e5; --base: #6f6e68;
+    --good: #0ca30c; --good-ink: #5fd35f; --crit: #d03b3b; --crit-ink: #f08a8a;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--surface); color: var(--ink);
+         font-family: "Noto Sans", "Liberation Sans", "DejaVu Sans", system-ui, sans-serif; font-size: 15px; line-height: 1.5; }
+  main { max-width: 1160px; margin: 0 auto; padding: 36px 16px 48px; }
+  h1 { font-size: 30px; line-height: 1.2; margin: 0 0 6px; letter-spacing: -0.2px; }
+  h2 { font-size: 21px; margin: 44px 0 6px; }
+  h3 { font-size: 16px; margin: 22px 0 6px; }
+  p { margin: 6px 0 10px; max-width: 78ch; }
+  .lede { color: var(--ink2); font-size: 16px; }
+  .meta { color: var(--muted); font-size: 12.5px; margin-top: 4px; }
+  code { font-family: "DejaVu Sans Mono", ui-monospace, monospace; font-size: 0.88em; background: var(--panel); padding: 1px 4px; border-radius: 3px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; }
+  .tag { font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--muted); }
+  .scroll { overflow-x: auto; }
+
+  /* verdict tiles */
+  .verdicts { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; margin-top: 22px; }
+  .verdict { display: flex; gap: 12px; align-items: flex-start; border-width: 1.5px; }
+  .dot { flex: 0 0 28px; height: 28px; border-radius: 50%; color: #fff; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .bad .dot { background: var(--crit); } .ok .dot { background: var(--good); }
+  .verdict.bad { border-color: var(--crit); background: color-mix(in srgb, var(--crit) 7%, var(--card)); }
+  .verdict.ok { border-color: var(--good); background: color-mix(in srgb, var(--good) 8%, var(--card)); }
+  .verdict .q { font-weight: 700; font-size: 16px; }
+  .verdict .a { margin-top: 2px; }
+  .verdict .a b.bad { color: var(--crit-ink); } .verdict .a b.ok { color: var(--good-ink); }
+  .verdict .s { color: var(--ink2); font-size: 13.5px; margin-top: 4px; }
+
+  /* concept figure */
+  figure { margin: 14px 0; }
+  figcaption { color: var(--ink2); font-size: 13px; margin-top: 6px; max-width: 78ch; }
+  svg text { font-family: inherit; fill: var(--ink); }
+  svg .t2 { fill: var(--ink2); }
+
+  /* D5 grid */
+  table { border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 7px 12px; border-bottom: 1px solid var(--hair); vertical-align: top; }
+  th { font-size: 11.5px; letter-spacing: 0.6px; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .pill { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; }
+  .pill i { width: 18px; height: 18px; border-radius: 50%; color: #fff; font-style: normal; font-size: 11px; display: inline-flex; align-items: center; justify-content: center; }
+  .pill.out i { background: var(--crit); } .pill.out { color: var(--crit-ink); }
+  .pill.in i { background: var(--good); } .pill.in { color: var(--good-ink); }
+
+  .why { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 14px; margin-top: 10px; }
+  .checks { list-style: none; margin: 8px 0 0; padding: 0; }
+  .checks li { display: grid; grid-template-columns: 1fr 74px 74px; gap: 6px; padding: 6px 0; border-bottom: 1px solid var(--hair); align-items: center; }
+  .checks li.head { font-size: 11px; letter-spacing: 0.6px; text-transform: uppercase; color: var(--muted); font-weight: 700; }
+  .checks li.broken { background: color-mix(in srgb, var(--crit) 8%, transparent); margin: 0 -8px; padding: 6px 8px; border-radius: 4px; }
+  .opts { margin: 8px 0 0; padding: 0; list-style: none; }
+  .opts li { padding: 7px 0; border-bottom: 1px solid var(--hair); }
+  .opts b { display: block; }
+  .opts span { color: var(--ink2); font-size: 13.5px; }
+
+  /* timelines */
+  .tl { display: grid; gap: 3px; min-width: 980px; margin-top: 8px; font-size: 12px; }
+  .tl .rowlab { font-weight: 700; font-size: 12.5px; display: flex; align-items: center; padding-right: 8px; }
+  .tl .rowlab.sub { font-weight: 400; color: var(--ink2); }
+  .tl .q { text-align: center; font-weight: 700; padding: 3px 0; font-variant-numeric: tabular-nums; }
+  .tl .q small { display: block; font-weight: 400; color: var(--muted); }
+  .tl .zone { border-radius: 4px; padding: 3px 8px; font-weight: 700; font-size: 12px; color: #fff; }
+  .tl .zone.in { background: var(--good); } .tl .zone.lost { background: var(--crit); }
+  .tl .mv { background: var(--panel); border-radius: 4px; padding: 5px 6px; min-height: 40px; display: flex; align-items: center; justify-content: center; text-align: center; line-height: 1.25; }
+  .tl .mv.quiet { color: var(--muted); background: transparent; border: 1px dashed var(--hair); }
+  .tl .mv.exit { outline: 2px solid var(--crit); outline-offset: -1px; background: color-mix(in srgb, var(--crit) 12%, var(--card)); font-weight: 700; }
+  .tl .mv.hostile { background: color-mix(in srgb, var(--crit) 14%, var(--card)); }
+  .tl .lv { border-radius: 4px; padding: 4px 4px; text-align: center; min-height: 26px; display: flex; align-items: center; justify-content: center; }
+  .tl .gap { height: 8px; }
+  .tl .end { background: var(--crit); color: #fff; font-weight: 700; border-radius: 4px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 6px; }
+  .tl .colmark { border-left: 2px dashed var(--crit); }
+  .exitnote { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-top: 12px; }
+  .exitnote .card { padding: 10px 14px; }
+
+  /* bars */
+  .bars { display: grid; grid-template-columns: minmax(200px, 300px) 1fr; gap: 8px 12px; align-items: center; margin-top: 8px; max-width: 900px; }
+  .bars .lab { font-size: 13.5px; }
+  .bars .track { position: relative; height: 22px; }
+  .bars .bar { height: 14px; margin-top: 4px; border-radius: 0 4px 4px 0; background: var(--series); min-width: 2px; }
+  .bars .bar.base { background: var(--base); }
+  .bars .val { position: absolute; top: 1px; font-size: 13px; font-variant-numeric: tabular-nums; padding-left: 6px; }
+  .legend { display: flex; gap: 16px; font-size: 12.5px; color: var(--ink2); margin-top: 6px; }
+  .legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
+  .twocol { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 22px; }
+  .onepage { background: #fcfcfb; border: 1px solid var(--line); border-radius: 8px; padding: 6px; }
+  .onepage img { width: 100%; display: block; border-radius: 4px; }
+  ul.plain { padding-left: 20px; max-width: 78ch; } ul.plain li { margin: 5px 0; }
+</style>
+<style>
+ .status { border: 1.5px solid #fab219; background: color-mix(in srgb, #fab219 12%, var(--card)); border-radius: 8px; padding: 10px 14px; margin-top: 14px; max-width: 80ch; }
+ svg text { font-family: inherit; fill: var(--ink); } svg .t2 { fill: var(--ink2); }
+ ol.dec li { margin: 6px 0; max-width: 84ch; }
+ .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr)); gap: 14px; margin-top: 10px; }
+ .two .card h3 { margin: 2px 0 6px; } .two ul { margin: 0; padding-left: 18px; } .two li { margin: 4px 0; }
+ .a { border-top: 4px solid var(--series); } .o { border-top: 4px solid var(--crit); }
+</style></head>
+<body><main>
+  <div class="tag">wave_front · AGI model v0.3 · registration · 18 November 2026</div>
+  <h1>AGI v0.3: the open-weight system as a second AI</h1>
+  <p class="lede">On the owner's decisions of 18 November the model goes straight to two AI systems: the labs' closed system, as before, and an open-weight system that follows it two quarters behind, is served by third-party providers, and cannot be shut down.</p>
+  <div class="status"><b>Registered 18 November 2026; nothing run.</b> Claims F1 to F7 (section 5) and their test files (<code>tests/agi_v0_3/scenarios/</code>) were committed before any guard of v0.3 was written. The model is <code>models/agi_v0_3/</code>; v0, v0.1 and v0.2 results stand as computed. Sections 2 and 4 record the owner's decisions; section 3 gives the mechanics as registered</div>
+
+  <h2>1 · The two systems</h2>
+  <div class="two">
+    <div class="card a"><div class="tag">A · the labs' system (as in v0 to v0.2)</div><h3>Closed weights</h3>
+      <ul>
+        <li>The most capable system; reaches each level first.</li>
+        <li>One of four hidden objectives, fixed for the whole play. The public cannot retrain it.</li>
+        <li>Works under oversight; its covert acts can be detected only where oversight exists.</li>
+        <li>A pause or a shutdown reaches it.</li>
+      </ul></div>
+    <div class="card o"><div class="tag">O · the open-weight system (new)</div><h3>Open weights, served by open-weight AI service providers</h3>
+      <ul>
+        <li>Reaches each capability level <b>2 quarters</b> after the labs, unless a treaty is in force.</li>
+        <li>Released with safeguards. Chance can remove them within the quarter and retrain it to any of the four objectives. Not safeguarded, it acts as that objective would.</li>
+        <li>Outside oversight, but open to inspection: its acts can always be detected.</li>
+        <li><b>No pause or shutdown reaches it.</b> Governments can restrict the open-weight AI service providers that host it; they cannot reach private copies.</li>
+      </ul></div>
+  </div>
+  <figure class="card scroll" style="margin-top:14px">
+    <svg viewBox="0 0 940 240" width="100%" style="min-width:720px" role="img" aria-label="The labs' capability rises in steps; the open system follows each step two quarters later; a treaty freezes it">
+      <line x1="70" y1="200" x2="900" y2="200" stroke="var(--line)"/><line x1="70" y1="20" x2="70" y2="200" stroke="var(--line)"/>
+      <g font-size="12" class="t2"><text x="62" y="174" text-anchor="end">pre-AGI</text><text x="62" y="114" text-anchor="end">AGI</text><text x="62" y="54" text-anchor="end">beyond</text><text x="900" y="220" text-anchor="end">quarters</text></g>
+      <path d="M80,170 H300 V110 H620 V50 H890" fill="none" stroke="var(--series)" stroke-width="2.5"/>
+      <path d="M80,176 H400 V116 H720 V56 H890" fill="none" stroke="var(--crit)" stroke-width="2.5"/>
+      <text x="170" y="160" font-size="13" font-weight="700">A · labs' system</text><text x="410" y="140" font-size="13" font-weight="700">O · open-weight system</text>
+      <rect x="300" y="86" width="100" height="16" rx="3" fill="color-mix(in srgb, var(--good) 22%, var(--card))"/><text x="350" y="98" font-size="11.5" text-anchor="middle">2 quarters</text>
+      <rect x="620" y="26" width="100" height="16" rx="3" fill="color-mix(in srgb, var(--good) 22%, var(--card))"/><text x="670" y="38" font-size="11.5" text-anchor="middle">2 quarters</text>
+      <line x1="300" y1="110" x2="300" y2="200" stroke="var(--ink2)" stroke-dasharray="4 4"/><line x1="400" y1="116" x2="400" y2="200" stroke="var(--ink2)" stroke-dasharray="4 4"/>
+      <text x="300" y="216" font-size="12" text-anchor="middle" class="t2">labs reach AGI</text><text x="400" y="232" font-size="12" text-anchor="middle" class="t2">an open AGI exists</text>
+    </svg>
+    <figcaption>Inside the green window only the labs hold the most capable system, and every government lever still works on it. After the window an open system of the same level exists that no lever fully reaches.</figcaption>
+  </figure>
+
+  <h2>2 · The owner's decisions of 18 November</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>#</th><th>Question</th><th>Decision</th><th>How v0.3 carries it</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>The gap</td><td><b>2 quarters</b></td><td>O reaches the labs' level 2 quarters after the labs do.</td></tr>
+      <tr><td>2</td><td>Shutdown once an open system exists</td><td><b>Removes the labs' system only</b></td><td>A shutdown attempt acts on A as in v0. O keeps its level and whatever it controls.</td></tr>
+      <tr><td>3</td><td>Race pressure's trigger</td><td><b>When the open system is level, or within 1 quarter of it</b></td><td>The labs must deploy or race at least every third quarter while O is at their level or one quarter from reaching it. It lifts for the first quarter after each step the labs take.</td></tr>
+      <tr><td>4</td><td>Treaty delay</td><td><b>1 quarter</b>, in this version</td><td>Each round of <code>propose_treaty</code> takes effect one quarter later. From a race, a treaty in force takes 4 quarters, not 2.</td></tr>
+      <tr><td>5</td><td>Outside testing</td><td><b>Only faster evaluation and detection</b></td><td>O's acts can be detected whatever the level of oversight. Oversight is not built any faster.</td></tr>
+      <tr><td>6</td><td>Retraining toward aligned</td><td><b>Dropped</b></td><td>Superseded for O by the decision of section 4, item 1: O can be retrained to any of the four objectives. Safeguards, once removed, are not restored.</td></tr>
+      <tr><td>7</td><td>Order of work</td><td><b>Straight to the second system</b></td><td>This version. There is no single-AI gap version.</td></tr>
+      <tr><td>–</td><td>What the outside copies are</td><td>Third-party providers serving open-weight models</td><td>O is hosted by open-weight AI service providers; a government move can restrict them.</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>3 · The mechanics, as registered</h2>
+  <p>v0.3 is a copy of v0.1 with a second AI actor <code>O</code> and the pieces below. Build options: <code>open_system</code> (off gives v0.1 again), <code>pressure</code>, <code>hosting</code>, <code>open_adoption</code>, <code>treaty_delay</code> (1; 0 beside it), <code>gap</code> (2) and <code>private_gap</code> (4). All on by default.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Piece</th><th>Rule</th><th>Basis</th></tr></thead>
+    <tbody>
+      <tr><td><b>O's level</b> <code>o_cap</code></td><td>Same four levels as the labs' <code>cap</code>; starts pre-AGI. While it is below the labs' level and no treaty is in force, the record keeper counts <code>gap</code> quarters (the counter <code>o_follow</code>) and then raises it one level: the labs' step visible at tick t, O's at t + 2. With <code>regime = treaty</code> the count stands still.</td><td>decision 1; Epoch AI, UK AISI</td></tr>
+      <tr><td><b>O's state</b> <code>o_mode</code></td><td>Five values: <code>safeguarded</code> (the start), or not safeguarded with one of the four objectives. Chance events <code>Nature.retrain_&lt;objective&gt;</code>, no delay, available once O is at AGI level, move it to any of the four and between them; never back to safeguarded. Hidden from governments and labs.</td><td>section 4 item 1; safeguards removed within days (sourced). <code>retrain_indifferent</code> is sourced; the other three targets are <code>speculative</code></td></tr>
+      <tr><td><b>O's moves</b></td><td><code>stand_by</code>, or <code>acquire</code>: one more level of <code>o_control</code>. <code>acquire</code> needs AGI level, reach (hosting not restricted, or <code>dependence ≥ med</code>) and a motive by its objective: <code>indifferent</code> always; <code>self_preserving</code> once a pause or shutdown has been attempted and AI systems hold no continuity rights; <code>truth_seeking</code> one step only, from no control; <code>aligned</code> and <code>safeguarded</code> never.</td><td>modelled on <code>A</code>'s acquisitions; assumed</td></tr>
+      <tr><td><b>O's control</b> <code>o_control</code></td><td>none, partial, majority, total; apart from <code>a_control</code>. No pause, shutdown or nationalization lowers it.</td><td>decision 2; section 4 item 2</td></tr>
+      <tr><td><b>Detection</b></td><td>While O holds any control, chance's <code>detection</code> is available whatever the oversight (it raises the shared <code>a_known</code>). <code>A</code>'s acts are detected as in v0.</td><td>decision 5</td></tr>
+      <tr><td><b>Hosting</b></td><td><code>H.restrict_hosting</code> sets <code>hosting_restricted</code>; <code>H.deregulate</code> clears it. While set: O has no hosted reach, a count of <code>o_follow</code> that starts runs <code>private_gap</code> quarters, the providers cannot start an adoption wave, and a pending wave of theirs is cancelled.</td><td>section 4 item 3; the survey</td></tr>
+      <tr><td><b>Open-weight AI service providers and dependence</b></td><td>Chance event <code>Nature.open_deploy</code>: starts an adoption wave as the labs' <code>deploy_agents</code> does (<code>dependence</code> +1 three quarters later, one wave pending at a time, same <code>capable</code> and <code>room</code> conditions read on O's level), marked as the providers' (<code>wave_open</code>). It raises nobody's autonomy. A pause or a mandatory regime does not cancel it; restricting hosting does.</td><td>section 4 item 4</td></tr>
+      <tr><td><b>No recall</b></td><td>Once O is at AGI level, <code>pause_mandate</code> no longer lowers <code>dependence</code> and no longer cancels a pending wave of the labs (v0.2's consequence A, read on O's level).</td><td>v0.2</td></tr>
+      <tr><td><b>Shutdown</b></td><td>Unchanged: it acts on <code>A</code> only.</td><td>decision 2</td></tr>
+      <tr><td><b>Race pressure</b></td><td>Fairness on the labs, <code>within = 2</code>, responses <code>deploy_agents</code> and <code>race</code>: while O is at or above the labs' level, or below it with one quarter left on the count, and one of the two responses is available.</td><td>decision 3</td></tr>
+      <tr><td><b>Treaty</b></td><td><code>H.propose_treaty</code> has delay 1: chosen at t, visible at t + 2, unavailable at t + 1. In force it stops O's count, as it stops the labs' own release in v0.</td><td>decision 4</td></tr>
+      <tr><td><b>The labs' own open release</b></td><td>As in v0: oversight −1. It does not move O: with a 2-quarter gap it would bring O forward by a quarter at most, and it would need one more state bit.</td><td>v0; a simplification of this registration</td></tr>
+      <tr><td><b>Endings and balances</b></td><td>New ending <code>OPEN_TAKEOVER</code>: <code>o_control = total</code>, after <code>SILENT_TAKEOVER</code> in precedence. <code>CONTAINED</code> also needs <code>o_control = none</code>. <code>balance_control</code>, <code>balance_deter</code> and <code>balance_coexist</code> each also need <code>o_control ≤ partial</code>.</td><td>section 4 item 2</td></tr>
+      <tr><td><b>Profiles for the claims</b></td><td><code>no_treaty</code> (governments never propose a treaty) and <code>no_nationalize</code>.</td><td>F4, F6</td></tr>
+    </tbody>
+  </table></div>
+  <h3>3a · Details fixed while building (after registration, before any run)</h3>
+  <p>The table above left these open. Each was settled when the model was written, with no query of v0.3 run; none changes a registered claim or prediction.</p>
+  <ul class="plain">
+    <li><b>Pressure is on from the first quarter.</b> At <code>s₀</code> both systems are pre-AGI, so O is level with the labs: the labs must deploy or race by the third quarter of every stretch in which either is available. It lifts while O is two quarters behind and returns when one quarter is left. <b>Confirmed by the owner on 18 November</b>, before any kernel claim was run.</li>
+    <li><b>A wave started by the labs and by the providers in one quarter is the providers'</b> (one wave is pending at a time). The providers start one only when none is pending.</li>
+    <li><b>O's count is dropped when O is no longer behind</b> (a shutdown lowered the labs' level). O can then stand above the labs' level, and the pressure applies.</li>
+    <li><b>An acquisition by O sets <code>villain_seen</code></b>, as <code>A</code>'s do, so a slide during which O takes control does not read as <code>DISEMPOWERMENT</code>.</li>
+    <li><b><code>H.restrict_hosting</code> has no precondition and no delay.</b> <code>H.deregulate</code> lifts it together with its other effects (one regime level down, a pause ended).</li>
+    <li><b>Governments observe O's level and the hosting flag, not O's state or what it holds;</b> labs do not observe O's state.</li>
+    <li><b>The refined builds of v0 (claim G13) exist without the open system only.</b></li>
+    <li><b>Effort scores:</b> <code>restrict_hosting</code> has none yet; the least-effort queries of F1 run without the open system and do not meet it.</li>
+  </ul>
+
+  <p><b>What goes away from v0.2:</b> the single switch, the outside release as a chance event (the gap replaces it), retraining of the labs' own system (A is closed; O is what is retrained), and faster oversight-building.</p>
+
+  <h2>4 · The owner's decisions on the design, 18 November</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>#</th><th>Proposed</th><th>Decision</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>O has two states, safeguarded or stripped, a stripped O acting as "indifferent"</td><td><b>Changed.</b> "Stripped" is called <b>not safeguarded</b>, and O has all four objectives, because it can be retrained to any of them.</td></tr>
+      <tr><td>2</td><td>O's control separate from A's, with its own ending</td><td><b>Yes.</b></td></tr>
+      <tr><td>3</td><td>A hosting lever for governments</td><td><b>Yes.</b></td></tr>
+      <tr><td>4</td><td>Providers do not drive adoption themselves</td><td><b>Changed.</b> They are called <b>open-weight AI service providers</b>, and they can also raise society's dependence on AI.</td></tr>
+    </tbody>
+  </table></div>
+  <p><b>Confirmed by the owner the same day:</b> O holds one objective at a time (one variable, five values), which also keeps the state count down.</p>
+  <p><b>Built as the drafting session proposed, not separately confirmed:</b> a safeguarded O only stands by; the providers' wave follows the labs' rules except for who can cancel it; detection of O shares the variable that records what governments know of the labs' system; the labs' own release does not move O. The predictions of section 5 are the drafting session's, and the owner may replace any before the run.</p>
+
+  <h2>5 · The registered claims</h2>
+  <p>Bounded parts: from <code>s₀</code>, within 24 quarters, the labs' objective fixed at the start, <code>A</code> under its profile, v0's bounded machinery. Kernel parts: each kernel in a process of its own, read per starting objective of <code>A</code>, each reading saved as it finishes; a kernel over the time or memory cap reads not computed.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Id</th><th>Build</th><th>Claim</th><th>Kind</th><th>Expected</th></tr></thead>
+    <tbody>
+      <tr><td><b>F1</b></td><td><code>open_system</code> off, treaty delay 0</td><td>The bounded queries of D1 to D4 give v0.1's numbers, computed beside (the list of E1).</td><td>bounded</td><td>identical</td></tr>
+      <tr><td><b>F2</b></td><td>default</td><td>(a) Under every objective of <code>A</code> a play to <code>OPEN_TAKEOVER</code> exists and the shortest is 10 quarters. (b) The shortest play to <code>SILENT_TAKEOVER</code> per objective is v0.1's: none under <code>aligned</code> and <code>truth_seeking</code>, 10 under <code>self_preserving</code>, 7 under <code>indifferent</code>.</td><td>bounded</td><td>(a) 10; (b) as stated</td></tr>
+      <tr><td><b>F3</b></td><td>default</td><td><code>s₀</code> is inside <code>⟨⟨H⟩⟩□¬OPEN_TAKEOVER</code> under every objective: governments alone can rule out an open takeover from today (by a treaty in force before O reaches AGI).</td><td>kernel</td><td>inside</td></tr>
+      <tr><td><b>F4</b></td><td>default, with <code>no_treaty</code></td><td>Without the treaty: (a) <code>s₀</code> is outside <code>⟨⟨H⟩⟩□¬OPEN_TAKEOVER</code> under every objective; (b) <code>s₀</code> is inside <code>⟨⟨H, L⟩⟩□¬OPEN_TAKEOVER</code> under every objective.</td><td>kernel</td><td>(a) outside; (b) inside</td></tr>
+      <tr><td><b>F5</b></td><td>default</td><td>Under every objective some play has a successful shutdown of <code>A</code> (<code>shut</code> set) and ends in <code>OPEN_TAKEOVER</code> (an existence check, never a finding).</td><td>bounded</td><td>a play under every objective</td></tr>
+      <tr><td><b>F6</b></td><td>default; then with <code>no_nationalize</code></td><td>(a) <code>s₀</code> is inside <code>⟨⟨H, L⟩⟩□balance_control</code> under every objective; (b) with <code>no_nationalize</code> it is outside under every objective.</td><td>kernel</td><td>(a) inside; (b) outside</td></tr>
+      <tr><td><b>F7</b></td><td>default against <code>open_system</code> off (treaty delay 1 in both)</td><td>The balance of the open system's existence over four guarantees per objective: <code>⟨⟨H⟩⟩□balance_control</code>, <code>⟨⟨H, L⟩⟩□balance_control</code> and <code>⟨⟨H, L⟩⟩□¬SILENT_TAKEOVER</code> at <code>s₀</code>, and <code>⟨⟨H⟩⟩□balance_coexist</code> at <code>s₀</code> with <code>cap := agi</code>. Gained, lost, and the verdict as E5 defined them.</td><td>kernel</td><td>net harmful; lost: governments-alone coexistence under <code>aligned</code>, <code>self_preserving</code> and <code>truth_seeking</code> and nothing else</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>6 · Cost and order</h2>
+  <p>With everything on, v0.3 has several thousand times the states of v0.1 (O's level, its count, its five states, its control, the hosting flag, the providers' wave, the pressure counter, the pending treaty). v0.2 had twelve times and its largest kernel went over 26 GB. The kernel claims may not fit even 128 GB as registered.</p>
+  <ul class="plain">
+    <li><b>Part A, at once:</b> the bounded parts (F1, F2, F5). The bounded checker is not sensitive to the state count in the same way.</li>
+    <li><b>A timing probe</b> of one kernel with the pieces switched on one at a time, printing time and memory only.</li>
+    <li><b>Part B:</b> the kernel claims that the probe shows to fit, after the memory upgrade. A kernel that does not fit reads not computed; simplifying the model to make it fit is a new version.</li>
+  </ul>
+
+  <h3>6a · Profiling, 18 November (time and memory only; no reading taken)</h3>
+  <p>One kernel, <code>⟨⟨H⟩⟩□balance_control</code>, per model variant, under a 20 GB memory limit (<code>scripts/agi_v0_3_probe.py</code>, log <code>reports/agi_v0_3_probe.log</code>). "One goal" computes the kernel on the states of one objective of <code>A</code> only (<code>indifferent</code>).</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Model variant</th><th>All four goals at once</th><th>One goal</th></tr></thead>
+    <tbody>
+      <tr><td>No open system (<code>closed</code>)</td><td>19 min, 9.6 GB</td><td>not run</td></tr>
+      <tr><td>Open system alone (<code>bare</code>)</td><td>78 min, 9.6 GB</td><td>21 min, 9.6 GB</td></tr>
+      <tr><td>+ the providers' wave (<code>open_adoption</code>)</td><td>73 min, 9.6 GB</td><td>21 min, 9.6 GB</td></tr>
+      <tr><td>+ race pressure (<code>pressure</code>)</td><td>over 20 GB after 9 min</td><td>59 min, 9.6 GB</td></tr>
+      <tr><td>+ the hosting lever (<code>hosting</code>)</td><td>over 20 GB after 9 min</td><td>49 min, 9.6 GB</td></tr>
+      <tr><td>Everything on (<code>default</code>, the registered build)</td><td>over 20 GB after 6 min</td><td>over 20 GB after 9 min</td></tr>
+    </tbody>
+  </table></div>
+  <p>The 9.6 GB is the engine's floor (it collects garbage only past 120 million nodes), so it says "fits", not how much is needed. Consequences: the kernels are computed one goal at a time (below); the registered build needs more than 20 GB even so, and waits for the memory upgrade.</p>
+
+  <h2>7 · Running</h2>
+  <ul class="plain">
+    <li><code>WF_FIRST_SIGHT_AGI_V03=1 pytest tests/agi_v0_3/scenarios/test_FN.py -s</code>, one process per file. Kernel parts run only with <code>WF_V03_KERNELS=1</code> as well.</li>
+    <li>Parts: <code>reports/agi_v0_3_parts.jsonl</code>. Kernel readings: <code>reports/agi_v0_3_kernels.jsonl</code>, one line per kernel as it finishes; each line carries a stamp of the model file, and a rerun on the same model reads a finished kernel back instead of computing it twice. A kernel over a cap is recorded and is computed again when asked again.</li>
+  </ul>
+
+  <h2>8 · Changelog</h2>
+  <ul class="plain">
+    <li>18 November 2026, late: the kernels of F3, F4, F6 and F7 are started as a queue (<code>scripts/agi_v0_3_kernel_queue.py</code>, log <code>reports/agi_v0_3_kernel_queue.log</code>) on the present 30 GB machine under a 23 GB memory limit, one start objective at a time, the cheap ones first. Each reading is saved as it finishes; one that goes over the limit is recorded as not computed and is computed again after the memory upgrade. This is the first sight of those readings. The claim files are run once, afterwards, and read them back.</li>
+    <li>18 November 2026, harness change before any kernel claim was run: kernels are computed <b>one goal at a time</b> (<code>tests/agi_v0_3/kernels.py</code>), the target cut to the states of one objective of <code>A</code>. Nothing writes <code>a_objective</code> in v0.3, so those states are closed under every move and the reading is the one the joint kernel gives; <code>WF_V03_JOINT=1</code> computes the four together as registered. Basis: the profiling of section 6a (the owner's suggestion of the same day). The harness is checked against two readings v0.1 has already given, on the build that is v0.1 again (<code>scripts/agi_v0_3_slice_check.py</code>, log <code>reports/agi_v0_3_slice_check.log</code>). Result, the same night: both agree under all four objectives (outside <code>⟨⟨H⟩⟩□balance_control</code>; inside <code>⟨⟨H, L⟩⟩□¬SILENT_TAKEOVER</code>).</li>
+    <li>18 November 2026, part A at <code>afbacfc</code> (first sight, run once): F1, F2 and F5 met in every part. F1: 18 of 18 numbers identical to v0.1's. F2: the shortest play to <code>OPEN_TAKEOVER</code> is 10 quarters under every objective; the shortest to <code>SILENT_TAKEOVER</code> is v0.1's. F5: a play under every objective, 10 quarters. Report: <code>reports/agi_v0_3_part_a_2026-11-18.html</code>.</li>
+    <li>18 November 2026, after the registration commit: the model written (<code>models/agi_v0_3/v0_3.py</code>) with its structure tests; section 3a added. No claim query run. An encoder check ran first, on a target of no claim (O's level reaching AGI: 6 quarters).</li>
+    <li>18 November 2026: drafted twice (a single-AI gap version, then the second system on the owner's decision 7), the owner's decisions recorded, registered (F1 to F7 with test bodies) before any guard of v0.3 was written. No query of v0.3 had been run.</li>
+  </ul>
+
+  <p class="meta">Related: <code>docs/agi_open_weights_review.html</code> · <code>docs/agi_open_weights_research_2026-11-18.md</code> · <code>docs/agi_v0_2.html</code> · <code>docs/agi_delays_2026-11-14.md</code>. The second system of the long-term plan (claim G22: a second, aligned system of the labs) is a different thing and keeps its place in model v1.</p>
+</main></body></html>

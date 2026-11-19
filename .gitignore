@@ -13,3 +13,4 @@ data/cw/raw/
 data/ww2/corpora/raw/
 data/cw/corpora/raw/
 .cache/
+console/.env

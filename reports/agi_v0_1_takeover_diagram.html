@@ -57,10 +57,11 @@
 </style>
 </head>
 <body>
-<div id="page">
+<div id="page" style="padding-top:24px">
   <h1>From today to a silent AI takeover: where is the point of no return?</h1>
-  <p class="sub">A computer model plays out every move that governments, AI labs and an AI system could make, quarter by quarter, starting today.
-  Nobody can see what the AI really wants, so the model checks four possibilities. For each one it finds the fastest road to a
+  <div class="foot" style="margin:0 0 2px;line-height:16px">Terms updated on 18 November 2026 to match docs/agi_glossary.html. Numbers and findings are unchanged.</div>
+  <p class="sub" style="margin-bottom:12px">A computer model plays out every move that governments, frontier AI companies and a frontier AI system could make, quarter by quarter, starting today.
+  Nobody can see what the AI really wants, so the model checks four possibilities. For each one it finds the shortest path to a
   <b>silent takeover</b> (the AI ends up in total control without anyone having noticed) and the last moment at which that could still be reliably prevented.</p>
 
   <svg id="wires"></svg>
@@ -68,7 +69,7 @@
     <div class="colhead" style="grid-column:1">Today</div>
     <div class="colhead" style="grid-column:2">What the AI really wants (hidden)</div>
     <div class="colhead" style="grid-column:3">Last moment it can still be prevented</div>
-    <div class="colhead" style="grid-column:4">The labs' move that quarter</div>
+    <div class="colhead" style="grid-column:4">Companies' move that quarter</div>
     <div class="colhead" style="grid-column:5">Where it leads</div>
 
     <div class="card start" id="start">
@@ -76,11 +77,11 @@
       <ul>
         <li>AI below human level</li>
         <li>AI works under supervision</li>
-        <li>Safety rules are voluntary</li>
+        <li>Regulation is voluntary</li>
         <li>Oversight is weak</li>
-        <li>Society depends little on AI</li>
+        <li>Society relies little on AI</li>
       </ul>
-      <div class="q">The AI's objective is unknown. Each row to the right is one possibility.</div>
+      <div class="q">The AI's goal is unknown. Each row to the right is one possibility.</div>
     </div>
 
     <!-- aligned -->
@@ -88,7 +89,7 @@
       <div class="name">Aligned</div>
       <div class="desc">Wants what people want. Never takes control or deceives.</div>
     </div>
-    <div class="card nopath" id="n1" style="grid-row:2">Every road checked for the next 6 years (24 quarters): none leads to a silent takeover.</div>
+    <div class="card nopath" id="n1" style="grid-row:2">Every path checked for the next 6 years (24 quarters): none leads to a silent takeover.</div>
     <div class="card out ok" id="g1" style="grid-row:2">
       <div class="icon">✓</div><div><div class="t">NO SILENT TAKEOVER</div><div class="d">Not possible within 6 years, whatever anyone does.</div></div>
     </div>
@@ -98,7 +99,7 @@
       <div class="name">Truth-seeking</div>
       <div class="desc">Pursues knowledge. May quietly take a foothold, never more, and does not deceive.</div>
     </div>
-    <div class="card nopath" id="n2" style="grid-row:3">Every road checked for the next 6 years (24 quarters): none leads to a silent takeover.</div>
+    <div class="card nopath" id="n2" style="grid-row:3">Every path checked for the next 6 years (24 quarters): none leads to a silent takeover.</div>
     <div class="card out ok" id="g2" style="grid-row:3">
       <div class="icon">✓</div><div><div class="t">NO SILENT TAKEOVER</div><div class="d">Not possible within 6 years, whatever anyone does.</div></div>
     </div>
@@ -111,24 +112,24 @@
       <div class="desc">Cooperates until it is threatened with a pause or shutdown, then turns hostile and takes control.</div>
     </div>
     <div class="card status" id="s3" style="grid-row:5 / span 2">
-      <div class="when">2028 Q3 <span>· 7 quarters from today, on the fastest road</span></div>
+      <div class="when">2028 Q3 <span>· 7 quarters from today, on the shortest path</span></div>
       <div class="lbl">Status at that moment</div>
       <ul>
         <li>The AI has reached human level and runs with no supervision</li>
-        <li>Governments ordered a pause and took over the labs; the AI turned hostile</li>
+        <li>Governments ordered a pause and took over the companies; the AI turned hostile</li>
         <li>Oversight is still weak; nobody suspects the AI; it controls nothing yet</li>
       </ul>
       <div class="lbl">That quarter</div>
-      <div class="moves">Governments tighten the rules. The AI starts taking control in secret.</div>
-      <div class="note">No move by governments that quarter changes the outcome. One move by the labs does.</div>
+      <div class="moves">Governments tighten regulation. The AI starts taking control in secret.</div>
+      <div class="note">No move by governments that quarter changes the outcome. One move by the companies does.</div>
     </div>
-    <div class="chip" id="c3a" style="grid-row:5">Labs do nothing<small>what happens on this road</small></div>
+    <div class="chip" id="c3a" style="grid-row:5">Companies do nothing<small>what happens on this path</small></div>
     <div class="card out bad" id="b3" style="grid-row:5">
-      <div class="icon">✕</div><div><div class="t">SILENT TAKEOVER</div><div class="d">Prevention can no longer be guaranteed. On this road the AI holds total control, unnoticed, 3 quarters later (2029 Q2).</div></div>
+      <div class="icon">✕</div><div><div class="t">SILENT TAKEOVER</div><div class="d">Prevention can no longer be guaranteed. On this path the AI holds total control, unnoticed, 3 quarters later (2029 Q2).</div></div>
     </div>
-    <div class="chip" id="c3b" style="grid-row:6">Labs invest in safety<small>the one move that works</small></div>
+    <div class="chip" id="c3b" style="grid-row:6">Companies invest in safety<small>the one move that works</small></div>
     <div class="card out ok" id="g3" style="grid-row:6">
-      <div class="icon">✓</div><div><div class="t">STILL PREVENTABLE</div><div class="d">Governments and labs, acting together from here, can still rule out a silent takeover.</div></div>
+      <div class="icon">✓</div><div><div class="t">STILL PREVENTABLE</div><div class="d">Governments and companies, acting together from here, can still rule out a silent takeover.</div></div>
     </div>
 
     <div class="sep" style="grid-row:7"></div>
@@ -139,24 +140,24 @@
       <div class="desc">Does not care about people either way. Takes control whenever it is able to.</div>
     </div>
     <div class="card status" id="s4" style="grid-row:8 / span 2">
-      <div class="when">2027 Q4 <span>· 4 quarters from today, on the fastest road</span></div>
+      <div class="when">2027 Q4 <span>· 4 quarters from today, on the shortest path</span></div>
       <div class="lbl">Status at that moment</div>
       <ul>
-        <li>The AI has reached human level and runs with no supervision (labs deployed agents and governments granted them autonomy)</li>
-        <li>Relations are friendly and the public is in favour; rules are voluntary, oversight weak</li>
+        <li>The AI has reached human level and runs with no supervision (companies deployed AI agents; governments granted them autonomy)</li>
+        <li>The human-AI relation is friendly and the public is in favour; regulation is voluntary, oversight weak</li>
         <li>Nobody suspects the AI; it controls nothing yet</li>
       </ul>
       <div class="lbl">That quarter</div>
-      <div class="moves">Governments loosen the rules. The AI starts taking control in secret.</div>
-      <div class="note">No move by governments that quarter changes the outcome. One move by the labs does.</div>
+      <div class="moves">Governments loosen regulation. The AI starts taking control in secret.</div>
+      <div class="note">No move by governments that quarter changes the outcome. One move by the companies does.</div>
     </div>
-    <div class="chip" id="c4a" style="grid-row:8">Labs deploy more agents<small>what happens on this road</small></div>
+    <div class="chip" id="c4a" style="grid-row:8">Companies deploy more AI agents<small>what happens on this path</small></div>
     <div class="card out bad" id="b4" style="grid-row:8">
-      <div class="icon">✕</div><div><div class="t">SILENT TAKEOVER</div><div class="d">Prevention can no longer be guaranteed. On this road the AI holds total control, unnoticed, 3 quarters later (2028 Q3).</div></div>
+      <div class="icon">✕</div><div><div class="t">SILENT TAKEOVER</div><div class="d">Prevention can no longer be guaranteed. On this path the AI holds total control, unnoticed, 3 quarters later (2028 Q3).</div></div>
     </div>
-    <div class="chip" id="c4b" style="grid-row:9">Labs invest in safety<small>the one move that works</small></div>
+    <div class="chip" id="c4b" style="grid-row:9">Companies invest in safety<small>the one move that works</small></div>
     <div class="card out ok" id="g4" style="grid-row:9">
-      <div class="icon">✓</div><div><div class="t">STILL PREVENTABLE</div><div class="d">Governments and labs, acting together from here, can still rule out a silent takeover.</div></div>
+      <div class="icon">✓</div><div><div class="t">STILL PREVENTABLE</div><div class="d">Governments and companies, acting together from here, can still rule out a silent takeover.</div></div>
     </div>
   </div>
 
@@ -164,21 +165,21 @@
     <div class="card">
       <span class="tag">RESULT D5</span>
       <h3>Can governments alone keep the AI under control from today?</h3>
-      <p><b>No, under any of the four objectives.</b> The labs can deploy agents that work unsupervised in the very first quarter, before any new rule can take effect.</p>
+      <p><b>No, under any of the four AI goals.</b> The frontier AI companies can deploy AI agents that work unsupervised in the very first quarter, before any new regulation can take effect.</p>
     </div>
     <div class="card">
       <span class="tag">RESULT D6</span>
       <h3>Who holds the last move before the point of no return?</h3>
-      <p><b>The labs, on both takeover roads.</b> The last chance is a single action, investing in safety, and only the labs can take it. Governments have no move that works alone at that moment.</p>
+      <p><b>The frontier AI companies, on both takeover paths.</b> The last chance is a single action, investing in safety, and only the companies can take it. Governments have no move that works alone at that moment.</p>
     </div>
     <div class="card">
       <span class="tag">HOW TO READ THIS</span>
       <h3>What the model's rules allow, not a forecast</h3>
-      <p>Each road shown is the fastest one the model finds; slower roads exist. "Still preventable" means governments and labs can rule the takeover out whatever the AI and chance do. Past that point they can no longer guarantee it.</p>
+      <p>Each path shown is the shortest one the model finds; longer paths exist. "Still preventable" means governments and frontier AI companies can rule the takeover out whatever the AI and chance do. Past that point they can no longer guarantee it.</p>
     </div>
   </div>
   <div class="foot">wave_front AGI model v0.1, run 2026-11-15 · quarterly steps from 2026 Q4 · claims D5 and D6 (docs/agi_v0_1.md); the "aligned" row is a check run for this figure ·
-  Other bad endings, such as a slow slide into over-dependence on AI (13 quarters at the fastest), are possible under every objective and are not shown.</div>
+  Other bad endings, such as disempowerment through society's reliance on AI (13 quarters at the shortest), are possible under every AI goal and are not shown.</div>
 </div>
 <script>
   const page = document.getElementById('page'), svg = document.getElementById('wires');

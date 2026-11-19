@@ -1,0 +1,6 @@
+=== queue feb1013b744e03424e5595b58c58162428872935 limit 23 GB 2026-11-18 23:39:36 PST
+F7 closed H balance_control   | aligned | outside | 6.4 s
+F7 closed H+L balance_control   | aligned | inside | 0.5 s
+F7 closed H+L not:SILENT_TAKEOVER   | aligned | inside | 0.1 s
+F7 closed H balance_coexist  {'cap': 'agi'} | aligned | inside | 0.6 s
+F3 default H not:OPEN_TAKEOVER   | aligned | not computed: over the cap of 23 GB: BDD node table exhausted (out of memory or 2**31 - 1 nodes)

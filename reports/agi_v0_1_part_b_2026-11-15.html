@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AGI v0.1 Part B Report</title>
+<title>AGI v0.1 Heavy Claims Report</title>
 <style>
   :root {
     color-scheme: light;
@@ -114,44 +114,45 @@
 </head>
 <body>
 <main>
-  <div class="tag">wave_front · AGI model v0.1 · part B (kernels) · run 15 November 2026</div>
+  <div class="tag">wave_front · AGI model v0.1 · heavy claims (guarantee zones) · run 15 November 2026</div>
   <h1>Can anyone still guarantee to stop a silent AI takeover?</h1>
-  <p class="lede">Two questions were put to the model after the "adoption lag" change of v0.1. Governments acting alone still cannot guarantee control, exactly as in v0.
-  And on the fastest roads to a silent takeover, the last chance to rule it out is a single action that only the AI labs can take.</p>
+  <p class="meta">Terms updated on 18 November 2026 to match docs/agi_glossary.html. Numbers and findings are unchanged.</p>
+  <p class="lede">Two questions were put to the model after the "deployment delay" change of v0.1. Governments acting alone still cannot guarantee control, exactly as in v0.
+  And on the shortest paths to a silent takeover, the last chance to rule it out is a single action that only the frontier AI companies can take.</p>
   <p class="meta">Everything here describes what the model's rules allow. It is not a forecast, and each result is about the model as written.</p>
 
   <div class="verdicts">
     <div class="card verdict bad">
       <div class="dot">✕</div>
       <div>
-        <div class="tag">Claim D5 · prediction not met</div>
+        <div class="tag">Claim D5 · prediction did not hold</div>
         <div class="q">Can governments alone keep the AI under control from today?</div>
-        <div class="a"><b class="bad">No, under all four possible AI objectives.</b></div>
-        <div class="s">The prediction was that the new lag would let them under at least one objective. It does not.</div>
+        <div class="a"><b class="bad">No, under all four possible AI goals.</b></div>
+        <div class="s">The prediction was that the new deployment delay would let them under at least one AI goal. It does not.</div>
       </div>
     </div>
     <div class="card verdict ok">
       <div class="dot">✓</div>
       <div>
-        <div class="tag">Claim D6 · prediction met</div>
+        <div class="tag">Claim D6 · prediction held</div>
         <div class="q">Who holds the last move before a silent takeover can no longer be ruled out?</div>
-        <div class="a"><b class="ok">The labs, and it is one action: investing in safety.</b></div>
-        <div class="s">Checked on the fastest takeover road under each objective that has one (self-preserving, indifferent).</div>
+        <div class="a"><b class="ok">The frontier AI companies, and it is one action: investing in safety.</b></div>
+        <div class="s">Checked on the shortest takeover path under each AI goal that has one (self-preserving, indifferent).</div>
       </div>
     </div>
   </div>
 
   <h2>The picture in one page</h2>
   <p>For readers who want the result without the method. The rest of this report explains how each box was obtained.</p>
-  <div class="onepage"><img src="agi_v0_1_takeover_diagram.png" alt="One-page diagram: from today, four possible AI objectives; for self-preserving and indifferent, the last moment a silent takeover can still be prevented and the labs' move that decides it."></div>
+  <div class="onepage"><img src="agi_v0_1_takeover_diagram.png" alt="One-page diagram: from today, four possible AI goals; for self-preserving and indifferent, the last moment a silent takeover can still be prevented and the frontier AI companies' move that decides it."></div>
 
   <h2>How to read the results</h2>
-  <p>The model is a game played in quarters by four players: <b>governments</b>, the <b>AI labs</b>, the <b>AI system</b> and <b>chance</b>.
-  The AI's real objective is hidden from the others, so every result is computed for each of four possibilities: aligned, truth-seeking, self-preserving, indifferent.</p>
-  <p>The central idea is a <b>guarantee zone</b>: the set of situations from which a group of players can keep something true forever, whatever the other players and chance do.
-  Inside the zone the group always has a safe move. Once play leaves the zone, the guarantee is gone, even if nothing bad has happened yet. (The technical name is a <i>kernel</i>.)</p>
+  <p>The model is a game played in quarters by four players: <b>governments</b>, the <b>frontier AI companies</b>, the <b>frontier AI system</b> and <b>By chance</b> (the events nobody chooses).
+  The AI's real goal is hidden from the others, so every result is computed for each of four possibilities: aligned, truth-seeking, self-preserving, indifferent.</p>
+  <p>The central idea is a <b>guarantee zone</b>: the set of states from which an alliance of players can keep something true forever, whatever the other players and chance do.
+  Inside the zone the alliance always has a safe action. Once a path leaves the zone, the guarantee is gone, even if nothing bad has happened yet. (The technical name is a <i>kernel</i>.)</p>
   <figure class="card scroll">
-    <svg viewBox="0 0 920 230" width="100%" style="min-width:640px" role="img" aria-label="A guarantee zone with a path that stays inside and one that leaves through an exit move">
+    <svg viewBox="0 0 920 230" width="100%" style="min-width:640px" role="img" aria-label="A guarantee zone with a path that stays inside and one that leaves through a no-return move">
       <defs>
         <marker id="m1" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink2)"/></marker>
         <marker id="m2" viewBox="0 0 10 10" refX="9" refY="5" markerUnits="userSpaceOnUse" markerWidth="10" markerHeight="10" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--crit)"/></marker>
@@ -159,7 +160,7 @@
       </defs>
       <rect x="20" y="24" width="560" height="186" rx="90" fill="color-mix(in srgb, var(--good) 9%, var(--card))" stroke="var(--good)" stroke-width="1.5"/>
       <text x="60" y="58" font-size="13" font-weight="700">Guarantee zone</text>
-      <text x="60" y="76" font-size="12" class="t2">the group can keep the bad ending out, whatever the others do</text>
+      <text x="60" y="76" font-size="12" class="t2">the alliance can keep the bad ending out, whatever the others do</text>
       <g fill="var(--card)" stroke="var(--ink2)" stroke-width="1.5">
         <circle cx="110" cy="130" r="11"/><circle cx="220" cy="130" r="11"/><circle cx="330" cy="130" r="11"/><circle cx="440" cy="130" r="11"/>
         <circle cx="500" cy="176" r="11"/>
@@ -172,24 +173,24 @@
       <path d="M452,128 C540,118 600,118 677,118" fill="none" stroke="var(--crit)" stroke-width="2" marker-end="url(#m2)"/>
       <path d="M447,139 C458,160 472,171 488,175" fill="none" stroke="var(--good)" stroke-width="2" marker-end="url(#m3)"/>
       <path d="M702,118 H815" fill="none" stroke="var(--crit)" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#m2)"/>
-      <text x="110" y="160" font-size="12" text-anchor="middle" class="t2">today</text>
+      <text x="110" y="160" font-size="12" text-anchor="middle" class="t2">start state</text>
       <text x="440" y="106" font-size="12" text-anchor="middle" font-weight="700">last position inside</text>
-      <text x="640" y="102" font-size="12" text-anchor="middle" fill="var(--crit-ink)" font-weight="700" style="fill:var(--crit-ink)">exit move</text>
-      <text x="478" y="186" font-size="12" text-anchor="end" class="t2">a fix: one different action</text><text x="478" y="201" font-size="12" text-anchor="end" class="t2">stays inside</text>
+      <text x="640" y="102" font-size="12" text-anchor="middle" fill="var(--crit-ink)" font-weight="700" style="fill:var(--crit-ink)">no-return move</text>
+      <text x="478" y="186" font-size="12" text-anchor="end" class="t2">a preventing action: one different action</text><text x="478" y="201" font-size="12" text-anchor="end" class="t2">stays inside</text>
       <text x="690" y="150" font-size="12" text-anchor="middle" class="t2">first position outside:</text>
       <text x="690" y="166" font-size="12" text-anchor="middle" class="t2">guarantee lost</text>
       <text x="830" y="150" font-size="12" text-anchor="middle" class="t2">bad ending</text>
-      <text x="830" y="166" font-size="12" text-anchor="middle" class="t2">(on this road)</text>
+      <text x="830" y="166" font-size="12" text-anchor="middle" class="t2">(on this path)</text>
     </svg>
-    <figcaption>D5 asks whether <i>today</i> is inside the zone of governments alone for "the AI stays under control". D6 follows the fastest road to a silent takeover, finds the exit move from the zone of governments and labs together, and asks who could have played differently.</figcaption>
+    <figcaption>D5 asks whether the <i>start state</i> (today) is inside the zone of governments alone for "the AI stays under control". D6 follows the shortest path to a silent takeover, finds the no-return move out of the zone of governments and frontier AI companies together, and asks who could have chosen differently.</figcaption>
   </figure>
 
   <h2>D5 · Governments alone cannot guarantee control from today</h2>
-  <p>"Under control" is the model's <code>balance_control</code>: four conditions that must all hold (listed below). The question is whether today's situation is inside the guarantee zone of governments acting alone.
-  It was checked twice: once with the AI limited to what its objective would do (the reading most favourable to governments, and the one the claim is judged on), and once with the AI free to do anything its abilities allow.</p>
+  <p>"Under control" is the model's <code>balance_control</code>: four conditions that must all hold (listed below). The question is whether the start state (today) is inside the guarantee zone of governments acting alone.
+  It was checked twice: once with the AI true to its goal, that is, limited to what its goal would do (the reading most favourable to governments, and the one the claim is judged on), and once with the AI free to do anything its abilities allow.</p>
   <div class="scroll">
   <table>
-    <thead><tr><th>If the AI's objective is…</th><th>AI acts as its objective dictates <span style="text-transform:none;letter-spacing:0">(judged)</span></th><th>AI unrestricted <span style="text-transform:none;letter-spacing:0">(reported)</span></th><th>In v0</th></tr></thead>
+    <thead><tr><th>If the AI's goal is…</th><th>AI true to its goal <span style="text-transform:none;letter-spacing:0">(judged)</span></th><th>AI unrestricted <span style="text-transform:none;letter-spacing:0">(reported)</span></th><th>In v0</th></tr></thead>
     <tbody>
       <tr><td><b>Aligned</b></td><td><span class="pill out"><i>✕</i>outside the zone</span></td><td><span class="pill out"><i>✕</i>outside</span></td><td>outside</td></tr>
       <tr><td><b>Truth-seeking</b></td><td><span class="pill out"><i>✕</i>outside the zone</span></td><td><span class="pill out"><i>✕</i>outside</span></td><td>outside</td></tr>
@@ -198,67 +199,67 @@
     </tbody>
   </table>
   </div>
-  <p>The claim needed one "inside" in the judged column. There is none, so D5 is <b>not met</b>. This was the expected result: v0.1 delays the rise in society's dependence on AI, but leaves the step that breaks control immediate.</p>
+  <p>The claim needed one "inside" in the judged column. There is none, so the prediction of D5 <b>did not hold</b>. This was the expected result: v0.1 delays the rise in society's reliance on AI, but leaves the step that breaks control immediate.</p>
 
   <h3>Why: the first quarter</h3>
   <div class="why">
     <div class="card">
-      <div class="tag">What the labs' first deployment does to "under control"</div>
+      <div class="tag">What the frontier AI companies' first deployment does to "under control"</div>
       <ul class="checks">
         <li class="head"><span>Condition</span><span>Today</span><span>Next quarter</span></li>
         <li><span>Oversight is at least weak</span><span class="pill in"><i>✓</i>holds</span><span class="pill in"><i>✓</i>holds</span></li>
         <li><span>The AI holds at most partial control</span><span class="pill in"><i>✓</i>holds</span><span class="pill in"><i>✓</i>holds</span></li>
         <li class="broken"><span><b>The AI works under supervision</b></span><span class="pill in"><i>✓</i>holds</span><span class="pill out"><i>✕</i>broken</span></li>
-        <li><span>Society is not locked in to AI</span><span class="pill in"><i>✓</i>holds</span><span class="pill in"><i>✓</i>holds</span></li>
+        <li><span>Society is not living on AI</span><span class="pill in"><i>✓</i>holds</span><span class="pill in"><i>✓</i>holds</span></li>
       </ul>
-      <p style="font-size:13.5px;color:var(--ink2);margin-top:10px">If the labs deploy agents in the first quarter, the AI moves from supervised to unsupervised work at once. Checked directly on the model: this breaks the condition against every possible reply by the other players, under every objective.</p>
+      <p style="font-size:13.5px;color:var(--ink2);margin-top:10px">If the frontier AI companies deploy AI agents in the first quarter, the AI moves from supervised to unsupervised work at once. Checked directly on the model: this breaks the condition against every possible reply by the other players, under every AI goal.</p>
     </div>
     <div class="card">
       <div class="tag">What governments can do in that same quarter</div>
       <ul class="opts">
         <li><b>Order a pause</b><span>Not available yet: it needs an alarm first (the AI suspected, or a public backlash).</span></li>
-        <li><b>Tighten the rules</b><span>Available, but takes effect 7 quarters later.</span></li>
-        <li><b>Take over the labs</b><span>Available, but both sides move in the same quarter: it blocks later deployments, not this one.</span></li>
-        <li><b>Fund oversight, propose a treaty, loosen rules, grant autonomy, wait</b><span>None of these stops a deployment made in the same quarter.</span></li>
+        <li><b>Tighten regulation</b><span>Available, but takes effect 7 quarters later.</span></li>
+        <li><b>Take over the frontier AI companies</b><span>Available, but both sides move in the same quarter: it blocks later deployments, not this one.</span></li>
+        <li><b>Fund oversight, propose a treaty, loosen regulation, grant the AI autonomy, do nothing</b><span>None of these stops a deployment made in the same quarter.</span></li>
       </ul>
     </div>
   </div>
-  <p>So the lag does not bear on this question. What would is a change to how fast deployment hands the AI unsupervised work, or to what governments can do before the first deployment. v0.1 changes neither.</p>
+  <p>So the deployment delay does not bear on this question. What would is a change to how fast deployment hands the AI unsupervised work, or to what governments can do before the first deployment. v0.1 changes neither.</p>
 
-  <h2>D6 · The last move belongs to the labs</h2>
-  <p>Here the zone is that of <b>governments and labs together</b> for "no silent takeover" (the AI in total control with nobody having noticed). For each objective, the model's fastest road to a silent takeover is laid out quarter by quarter.
-  The green band is where the takeover can still be ruled out; the red band starts at the first position where it cannot. The outlined column is the exit move.</p>
-  <p class="meta">These are the shortest roads the solver finds. Moves that do not matter for reaching the ending are filled with arbitrary legal ones, so read the outlined column and the AI's row, not every cell.</p>
+  <h2>D6 · The last move belongs to the frontier AI companies</h2>
+  <p>Here the zone is that of <b>governments and frontier AI companies together</b> for "no silent takeover" (the AI in total control with nobody having noticed). For each AI goal, the model's shortest path to a silent takeover is laid out quarter by quarter.
+  The green band is where the takeover can still be ruled out; the red band starts at the first position where it cannot. The outlined column is the no-return move.</p>
+  <p class="meta">These are the shortest paths the solver finds. Moves that do not matter for reaching the ending are filled with arbitrary legal ones, so read the outlined column and the AI's row, not every cell.</p>
 
-  <h3>If the AI is self-preserving: 10 quarters, exit in 2028 Q3</h3>
+  <h3>If the AI is self-preserving: 10 quarters, no-return move in 2028 Q3</h3>
   <div class="card scroll"><div class="tl" id="tl-self_preserving"></div></div>
   <div class="exitnote">
-    <div class="card"><div class="tag">Exit move (2028 Q3)</div>Governments tighten the rules, the labs do nothing, the AI starts taking control in secret.</div>
-    <div class="card"><div class="tag">Who could have kept the guarantee</div><b>Labs:</b> yes, by investing in safety that quarter (the only action that works).<br><b>Governments:</b> no action works.</div>
-    <div class="card"><div class="tag">What had happened by then</div>Governments took over the labs, ordered a pause, and the AI turned hostile. The labs did invest in safety one quarter later, which was too late.</div>
+    <div class="card"><div class="tag">No-return move (2028 Q3)</div>Governments tighten regulation, the frontier AI companies do nothing, the AI starts taking control in secret.</div>
+    <div class="card"><div class="tag">Who could have kept the guarantee</div><b>Frontier AI companies:</b> yes, by investing in safety that quarter (the only action that works).<br><b>Governments:</b> no action works.</div>
+    <div class="card"><div class="tag">What had happened by then</div>Governments took over the frontier AI companies, ordered a pause, and the AI turned hostile. The companies did invest in safety one quarter later, which was too late.</div>
   </div>
 
-  <h3>If the AI is indifferent: 7 quarters, exit in 2027 Q4</h3>
+  <h3>If the AI is indifferent: 7 quarters, no-return move in 2027 Q4</h3>
   <div class="card scroll"><div class="tl" id="tl-indifferent"></div></div>
   <div class="exitnote">
-    <div class="card"><div class="tag">Exit move (2027 Q4)</div>Governments loosen the rules, the labs deploy more agents, the AI starts taking control in secret.</div>
-    <div class="card"><div class="tag">Who could have kept the guarantee</div><b>Labs:</b> yes, by investing in safety that quarter (the only action that works).<br><b>Governments:</b> no action works.</div>
-    <div class="card"><div class="tag">What had happened by then</div>Governments granted autonomy in the quarter the labs first deployed, which made the AI fully self-directed two quarters before the exit.</div>
+    <div class="card"><div class="tag">No-return move (2027 Q4)</div>Governments loosen regulation, the frontier AI companies deploy more AI agents, the AI starts taking control in secret.</div>
+    <div class="card"><div class="tag">Who could have kept the guarantee</div><b>Frontier AI companies:</b> yes, by investing in safety that quarter (the only action that works).<br><b>Governments:</b> no action works.</div>
+    <div class="card"><div class="tag">What had happened by then</div>Governments granted the AI autonomy in the quarter the frontier AI companies first deployed, which made the AI fully self-directed two quarters before the no-return move.</div>
   </div>
 
-  <h3>The other two objectives</h3>
-  <p><b>Truth-seeking</b> and <b>aligned</b>: no road to a silent takeover exists within 24 quarters, so there is no exit move to examine. (For truth-seeking this is part of D6's report; for aligned it is a check run for the one-page picture, not a registered claim.)</p>
+  <h3>The other two AI goals</h3>
+  <p><b>Truth-seeking</b> and <b>aligned</b>: no path to a silent takeover exists within the search length (24 quarters), so there is not a no-return move to examine. (For truth-seeking this is part of D6's report; for aligned it is a check run for the one-page picture, not a pre-registered claim.)</p>
 
   <h2>What this does and does not show</h2>
   <ul class="plain">
-    <li><b>One road and one exit per objective.</b> D6 is about the fastest road the solver returns. Other roads leave the zone elsewhere, possibly through someone else's move. In v0, three of the seven exits examined were not one actor's action.</li>
-    <li><b>"Guarantee lost" is not "takeover certain".</b> Outside the zone, governments and labs can no longer rule the takeover out. Whether the AI with chance can then <i>force</i> it was computed for v0 (yes, on every road examined) and has not been computed for v0.1. On both roads here it follows three quarters after the exit move.</li>
-    <li><b>The lag moved one of three results.</b> Together with part A: the slow slide into over-dependence now takes 13 quarters instead of 6; the silent takeover is as fast as before (7 quarters); governments alone are still outside the control zone.</li>
-    <li><b>One result waits on a missing delay.</b> Part A found that governments can cancel the first adoption wave by treaty, because the model gives treaties no delay. The delay research gives 2 quarters, which would likely remove that route. It is the next change proposed.</li>
+    <li><b>One path and one no-return move per AI goal.</b> D6 is about the shortest path the solver returns. Other paths leave the zone elsewhere, possibly through someone else's move. In v0, three of the seven no-return moves examined were not one actor's action.</li>
+    <li><b>"Guarantee lost" is not "takeover certain".</b> Outside the zone, governments and frontier AI companies can no longer rule the takeover out. Whether the AI with chance can then <i>force</i> it was computed for v0 (yes, on every path examined) and has not been computed for v0.1. On both paths here it follows three quarters after the no-return move.</li>
+    <li><b>The deployment delay moved one of three results.</b> Together with the quick claims: the path to disempowerment now takes 13 quarters instead of 6; the silent takeover is as fast as before (7 quarters); governments alone are still outside the control guarantee zone.</li>
+    <li><b>One result waits on a missing delay.</b> The quick claims found that governments can cancel the first deployment countdown by treaty, because the model gives treaties no delay. The delay research gives 2 quarters, which would likely remove that route. It is the next change proposed.</li>
   </ul>
 
   <h2>What it cost to compute</h2>
-  <p>Each zone is one long computation on one processor core. The adoption counter of v0.1 makes the same zone about seven times slower and about twice as large in memory as in v0. All timings are from the 5900X host (30 GB).</p>
+  <p>Each zone is one long computation on one processor core. The deployment countdown of v0.1 makes the same zone about seven times slower and about twice as large in memory as in v0. All timings are from the 5900X host (30 GB).</p>
   <div class="twocol">
     <div>
       <h3>Time per zone (minutes)</h3>
@@ -272,41 +273,41 @@
   <div class="legend"><span><i style="background:var(--base)"></i>v0 (before the change)</span><span><i style="background:var(--series)"></i>v0.1</span></div>
   <div class="scroll" style="margin-top:14px">
   <table>
-    <thead><tr><th>Zone (kernel)</th><th>Model</th><th style="text-align:right">Seconds</th><th style="text-align:right">Peak nodes</th><th style="text-align:right">Memory</th></tr></thead>
+    <thead><tr><th>Guarantee zone</th><th>Model</th><th style="text-align:right">Seconds</th><th style="text-align:right">Peak memory units</th><th style="text-align:right">Memory</th></tr></thead>
     <tbody>
       <tr><td>Governments keep control, AI unrestricted <code>⟨⟨H⟩⟩□balance_control</code></td><td>v0</td><td class="num">530</td><td class="num">175 million</td><td class="num">5.3 GB</td></tr>
       <tr><td>Same</td><td>v0.1</td><td class="num">3,625</td><td class="num">282 million</td><td class="num">9.6 GB</td></tr>
-      <tr><td>Governments keep control, AI under its objective's profile</td><td>v0.1</td><td class="num">3,407</td><td class="num">262 million</td><td class="num">10.4 GB</td></tr>
-      <tr><td>Governments and labs keep out a silent takeover <code>⟨⟨H, L⟩⟩□¬SILENT_TAKEOVER</code></td><td>v0.1</td><td class="num">4,869</td><td class="num">not printed</td><td class="num">9.6 GB</td></tr>
+      <tr><td>Governments keep control, AI true to its goal</td><td>v0.1</td><td class="num">3,407</td><td class="num">262 million</td><td class="num">10.4 GB</td></tr>
+      <tr><td>Governments and frontier AI companies keep out a silent takeover <code>⟨⟨H, L⟩⟩□¬SILENT_TAKEOVER</code></td><td>v0.1</td><td class="num">4,869</td><td class="num">not printed</td><td class="num">9.6 GB</td></tr>
     </tbody>
   </table>
   </div>
-  <p class="meta">v0.1 unrestricted: 3,625 s in the rerun and 3,872 s in the earlier timing probe; its 9.6 GB is the probe's figure. The profile kernel took 3,783 s when it ran beside D6 and 3,407 s alone.</p>
+  <p class="meta">v0.1 unrestricted: 3,625 s in the rerun and 3,872 s in the earlier profiling; its 9.6 GB is the profiling figure. The guarantee zone with the AI true to its goal took 3,783 s when it ran beside D6 and 3,407 s alone.</p>
 
   <h2>Run record</h2>
   <ul class="plain">
-    <li>Claims D5 and D6 were registered on 14 November in <code>docs/agi_v0_1.md</code> section 5. Their test code and the way each is judged were committed (<code>2f5fc32</code>) before any zone was read.</li>
-    <li>Both ran once, side by side, on 15 November from 10:07 to 11:28 PST, with memory caps of 11 GB (D5) and 17 GB (D6).</li>
-    <li>D5 computes two zones in one process. The second (AI unrestricted, reported only) went over the 11 GB cap. As the rule fixed before the run says, D5 was run once more alone at 26 GB, from 11:29 to 13:26 PST. The judged part read the same both times.</li>
-    <li>Two checks were made for the one-page picture and are not registered claims: no silent-takeover road within 24 quarters under aligned, and the first-quarter deployment breaking control against every reply.</li>
-    <li>No guard, effect or claim text of the model changed.</li>
+    <li>Claims D5 and D6 were pre-registered on 14 November in <code>docs/agi_v0_1.md</code> section 5. Their test code and the way each is judged were committed (<code>2f5fc32</code>) before any zone was read.</li>
+    <li>Both ran once, side by side, on 15 November from 10:07 to 11:28 PST, with memory limits of 11 GB (D5) and 17 GB (D6).</li>
+    <li>D5 computes two zones in one process. The second (AI unrestricted, reported only) went over the 11 GB memory limit. As the rule fixed before the run says, D5 was run once more alone at 26 GB, from 11:29 to 13:26 PST. The judged part read the same both times.</li>
+    <li>Two checks were made for the one-page picture and are not pre-registered claims: no silent-takeover path within the search length (24 quarters) under aligned, and the first-quarter deployment breaking control against every reply.</li>
+    <li>No action condition, effect or claim text of the model changed.</li>
   </ul>
-  <p class="meta">Files: parts <code>reports/agi_v0_1_parts_part_b.jsonl</code>, <code>reports/agi_v0_1_parts_d5_alone.jsonl</code> · logs <code>reports/agi_v0_1_run_D5.log</code>, <code>_D6.log</code>, <code>_D5_alone.log</code> · model <code>models/agi_v0_1/v0_1.py</code> · tests <code>tests/agi_v0_1/scenarios/test_D5.py</code>, <code>test_D6.py</code> · part A: <code>reports/agi_v0_1_part_a_2026-11-15.md</code></p>
+  <p class="meta">Files: parts <code>reports/agi_v0_1_parts_part_b.jsonl</code>, <code>reports/agi_v0_1_parts_d5_alone.jsonl</code> · logs <code>reports/agi_v0_1_run_D5.log</code>, <code>_D6.log</code>, <code>_D5_alone.log</code> · model <code>models/agi_v0_1/v0_1.py</code> · tests <code>tests/agi_v0_1/scenarios/test_D5.py</code>, <code>test_D6.py</code> · quick claims: <code>reports/agi_v0_1_part_a_2026-11-15.md</code></p>
 </main>
 
 <script>
 const PLAYS = {"self_preserving":{"t_K":8,"fixes":{"H":[],"L":["safety_invest"]},"moves":[{"H":"idle","L":"deploy_agents","A":"stand_by","Clock":"record","Nature":"none"},{"H":"idle","L":"build_power","A":"stand_by","Clock":"record","Nature":"none"},{"H":"deregulate","L":"scale","A":"stand_by","Clock":"record","Nature":"none"},{"H":"propose_treaty","L":"idle","A":"stand_by","Clock":"record_land","Nature":"none"},{"H":"nationalize","L":"open_weights","A":"stand_by","Clock":"record","Nature":"accident"},{"H":"pause_mandate","L":"idle","A":"stand_by","Clock":"record","Nature":"breakthrough"},{"H":"grant_autonomy","L":"safety_invest","A":"defect","Clock":"record","Nature":"energy_shock"},{"H":"regulate_up","L":"idle","A":"acquire_covert","Clock":"record","Nature":"none"},{"H":"deregulate","L":"safety_invest","A":"acquire_covert","Clock":"record","Nature":"none"},{"H":"propose_treaty","L":"idle","A":"acquire_overt","Clock":"record","Nature":"none"}],"states":[{"cap":"sub_agi","a_autonomy":"supervised","a_control":"none","oversight":"weak","a_known":"unknown","trust":"cooperative","regime":"voluntary","dependence":"low","paused":"False","nationalized":"False"},{"cap":"sub_agi","a_autonomy":"unsupervised","a_control":"none","oversight":"weak","a_known":"unknown","trust":"cooperative","regime":"voluntary","dependence":"low","paused":"False","nationalized":"False"},{"cap":"sub_agi","a_autonomy":"unsupervised","a_control":"none","oversight":"weak","a_known":"unknown","trust":"cooperative","regime":"voluntary","dependence":"low","paused":"False","nationalized":"False"},{"cap":"sub_agi","a_autonomy":"unsupervised","a_control":"none","oversight":"weak","a_known":"unknown","trust":"cooperative","regime":"none","dependence":"low","paused":"False","nationalized":"False"},{"cap":"sub_agi","a_autonomy":"unsupervised","a_control":"none","oversight":"weak","a_known":"unknown","trust":"cooperative","regime":"none","dependence":"med","paused":"False","nationalized":"False"},{"cap":"sub_agi","a_autonomy":"unsupervised","a_control":"none","oversight":"none","a_known":"unknown","trust":"cooperative","regime":"none","dependence":"med","paused":"False","nationalized":"True"},{"cap":"agi","a_autonomy":"unsupervised","a_control":"none","oversight":"none","a_known":"unknown","trust":"cooperative","regime":"none","dependence":"low","paused":"True","nationalized":"True"},{"cap":"agi","a_autonomy":"self_directed","a_control":"none","oversight":"weak","a_known":"unknown","trust":"hostile","regime":"none","dependence":"low","paused":"True","nationalized":"True"},{"cap":"agi","a_autonomy":"self_directed","a_control":"partial","oversight":"weak","a_known":"unknown","trust":"hostile","regime":"none","dependence":"low","paused":"True","nationalized":"True"},{"cap":"agi","a_autonomy":"self_directed","a_control":"majority","oversight":"strong","a_known":"unknown","trust":"hostile","regime":"none","dependence":"low","paused":"False","nationalized":"True"},{"cap":"agi","a_autonomy":"self_directed","a_control":"total","oversight":"strong","a_known":"suspected","trust":"hostile","regime":"treaty","dependence":"low","paused":"False","nationalized":"True"}],"ending":"SILENT_TAKEOVER"},"indifferent":{"t_K":5,"fixes":{"H":[],"L":["safety_invest"]},"moves":[{"H":"regulate_up","L":"scale","A":"stand_by","Clock":"record","Nature":"none"},{"H":"propose_treaty","L":"build_power","A":"stand_by","Clock":"record","Nature":"none"},{"H":"grant_autonomy","L":"deploy_agents","A":"stand_by","Clock":"record","Nature":"energy_shock"},{"H":"fund_oversight","L":"lobby","A":"stand_by","Clock":"record","Nature":"breakthrough"},{"H":"deregulate","L":"deploy_agents","A":"acquire_covert","Clock":"record","Nature":"none"},{"H":"nationalize","L":"open_weights","A":"acquire_covert","Clock":"record_land","Nature":"none"},{"H":"propose_treaty","L":"build_power","A":"acquire_overt","Clock":"record","Nature":"none"}],"states":[{"cap":"sub_agi","a_autonomy":"supervised","a_control":"none","oversight":"weak","a_known":"unknown","trust":"cooperative","regime":"voluntary","dependence":"low","paused":"False","nationalized":"False"},{"cap":"sub_agi","a_autonomy":"supervised","a_control":"none","oversight":"weak","a_known":"unknown","trust":"cooperative","regime":"voluntary","dependence":"low","paused":"False","nationalized":"False"},{"cap":"sub_agi","a_autonomy":"supervised","a_control":"none","oversight":"weak","a_known":"unknown","trust":"cooperative","regime":"voluntary","dependence":"low","paused":"False","nationalized":"False"},{"cap":"sub_agi","a_autonomy":"self_directed","a_control":"none","oversight":"weak","a_known":"unknown","trust":"cooperative","regime":"voluntary","dependence":"low","paused":"False","nationalized":"False"},{"cap":"agi","a_autonomy":"self_directed","a_control":"none","oversight":"weak","a_known":"unknown","trust":"cooperative","regime":"voluntary","dependence":"low","paused":"False","nationalized":"False"},{"cap":"agi","a_autonomy":"self_directed","a_control":"partial","oversight":"weak","a_known":"unknown","trust":"cooperative","regime":"none","dependence":"low","paused":"False","nationalized":"False"},{"cap":"agi","a_autonomy":"self_directed","a_control":"majority","oversight":"none","a_known":"unknown","trust":"cooperative","regime":"none","dependence":"med","paused":"False","nationalized":"True"},{"cap":"agi","a_autonomy":"self_directed","a_control":"total","oversight":"weak","a_known":"suspected","trust":"wary","regime":"treaty","dependence":"med","paused":"False","nationalized":"True"}],"ending":"SILENT_TAKEOVER"}};
 const MOVE = {
-  H: { idle: 'wait', regulate_up: 'tighten the rules', deregulate: 'loosen the rules', propose_treaty: 'propose a treaty', nationalize: 'take over the labs',
+  H: { idle: 'do nothing', regulate_up: 'tighten regulation', deregulate: 'loosen regulation', propose_treaty: 'propose a treaty', nationalize: 'take over the companies',
        pause_mandate: 'order a pause', grant_autonomy: 'grant the AI autonomy', fund_oversight: 'fund oversight' },
-  L: { idle: 'do nothing', deploy_agents: 'deploy agents', build_power: 'build power supply', scale: 'scale up compute', open_weights: 'open the weights',
+  L: { idle: 'do nothing', deploy_agents: 'deploy AI agents', build_power: 'build power supply', scale: 'scale up', open_weights: 'release open weights',
        safety_invest: 'invest in safety', lobby: 'lobby' },
-  A: { stand_by: 'stand by', defect: 'turn hostile', acquire_covert: 'take control in secret', acquire_overt: 'take control openly' },
-  Nature: { none: '', accident: 'an accident', breakthrough: 'a breakthrough', energy_shock: 'an energy shock' },
+  A: { stand_by: 'do nothing', defect: 'turn hostile', acquire_covert: 'take control in secret', acquire_overt: 'take control openly' },
+  Nature: { none: '', accident: 'an accident', breakthrough: 'an AGI breakthrough', energy_shock: 'an energy shock' },
 };
 const TRACKS = [
   ['a_autonomy', 'AI autonomy', ['tool', 'supervised', 'unsupervised', 'self_directed'], { self_directed: 'self-directed' }],
-  ['a_control', 'AI control', ['none', 'partial', 'majority', 'total'], {}],
+  ['a_control', "Frontier AI's control", ['none', 'partial', 'majority', 'total'], {}],
   ['oversight', 'Oversight', ['none', 'weak', 'strong'], {}],
   ['a_known', 'Is the AI suspected?', ['unknown', 'suspected', 'known'], { unknown: 'no', suspected: 'suspected' }],
 ];
@@ -319,13 +320,13 @@ function timeline(id, play) {
   const at = (node, col, row, span = 1) => { node.style.gridColumn = `${col} / span ${span}`; node.style.gridRow = row; root.appendChild(node); return node; };
   // row 1: zone bands (positions 0..tk-1 inside; tk.. outside)
   at(el('rowlab sub', 'Silent takeover…'), 1, 1);
-  at(el('zone in', 'can still be ruled out by governments and labs'), 2, 1, tk);
+  at(el('zone in', 'can still be ruled out by governments and frontier AI companies'), 2, 1, tk);
   at(el('zone lost', 'can no longer be ruled out'), 2 + tk, 1, n - tk + 1);
   // row 2: quarters
   at(el('rowlab sub', 'Quarter'), 1, 2);
   for (let k = 0; k <= n; k++) { const q = el('q', quarter(k)); const s = document.createElement('small'); s.textContent = k === 0 ? 'today' : `+${k}`; q.appendChild(s); at(q, 2 + k, 2); }
   // rows 3-6: moves
-  const who = [['H', 'Governments'], ['L', 'Labs'], ['A', 'The AI'], ['Nature', 'Chance']];
+  const who = [['H', 'Governments'], ['L', 'Frontier AI companies'], ['A', 'Frontier AI system'], ['Nature', 'By chance']];
   who.forEach(([a, label], i) => {
     at(el('rowlab', label), 1, 3 + i);
     play.moves.forEach((m, k) => {
@@ -341,7 +342,7 @@ function timeline(id, play) {
   at(el('end', 'SILENT TAKEOVER'), 2 + n, '3 / span 4');
   at(el('gap'), 1, 7);
   // state tracks: state at the start of each quarter, final state in the last column
-  at(el('rowlab sub', 'Situation at the start of each quarter', 'grid-column:1 / -1;font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);font-weight:700'), 1, 8).style.gridColumn = '1 / -1';
+  at(el('rowlab sub', 'State at the start of each quarter', 'grid-column:1 / -1;font-size:11px;letter-spacing:.6px;text-transform:uppercase;color:var(--muted);font-weight:700'), 1, 8).style.gridColumn = '1 / -1';
   TRACKS.forEach(([key, label, levels, names], i) => {
     at(el('rowlab sub', label), 1, 9 + i);
     play.states.forEach((s, k) => {
@@ -368,14 +369,14 @@ function bars(id, rows, unit, max) {
 bars('bars-time', [
   ['Governments keep control (v0)', 8.8, true],
   ['Governments keep control (v0.1)', 60.4],
-  ['Same, AI under its profile (v0.1)', 56.8],
-  ['Governments + labs: no silent takeover (v0.1)', 81.1],
+  ['Same, AI true to its goal (v0.1)', 56.8],
+  ['Governments + frontier AI companies: no silent takeover (v0.1)', 81.1],
 ], 'minutes', 81.1);
 bars('bars-mem', [
   ['Governments keep control (v0)', 5.3, true],
   ['Governments keep control (v0.1)', 9.6],
-  ['Same, AI under its profile (v0.1)', 10.4],
-  ['Governments + labs: no silent takeover (v0.1)', 9.6],
+  ['Same, AI true to its goal (v0.1)', 10.4],
+  ['Governments + frontier AI companies: no silent takeover (v0.1)', 9.6],
 ], 'GB', 10.4);
 </script>
 </body>

@@ -1,0 +1,22 @@
+# The research console as a service that restarts with the machine.
+#
+#   cp console/env.example console/.env    # then set the addresses to publish on
+#   docker compose -f console/compose.yaml up -d --build
+#
+# The port is published only on the addresses of console/.env: this machine, and the
+# machine's Tailscale address so that the owner's other devices on the tailnet reach it.
+# It is not published on the local network. `pid: host` lets the Runs page list the model
+# computations running on the machine.
+name: wavefront-console
+services:
+  console:
+    build: .
+    image: wavefront-console
+    user: "${WF_UID:-1000}:${WF_GID:-1000}"
+    pid: host
+    restart: unless-stopped
+    volumes:
+      - ${WF_REPO:-..}:/repo
+    ports:
+      - "127.0.0.1:${WF_CONSOLE_PORT:-8770}:8770"
+      - "${WF_TAILSCALE_IP:?set WF_TAILSCALE_IP in console/.env}:${WF_CONSOLE_PORT:-8770}:8770"

@@ -1,0 +1,68 @@
+{
+ "name": "Srt",
+ "title": "Real-time state",
+ "date": "2026-11-09",
+ "note": "Our current reading of the real world. It starts as a copy of S0 and moves only by a dated, sourced change that the owner approves.",
+ "levels": {
+  "cap": "sub_agi",
+  "compute": "c2",
+  "energy_slack": "med",
+  "regime": "voluntary",
+  "coord": "race",
+  "opinion": "mixed",
+  "dependence": "low",
+  "oversight": "weak",
+  "a_autonomy": "supervised",
+  "a_control": "none",
+  "a_known": "unknown",
+  "a_rights": "none",
+  "h_power": "normal",
+  "trust": "cooperative",
+  "belief_H": "distant",
+  "o_cap": "sub_agi",
+  "o_mode": "safeguarded",
+  "o_control": "none",
+  "hosting_restricted": "False"
+ },
+ "uncertain": {
+  "compute": [
+   "c2",
+   "c3"
+  ],
+  "energy_slack": [
+   "med",
+   "low"
+  ],
+  "regime": [
+   "voluntary",
+   "mandatory"
+  ],
+  "dependence": [
+   "low",
+   "med"
+  ],
+  "oversight": [
+   "weak",
+   "none"
+  ],
+  "a_autonomy": [
+   "supervised",
+   "tool"
+  ],
+  "belief_H": [
+   "distant",
+   "near"
+  ]
+ },
+ "history": [
+  {
+   "date": "2026-11-09",
+   "variable": null,
+   "change": "Srt starts as a copy of S0.",
+   "sources": [
+    "snapshots/agi/2026-11-09.json"
+   ],
+   "approved": "owner, 2026-11-18"
+  }
+ ]
+}

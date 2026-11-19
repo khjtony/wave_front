@@ -1,0 +1,12 @@
+=== split probe self_preserving 2026-11-18 02:06:11 UTC
+Traceback (most recent call last):
+MemoryError: BDD node table exhausted (out of memory or 2**31 - 1 nodes)
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:49.12
+	Maximum resident set size (kbytes): 5407532
+SPLIT1_DONE 2026-11-18 02:08:00 UTC
+=== split probe self_preserving, gc at 40M, cap 8 GB 2026-11-18 02:08:17 UTC
+Traceback (most recent call last):
+MemoryError: BDD node table exhausted (out of memory or 2**31 - 1 nodes)
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 4:54.83
+	Maximum resident set size (kbytes): 5404856
+SPLIT2_DONE 2026-11-18 02:13:11 UTC

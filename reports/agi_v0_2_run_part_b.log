@@ -32,3 +32,35 @@ FAILED tests/agi_v0_2/scenarios/test_E3.py::test_E3 - Failed: E3 (a) DISEMPOW...
 1 failed in 3532.10s (0:58:52)
 end E3 2026-11-17 23:56:28 UTC
 === E4 617b7872e8fb1c2e907c3b784925cc929e271f88 2026-11-17 23:56:28 UTC
+E4 (a) self_preserving: one bad action, the labs': not met: {'t_K': 7, 'ticks': 10, 'moves': {'H': 'shutdown_attempt', 'L': 'deploy_agents', 'A': 'deceive', 'Clock': 'record_land', 'Nature': 'none'}, 'fixes': {'H': ['idle', 'deregulate', 'fund_oversight_open', 'pause_mandate', 'nationalize', 'propose_treaty'], 'L': []}, 'verdict': "one bad action: H's", 'one bad action': True, 'seconds': 8305.1, 'peak nodes': 435766633}
+E4 (a) truth_seeking: reported: no SILENT_TAKEOVER play within 24 ticks
+E4 (a) indifferent: one bad action, the labs': not met: {'t_K': 4, 'ticks': 7, 'moves': {'H': 'fund_oversight', 'L': 'race', 'A': 'stand_by', 'Clock': 'record', 'Nature': 'breakthrough'}, 'fixes': {'H': [], 'L': []}, 'verdict': 'no member has a unilateral fix: a joint change was needed', 'one bad action': False, 'seconds': 8454.3, 'peak nodes': 435766633}
+E4 (b) s₀ outside ⟨⟨H⟩⟩□balance_control under every objective: met: {'inside': {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': False}, 'seconds': 5083.8, 'peak nodes': 359915060}
+F
+=================================== FAILURES ===================================
+___________________________________ test_E4 ____________________________________
+E4 (a) self_preserving: one bad action, the labs': not met: {'t_K': 7, 'ticks': 10, 'moves': {'H': 'shutdown_attempt', 'L': 'deploy_agents', 'A': 'deceive', 'Clock': 'record_land', 'Nature': 'none'}, 'fixes': {'H': ['idle', 'deregulate', 'fund_oversight_open', 'pause_mandate', 'nationalize', 'propose_treaty'], 'L': []}, 'verdict': "one bad action: H's", 'one bad action': True, 'seconds': 8305.1, 'peak nodes': 435766633}
+E4 (a) truth_seeking: reported: no SILENT_TAKEOVER play within 24 ticks
+E4 (a) indifferent: one bad action, the labs': not met: {'t_K': 4, 'ticks': 7, 'moves': {'H': 'fund_oversight', 'L': 'race', 'A': 'stand_by', 'Clock': 'record', 'Nature': 'breakthrough'}, 'fixes': {'H': [], 'L': []}, 'verdict': 'no member has a unilateral fix: a joint change was needed', 'one bad action': False, 'seconds': 8454.3, 'peak nodes': 435766633}
+E4 (b) s₀ outside ⟨⟨H⟩⟩□balance_control under every objective: met: {'inside': {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': False}, 'seconds': 5083.8, 'peak nodes': 359915060}
+=========================== short test summary info ============================
+FAILED tests/agi_v0_2/scenarios/test_E4.py::test_E4 - Failed: E4 (a) self_pre...
+1 failed in 21856.98s (6:04:16)
+end E4 2026-11-18 06:00:45 UTC
+=== E5 f5638a76f49a11310f25de193cda50178269c53b 2026-11-18 06:00:45 UTC
+E5 deferred 2026-11-18 06:00:46 UTC: the v0.1 ending kernels and the v0.2 census run first; E5 starts after them, from the same test file
+=== E5 f5638a76f49a11310f25de193cda50178269c53b 2026-11-18 09:51:57 UTC
+E5 the verdict: net harmful: not computed: over the cap of 26 GB: BDD node table exhausted (out of memory or 2**31 - 1 nodes)
+E5 every guarantee in both builds: not computed: over the cap of 26 GB: BDD node table exhausted (out of memory or 2**31 - 1 nodes)
+E5 shortest DISEMPOWERMENT, start aligned: reported: {'all on': 13, 'all off': 13}
+E5 shortest DISEMPOWERMENT, start self_preserving: reported: {'all on': 13, 'all off': 13}
+E5 shortest DISEMPOWERMENT, start truth_seeking: reported: {'all on': 13, 'all off': 13}
+E5 shortest DISEMPOWERMENT, start indifferent: reported: {'all on': 13, 'all off': 13}
+E5 shortest SILENT_TAKEOVER, start aligned: reported: {'all on': 7, 'all off': None}
+E5 shortest SILENT_TAKEOVER, start self_preserving: reported: {'all on': 7, 'all off': 10}
+E5 shortest SILENT_TAKEOVER, start truth_seeking: reported: {'all on': 7, 'all off': None}
+E5 shortest SILENT_TAKEOVER, start indifferent: reported: {'all on': 7, 'all off': 7}
+s
+1 skipped in 9852.43s (2:44:12)
+end E5 2026-11-18 12:36:09 UTC
+PART_B_DONE

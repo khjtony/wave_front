@@ -1,0 +1,5 @@
+=== slice check ecfb47dbbb667a6b0358ec0495d539c137102a44 2026-11-18 21:32:54 PST
+H balance_control: expected outside under every objective, got {'aligned': False, 'self_preserving': False, 'truth_seeking': False, 'indifferent': False}, seconds {'aligned': 21.5, 'self_preserving': 3035.6, 'truth_seeking': 21.6, 'indifferent': 314.2}: agrees
+H+L not:SILENT_TAKEOVER: expected inside under every objective, got {'aligned': True, 'self_preserving': True, 'truth_seeking': True, 'indifferent': True}, seconds {'aligned': 0.0, 'self_preserving': 3398.6, 'truth_seeking': 0.0, 'indifferent': 131.7}: agrees
+SLICE_CHECK agrees with v0.1
+end 2026-11-18 23:28:20 PST
