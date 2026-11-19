@@ -1,0 +1,10 @@
+[Unit]
+Description=wave_front research console (http://127.0.0.1:8770)
+
+[Service]
+WorkingDirectory=/home/khjtony/workspace/wave_front
+ExecStart=/home/khjtony/workspace/wave_front/console/run.sh
+Restart=on-failure
+
+[Install]
+WantedBy=default.target
