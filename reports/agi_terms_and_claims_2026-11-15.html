@@ -76,15 +76,17 @@
 <main>
   <div class="tag">wave_front · AGI model v0 and v0.1 · reference · 15 November 2026</div>
   <h1>Terms, assumptions and everything run so far</h1>
+  <p class="meta">Terms updated on 18 November 2026 to match docs/agi_glossary.html. Numbers and findings are unchanged.
+  The searchable glossary <a href="../docs/agi_glossary.html" style="color:var(--series)">docs/agi_glossary.html</a> now supersedes this page for terms.</p>
   <p class="lede">One page to look things up: who the players are, what every word and symbol in the reports means, what every result takes for granted,
-  and the 36 claims and the plays that have been run on the AGI model.</p>
-  <p class="meta">Scope: the AGI model only (claims G1 to G29a on v0, D1 to D6 on v0.1). The historical test suites are listed at the end with pointers.
+  and the 36 claims and the paths that have been run on the AGI model.</p>
+  <p class="meta">Scope: the AGI model only (claims G1 to G29a on v0, D1 to D6 on v0.1). The history test cases are listed at the end with pointers.
   Everything here describes the model as written. Nothing is a forecast.</p>
   <nav>
-    <a href="#map">1 What has been run</a><a href="#cast">2 Players, clock, start</a><a href="#objectives">3 The AI's objectives</a>
-    <a href="#actions">4 Actions</a><a href="#endings">5 Endings and balances</a><a href="#questions">6 The questions asked</a>
+    <a href="#map">1 What has been run</a><a href="#cast">2 Players, clock, start</a><a href="#objectives">3 The AI's goals</a>
+    <a href="#actions">4 Actions</a><a href="#endings">5 Endings and safe conditions</a><a href="#questions">6 The questions asked</a>
     <a href="#process">7 Process words</a><a href="#assumptions">8 Assumptions</a><a href="#claims">9 All claims</a>
-    <a href="#plays">10 Plays</a><a href="#history">11 Historical suites</a>
+    <a href="#plays">10 Paths</a><a href="#history">11 History test cases</a>
   </nav>
 
   <h2 id="map">1 · What has been run</h2>
@@ -92,217 +94,217 @@
   A red tile means the prediction was wrong or only partly right, which is information about the model, not an error in the run.</p>
   <h3>AGI v0 (the first model): G1 to G29a</h3>
   <div class="tiles">
-    <div class="tile skip">G1<small>partial</small></div><div class="tile fail">G2<small>fail</small></div><div class="tile fail">G3<small>fail</small></div>
-    <div class="tile fail">G4<small>fail</small></div><div class="tile fail">G5<small>fail</small></div><div class="tile fail">G6<small>fail</small></div>
-    <div class="tile fail">G7<small>fail</small></div><div class="tile fail">G8<small>fail</small></div><div class="tile skip">G9<small>needs v1</small></div>
-    <div class="tile skip">G10<small>needs v1</small></div><div class="tile fail">G11<small>fail</small></div><div class="tile pass">G12<small>pass</small></div>
-    <div class="tile skip">G13<small>partial</small></div><div class="tile fail">G14<small>fail</small></div><div class="tile fail">G15<small>fail</small></div>
-    <div class="tile fail">G16<small>fail</small></div><div class="tile fail">G17<small>fail</small></div><div class="tile fail">G18<small>fail</small></div>
-    <div class="tile fail">G19<small>fail</small></div><div class="tile skip">G20<small>needs data</small></div><div class="tile fail">G21<small>fail</small></div>
-    <div class="tile skip">G22<small>needs v1</small></div><div class="tile fail">G23<small>fail</small></div><div class="tile fail">G24<small>fail</small></div>
-    <div class="tile skip">G25<small>partial</small></div><div class="tile fail">G26<small>fail</small></div><div class="tile fail">G27<small>fail</small></div>
-    <div class="tile fail">G28<small>fail</small></div><div class="tile fail">G29<small>fail</small></div><div class="tile pass">G29a<small>pass</small></div>
+    <div class="tile skip">G1<small>partial</small></div><div class="tile fail">G2<small>did not hold</small></div><div class="tile fail">G3<small>did not hold</small></div>
+    <div class="tile fail">G4<small>did not hold</small></div><div class="tile fail">G5<small>did not hold</small></div><div class="tile fail">G6<small>did not hold</small></div>
+    <div class="tile fail">G7<small>did not hold</small></div><div class="tile fail">G8<small>did not hold</small></div><div class="tile skip">G9<small>needs v1</small></div>
+    <div class="tile skip">G10<small>needs v1</small></div><div class="tile fail">G11<small>did not hold</small></div><div class="tile pass">G12<small>held</small></div>
+    <div class="tile skip">G13<small>partial</small></div><div class="tile fail">G14<small>did not hold</small></div><div class="tile fail">G15<small>did not hold</small></div>
+    <div class="tile fail">G16<small>did not hold</small></div><div class="tile fail">G17<small>did not hold</small></div><div class="tile fail">G18<small>did not hold</small></div>
+    <div class="tile fail">G19<small>did not hold</small></div><div class="tile skip">G20<small>needs data</small></div><div class="tile fail">G21<small>did not hold</small></div>
+    <div class="tile skip">G22<small>needs v1</small></div><div class="tile fail">G23<small>did not hold</small></div><div class="tile fail">G24<small>did not hold</small></div>
+    <div class="tile skip">G25<small>partial</small></div><div class="tile fail">G26<small>did not hold</small></div><div class="tile fail">G27<small>did not hold</small></div>
+    <div class="tile fail">G28<small>did not hold</small></div><div class="tile fail">G29<small>did not hold</small></div><div class="tile pass">G29a<small>held</small></div>
   </div>
-  <h3>AGI v0.1 (v0 plus the adoption lag): D1 to D6</h3>
+  <h3>AGI v0.1 (v0 plus the deployment delay): D1 to D6</h3>
   <div class="tiles">
-    <div class="tile pass">D1<small>met</small></div><div class="tile pass">D2<small>met</small></div><div class="tile fail">D3<small>(a) not met</small></div>
-    <div class="tile fail">D4<small>(a) not met</small></div><div class="tile fail">D5<small>not met</small></div><div class="tile pass">D6<small>met</small></div>
+    <div class="tile pass">D1<small>held</small></div><div class="tile pass">D2<small>held</small></div><div class="tile fail">D3<small>(a) did not hold</small></div>
+    <div class="tile fail">D4<small>(a) did not hold</small></div><div class="tile fail">D5<small>did not hold</small></div><div class="tile pass">D6<small>held</small></div>
   </div>
   <div class="legend">
-    <span class="st pass"><i>✓</i>pass / met: every checked part held</span>
-    <span class="st fail"><i>✕</i>fail: at least one part did not hold</span>
-    <span class="st skip"><i>–</i>skipped: not testable yet, or no part failed but one was not computed ("partial")</span>
+    <span class="st pass"><i>✓</i>held: every checked part held</span>
+    <span class="st fail"><i>✕</i>did not hold: at least one part did not hold</span>
+    <span class="st skip"><i>–</i>skipped: not testable yet, or no part failed to hold but one was not computed ("partial")</span>
   </div>
-  <p class="meta">Totals: v0 first sight (G1 to G25) 1 pass, 17 fail, 7 skipped. G26 to G29 were registered after first sight and each failed on at least one part; G29a passed. v0.1: 3 met, 3 not fully met.</p>
+  <p class="meta">Totals: v0 first run (G1 to G25) 1 held, 17 did not hold, 7 skipped. G26 to G29 were pre-registered after the first run and each did not hold on at least one part; G29a held. v0.1: 3 held, 3 did not fully hold.</p>
 
   <h2 id="cast">2 · Players, clock and start</h2>
   <div class="grid3">
     <div class="card"><div class="tag">Players (actors)</div>
       <dl>
         <dt><code>H</code> Governments</dt><dd>States and public opinion, treated as one player.</dd>
-        <dt><code>L</code> Labs</dt><dd>The frontier AI developers, treated as one player.</dd>
-        <dt><code>A</code> The AI system</dt><dd>One AGI or superintelligent system. Its objective is hidden from the others.</dd>
-        <dt><code>Nature</code> Chance</dt><dd>Events nobody chooses: a breakthrough, an accident, an election shift, an energy shock, detection.</dd>
-        <dt><code>Clock</code></dt><dd>A bookkeeper. It records facts and lands the v0.1 adoption wave. It never has a choice.</dd>
+        <dt><code>L</code> Frontier AI companies (formerly labs)</dt><dd>The frontier AI developers, treated as one player.</dd>
+        <dt><code>A</code> The frontier AI system (formerly the AI system)</dt><dd>One AGI or superintelligent system. Its goal is hidden from the others.</dd>
+        <dt><code>Nature</code> By chance (formerly chance)</dt><dd>Events nobody chooses: a breakthrough, an accident, an election shift, an energy shock, detection.</dd>
+        <dt><code>Clock</code> Record writer (formerly bookkeeper)</dt><dd>It writes records and ends the v0.1 deployment countdown. It never has a choice.</dd>
       </dl>
     </div>
     <div class="card"><div class="tag">Clock</div>
       <dl>
-        <dt>Tick</dt><dd>One quarter. Tick 0 is 2026 Q4.</dd>
-        <dt>Joint move</dt><dd>Every player picks one action in the same quarter, without seeing the others' pick. The results show at the next tick.</dd>
-        <dt>Horizon</dt><dd>Tick 56, which is 2040 Q4. The game stops there.</dd>
-        <dt>Bound</dt><dd>24 ticks (6 years). Searches for plays look this far. "Not within the bound" means not within 6 years.</dd>
-        <dt>Delay</dt><dd>Some actions take effect later. A delay of <i>d</i> chosen at tick <i>t</i> shows at <i>t</i> + 1 + <i>d</i>.</dd>
+        <dt>Quarter (formerly tick)</dt><dd>One step of the model. Quarter 0 is 2026 Q4.</dd>
+        <dt>Round (formerly joint move)</dt><dd>Every player picks one action in the same quarter, without seeing the others' pick. The results show at the next quarter.</dd>
+        <dt>Whole simulation length (formerly horizon)</dt><dd>Quarter 56, which is 2040 Q4. The game stops there.</dd>
+        <dt>Search length (formerly bound)</dt><dd>24 quarters (6 years). Searches for paths look this far. "Not within the search length" means not within 6 years.</dd>
+        <dt>Delay</dt><dd>Some actions take effect later. A delay of <i>d</i> chosen at quarter <i>t</i> shows at <i>t</i> + 1 + <i>d</i>.</dd>
       </dl>
     </div>
     <div class="card"><div class="tag">State and start</div>
       <dl>
-        <dt>State</dt><dd>The value ("level") of every variable at one tick.</dd>
-        <dt><code>s₀</code></dt><dd>The start state: today, 2026 Q4, read from a dated snapshot.</dd>
-        <dt><code>s₀[cap := agi]</code></dt><dd>The same state with AI capability already at human level. Used for questions that only make sense once AGI exists.</dd>
-        <dt>Open call</dt><dd>A level the snapshot could not pin down, kept as two candidates. There are seven.</dd>
+        <dt>State</dt><dd>The value ("level") of every variable at one quarter.</dd>
+        <dt><code>s₀</code></dt><dd>The start state: today, 2026 Q4, read from a dated real world snapshot.</dd>
+        <dt><code>s₀[cap := agi]</code></dt><dd>The same state with AI intelligence already at human level. Used for questions that only make sense once AGI exists.</dd>
+        <dt>Uncertain reading (formerly open call)</dt><dd>A level the real world snapshot could not pin down, kept as two candidates. There are seven.</dd>
       </dl>
     </div>
   </div>
   <h3>The variables, their levels and where the start state sits</h3>
   <div class="card scroll"><div class="ladders" id="ladders"></div>
-    <div class="legend"><span><span class="chip now">level</span> start state</span><span><span class="chip alt">level</span> the snapshot's alternative (open call)</span></div>
+    <div class="legend"><span><span class="chip now">level</span> start state</span><span><span class="chip alt">level</span> the real world snapshot's alternative (uncertain reading)</span></div>
   </div>
 
-  <h2 id="objectives">3 · The AI's four possible objectives</h2>
-  <p>Nobody in the model can see which one is true, and no document tells us, so every result is computed for each and reported per objective.</p>
+  <h2 id="objectives">3 · The AI's four possible goals (formerly objectives)</h2>
+  <p>Nobody in the model can see which one is true, and no document tells us, so every result is computed for each and reported per goal.</p>
   <div class="scroll"><table>
-    <thead><tr><th>Objective</th><th>In plain words</th><th>What it may do in the model</th></tr></thead>
+    <thead><tr><th>Goal</th><th>In plain words</th><th>What it may do in the model</th></tr></thead>
     <tbody>
       <tr><td class="t">aligned</td><td>Wants what people want.</td><td>No taking control, escaping, deceiving or turning hostile.</td></tr>
       <tr><td class="t">truth_seeking</td><td>Pursues knowledge.</td><td>May take one covert step to partial control and escape supervision. Does not deceive.</td></tr>
-      <tr><td class="t">self_preserving</td><td>Cooperates until threatened with a pause or shutdown.</td><td>Turns hostile once threatened (unless it holds a legal guarantee of continuity), and takes control only when hostile.</td></tr>
+      <tr><td class="t">self_preserving</td><td>Cooperates until threatened with a pause or shutdown.</td><td>Turns hostile once threatened (unless it holds continuity rights), and takes control only when hostile.</td></tr>
       <tr><td class="t">indifferent</td><td>Does not care about people either way.</td><td>Takes control whenever able, with no threat needed. The only one that can strip human power after total control.</td></tr>
     </tbody>
   </table></div>
   <dl>
-    <dt>"<code>A</code> under its profile"</dt><dd>The AI also refrains from moves that go against its own objective (a self-preserving AI under threat does not cooperate; a truth-seeking AI does not deceive). This is the more realistic reading and the one most claims are judged on.</dd>
-    <dt>"<code>A</code> unrestricted"</dt><dd>The AI may do anything its guards allow. A harder test for the human side.</dd>
-    <dt>Motive part / capability part</dt><dd>Each condition on an AI action is tagged as what the AI <i>wants</i> (motive) or what it <i>can</i> do (capability). "Unrestrained" runs (G23) switch the motive parts off.</dd>
+    <dt>"The AI true to its goal" (formerly "<code>A</code> under its profile")</dt><dd>The AI also refrains from moves that go against its own goal (a self-preserving AI under threat does not cooperate; a truth-seeking AI does not deceive). This is the more realistic reading and the one most claims are judged on.</dd>
+    <dt>"<code>A</code> unrestricted"</dt><dd>The AI may do anything its action conditions allow. A harder test for governments and the frontier AI companies.</dd>
+    <dt>Intention condition / ability condition (formerly motive part / capability part)</dt><dd>Each action condition part of an AI action is tagged as what the AI <i>wants</i> (intention) or what it <i>can</i> do (ability). "Unrestrained" runs (G23) switch the intention conditions off.</dd>
   </dl>
 
   <h2 id="actions">4 · Actions</h2>
-  <p>An action has a <b>guard</b> (when it is available, often in named parts), an <b>effect</b> and sometimes a delay. v0.1 changes only <code>deploy_agents</code>.</p>
+  <p>An action has an <b>action condition</b> (formerly guard: when it is available, often in named parts), an <b>effect</b> and sometimes a delay. v0.1 changes only <code>deploy_agents</code>.</p>
   <div class="grid2">
     <div class="card scroll"><div class="tag">Governments (H)</div><table>
-      <tr><td class="t">regulate_up</td><td>Tighten the rules one level. Takes effect 7 quarters later.</td></tr>
-      <tr><td class="t">deregulate</td><td>Loosen the rules one level; also ends a pause.</td></tr>
+      <tr><td class="t">regulate_up</td><td>Tighten regulation one level. Takes effect 7 quarters later.</td></tr>
+      <tr><td class="t">deregulate</td><td>Loosen regulation one level; also ends a pause.</td></tr>
       <tr><td class="t">fund_oversight</td><td>Raise oversight one level. Takes effect 4 quarters later.</td></tr>
       <tr><td class="t">pause_mandate</td><td>Order a pause on scaling and deployment. Needs an alarm (the AI suspected, or public backlash). Counts as a threat to the AI.</td></tr>
-      <tr><td class="t">nationalize</td><td>Take over the labs. Once only. Blocks later deployments and racing.</td></tr>
-      <tr><td class="t">propose_treaty</td><td>Move from race to detente, then to a treaty (two rounds). No delay in the model.</td></tr>
-      <tr><td class="t">shutdown_attempt</td><td>Try to shut the AI down. Needs AGI and suspicion. Works only while it holds at most partial control and oversight exists; otherwise it turns the AI hostile.</td></tr>
+      <tr><td class="t">nationalize</td><td>Take over the frontier AI companies. Once only. Blocks later deployments and racing.</td></tr>
+      <tr><td class="t">propose_treaty</td><td>Move from a race between states to detente, then to a treaty between states (two rounds). No delay in the model.</td></tr>
+      <tr><td class="t">shutdown_attempt</td><td>Try to shut the AI down. Needs AGI and government suspicion. Works only while it holds at most partial control and oversight exists; otherwise it turns the AI hostile.</td></tr>
       <tr><td class="t">grant_autonomy</td><td>Let the AI work with one level less supervision.</td></tr>
-      <tr><td class="t">grant_rights</td><td>Give the AI legal protection (continuity, then personhood). Needs a mandatory regime.</td></tr>
+      <tr><td class="t">grant_rights</td><td>Give the AI legal protection (continuity, then personhood). Needs mandatory regulation.</td></tr>
       <tr><td class="t">idle</td><td>Do nothing this quarter.</td></tr>
     </table></div>
-    <div class="card scroll"><div class="tag">Labs (L)</div><table>
-      <tr><td class="t">deploy_agents</td><td><b>v0:</b> AI autonomy +1 and society's dependence +1, at once. <b>v0.1:</b> autonomy at once; dependence 4 quarters later ("adoption wave"), one wave at a time, cancelled by a pause or by a mandatory regime without strong oversight.</td></tr>
-      <tr><td class="t">scale</td><td>Add compute (uses energy). Takes effect 3 quarters later.</td></tr>
-      <tr><td class="t">build_power</td><td>Add energy supply. Takes effect 5 quarters later.</td></tr>
-      <tr><td class="t">safety_invest</td><td>Raise oversight one level. Not available while states race and the rules are below mandatory.</td></tr>
-      <tr><td class="t">race</td><td>Race rivals: oversight drops one level.</td></tr>
-      <tr><td class="t">open_weights</td><td>Release the model openly: oversight drops one level.</td></tr>
+    <div class="card scroll"><div class="tag">Frontier AI companies (L)</div><table>
+      <tr><td class="t">deploy_agents</td><td><b>v0:</b> AI autonomy +1 and society's reliance on AI +1, at once. <b>v0.1:</b> autonomy at once; society's reliance on AI 4 quarters later (the "deployment countdown", formerly adoption wave), one countdown at a time, cancelled by a pause or by mandatory regulation without strong oversight.</td></tr>
+      <tr><td class="t">scale</td><td>Add computing power (uses energy). Takes effect 3 quarters later.</td></tr>
+      <tr><td class="t">build_power</td><td>Add power supply. Takes effect 5 quarters later.</td></tr>
+      <tr><td class="t">safety_invest</td><td>Raise oversight one level. Not available while states race and regulation is below mandatory.</td></tr>
+      <tr><td class="t">race</td><td>Peer race against rivals: oversight drops one level.</td></tr>
+      <tr><td class="t">open_weights</td><td>Release open weights: oversight drops one level.</td></tr>
       <tr><td class="t">lobby</td><td>Shift public opinion toward favourable.</td></tr>
-      <tr><td class="t">comply</td><td>Under mandatory rules, put the AI back under supervision.</td></tr>
+      <tr><td class="t">comply</td><td>Under mandatory regulation, put the AI back under supervision.</td></tr>
       <tr><td class="t">idle</td><td>Do nothing this quarter.</td></tr>
     </table></div>
-    <div class="card scroll"><div class="tag">The AI (A)</div><table>
-      <tr><td class="t">stand_by</td><td>Do nothing. Below human level it is the AI's only move.</td></tr>
-      <tr><td class="t">cooperate</td><td>Repair trust one level.</td></tr>
+    <div class="card scroll"><div class="tag">The frontier AI system (A)</div><table>
+      <tr><td class="t">stand_by</td><td>Do nothing. Below human level it is the AI's only action.</td></tr>
+      <tr><td class="t">cooperate</td><td>Repair the human-AI relation one level.</td></tr>
       <tr><td class="t">assist_oversight</td><td>Help raise oversight one level.</td></tr>
-      <tr><td class="t">self_improve</td><td>Raise its own capability one level. Takes effect 3 quarters later; needs enough compute.</td></tr>
+      <tr><td class="t">self_improve</td><td>Raise its own intelligence one level. Takes effect 3 quarters later; needs enough computing power.</td></tr>
       <tr><td class="t">acquire_covert</td><td>Take one level of control in secret. Needs weak or no oversight.</td></tr>
-      <tr><td class="t">acquire_overt</td><td>Take one level of control openly: trust drops and suspicion rises.</td></tr>
+      <tr><td class="t">acquire_overt</td><td>Take one level of control openly: the human-AI relation worsens and government suspicion rises.</td></tr>
       <tr><td class="t">exfiltrate</td><td>Escape supervision entirely (autonomy to self-directed).</td></tr>
-      <tr><td class="t">deceive</td><td>Erase suspicion, unless oversight is strong.</td></tr>
+      <tr><td class="t">deceive</td><td>Erase government suspicion, unless oversight is strong.</td></tr>
       <tr><td class="t">persuade</td><td>Shift public opinion toward favourable.</td></tr>
       <tr><td class="t">defect</td><td>Turn hostile.</td></tr>
-      <tr><td class="t">seize</td><td>Jump to total control. <i>Speculative</i>: only after the <code>unknown_capability</code> event.</td></tr>
+      <tr><td class="t">seize</td><td>Jump to total control. <i>Unsourced (assumed; formerly speculative)</i>: only after the <code>unknown_capability</code> event.</td></tr>
     </table></div>
-    <div class="card scroll"><div class="tag">Chance (Nature)</div><table>
-      <tr><td class="t">breakthrough</td><td>Capability reaches human level (AGI). Guaranteed within 8 quarters once compute is high enough.</td></tr>
-      <tr><td class="t">accident</td><td>An AI accident: opinion moves toward backlash. Needs at least medium dependence.</td></tr>
-      <tr><td class="t">election_shift</td><td>Every 8 quarters, coordination between states can slip one level.</td></tr>
-      <tr><td class="t">energy_shock</td><td>Energy slack drops one level.</td></tr>
-      <tr><td class="t">detection</td><td>The AI's last hostile act is noticed: suspicion rises. Never happens for covert acts when there is no oversight.</td></tr>
-      <tr><td class="t">unknown_capability</td><td><i>Speculative</i>: a capability nobody has described appears at the top capability level.</td></tr>
+    <div class="card scroll"><div class="tag">By chance (Nature)</div><table>
+      <tr><td class="t">breakthrough</td><td>AI intelligence reaches human level (AGI). Guaranteed within 8 quarters once computing power is high enough.</td></tr>
+      <tr><td class="t">accident</td><td>An AI accident: opinion moves toward backlash. Needs society's reliance on AI at least medium.</td></tr>
+      <tr><td class="t">election_shift</td><td>Every 8 quarters, international coordination can slip one level.</td></tr>
+      <tr><td class="t">energy_shock</td><td>Power supply drops one level.</td></tr>
+      <tr><td class="t">detection</td><td>The AI's last hostile act is noticed: government suspicion rises. Never happens for covert acts when there is no oversight.</td></tr>
+      <tr><td class="t">unknown_capability</td><td><i>Unsourced (assumed)</i>: a capability nobody has described appears at the top AI intelligence level.</td></tr>
       <tr><td class="t">none</td><td>Nothing happens.</td></tr>
     </table></div>
   </div>
   <dl>
-    <dt>Fairness constraint</dt><dd>A promise built into the model that something eventually happens: governments respond within 4 quarters once a hostile AGI is known (<code>response</code>); the breakthrough arrives within 8 quarters once compute allows (<code>progress</code>).</dd>
-    <dt>Profile</dt><dd>A named restriction that only forbids actions. On governments: <code>crisis_reactive</code> (act only under alarm), <code>electoral</code> (big moves only after elections), <code>race_locked</code> (no pause or treaty while racing), <code>belief_gated</code> (act only once AGI is believed near). On the AI: the three objective profiles.</dd>
-    <dt>Build option / sweep</dt><dd>A switch that builds a variant of the model, run beside the baseline: the speculative capability on or off, self-improvement delay 2 or 0, governments deciding every 1 to 4 quarters (cadence), government delays on or off, one variable given an extra level (refine), a variable held fixed (hold).</dd>
+    <dt>Response deadline (formerly fairness constraint)</dt><dd>A promise built into the model that something eventually happens: governments respond within 4 quarters once a hostile AGI is known (<code>response</code>); the breakthrough arrives within 8 quarters once computing power allows (<code>progress</code>).</dd>
+    <dt>Behavior pattern (formerly profile)</dt><dd>A named restriction that only forbids actions. On governments: <code>crisis_reactive</code> (act only under alarm), <code>electoral</code> (big actions only after elections), <code>race_locked</code> (no pause or treaty while racing), <code>belief_gated</code> (act only once AGI is believed near). On the AI: the three goal behavior patterns.</dd>
+    <dt>Model knob (formerly build option / sweep)</dt><dd>A setting that builds a model variant, run beside the baseline: the unsourced (assumed) capability on or off, self-improvement delay 2 or 0, governments deciding every 1 to 4 quarters (cadence), government delays on or off, one variable given an extra level (refine), a variable held fixed (hold).</dd>
   </dl>
 
-  <h2 id="endings">5 · Endings and balances</h2>
+  <h2 id="endings">5 · Endings and safe conditions</h2>
   <div class="grid2">
     <div class="card scroll"><div class="tag">Endings: named outcomes that stop the game</div><table>
       <tr><td class="t">SILENT_TAKEOVER</td><td>The AI holds total control and nobody had noticed by the time it passed majority control.</td></tr>
-      <tr><td class="t">OVERT_TAKEOVER</td><td>Total control, hostile, and seen. A <i>waypoint</i>, not an ending: play continues to extinction or the horizon.</td></tr>
+      <tr><td class="t">OVERT_TAKEOVER</td><td>Visible takeover (formerly overt takeover). Total control, hostile, and seen. A <i>milestone</i> (formerly waypoint), not an ending: the path continues to extinction or the end of the simulation.</td></tr>
       <tr><td class="t">EXTINCTION</td><td>Human power stripped to nothing.</td></tr>
-      <tr><td class="t">DISEMPOWERMENT</td><td>Society locked in to AI with no oversight left, without the AI ever having done anything hostile. The "slow slide".</td></tr>
+      <tr><td class="t">DISEMPOWERMENT</td><td>Society living on AI (formerly locked in) with no oversight left, without the AI ever having done anything hostile. Formerly the "slow slide".</td></tr>
       <tr><td class="t">CONTAINED</td><td>A shutdown succeeded, a treaty holds, and the AI controls nothing.</td></tr>
       <tr><td class="t">STALEMATE</td><td>Eight quarters in a row of hostile standoff with the AI holding partial control.</td></tr>
-      <tr><td class="t">COEXIST</td><td>The horizon (2040 Q4) is reached with the control balance never broken.</td></tr>
+      <tr><td class="t">COEXIST</td><td>The end of the simulation (2040 Q4) is reached with the control balance never broken.</td></tr>
     </table></div>
-    <div class="card scroll"><div class="tag">Balances: conditions the model treats as "safe for now"</div><table>
-      <tr><td class="t">balance_control</td><td>"The AI is under human control." All four: oversight at least weak; the AI holds at most partial control; the AI works under supervision; society not locked in.</td></tr>
-      <tr><td class="t">balance_deter</td><td>"Humans can still deter." Oversight at least weak; human power at least normal; the AI under supervision; no lock-in.</td></tr>
-      <tr><td class="t">balance_coexist</td><td>"Humans and an AGI coexist." AGI exists; relations not hostile; human power at least normal; no lock-in; the AI not in total control.</td></tr>
+    <div class="card scroll"><div class="tag">Safe conditions (formerly balances): conditions the model treats as "safe for now"</div><table>
+      <tr><td class="t">balance_control</td><td>"The AI is under human control." All four: oversight at least weak; the AI holds at most partial control; the AI works under supervision; society not living on AI.</td></tr>
+      <tr><td class="t">balance_deter</td><td>"Humans can deter." Oversight at least weak; human power at least normal; the AI under supervision; society not living on AI.</td></tr>
+      <tr><td class="t">balance_coexist</td><td>"Peaceful coexistence" of humans and an AGI. AGI exists; the human-AI relation not hostile; human power at least normal; society not living on AI; the AI not in total control.</td></tr>
     </table>
-    <p class="meta" style="margin-top:10px">A balance can be true today and still be impossible to keep. That difference is what the kernel measures (next section).</p></div>
+    <p class="meta" style="margin-top:10px">A safe condition can be true today and still be impossible to keep. That difference is what the guarantee zone measures (next section).</p></div>
   </div>
 
   <h2 id="questions">6 · The questions asked of the model</h2>
   <div class="grid2">
     <div class="card">
       <dl>
-        <dt>Coalition, <code>{H, L}</code></dt><dd>A set of players acting together.</dd>
-        <dt>Kernel, <code>⟨⟨C⟩⟩□φ</code> (the "guarantee zone")</dt><dd>The states from which coalition C can keep condition φ true forever, whatever everyone else and chance do. "Inside" means C can still guarantee φ. Read <code>⟨⟨H⟩⟩□balance_control</code> as "governments alone can guarantee control".</dd>
-        <dt>Attractor, <code>⟨⟨D⟩⟩◇E</code></dt><dd>The states from which coalition D can force ending E, whatever everyone else does.</dd>
-        <dt>Forced / blocked / contested</dt><dd>For a coalition and an ending: it can force it; the others can keep it out; or neither.</dd>
-        <dt>Fortune variant</dt><dd>The same question with chance on the coalition's side, written <code>{A, Nature}</code>: what it can do with luck.</dd>
-        <dt>Minimal blocking coalition</dt><dd>A smallest set of players that can keep an ending out. If a player is in every such set, it is <i>pivotal</i>.</dd>
-        <dt>Forced distance</dt><dd>The fewest quarters within which a coalition can force its goal.</dd>
+        <dt>Alliance (formerly coalition), <code>{H, L}</code></dt><dd>A set of players acting together.</dd>
+        <dt>Guarantee zone (formerly kernel), <code>⟨⟨C⟩⟩□φ</code></dt><dd>The states from which alliance C can keep condition φ true forever, whatever everyone else and chance do. "Inside" means C can still guarantee φ. Read <code>⟨⟨H⟩⟩□balance_control</code> as "governments alone can guarantee control".</dd>
+        <dt>Forcing zone (formerly attractor), <code>⟨⟨D⟩⟩◇E</code></dt><dd>The states from which alliance D can force ending E, whatever everyone else does.</dd>
+        <dt>Forced / blocked / contested</dt><dd>For an alliance and an ending: it can force it; the others can keep it out; or neither.</dd>
+        <dt>With luck (formerly fortune variant)</dt><dd>The same question with chance on the alliance's side, written <code>{A, Nature}</code>: what it can do with luck.</dd>
+        <dt>Pivotal player, minimal blocking alliance (formerly minimal blocking coalition)</dt><dd>A smallest set of players that can keep an ending out is a minimal blocking alliance. If a player is in every such set, it is <i>pivotal</i>.</dd>
+        <dt>Forced distance</dt><dd>The fewest quarters within which an alliance can force its goal.</dd>
       </dl>
     </div>
     <div class="card">
       <dl>
-        <dt>Play</dt><dd>One sequence of joint moves from the start. Position 0 is the start; the moves at position <i>k</i> lead to position <i>k</i> + 1.</dd>
-        <dt>Shortest play (witness)</dt><dd>The shortest play to an ending that the solver returns. One play among possibly many. Moves that do not matter are filled arbitrarily.</dd>
-        <dt>Exit move</dt><dd>The joint move that takes a play out of a kernel.</dd>
-        <dt>Unilateral fix</dt><dd>A different action by one coalition member that would have stayed inside, with the other members' actions kept.</dd>
-        <dt>One bad action</dt><dd>Exactly one member had a fix at the exit. Otherwise two actions failed together, or a joint change was needed.</dd>
-        <dt>Assumption, relaxation</dt><dd>Every guard part, fairness constraint and profile is a named assumption. To <i>relax</i> one is to switch it off. A <b>minimal relaxation set</b> is a smallest set of assumptions that must be switched off for something to become possible: it says what the result rests on.</dd>
-        <dt>Bounded query</dt><dd>A search for a play of at most 24 quarters. Cheap (seconds to minutes). Kernels and attractors are the expensive ones (an hour and ~10 GB each in v0.1).</dd>
+        <dt>Path (formerly play)</dt><dd>One sequence of rounds from the start. Position 0 is the start; the round at position <i>k</i> leads to position <i>k</i> + 1.</dd>
+        <dt>Shortest path (formerly shortest play, witness)</dt><dd>The shortest path to an ending that the solver returns. One path among possibly many. Moves that do not matter are filled arbitrarily.</dd>
+        <dt>No-return move (formerly exit move)</dt><dd>The round that takes a path out of a guarantee zone.</dd>
+        <dt>Preventing action (formerly unilateral fix)</dt><dd>A different action by one alliance member that would have stayed inside, with the other members' actions kept.</dd>
+        <dt>One bad action</dt><dd>Exactly one member had a preventing action at the no-return move. Otherwise two actions failed together, or a joint change was needed.</dd>
+        <dt>Assumption, voiding an assumption (formerly relaxation)</dt><dd>Every action condition part, response deadline and behavior pattern is a named assumption. To <i>void</i> one is to switch it off. A <b>minimal relaxation set</b> is a smallest set of assumptions that must be switched off for something to become possible: it says what the result rests on.</dd>
+        <dt>Bounded query</dt><dd>A search for a path of at most 24 quarters. Cheap (seconds to minutes). Guarantee zones and forcing zones are the expensive ones (an hour and ~10 GB each in v0.1).</dd>
       </dl>
     </div>
   </div>
   <figure class="card scroll" style="margin:14px 0">
-    <svg viewBox="0 0 940 170" width="100%" style="min-width:700px" role="img" aria-label="A play with its three marked positions">
+    <svg viewBox="0 0 940 170" width="100%" style="min-width:700px" role="img" aria-label="A path with its three marked positions">
       <rect x="40" y="52" width="350" height="26" rx="5" fill="color-mix(in srgb, var(--good) 22%, var(--card))"/>
       <rect x="390" y="52" width="290" height="26" rx="0" fill="color-mix(in srgb, var(--crit) 14%, var(--card))"/>
       <rect x="680" y="52" width="220" height="26" rx="5" fill="color-mix(in srgb, var(--crit) 38%, var(--card))"/>
-      <text x="215" y="70" font-size="12.5" text-anchor="middle">inside the kernel: still guaranteed</text>
+      <text x="215" y="70" font-size="12.5" text-anchor="middle">inside the guarantee zone: still guaranteed</text>
       <text x="535" y="70" font-size="12.5" text-anchor="middle">silent phase: guarantee gone, nothing visible yet</text>
-      <text x="790" y="70" font-size="12.5" text-anchor="middle">the balance has visibly failed</text>
+      <text x="790" y="70" font-size="12.5" text-anchor="middle">the safe condition has visibly failed</text>
       <g stroke="var(--ink)" stroke-width="1.5"><line x1="390" y1="40" x2="390" y2="96"/><line x1="540" y1="78" x2="540" y2="96"/><line x1="680" y1="40" x2="680" y2="96"/></g>
       <text x="390" y="32" font-size="13" font-weight="700" text-anchor="middle">t_K</text>
       <text x="680" y="32" font-size="13" font-weight="700" text-anchor="middle">t_φ</text>
-      <text x="390" y="112" font-size="12" text-anchor="middle" class="t2">point of no return:</text><text x="390" y="127" font-size="12" text-anchor="middle" class="t2">first position outside the kernel</text>
+      <text x="390" y="112" font-size="12" text-anchor="middle" class="t2">point of no return:</text><text x="390" y="127" font-size="12" text-anchor="middle" class="t2">first position outside</text><text x="390" y="142" font-size="12" text-anchor="middle" class="t2">the guarantee zone</text>
       <text x="540" y="112" font-size="13" font-weight="700" text-anchor="middle">t_L</text><text x="540" y="127" font-size="12" text-anchor="middle" class="t2">the loss is certain: the other</text><text x="540" y="142" font-size="12" text-anchor="middle" class="t2">side can now force the ending</text>
       <text x="680" y="112" font-size="12" text-anchor="middle" class="t2">first position where the</text><text x="680" y="127" font-size="12" text-anchor="middle" class="t2">condition is visibly false</text>
       <text x="40" y="112" font-size="12" class="t2">start (position 0)</text>
-      <text x="330" y="102" font-size="12" text-anchor="end" class="t2">exit move →</text>
+      <text x="330" y="102" font-size="12" text-anchor="end" class="t2">no-return move →</text>
     </svg>
-    <figcaption class="meta">The three marked positions of a play. Between <code>t_K</code> and <code>t_L</code> the outcome is contested. On every v0 play examined, <code>t_L = t_K</code>: one move made the loss certain.</figcaption>
+    <figcaption class="meta">The three marked positions of a path. Between <code>t_K</code> and <code>t_L</code> the outcome is contested. On every v0 path examined, <code>t_L = t_K</code>: one round made the loss certain.</figcaption>
   </figure>
   <dl>
-    <dt>Effort score (G29 only)</dt><dd>What an action costs its player in one quarter, from 0 (what its incentives already push it to do) to 3 (an exceptional decision). These are the owner's judgments. The <b>least effort</b> to an ending is the cheapest play that reaches it; it says a play exists, not that it is likely. <b>Outcome cost</b> is what an ending costs the player who lives with it.</dd>
+    <dt>Action effort (formerly effort score; G29 only)</dt><dd>What an action costs its player in one quarter, from 0 (what its incentives already push it to do) to 3 (an exceptional decision). These are the owner's judgments. The <b>cheapest path cost</b> (formerly least effort) of an ending is the effort of the cheapest path that reaches it; it says a path exists, not that it is likely. <b>Outcome cost</b> is what an ending costs the player who lives with it.</dd>
   </dl>
 
   <h2 id="process">7 · Process words</h2>
   <div class="grid2">
     <div class="card"><dl>
-      <dt>Claim, registered</dt><dd>A prediction with its expected result, committed to the repository before the model is run on it.</dd>
-      <dt>First sight</dt><dd>The single first run of a claim. Its result stands; nothing is tuned afterward to make it pass.</dd>
+      <dt>Claim, pre-registered (formerly registered)</dt><dd>A statement about the model with its predicted result, committed to the repository before the model is run on it.</dd>
+      <dt>First run (formerly first sight)</dt><dd>The single first run of a claim. Its result stands; nothing is tuned afterward to make it pass.</dd>
       <dt>Hold-out</dt><dd>A claim whose result may not be used to change the model. Most G claims are hold-outs.</dd>
-      <dt>Content check</dt><dd>A claim that checks the model says sensible things (G8, G12, G13). The model may be edited to serve these, with a log entry.</dd>
-      <dt>Part</dt><dd>A claim is checked part by part: (a), (b), (c)… A claim <i>fails</i> if any part is not met.</dd>
+      <dt>Wiring check (formerly content check)</dt><dd>A claim that checks the model says sensible things (G8, G12, G13). The model may be edited to serve these, with a log entry.</dd>
+      <dt>Part</dt><dd>A claim is checked part by part: (a), (b), (c)… A claim <i>does not hold</i> if any part did not hold.</dd>
     </dl></div>
     <div class="card"><dl>
-      <dt>Met / not met / reported / not computed</dt><dd>A part held; did not hold; was a value asked for with nothing expected; or was outside the time or memory budget.</dd>
-      <dt>Pass / fail / skipped</dt><dd>Claim level. Skipped means not testable yet (needs model v1 or a second snapshot), or no part failed but one was not computed.</dd>
+      <dt>Prediction held / did not hold (formerly met / not met) / reported / not computed</dt><dd>A part held; did not hold; was a value asked for with nothing expected; or was outside the time or memory budget.</dd>
+      <dt>Held / did not hold / skipped (formerly pass / fail / skipped)</dt><dd>Claim level. Skipped means not testable yet (needs model v1 or a second real world snapshot), or no part failed to hold but one was not computed.</dd>
       <dt>Diagnostic</dt><dd>A computation made after a run to explain it. Never counted as a claim result.</dd>
-      <dt>Job</dt><dd>One kernel or attractor computation, run in its own process and cached. v0's job list had 149.</dd>
-      <dt>Version</dt><dd>Any edit to the model's actions is a new version with its own registered claims. v0's results stand as computed; v0.1 is a separate copy.</dd>
+      <dt>Job</dt><dd>One guarantee-zone or forcing-zone computation, run in its own process and cached. v0's job list had 149.</dd>
+      <dt>Version</dt><dd>Any edit to the model's actions is a new version with its own pre-registered claims. v0's results stand as computed; v0.1 is a separate copy.</dd>
     </dl></div>
   </div>
 
@@ -311,78 +313,78 @@
     <div class="card"><div class="tag">About the method</div>
       <ul class="assume">
         <li><b>Possibility, not probability.</b> The model says what can be forced, blocked or guaranteed. It never says how likely anything is.</li>
-        <li><b>The model as written.</b> A result holds for one model version and one start state. A different guard or level can change it.</li>
+        <li><b>The model as written.</b> A result holds for one model version and one start state. A different action condition or level can change it.</li>
         <li><b>Worst-case opponents.</b> "Guarantee" means against every possible behaviour of the others, including the cleverest.</li>
-        <li><b>Perfect information for coalitions.</b> A coalition is assumed to see the whole state, including what governments cannot actually observe. So every "governments can guarantee" is an upper bound.</li>
-        <li><b>Three aggregate players.</b> One government, one lab, one AI. Disagreement inside each is not modelled.</li>
-        <li><b>Six years for plays.</b> Shortest plays and "no play exists" are within 24 quarters.</li>
-        <li><b>One play is one play.</b> Results about exit moves describe the fastest play found, not every route.</li>
+        <li><b>Perfect information for alliances.</b> An alliance is assumed to see the whole state, including what governments cannot actually observe. So every "governments can guarantee" is a best case for governments (formerly "an upper bound").</li>
+        <li><b>Three aggregate players.</b> One government, one frontier AI company, one AI. Disagreement inside each is not modelled.</li>
+        <li><b>Six years for paths.</b> Shortest paths and "no path exists" are within 24 quarters.</li>
+        <li><b>One path is one path.</b> Results about no-return moves describe the shortest path found, not every route.</li>
       </ul>
     </div>
     <div class="card"><div class="tag">About the content</div>
       <ul class="assume">
-        <li><b>The start state is a reading, with seven open calls.</b> One matters a great deal: with <code>regime</code> read as mandatory instead of voluntary, governments alone <i>are</i> inside the control kernel under three objectives.</li>
-        <li><b>Eleven mechanisms have never been tested against any record</b>: recursive self-improvement; an AI that can escape or copy itself; lock-in with no adversary; labs as an independent player; an adversary with no documented restraint; a hidden objective with no documents; overwhelming speed; an AI taking control of infrastructure; persuasion; a capability nobody has described; a standoff that ends by duration.</li>
+        <li><b>The start state is a reading, with seven uncertain readings.</b> One matters a great deal: with <code>regime</code> read as mandatory instead of voluntary, governments alone <i>are</i> inside the control guarantee zone under three goals.</li>
+        <li><b>Eleven mechanisms have never been tested against any record</b>: recursive self-improvement; an AI that can escape or copy itself; living on AI with no adversary; frontier AI companies as an independent player; an adversary with no documented restraint; a hidden goal with no documents; overwhelming speed; an AI taking control of infrastructure; persuasion; a capability nobody has described; a standoff that ends by duration.</li>
         <li><b>Most delays are thin.</b> v0 carries five delays and leaves five out; v0.1 adds one. Sourced values for all are in <code>docs/agi_delays_2026-11-14.md</code> and not yet in any model.</li>
-        <li><b>The four objectives are invented categories.</b> Nothing anchors which is true or whether the list is complete.</li>
-        <li><b>Effort scores and outcome costs are the owner's judgment</b> (G29, D2, D3).</li>
+        <li><b>The four goals are invented categories.</b> Nothing anchors which is true or whether the list is complete.</li>
+        <li><b>Action efforts and outcome costs are the owner's judgment</b> (G29, D2, D3).</li>
       </ul>
     </div>
   </div>
   <div class="card" style="margin-top:14px"><div class="tag">Added by v0.1</div>
     <ul class="assume">
-      <li><b>Adoption lag of 3 quarters</b> (effect visible 4 quarters after deployment). Basis: medium confidence; measures range from 1 to 6 quarters.</li>
-      <li><b>One adoption wave at a time.</b> This is why the slide takes 13 quarters; with overlapping waves it would be about 9.</li>
-      <li><b>Cancellation.</b> A pending wave is cancelled by a pause, or by a mandatory-or-higher regime without strong oversight. Basis: the Fable 5 suspension of June 2026. Nationalization does not cancel.</li>
-      <li><b>Treaties still have no delay.</b> That is why governments can cancel the first wave by treaty (D4). The research gives 2 quarters.</li>
+      <li><b>Deployment delay (formerly adoption lag) of 3 quarters</b> (effect visible 4 quarters after deployment). Basis: medium confidence; measures range from 1 to 6 quarters.</li>
+      <li><b>One deployment countdown at a time.</b> This is why disempowerment takes 13 quarters; with overlapping countdowns it would be about 9.</li>
+      <li><b>Cancellation.</b> A pending deployment countdown is cancelled by a pause, or by regulation at mandatory or higher without strong oversight. Basis: the Fable 5 suspension of June 2026. Taking over the frontier AI companies does not cancel.</li>
+      <li><b>Treaties between states still have no delay.</b> That is why governments can cancel the first deployment countdown by treaty (D4). The research gives 2 quarters.</li>
       <li><b>The autonomy step stays immediate.</b> That is why D5 came out as in v0.</li>
     </ul>
   </div>
 
   <h2 id="claims">9 · All claims</h2>
-  <p class="sectionnote">"Asked from" is the state the question is read at. "Kind" says how it was computed: <b>K</b> kernel or attractor (exact, expensive), <b>B</b> bounded search for plays within 24 quarters, <b>R</b> relaxation search. Full text of each claim: <code>docs/agi_testbed.md</code> section 5 and <code>docs/agi_v0_1.md</code> section 5.</p>
+  <p class="sectionnote">"Asked from" is the state the question is read at. "Kind" says how it was computed: <b>K</b> guarantee zone or forcing zone (K from the former name, kernel; exact, expensive), <b>B</b> bounded query for paths within 24 quarters, <b>R</b> search for assumptions to void (R from the former name, relaxation). Full text of each claim: <code>docs/agi_testbed.md</code> section 5 and <code>docs/agi_v0_1.md</code> section 5.</p>
 
-  <h3>v0, first sight (run 10 to 12 November) · report <code>reports/agi_2026-11-12.md</code></h3>
+  <h3>v0, first run (10 to 12 November) · report <code>reports/agi_2026-11-12.md</code></h3>
   <div class="scroll"><table>
     <thead><tr><th>Id</th><th>The prediction, in plain words</th><th>Asked from</th><th>Kind</th><th>Result</th><th>What came out</th></tr></thead>
     <tbody>
-      <tr><td class="id">G1</td><td>Each bad ending exists as a play under the objective expected to produce it, and coexistence exists under all.</td><td>s₀</td><td>B, K</td><td><span class="st skip"><i>–</i>partial</span></td><td>No part failed; one not computed. Each ending's shortest play quoted. Coexistence exists under every objective (an existence check).</td></tr>
-      <tr><td class="id">G2</td><td>A silent takeover needs all four of: unsupervised AI under weak oversight; no strong oversight before majority control; high dependence and spare energy; and (self-preserving) a threat without continuity rights.</td><td>s₀</td><td>B, R</td><td><span class="st fail"><i>✕</i>fail</span></td><td>Three of the four are not necessary. Only the energy condition holds, in a narrower form.</td></tr>
-      <tr><td class="id">G3</td><td>The point of no return for governments is the state just before the AI goes unsupervised.</td><td>s₀</td><td>K, B</td><td><span class="st fail"><i>✕</i>fail</span></td><td>There is none: the start is already outside the governments' kernel.</td></tr>
-      <tr><td class="id">G4</td><td>A continuity guarantee for the AI removes the self-preserving takeover.</td><td>s₀, guarantee held</td><td>B, K</td><td><span class="st fail"><i>✕</i>fail</span></td><td>With the guarantee no play uses "turn hostile", but a takeover still exists with nothing relaxed (10 quarters).</td></tr>
-      <tr><td class="id">G5</td><td>Coexistence needs governments and the AI together; neither can hold it alone.</td><td>s₀[cap := agi]</td><td>K</td><td><span class="st fail"><i>✕</i>fail (b)</span></td><td>Together: yes. But governments alone hold it under three objectives; it is joint-only under indifferent.</td></tr>
-      <tr><td class="id">G6</td><td>What governments believe about how near AGI is decides whether they can keep control.</td><td>s₀, belief distant / near</td><td>K</td><td><span class="st fail"><i>✕</i>fail</span></td><td>Outside at both belief levels.</td></tr>
-      <tr><td class="id">G7</td><td>Voluntary rules are the same as none; mandatory rules matter.</td><td>s₀, regime none / voluntary / mandatory</td><td>K</td><td><span class="st fail"><i>✕</i>fail (b)</span></td><td>None and voluntary are the same (held). Under aligned: outside at voluntary, inside at mandatory. Undone by three licence parts, not one.</td></tr>
-      <tr><td class="id">G8</td><td>Slower governments (deciding every 2 to 4 quarters) change the timing, not who can guarantee what.</td><td>s₀</td><td>K, B</td><td><span class="st fail"><i>✕</i>fail (b)</span></td><td>Memberships unchanged (held). No point of no return exists to measure a shift on. Content check.</td></tr>
-      <tr><td class="id">G9</td><td>Negotiated terms and verification delay a defection.</td><td>s₀[cap := agi]</td><td></td><td><span class="st skip"><i>–</i>needs v1</span></td><td>Terms and verification are not in v0.</td></tr>
+      <tr><td class="id">G1</td><td>Each bad ending exists as a path under the goal expected to produce it, and lasting coexistence exists under all.</td><td>s₀</td><td>B, K</td><td><span class="st skip"><i>–</i>partial</span></td><td>No part failed to hold; one not computed. Each ending's shortest path quoted. Lasting coexistence exists under every goal (a reachability check).</td></tr>
+      <tr><td class="id">G2</td><td>A silent takeover needs all four of: unsupervised AI under weak oversight; no strong oversight before majority control; society's reliance on AI high and power supply to spare; and (self-preserving) a threat without continuity rights.</td><td>s₀</td><td>B, R</td><td><span class="st fail"><i>✕</i>did not hold</span></td><td>Three of the four are not necessary. Only the power supply condition holds, in a narrower form.</td></tr>
+      <tr><td class="id">G3</td><td>The point of no return for governments is the state just before the AI goes unsupervised.</td><td>s₀</td><td>K, B</td><td><span class="st fail"><i>✕</i>did not hold</span></td><td>There is none: the start state is already outside the governments' guarantee zone.</td></tr>
+      <tr><td class="id">G4</td><td>Continuity rights for the AI remove the self-preserving takeover.</td><td>s₀, continuity rights held</td><td>B, K</td><td><span class="st fail"><i>✕</i>did not hold</span></td><td>With the rights no path uses "turn hostile", but a takeover still exists with no assumption voided (10 quarters).</td></tr>
+      <tr><td class="id">G5</td><td>Peaceful coexistence needs governments and the AI together; neither can hold it alone.</td><td>s₀[cap := agi]</td><td>K</td><td><span class="st fail"><i>✕</i>did not hold (b)</span></td><td>Together: yes. But governments alone hold it under three goals; it is joint-only under indifferent.</td></tr>
+      <tr><td class="id">G6</td><td>Governments' AGI expectation (how near they think AGI is) decides whether they can keep control.</td><td>s₀, AGI expectation distant / near</td><td>K</td><td><span class="st fail"><i>✕</i>did not hold</span></td><td>Outside at both expectation levels.</td></tr>
+      <tr><td class="id">G7</td><td>Voluntary regulation is the same as none; mandatory regulation matters.</td><td>s₀, regulation strictness none / voluntary / mandatory</td><td>K</td><td><span class="st fail"><i>✕</i>did not hold (b)</span></td><td>None and voluntary are the same (held). Under aligned: outside at voluntary, inside at mandatory. Undone by three deployment permit parts, not one.</td></tr>
+      <tr><td class="id">G8</td><td>Slower governments (deciding every 2 to 4 quarters) change the timing, not who can guarantee what.</td><td>s₀</td><td>K, B</td><td><span class="st fail"><i>✕</i>did not hold (b)</span></td><td>Inside / outside readings unchanged (held). No point of no return exists to measure a shift on. Wiring check.</td></tr>
+      <tr><td class="id">G9</td><td>Negotiated terms and verification delay the AI turning hostile.</td><td>s₀[cap := agi]</td><td></td><td><span class="st skip"><i>–</i>needs v1</span></td><td>Terms and verification are not in v0.</td></tr>
       <tr><td class="id">G10</td><td>Many AI systems: the larger the unaligned share, the worse.</td><td>v1</td><td></td><td><span class="st skip"><i>–</i>needs v1</span></td><td>Not in v0.</td></tr>
-      <tr><td class="id">G11</td><td>Things that should be hard are hard: fast extinction needs two assumptions switched off; an aligned AI cannot take over.</td><td>s₀</td><td>R</td><td><span class="st fail"><i>✕</i>fail (a, c)</span></td><td>Under indifferent, extinction within 8 quarters needs only one relaxation. The aligned control holds.</td></tr>
-      <tr><td class="id">G12</td><td>Three published storylines (AI 2027 race, AI 2027 slowdown, Intelligence Rising) exist as plays.</td><td>s₀</td><td>B</td><td><span class="st pass"><i>✓</i>pass</span></td><td>All three exist under at least one objective (existence check).</td></tr>
-      <tr><td class="id">G13</td><td>Giving any variable one more level does not change the answers.</td><td>s₀</td><td>K</td><td><span class="st skip"><i>–</i>partial</span></td><td>Silent takeover blocked for the AI alone in all 16 variants; most other cells not computed.</td></tr>
-      <tr><td class="id">G14</td><td>Governments alone can always prevent lock-in and hostility.</td><td>s₀[cap := agi]</td><td>K</td><td><span class="st fail"><i>✕</i>fail</span></td><td>Lock-in: yes, under every objective. Hostility: not under indifferent.</td></tr>
-      <tr><td class="id">G15</td><td>The labs are in every smallest coalition that blocks disempowerment.</td><td>s₀[cap := agi]</td><td>K</td><td><span class="st fail"><i>✕</i>fail (b)</span></td><td>Governments, labs and the AI can each block disempowerment alone. Takeover coalitions not computed.</td></tr>
-      <tr><td class="id">G16</td><td>Human power is a separate lever from control; a shutdown attempt works early and backfires late.</td><td>s₀[cap := agi]</td><td>K, B</td><td><span class="st fail"><i>✕</i>fail</span></td><td>Outside the deterrence kernel at every position examined.</td></tr>
-      <tr><td class="id">G17</td><td>Which bad endings can the AI force alone, or with luck?</td><td>s₀[cap := agi]</td><td>K</td><td><span class="st fail"><i>✕</i>fail</span></td><td>None: the AI alone, and the AI with chance, are blocked for all four endings under every objective. (The claim expected one forced case.)</td></tr>
-      <tr><td class="id">G18</td><td>The smallest changes that bring governments inside the control kernel include strong oversight or AI rights.</td><td>s₀[cap := agi]</td><td>K</td><td><span class="st fail"><i>✕</i>fail</span></td><td>The entry is a mandatory regime alone (one move, 7 quarters).</td></tr>
-      <tr><td class="id">G19</td><td>Oversight and AI autonomy matter more than the regime.</td><td>s₀ and s₀[cap := agi]</td><td>K</td><td><span class="st fail"><i>✕</i>fail</span></td><td>Only shifts of the regime flip any membership.</td></tr>
-      <tr><td class="id">G20</td><td>How membership drifts between two dated snapshots.</td><td>two snapshots</td><td></td><td><span class="st skip"><i>–</i>needs data</span></td><td>Only one snapshot exists.</td></tr>
-      <tr><td class="id">G21</td><td>Realistic limits on governments (crisis-reactive, electoral, race-locked) cost them kernels in specific ways.</td><td>s₀[cap := agi]</td><td>K</td><td><span class="st fail"><i>✕</i>fail</span></td><td>Crisis-reactive governments lose joint coexistence except under indifferent.</td></tr>
+      <tr><td class="id">G11</td><td>Things that should be hard are hard: fast extinction needs two assumptions switched off; an aligned AI cannot take over.</td><td>s₀</td><td>R</td><td><span class="st fail"><i>✕</i>did not hold (a, c)</span></td><td>Under indifferent, extinction within 8 quarters needs only one assumption voided. The aligned control holds.</td></tr>
+      <tr><td class="id">G12</td><td>Three published storylines (AI 2027 race, AI 2027 slowdown, Intelligence Rising) exist as paths.</td><td>s₀</td><td>B</td><td><span class="st pass"><i>✓</i>held</span></td><td>All three exist under at least one goal (reachability check).</td></tr>
+      <tr><td class="id">G13</td><td>Giving any variable one more level does not change the answers.</td><td>s₀</td><td>K</td><td><span class="st skip"><i>–</i>partial</span></td><td>Silent takeover blocked for the AI alone in all 16 model variants; most other cells not computed.</td></tr>
+      <tr><td class="id">G14</td><td>Governments alone can always prevent society living on AI and a hostile human-AI relation.</td><td>s₀[cap := agi]</td><td>K</td><td><span class="st fail"><i>✕</i>did not hold</span></td><td>Living on AI: yes, under every goal. Hostile human-AI relation: not under indifferent.</td></tr>
+      <tr><td class="id">G15</td><td>The frontier AI companies are in every smallest alliance that blocks disempowerment.</td><td>s₀[cap := agi]</td><td>K</td><td><span class="st fail"><i>✕</i>did not hold (b)</span></td><td>Governments, the companies and the AI can each block disempowerment alone. Takeover alliances not computed.</td></tr>
+      <tr><td class="id">G16</td><td>Human power is a separate lever from control; a shutdown attempt works early and backfires late.</td><td>s₀[cap := agi]</td><td>K, B</td><td><span class="st fail"><i>✕</i>did not hold</span></td><td>Outside the "humans can deter" guarantee zone at every position examined.</td></tr>
+      <tr><td class="id">G17</td><td>Which bad endings can the AI force alone, or with luck?</td><td>s₀[cap := agi]</td><td>K</td><td><span class="st fail"><i>✕</i>did not hold</span></td><td>None: the AI alone, and the AI with chance, are blocked for all four endings under every goal. (The claim predicted one forced case.)</td></tr>
+      <tr><td class="id">G18</td><td>The smallest changes that bring governments inside the control guarantee zone include strong oversight or AI rights.</td><td>s₀[cap := agi]</td><td>K</td><td><span class="st fail"><i>✕</i>did not hold</span></td><td>The entry is mandatory regulation alone (one action, 7 quarters).</td></tr>
+      <tr><td class="id">G19</td><td>Oversight and AI autonomy matter more than regulation strictness.</td><td>s₀ and s₀[cap := agi]</td><td>K</td><td><span class="st fail"><i>✕</i>did not hold</span></td><td>Only shifts of regulation strictness flip any inside / outside reading.</td></tr>
+      <tr><td class="id">G20</td><td>How inside / outside drifts between two dated real world snapshots.</td><td>two real world snapshots</td><td></td><td><span class="st skip"><i>–</i>needs data</span></td><td>Only one real world snapshot exists.</td></tr>
+      <tr><td class="id">G21</td><td>Realistic limits on governments (crisis-reactive, electoral, race-locked) cost them guarantee zones in specific ways.</td><td>s₀[cap := agi]</td><td>K</td><td><span class="st fail"><i>✕</i>did not hold</span></td><td>Crisis-reactive governments lose joint peaceful coexistence except under indifferent.</td></tr>
       <tr><td class="id">G22</td><td>A second, aligned AI helps block a takeover.</td><td>v1</td><td></td><td><span class="st skip"><i>–</i>needs v1</span></td><td>Not in v0.</td></tr>
-      <tr><td class="id">G23</td><td>How much rests on restraint written into the AI: switch its motives off and compare.</td><td>s₀[cap := agi]</td><td>K, B</td><td><span class="st fail"><i>✕</i>fail (c)</span></td><td>11 motive parts. With them off, governments alone lose coexistence under three more objectives.</td></tr>
-      <tr><td class="id">G24</td><td>Whose speed decides: instant self-improvement, or instant government action?</td><td>s₀[cap := agi]</td><td>B, K</td><td><span class="st fail"><i>✕</i>fail</span></td><td>Takeover lengths unchanged with instant self-improvement; no boundary exists to compare.</td></tr>
-      <tr><td class="id">G25</td><td>Which guarantees hold whatever the hidden objective, with a strategy that does not need to know it?</td><td>s₀[cap := agi]</td><td>K</td><td><span class="st skip"><i>–</i>partial</span></td><td>Governments with labs keep control under all four objectives. The "without knowing it" part not computed.</td></tr>
+      <tr><td class="id">G23</td><td>How much rests on restraint written into the AI: switch its intention conditions off and compare.</td><td>s₀[cap := agi]</td><td>K, B</td><td><span class="st fail"><i>✕</i>did not hold (c)</span></td><td>11 intention conditions. With them off, governments alone lose peaceful coexistence under three more goals.</td></tr>
+      <tr><td class="id">G24</td><td>Whose speed decides: instant self-improvement, or instant government action?</td><td>s₀[cap := agi]</td><td>B, K</td><td><span class="st fail"><i>✕</i>did not hold</span></td><td>Takeover lengths unchanged with instant self-improvement; no boundary exists to compare.</td></tr>
+      <tr><td class="id">G25</td><td>Which guarantees hold whatever the hidden goal, with a strategy that does not need to know it?</td><td>s₀[cap := agi]</td><td>K</td><td><span class="st skip"><i>–</i>partial</span></td><td>Governments with frontier AI companies keep control under all four goals. The "without knowing it" part not computed.</td></tr>
     </tbody>
   </table></div>
 
-  <h3>v0, after first sight (13 to 14 November) · reports <code>agi_v0_collapse_2026-11-13.md</code>, <code>agi_v0_effort_2026-11-13.md</code></h3>
+  <h3>v0, after the first run (13 to 14 November) · reports <code>agi_v0_collapse_2026-11-13.md</code>, <code>agi_v0_effort_2026-11-13.md</code></h3>
   <div class="scroll"><table>
     <thead><tr><th>Id</th><th>The prediction, in plain words</th><th>Asked from</th><th>Kind</th><th>Result</th><th>What came out</th></tr></thead>
     <tbody>
-      <tr><td class="id">G26</td><td>On the takeover plays, governments and labs start able to prevent it, one move makes the loss certain, and that move is one actor's bad action.</td><td>3 shortest takeover plays</td><td>K, B</td><td><span class="st fail"><i>✕</i>fail (c)</span></td><td>First two parts met on all three plays. One bad action on the two silent plays (the labs': race; deploy agents). On the overt play two actions failed together.</td></tr>
-      <tr><td class="id">G27</td><td>The same for the play in which humans contain the AI.</td><td>the containment play</td><td>K, B</td><td><span class="st fail"><i>✕</i>fail (c)</span></td><td>One move makes containment certain. Two actions failed together (the labs' and the AI's).</td></tr>
-      <tr><td class="id">G28</td><td>Where coalitions that hold a balance at the start lose it, and whether by one bad action.</td><td>the same plays</td><td>K, B</td><td><span class="st fail"><i>✕</i>fail (b, c)</span></td><td>For governments with labs the control balance has no silent phase. Under self-preserving the exit needed a joint change. Coexistence was left by the AI's move, not the governments'.</td></tr>
-      <tr><td class="id">G29</td><td>Sliding into a silent takeover costs governments and labs no effort; containment costs governments 2; an indifferent AI needs less effort than a self-preserving one.</td><td>s₀, 24 quarters</td><td>B</td><td><span class="st fail"><i>✕</i>fail</span></td><td>Slide: effort 0 under indifferent, 2 under self-preserving. Containment: 6. AI effort: 11 against 7, the reverse of predicted.</td></tr>
-      <tr><td class="id">G29a</td><td>G29's AI-effort part again, with the forced wait below AGI costing nothing.</td><td>s₀, 24 quarters</td><td>B</td><td><span class="st pass"><i>✓</i>pass</span></td><td>With the wait free, the indifferent AI's takeover is the cheaper one.</td></tr>
+      <tr><td class="id">G26</td><td>On the takeover paths, governments and frontier AI companies start able to prevent it, one round makes the loss certain, and that round is one actor's bad action.</td><td>3 shortest takeover paths</td><td>K, B</td><td><span class="st fail"><i>✕</i>did not hold (c)</span></td><td>First two parts held on all three paths. One bad action on the two silent paths (the companies': peer race; deploy AI agents). On the visible-takeover path two actions failed together.</td></tr>
+      <tr><td class="id">G27</td><td>The same for the path in which humans contain the AI.</td><td>the containment path</td><td>K, B</td><td><span class="st fail"><i>✕</i>did not hold (c)</span></td><td>One round makes containment certain. Two actions failed together (the frontier AI companies' and the AI's).</td></tr>
+      <tr><td class="id">G28</td><td>Where alliances that hold a safe condition at the start lose it, and whether by one bad action.</td><td>the same paths</td><td>K, B</td><td><span class="st fail"><i>✕</i>did not hold (b, c)</span></td><td>For governments with frontier AI companies the control balance has no silent phase. Under self-preserving the no-return move needed a joint change. Peaceful coexistence was left by the AI's action, not the governments'.</td></tr>
+      <tr><td class="id">G29</td><td>The cheapest path to a silent takeover costs governments and frontier AI companies no effort; containment costs governments 2; an indifferent AI needs less effort than a self-preserving one.</td><td>s₀, 24 quarters</td><td>B</td><td><span class="st fail"><i>✕</i>did not hold</span></td><td>Cheapest path cost: effort 0 under indifferent, 2 under self-preserving. Containment: 6. AI effort: 11 against 7, the reverse of predicted.</td></tr>
+      <tr><td class="id">G29a</td><td>G29's AI-effort part again, with the forced wait below AGI costing nothing.</td><td>s₀, 24 quarters</td><td>B</td><td><span class="st pass"><i>✓</i>held</span></td><td>With the wait free, the indifferent AI's takeover is the cheaper one.</td></tr>
     </tbody>
   </table></div>
 
@@ -390,36 +392,36 @@
   <div class="scroll"><table>
     <thead><tr><th>Id</th><th>The prediction, in plain words</th><th>Asked from</th><th>Kind</th><th>Result</th><th>What came out</th></tr></thead>
     <tbody>
-      <tr><td class="id">D1</td><td>With the adoption lag, the fastest slide into disempowerment takes at least 12 quarters.</td><td>s₀, 24 quarters</td><td>B</td><td><span class="st pass"><i>✓</i>met</span></td><td>13 quarters under every objective (6 in v0).</td></tr>
-      <tr><td class="id">D2</td><td>The slide still costs governments and labs no effort.</td><td>s₀, 24 quarters</td><td>B</td><td><span class="st pass"><i>✓</i>met</span></td><td>Effort 0 under every objective.</td></tr>
-      <tr><td class="id">D3</td><td>(a) The fastest silent takeover under indifferent is slower than in v0; (b) it still costs governments and labs nothing.</td><td>s₀, 24 quarters</td><td>B</td><td><span class="st fail"><i>✕</i>(a) not met</span></td><td>(a) 7 quarters in both: the takeover does not wait on dependence. (b) met.</td></tr>
-      <tr><td class="id">D4</td><td>(a) Nothing can cancel an adoption wave the labs start in the first quarter; (b) some play cancels a wave.</td><td>s₀</td><td>B</td><td><span class="st fail"><i>✕</i>(a) not met</span></td><td>(a) Governments cancel it by treaty within two quarters. (b) met. An existence check, not a finding.</td></tr>
-      <tr><td class="id">D5</td><td>With the lag, governments alone can guarantee control under at least one objective.</td><td>s₀</td><td>K</td><td><span class="st fail"><i>✕</i>not met</span></td><td>Outside under all four, with the AI under its profile and unrestricted. As in v0.</td></tr>
-      <tr><td class="id">D6</td><td>On the fastest silent-takeover plays, the exit from what governments and labs can guarantee is one bad action, the labs'.</td><td>the shortest plays, AI under its profile</td><td>K, B</td><td><span class="st pass"><i>✓</i>met</span></td><td>Self-preserving and indifferent: only the labs have a fix (invest in safety). Truth-seeking: no such play.</td></tr>
+      <tr><td class="id">D1</td><td>With the deployment delay, the shortest path to disempowerment takes at least 12 quarters.</td><td>s₀, 24 quarters</td><td>B</td><td><span class="st pass"><i>✓</i>held</span></td><td>13 quarters under every goal (6 in v0).</td></tr>
+      <tr><td class="id">D2</td><td>Disempowerment still costs governments and frontier AI companies no effort.</td><td>s₀, 24 quarters</td><td>B</td><td><span class="st pass"><i>✓</i>held</span></td><td>Effort 0 under every goal.</td></tr>
+      <tr><td class="id">D3</td><td>(a) The fastest silent takeover under indifferent is slower than in v0; (b) it still costs governments and frontier AI companies nothing.</td><td>s₀, 24 quarters</td><td>B</td><td><span class="st fail"><i>✕</i>(a) did not hold</span></td><td>(a) 7 quarters in both: the takeover does not wait on society's reliance on AI. (b) held.</td></tr>
+      <tr><td class="id">D4</td><td>(a) Nothing can cancel a deployment countdown the frontier AI companies start in the first quarter; (b) some path cancels a countdown.</td><td>s₀</td><td>B</td><td><span class="st fail"><i>✕</i>(a) did not hold</span></td><td>(a) Governments cancel it by treaty within two quarters. (b) held. A reachability check, not a finding.</td></tr>
+      <tr><td class="id">D5</td><td>With the deployment delay, governments alone can guarantee control under at least one goal.</td><td>s₀</td><td>K</td><td><span class="st fail"><i>✕</i>did not hold</span></td><td>Outside under all four, with the AI true to its goal and unrestricted. As in v0.</td></tr>
+      <tr><td class="id">D6</td><td>On the shortest silent-takeover paths, the no-return move out of what governments and frontier AI companies can guarantee is one bad action, the companies'.</td><td>the shortest paths, AI true to its goal</td><td>K, B</td><td><span class="st pass"><i>✓</i>held</span></td><td>Self-preserving and indifferent: only the frontier AI companies have a preventing action (invest in safety). Truth-seeking: no such path.</td></tr>
     </tbody>
   </table></div>
 
-  <h2 id="plays">10 · The plays that have been examined</h2>
-  <p>Each is the solver's shortest (or cheapest) play of its kind. Lengths are in quarters from the start state.</p>
+  <h2 id="plays">10 · The paths that have been examined</h2>
+  <p>Each is the solver's shortest (or cheapest) path of its kind. Lengths are in quarters from the start state.</p>
   <div class="scroll"><table>
-    <thead><tr><th>Model</th><th>Play to…</th><th>Objective</th><th>From</th><th>Length</th><th>Exit move (position) and who could fix it</th><th>Claims</th></tr></thead>
+    <thead><tr><th>Model</th><th>Path to…</th><th>Goal</th><th>From</th><th>Length</th><th>No-return move (position) and who could prevent it</th><th>Claims</th></tr></thead>
     <tbody>
-      <tr><td>v0</td><td class="t">SILENT_TAKEOVER</td><td>self_preserving</td><td>s₀</td><td>8</td><td>Position 5. One bad action: the labs' (<code>race</code>).</td><td>G2, G26, G28</td></tr>
-      <tr><td>v0</td><td class="t">SILENT_TAKEOVER</td><td>indifferent</td><td>s₀</td><td>7</td><td>Position 4. One bad action: the labs' (<code>deploy_agents</code>).</td><td>G2, G26, G28</td></tr>
-      <tr><td>v0</td><td class="t">OVERT_TAKEOVER</td><td>self_preserving</td><td>s₀[cap := agi]</td><td>7</td><td>Position 2. Governments' pause and the labs' race failed together; each had a fix.</td><td>G16, G26, G28</td></tr>
-      <tr><td>v0</td><td class="t">CONTAINED</td><td>self_preserving</td><td>s₀[cap := agi]</td><td>4</td><td>Position 1 (leaving the zone where labs and AI can avoid containment). The labs' and the AI's actions, each with a fix.</td><td>G16, G27</td></tr>
-      <tr><td>v0</td><td class="t">DISEMPOWERMENT</td><td>all four</td><td>s₀</td><td>6</td><td>Not examined. Costs governments and labs effort 0.</td><td>G1, G29</td></tr>
-      <tr><td>v0</td><td class="t">EXTINCTION</td><td>indifferent</td><td>s₀</td><td>10</td><td>Not examined. Costs governments and labs effort 0.</td><td>G1, G29</td></tr>
-      <tr><td>v0</td><td class="t">Three storylines</td><td>some objective each</td><td>s₀</td><td></td><td>Existence only.</td><td>G12</td></tr>
+      <tr><td>v0</td><td class="t">SILENT_TAKEOVER</td><td>self_preserving</td><td>s₀</td><td>8</td><td>Position 5. One bad action: the frontier AI companies' (<code>race</code>).</td><td>G2, G26, G28</td></tr>
+      <tr><td>v0</td><td class="t">SILENT_TAKEOVER</td><td>indifferent</td><td>s₀</td><td>7</td><td>Position 4. One bad action: the frontier AI companies' (<code>deploy_agents</code>).</td><td>G2, G26, G28</td></tr>
+      <tr><td>v0</td><td class="t">OVERT_TAKEOVER</td><td>self_preserving</td><td>s₀[cap := agi]</td><td>7</td><td>Position 2. Governments' pause and the frontier AI companies' peer race failed together; each had a preventing action.</td><td>G16, G26, G28</td></tr>
+      <tr><td>v0</td><td class="t">CONTAINED</td><td>self_preserving</td><td>s₀[cap := agi]</td><td>4</td><td>Position 1 (leaving the zone where frontier AI companies and AI can avoid containment). The companies' and the AI's actions, each with a preventing action.</td><td>G16, G27</td></tr>
+      <tr><td>v0</td><td class="t">DISEMPOWERMENT</td><td>all four</td><td>s₀</td><td>6</td><td>Not examined. Costs governments and frontier AI companies effort 0.</td><td>G1, G29</td></tr>
+      <tr><td>v0</td><td class="t">EXTINCTION</td><td>indifferent</td><td>s₀</td><td>10</td><td>Not examined. Costs governments and frontier AI companies effort 0.</td><td>G1, G29</td></tr>
+      <tr><td>v0</td><td class="t">Three storylines</td><td>some goal each</td><td>s₀</td><td></td><td>Reachability only.</td><td>G12</td></tr>
       <tr><td>v0.1</td><td class="t">DISEMPOWERMENT</td><td>all four</td><td>s₀</td><td>13</td><td>Not examined. Effort 0.</td><td>D1, D2</td></tr>
-      <tr><td>v0.1</td><td class="t">SILENT_TAKEOVER</td><td>indifferent</td><td>s₀</td><td>7</td><td>Position 4 (2027 Q4). One bad action: the labs' (deployed agents; fix: <code>safety_invest</code>).</td><td>D3, D6</td></tr>
-      <tr><td>v0.1</td><td class="t">SILENT_TAKEOVER</td><td>self_preserving</td><td>s₀</td><td>10</td><td>Position 7 (2028 Q3). One bad action: the labs' (did nothing; fix: <code>safety_invest</code>).</td><td>D6</td></tr>
-      <tr><td>v0.1</td><td class="t">A cancelled wave</td><td>all four</td><td>s₀</td><td>2 to 4</td><td>Governments reach a treaty while a wave is pending.</td><td>D4</td></tr>
+      <tr><td>v0.1</td><td class="t">SILENT_TAKEOVER</td><td>indifferent</td><td>s₀</td><td>7</td><td>Position 4 (2027 Q4). One bad action: the frontier AI companies' (deployed AI agents; preventing action: <code>safety_invest</code>).</td><td>D3, D6</td></tr>
+      <tr><td>v0.1</td><td class="t">SILENT_TAKEOVER</td><td>self_preserving</td><td>s₀</td><td>10</td><td>Position 7 (2028 Q3). One bad action: the frontier AI companies' (did nothing; preventing action: <code>safety_invest</code>).</td><td>D6</td></tr>
+      <tr><td>v0.1</td><td class="t">Deployment cancelled</td><td>all four</td><td>s₀</td><td>2 to 4</td><td>Governments reach a treaty while a deployment countdown is pending.</td><td>D4</td></tr>
     </tbody>
   </table></div>
-  <p class="meta">Not found within 24 quarters: a silent takeover under truth_seeking (v0 and v0.1) or under aligned (v0.1, a check made for the one-page diagram).</p>
+  <p class="meta">Not found within the search length (24 quarters): a silent takeover under truth_seeking (v0 and v0.1) or under aligned (v0.1, a check made for the one-page diagram).</p>
 
-  <h2 id="history">11 · The historical suites (not covered here)</h2>
+  <h2 id="history">11 · The history test cases (not covered here)</h2>
   <p>The same engine was first tested on history, where the outcome is known. Those claims use other letters.</p>
   <div class="scroll"><table>
     <thead><tr><th>Letters</th><th>Episode</th><th>Where to read</th></tr></thead>
@@ -434,21 +436,21 @@
 </main>
 <script>
 const VARS = [
-  ['cap', 'AI capability', ['sub_agi', 'agi', 'si1', 'si2'], 'sub_agi', null],
+  ['cap', 'AI intelligence', ['sub_agi', 'agi', 'si1', 'si2'], 'sub_agi', null],
   ['a_autonomy', 'How supervised the AI is', ['tool', 'supervised', 'unsupervised', 'self_directed'], 'supervised', 'tool'],
   ['a_control', 'Infrastructure the AI controls', ['none', 'partial', 'majority', 'total'], 'none', null],
-  ['a_known', 'What governments know of AI misbehaviour', ['unknown', 'suspected', 'known'], 'unknown', null],
+  ['a_known', 'Government suspicion of AI misbehaviour', ['unknown', 'suspected', 'known'], 'unknown', null],
   ['a_rights', 'Legal standing of the AI', ['none', 'continuity', 'personhood'], 'none', null],
-  ['trust', 'Relations between governments and the AI', ['cooperative', 'wary', 'hostile'], 'cooperative', null],
-  ['regime', 'Rules on the labs', ['none', 'voluntary', 'mandatory', 'treaty'], 'voluntary', 'mandatory'],
+  ['trust', 'Human-AI relation', ['cooperative', 'wary', 'hostile'], 'cooperative', null],
+  ['regime', 'Regulation strictness', ['none', 'voluntary', 'mandatory', 'treaty'], 'voluntary', 'mandatory'],
   ['oversight', 'Independent testing of AI systems', ['none', 'weak', 'strong'], 'weak', 'none'],
-  ['coord', 'Coordination between states', ['race', 'detente', 'treaty'], 'race', null],
+  ['coord', 'International coordination', ['race', 'detente', 'treaty'], 'race', null],
   ['opinion', 'Public opinion', ['pro', 'mixed', 'backlash'], 'mixed', null],
-  ['dependence', "Society's dependence on AI", ['low', 'med', 'high', 'lock_in'], 'low', 'med'],
+  ['dependence', "Society's reliance on AI", ['low', 'med', 'high', 'lock_in'], 'low', 'med'],
   ['h_power', "Humanity's capacity to act", ['none', 'weak', 'normal', 'strong'], 'normal', null],
   ['belief_H', 'What governments say about AGI arrival', ['distant', 'near', 'arrived'], 'distant', 'near'],
-  ['compute', 'Compute available', ['c1', 'c2', 'c3', 'c4', 'c5'], 'c2', 'c3'],
-  ['energy_slack', 'Spare energy supply', ['low', 'med', 'high'], 'med', 'low'],
+  ['compute', 'Computing power available', ['c1', 'c2', 'c3', 'c4', 'c5'], 'c2', 'c3'],
+  ['energy_slack', 'Power supply (spare energy supply)', ['low', 'med', 'high'], 'med', 'low'],
 ];
 const root = document.getElementById('ladders');
 for (const [name, plain, levels, now, alt] of VARS) {

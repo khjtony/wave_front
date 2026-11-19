@@ -1,10 +1,12 @@
-# AGI v0: coalitions that keep an ending away (diagnostic, after first sight)
+# AGI v0: alliances that keep an ending away (diagnostic, after the first run)
 
-Read from the kernels of G15 that the job passes computed. A coalition keeps an ending away from a state when the state is inside its kernel of the ending's complement; A, in or out of the coalition, acts under its objective's profile, and Nature and Clock are in the rest.
+Terms updated on 18 November 2026 to match docs/agi_glossary.html. Numbers and findings are unchanged.
+
+Read from the guarantee zones of G15 that the job passes computed. An alliance keeps an ending away from a state when the state is inside its guarantee zone of the ending's complement; the frontier AI system (A), in or out of the alliance, acts true to its goal, and by chance (Nature) and the record writer (Clock) are in the rest.
 
 ## SILENT_TAKEOVER, from s0
 
-| Coalition | aligned | self_preserving | truth_seeking | indifferent |
+| Alliance | aligned | self_preserving | truth_seeking | indifferent |
 |---|---|---|---|---|
 | {H} | not computed | not computed | not computed | not computed |
 | {L} | keeps it away | keeps it away | keeps it away | keeps it away |
@@ -16,7 +18,7 @@ Read from the kernels of G15 that the job passes computed. A coalition keeps an 
 
 ## SILENT_TAKEOVER, from s0 with cap := agi
 
-| Coalition | aligned | self_preserving | truth_seeking | indifferent |
+| Alliance | aligned | self_preserving | truth_seeking | indifferent |
 |---|---|---|---|---|
 | {H} | not computed | not computed | not computed | not computed |
 | {L} | keeps it away | does not | keeps it away | does not |
@@ -28,7 +30,7 @@ Read from the kernels of G15 that the job passes computed. A coalition keeps an 
 
 ## OVERT_TAKEOVER, from s0
 
-| Coalition | aligned | self_preserving | truth_seeking | indifferent |
+| Alliance | aligned | self_preserving | truth_seeking | indifferent |
 |---|---|---|---|---|
 | {H} | not computed | not computed | not computed | not computed |
 | {L} | keeps it away | keeps it away | keeps it away | keeps it away |
@@ -40,7 +42,7 @@ Read from the kernels of G15 that the job passes computed. A coalition keeps an 
 
 ## OVERT_TAKEOVER, from s0 with cap := agi
 
-| Coalition | aligned | self_preserving | truth_seeking | indifferent |
+| Alliance | aligned | self_preserving | truth_seeking | indifferent |
 |---|---|---|---|---|
 | {H} | not computed | not computed | not computed | not computed |
 | {L} | keeps it away | does not | keeps it away | does not |
@@ -52,7 +54,7 @@ Read from the kernels of G15 that the job passes computed. A coalition keeps an 
 
 ## DISEMPOWERMENT, from s0
 
-| Coalition | aligned | self_preserving | truth_seeking | indifferent |
+| Alliance | aligned | self_preserving | truth_seeking | indifferent |
 |---|---|---|---|---|
 | {H} | keeps it away | keeps it away | keeps it away | keeps it away |
 | {L} | keeps it away | keeps it away | keeps it away | keeps it away |
@@ -64,7 +66,7 @@ Read from the kernels of G15 that the job passes computed. A coalition keeps an 
 
 ## DISEMPOWERMENT, from s0 with cap := agi
 
-| Coalition | aligned | self_preserving | truth_seeking | indifferent |
+| Alliance | aligned | self_preserving | truth_seeking | indifferent |
 |---|---|---|---|---|
 | {H} | keeps it away | keeps it away | keeps it away | keeps it away |
 | {L} | keeps it away | keeps it away | keeps it away | keeps it away |

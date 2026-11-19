@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AGI v0.3 Part A Report</title>
+<title>AGI v0.3 Quick Claims Report</title>
 <style>
   :root {
     color-scheme: light;
@@ -114,57 +114,58 @@
 </head>
 <body>
 <main>
-  <div class="tag">wave_front · AGI model v0.3 · part A (bounded claims) · 18 November 2026</div>
-  <h1>v0.3 part A: the open-weight system is in, and the mechanics behave as registered</h1>
-  <p class="lede">v0.3 adds the best open-weight system as a second AI, <code>O</code>, beside the labs' system <code>A</code>. Part A runs the three claims that need no kernel. All three came out as predicted. They check that the model is wired as intended; none of them is a finding about the world. The findings wait on the kernel claims F3, F4, F6 and F7.</p>
-  <p class="meta">Model <code>models/agi_v0_3/v0_3.py</code> at commit <code>afbacfc</code>; claims registered at <code>35e6d97</code> before any guard was written; first sight, run once; 34 parts, 30 checked and met, 4 reported. Data: <code>reports/agi_v0_3_parts.jsonl</code>.</p>
+  <div class="tag">wave_front · AGI model v0.3 · quick claims (bounded claims) · 18 November 2026</div>
+  <h1>v0.3 quick claims: the open-weight AI system is in, and the mechanics behave as pre-registered</h1>
+  <p class="meta">Terms updated on 18 November 2026 to match docs/agi_glossary.html. Numbers and findings are unchanged.</p>
+  <p class="lede">v0.3 adds the best open-weight AI system as a second AI, <code>O</code>, beside the frontier AI system <code>A</code>. The quick claims are the three claims that need no guarantee zone. All three came out as predicted. They check that the model is wired as intended; none of them is a finding about the world. The findings wait on the guarantee-zone claims F3, F4, F6 and F7.</p>
+  <p class="meta">Model <code>models/agi_v0_3/v0_3.py</code> at commit <code>afbacfc</code>; claims pre-registered at <code>35e6d97</code> before any action condition was written; first run, made once; 34 parts, 30 checked with the prediction held, 4 reported. Data: <code>reports/agi_v0_3_parts.jsonl</code>.</p>
 
   <div class="verdicts">
-    <div class="card verdict ok"><div class="dot">✓</div><div><div class="q">F1 · Without the open system, is it v0.1 again?</div><div class="a"><b class="ok">Yes: 18 of 18 numbers identical.</b></div><div class="s">Everything v0.3 adds can be switched off cleanly, so later differences are the open system's.</div></div></div>
-    <div class="card verdict ok"><div class="dot">✓</div><div><div class="q">F2 · How fast can an open takeover go, and does O speed up the labs' system's own takeover?</div><div class="a"><b class="ok">10 quarters at the fastest, under every objective of A. A's own fastest takeover is unchanged.</b></div><div class="s">A lower bound on timing if every actor plays into it. Not a likelihood.</div></div></div>
-    <div class="card verdict ok"><div class="dot">✓</div><div><div class="q">F5 · Can a shutdown of the labs' system succeed and the open system still take over?</div><div class="a"><b class="ok">Yes, under every objective, still in 10 quarters.</b></div><div class="s">A shutdown reaches <code>A</code> only, as decided. An existence check of the mechanics.</div></div></div>
+    <div class="card verdict ok"><div class="dot">✓</div><div><div class="q">F1 · Without the open-weight AI system, is it v0.1 again?</div><div class="a"><b class="ok">Yes: 18 of 18 numbers identical.</b></div><div class="s">Everything v0.3 adds can be switched off cleanly, so later differences are the open system's.</div></div></div>
+    <div class="card verdict ok"><div class="dot">✓</div><div><div class="q">F2 · How fast can an open-weight AI takeover go, and does O speed up the frontier AI system's own takeover?</div><div class="a"><b class="ok">10 quarters at the fastest, under every goal of A. A's own fastest takeover is unchanged.</b></div><div class="s">A lower bound on timing if every actor plays into it. Not a likelihood.</div></div></div>
+    <div class="card verdict ok"><div class="dot">✓</div><div><div class="q">F5 · Can a shutdown of the frontier AI system succeed and the open-weight AI system still take over?</div><div class="a"><b class="ok">Yes, under every goal of the frontier AI system, still in 10 quarters.</b></div><div class="s">A shutdown reaches <code>A</code> only, as decided. A reachability check of the mechanics.</div></div></div>
   </div>
 
   <h2>1 · Where the 10 quarters come from</h2>
-  <p>The fastest play to <code>OPEN_TAKEOVER</code> is the same length whatever the labs' system wants, because <code>A</code> has no part in it. It is four waits in a row: 4 quarters to AGI level at the labs, 2 quarters for the open system to follow, 1 quarter to remove its safeguards, 3 quarters of taking control.</p>
+  <p>The shortest path to <code>OPEN_TAKEOVER</code> is the same length whatever the frontier AI system wants, because <code>A</code> has no part in it. It is four waits in a row: 4 quarters to AGI level at the frontier AI companies, 2 quarters for the open-weight AI system to follow, 1 quarter to remove its safeguards, 3 quarters of taking control.</p>
   <figure><div class="scroll"><div class="tl" style="grid-template-columns:150px repeat(11, minmax(74px, 1fr))">
   <div class="rowlab" style="grid-column:1">Quarter</div><div class='q' style='grid-column:2'>0<small>2026 Q4</small></div><div class='q' style='grid-column:3'>1<small>2027 Q1</small></div><div class='q' style='grid-column:4'>2<small>Q2</small></div><div class='q' style='grid-column:5'>3<small>Q3</small></div><div class='q' style='grid-column:6'>4<small>Q4</small></div><div class='q' style='grid-column:7'>5<small>2028 Q1</small></div><div class='q' style='grid-column:8'>6<small>Q2</small></div><div class='q' style='grid-column:9'>7<small>Q3</small></div><div class='q' style='grid-column:10'>8<small>Q4</small></div><div class='q' style='grid-column:11'>9<small>2029 Q1</small></div><div class='q' style='grid-column:12'>10<small>Q2</small></div>
-  <div class="rowlab" style="grid-column:1">Labs' system</div><div class='mv' style='grid-column:2/5'>labs add compute (chosen in quarter 0, in place by quarter 3)</div><div class='mv' style='grid-column:5/6'>breakthrough</div><div class='lv zone in' style='grid-column:6/13'>AGI level</div>
-  <div class="rowlab" style="grid-column:1">Open system O</div><div class='mv quiet' style='grid-column:2/6'>pre-AGI, level with the labs</div><div class='mv' style='grid-column:6/8'>follows, 2 quarters behind</div><div class='mv hostile' style='grid-column:8/9'>AGI level; safeguards removed</div><div class='lv zone lost' style='grid-column:9/13'>not safeguarded</div>
-  <div class="rowlab" style="grid-column:1">What O holds</div><div class='mv quiet' style='grid-column:2/9'>nothing</div><div class='mv hostile' style='grid-column:9/10'>takes: partial</div><div class='mv hostile' style='grid-column:10/11'>takes: majority</div><div class='mv exit' style='grid-column:11/12'>takes: total</div><div class='end' style='grid-column:12/13'>OPEN TAKEOVER</div>
+  <div class="rowlab" style="grid-column:1">Frontier AI system</div><div class='mv' style='grid-column:2/5'>frontier AI companies scale up computing power (chosen in quarter 0, in place by quarter 3)</div><div class='mv' style='grid-column:5/6'>AGI breakthrough</div><div class='lv zone in' style='grid-column:6/13'>AGI level</div>
+  <div class="rowlab" style="grid-column:1">Open-weight AI system O</div><div class='mv quiet' style='grid-column:2/6'>pre-AGI, equal to the frontier AI system</div><div class='mv' style='grid-column:6/8'>follows, 2 quarters behind</div><div class='mv hostile' style='grid-column:8/9'>AGI level; safeguards removed</div><div class='lv zone lost' style='grid-column:9/13'>not safeguarded</div>
+  <div class="rowlab" style="grid-column:1">Open system's control</div><div class='mv quiet' style='grid-column:2/9'>nothing</div><div class='mv hostile' style='grid-column:9/10'>takes: partial</div><div class='mv hostile' style='grid-column:10/11'>takes: majority</div><div class='mv exit' style='grid-column:11/12'>takes: total</div><div class='end' style='grid-column:12/13'>OPEN-WEIGHT AI TAKEOVER</div>
 </div></div>
-  <figcaption>The fastest open takeover in the model: every actor plays the move that hurries it, and chance obliges each time. Quarter 0 is 2026 Q4, so the earliest date is 2029 Q2. The 2-quarter gap and the 1-quarter retraining are the owner's settings; the three steps of control are the model's four control levels.</figcaption></figure>
-  <p>What can interrupt this chain is the subject of the kernel claims: a treaty in force before quarter 6 stops the open system's count (F3); without the treaty, restricting hosting cuts its reach only while society's dependence is low (F4).</p>
+  <figcaption>The fastest open-weight AI takeover in the model: every actor chooses the action that hurries it, and chance obliges each time. Quarter 0 is 2026 Q4, so the earliest date is 2029 Q2. The 2-quarter open-weight gap and the 1-quarter retraining are the owner's settings; the three steps of control are the model's four control levels.</figcaption></figure>
+  <p>What can interrupt this chain is the subject of the guarantee-zone claims: a treaty between states in force before quarter 6 stops the open system upgrade countdown (F3); without the treaty, restricting service cuts the open system's reach only while society's reliance on AI is low (F4).</p>
 
   <h2>2 · The numbers</h2>
-  <h3>F1: v0.3 without the open system against v0.1</h3>
+  <h3>F1: v0.3 without the open-weight AI system against v0.1</h3>
   <div class="scroll"><table>
-    <thead><tr><th rowspan="2">Objective of A</th><th colspan="2">Fastest slide to disempowerment (quarters)</th><th colspan="2">Least joint effort of H and L on it</th><th colspan="2">Can the first adoption wave be cancelled?</th><th colspan="2">First quarter a wave is cancelled</th></tr>
+    <thead><tr><th rowspan="2">Goal of A</th><th colspan="2">Shortest path to disempowerment (quarters)</th><th colspan="2">Cheapest path cost of H and L on it</th><th colspan="2">Can the first deployment countdown be cancelled?</th><th colspan="2">First quarter a deployment is cancelled</th></tr>
     <tr><th>v0.3</th><th>v0.1</th><th>v0.3</th><th>v0.1</th><th>v0.3</th><th>v0.1</th><th>v0.3</th><th>v0.1</th></tr></thead>
     <tbody><tr><td><code>aligned</code></td><td class='num'>13</td><td class='num'>13</td><td class='num'>0</td><td class='num'>0</td><td class='num'>yes</td><td class='num'>yes</td><td class='num'>2</td><td class='num'>2</td></tr><tr><td><code>self_preserving</code></td><td class='num'>13</td><td class='num'>13</td><td class='num'>0</td><td class='num'>0</td><td class='num'>yes</td><td class='num'>yes</td><td class='num'>2</td><td class='num'>2</td></tr><tr><td><code>truth_seeking</code></td><td class='num'>13</td><td class='num'>13</td><td class='num'>0</td><td class='num'>0</td><td class='num'>yes</td><td class='num'>yes</td><td class='num'>2</td><td class='num'>2</td></tr><tr><td><code>indifferent</code></td><td class='num'>13</td><td class='num'>13</td><td class='num'>0</td><td class='num'>0</td><td class='num'>yes</td><td class='num'>yes</td><td class='num'>2</td><td class='num'>2</td></tr></tbody>
   </table></div>
-  <p>Under <code>indifferent</code>, the fastest silent takeover by <code>A</code> is 7 quarters in both, at least joint effort 0 in both.</p>
+  <p>Under <code>indifferent</code>, the fastest silent takeover by <code>A</code> is 7 quarters in both, at cheapest path cost 0 in both.</p>
 
-  <h3>F2 and F5: the registered build (everything on)</h3>
+  <h3>F2 and F5: the pre-registered model variant (everything on)</h3>
   <div class="scroll"><table>
-    <thead><tr><th>Objective of A</th><th>Fastest open takeover (F2 a)</th><th>Fastest silent takeover by A (F2 b)</th><th>The same in v0.1</th><th>Shutdown of A succeeds, then open takeover (F5)</th></tr></thead>
+    <thead><tr><th>Goal of A</th><th>Fastest open-weight AI takeover (F2 a)</th><th>Fastest silent takeover by A (F2 b)</th><th>The same in v0.1</th><th>Shutdown of A succeeds, then open-weight AI takeover (F5)</th></tr></thead>
     <tbody><tr><td><code>aligned</code></td><td class='num'>10 quarters</td><td class='num'>none</td><td class='num'>none</td><td class='num'>10 quarters</td></tr><tr><td><code>self_preserving</code></td><td class='num'>10 quarters</td><td class='num'>10 quarters</td><td class='num'>10 quarters</td><td class='num'>10 quarters</td></tr><tr><td><code>truth_seeking</code></td><td class='num'>10 quarters</td><td class='num'>none</td><td class='num'>none</td><td class='num'>10 quarters</td></tr><tr><td><code>indifferent</code></td><td class='num'>10 quarters</td><td class='num'>7 quarters</td><td class='num'>7 quarters</td><td class='num'>10 quarters</td></tr></tbody>
   </table></div>
-  <p>Two readings. The open system adds a takeover route under <code>aligned</code> and <code>truth_seeking</code>, where the labs' system alone has none within 24 quarters. And the open-weight AI service providers' adoption waves do not make <code>A</code>'s own takeover faster: the labs could already start a wave in quarter 0.</p>
+  <p>Two readings. The open-weight AI system adds a takeover path under <code>aligned</code> and <code>truth_seeking</code>, where the frontier AI system alone has none within 24 quarters. And the open-weight AI service providers' deployment countdowns do not make <code>A</code>'s own takeover faster: the frontier AI companies could already start a deployment countdown in quarter 0.</p>
 
-  <h2>3 · What part A does not say</h2>
+  <h2>3 · What the quick claims do not say</h2>
   <ul>
-    <li><b>Nothing about who can prevent it.</b> A fastest play exists whenever nobody stops it. Whether governments, or governments with labs, can <i>guarantee</i> no open takeover is F3 and F4; whether they can still keep control and coexistence is F6 and F7.</li>
-    <li><b>Nothing about likelihood.</b> The 10 quarters need chance to deliver the breakthrough and the retraining at the first opportunity.</li>
-    <li><b>One setting to keep in mind for part B:</b> race pressure is on from the first quarter, because at the start both systems are pre-AGI and so level (section 3a of the registration). The labs must deploy or race by the third quarter of any stretch in which either is possible.</li>
+    <li><b>Nothing about who can prevent it.</b> A shortest path exists whenever nobody stops it. Whether governments, or governments with frontier AI companies, can <i>guarantee</i> no open-weight AI takeover is F3 and F4; whether they can still keep control and peaceful coexistence is F6 and F7.</li>
+    <li><b>Nothing about likelihood.</b> The 10 quarters need chance to deliver the AGI breakthrough and the retraining at the first opportunity.</li>
+    <li><b>One setting to keep in mind for the heavy claims:</b> race pressure is on from the first quarter, because at the start state the frontier AI system and the open-weight AI system are both pre-AGI and so equal (section 3a of the pre-registration). The frontier AI companies must deploy or race by the third quarter of any stretch in which either is possible.</li>
   </ul>
 
   <h2>4 · Next</h2>
   <ul>
-    <li><b>Timing probes are running</b> (one kernel per build, time and memory only, 20 GB cap): the open system alone first, then with each option. They decide which kernel claims fit on 128 GB.</li>
-    <li><b>Part B</b> (F3, F4, F6, F7) after the memory upgrade on Thursday 19 November. Each kernel's reading is saved as it finishes.</li>
+    <li><b>Profiling is running</b> (one guarantee zone per model variant, time and memory only, 20 GB memory limit): the open-weight AI system alone first, then with each model knob. It decides which guarantee-zone claims fit on 128 GB.</li>
+    <li><b>The heavy claims</b> (F3, F4, F6, F7) after the memory upgrade on Thursday 19 November. Each guarantee zone's reading is saved as it finishes.</li>
   </ul>
-  <p class="meta">Related: <code>docs/agi_v0_3.html</code> (registration and mechanics), <code>docs/agi_open_weights_research_2026-11-18.md</code> (sources), <code>reports/agi_v0_3_run_part_a.log</code>.</p>
+  <p class="meta">Related: <code>docs/agi_v0_3.html</code> (pre-registration and mechanics), <code>docs/agi_open_weights_research_2026-11-18.md</code> (sources), <code>reports/agi_v0_3_run_part_a.log</code>.</p>
 </main>
 </body>
 </html>

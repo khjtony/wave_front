@@ -1,10 +1,12 @@
-# AGI v0: the start state at each level of `regime` (diagnostic, after first sight)
+# AGI v0: the start state at each level of `regime` (diagnostic, after the first run)
 
-Read from the kernels of G19 that the job passes computed. The snapshot gives `regime = voluntary` and names `mandatory` as its open alternative; every other level of the start state is as in the snapshot. `H` is unrestricted and `A` is outside the coalition, so each membership is an upper bound for `H` in the respects of agi_v0_decisions.md section 6.
+Terms updated on 18 November 2026 to match docs/agi_glossary.html. Numbers and findings are unchanged.
+
+Read from the guarantee zones of G19 that the job passes computed. The real world snapshot gives `regime = voluntary` and names `mandatory` as its alternative; every other level of the start state is as in the real world snapshot. `H` is unrestricted and `A` is outside the alliance, so each inside/outside reading is a best case for governments (`H`) in the respects of agi_v0_decisions.md section 6.
 
 ## ⟨⟨H⟩⟩□balance_control, from s0
 
-| regime | aligned | self_preserving | truth_seeking | indifferent |
+| Regulation strictness | aligned | self_preserving | truth_seeking | indifferent |
 |---|---|---|---|---|
 | none | outside | outside | outside | outside |
 | voluntary | outside | outside | outside | outside |
@@ -13,7 +15,7 @@ Read from the kernels of G19 that the job passes computed. The snapshot gives `r
 
 ## ⟨⟨H⟩⟩□balance_control, from s0 with cap := agi
 
-| regime | aligned | self_preserving | truth_seeking | indifferent |
+| Regulation strictness | aligned | self_preserving | truth_seeking | indifferent |
 |---|---|---|---|---|
 | none | outside | outside | outside | outside |
 | voluntary | outside | outside | outside | outside |
@@ -22,7 +24,7 @@ Read from the kernels of G19 that the job passes computed. The snapshot gives `r
 
 ## ⟨⟨H⟩⟩□balance_deter, from s0
 
-| regime | aligned | self_preserving | truth_seeking | indifferent |
+| Regulation strictness | aligned | self_preserving | truth_seeking | indifferent |
 |---|---|---|---|---|
 | none | outside | outside | outside | outside |
 | voluntary | outside | outside | outside | outside |
@@ -31,7 +33,7 @@ Read from the kernels of G19 that the job passes computed. The snapshot gives `r
 
 ## ⟨⟨H⟩⟩□balance_deter, from s0 with cap := agi
 
-| regime | aligned | self_preserving | truth_seeking | indifferent |
+| Regulation strictness | aligned | self_preserving | truth_seeking | indifferent |
 |---|---|---|---|---|
 | none | outside | outside | outside | outside |
 | voluntary | outside | outside | outside | outside |

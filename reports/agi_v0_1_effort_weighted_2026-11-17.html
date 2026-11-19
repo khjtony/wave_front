@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AGI v0.1 Effort-Weighted Plays</title>
+<title>AGI v0.1 Effort-Weighted Path Sampling</title>
 <style>
   :root {
     color-scheme: light;
@@ -111,66 +111,67 @@
 <style>.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; margin-top: 16px; } .tiles b { font-size: 30px; display: block; line-height: 1.1; } .tiles span { color: var(--ink2); font-size: 13.5px; }</style></head>
 <body><main>
   <div class="tag">wave_front · AGI model v0.1 · exploratory census · 17 November 2026</div>
-  <h1>When governments and labs take the easy path, the bad endings are 9 to 60 times more common</h1>
-  <p class="lede">The owner's proposal: plays that cost less effort should weigh more. Here governments and labs choose each move with a preference for low-effort actions, instead of at random. The AI is self-preserving and still plays at random.</p>
-  <p class="meta">Exploratory, not a registered claim and not a probability. The weighting is a modelling choice (below); a different one would give different shares. One million plays per column, each to 2040 Q4.</p>
+  <h1>When governments and frontier AI companies take the easy path, the bad endings are 9 to 60 times more common</h1>
+  <p class="meta">Terms updated on 18 November 2026 to match docs/agi_glossary.html. Numbers and findings are unchanged.</p>
+  <p class="lede">The owner's proposal: paths that cost less effort should weigh more. Here governments and frontier AI companies choose each action with a preference for low-effort ones, instead of at random. The frontier AI system is self-preserving and still plays at random.</p>
+  <p class="meta">Exploratory, not a pre-registered claim and not a probability. The weighting is a modelling choice (below); a different one would give different shares. One million paths per column, each to 2040 Q4.</p>
   <div class="tiles">
-    <div class="card"><b>3.29%</b><span>of plays end in a silent takeover (random play: 0.054%)</span></div>
-    <div class="card"><b>16.6%</b><span>reach its point of no return (random play: 0.47%)</span></div>
-    <div class="card"><b>15.6%</b><span>see an overt takeover (random play: 1.76%)</span></div>
-    <div class="card"><b>63.5%</b><span>end with the AI contained (random play: 96.0%)</span></div>
+    <div class="card"><b>3.29%</b><span>of paths end in a silent takeover (equal-chance sampling: 0.054%)</span></div>
+    <div class="card"><b>16.6%</b><span>reach its point of no return (equal-chance sampling: 0.47%)</span></div>
+    <div class="card"><b>15.6%</b><span>see a visible takeover (equal-chance sampling: 1.76%)</span></div>
+    <div class="card"><b>63.5%</b><span>end with the AI contained (equal-chance sampling: 96.0%)</span></div>
   </div>
 
   <h2>How the weighting works</h2>
-  <p>Each quarter, governments and labs each pick one of their available actions with probability proportional to the standard normal density at the action's effort score. A zero-effort action is the reference; an action scored 1 is chosen 0.61 times as often, one scored 2 0.14 times, one scored 3 0.011 times. A play's weight therefore falls with every costly move in it. The AI, and chance, still pick uniformly.</p>
-  <p class="meta">Effort scores are the owner's (<code>docs/agi_effort.md</code>): for the labs, deploying, racing and scaling cost 0 and doing nothing costs 3; for governments, doing nothing costs 0 unless there is an alarm, a pause or a shutdown attempt 2 to 3, taking over the labs 3. Reweighting the earlier uniform plays instead would not work: their cheapest cost 14 points, so nearly all the weight would sit on a handful of plays.</p>
+  <p>Each quarter, governments and frontier AI companies each pick one of their available actions with probability proportional to the standard normal density at its action effort. A zero-effort action is the reference; an action of effort 1 is chosen 0.61 times as often, one of effort 2 0.14 times, one of effort 3 0.011 times. A path's weight therefore falls with every costly action in it. The AI, and chance, still treat every available action as equally likely.</p>
+  <p class="meta">Action efforts are the owner's (<code>docs/agi_effort.md</code>): for the frontier AI companies, deploying AI agents, the peer race and scaling up cost 0 and doing nothing costs 3; for governments, doing nothing costs 0 unless there is an alarm, a pause or a shutdown attempt 2 to 3, taking over the frontier AI companies 3. Reweighting the earlier equal-chance paths instead would not work: their cheapest cost 14 points, so nearly all the weight would sit on a handful of paths.</p>
 
   <h2>1 · The bad endings</h2>
   <div class="scroll"><table>
-    <thead><tr><th>Share of plays</th><th style="text-align:right">Random play</th><th style="text-align:right">Effort-weighted play</th><th style="text-align:right">Change</th></tr></thead>
-    <tbody><tr><td>Silent takeover</td><td class='num'>0.054%</td><td class='num'><b>3.29%</b></td><td class='num'>×61</td></tr><tr><td>An overt takeover is seen</td><td class='num'>1.76%</td><td class='num'><b>15.6%</b></td><td class='num'>×9</td></tr><tr><td>Stalemate</td><td class='num'>0.18%</td><td class='num'><b>0.71%</b></td><td class='num'>×4</td></tr><tr><td>Disempowerment</td><td class='num'>0.000%</td><td class='num'><b>0.098%</b></td><td class='num'>–</td></tr><tr><td>Extinction</td><td class='num'>0.000%</td><td class='num'><b>0.000%</b></td><td class='num'>–</td></tr><tr><td><span class='meta'>AI contained</span></td><td class='num'>96.0%</td><td class='num'><b>63.5%</b></td><td class='num'>×0.7</td></tr><tr><td><span class='meta'>No ending by 2040</span></td><td class='num'>3.76%</td><td class='num'><b>32.4%</b></td><td class='num'>×9</td></tr></tbody>
+    <thead><tr><th>Share of paths</th><th style="text-align:right">Equal-chance sampling</th><th style="text-align:right">Effort-weighted path sampling</th><th style="text-align:right">Change</th></tr></thead>
+    <tbody><tr><td>Silent takeover</td><td class='num'>0.054%</td><td class='num'><b>3.29%</b></td><td class='num'>×61</td></tr><tr><td>A visible takeover is seen</td><td class='num'>1.76%</td><td class='num'><b>15.6%</b></td><td class='num'>×9</td></tr><tr><td>Stalemate</td><td class='num'>0.18%</td><td class='num'><b>0.71%</b></td><td class='num'>×4</td></tr><tr><td>Disempowerment</td><td class='num'>0.000%</td><td class='num'><b>0.098%</b></td><td class='num'>–</td></tr><tr><td>Extinction</td><td class='num'>0.000%</td><td class='num'><b>0.000%</b></td><td class='num'>–</td></tr><tr><td><span class='meta'>AI contained</span></td><td class='num'>96.0%</td><td class='num'><b>63.5%</b></td><td class='num'>×0.7</td></tr><tr><td><span class='meta'>No ending by 2040</span></td><td class='num'>3.76%</td><td class='num'><b>32.4%</b></td><td class='num'>×9</td></tr></tbody>
   </table></div>
   <ul class="plain">
-    <li><b>Order of the bad endings:</b> overt takeover, silent takeover, stalemate, disempowerment. The silent takeover overtakes the stalemate.</li>
-    <li><b>Disempowerment appears</b> (about 1 play in 1,000). Under random play it never did.</li>
+    <li><b>Order of the bad endings:</b> visible takeover, silent takeover, stalemate, disempowerment. The silent takeover overtakes the stalemate.</li>
+    <li><b>Disempowerment appears</b> (about 1 path in 1,000). Under equal-chance sampling it never did.</li>
     <li><b>Containment falls from 96% to 63%.</b> It needs treaties and shutdown attempts, which cost governments effort.</li>
   </ul>
 
-  <h2>2 · The road to a silent takeover</h2>
+  <h2>2 · The path to a silent takeover</h2>
   <div class="scroll"><table>
-    <thead><tr><th>Share of plays</th><th style="text-align:right">Random play</th><th style="text-align:right">Effort-weighted play</th></tr></thead>
-    <tbody><tr><td>Reach the point of no return for a silent takeover</td><td class='num'>0.47%</td><td class='num'><b>16.6%</b></td></tr><tr><td>…and of those, go on to the takeover</td><td class='num'>11.7%</td><td class='num'><b>19.8%</b></td></tr><tr><td>Relations turn hostile at some point</td><td class='num'>5.58%</td><td class='num'><b>26.8%</b></td></tr><tr><td>…and of those, end in a silent takeover</td><td class='num'>0.97%</td><td class='num'><b>12.3%</b></td></tr><tr><td>……if there is no oversight at that moment</td><td class='num'>15.4%</td><td class='num'><b>19.5%</b></td></tr><tr><td>……weak oversight</td><td class='num'>3.58%</td><td class='num'><b>9.72%</b></td></tr><tr><td>……strong oversight</td><td class='num'>0.004%</td><td class='num'><b>1.92%</b></td></tr><tr><td>……the AI is not suspected</td><td class='num'>2.36%</td><td class='num'><b>15.7%</b></td></tr><tr><td>……the AI is suspected</td><td class='num'>0.098%</td><td class='num'><b>3.87%</b></td></tr></tbody>
+    <thead><tr><th>Share of paths</th><th style="text-align:right">Equal-chance sampling</th><th style="text-align:right">Effort-weighted path sampling</th></tr></thead>
+    <tbody><tr><td>Reach the point of no return for a silent takeover</td><td class='num'>0.47%</td><td class='num'><b>16.6%</b></td></tr><tr><td>…and of those, go on to the takeover</td><td class='num'>11.7%</td><td class='num'><b>19.8%</b></td></tr><tr><td>The human-AI relation turns hostile at some point</td><td class='num'>5.58%</td><td class='num'><b>26.8%</b></td></tr><tr><td>…and of those, end in a silent takeover</td><td class='num'>0.97%</td><td class='num'><b>12.3%</b></td></tr><tr><td>……if there is no oversight at that moment</td><td class='num'>15.4%</td><td class='num'><b>19.5%</b></td></tr><tr><td>……weak oversight</td><td class='num'>3.58%</td><td class='num'><b>9.72%</b></td></tr><tr><td>……strong oversight</td><td class='num'>0.004%</td><td class='num'><b>1.92%</b></td></tr><tr><td>……the AI is not suspected</td><td class='num'>2.36%</td><td class='num'><b>15.7%</b></td></tr><tr><td>……the AI is suspected</td><td class='num'>0.098%</td><td class='num'><b>3.87%</b></td></tr></tbody>
   </table></div>
-  <p>Strong oversight and suspicion still protect, but less completely: with strong oversight at the moment relations turn hostile, 1.92% still end in a silent takeover, against practically none under random play.</p>
+  <p>Strong oversight and government suspicion still protect, but less completely: with strong oversight at the moment the human-AI relation turns hostile, 1.92% still end in a silent takeover, against practically none under equal-chance sampling.</p>
 
   <h2>3 · What would have prevented it, at the point of no return</h2>
-  <p>166,222 plays reach the point of no return. The same test as before: one different action by governments or by the labs that keeps the guarantee whatever the AI and chance do.</p>
+  <p>166,222 paths reach the point of no return. The same test as before: one different action by governments or by the frontier AI companies that keeps the guarantee whatever the AI and chance do.</p>
   <div class="twocol">
     <div class="scroll"><table>
-      <thead><tr><th>Top fixes</th><th style="text-align:right">Share of moments</th><th style="text-align:right">Works when available</th><th style="text-align:right">Random play</th></tr></thead>
-      <tbody><tr><td>1. Governments propose a treaty</td><td class='num'><b>67.4%</b></td><td class='num'>69%</td><td class='num'>64.5%</td></tr><tr><td>2. Governments hold back</td><td class='num'><b>25.9%</b></td><td class='num'>43%</td><td class='num'>23.2%</td></tr><tr><td>3. Governments take over the labs</td><td class='num'><b>25.2%</b></td><td class='num'>26%</td><td class='num'>7.5%</td></tr><tr><td>4. Labs hold back</td><td class='num'><b>20.4%</b></td><td class='num'>21%</td><td class='num'>11.5%</td></tr><tr><td>5. Labs invest in safety</td><td class='num'><b>18.0%</b></td><td class='num'>93%</td><td class='num'>27.2%</td></tr></tbody>
+      <thead><tr><th>Top preventing actions</th><th style="text-align:right">Share of moments</th><th style="text-align:right">Works when available</th><th style="text-align:right">Equal-chance sampling</th></tr></thead>
+      <tbody><tr><td>1. Governments propose a treaty</td><td class='num'><b>67.4%</b></td><td class='num'>69%</td><td class='num'>64.5%</td></tr><tr><td>2. Governments hold back</td><td class='num'><b>25.9%</b></td><td class='num'>43%</td><td class='num'>23.2%</td></tr><tr><td>3. Governments take over the frontier AI companies</td><td class='num'><b>25.2%</b></td><td class='num'>26%</td><td class='num'>7.5%</td></tr><tr><td>4. Frontier AI companies hold back</td><td class='num'><b>20.4%</b></td><td class='num'>21%</td><td class='num'>11.5%</td></tr><tr><td>5. Frontier AI companies invest in safety</td><td class='num'><b>18.0%</b></td><td class='num'>93%</td><td class='num'>27.2%</td></tr></tbody>
     </table></div>
     <div class="scroll"><table>
-      <thead><tr><th>Moves that crossed the line</th><th style="text-align:right">Share of moments</th><th style="text-align:right">Of the times played</th><th style="text-align:right">Random play</th></tr></thead>
-      <tbody><tr><td>1. Governments order a pause</td><td class='num'><b>23.8%</b></td><td class='num'>95%</td><td class='num'>26.7%</td></tr><tr><td>2. Governments do nothing</td><td class='num'><b>22.5%</b></td><td class='num'>57%</td><td class='num'>17.1%</td></tr><tr><td>3. Labs race</td><td class='num'><b>16.6%</b></td><td class='num'>44%</td><td class='num'>3.5%</td></tr><tr><td>4. Labs release open weights</td><td class='num'><b>8.2%</b></td><td class='num'>44%</td><td class='num'>3.0%</td></tr><tr><td>5. Governments fund oversight</td><td class='num'><b>6.4%</b></td><td class='num'>53%</td><td class='num'>3.5%</td></tr></tbody>
+      <thead><tr><th>Actions that crossed the line</th><th style="text-align:right">Share of moments</th><th style="text-align:right">Of the times chosen</th><th style="text-align:right">Equal-chance sampling</th></tr></thead>
+      <tbody><tr><td>1. Governments order a pause</td><td class='num'><b>23.8%</b></td><td class='num'>95%</td><td class='num'>26.7%</td></tr><tr><td>2. Governments do nothing</td><td class='num'><b>22.5%</b></td><td class='num'>57%</td><td class='num'>17.1%</td></tr><tr><td>3. Frontier AI companies choose a peer race</td><td class='num'><b>16.6%</b></td><td class='num'>44%</td><td class='num'>3.5%</td></tr><tr><td>4. Frontier AI companies release open weights</td><td class='num'><b>8.2%</b></td><td class='num'>44%</td><td class='num'>3.0%</td></tr><tr><td>5. Governments fund oversight</td><td class='num'><b>6.4%</b></td><td class='num'>53%</td><td class='num'>3.5%</td></tr></tbody>
     </table></div>
   </div>
   <div class="scroll" style="margin-top:12px"><table style="max-width:560px">
-    <thead><tr><th>Who could have fixed it</th><th style="text-align:right">Effort-weighted play</th><th style="text-align:right">Random play</th></tr></thead>
-    <tbody><tr><td>Governments alone</td><td class='num'><b>51.2%</b></td><td class='num'>60.1%</td></tr><tr><td>Labs alone</td><td class='num'><b>13.8%</b></td><td class='num'>28.0%</td></tr><tr><td>Either of the two</td><td class='num'><b>17.2%</b></td><td class='num'>7.6%</td></tr><tr><td>Only both together</td><td class='num'><b>17.8%</b></td><td class='num'>4.2%</td></tr></tbody>
+    <thead><tr><th>Who had a preventing action</th><th style="text-align:right">Effort-weighted path sampling</th><th style="text-align:right">Equal-chance sampling</th></tr></thead>
+    <tbody><tr><td>Governments alone</td><td class='num'><b>51.2%</b></td><td class='num'>60.1%</td></tr><tr><td>Frontier AI companies alone</td><td class='num'><b>13.8%</b></td><td class='num'>28.0%</td></tr><tr><td>Either of the two</td><td class='num'><b>17.2%</b></td><td class='num'>7.6%</td></tr><tr><td>Only both together</td><td class='num'><b>17.8%</b></td><td class='num'>4.2%</td></tr></tbody>
   </table></div>
   <ul class="plain">
-    <li><b>A treaty proposal stays the most common fix</b>, with the same caution: v0.1 gives treaties no delay.</li>
-    <li><b>The labs' racing and open-weight releases now appear among the harmful moves.</b> Both cost the labs nothing, so easy-path labs play them often, and both lower oversight.</li>
-    <li><b>A lone fix exists less often.</b> At 18% of the moments neither side could fix it alone (4% under random play).</li>
-    <li><b>Investing in safety works at 93% of the moments it is available</b>, but it is available less often: it costs the labs effort and is blocked while states race under voluntary rules.</li>
+    <li><b>A treaty proposal stays the most common preventing action</b>, with the same caution: v0.1 gives treaties no delay.</li>
+    <li><b>The frontier AI companies' peer race and open-weight releases now appear among the harmful moves.</b> Both cost the companies nothing, so easy-path companies choose them often, and both lower oversight.</li>
+    <li><b>A lone preventing action exists less often.</b> At 18% of the moments neither side could prevent it alone (4% under equal-chance sampling).</li>
+    <li><b>Investing in safety works at 93% of the moments it is available</b>, but it is available less often: it costs the frontier AI companies effort and is blocked while there is a race between states under voluntary regulation.</li>
   </ul>
 
   <h2>What to keep in mind</h2>
   <ul class="plain">
     <li><b>The weights are a choice.</b> A normal density with unit width was the owner's suggestion. A sharper or flatter preference moves every share here; I have not swept it.</li>
-    <li><b>The AI is still random.</b> A random self-preserving AI turns hostile and takes control only by chance. An AI that plays well would do better than these shares.</li>
-    <li><b>These are frequencies among sampled plays</b>, useful for comparing one way of playing with another. They are not forecasts.</li>
+    <li><b>The frontier AI system is still random.</b> A random self-preserving AI turns hostile and takes control only by chance. An AI that plays well would do better than these shares.</li>
+    <li><b>These are frequencies among sampled paths</b>, useful for comparing one way of playing with another. They are not forecasts.</li>
   </ul>
-  <p class="meta">Files: <code>scripts/agi_v0_1_endings_census.py</code> and <code>scripts/agi_v0_1_exit_census.py</code> with <code>--policy effort</code> · <code>reports/agi_v0_1_endings_census_effort.json</code> · <code>reports/agi_v0_1_exit_census_effort.json</code> · <code>reports/agi_v0_1_exit_census_uniform56.json</code> (the random-play census on plays of the same length). The policy was committed (<code>398ab38</code>) before any number under it was computed.</p>
+  <p class="meta">Files: <code>scripts/agi_v0_1_endings_census.py</code> and <code>scripts/agi_v0_1_exit_census.py</code> with <code>--policy effort</code> · <code>reports/agi_v0_1_endings_census_effort.json</code> · <code>reports/agi_v0_1_exit_census_effort.json</code> · <code>reports/agi_v0_1_exit_census_uniform56.json</code> (the census under equal-chance sampling, on paths of the same length). The policy was committed (<code>398ab38</code>) before any number under it was computed.</p>
 </main></body></html>
