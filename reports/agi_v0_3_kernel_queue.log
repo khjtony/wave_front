@@ -4,3 +4,6 @@ F7 closed H+L balance_control   | aligned | inside | 0.5 s
 F7 closed H+L not:SILENT_TAKEOVER   | aligned | inside | 0.1 s
 F7 closed H balance_coexist  {'cap': 'agi'} | aligned | inside | 0.6 s
 F3 default H not:OPEN_TAKEOVER   | aligned | not computed: over the cap of 23 GB: BDD node table exhausted (out of memory or 2**31 - 1 nodes)
+F6 default H+L balance_control   | aligned | inside | 5189.8 s
+F4 default H not:OPEN_TAKEOVER no_treaty  | aligned | outside | 7863.2 s
+F4 default H+L not:OPEN_TAKEOVER no_treaty  | aligned | inside | 9334.2 s
