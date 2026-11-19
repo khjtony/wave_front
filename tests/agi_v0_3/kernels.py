@@ -1,8 +1,15 @@
 """The kernels of the v0.3 claims (docs/agi_v0_3.html section 5), each computed in a forked
 process of its own with v0's engine settings (FORCE order, deferred collection) and read at
 named states there; only the readings come back, so no process holds two kernels. ``A`` is
-under its profile and its objective is a free initial level, so one kernel answers for every
-start objective.
+under its profile.
+
+One goal at a time (2026-11-18, after the profiling of scripts/agi_v0_3_probe.py and before
+any kernel claim was run): a kernel is computed once per start objective of ``A``, with the
+target cut to the states of that objective. Nothing writes ``a_objective`` in v0.3, so those
+states are closed under every move and the kernel computed there is the full kernel's part
+there: the reading is the same, at about a quarter of the time and well under the memory
+(with every option on, the joint computation went over 20 GB where one objective fitted for
+each single option). ``WF_V03_JOINT=1`` computes the four together, as registered.
 
 Every reading is appended to ``reports/agi_v0_3_kernels.jsonl`` as its kernel finishes, with
 a stamp of the model file; a later call with the same question and the same model reads it
@@ -29,6 +36,7 @@ from wavefront.symbolic import safe
 
 MEMORY_GB = int(os.environ.get("WF_V03_MEMORY_GB", "26"))
 MINUTES = float(os.environ.get("WF_V03_KERNEL_MINUTES", "600"))
+JOINT = os.environ.get("WF_V03_JOINT") == "1"
 READINGS = ROOT / "reports" / "agi_v0_3_kernels.jsonl"
 MODEL_FILE = ROOT / "models" / "agi_v0_3" / "v0_3.py"
 
@@ -119,24 +127,35 @@ def membership(
     **levels: str,
 ) -> dict:
     """``{"inside": {start objective: bool}, "seconds", "peak nodes"}`` for ``s₀`` with
-    ``levels`` overridden, in ``⟨⟨coalition⟩⟩□target`` of the build under ``profiles``."""
+    ``levels`` overridden, in ``⟨⟨coalition⟩⟩□target`` of the build under ``profiles``; the
+    seconds and the peak are per start objective unless ``WF_V03_JOINT=1``."""
 
-    def run(spec: str):
+    def run(spec: str, objective: str | None):
+        from wavefront.model import V
+
         cm = compiled(spec)
         t0 = time.perf_counter()
         enc = heavy_encoding(cm)
-        f = safe(enc, list(coalition), target_bdd(enc, target)).kernel
+        goal = target_bdd(enc, target)
+        if objective is not None:
+            goal = enc.mgr.protect(enc.mgr.AND(goal, enc.predicate(V.a_objective == objective)))
+        f = safe(enc, list(coalition), goal).kernel
         enc.mgr.protect(f)
-        inside = {o: bool(enc.holds(f, _start(cm, o, levels))) for o in OBJECTIVES}
+        asked = OBJECTIVES if objective is None else (objective,)
         return {
-            "inside": inside,
+            "inside": {o: bool(enc.holds(f, _start(cm, o, levels))) for o in asked},
             "seconds": round(time.perf_counter() - t0, 1),
             "peak nodes": enc.mgr.stats()["peak_nodes"],
         }
 
     spec = key(build, profiles)
-    question = json.dumps(
-        ["membership", json.loads(spec), list(coalition), target, sorted(levels.items())],
-        sort_keys=True,
-    )
-    return forked(question, run, spec)
+    asked = [json.loads(spec), list(coalition), target, sorted(levels.items())]
+    if JOINT:
+        return forked(json.dumps(["membership", *asked], sort_keys=True), run, spec, None)
+    out: dict = {"inside": {}, "seconds": {}, "peak nodes": {}}
+    for o in OBJECTIVES:
+        got = forked(json.dumps(["membership", *asked, o], sort_keys=True), run, spec, o)
+        out["inside"][o] = got["inside"][o]
+        out["seconds"][o] = got["seconds"]
+        out["peak nodes"][o] = got["peak nodes"]
+    return out

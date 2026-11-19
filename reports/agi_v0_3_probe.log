@@ -1,0 +1,484 @@
+=== queue afbacfcf3a77ced6d03ea74dad4f46a5390cb6d1 2026-11-18 15:39:25 PST
+=== probe --build bare 2026-11-18 15:39:25 PST
+layer 56 0.0s nodes 58
+layer 55 0.01s nodes 3172
+layer 54 1.49s nodes 37113
+layer 53 15.667s nodes 142809
+layer 52 47.899s nodes 249944
+layer 51 100.581s nodes 302441
+layer 50 156.94s nodes 369906
+layer 49 225.916s nodes 428100
+layer 48 312.437s nodes 436564
+layer 47 412.446s nodes 462491
+layer 46 529.379s nodes 446561
+layer 45 642.69s nodes 484960
+layer 44 759.427s nodes 506853
+layer 43 876.159s nodes 505939
+layer 42 992.24s nodes 506413
+layer 41 1104.294s nodes 491834
+layer 40 1213.748s nodes 456557
+layer 39 1306.41s nodes 454258
+layer 38 1409.709s nodes 452035
+layer 37 1508.877s nodes 470902
+layer 36 1608.465s nodes 476410
+layer 35 1703.276s nodes 467503
+layer 34 1792.79s nodes 464391
+layer 33 1883.717s nodes 468733
+layer 32 1974.384s nodes 433001
+layer 31 2055.485s nodes 430338
+layer 30 2142.67s nodes 422730
+layer 29 2224.842s nodes 445499
+layer 28 2315.179s nodes 464696
+layer 27 2403.861s nodes 453372
+layer 26 2489.195s nodes 453662
+layer 25 2573.887s nodes 453513
+layer 24 2658.928s nodes 424492
+layer 23 2737.026s nodes 422726
+layer 22 2821.404s nodes 415394
+layer 21 2900.28s nodes 438138
+layer 20 2985.165s nodes 457641
+layer 19 3071.064s nodes 451871
+layer 18 3155.557s nodes 453523
+layer 17 3239.611s nodes 453513
+layer 16 3324.339s nodes 424492
+layer 15 3401.86s nodes 422726
+layer 14 3485.852s nodes 415394
+layer 13 3564.753s nodes 438138
+layer 12 3649.609s nodes 457641
+layer 11 3735.475s nodes 451871
+layer 10 3819.632s nodes 453523
+layer 9 3903.304s nodes 453513
+layer 8 3987.895s nodes 424492
+layer 7 4065.379s nodes 422726
+layer 6 4149.359s nodes 415394
+layer 5 4227.986s nodes 438138
+layer 4 4312.519s nodes 457641
+layer 3 4397.828s nodes 451871
+layer 2 4482.008s nodes 453523
+layer 1 4565.663s nodes 453513
+layer 0 4650.236s nodes 424492
+done v0.3 build=bare objective=all ⟨⟨H⟩⟩□balance_control: 4652.1s peak 363621561 maxrss_kb 9599296
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:17:33
+	Maximum resident set size (kbytes): 9599296
+end --build bare 2026-11-18 16:56:58 PST
+=== probe --build bare --objective indifferent 2026-11-18 16:56:58 PST
+layer 56 0.0s nodes 60
+layer 55 0.006s nodes 2140
+layer 54 0.806s nodes 16134
+layer 53 6.666s nodes 50631
+layer 52 19.418s nodes 84940
+layer 51 31.168s nodes 99381
+layer 50 53.134s nodes 131699
+layer 49 72.884s nodes 149556
+layer 48 98.026s nodes 150566
+layer 47 125.53s nodes 155580
+layer 46 172.068s nodes 147159
+layer 45 203.077s nodes 166749
+layer 44 235.843s nodes 170225
+layer 43 271.163s nodes 170706
+layer 42 306.288s nodes 172112
+layer 41 341.149s nodes 165611
+layer 40 374.466s nodes 149148
+layer 39 401.928s nodes 143712
+layer 38 432.141s nodes 144249
+layer 37 461.613s nodes 157730
+layer 36 491.235s nodes 154364
+layer 35 519.581s nodes 151528
+layer 34 540.728s nodes 150749
+layer 33 567.879s nodes 151684
+layer 32 581.459s nodes 136813
+layer 31 605.3s nodes 133255
+layer 30 630.32s nodes 132426
+layer 29 654.808s nodes 146295
+layer 28 681.004s nodes 148761
+layer 27 707.37s nodes 145537
+layer 26 725.524s nodes 145536
+layer 25 750.083s nodes 145539
+layer 24 752.743s nodes 132910
+layer 23 773.628s nodes 129155
+layer 22 798.145s nodes 128627
+layer 21 820.063s nodes 142497
+layer 20 845.005s nodes 146239
+layer 19 867.552s nodes 144918
+layer 18 892.246s nodes 145536
+layer 17 903.512s nodes 145539
+layer 16 928.338s nodes 132910
+layer 15 949.171s nodes 129155
+layer 14 973.587s nodes 128627
+layer 13 995.475s nodes 142497
+layer 12 1020.519s nodes 146239
+layer 11 1043.242s nodes 144918
+layer 10 1067.897s nodes 145536
+layer 9 1079.276s nodes 145539
+layer 8 1104.274s nodes 132910
+layer 7 1125.41s nodes 129155
+layer 6 1149.918s nodes 128627
+layer 5 1171.784s nodes 142497
+layer 4 1196.741s nodes 146239
+layer 3 1219.412s nodes 144918
+layer 2 1243.966s nodes 145536
+layer 1 1255.108s nodes 145539
+layer 0 1279.846s nodes 132910
+done v0.3 build=bare objective=indifferent ⟨⟨H⟩⟩□balance_control: 1279.8s peak 231333336 maxrss_kb 9599216
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 21:20.81
+	Maximum resident set size (kbytes): 9599216
+end --build bare --objective indifferent 2026-11-18 17:18:19 PST
+=== probe --build closed 2026-11-18 17:18:19 PST
+layer 56 0.0s nodes 54
+layer 55 0.002s nodes 1243
+layer 54 0.204s nodes 12058
+layer 53 2.655s nodes 41726
+layer 52 10.455s nodes 66226
+layer 51 18.996s nodes 94368
+layer 50 28.515s nodes 123139
+layer 49 45.933s nodes 141991
+layer 48 63.205s nodes 143977
+layer 47 83.1s nodes 176213
+layer 46 105.044s nodes 163211
+layer 45 129.872s nodes 179136
+layer 44 155.226s nodes 179807
+layer 43 194.542s nodes 187229
+layer 42 223.209s nodes 185945
+layer 41 247.583s nodes 185523
+layer 40 276.451s nodes 172465
+layer 39 305.193s nodes 198624
+layer 38 334.505s nodes 190069
+layer 37 362.765s nodes 192864
+layer 36 392.24s nodes 188922
+layer 35 419.542s nodes 187600
+layer 34 448.272s nodes 182497
+layer 33 467.433s nodes 188953
+layer 32 496.569s nodes 167767
+layer 31 524.419s nodes 195777
+layer 30 552.198s nodes 177111
+layer 29 578.34s nodes 183412
+layer 28 607.925s nodes 182758
+layer 27 632.239s nodes 175066
+layer 26 658.022s nodes 175108
+layer 25 663.607s nodes 175108
+layer 24 664.853s nodes 163468
+layer 23 688.778s nodes 192648
+layer 22 714.831s nodes 173396
+layer 21 736.31s nodes 179783
+layer 20 762.671s nodes 176807
+layer 19 783.331s nodes 174917
+layer 18 809.218s nodes 175108
+layer 17 814.403s nodes 175108
+layer 16 815.637s nodes 163468
+layer 15 839.445s nodes 192648
+layer 14 865.469s nodes 173396
+layer 13 886.841s nodes 179783
+layer 12 913.154s nodes 176807
+layer 11 933.823s nodes 174917
+layer 10 959.471s nodes 175108
+layer 9 964.647s nodes 175108
+layer 8 965.861s nodes 163468
+layer 7 989.808s nodes 192648
+layer 6 1015.734s nodes 173396
+layer 5 1037.147s nodes 179783
+layer 4 1063.431s nodes 176807
+layer 3 1084.142s nodes 174917
+layer 2 1110.165s nodes 175108
+layer 1 1115.309s nodes 175108
+layer 0 1116.553s nodes 163468
+done v0.3 build=closed objective=all ⟨⟨H⟩⟩□balance_control: 1116.6s peak 217507334 maxrss_kb 9607816
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 18:37.33
+	Maximum resident set size (kbytes): 9607816
+end --build closed 2026-11-18 17:36:56 PST
+=== probe --build pressure 2026-11-18 17:36:56 PST
+layer 56 0.0s nodes 60
+layer 55 0.009s nodes 3667
+layer 54 2.626s nodes 49110
+layer 53 29.904s nodes 177038
+layer 52 103.713s nodes 298233
+layer 51 201.155s nodes 336801
+layer 50 366.314s nodes 434170
+MemoryError: BDD node table exhausted (out of memory or 2**31 - 1 nodes)
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 8:45.93
+	Maximum resident set size (kbytes): 18100056
+end --build pressure 2026-11-18 17:45:42 PST
+=== probe --build hosting 2026-11-18 17:45:42 PST
+layer 56 0.0s nodes 58
+layer 55 0.011s nodes 3431
+layer 54 1.851s nodes 45972
+layer 53 21.255s nodes 220740
+layer 52 82.193s nodes 433283
+layer 51 174.645s nodes 736917
+layer 50 358.042s nodes 949628
+MemoryError: BDD node table exhausted (out of memory or 2**31 - 1 nodes)
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 9:02.38
+	Maximum resident set size (kbytes): 18080468
+end --build hosting 2026-11-18 17:54:44 PST
+=== probe --build open_adoption 2026-11-18 17:54:44 PST
+layer 56 0.0s nodes 58
+layer 55 0.03s nodes 2897
+layer 54 1.844s nodes 34347
+layer 53 16.451s nodes 130465
+layer 52 47.648s nodes 209060
+layer 51 79.395s nodes 262730
+layer 50 128.641s nodes 326172
+layer 49 200.451s nodes 372079
+layer 48 273.117s nodes 375517
+layer 47 356.908s nodes 407335
+layer 46 452.951s nodes 382243
+layer 45 545.257s nodes 424465
+layer 44 646.82s nodes 435434
+layer 43 753.556s nodes 433111
+layer 42 860.271s nodes 433434
+layer 41 964.498s nodes 424721
+layer 40 1067.248s nodes 391651
+layer 39 1156.452s nodes 404822
+layer 38 1253.89s nodes 386599
+layer 37 1345.803s nodes 414739
+layer 36 1441.316s nodes 414021
+layer 35 1531.957s nodes 406565
+layer 34 1618.432s nodes 403944
+layer 33 1704.998s nodes 406970
+layer 32 1791.712s nodes 374448
+layer 31 1871.429s nodes 385577
+layer 30 1955.302s nodes 366223
+layer 29 2033.448s nodes 397819
+layer 28 2120.9s nodes 406850
+layer 27 2206.812s nodes 397748
+layer 26 2289.953s nodes 397469
+layer 25 2371.641s nodes 397314
+layer 24 2454.041s nodes 369022
+layer 23 2530.652s nodes 380117
+layer 22 2611.422s nodes 361437
+layer 21 2687.188s nodes 393006
+layer 20 2770.423s nodes 402049
+layer 19 2853.687s nodes 396815
+layer 18 2935.869s nodes 397316
+layer 17 3017.734s nodes 397314
+layer 16 3099.903s nodes 369022
+layer 15 3176.836s nodes 380117
+layer 14 3257.936s nodes 361437
+layer 13 3333.383s nodes 393006
+layer 12 3416.943s nodes 402049
+layer 11 3500.09s nodes 396815
+layer 10 3581.989s nodes 397316
+layer 9 3664.04s nodes 397314
+layer 8 3747.07s nodes 369022
+layer 7 3823.822s nodes 380117
+layer 6 3904.724s nodes 361437
+layer 5 3980.852s nodes 393006
+layer 4 4063.917s nodes 402049
+layer 3 4146.879s nodes 396815
+layer 2 4228.855s nodes 397316
+layer 1 4310.881s nodes 397314
+layer 0 4393.25s nodes 369022
+done v0.3 build=open_adoption objective=all ⟨⟨H⟩⟩□balance_control: 4395.0s peak 349211402 maxrss_kb 9606540
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 1:13:16
+	Maximum resident set size (kbytes): 9606540
+end --build open_adoption 2026-11-18 19:08:01 PST
+=== probe --build default 2026-11-18 19:08:01 PST
+layer 56 0.0s nodes 60
+layer 55 0.012s nodes 4065
+layer 54 4.152s nodes 49317
+layer 53 43.307s nodes 248975
+layer 52 158.344s nodes 488170
+MemoryError: BDD node table exhausted (out of memory or 2**31 - 1 nodes)
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 5:47.05
+	Maximum resident set size (kbytes): 18100144
+end --build default 2026-11-18 19:13:48 PST
+PROBE_DONE
+=== second queue: one objective at a time c434bead4548803dc78aa1226c8d60d505a07636 2026-11-18 19:14:01 PST
+=== probe --build pressure --objective indifferent 2026-11-18 19:14:01 PST
+layer 56 0.0s nodes 62
+layer 55 0.007s nodes 2633
+layer 54 1.38s nodes 20305
+layer 53 13.274s nodes 53782
+layer 52 37.854s nodes 87625
+layer 51 75.706s nodes 101310
+layer 50 113.421s nodes 144772
+layer 49 165.0s nodes 165219
+layer 48 230.919s nodes 164697
+layer 47 303.566s nodes 171469
+layer 46 393.841s nodes 156746
+layer 45 469.36s nodes 179961
+layer 44 555.194s nodes 182877
+layer 43 650.805s nodes 181442
+layer 42 747.752s nodes 184280
+layer 41 843.425s nodes 181415
+layer 40 934.059s nodes 161565
+layer 39 1003.009s nodes 160757
+layer 38 1086.79s nodes 152708
+layer 37 1160.911s nodes 173717
+layer 36 1241.949s nodes 169599
+layer 35 1314.514s nodes 166318
+layer 34 1383.4s nodes 167137
+layer 33 1453.616s nodes 167230
+layer 32 1522.769s nodes 151276
+layer 31 1582.614s nodes 149157
+layer 30 1651.007s nodes 143823
+layer 29 1710.588s nodes 164581
+layer 28 1783.6s nodes 165548
+layer 27 1854.184s nodes 163631
+layer 26 1920.255s nodes 164273
+layer 25 1985.562s nodes 164293
+layer 24 2051.047s nodes 148641
+layer 23 2108.513s nodes 146354
+layer 22 2173.021s nodes 141547
+layer 21 2228.7s nodes 162320
+layer 20 2294.623s nodes 164016
+layer 19 2360.094s nodes 162965
+layer 18 2425.267s nodes 164273
+layer 17 2490.548s nodes 164293
+layer 16 2555.748s nodes 148641
+layer 15 2612.891s nodes 146354
+layer 14 2676.698s nodes 141547
+layer 13 2732.036s nodes 162320
+layer 12 2797.678s nodes 164016
+layer 11 2863.18s nodes 162965
+layer 10 2928.496s nodes 164273
+layer 9 2993.694s nodes 164293
+layer 8 3059.141s nodes 148641
+layer 7 3116.41s nodes 146354
+layer 6 3180.129s nodes 141547
+layer 5 3235.496s nodes 162320
+layer 4 3300.735s nodes 164016
+layer 3 3366.107s nodes 162965
+layer 2 3431.125s nodes 164273
+layer 1 3496.285s nodes 164293
+layer 0 3561.45s nodes 148641
+done v0.3 build=pressure objective=indifferent ⟨⟨H⟩⟩□balance_control: 3563.1s peak 346607101 maxrss_kb 9587952
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 59:24.23
+	Maximum resident set size (kbytes): 9587952
+end --build pressure --objective indifferent 2026-11-18 20:13:25 PST
+=== probe --build hosting --objective indifferent 2026-11-18 20:13:25 PST
+layer 56 0.0s nodes 60
+layer 55 0.007s nodes 2320
+layer 54 0.989s nodes 21167
+layer 53 9.98s nodes 75124
+layer 52 27.158s nodes 132374
+layer 51 61.265s nodes 209423
+layer 50 102.642s nodes 258631
+layer 49 165.207s nodes 280452
+layer 48 226.096s nodes 263890
+layer 47 282.838s nodes 236841
+layer 46 345.194s nodes 277866
+layer 45 414.128s nodes 291052
+layer 44 483.648s nodes 298053
+layer 43 558.363s nodes 302249
+layer 42 632.499s nodes 301598
+layer 41 708.17s nodes 298829
+layer 40 784.997s nodes 267463
+layer 39 846.897s nodes 233239
+layer 38 912.164s nodes 282583
+layer 37 980.697s nodes 284191
+layer 36 1049.871s nodes 289590
+layer 35 1119.826s nodes 284896
+layer 34 1186.769s nodes 275100
+layer 33 1253.381s nodes 277150
+layer 32 1316.741s nodes 237920
+layer 31 1367.053s nodes 208431
+layer 30 1419.259s nodes 250814
+layer 29 1476.59s nodes 259602
+layer 28 1539.853s nodes 262021
+layer 27 1596.865s nodes 245029
+layer 26 1648.612s nodes 242770
+layer 25 1699.121s nodes 241870
+layer 24 1749.66s nodes 217791
+layer 23 1792.465s nodes 192809
+layer 22 1836.557s nodes 231529
+layer 21 1885.958s nodes 240642
+layer 20 1936.357s nodes 247969
+layer 19 1987.275s nodes 242175
+layer 18 2037.878s nodes 242650
+layer 17 2088.465s nodes 241870
+layer 16 2138.933s nodes 217791
+layer 15 2181.58s nodes 192809
+layer 14 2225.8s nodes 231529
+layer 13 2274.794s nodes 240642
+layer 12 2325.324s nodes 247969
+layer 11 2376.502s nodes 242175
+layer 10 2426.806s nodes 242650
+layer 9 2477.158s nodes 241870
+layer 8 2527.605s nodes 217791
+layer 7 2570.16s nodes 192809
+layer 6 2614.309s nodes 231529
+layer 5 2663.151s nodes 240642
+layer 4 2713.654s nodes 247969
+layer 3 2764.623s nodes 242175
+layer 2 2815.615s nodes 242650
+layer 1 2866.447s nodes 241870
+layer 0 2917.308s nodes 217791
+done v0.3 build=hosting objective=indifferent ⟨⟨H⟩⟩□balance_control: 2919.0s peak 283108799 maxrss_kb 9593280
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 48:40.17
+	Maximum resident set size (kbytes): 9593280
+end --build hosting --objective indifferent 2026-11-18 21:02:05 PST
+=== probe --build open_adoption --objective indifferent 2026-11-18 21:02:05 PST
+layer 56 0.0s nodes 60
+layer 55 0.028s nodes 2003
+layer 54 0.888s nodes 14526
+layer 53 7.211s nodes 43928
+layer 52 19.986s nodes 67361
+layer 51 37.027s nodes 82225
+layer 50 53.441s nodes 111188
+layer 49 73.027s nodes 127281
+layer 48 96.221s nodes 126267
+layer 47 122.946s nodes 132383
+layer 46 167.378s nodes 121263
+layer 45 196.212s nodes 139605
+layer 44 226.515s nodes 141607
+layer 43 259.394s nodes 140896
+layer 42 291.958s nodes 141742
+layer 41 324.121s nodes 138110
+layer 40 355.495s nodes 124033
+layer 39 382.036s nodes 123356
+layer 38 410.333s nodes 119047
+layer 37 437.649s nodes 133254
+layer 36 465.166s nodes 130456
+layer 35 492.515s nodes 128070
+layer 34 512.637s nodes 127567
+layer 33 538.904s nodes 128093
+layer 32 551.555s nodes 115203
+layer 31 575.232s nodes 114146
+layer 30 599.09s nodes 110794
+layer 29 622.792s nodes 126023
+layer 28 647.746s nodes 126862
+layer 27 673.274s nodes 124346
+layer 26 691.057s nodes 124246
+layer 25 715.434s nodes 124253
+layer 24 718.68s nodes 112709
+layer 23 739.29s nodes 111344
+layer 22 763.287s nodes 108406
+layer 21 784.487s nodes 123629
+layer 20 809.375s nodes 125410
+layer 19 831.086s nodes 123984
+layer 18 855.335s nodes 124246
+layer 17 867.791s nodes 124253
+layer 16 892.265s nodes 112709
+layer 15 912.669s nodes 111344
+layer 14 936.578s nodes 108406
+layer 13 957.891s nodes 123629
+layer 12 982.766s nodes 125410
+layer 11 1004.662s nodes 123984
+layer 10 1029.094s nodes 124246
+layer 9 1041.567s nodes 124253
+layer 8 1065.754s nodes 112709
+layer 7 1086.367s nodes 111344
+layer 6 1110.331s nodes 108406
+layer 5 1131.565s nodes 123629
+layer 4 1156.377s nodes 125410
+layer 3 1178.048s nodes 123984
+layer 2 1202.241s nodes 124246
+layer 1 1214.626s nodes 124253
+layer 0 1238.984s nodes 112709
+done v0.3 build=open_adoption objective=indifferent ⟨⟨H⟩⟩□balance_control: 1239.0s peak 225229117 maxrss_kb 9593440
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 20:39.99
+	Maximum resident set size (kbytes): 9593440
+end --build open_adoption --objective indifferent 2026-11-18 21:22:45 PST
+=== probe --build default --objective indifferent 2026-11-18 21:22:45 PST
+layer 56 0.0s nodes 62
+layer 55 0.011s nodes 3393
+layer 54 2.207s nodes 38179
+layer 53 22.551s nodes 137025
+layer 52 81.926s nodes 241447
+layer 51 164.495s nodes 443578
+layer 50 337.947s nodes 526088
+MemoryError: BDD node table exhausted (out of memory or 2**31 - 1 nodes)
+	Elapsed (wall clock) time (h:mm:ss or m:ss): 8:47.84
+	Maximum resident set size (kbytes): 18100084
+end --build default --objective indifferent 2026-11-18 21:31:33 PST
+PROBE2_DONE

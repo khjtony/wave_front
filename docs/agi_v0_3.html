@@ -241,6 +241,21 @@
     <li><b>Part B:</b> the kernel claims that the probe shows to fit, after the memory upgrade. A kernel that does not fit reads not computed; simplifying the model to make it fit is a new version.</li>
   </ul>
 
+  <h3>6a · Profiling, 18 November (time and memory only; no reading taken)</h3>
+  <p>One kernel, <code>⟨⟨H⟩⟩□balance_control</code>, per model variant, under a 20 GB memory limit (<code>scripts/agi_v0_3_probe.py</code>, log <code>reports/agi_v0_3_probe.log</code>). "One goal" computes the kernel on the states of one objective of <code>A</code> only (<code>indifferent</code>).</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Model variant</th><th>All four goals at once</th><th>One goal</th></tr></thead>
+    <tbody>
+      <tr><td>No open system (<code>closed</code>)</td><td>19 min, 9.6 GB</td><td>not run</td></tr>
+      <tr><td>Open system alone (<code>bare</code>)</td><td>78 min, 9.6 GB</td><td>21 min, 9.6 GB</td></tr>
+      <tr><td>+ the providers' wave (<code>open_adoption</code>)</td><td>73 min, 9.6 GB</td><td>21 min, 9.6 GB</td></tr>
+      <tr><td>+ race pressure (<code>pressure</code>)</td><td>over 20 GB after 9 min</td><td>59 min, 9.6 GB</td></tr>
+      <tr><td>+ the hosting lever (<code>hosting</code>)</td><td>over 20 GB after 9 min</td><td>49 min, 9.6 GB</td></tr>
+      <tr><td>Everything on (<code>default</code>, the registered build)</td><td>over 20 GB after 6 min</td><td>over 20 GB after 9 min</td></tr>
+    </tbody>
+  </table></div>
+  <p>The 9.6 GB is the engine's floor (it collects garbage only past 120 million nodes), so it says "fits", not how much is needed. Consequences: the kernels are computed one goal at a time (below); the registered build needs more than 20 GB even so, and waits for the memory upgrade.</p>
+
   <h2>7 · Running</h2>
   <ul class="plain">
     <li><code>WF_FIRST_SIGHT_AGI_V03=1 pytest tests/agi_v0_3/scenarios/test_FN.py -s</code>, one process per file. Kernel parts run only with <code>WF_V03_KERNELS=1</code> as well.</li>
@@ -249,6 +264,7 @@
 
   <h2>8 · Changelog</h2>
   <ul class="plain">
+    <li>18 November 2026, harness change before any kernel claim was run: kernels are computed <b>one goal at a time</b> (<code>tests/agi_v0_3/kernels.py</code>), the target cut to the states of one objective of <code>A</code>. Nothing writes <code>a_objective</code> in v0.3, so those states are closed under every move and the reading is the one the joint kernel gives; <code>WF_V03_JOINT=1</code> computes the four together as registered. Basis: the profiling of section 6a (the owner's suggestion of the same day). The harness is checked against two readings v0.1 has already given, on the build that is v0.1 again (<code>scripts/agi_v0_3_slice_check.py</code>, log <code>reports/agi_v0_3_slice_check.log</code>).</li>
     <li>18 November 2026, part A at <code>afbacfc</code> (first sight, run once): F1, F2 and F5 met in every part. F1: 18 of 18 numbers identical to v0.1's. F2: the shortest play to <code>OPEN_TAKEOVER</code> is 10 quarters under every objective; the shortest to <code>SILENT_TAKEOVER</code> is v0.1's. F5: a play under every objective, 10 quarters. Report: <code>reports/agi_v0_3_part_a_2026-11-18.html</code>.</li>
     <li>18 November 2026, after the registration commit: the model written (<code>models/agi_v0_3/v0_3.py</code>) with its structure tests; section 3a added. No claim query run. An encoder check ran first, on a target of no claim (O's level reaching AGI: 6 quarters).</li>
     <li>18 November 2026: drafted twice (a single-AI gap version, then the second system on the owner's decision 7), the owner's decisions recorded, registered (F1 to F7 with test bodies) before any guard of v0.3 was written. No query of v0.3 had been run.</li>
