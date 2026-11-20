@@ -673,5 +673,6 @@ def overview() -> dict:
         "news_new": sum(1 for n in store("news") if n["status"] == "new"),
         "findings": len(store("findings")),
         "srt_date": s["srt"]["date"],
+        "srt_reviewed": s["srt"].get("reviewed", s["srt"]["date"]),
         "srt_moved": moved,
     }

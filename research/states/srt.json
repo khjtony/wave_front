@@ -63,6 +63,16 @@
     "snapshots/agi/2026-11-09.json"
    ],
    "approved": "owner, 2026-11-18"
+  },
+  {
+   "date": "2026-11-20",
+   "variable": null,
+   "change": "First review since the split (news of 9 to 20 November, eight items in the inbox). No level changed. One item bears on an uncertain reading: California's mandatory safety standards and regulation strictness (voluntary or mandatory).",
+   "sources": [
+    "research/news.json"
+   ],
+   "approved": "no change to approve; the eight items wait for the owner's triage"
   }
- ]
+ ],
+ "reviewed": "2026-11-20"
 }

@@ -1,1 +1,98 @@
-[]
+[
+ {
+  "id": 1,
+  "created": "2026-11-20 01:50",
+  "status": "new",
+  "title": "California releases next steps on mandatory AI safety standards and oversight",
+  "url": "https://gov.ca.gov/2026/11/18/governor-newsoms-nation-leading-ai-safety-framework-is-getting-even-stronger-as-california-releases-next-steps-on-mandatory-safety-standards-and-oversight",
+  "source": "Governor of California (primary)",
+  "date": "2026-11-18",
+  "variable": "regime",
+  "effect": "Bears on the uncertain reading voluntary / mandatory: binding state-level standards strengthen the 'mandatory' candidate. Proposed: no level change yet; decide whether a state-level mandate counts.",
+  "note": "This is the reading finding 2 turns on."
+ },
+ {
+  "id": 2,
+  "created": "2026-11-20 01:50",
+  "status": "new",
+  "title": "Trump rejects global AI regulation as Xi calls for cooperation on safety",
+  "url": "https://www.euronews.com/2026/11/19/us-president-trump-rejects-global-ai-regulation-as-chinas-xi-calls-for-cooperation-on-safe",
+  "source": "Euronews",
+  "date": "2026-11-19",
+  "variable": "coord",
+  "effect": "Supports the current level 'race'. Proposed: no change.",
+  "note": "Talks in Shenzhen; no agreement reported."
+ },
+ {
+  "id": 3,
+  "created": "2026-11-20 01:50",
+  "status": "new",
+  "title": "US Commerce rule tightening advanced AI chip export licences (issued 16 Nov, effective on publication 19 Nov)",
+  "url": "https://learnrudi.com/insights/rudi-daily-ai-news-2026-11-17.html",
+  "source": "newsletter; not verified against the Federal Register",
+  "date": "2026-11-17",
+  "variable": "coord",
+  "effect": "Supports 'race'. Proposed: no change.",
+  "note": "Single secondary source."
+ },
+ {
+  "id": 4,
+  "created": "2026-11-20 01:50",
+  "status": "new",
+  "title": "California attorney general sues OpenAI over safeguards failures tied to an agent hack",
+  "url": "https://learnrudi.com/insights/rudi-daily-ai-news-2026-11-17.html",
+  "source": "newsletter; not verified",
+  "date": "2026-11-17",
+  "variable": "oversight",
+  "effect": "An incident handled by a state regulator. Proposed: no change to oversight (weak) or government suspicion (unknown).",
+  "note": ""
+ },
+ {
+  "id": 5,
+  "created": "2026-11-20 01:50",
+  "status": "new",
+  "title": "AUDIT AI Act introduced in the US Senate (transparency of public companies' AI investments)",
+  "url": "https://www.mlex.com/mlex/artificial-intelligence/articles/2552512",
+  "source": "MLex",
+  "date": "2026-11-19",
+  "variable": "regime",
+  "effect": "Introduced only. Proposed: no change.",
+  "note": ""
+ },
+ {
+  "id": 6,
+  "created": "2026-11-20 01:50",
+  "status": "new",
+  "title": "Frontier releases 9 to 18 November: Claude Fable 5.2 (9 Nov), Gemini 4 Carbon / Hydrogen / Neon (10 to 18 Nov), GPT-6.2 (17 Nov)",
+  "url": "https://local-ai-zone.github.io/blog/November_2026_AI_Model_Updates.html",
+  "source": "aggregators; not verified against the companies' announcements",
+  "date": "2026-11-17",
+  "variable": "cap",
+  "effect": "No AGI claim found. Supports the current level 'sub_agi'. Proposed: no change.",
+  "note": ""
+ },
+ {
+  "id": 7,
+  "created": "2026-11-20 01:50",
+  "status": "new",
+  "title": "Moonshot publishes the open weights of Kimi K3.1 Pro (API 23 Oct; weights about 4 Nov)",
+  "url": "https://en.wikipedia.org/wiki/Kimi_(chatbot)",
+  "source": "Wikipedia and guides; date varies between 2 and 6 Nov",
+  "date": "2026-11-04",
+  "variable": "o_cap",
+  "effect": "Consistent with the open-weight gap of about two quarters. Proposed: no change.",
+  "note": "Index gap to closed models reported between 12 and 26 points depending on the board."
+ },
+ {
+  "id": 8,
+  "created": "2026-11-20 01:50",
+  "status": "new",
+  "title": "Japan weighs corrective orders with penalties for high-performance AI; direction expected by year-end",
+  "url": "https://note.com/right_crab9040/n/n25759b527b06?hl=en",
+  "source": "news digest; not verified",
+  "date": "2026-11-18",
+  "variable": "regime",
+  "effect": "Not decided. Proposed: no change.",
+  "note": ""
+ }
+]
