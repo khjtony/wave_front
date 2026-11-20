@@ -13,6 +13,8 @@ printed: what was asked, and the reading or the limit it went over.
 
 from __future__ import annotations
 
+import sys
+
 from tests.agi.common import NotComputed
 from tests.agi_v0_3.common import CLOSED, DEFAULT
 from tests.agi_v0_3.kernels import membership
@@ -38,7 +40,9 @@ QUEUE += [("F7", "default", DEFAULT, c, t, (), lv) for c, t, lv in F7 if (c, t) 
 
 
 def main() -> None:
-    for objective in ORDER:
+    # ``--goal X`` runs one start objective only, so that several queues can share the machine.
+    only = sys.argv[sys.argv.index("--goal") + 1 :][:1] if "--goal" in sys.argv else []
+    for objective in only or ORDER:
         for claim, name, build, coalition, target, profiles, levels in QUEUE:
             what = (
                 f"{claim} {name} {'+'.join(coalition)} {target} {' '.join(profiles)} {levels or ''}"
