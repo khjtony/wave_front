@@ -6,3 +6,8 @@ F3 default H not:OPEN_TAKEOVER   | self_preserving | not computed: over the cap 
 F6 default H+L balance_control   | self_preserving | not computed: over the cap of 28 GB: BDD node table exhausted (out of memory or 2**31 - 1 nodes)
 F4 default H not:OPEN_TAKEOVER no_treaty  | self_preserving | not computed: over the cap of 28 GB: BDD node table exhausted (out of memory or 2**31 - 1 nodes)
 F4 default H+L not:OPEN_TAKEOVER no_treaty  | self_preserving | not computed: over the cap of 28 GB: BDD node table exhausted (out of memory or 2**31 - 1 nodes)
+F6 default H+L balance_control no_nationalize  | self_preserving | not computed: over the cap of 28 GB: BDD node table exhausted (out of memory or 2**31 - 1 nodes)
+F7 default H balance_control   | self_preserving | not computed: over the cap of 28 GB: BDD node table exhausted (out of memory or 2**31 - 1 nodes)
+F7 default H+L not:SILENT_TAKEOVER   | self_preserving | not computed: over the cap of 28 GB: BDD node table exhausted (out of memory or 2**31 - 1 nodes)
+F7 default H balance_coexist  {'cap': 'agi'} | self_preserving | outside | 662.3 s
+QUEUE_DONE
