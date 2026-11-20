@@ -39,6 +39,7 @@ MINUTES = float(os.environ.get("WF_V03_KERNEL_MINUTES", "600"))
 JOINT = os.environ.get("WF_V03_JOINT") == "1"
 READINGS = ROOT / "reports" / "agi_v0_3_kernels.jsonl"
 MODEL_FILE = ROOT / "models" / "agi_v0_3" / "v0_3.py"
+PROGRESS = ROOT / ".cache" / "agi_v0_3_progress"
 
 
 def stamp() -> str:
@@ -112,6 +113,20 @@ def forked(question: str, fn: Callable, *args: object):
     return value
 
 
+def _progress(horizon: int) -> Callable[[dict], None]:
+    """Writes the layer a kernel computation has reached to ``.cache/agi_v0_3_progress/
+    <pid>.json`` (the console shows it). Progress only: no reading is in it."""
+    PROGRESS.mkdir(parents=True, exist_ok=True)
+    path = PROGRESS / f"{os.getpid()}.json"
+
+    def tell(st: dict) -> None:
+        row = {"tick": st.get("tick"), "horizon": horizon, "seconds": st.get("seconds")}
+        row |= {"nodes": st.get("nodes"), "at": time.time()}
+        path.write_text(json.dumps(row), encoding="utf-8")
+
+    return tell
+
+
 def _start(cm, objective: str, levels: dict[str, str]):
     states = [s for s in cm.initial_states() if cm.state_dict(s)["a_objective"] == objective]
     if len(states) != 1:
@@ -141,7 +156,7 @@ def membership(
         goal = target_bdd(enc, target)
         if objective is not None:
             goal = enc.mgr.protect(enc.mgr.AND(goal, enc.predicate(V.a_objective == objective)))
-        f = safe(enc, list(coalition), goal).kernel
+        f = safe(enc, list(coalition), goal, on_iteration=_progress(cm.horizon)).kernel
         enc.mgr.protect(f)
         asked = OBJECTIVES if objective is None else (objective,)
         return {

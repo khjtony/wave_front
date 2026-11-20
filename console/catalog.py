@@ -510,6 +510,16 @@ def _workers(now: float) -> list[dict]:
     return sorted(out, key=lambda w: w["started"])
 
 
+def _layer(pid: int) -> dict | None:
+    """How far a zone computation has got: layers done of the simulation's quarters."""
+    try:
+        got = json.loads((ROOT / ".cache" / "agi_v0_3_progress" / f"{pid}.json").read_text())
+        total = int(got["horizon"]) + 1
+        return {"done": total - int(got["tick"]), "of": total, "nodes": got.get("nodes")}
+    except (OSError, ValueError, KeyError, TypeError):
+        return None
+
+
 def queue() -> dict:
     """The heavy claims' queue: every zone and AI goal as done, running, waiting or not
     fitting, with who computes it and for how long. The running zone of a worker is inferred:
@@ -586,6 +596,7 @@ def queue() -> dict:
                 if position == 0 and w["child"]:
                     e |= {"status": "running", "seconds": w["child"]["seconds"]}
                     e["gb"] = w["child"]["gb"]
+                    e["layer"] = _layer(w["child"]["pid"])
                 else:
                     e |= {"position": position, "waiting_seconds": w["seconds"]}
                 position += 1
