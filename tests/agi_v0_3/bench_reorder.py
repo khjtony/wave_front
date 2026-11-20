@@ -26,6 +26,7 @@ import json
 import resource
 import sys
 import time
+from pathlib import Path
 
 MODELS = {
     "v01": None,  # tests.agi_v0_3.common.V01
@@ -36,7 +37,27 @@ MODELS = {
         "open_adoption": False,
         "treaty_delay": 1,
     },
+    "default": "DEFAULT",  # tests.agi_v0_3.common.DEFAULT, the registered build
 }
+ORDERS = Path(__file__).resolve().parent / "orders"
+SIFTED_GC_MIN_NODES = 40_000_000
+
+
+def ordered_encoding(cm, order_file=None, gc_min_nodes: int = SIFTED_GC_MIN_NODES):
+    """What ``tests.agi.common.heavy_encoding`` gives, in another static order: the one
+    nearest to the bit-level order of ``order_file`` (a JSON list written by ``--dump-order``,
+    such as ``orders/default_aligned_sifted.json``), or, without a file, FORCE with the
+    actors as vertices. The compiled core, no library."""
+    from wavefront.symbolic import encode
+
+    if order_file is None:
+        order, actions = _force_with_actions(cm)
+    else:
+        with open(order_file, encoding="utf-8") as fh:
+            order, actions = _replay(cm, json.load(fh))
+    enc = encode(cm, var_order=order, actions=actions)
+    enc.mgr.gc_min_nodes = gc_min_nodes
+    return enc
 
 
 def _rss_peak_mb() -> float:
@@ -182,6 +203,10 @@ def main(argv: list[str] | None = None) -> int:
     )
     p.add_argument("--goal", default="aligned", help="an objective of A, or 'all'")
     p.add_argument("--model", choices=tuple(MODELS), default="v01")
+    p.add_argument("--coalition", default="H", help="actor names joined by +")
+    p.add_argument("--target", default="balance_control", help="as tests.agi.common.target_bdd")
+    p.add_argument("--profiles", default="", help="model profiles joined by commas")
+    p.add_argument("--stop-after", type=float, default=None, help="seconds; then exit (cudd)")
     p.add_argument("--cap-gb", type=float, default=12.0)
     p.add_argument(
         "--gc-min-nodes",
@@ -198,13 +223,15 @@ def main(argv: list[str] | None = None) -> int:
     resource.setrlimit(resource.RLIMIT_AS, (cap, cap))
 
     from tests.agi.common import GC_MIN_NODES, force_order, target_bdd
-    from tests.agi_v0_3.common import V01, compiled, key
+    from tests.agi_v0_3.common import DEFAULT, V01, compiled, key
     from wavefront.model import V
     from wavefront.symbolic import encode, safe
 
     rec: dict = {k: v for k, v in vars(args).items() if k != "out"}
     t_start = time.perf_counter()
-    cm = compiled(key(MODELS[args.model] or V01))
+    build = {"v01": V01, "default": DEFAULT}.get(args.model) or MODELS[args.model]
+    profiles = [x for x in args.profiles.split(",") if x]
+    cm = compiled(key(build, profiles))
     actions: str | dict[str, str] = "top"
     if args.force_actions:
         order, actions = _force_with_actions(cm)
@@ -272,14 +299,16 @@ def main(argv: list[str] | None = None) -> int:
                 with open(args.dump_order, "w", encoding="utf-8") as fh:
                     json.dump([mgr.names[v] for v in mgr.order()], fh)
             print(json.dumps(row), flush=True)
+            if args.stop_after and st["seconds"] > args.stop_after:
+                raise SystemExit(0)
 
-        goal = target_bdd(enc, "balance_control")
+        goal = target_bdd(enc, args.target)
         if args.goal != "all":  # "all": every start objective at once
             goal = mgr.AND(goal, enc.predicate(V.a_objective == args.goal))
         mgr.protect(goal)
         t0 = time.perf_counter()
         try:
-            res = safe(enc, ["H"], goal, on_iteration=on_iteration)
+            res = safe(enc, args.coalition.split("+"), goal, on_iteration=on_iteration)
         except MemoryError as exc:
             rec["error"] = f"MemoryError: {exc}"
             res = None
@@ -292,6 +321,10 @@ def main(argv: list[str] | None = None) -> int:
             rec["initial_membership"] = {
                 cm.state_dict(s)["a_objective"]: res.contains(s) for s in cm.initial_states()
             }
+            if args.goal != "all":  # the reading of tests/agi_v0_3/kernels.py::membership
+                from tests.agi_v0_3.kernels import _start
+
+                rec["inside"] = bool(enc.holds(res.kernel, _start(cm, args.goal, {})))
         rec["sizes_at_end"] = _sizes(enc)
 
     stats = mgr.stats()

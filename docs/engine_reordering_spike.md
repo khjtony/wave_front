@@ -211,3 +211,20 @@ python -m tests.agi_v0_3.bench_reorder --core c --model v03p --goal indifferent 
 ```
 
 Each run caps its own address space (`--cap-gb`, default 12), prints one line per layer and ends with a JSON record (`--out FILE` appends it). `--encode-only` prints the sizes of 5.5.
+
+## 9. Follow-up: the registered build (2026-11-20, afternoon)
+
+Build `tests.agi_v0_3.common.DEFAULT` (every option on), zones cut to `a_objective = aligned` and read at that objective's start state as `tests/agi_v0_3/kernels.py::membership` does. The compiled core, collection threshold 40 million nodes, against production's saved readings in the FORCE order.
+
+The order (`tests/agi_v0_3/orders/default_aligned_sifted.json`) is what a CUDD `auto` pass on `["H"]`, `not:OPEN_TAKEOVER` had reached after 199 s and 6 of 57 layers; the pass then stalled in its seventh layer and was stopped at 900 s.
+
+| Zone | Production, FORCE order | Sifted order | FORCE with actors as vertices |
+|---|---|---|---|
+| `["H","L"]`, `balance_control` | inside, 5,190 s | no reading: stopped at 1,170 s after 12 layers, about 180 s a layer (on course for about 9,300 s), 17.8 GB | not run |
+| `["H"]`, `not:OPEN_TAKEOVER`, profile `no_treaty` | outside, 7,863 s | outside, 3,877 s, 9,641 MB | out of memory at 12 GB after 7 layers and 545 s (eight times slower per layer than the sifted order) |
+| `["H"]`, `not:OPEN_TAKEOVER` | inside, 11,063 s, about 26 GB | out of memory at 12 GB after 13 layers and 857 s; not run under a larger cap | not run |
+
+- No reading disagrees with production: the one zone that finished reads the same.
+- On this build the gain is a factor of 2 on the zone the order was sifted for, not the factor of 20 of AGI v0.1, and the order is worse than FORCE for another coalition and target. An order has to be found per zone (coalition and target), and a few minutes of sifting are not enough here.
+- The no-library heuristic of 5.1 (f) does not carry over to this build.
+- This weakens section 7: the sifted static order is not a general remedy for the registered build as it stands. A longer or better-directed order search would be needed before the production harness changes.
