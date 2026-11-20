@@ -1,9 +1,13 @@
 /* See wf_cudd.h. Only CUDD's public interface (cudd.h, mtr.h) is used. */
+#define _GNU_SOURCE
 #include "wf_cudd.h"
 
+#include <execinfo.h>
 #include <limits.h>
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "mtr.h" /* before cudd.h, which declares the group functions only then */
 
@@ -22,6 +26,19 @@ static uintptr_t ret(DdNode *r) {
 }
 
 const char *wf_source_hash(void) { return WF_SOURCE_HASH; }
+
+/* On SIGSEGV, write the C stack to stderr (addresses for addr2line) and die as usual. */
+static void on_segv(int sig) {
+    void *frames[96];
+    int n = backtrace(frames, 96);
+    static const char msg[] = "wf_cudd: SIGSEGV, C stack:\n";
+    if (write(2, msg, sizeof msg - 1) < 0) n = 0;
+    backtrace_symbols_fd(frames, n, 2);
+    signal(sig, SIG_DFL);
+    raise(sig);
+}
+
+void wf_trace_crashes(void) { signal(SIGSEGV, on_segv); }
 
 DdManager *wf_new(size_t max_memory, unsigned int cache_slots) {
     DdManager *dd = Cudd_Init(0, 0, CUDD_UNIQUE_SLOTS,

@@ -3,14 +3,20 @@
 
     python -m tests.agi_v0_3.bench_reorder --core c --goal indifferent
     python -m tests.agi_v0_3.bench_reorder --core cudd --reorder off --goal indifferent
-    python -m tests.agi_v0_3.bench_reorder --core cudd --reorder points --pre-reorder ...
+    python -m tests.agi_v0_3.bench_reorder --core cudd --reorder auto --dump-order o.json ...
+    python -m tests.agi_v0_3.bench_reorder --core c --order-from o.json ...
 
 It prints one line per tick layer and ends with one JSON record (also appended to ``--out``):
 the number of states in the kernel, the membership of the model's initial states, wall time,
 peak resident memory, peak live nodes, the sizes of the next-state functions and of the
 availability predicates, and the largest result of a ``compose`` or ``and_exists`` (the
-intermediate BDDs of a controllable predecessor). The static order is the FORCE order of
-``tests.agi.common.force_order``, computed on the compiled core in every case.
+intermediate BDDs of a controllable predecessor).
+
+The static order is the FORCE order of ``tests.agi.common.force_order``, computed on the
+compiled core in every case, unless ``--order-from`` replays an order a CUDD run ended in
+(``final_order`` of its record, or the file of ``--dump-order``) or ``--force-actions``
+asks for the FORCE variant that places the action bits. With ``--reorder auto`` the sizes
+"after encoding" are already in whatever order CUDD had reached by then.
 """
 
 from __future__ import annotations
@@ -71,6 +77,52 @@ def _replay(cm, bit_order: list[str]) -> tuple[list[str], dict[str, str]]:
     return var_order, actions
 
 
+def _force_with_actions(cm, rounds: int = 200) -> tuple[list[str], dict[str, str]]:
+    """The FORCE heuristic of ``tests.agi.common.force_order`` with the actors as vertices
+    too: one hyperedge per state variable (itself, the variables its update reads and the
+    actors whose action bits it reads) and one per actor (itself and what its availability
+    reads). ``tick`` stays first; an actor's action bits go after the state variable that
+    precedes the actor in the result. Needs no reordering library."""
+    from wavefront.symbolic import encode
+
+    enc = encode(cm)
+    names = [v.name for v in cm.variables]
+    n = len(names)
+    tick = cm.index["tick"]
+    vertex = {lv: i for i in range(n) for lv in enc.cur[i]}
+    vertex.update({lv: n + a for a in range(len(cm.actors)) for lv in enc.act[a]})
+    edges = []
+    for i in range(n):
+        fs = [enc.next_fn[lv] for lv in enc.cur[i] if lv in enc.next_fn]
+        if fs:
+            edges.append({i} | {vertex[lv] for lv in enc.mgr.support(fs) if lv in vertex})
+    for a in range(len(cm.actors)):
+        edges.append({n + a} | {vertex[lv] for lv in enc.mgr.support(enc.avail[a])})
+    edges = [sorted(e - {tick}) for e in edges if len(e - {tick}) > 1]
+    pos = {v: float(v) for v in range(n + len(cm.actors))}
+    best, best_span = list(pos), None
+    for _ in range(rounds):
+        cog = [sum(pos[v] for v in e) / len(e) for e in edges]
+        acc: dict[int, list[float]] = {v: [] for v in pos}
+        for e, c in zip(edges, cog, strict=True):
+            for v in e:
+                acc[v].append(c)
+        new = {v: (sum(a) / len(a) if a else pos[v]) for v, a in acc.items()}
+        ranked = sorted(pos, key=lambda v: (new[v], v))
+        pos = {v: float(r) for r, v in enumerate(ranked)}
+        span = sum(max(pos[v] for v in e) - min(pos[v] for v in e) for e in edges)
+        if best_span is None or span < best_span:
+            best, best_span = ranked, span
+    var_order = ["tick"]
+    actions: dict[str, str] = {}
+    for v in best:
+        if v >= n:
+            actions[cm.actors[v - n].name] = var_order[-1]
+        elif v != tick:
+            var_order.append(names[v])
+    return var_order, actions
+
+
 def _sizes(enc) -> dict:
     mgr = enc.mgr
     fns = list(enc.next_fn.values())
@@ -117,9 +169,26 @@ def main(argv: list[str] | None = None) -> int:
         help="a JSON list of bit names (the final_order of a cudd run): the static order "
         "nearest to it replaces the FORCE order",
     )
-    p.add_argument("--goal", default="aligned")
+    p.add_argument(
+        "--force-actions",
+        action="store_true",
+        help="the FORCE heuristic with the actors as vertices replaces the FORCE order",
+    )
+    p.add_argument(
+        "--dump-order",
+        default=None,
+        metavar="FILE",
+        help="after every tick layer, write the current order there (cudd), for --order-from",
+    )
+    p.add_argument("--goal", default="aligned", help="an objective of A, or 'all'")
     p.add_argument("--model", choices=tuple(MODELS), default="v01")
     p.add_argument("--cap-gb", type=float, default=12.0)
+    p.add_argument(
+        "--gc-min-nodes",
+        type=int,
+        default=None,
+        help="collection threshold (default: the heavy setting, 120 million nodes)",
+    )
     p.add_argument("--encode-only", action="store_true", help="sizes only, with trans_parts")
     p.add_argument("--no-probe", action="store_true", help="do not size the intermediates")
     p.add_argument("--out", default=None, help="append the JSON record to this file")
@@ -137,7 +206,10 @@ def main(argv: list[str] | None = None) -> int:
     t_start = time.perf_counter()
     cm = compiled(key(MODELS[args.model] or V01))
     actions: str | dict[str, str] = "top"
-    if args.order_from:
+    if args.force_actions:
+        order, actions = _force_with_actions(cm)
+        rec["var_order"], rec["actions"] = order, actions
+    elif args.order_from:
         with open(args.order_from, encoding="utf-8") as fh:
             order, actions = _replay(cm, json.load(fh))
         rec["var_order"], rec["actions"] = order, actions
@@ -146,7 +218,7 @@ def main(argv: list[str] | None = None) -> int:
     t0 = time.perf_counter()
     enc = encode(cm, mgr=_make_manager(args), var_order=order, actions=actions)
     mgr = enc.mgr
-    mgr.gc_min_nodes = GC_MIN_NODES
+    mgr.gc_min_nodes = args.gc_min_nodes or GC_MIN_NODES
     rec["vars"] = mgr.num_vars
     rec["encode_seconds"] = round(time.perf_counter() - t0, 2)
     rec["sizes_after_encoding"] = _sizes(enc)
@@ -196,11 +268,15 @@ def main(argv: list[str] | None = None) -> int:
             }
             layers.append(row)
             now["tick"] = st["tick"] - 1
+            if args.dump_order and args.core == "cudd":
+                with open(args.dump_order, "w", encoding="utf-8") as fh:
+                    json.dump([mgr.names[v] for v in mgr.order()], fh)
             print(json.dumps(row), flush=True)
 
-        goal = mgr.protect(
-            mgr.AND(target_bdd(enc, "balance_control"), enc.predicate(V.a_objective == args.goal))
-        )
+        goal = target_bdd(enc, "balance_control")
+        if args.goal != "all":  # "all": every start objective at once
+            goal = mgr.AND(goal, enc.predicate(V.a_objective == args.goal))
+        mgr.protect(goal)
         t0 = time.perf_counter()
         try:
             res = safe(enc, ["H"], goal, on_iteration=on_iteration)

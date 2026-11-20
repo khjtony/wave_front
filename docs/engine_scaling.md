@@ -379,3 +379,7 @@ WAVEFRONT_BDD=python python -m pytest tests/symbolic -q                 # the re
 - Rerun the build after any change to `bdd_core.c` or `bdd_core.h`. The wrapper refuses a stale module.
 - `pip install -e .` without the extra still works: the engine then uses the Python manager, and the differential tests are skipped.
 - No setuptools hook builds the core at install time. The project builds with plain setuptools and no `setup.py`, and a hook would make cffi and a compiler requirements of every install. `.gitignore` excludes the built `*.so`.
+
+### 7.6 Variable order
+
+The core has no reordering, and its order is whatever `encode` is given. docs/engine_reordering_spike.md measures what the order is worth on the AGI guarantee zones: an order found by CUDD's sifting, given back to this core as a static order, cuts a 522 s zone to 22 s. The gain is in the intermediates of the controllable predecessor, where the action bits sit in the order, not in the transition functions.

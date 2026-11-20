@@ -57,6 +57,7 @@ int wf_check(DdManager *dd);
 int wf_check_zero_ref(DdManager *dd);
 void wf_stats(DdManager *dd, uint64_t *out);
 const char *wf_source_hash(void);
+void wf_trace_crashes(void);
 
 #define WF_NSTATS 12
 #define WF_SIFT 0

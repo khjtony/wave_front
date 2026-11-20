@@ -71,6 +71,9 @@ if all((HERE / name).exists() for name in SOURCES):
 
 __all__ = ["BDD", "TRUE", "FALSE", "REORDER_MODES", "METHODS"]
 
+if os.environ.get("WAVEFRONT_CUDD_BACKTRACE") == "1":  # a C stack on stderr if CUDD crashes
+    lib.wf_trace_crashes()
+
 REORDER_MODES = ("off", "auto", "points")
 METHODS = {
     "sift": lib.WF_SIFT,
