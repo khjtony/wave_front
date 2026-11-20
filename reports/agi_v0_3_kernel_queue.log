@@ -20,3 +20,10 @@ F6 default H+L balance_control   | aligned | inside | 5189.8 s
 F4 default H not:OPEN_TAKEOVER no_treaty  | aligned | outside | 7863.2 s
 F4 default H+L not:OPEN_TAKEOVER no_treaty  | aligned | inside | 9334.2 s
 F6 default H+L balance_control no_nationalize  | aligned | outside | 5507.7 s
+F7 default H balance_control   | aligned | outside | 3723.9 s
+F7 default H+L not:SILENT_TAKEOVER   | aligned | inside | 0.4 s
+F7 default H balance_coexist  {'cap': 'agi'} | aligned | outside | 64.7 s
+F7 closed H balance_control   | truth_seeking | outside | 6.4 s
+F7 closed H+L balance_control   | truth_seeking | inside | 0.5 s
+F7 closed H+L not:SILENT_TAKEOVER   | truth_seeking | inside | 0.1 s
+F7 closed H balance_coexist  {'cap': 'agi'} | truth_seeking | inside | 0.9 s
