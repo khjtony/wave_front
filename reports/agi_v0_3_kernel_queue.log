@@ -30,3 +30,34 @@ F7 closed H balance_coexist  {'cap': 'agi'} | truth_seeking | inside | 0.9 s
 F3 default H not:OPEN_TAKEOVER   | truth_seeking | inside | 24058.5 s
 F6 default H+L balance_control   | truth_seeking | inside | 6452.0 s
 F4 default H not:OPEN_TAKEOVER no_treaty  | truth_seeking | outside | 13086.8 s
+F4 default H+L not:OPEN_TAKEOVER no_treaty  | truth_seeking | inside | 15161.9 s
+end 2026-11-20 11:42:37 PST
+=== worker pid=1198674 goal=all limit=85
+F7 closed H balance_control   | aligned | outside | 6.4 s
+F7 closed H+L balance_control   | aligned | inside | 0.5 s
+F7 closed H+L not:SILENT_TAKEOVER   | aligned | inside | 0.1 s
+F7 closed H balance_coexist  {'cap': 'agi'} | aligned | inside | 0.6 s
+F3 default H not:OPEN_TAKEOVER   | aligned | inside | 11063.3 s
+F6 default H+L balance_control   | aligned | inside | 5189.8 s
+F4 default H not:OPEN_TAKEOVER no_treaty  | aligned | outside | 7863.2 s
+F4 default H+L not:OPEN_TAKEOVER no_treaty  | aligned | inside | 9334.2 s
+F6 default H+L balance_control no_nationalize  | aligned | outside | 5507.7 s
+F7 default H balance_control   | aligned | outside | 3723.9 s
+F7 default H+L not:SILENT_TAKEOVER   | aligned | inside | 0.4 s
+F7 default H balance_coexist  {'cap': 'agi'} | aligned | outside | 64.7 s
+F7 closed H balance_control   | truth_seeking | outside | 6.4 s
+F7 closed H+L balance_control   | truth_seeking | inside | 0.5 s
+F7 closed H+L not:SILENT_TAKEOVER   | truth_seeking | inside | 0.1 s
+F7 closed H balance_coexist  {'cap': 'agi'} | truth_seeking | inside | 0.9 s
+F3 default H not:OPEN_TAKEOVER   | truth_seeking | inside | 24058.5 s
+F6 default H+L balance_control   | truth_seeking | inside | 6452.0 s
+F4 default H not:OPEN_TAKEOVER no_treaty  | truth_seeking | outside | 13086.8 s
+F4 default H+L not:OPEN_TAKEOVER no_treaty  | truth_seeking | inside | 15161.9 s
+F6 default H+L balance_control no_nationalize  | truth_seeking | outside | 6564.6 s
+F7 default H balance_control   | truth_seeking | outside | 4751.9 s
+F7 default H+L not:SILENT_TAKEOVER   | truth_seeking | inside | 0.5 s
+F7 default H balance_coexist  {'cap': 'agi'} | truth_seeking | outside | 527.7 s
+F7 closed H balance_control   | indifferent | outside | 113.0 s
+F7 closed H+L balance_control   | indifferent | inside | 7.7 s
+F7 closed H+L not:SILENT_TAKEOVER   | indifferent | inside | 90.9 s
+F7 closed H balance_coexist  {'cap': 'agi'} | indifferent | outside | 0.1 s
