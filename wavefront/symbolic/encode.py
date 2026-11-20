@@ -255,6 +255,11 @@ class Encoding:
                 place_actor(a)
         for a in bottom:
             place_actor(a)
+        group = getattr(mgr, "group", None)
+        if group is not None:  # a core that reorders: a bit stays next to its next-state bit
+            for cur_bits, nxt_bits in zip(self.cur, self.nxt, strict=True):
+                for c, n in zip(cur_bits, nxt_bits, strict=True):
+                    group((c, n))
         self.var_order = [names[i] for i in order]
         self.state_levels = sorted(v for bits in self.cur for v in bits)
         self.next_levels = sorted(v for bits in self.nxt for v in bits)
