@@ -32,7 +32,17 @@ const file = path => "/file/" + path;
 const pill = status => h("span", { class: "pill " + (STATUS[status] || ["idle"])[0] }, (STATUS[status] || [0, status])[1]);
 const dur = s => s >= 3600 ? (s / 3600).toFixed(1) + " h" : s >= 60 ? Math.round(s / 60) + " min" : Math.round(s) + " s";
 const quarter = t => `${2026 + Math.floor((Number(t) + 3) / 4)} Q${((Number(t) + 3) % 4) + 1}`;
-function show(...nodes) { main.replaceChildren(...nodes.flat()); }
+// What the reader opened stays open across a refresh: each <details> is remembered by its page
+// and its summary text without the numbers (counts and times change between refreshes).
+const OPEN = new Map();
+const detailsKey = d => (location.hash || "#overview") + "|" + ((d.querySelector("summary") || d).textContent || "").replace(/[0-9.]+/g, "").slice(0, 80);
+function show(...nodes) {
+  for (const d of main.querySelectorAll("details")) OPEN.set(detailsKey(d), d.open);
+  const x = window.scrollX, y = window.scrollY;
+  main.replaceChildren(...nodes.flat());
+  for (const d of main.querySelectorAll("details")) { const was = OPEN.get(detailsKey(d)); if (was !== undefined) d.open = was; }
+  window.scrollTo(x, y);
+}
 function fail(err) { show(h("h1", null, "Something went wrong"), h("p", { class: "err" }, String(err.message || err))); }
 function tabs(items, current, pick) {
   return h("div", { class: "tabs", role: "group" }, items.map(([key, label]) =>
@@ -332,7 +342,7 @@ function go() {
   if (page === "runs" || page === "overview") timer = setInterval(() => { if (!document.hidden) (PAGES[page])().catch(() => {}); }, 15000);
   (PAGES[page] || overview)().catch(fail);
 }
-window.addEventListener("hashchange", go);
+window.addEventListener("hashchange", () => { window.scrollTo(0, 0); go(); });
 window.addEventListener("error", e => fail(e.error || e.message));
 window.addEventListener("unhandledrejection", e => fail(e.reason));
 if (location.search.includes("shot")) document.body.append(h("img", { src: "/hold?ms=2500", alt: "", hidden: true }));
