@@ -8,7 +8,8 @@ Date: 2026-11-20. Branch: `engine-multicore-spike` (local, not pushed).
 
 - A third BDD core on the multi-core package Sylvan was built, passes the differential checks against the own core and gives the same kernels on the benchmark.
 - On the benchmark kernel (`indifferent`, 152 million nodes at the peak) it took 175 s on 12 threads against 473 s for the own core on the same day: 2.7 times faster.
-- On one thread it is 1.5 times slower than the own core (710 s). The 12-thread run used 2,020 processor-seconds against 473: 4.3 times the work for 2.7 times the speed. Eight threads gave almost all of the gain (182 s).
+- On the largest kernel (`self_preserving`, 239 million nodes at the peak) it took 975 s on 12 threads against 4,331 s: 4.4 times faster.
+- On one thread it is 1.5 times slower than the own core (710 s on `indifferent`). The 12-thread runs used 4.3 times (`indifferent`) and 2.6 times (`self_preserving`) the processor time of the own core. On `indifferent`, eight threads gave almost all of the gain (182 s).
 - Recommendation (section 8): adopt as an opt-in core for single long kernels, with the work of section 7 remaining; keep the own core as the default and for batches of kernels run side by side.
 
 ## 1. Choice of library
@@ -71,6 +72,7 @@ All of the following was run in the spike's own virtualenv on 2026-11-20.
 | the whole of `tests/symbolic` with `WAVEFRONT_BDD=sylvan` and 4 threads (51 tests, 253 s) | explicit engine and both other cores | pass |
 | benchmark kernel `aligned`: states in the kernel, kernel BDD nodes, membership of the four initial states | own C core | equal: 302,461,218,730,668,589,056 states, 33,009 nodes, all four outside |
 | benchmark kernel `indifferent`, on 1, 4, 8 and 12 threads | own C core | equal in all four runs: 196,126,762,366,467,883,008 states, 433,674 nodes, all four outside |
+| benchmark kernel `self_preserving`, on 12 threads | own C core | equal: 259,418,167,803,592,593,408 states, 1,219,205 nodes, all four outside |
 
 The test files run Sylvan on 4 threads, so the parallel paths are the ones compared. `simplify` returned the same function as the own core in every step of these tests; the contract only asks for agreement on the care set, because Sylvan's `restrict` is not this project's code.
 
@@ -84,7 +86,7 @@ WAVEFRONT_BDD=sylvan WAVEFRONT_BDD_THREADS=12 WAVEFRONT_SYLVAN_NODES_LOG2=28 \
   WAVEFRONT_SYLVAN_CACHE_LOG2=26 python -m tests.symbolic.bench_multicore indifferent
 ```
 
-The machine is a KVM guest with 20 virtual processors on a Ryzen 9 5900X (12 physical cores), shared with other long computations: the other jobs kept two to four processors busy during these runs, and not the same number for every row. One benchmark ran at a time, each under a 12 GB address-space cap. Every figure is one run.
+The machine is a KVM guest with 20 virtual processors on a Ryzen 9 5900X (12 physical cores), shared with other long computations: the other jobs kept about two to four processors busy during these runs, and not the same number for every row. One benchmark ran at a time, each under a 12 GB address-space cap. Every figure is one run.
 
 **`indifferent`** (56 tick layers, 7 collections on either core).
 
@@ -110,43 +112,44 @@ The owner's earlier figure for the own core was about 314 s; today it measured 4
 
 | Core | Threads | Wall s | Speed against the own core | Processor s | in `compose` s | in `and_exists` s | in collections s | Collections | Peak nodes | Peak resident GB |
 |---|---|---|---|---|---|---|---|---|---|---|
-OWN_ROW
-| Sylvan | 12 | 974.6 | SPEED | 11,380.0 | 557.3 | 350.7 | 64.8 | 51 | 238,937,782 | 8.32 |
+| own C core | 1 | 4,331.0 | 1.00 | 4,330.9 | 2,665.4 | 1,575.0 | 86.3 | 51 | 238,935,380 | 9.14 |
+| Sylvan | 12 | 974.6 | 4.44 | 11,380.0 | 557.3 | 350.7 | 64.8 | 51 | 238,937,782 | 8.32 |
 
-The Sylvan run found 259,418,167,803,592,593,408 states in the kernel (1,219,205 nodes), all four initial states outside. Its peak is 89% of the 268-million-node table, so this kernel is close to the largest this core can compute under a 12 GB cap. It collected after 51 of its 57 layers: one layer is enough to pass the threshold again (120 million nodes and twice what survived the previous collection), and every collection empties Sylvan's cache.
+Both runs found 259,418,167,803,592,593,408 states in the kernel (1,219,205 nodes), all four initial states outside. The owner's earlier figure for the own core was about 3,036 s. Sylvan's peak is 89% of the 268-million-node table, so this kernel is close to the largest this core can compute under a 12 GB cap. Both cores collected after 51 of the 57 layers: one layer is enough to pass the threshold again (120 million nodes and twice what survived the previous collection), and every collection empties Sylvan's cache.
 
-The peak node counts of the two cores differ by 0.1%: the count includes intermediate results not yet collected, and the two packages build slightly different intermediates. The results are the same functions.
+The peak node counts of the two cores differ by 0.1% or less: the count includes intermediate results not yet collected, and the two packages build slightly different intermediates. The results are the same functions.
 
-**Memory.** The own core's resident memory follows the live nodes (5.1 GB at the peak). Sylvan's tables are allocated in full at the start: 8.8 GB of address space here, of which 6.6 to 7.3 GB became resident. Under a 12 GB cap the Sylvan core holds at most 2^28 = 268 million nodes, because the table size is a power of two and the next size is 12.9 GB for the nodes alone. When that table is full the process ends.
+**Memory.** The own core's resident memory follows the live nodes: 5.1 GB at 152 million, 9.1 GB at 239 million. Sylvan's tables are allocated in full at the start: 8.8 GB of address space here, of which 6.6 to 8.3 GB became resident. Under a 12 GB cap the Sylvan core holds at most 2^28 = 268 million nodes, because the table size is a power of two and the next size is 12.9 GB for the nodes alone. When that table is full the process ends.
 
 ### Where the time goes
 
-- **The Python loop costs nothing.** On the own core, 473.3 of the 473.2 s are inside six manager methods. The layered kernel makes 56 calls of `compose` (one preimage per tick) and 280 calls of `and_exists` (five actors per tick). Any gain has to come from inside those calls, and Sylvan does parallelise inside them.
-- **One thread of Sylvan is 1.5 times slower than the own core** on both operations (450 against 299 s, 248 against 164 s). Its nodes are 16 bytes plus 8 in the table against 12 plus 8, its table is built for concurrent insertion, and a collection empties its whole cache where the own core keeps the entries that survive.
+- **The Python loop costs nothing.** On the own core, the seconds counted inside six manager methods add up to the whole 473 s. The layered kernel makes 56 calls of `compose` (one preimage per tick) and 280 calls of `and_exists` (five actors per tick). Any gain has to come from inside those calls, and Sylvan does parallelise inside them.
+- **One thread of Sylvan is 1.5 times slower than the own core** on both operations (450 against 299 s, 248 against 164 s). Likely reasons, not measured apart: its nodes are 16 bytes plus 8 in the table against 12 plus 8, its table is built for concurrent insertion, and a collection empties its whole cache where the own core keeps the entries that survive.
 - **`and_exists` scales better than `compose`.** From 1 to 12 threads `and_exists` gains 5.8 times and `compose` 3.6 times. `compose` gains nothing from 8 to 12 threads.
 - **The work grows with the threads.** Processor time goes from 712 s on one thread to 1,179, 1,419 and 2,020 s on 4, 8 and 12. The workers were busy almost all of the wall time in every run (processor time is 99.5%, 97% and 96% of wall time times threads). I could not separate the causes: the machine does not allow `perf` (`perf_event_paranoid` is 4). The candidates, by reasoning only: two workers computing the same subproblem before either has cached it; workers spinning while they look for work to steal; 12 workers and the other jobs sharing 12 physical cores behind 20 virtual ones; and all workers missing the processor cache into the same 9 GB of tables.
 - **Layers after a collection are slow.** The layers that follow one of the 7 collections take about twice as long as their neighbours on Sylvan with 12 threads (9 to 12 s against 4 to 6 s), because the cache is empty. With a 268-million-node table the collection threshold could be raised and some of the 7 avoided. Not tried.
 
 ## 6. What a kernel batch should use
 
-The kernels of a claim are independent of each other (one per start objective, per build). The own core runs one per process on one thread. Per processor-second it does 4.3 times the work of Sylvan on 12 threads and 2.5 times the work of Sylvan on 4. So when there are at least as many kernels waiting as cores, and memory for them (about 5 to 10 GB each), the own core in parallel processes finishes the batch sooner. The Sylvan core helps in the other case: one kernel that everything else waits for, or more cores than kernels.
+The kernels of a claim are independent of each other (one per start objective, per build). The own core runs one per process on one thread. Per processor-second it does 2.6 to 4.3 times the work of Sylvan on 12 threads (`self_preserving`, `indifferent`) and 2.5 times the work of Sylvan on 4 (`indifferent`). So when there are at least as many kernels waiting as cores, and memory for them (5 to 9 GB each for the kernels above), the own core in parallel processes finishes the batch sooner. The Sylvan core helps in the other case: one kernel that everything else waits for, or more cores than kernels.
 
 ## 7. What is missing
 
 1. **One table per process.** Sylvan has one node table, so every manager of the Sylvan core is a view of it. A collection asked for by one manager reclaims edges that another live manager holds without protecting them. The engine's own use (one encoding, results registered as holders) is safe, and the tests pass, but the interface promises independent managers. The fix is either a rule (one Sylvan manager per process) enforced in `manager()`, or reference counts for edges held in Python.
 2. **A full table ends the process.** There is no `MemoryError`: Sylvan prints a message and exits with status 1. The tables do not grow either (growth happens inside Sylvan's automatic collection, which is off). Needed: growth at `maybe_gc`, and a table-full handler that at least reports the computation that died. The forked kernel jobs of `tests/agi_v0_3/kernels.py` would read such a death as "the kernel's process died unanswered".
-3. **Fork.** Worker threads do not survive a fork. A process that made a Sylvan manager and then forks gets a `RuntimeError` in the child on the next manager. The kernel jobs fork before they encode, so they are not affected; anything that forks later is.
-4. **`transfer` is slow.** It walks the BDD in Python. Fine for tests, minutes for a kernel of millions of nodes. `tests/agi/common.py` stores kernels as node tables for later evaluation; that path was not tried on this core.
+3. **Fork.** Worker threads do not survive a fork. A process that made a Sylvan manager and then forks gets a `RuntimeError` in the child on the next manager. The kernel jobs encode in the forked child, so they are not affected as long as the parent has made no Sylvan manager; anything that forks later is.
+4. **`transfer` is slow.** It walks the BDD in Python. Fine for tests; not timed on a kernel of millions of nodes. `tests/agi/common.py` stores kernels as node tables for later evaluation; that path was not tried on this core.
 5. **`simplify`** is Sylvan's `restrict`: equal to the own core's result in every test, but not by construction.
 6. **Packaging.** The build clones from github.com and needs cmake 3.23. Nothing checks the licence notice requirements of Apache-2.0 for a redistributed binary; today nothing is redistributed.
-7. **Not measured.** `self_preserving` on the own core today (the owner's figure of about 3,036 s is from another day); any run with more than 12 threads; any run on a quiet machine; the attractors and forward reachability (`image` uses the same operations, but no figure was taken); WW2 or Cold War models at benchmark size.
-8. **Tuning not tried.** The collection threshold (section 5), Sylvan's cache granularity, a cache larger than the node table's quarter.
+7. **Not measured.** `self_preserving` on 1, 4 or 8 threads; any run with more than 12 threads; any run on a quiet machine; the attractors and forward reachability (`image` uses the same operations, but no figure was taken); WW2 or Cold War models at benchmark size.
+8. **Stored kernels.** `tests/agi/common.py` stamps its cache of computed kernels (`.cache/agi`) with a hash of every source file under `wavefront/`. This branch adds files there, so merging it starts an empty cache, as any change to `wavefront/` does.
+9. **Tuning not tried.** The collection threshold (section 5), Sylvan's cache granularity, a cache larger than the node table's quarter.
 
 ## 8. Recommendation
 
 **Adopt with named work remaining**, as an opt-in core, not as the default.
 
-- The gain is real and the answers are identical: 2.7 times on `indifferent`, 3.6 times on `aligned`, with 8 threads enough for most of it.
-- It is not a replacement for the own core. On one thread it is slower, it costs 4.3 times the processor time on 12 threads, it holds fewer nodes under the same memory cap, and items 1 and 2 of section 7 are behaviour the rest of the code does not expect.
-- Before any registered claim is computed on it: item 2 (a full table must not look like a killed job), the one-manager rule of item 1, and one `self_preserving` run on both cores on the same day.
+- The gain is real and the answers are identical: 3.6 times on `aligned`, 2.7 times on `indifferent` and 4.4 times on `self_preserving`, the kernel that takes 72 minutes on the own core and 16 on this one.
+- It is not a replacement for the own core. On one thread it is slower, it costs 2.6 to 4.3 times the processor time on 12 threads, its table cannot grow past 268 million nodes under a 12 GB cap (the largest kernel here peaks at 239 million), and items 1 and 2 of section 7 are behaviour the rest of the code does not expect.
+- Before any registered claim is computed on it: item 2 (a full table must not look like a killed job) and the one-manager rule of item 1.
 - For a queue of kernels on this machine the own core, one process per kernel, remains the better use of the cores (section 6).
