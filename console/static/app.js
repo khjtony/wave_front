@@ -346,5 +346,5 @@ window.addEventListener("hashchange", () => { window.scrollTo(0, 0); go(); });
 window.addEventListener("error", e => fail(e.error || e.message));
 window.addEventListener("unhandledrejection", e => fail(e.reason));
 if (location.search.includes("shot")) document.body.append(h("img", { src: "/hold?ms=2500", alt: "", hidden: true }));
-document.getElementById("navfoot").textContent = "This machine only";
+setTimeout(() => { document.getElementById("navfoot").textContent = "Page version " + (window.BUILD ? new Date(window.BUILD * 1000).toLocaleString() : "unknown"); }, 0);
 go();

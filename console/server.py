@@ -92,7 +92,17 @@ class Handler(BaseHTTPRequestHandler):
             kind = "text/plain"
         if kind.startswith("text/") or kind.endswith(("json", "javascript")):
             kind += "; charset=utf-8"
-        self._send(200, path.read_bytes(), kind)
+        body = path.read_bytes()
+        if path.name == "index.html":
+            # The page's script and style carry their modification time, so that a browser
+            # which keeps old copies (phones do) still loads the current ones.
+            for name in ("app.js", "style.css"):
+                stamp = int((STATIC / name).stat().st_mtime)
+                body = body.replace(f'"{name}"'.encode(), f'"{name}?v={stamp}"'.encode())
+            body = body.replace(
+                b"</body>", f"<script>window.BUILD={stamp}</script></body>".encode()
+            )
+        self._send(200, body, kind)
 
     def do_GET(self) -> None:
         url = urlparse(self.path)

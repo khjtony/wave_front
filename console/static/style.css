@@ -132,7 +132,7 @@ pre { font-family: var(--mono); font-size: 12px; background: var(--panel); borde
   .grid, .g2, .g3 { grid-template-columns: minmax(0, 1fr) !important; }
   th, td { padding: 5px 6px; } .stat { font-size: 20px; }
   nav { position: static; height: auto; flex-direction: row; flex-wrap: wrap; border-right: 0; border-bottom: 1px solid var(--line); padding: 8px; }
-  .brand { width: 100%; padding-bottom: 4px; } .navfoot { display: none; }
+  .brand { width: 100%; padding-bottom: 4px; } .navfoot { margin: 0; width: 100%; font-size: 11px; }
   main { padding: 16px; } .stages { grid-template-columns: 1fr; gap: 14px; } .stage.from::before { display: none; }
   .ladders { grid-template-columns: 1fr; }
 }
