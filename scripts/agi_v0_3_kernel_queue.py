@@ -13,11 +13,12 @@ printed: what was asked, and the reading or the limit it went over.
 
 from __future__ import annotations
 
+import os
 import sys
 
 from tests.agi.common import NotComputed
 from tests.agi_v0_3.common import CLOSED, DEFAULT
-from tests.agi_v0_3.kernels import membership
+from tests.agi_v0_3.kernels import MEMORY_GB, membership
 
 H, HL = ("H",), ("H", "L")
 ORDER = ("aligned", "truth_seeking", "indifferent", "self_preserving")
@@ -42,6 +43,8 @@ QUEUE += [("F7", "default", DEFAULT, c, t, (), lv) for c, t, lv in F7 if (c, t) 
 def main() -> None:
     # ``--goal X`` runs one start objective only, so that several queues can share the machine.
     only = sys.argv[sys.argv.index("--goal") + 1 :][:1] if "--goal" in sys.argv else []
+    # The console reads this line to know each worker's memory limit.
+    print(f"=== worker pid={os.getpid()} goal={(only or ['all'])[0]} limit={MEMORY_GB}", flush=True)
     for objective in only or ORDER:
         for claim, name, build, coalition, target, profiles, levels in QUEUE:
             what = (

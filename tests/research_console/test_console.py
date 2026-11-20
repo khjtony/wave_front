@@ -106,3 +106,16 @@ def test_the_findings_registry_names_no_bare_reachability():
     kinds = {"guarantee-zone reading", "no-return analysis", "assumption set"}
     assert findings and all(f["kind"] in kinds for f in findings)
     assert all((catalog.ROOT / f["evidence"]).exists() for f in findings)
+
+
+def test_the_queue_plan_is_the_queue_scripts():
+    import scripts.agi_v0_3_kernel_queue as script
+    from tests.agi_v0_3.common import CLOSED, DEFAULT
+
+    assert catalog.BUILDS == {"default": DEFAULT, "closed": CLOSED}
+    assert catalog.PLAN_GOALS == script.ORDER
+    assert [(c, n, list(a), t, list(p), lv) for c, n, _, a, t, p, lv in script.QUEUE] == [
+        (c, n, a, t, p, lv) for c, n, a, t, p, lv in catalog.PLAN
+    ]
+    q = catalog.queue()
+    assert len(q["items"]) == 48 and sum(q["counts"].values()) == 48

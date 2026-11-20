@@ -17,7 +17,7 @@ function h(tag, attrs, ...kids) {
     else if (k.startsWith("on")) e.addEventListener(k.slice(2), v);
     else e.setAttribute(k, v === true ? "" : v);
   }
-  for (const kid of kids.flat()) if (kid != null && kid !== false) e.append(kid.nodeType ? kid : document.createTextNode(kid));
+  for (const kid of kids.flat(Infinity)) if (kid != null && kid !== false) e.append(kid.nodeType ? kid : document.createTextNode(kid));
   return e;
 }
 function rich(text) {  // `x` becomes code
@@ -190,10 +190,22 @@ async function runs() {
   const cell = c => !c ? h("td", { class: "muted" }, "·") : c.kind !== "ok" ? h("td", { title: c.note }, h("span", { class: "pill warn" }, "did not fit")) :
     h("td", { title: `${dur(c.seconds)} · ${c.at}` }, h("span", { class: "pill " + (c.inside ? "held" : "bad") }, c.inside ? "inside" : "outside"));
   const who = a => a === "H" ? "Governments alone" : a === "H+L" ? "Governments with frontier AI companies" : a;
+  const Q = r.queue, zone = e => [who(e.alliance.join("+")), " · ", TARGET[e.target] || e.target, e.patterns.length ? ` · ${e.patterns.join(", ")}` : "", Object.keys(e.levels).length ? " · AGI since s₀" : ""];
+  const variant = e => e.variant === "default" ? "everything on" : "no open system";
+  const item = (e, right) => h("div", { class: "qi" }, h("div", null, h("b", null, zone(e)), h("div", { class: "small muted" }, `${e.claim} · ${variant(e)} · ${GOAL_NAME[e.goal]} goal` + (e.worker ? ` · ${e.worker}` : ""))), h("div", { class: "qr" }, right));
+  const by = k => Q.items.filter(e => e.status === k);
+  const queuePanel = h("div", { class: "panel" }, h("h2", null, "Heavy-claims queue"),
+    h("div", { class: "stats" }, [["running", "running"], ["waiting", "waiting"], ["done", "done"], ["did not fit", "did not fit"]].map(([k, t]) => h("div", null, h("div", { class: "stat" }, Q.counts[k]), h("small", null, t)))),
+    h("p", { class: "small muted gap" }, Q.workers.length ? Q.workers.map(w => `${w.name}: up ${dur(w.seconds)}, limit ${w.limit || "?"} GB`).join(" · ") : "No queue is running."),
+    by("running").length ? [h("h3", { class: "gap" }, "Running"), by("running").map(e => item(e, [h("span", { class: "pill held" }, "running " + dur(e.seconds)), h("span", { class: "small muted" }, `${e.gb} of ${e.limit || "?"} GB`)]))] : null,
+    by("waiting").length ? h("details", { open: by("waiting").length <= 8 }, h("summary", { class: "gap" }, h("b", null, `Waiting (${by("waiting").length})`)), by("waiting").map(e => item(e, [h("span", { class: "pill idle" }, "waiting " + dur(e.waiting_seconds)), h("span", { class: "small muted" }, e.position === 0 ? "next" : `${e.position} ahead of it` + (e.largest_limit_tried ? ` · did not fit in ${e.largest_limit_tried} GB` : ""))]))) : null,
+    by("did not fit").length ? [h("h3", { class: "gap" }, "Did not fit, not queued again"), by("did not fit").map(e => item(e, h("span", { class: "pill warn" }, `over ${e.largest_limit_tried} GB`)))] : null,
+    h("details", null, h("summary", { class: "gap" }, h("b", null, `Done (${by("done").length})`)), by("done").map(e => item(e, [h("span", { class: "pill " + (e.inside ? "held" : "bad") }, e.inside ? "inside" : "outside"), h("span", { class: "small muted" }, "took " + dur(e.seconds))]))));
   show(h("h1", null, "Runs"),
-    h("p", { class: "lede" }, "What is computing now, the saved guarantee-zone readings, and the logs. This page refreshes every 15 seconds."),
-    h("div", { class: "panel" }, h("h2", null, "Running now"), r.live.length ? h("table", null, h("tr", null, h("th", null, "What"), h("th", null, "Running for"), h("th", null, "Memory")),
-      r.live.map(p => h("tr", null, h("td", null, h("code", null, p.what), " ", h("span", { class: "muted small" }, p.args)), h("td", null, dur(p.seconds)), h("td", null, p.gb + " GB")))) : h("p", { class: "muted" }, "Nothing is running.")),
+    h("p", { class: "lede" }, "The queue of heavy claims with running and waiting times, the saved guarantee-zone readings, and the logs. This page refreshes every 15 seconds."),
+    queuePanel,
+    h("div", { class: "panel gap" }, h("h2", null, "Processes"), r.live.length ? h("div", { class: "scroll" }, h("table", null, h("tr", null, h("th", null, "What"), h("th", null, "Running for"), h("th", null, "Memory")),
+      r.live.map(p => h("tr", null, h("td", null, h("code", null, p.what), " ", h("span", { class: "muted small" }, p.args)), h("td", null, dur(p.seconds)), h("td", null, p.gb + " GB"))))) : h("p", { class: "muted" }, "Nothing is running.")),
     h("div", { class: "panel gap" }, h("h2", null, "Guarantee-zone readings, v0.3"),
       h("p", { class: "small muted" }, "Is the start state inside the zone where this alliance can guarantee the condition, whatever everyone else and chance do? One column per AI goal. A dot means not computed yet."),
       Object.keys(groups).length ? Object.entries(groups).map(([g, rows]) => h("div", { class: "scroll gap" }, h("span", { class: "tag" }, "model variant: " + g),

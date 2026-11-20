@@ -12,6 +12,7 @@ import re
 import subprocess
 import threading
 import time
+from datetime import datetime
 from functools import lru_cache
 from pathlib import Path
 
@@ -399,9 +400,9 @@ def live() -> list[dict]:
     out = []
     for line in got:
         pid, seconds, rss, args = line.split(None, 3)
-        if "python" not in args or "console" in args:
-            continue
-        hit = re.search(r"(scripts/agi_\S+\.py|tests/agi\S*)(.*)", args)
+        hit = re.match(
+            r"\S*python\S*\s+(?:-m pytest .*?)?(scripts/agi_\S+\.py|tests/agi\S*)(.*)", args
+        )
         if hit:
             out.append(
                 {
@@ -453,6 +454,153 @@ def readings() -> list[dict]:
     return list(latest.values())
 
 
+# The heavy claims' zones in the order scripts/agi_v0_3_kernel_queue.py computes them (a test
+# keeps the two lists equal): (claim, variant, alliance, target, behavior patterns, levels).
+_ON = {"open_system": True, "pressure": True, "hosting": True, "open_adoption": True}
+BUILDS = {
+    "default": {**_ON, "treaty_delay": 1},
+    "closed": {**_ON, "open_system": False, "treaty_delay": 1},
+}
+_F7 = [
+    (["H"], "balance_control", {}),
+    (["H", "L"], "balance_control", {}),
+    (["H", "L"], "not:SILENT_TAKEOVER", {}),
+    (["H"], "balance_coexist", {"cap": "agi"}),
+]
+PLAN = [("F7", "closed", c, t, [], lv) for c, t, lv in _F7] + [
+    ("F3", "default", ["H"], "not:OPEN_TAKEOVER", [], {}),
+    ("F6", "default", ["H", "L"], "balance_control", [], {}),
+    ("F4", "default", ["H"], "not:OPEN_TAKEOVER", ["no_treaty"], {}),
+    ("F4", "default", ["H", "L"], "not:OPEN_TAKEOVER", ["no_treaty"], {}),
+    ("F6", "default", ["H", "L"], "balance_control", ["no_nationalize"], {}),
+    ("F7", "default", ["H"], "balance_control", [], {}),
+    ("F7", "default", ["H", "L"], "not:SILENT_TAKEOVER", [], {}),
+    ("F7", "default", ["H"], "balance_coexist", [], {"cap": "agi"}),
+]
+PLAN_GOALS = ("aligned", "truth_seeking", "indifferent", "self_preserving")
+_STAMP = "%Y-%m-%d %H:%M:%S %z"
+
+
+def _question(item: tuple, goal: str) -> str:
+    _, variant, alliance, target, patterns, levels = item
+    spec = {"build": BUILDS[variant], "profiles": sorted(patterns)}
+    return json.dumps(
+        ["membership", spec, alliance, target, sorted(levels.items()), goal], sort_keys=True
+    )
+
+
+def _workers(now: float) -> list[dict]:
+    """The queue processes on this machine: each worker with the zone process it has forked."""
+    got = subprocess.run(
+        ["ps", "-eo", "pid,ppid,etimes,rss,args"], capture_output=True, text=True, check=False
+    ).stdout.splitlines()[1:]
+    procs = {}
+    for line in got:
+        pid, ppid, seconds, rss, args = line.split(None, 4)
+        if re.match(r"\S*python\S*\s+scripts/agi_v0_3_kernel_queue\.py", args):
+            goal = re.search(r"--goal (\w+)", args)
+            procs[int(pid)] = {"pid": int(pid), "ppid": int(ppid), "seconds": int(seconds)}
+            procs[int(pid)] |= {"gb": round(int(rss) / 1048576, 1), "goal": goal and goal.group(1)}
+    out = []
+    for p in procs.values():
+        if p["ppid"] in procs:
+            continue
+        child = next((c for c in procs.values() if c["ppid"] == p["pid"]), None)
+        out.append({**p, "started": now - p["seconds"], "child": child, "limit": None})
+    return sorted(out, key=lambda w: w["started"])
+
+
+def queue() -> dict:
+    """The heavy claims' queue: every zone and AI goal as done, running, waiting or not
+    fitting, with who computes it and for how long. The running zone of a worker is inferred:
+    it is the first in the worker's order that has no reading and that the worker has not
+    already found too large."""
+    now = time.time()
+    path = ROOT / "reports" / "agi_v0_3_kernels.jsonl"
+    done: dict[str, dict] = {}
+    over: dict[str, list[dict]] = {}
+    if path.exists():
+        for line in path.read_text(encoding="utf-8").splitlines():
+            row = json.loads(line)
+            try:
+                row["epoch"] = datetime.strptime(row["at"], _STAMP).timestamp()
+            except (KeyError, ValueError):
+                row["epoch"] = 0.0
+            if row["kind"] == "ok":
+                done[row["question"]] = row
+            else:
+                over.setdefault(row["question"], []).append(row)
+    workers = _workers(now)
+    # A worker's memory limit: the line it printed when it started, else the limit of the
+    # queue's own log header (the all-goals worker), else the limit it was last seen to hit.
+    headers = "\n".join(
+        f.read_text(encoding="utf-8", errors="replace")
+        for f in sorted((ROOT / "reports").glob("agi_v0_3_kernel_queue*.log"))
+    )
+    stated = {
+        int(a): int(b) for a, b in re.findall(r"=== worker pid=(\d+) goal=\w+ limit=(\d+)", headers)
+    }
+    runner = re.findall(r"=== queue \w+ limit (\d+) GB", headers)
+    for w in workers:
+        hits = [
+            t
+            for ts in over.values()
+            for t in ts
+            if t["epoch"] >= w["started"] - 60 and json.loads(t["question"])[5] == w["goal"]
+        ]
+        w["limit"] = (
+            stated.get(w["pid"])
+            or (int(runner[-1]) if runner and not w["goal"] else None)
+            or (max(hits, key=lambda t: t["epoch"]).get("memory cap GB") if hits else None)
+        )
+    workers.sort(key=lambda w: (w["goal"] is None, w["started"]))
+    items = {}
+    for goal in PLAN_GOALS:
+        for item in PLAN:
+            q = _question(item, goal)
+            entry = {"claim": item[0], "variant": item[1], "alliance": item[2], "target": item[3]}
+            entry |= {"patterns": item[4], "levels": item[5], "goal": goal, "status": "waiting"}
+            tries = over.get(q, [])
+            entry["largest_limit_tried"] = max(
+                (t.get("memory cap GB", 0) for t in tries), default=0
+            )
+            if q in done:
+                r = done[q]["reading"]
+                entry |= {"status": "done", "inside": r["inside"][goal], "seconds": r["seconds"]}
+                entry["at"] = done[q].get("at", "")
+            items[q] = entry
+    for n, w in enumerate(workers, 1):
+        w["name"] = f"queue {n}" + (f" ({w['goal']} goal)" if w["goal"] else " (all goals)")
+        position = 0
+        for goal in [w["goal"]] if w["goal"] else PLAN_GOALS:
+            for item in PLAN:
+                e = items[_question(item, goal)]
+                tried = any(
+                    t["epoch"] >= w["started"] - 60 and t.get("memory cap GB") == (w["limit"] or 0)
+                    for t in over.get(_question(item, goal), [])
+                )
+                if e["status"] != "waiting" or tried or e.get("worker"):
+                    continue
+                e["worker"] = w["name"]
+                e["limit"] = w["limit"]
+                if position == 0 and w["child"]:
+                    e |= {"status": "running", "seconds": w["child"]["seconds"]}
+                    e["gb"] = w["child"]["gb"]
+                else:
+                    e |= {"position": position, "waiting_seconds": w["seconds"]}
+                position += 1
+    for e in items.values():
+        if e["status"] == "waiting" and not e.get("worker"):
+            e["status"] = "did not fit" if e["largest_limit_tried"] else "not queued"
+    order = {"running": 0, "waiting": 1, "did not fit": 2, "not queued": 3, "done": 4}
+    rows = sorted(items.values(), key=lambda e: (order[e["status"]], e.get("position", 0)))
+    return {
+        "workers": [{k: w[k] for k in ("name", "seconds", "limit")} for w in workers],
+        "items": rows,
+        "counts": {k: sum(1 for e in rows if e["status"] == k) for k in order},
+    }
+
+
 def logs() -> list[dict]:
     out = []
     for path in sorted((ROOT / "reports").glob("*.log"), key=lambda p: -p.stat().st_mtime):
@@ -469,7 +617,7 @@ def logs() -> list[dict]:
 
 
 def runs() -> dict:
-    return {"live": live(), "readings": readings(), "logs": logs()}
+    return {"live": live(), "queue": queue(), "readings": readings(), "logs": logs()}
 
 
 # -- states and stores -------------------------------------------------------------------
