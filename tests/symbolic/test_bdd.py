@@ -1,5 +1,6 @@
 """The BDD managers against truth tables on random functions of a few variables: the
-pure-Python reference and the compiled core (skipped when it is not built)."""
+pure-Python reference, the compiled core and the multi-core core on Sylvan (each of the last
+two skipped when it is not built)."""
 
 import itertools
 import random
@@ -8,13 +9,17 @@ import pytest
 from hypothesis import given, settings
 from hypothesis import strategies as st
 
-from wavefront.symbolic import c_available
+from wavefront.symbolic import c_available, sylvan_available
 from wavefront.symbolic import manager as new_manager
 from wavefront.symbolic.bdd import FALSE, TRUE
 
 CORES = [
     "python",
     pytest.param("c", marks=pytest.mark.skipif(not c_available(), reason="C core not built")),
+    pytest.param(
+        "sylvan",
+        marks=pytest.mark.skipif(not sylvan_available(), reason="Sylvan core not built"),
+    ),
 ]
 
 N = 6
@@ -170,8 +175,12 @@ def test_protect_and_register(core):
     assert mgr.evaluate(g, [0, 1, 0, 0, 0, 0])
     mgr.unprotect(f)
     del h
-    mgr.gc()
-    assert mgr.live_nodes == 1
+    before = mgr.live_nodes
+    freed = mgr.gc()
+    if core == "sylvan":  # one table for every manager of the process: count what went
+        assert freed >= mgr.node_count([f, g]) - 1 and mgr.live_nodes == before - freed
+    else:
+        assert mgr.live_nodes == 1
 
 
 @pytest.mark.parametrize("core", CORES)

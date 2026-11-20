@@ -14,3 +14,5 @@ data/ww2/corpora/raw/
 data/cw/corpora/raw/
 .cache/
 console/.env
+third_party/
+.venv-spike/
