@@ -33,3 +33,17 @@ F4 default H+L not:OPEN_TAKEOVER no_treaty  | indifferent | not computed: over t
 F6 default H+L balance_control no_nationalize  | indifferent | outside | 14738.3 s
 F7 default H balance_control   | indifferent | outside | 15221.6 s
 paused by the owner for the engine benchmarks 2026-11-20 16:11:29 PST; zones in progress are computed again on restart
+=== worker pid=1954104 goal=indifferent limit=45
+F7 closed H balance_control   | indifferent | outside | 113.0 s
+F7 closed H+L balance_control   | indifferent | inside | 7.7 s
+F7 closed H+L not:SILENT_TAKEOVER   | indifferent | inside | 90.9 s
+F7 closed H balance_coexist  {'cap': 'agi'} | indifferent | outside | 0.1 s
+F3 default H not:OPEN_TAKEOVER   | indifferent | not computed: over the cap of 45 GB: BDD node table exhausted (out of memory or 2**31 - 1 nodes)
+F6 default H+L balance_control   | indifferent | inside | 15384.7 s
+F4 default H not:OPEN_TAKEOVER no_treaty  | indifferent | not computed: over the cap of 45 GB: BDD node table exhausted (out of memory or 2**31 - 1 nodes)
+F4 default H+L not:OPEN_TAKEOVER no_treaty  | indifferent | not computed: over the cap of 45 GB: BDD node table exhausted (out of memory or 2**31 - 1 nodes)
+F6 default H+L balance_control no_nationalize  | indifferent | outside | 14738.3 s
+F7 default H balance_control   | indifferent | outside | 15221.6 s
+F7 default H+L not:SILENT_TAKEOVER   | indifferent | not computed: over the cap of 45 GB: BDD node table exhausted (out of memory or 2**31 - 1 nodes)
+F7 default H balance_coexist  {'cap': 'agi'} | indifferent | outside | 0.5 s
+QUEUE_DONE
