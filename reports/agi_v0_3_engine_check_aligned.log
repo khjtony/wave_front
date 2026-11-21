@@ -4,3 +4,5 @@ F7 closed H+L balance_control   | aligned | inside | 0.8 s
 F7 closed H+L not:SILENT_TAKEOVER   | aligned | inside | 0.1 s
 F7 closed H balance_coexist  {'cap': 'agi'} | aligned | inside | 1.0 s
 F3 default H not:OPEN_TAKEOVER   | aligned | inside | 7991.8 s
+F6 default H+L balance_control   | aligned | inside | 12314.8 s
+F4 default H not:OPEN_TAKEOVER no_treaty  | aligned | outside | 4598.2 s

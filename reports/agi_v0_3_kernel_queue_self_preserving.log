@@ -44,3 +44,4 @@ F7 closed H balance_control   | self_preserving | outside | 1052.9 s
 F7 closed H+L balance_control   | self_preserving | inside | 78.8 s
 F7 closed H+L not:SILENT_TAKEOVER   | self_preserving | inside | 2584.1 s
 F7 closed H balance_coexist  {'cap': 'agi'} | self_preserving | inside | 7.9 s
+F3 default H not:OPEN_TAKEOVER   | self_preserving | not computed: over the cap of 40 GB: BDD node table exhausted (out of memory or 2**31 - 1 nodes)
