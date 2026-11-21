@@ -228,3 +228,16 @@ The order (`tests/agi_v0_3/orders/default_aligned_sifted.json`) is what a CUDD `
 - On this build the gain is a factor of 2 on the zone the order was sifted for, not the factor of 20 of AGI v0.1, and the order is worse than FORCE for another coalition and target. An order has to be found per zone (coalition and target), and a few minutes of sifting are not enough here.
 - The no-library heuristic of 5.1 (f) does not carry over to this build.
 - This weakens section 7: the sifted static order is not a general remedy for the registered build as it stands. A longer or better-directed order search would be needed before the production harness changes.
+
+### 9.1 Orders searched per question (12 GB cap)
+
+Each CUDD `auto` pass was stopped at about 570 s. Every pass on this build finished 4 layers and then stalled in the fifth, whether it started from the FORCE order or from `default_aligned_sifted.json`. The snapshots were then compared on the compiled core over the first layers only (seconds to finish the named layer).
+
+| Question | FORCE | `default_aligned_sifted.json` | own pass from FORCE | own pass from the sifted order |
+|---|---|---|---|---|
+| `aligned`, `["H","L"]`, `balance_control`: tick 49 | 285 s | 457 s | 219 s (`default_HL_balance_control_aligned.json`) | out of memory at 12 GB after tick 51 (177 s there; FORCE 104 s) |
+| `indifferent`, `["H"]`, `not:OPEN_TAKEOVER`: tick 52 | 41.6 s | 16.7 s | 17.8 s (`default_H_not_open_takeover_indifferent.json`), with a larger layer | 31.7 s |
+
+The coordinator's own run of `aligned`, `["H"]`, `not:OPEN_TAKEOVER`, no profile, in `default_aligned_sifted.json` under a 30 GB cap read inside in 6,243 s with 18.2 GB (production: inside, 11,063 s, about 26 GB).
+
+A question's own short pass helps a little on `["H","L"]` (1.3 times over the first eight layers) and not at all on `indifferent`, where the order sifted for `aligned` is as good. Seeding the pass with a sifted order did not get it further and gave worse orders.
