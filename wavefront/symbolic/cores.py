@@ -1,5 +1,5 @@
-"""Selection of the BDD core: the compiled manager (:mod:`.bdd_c`) or the pure-Python
-reference (:mod:`.bdd`).
+"""Selection of the BDD core: the compiled manager (:mod:`.bdd_c`), the pure-Python
+reference (:mod:`.bdd`) or the CUDD binding (:mod:`.bdd_cudd`).
 
 :func:`manager` returns a new manager. With no argument it follows the environment variable
 ``WAVEFRONT_BDD``: unset or ``"c"`` gives the compiled manager when its extension imports and
@@ -7,6 +7,11 @@ the reference otherwise; ``"python"`` gives the reference. An explicit ``manager
 not fall back: it raises :class:`ImportError` when the extension is missing or stale. Both
 cores give identical results (docs/framework_spec.md section 15); a manager's ``core``
 attribute says which one it is, and the fixpoints' ``stats`` repeat it.
+
+``"cudd"`` gives the manager on top of CUDD, which can reorder its variables (an
+engineering spike, docs/engine_reordering_spike.md). It is never chosen by default and never
+falls back: it raises :class:`ImportError` when its binding is not built. Its reordering mode
+follows ``WAVEFRONT_CUDD_REORDER`` (see :mod:`.bdd_cudd`).
 """
 
 from __future__ import annotations
@@ -19,7 +24,7 @@ from .bdd import BDD
 __all__ = ["ENV", "manager", "c_available", "c_import_error"]
 
 ENV = "WAVEFRONT_BDD"
-_CORES = ("c", "python")
+_CORES = ("c", "python", "cudd")
 _error: ImportError | None = None
 _checked = False
 _warned = False
@@ -49,15 +54,19 @@ def c_import_error() -> ImportError | None:
 
 
 def manager(kind: str | None = None):
-    """A new BDD manager: ``kind`` is ``"c"``, ``"python"`` or ``None`` (follow
+    """A new BDD manager: ``kind`` is ``"c"``, ``"python"``, ``"cudd"`` or ``None`` (follow
     ``WAVEFRONT_BDD``, falling back to the reference when the compiled core does not
-    import)."""
+    import; ``"cudd"`` never falls back)."""
     explicit = kind is not None
     kind = kind if explicit else (os.environ.get(ENV) or "c").strip().lower()
     if kind not in _CORES:
         raise ValueError(f"unknown BDD core {kind!r} (expected one of {', '.join(_CORES)})")
     if kind == "python":
         return BDD()
+    if kind == "cudd":
+        from .bdd_cudd import BDD as CuddBDD
+
+        return CuddBDD()
     cls = _load()
     if cls is not None:
         return cls()
