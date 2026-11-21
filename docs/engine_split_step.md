@@ -10,6 +10,7 @@ All figures were measured on 2026-11-20 and 2026-11-21 on the shared 5900X host,
 - **The split step releases them.** `step="split"` runs the same substitution one node of the layer at a time, from the bottom level up, and drops each sub-result after the last node that uses it. The manager can then collect inside the step. The result is the same edge (section 3).
 - **It cuts the memory of a heavy step by a factor of 3 to 4 at the same speed.** On the zone of the task, the node table at tick 49 is 242 million nodes and 10.0 GB where the present step needs 990 million and 34.8 GB. With collections made more often (factor 1.25) it is 158 million and 5.9 GB, and the run passes tick 47 inside 12 GB, the layer on which the present step reached 67.9 GB and the limit of the node table. It then runs out of 12 GB in layer 46 (section 6.1).
 - **It does not make anything faster, and it does not help a small model.** The same sub-results are created. On AGI v0.1 it changes nothing in memory and costs 4 to 12% in time (section 6.3).
+- **Two whole zones of the registered build read the same.** `aligned` with `no_treaty` reads outside in 3.6 GB (present step: 9.6 GB). `aligned` without a profile reads inside in 3.8 GB under the 12 GB cap, where the present step ran out of memory and needed 18.2 GB under a larger cap (section 6.2).
 - **`step="moves"` trades time for memory once more.** It does the split step once per joint move of the coalition: about a third of the memory for about twice the time on one measured step (section 6.4).
 - **Quantifying action bits early does not help here; it hurts.** Section 4 lists what was tried and dropped, with the numbers.
 - **Every reading and count matched** (section 5).
@@ -113,7 +114,7 @@ Checked by running:
   - `cpre` with each split step equals the present `cpre` as an edge for the coalitions `["H"]`, `["H","L"]` and `["A"]`, on 12 random targets, the six endings, `balance_control`, and the first six tick layers of the kernels of `balance_control ∧ a_objective = GOAL` for `aligned` and `indifferent` and each of the three coalitions: 165 comparisons, once without a profile and once with `no_treaty` selected.
   - Marked `slow`: the two whole kernels `⟨⟨H⟩⟩□(balance_control ∧ a_objective = GOAL)` under `split` and under `moves` have 302461218730668589056 states (`aligned`) and 196126762366467883008 states (`indifferent`), and none of the four initial states is inside.
 - `tests/symbolic` as a whole passes with `WAVEFRONT_STEP` unset, `split` and `moves` (50 passed, 18 skipped, each time). The 18 tests of the CUDD binding are skipped: it is not built in this environment.
-- On the registered build every layer that both steps computed has the same number of nodes (section 6.1), and the zone with `no_treaty` reads the same at the start state (section 6.2).
+- On the registered build every layer that both steps computed has the same number of nodes (section 6.1), and the two zones of section 6.2 read the same at the start state as under the present step.
 - `ruff check .` and `ruff format --check .` pass.
 
 Reasoned, not run:
@@ -150,19 +151,24 @@ Build `DEFAULT`, `a_objective = indifferent`, coalition `["H"]`, target `not:OPE
 - Under 12 GB the table can hold 376 million nodes (28.6 bytes a node with the unique table, plus 1.6 GB of computed tables). Layer 46 needs more than that at once even when released: the widest cut of the layer times the size of a sub-result.
 - Time. The present step finished layer 52 after 19.2 s and layer 51 after 89.2 s in the profiling run of section 2 (which also sizes every result); the split step after 19.3 s and 76.9 s. The two steps create the same sub-results, so no speed-up is expected or claimed. From tick 50 on the present step could not be timed under the cap.
 
-### 6.2 The zone with `no_treaty`
+### 6.2 Two whole zones of the registered build
 
-Build `DEFAULT`, `a_objective = aligned`, coalition `["H"]`, target `not:OPEN_TAKEOVER`, profile `no_treaty`, the same order and threshold, the present collection policy (factor 2).
+Build `DEFAULT`, `a_objective = aligned`, coalition `["H"]`, target `not:OPEN_TAKEOVER`, the same order and threshold. The present step's rows are the records of docs/engine_reordering_spike.md section 9 and were not rerun.
 
-| Step | Time | Memory | Node table | Reading at the start state |
-|---|---|---|---|---|
-| present (`compose`), recorded in docs/engine_reordering_spike.md section 9, not rerun | 3,877 s | 9,641 MB | not recorded | outside |
-| `split` | 3,616 s | 3,567 MB | 73,098,161 | outside |
+| Profile | Step | Time | Memory | Node table | Reading at the start state |
+|---|---|---|---|---|---|
+| `no_treaty` | present (`compose`), 12 GB cap | 3,877 s | 9,641 MB | not recorded | outside |
+| `no_treaty` | `split`, factor 2, 12 GB cap | 3,616 s | 3,567 MB | 73,098,161 | outside |
+| none | present (`compose`), 12 GB cap | out of memory after 13 layers and 857 s | | | no reading |
+| none | present (`compose`), 30 GB cap | 6,243 s | 18.2 GB | not recorded | inside |
+| none | `split`, factor 1.5, 12 GB cap | 6,134 s | 3,819 MB | 81,233,838 | inside |
 
-- The reading is the same, and it is production's (outside, in the FORCE order).
-- The kernel under `split` has 10745571244955131088879616 states and 657,535 nodes; none of the four initial states is inside. No count of the present step's kernel was recorded to compare with; the reading is what was compared.
-- 2.7 times less memory. The times are from two different days on a shared machine, so they say "no slower", not "7% faster".
-- The largest layer has 173,605 nodes: this zone is a tenth of the zone of 6.1 in every layer.
+- Both readings are the present step's, and production's in the FORCE order (outside; inside, there with about 26 GB).
+- The zone without a profile did not fit in 12 GB with the present step. With the split step it finishes there in 3.8 GB.
+- Memory: 2.7 times less with `no_treaty`, 4.8 times less without a profile (there with the collection factor at 1.5 instead of 2).
+- The times are from different runs on a shared machine. They say "no slower", not "faster".
+- Under `split` the kernel with `no_treaty` has 10745571244955131088879616 states and 657,535 nodes, and none of the four initial states is inside. The kernel without a profile has 10790031558679106831843328 states and 1,268,572 nodes, and of the four initial states only the `aligned` one is inside. No count of the present step's kernels was recorded to compare with; the readings are what was compared.
+- These zones are small beside the zone of 6.1: their largest layers have 173,605 and 272,690 nodes.
 
 ### 6.3 AGI v0.1, both whole kernels, every step, same day
 
@@ -196,11 +202,22 @@ One step in isolation (the step that computes layer 50 of the zone of 6.1 from l
 
 Without the 12.9 million nodes held for the comparison the working sets are about 43.5 and 13.7 million: 3.2 times less memory for 2.2 times the time.
 
+The zone of 6.1 with `--step moves --gc-factor 1.25`, stopped after tick 50 (the layers have the same node counts):
+
+| Layer (tick) | `split`, factor 1.25: node table, memory, time | `moves`, factor 1.25: node table, memory, time |
+|---|---|---|
+| 52 | 43 M, 2.3 GB, 19 s | 40 M, 2.2 GB, 22 s |
+| 51 | 43 M, 2.5 GB, 79 s | 41 M, 2.2 GB, 130 s |
+| 50 | 76 M, 3.7 GB, 319 s | 47 M, 2.6 GB, 463 s |
+
+Up to tick 51 the collection threshold of 40 million nodes sets both. At tick 50 `moves` holds a table 1.6 times smaller for 1.45 times the time of the whole run. It was not run further, so whether it passes layer 46 inside 12 GB is not known.
+
 ## 7. Not done
 
 - **The zone of 6.1 is not finished.** Under 12 GB the split step stops in layer 46 of 57. How far it goes under a larger cap is not known; section 9 has the commands.
 - **No speed-up.** The split step creates the same sub-results as `compose`. The cost of the substitution itself (20 to 37 times its result) is untouched. Not tried: a substitution from the top of the layer down that carries the reaching condition of each node, so that a sub-result is built only for the contexts in which its node is reached; a transition relation clustered per actor (only the finest partition, one variable at a time, was tried, section 4).
-- **The present step was not rerun on the registered build past tick 51** (it needs 18 GB and more). The comparison of 6.1 uses the figures handed over with the task.
+- **The present step was not rerun on the registered build past tick 51** (it needs 18 GB and more). The comparison of 6.1 uses the figures handed over with the task, and 6.2 the records of the reordering spike. For the two zones of 6.2 the readings agree; the numbers of states under the present step were never recorded, so they were not compared.
+- **`moves` was run on the zone of 6.1 only to tick 50.**
 - **The collection policy is set by hand.** The factor 1.25 of 6.1 is an argument of the harness. The step does not know the memory cap; a policy that tightens as the table nears the cap would get the same without a setting.
 - **`compose_by_levels` is Python driving one `ITE` per node.** That costs 4 to 12% on a small model. A version inside the compiled core, with the same release rule, would remove it; it would also need the reference manager's counterpart and the differential tests.
 - **`moves` splits on the coalition only**, and only up to 64 joint moves. Cofactoring on an opponent's actions as well is exact by the same argument (`∃ a_O` is a disjunction over the opponent's moves) and was measured only without the release (section 4).
@@ -213,7 +230,7 @@ Without the 12.9 million nodes held for the comparison the working sets are abou
 **Keep it optional, and switch it on for the heavy zones now.**
 
 - Library default: `compose` stays. On models whose steps are small (AGI v0.1, the WW2 states of the test suite) `split` gains nothing and costs 4 to 12%.
-- Kernel jobs of the registered AGI v0.3 build (`tests/agi_v0_3/kernels.py` and the kernel queue): run with `WAVEFRONT_STEP=split`. It is exact, the tests compare it edge by edge, a zone computed with it reads as production's (6.2), it costs no time on those zones and it divides their memory by 3 to 4. With the collection factor at 1.25 the division is nearer 6 at a price of about 17% in time.
+- Kernel jobs of the registered AGI v0.3 build (`tests/agi_v0_3/kernels.py` and the kernel queue): run with `WAVEFRONT_STEP=split`. It is exact, the tests compare it edge by edge, two zones computed with it read as production's (6.2), it costs no time on those zones and it divides their memory by 3 to 4. With the collection factor at 1.25 the division is nearer 6 at a price of about 17% in time.
 - `moves`: a last resort when a zone still does not fit. It is exact and tested the same way, and it costs about twice the time.
 - Make `split` the default of the library only if a version inside the compiled core removes its overhead on small models.
 - The order still matters more than the step: the sifted order made the zone 2 to 20 times cheaper (docs/engine_reordering_spike.md), the split step 3 to 4 times smaller in memory only. They combine: every figure here is in the sifted order.
@@ -230,7 +247,7 @@ python -m tests.agi_v0_3.bench_reorder --core c --model default --goal indiffere
     --gc-min-nodes 40000000 --step split --cap-gb 12
 python -m tests.agi_v0_3.bench_reorder ... --gc-min-nodes 40000000 --gc-factor 1.25 --step split --cap-gb 12
 
-# 6.2
+# 6.2 (the second zone: without --profiles, with --gc-factor 1.5)
 python -m tests.agi_v0_3.bench_reorder --core c --model default --goal aligned \
     --coalition H --target not:OPEN_TAKEOVER --profiles no_treaty \
     --order-from tests/agi_v0_3/orders/default_aligned_sifted.json \
