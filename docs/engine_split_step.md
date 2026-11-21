@@ -152,7 +152,17 @@ Build `DEFAULT`, `a_objective = indifferent`, coalition `["H"]`, target `not:OPE
 
 ### 6.2 The zone with `no_treaty`
 
-Pending at this commit: the run is in progress.
+Build `DEFAULT`, `a_objective = aligned`, coalition `["H"]`, target `not:OPEN_TAKEOVER`, profile `no_treaty`, the same order and threshold, the present collection policy (factor 2).
+
+| Step | Time | Memory | Node table | Reading at the start state |
+|---|---|---|---|---|
+| present (`compose`), recorded in docs/engine_reordering_spike.md section 9, not rerun | 3,877 s | 9,641 MB | not recorded | outside |
+| `split` | 3,616 s | 3,567 MB | 73,098,161 | outside |
+
+- The reading is the same, and it is production's (outside, in the FORCE order).
+- The kernel under `split` has 10745571244955131088879616 states and 657,535 nodes; none of the four initial states is inside. No count of the present step's kernel was recorded to compare with; the reading is what was compared.
+- 2.7 times less memory. The times are from two different days on a shared machine, so they say "no slower", not "7% faster".
+- The largest layer has 173,605 nodes: this zone is a tenth of the zone of 6.1 in every layer.
 
 ### 6.3 AGI v0.1, both whole kernels, every step, same day
 

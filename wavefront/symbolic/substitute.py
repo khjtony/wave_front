@@ -8,7 +8,7 @@ sub-result stays in the node table until the call returns. When the substituted 
 read variables far above the variable they replace (the next-state functions of a game read
 the action bits and state bits of the whole order), a sub-result is a graph over all of them
 and shares little with the other sub-results: on the largest model the sub-results together
-are 30 times the size of the result, and they, not the result, set the memory of a
+are 20 to 37 times the size of the result, and they, not the result, set the memory of a
 controllable predecessor (docs/engine_split_step.md).
 
 :func:`compose_by_levels` computes the same sub-results by the same recursion, with one
