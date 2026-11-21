@@ -31,13 +31,23 @@ import time
 from collections.abc import Callable, Sequence
 
 from tests.agi.common import NotComputed, heavy_encoding, target_bdd, with_levels
-from tests.agi_v0_3.common import OBJECTIVES, ROOT, Build, compiled, key
+from tests.agi_v0_3.common import DEFAULT, OBJECTIVES, ROOT, Build, compiled, key
 from wavefront.symbolic import safe
 
 MEMORY_GB = int(os.environ.get("WF_V03_MEMORY_GB", "26"))
 MINUTES = float(os.environ.get("WF_V03_KERNEL_MINUTES", "600"))
 JOINT = os.environ.get("WF_V03_JOINT") == "1"
-READINGS = ROOT / "reports" / "agi_v0_3_kernels.jsonl"
+# Engine settings that change the cost of a kernel and not the kernel (2026-11-21, after the
+# engine benchmarks of docs/engine_split_step.md and docs/engine_reordering_spike.md):
+# ``WF_V03_STEP=split`` substitutes level by level (the same edge, a third to a fifth of the
+# memory on the registered build); ``WF_V03_ORDER`` names a static variable order file
+# (tests/agi_v0_3/orders/) in place of the FORCE order; ``WF_V03_GC_FACTOR`` sets how soon
+# the manager collects. Each saved reading records the settings it was computed with.
+STEP = os.environ.get("WF_V03_STEP", "compose")
+ORDER = os.environ.get("WF_V03_ORDER", "")
+GC_FACTOR = float(os.environ.get("WF_V03_GC_FACTOR", "0") or 0)
+# ``WF_V03_READINGS`` names another file, for a check that must not read the saved readings.
+READINGS = ROOT / os.environ.get("WF_V03_READINGS", "reports/agi_v0_3_kernels.jsonl")
 MODEL_FILE = ROOT / "models" / "agi_v0_3" / "v0_3.py"
 PROGRESS = ROOT / ".cache" / "agi_v0_3_progress"
 
@@ -152,17 +162,28 @@ def membership(
 
         cm = compiled(spec)
         t0 = time.perf_counter()
-        enc = heavy_encoding(cm)
+        # The order files were found on the registered build; other builds keep FORCE.
+        ordered = ORDER and json.loads(spec)["build"] == DEFAULT
+        if ordered:
+            from tests.agi_v0_3.bench_reorder import ordered_encoding
+
+            enc = ordered_encoding(cm, str(ROOT / ORDER), gc_min_nodes=40_000_000)
+        else:
+            enc = heavy_encoding(cm)
+        if GC_FACTOR:
+            enc.mgr.gc_factor = GC_FACTOR
         goal = target_bdd(enc, target)
         if objective is not None:
             goal = enc.mgr.protect(enc.mgr.AND(goal, enc.predicate(V.a_objective == objective)))
-        f = safe(enc, list(coalition), goal, on_iteration=_progress(cm.horizon)).kernel
+        f = safe(enc, list(coalition), goal, on_iteration=_progress(cm.horizon), step=STEP).kernel
         enc.mgr.protect(f)
         asked = OBJECTIVES if objective is None else (objective,)
         return {
             "inside": {o: bool(enc.holds(f, _start(cm, o, levels))) for o in asked},
             "seconds": round(time.perf_counter() - t0, 1),
             "peak nodes": enc.mgr.stats()["peak_nodes"],
+            "engine": {"step": STEP, "order": ORDER if ordered else "FORCE"}
+            | {"gc factor": GC_FACTOR or None},
         }
 
     spec = key(build, profiles)
