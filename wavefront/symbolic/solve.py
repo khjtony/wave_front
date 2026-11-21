@@ -10,7 +10,14 @@ the results equal the explicit engine's.
   in s . step(s, move) in X}``, where *active* is non-terminal with an available action for
   every actor. With ``P(s, a) = X(f(s, a))`` (the next-state functions substituted into
   ``X``), it is ``exists a_C . avail_C & ~(exists a_O . avail_O & ~P)``, quantified actor by
-  actor.
+  actor. The step is carried out in one of three ways (``step=`` of :func:`cpre`,
+  :func:`attractor`, :func:`safe` and :func:`contested`, or the environment variable
+  ``WAVEFRONT_STEP``): ``"compose"`` (the default) substitutes in one manager call;
+  ``"split"`` substitutes one node of ``X`` at a time and releases every sub-result after its
+  last use (:mod:`wavefront.symbolic.substitute`), and inside a fixpoint collects garbage
+  within the step; ``"moves"`` does the split step once per joint move of the coalition,
+  with that move's action bits fixed in the next-state functions, and joins the cases
+  (less memory again, more time). All three return the same edge.
 - :func:`attractor`: ``mu X . T | cpre(X)``, keeping every stage ``X_0 = T``,
   ``X_{i+1} = T | cpre(X_i)``; the rank of a state is its first stage.
 - :func:`safe`: ``nu X . phi & (Term | cpre(X))``. For a timed model it is computed backward
@@ -40,6 +47,7 @@ invalidated by a collection during the call.
 from __future__ import annotations
 
 import itertools
+import os
 import time
 from collections.abc import Callable, Collection, Sequence
 from dataclasses import dataclass, field
@@ -49,6 +57,7 @@ from ..model.compile import CompiledModel
 from ..model.model import ModelError
 from .bdd import FALSE, TRUE
 from .encode import Encoding
+from .substitute import STATIC_CORES, compose_by_levels
 
 __all__ = [
     "cpre",
@@ -62,11 +71,25 @@ __all__ = [
     "SymbolicSafe",
     "SymbolicContested",
     "SymbolicReach",
+    "STEP_ENV",
+    "STEPS",
 ]
 
 State = tuple[int, ...]
 SubMove = tuple[int, ...]
 Progress = Callable[[dict], None]
+Step = Literal["compose", "split", "moves"]
+STEP_ENV = "WAVEFRONT_STEP"
+STEPS = ("compose", "split", "moves")
+MOVES_LIMIT = 64  # "moves": more joint moves of the coalition than this, and the step is "split"
+
+
+def _step_kind(step: str | None) -> str:
+    """The step asked for; ``None`` follows ``WAVEFRONT_STEP`` (default ``"compose"``)."""
+    kind = step if step is not None else (os.environ.get(STEP_ENV) or "compose").strip().lower()
+    if kind not in STEPS:
+        raise ValueError(f"unknown step {kind!r} (expected one of {', '.join(STEPS)})")
+    return kind
 
 
 def _maybe_gc(enc: Encoding, roots: Sequence[int]) -> None:
@@ -80,23 +103,109 @@ def _split(enc: Encoding, coalition: Collection[str]) -> tuple[list[int], list[i
     return members, others
 
 
-def _cpre_from(enc: Encoding, members: list[int], others: list[int], p: int) -> int:
-    """``exists a_C . avail_C & forall a_O . (avail_O -> p)`` for ``p`` over (s, a)."""
+def _cpre_from(
+    enc: Encoding,
+    members: list[int],
+    others: list[int],
+    x: int,
+    kind: str = "compose",
+    keep: Sequence[int] | None = None,
+) -> int:
+    """``exists a_C . avail_C & forall a_O . (avail_O -> p)`` for ``p = x(f(s, a))``.
+
+    ``kind`` (one of :data:`STEPS`): ``"split"`` computes ``p`` one node of ``x`` at a time
+    (:meth:`Encoding.preimage`); the quantifications and their order are the same, so the
+    result is the same edge. ``"moves"`` is :func:`_cpre_by_moves`. With either and ``keep``
+    (every edge the caller still needs besides ``x``, the encoding's and the protected
+    ones), garbage may be collected inside the substitution and after each quantification.
+    A core without a static order (the CUDD binding) keeps to ``"compose"``."""
     mgr = enc.mgr
-    bad = p ^ 1
+    if getattr(mgr, "core", "python") not in STATIC_CORES:
+        kind = "compose"
+    if kind == "moves":
+        moves = _coalition_moves(enc, members)
+        if moves is not None:
+            return _cpre_by_moves(enc, members, others, x, moves, keep)
+    split = kind != "compose"
+    held = [x, *keep] if split and keep is not None else None
+    bad = enc.preimage(x, split=split, keep=held) ^ 1
     for o in others:
         bad = mgr.and_exists(enc.avail[o], bad, enc.actor_vs[o])
+        if held is not None:
+            mgr.maybe_gc([bad, *held])
     good = bad ^ 1
     for c in members:
         good = mgr.and_exists(enc.avail[c], good, enc.actor_vs[c])
+        if held is not None:
+            mgr.maybe_gc([good, *held])
     return good
 
 
-def cpre(enc: Encoding, coalition: Collection[str], x: int) -> int:
+def _coalition_moves(enc: Encoding, members: list[int]) -> list[tuple[int, ...]] | None:
+    """The joint moves of the coalition (action indices in actor order), or ``None`` when
+    there is nothing to split on (no member) or too much (over :data:`MOVES_LIMIT`)."""
+    sizes = [len(enc.cm.actors[c].actions) for c in members]
+    total = 1
+    for k in sizes:
+        total *= k
+    if not members or total > MOVES_LIMIT:
+        return None
+    return list(itertools.product(*(range(k) for k in sizes)))
+
+
+def _cpre_by_moves(
+    enc: Encoding,
+    members: list[int],
+    others: list[int],
+    x: int,
+    moves: Sequence[tuple[int, ...]],
+    keep: Sequence[int] | None,
+) -> int:
+    """The same function as the other steps, one joint move ``c`` of the coalition at a
+    time: ``OR_c avail_C[c] & ~(exists a_O . avail_O & ~x(f(s, c, a_O)))``.
+
+    It is the expansion of ``exists a_C`` over the codes of the coalition's action bits. A
+    code that is no action is never available, so only the moves remain; the other actors'
+    availability does not read the coalition's bits; and fixing those bits in ``x(f(s, a))``
+    is fixing them in the next-state functions, since they are not substituted. Each case
+    is a split substitution with functions that no longer read the coalition's bits, so its
+    sub-results are smaller; the cases are joined as they come."""
+    mgr = enc.mgr
+    held = None if keep is None else [x, *keep]
+    good = FALSE
+    for move in moves:
+        can = mgr.and_all(enc.action_avail[c][j] for c, j in zip(members, move, strict=True))
+        if can == FALSE:
+            continue
+        bits: dict[int, int] = {}
+        for c, j in zip(members, move, strict=True):
+            levels = enc.act[c]
+            k = len(levels)
+            bits.update({lv: (j >> (k - 1 - b)) & 1 for b, lv in enumerate(levels)})
+        fns = {}
+        for lv, f in enc.next_fn.items():
+            g = mgr.restrict(f, bits)
+            if g != mgr.var(lv):
+                fns[lv] = g
+        mine = None if held is None else [good, can, *held]
+        bad = compose_by_levels(mgr, x, fns, mine) ^ 1  # it keeps fns itself
+        for o in others:
+            bad = mgr.and_exists(enc.avail[o], bad, enc.actor_vs[o])
+            if mine is not None:
+                mgr.maybe_gc([bad, *mine])
+        good = mgr.OR(good, mgr.DIFF(can, bad))
+        if held is not None:
+            mgr.maybe_gc([good, *held])
+    return good
+
+
+def cpre(enc: Encoding, coalition: Collection[str], x: int, step: Step | None = None) -> int:
     """The controllable predecessor of ``x`` for ``coalition`` (actor names, Nature
-    included when named)."""
+    included when named). ``step``: ``"compose"``, ``"split"`` or ``"moves"`` (the module
+    docstring; ``None`` follows ``WAVEFRONT_STEP``). Nothing is collected during the call."""
     members, others = _split(enc, coalition)
-    return enc.mgr.AND(_cpre_from(enc, members, others, enc.preimage(x)), enc.active)
+    good = _cpre_from(enc, members, others, x, _step_kind(step))
+    return enc.mgr.AND(good, enc.active)
 
 
 def _winning_moves(enc: Encoding, members: list[int], x: int, state: Sequence[int]) -> int:
@@ -287,10 +396,12 @@ def attractor(
     coalition: Collection[str],
     target: int,
     on_iteration: Progress | None = None,
+    step: Step | None = None,
 ) -> SymbolicAttractor:
-    """States from which ``coalition`` can force ``target`` (a state predicate)."""
+    """States from which ``coalition`` can force ``target`` (a state predicate). ``step``
+    as in :func:`cpre`."""
     with enc.mgr.protecting(target):
-        return _attractor(enc, coalition, target, on_iteration)
+        return _attractor(enc, coalition, target, on_iteration, _step_kind(step))
 
 
 def _attractor(
@@ -298,6 +409,7 @@ def _attractor(
     coalition: Collection[str],
     target: int,
     on_iteration: Progress | None,
+    kind: str = "compose",
 ) -> SymbolicAttractor:
     mgr = enc.mgr
     members, others = _split(enc, coalition)
@@ -308,8 +420,9 @@ def _attractor(
     res.layers.append(x)
     t0 = time.perf_counter()
     while True:
-        step = mgr.AND(_cpre_from(enc, members, others, enc.preimage(x)), enc.active)
-        new = mgr.OR(goal, step)
+        # goal and the earlier stages are held by ``res``
+        pre = _cpre_from(enc, members, others, x, kind, keep=())
+        new = mgr.OR(goal, mgr.AND(pre, enc.active))
         if new == x:
             break
         x = new
@@ -329,15 +442,16 @@ def safe(
     within: int | None = None,
     method: Literal["auto", "layered", "iterate"] = "auto",
     on_iteration: Progress | None = None,
+    step: Step | None = None,
 ) -> SymbolicSafe:
     """States from which ``coalition`` can keep ``phi`` until a terminal state.
 
     ``within`` (optional) is a set closed under successors, such as the result of
     :func:`reachable`: the kernel is computed inside it, and each step's argument is
     simplified with it as the care set. ``method``: ``"layered"`` (timed models only),
-    ``"iterate"``, or ``"auto"`` (layered when timed)."""
+    ``"iterate"``, or ``"auto"`` (layered when timed). ``step`` as in :func:`cpre`."""
     with enc.mgr.protecting(phi, within):
-        return _safe(enc, coalition, phi, within, method, on_iteration)
+        return _safe(enc, coalition, phi, within, method, on_iteration, _step_kind(step))
 
 
 def _safe(
@@ -347,6 +461,7 @@ def _safe(
     within: int | None,
     method: str,
     on_iteration: Progress | None,
+    kind: str = "compose",
 ) -> SymbolicSafe:
     mgr = enc.mgr
     members, others = _split(enc, coalition)
@@ -361,9 +476,11 @@ def _safe(
     if method == "layered" and tick is None:
         raise ModelError("the layered method needs a timed model")
 
-    def step(x: int) -> int:
+    def step(x: int, *keep: int) -> int:
+        """``cpre(x)``; ``keep``: the caller's other edges (``base`` is held by ``res``)."""
         arg = x if within is None or x == FALSE else mgr.simplify(x, within)
-        return mgr.AND(_cpre_from(enc, members, others, enc.preimage(arg)), enc.active)
+        pre = _cpre_from(enc, members, others, arg, kind, keep=(x, *keep))
+        return mgr.AND(pre, enc.active)
 
     t0 = time.perf_counter()
     if method == "layered":
@@ -377,7 +494,7 @@ def _safe(
             at_t = enc.cur_env[tick].get(t, FALSE)
             layer = mgr.AND(base, at_t)
             if layer != FALSE:
-                keep = stay if nxt == FALSE else mgr.OR(stay, step(nxt))
+                keep = stay if nxt == FALSE else mgr.OR(stay, step(nxt, kernel, layer))
                 layer = mgr.AND(layer, keep)
             kernel = mgr.OR(kernel, layer)
             nxt = layer
@@ -390,7 +507,7 @@ def _safe(
     x = base
     k = 0
     while True:
-        new = mgr.AND(base, mgr.OR(enc.term, step(x)))
+        new = mgr.AND(base, mgr.OR(enc.term, step(x)))  # x is kept by step
         if new == x:
             break
         x = new
@@ -408,9 +525,10 @@ def contested(
     coalition: Collection[str],
     goal: int,
     kind: Literal["reach", "keep"],
+    step: Step | None = None,
 ) -> SymbolicContested:
     """Forced, blocked and contested regions for a reach or keep objective (as
-    :func:`wavefront.engine.solve.contested`)."""
+    :func:`wavefront.engine.solve.contested`). ``step`` as in :func:`cpre`."""
     mgr = enc.mgr
     members = set(enc.actor_indices(coalition))
     rest = [a.name for a in enc.cm.actors if a.index not in members]
@@ -420,12 +538,12 @@ def contested(
     other = mgr.DIFF(enc.dom, goal)
     with mgr.protecting(goal, other):
         if kind == "reach":
-            first = attractor(enc, coalition, goal)
-            second = safe(enc, rest, other)
+            first = attractor(enc, coalition, goal, step=step)
+            second = safe(enc, rest, other, step=step)
             forced, blocked = first.win, second.kernel
         else:
-            first = safe(enc, coalition, goal)
-            second = attractor(enc, rest, other)
+            first = safe(enc, coalition, goal, step=step)
+            second = attractor(enc, rest, other, step=step)
             forced, blocked = first.kernel, second.win
     middle = mgr.DIFF(mgr.DIFF(enc.dom, forced), blocked)
     return SymbolicContested(enc, forced, blocked, middle)

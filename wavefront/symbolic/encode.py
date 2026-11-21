@@ -51,7 +51,8 @@ their image is themselves (they are frozen).
 
 The per-variable transition relation parts ``x' <-> f(s, a)`` (:meth:`Encoding.trans_parts`)
 are used for forward images; backward steps substitute the next-state functions into the
-target set (:meth:`Encoding.preimage`).
+target set (:meth:`Encoding.preimage`), in one manager call or, split, one node of the target
+at a time (:mod:`wavefront.symbolic.substitute`).
 """
 
 from __future__ import annotations
@@ -82,6 +83,7 @@ from ..model.expr import (
 from ..model.model import ModelError
 from .bdd import BDD, FALSE, TRUE
 from .cores import manager as new_manager
+from .substitute import STATIC_CORES, compose_by_levels
 
 __all__ = ["Encoding", "encode", "Partition"]
 
@@ -701,9 +703,15 @@ class Encoding:
                     self.next_fn[lv] = f
 
     # -- transition use ------------------------------------------------------------------
-    def preimage(self, x: int) -> int:
+    def preimage(self, x: int, split: bool = False, keep: Sequence[int] | None = None) -> int:
         """``x(f(s, a))``: the (state, joint action) pairs whose successor is in ``x`` (a
-        predicate over current bits)."""
+        predicate over current bits). With ``split`` the substitution runs one node of
+        ``x`` at a time (:func:`wavefront.symbolic.substitute.compose_by_levels`): the same
+        result, without holding every sub-result until the end; then, with ``keep`` (every
+        other edge the caller still needs), garbage may be collected on the way. A core
+        without a static order (the CUDD binding) keeps to the one call."""
+        if split and getattr(self.mgr, "core", "python") in STATIC_CORES:
+            return compose_by_levels(self.mgr, x, self.next_fn, keep)
         return self.mgr.compose(x, self.next_fn)
 
     @property

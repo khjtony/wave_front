@@ -5,6 +5,7 @@
     python -m tests.agi_v0_3.bench_reorder --core cudd --reorder off --goal indifferent
     python -m tests.agi_v0_3.bench_reorder --core cudd --reorder auto --dump-order o.json ...
     python -m tests.agi_v0_3.bench_reorder --core c --order-from o.json ...
+    python -m tests.agi_v0_3.bench_reorder --core c --order-from o.json --step split ...
 
 It prints one line per tick layer and ends with one JSON record (also appended to ``--out``):
 the number of states in the kernel, the membership of the model's initial states, wall time,
@@ -214,6 +215,21 @@ def main(argv: list[str] | None = None) -> int:
         default=None,
         help="collection threshold (default: the heavy setting, 120 million nodes)",
     )
+    p.add_argument(
+        "--gc-factor",
+        type=float,
+        default=None,
+        help="collect again once the node table is this many times what the last "
+        "collection left (default 2.0)",
+    )
+    p.add_argument(
+        "--step",
+        choices=("compose", "split", "moves"),
+        default=None,
+        help="how a controllable predecessor substitutes (docs/engine_split_step.md); "
+        "default: WAVEFRONT_STEP, else compose",
+    )
+    p.add_argument("--stop-tick", type=int, default=None, help="exit after this tick layer")
     p.add_argument("--encode-only", action="store_true", help="sizes only, with trans_parts")
     p.add_argument("--no-probe", action="store_true", help="do not size the intermediates")
     p.add_argument("--out", default=None, help="append the JSON record to this file")
@@ -246,6 +262,8 @@ def main(argv: list[str] | None = None) -> int:
     enc = encode(cm, mgr=_make_manager(args), var_order=order, actions=actions)
     mgr = enc.mgr
     mgr.gc_min_nodes = args.gc_min_nodes or GC_MIN_NODES
+    if args.gc_factor is not None:
+        mgr.gc_factor = args.gc_factor
     rec["vars"] = mgr.num_vars
     rec["encode_seconds"] = round(time.perf_counter() - t0, 2)
     rec["sizes_after_encoding"] = _sizes(enc)
@@ -291,6 +309,7 @@ def main(argv: list[str] | None = None) -> int:
                 "nodes": st["nodes"],
                 "live": st["live_nodes"],
                 "peak": st["peak_nodes"],
+                "gcs": mgr.gc_runs,
                 "rss_mb": round(_rss_peak_mb()),
             }
             layers.append(row)
@@ -301,6 +320,8 @@ def main(argv: list[str] | None = None) -> int:
             print(json.dumps(row), flush=True)
             if args.stop_after and st["seconds"] > args.stop_after:
                 raise SystemExit(0)
+            if args.stop_tick is not None and st["tick"] <= args.stop_tick:
+                raise SystemExit(0)
 
         goal = target_bdd(enc, args.target)
         if args.goal != "all":  # "all": every start objective at once
@@ -308,7 +329,9 @@ def main(argv: list[str] | None = None) -> int:
         mgr.protect(goal)
         t0 = time.perf_counter()
         try:
-            res = safe(enc, args.coalition.split("+"), goal, on_iteration=on_iteration)
+            res = safe(
+                enc, args.coalition.split("+"), goal, on_iteration=on_iteration, step=args.step
+            )
         except MemoryError as exc:
             rec["error"] = f"MemoryError: {exc}"
             res = None

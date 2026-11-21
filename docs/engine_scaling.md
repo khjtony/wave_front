@@ -75,13 +75,13 @@ The CLI is not wired to the engine yet; wave B does that.
   `live` is the predicate that every actor has an available action. `active` is `dom & ~term & live`.
 - **Terminal states.** `term` is any ending or `tick == horizon`. Terminal states have no moves, and in `image` they are frozen: their image is themselves. Overlapping endings are collected for the reachability check.
 - **Images.**
-  - `preimage(x)` substitutes the next-state functions into `x` (`compose`).
+  - `preimage(x)` substitutes the next-state functions into `x` (`compose`); `preimage(x, split=True)` gives the same edge by `compose_by_levels` (docs/engine_split_step.md).
   - `image(s)` is a relational product over the partitioned relation `x' <-> f(s, a)` (one part per changing variable) together with each actor's availability. Parts are conjoined greedily: each time, the part that lets the most action and current bits be quantified, with action bits weighted 4. A bit is quantified as soon as no remaining part mentions it.
 - **Explicit-state helpers.** The encoding provides `state_to_cube`, `cube_to_state`, `holds(f, state)`, `available(state)`, `successor(state, move)`, `is_error`, `predicate(target)` and `count(f)`. `predicate` takes an ending name, `HORIZON`, an invariant name or an expression, and caches its result.
 
 ### 2.3 Fixpoints (`wavefront/symbolic/solve.py`)
 
-- **`cpre(enc, C, X)`.** It computes `exists a_C . avail_C & ~(exists a_O . avail_O & ~X(f(s, a)))` on active states. The quantification runs actor by actor and is exact, because each actor's availability depends only on its own action bits.
+- **`cpre(enc, C, X)`.** It computes `exists a_C . avail_C & ~(exists a_O . avail_O & ~X(f(s, a)))` on active states. The quantification runs actor by actor and is exact, because each actor's availability depends only on its own action bits. The substitution `X(f(s, a))` is one `compose` call by default; `step="split"` (or `WAVEFRONT_STEP=split`) computes the same edge one node of `X` at a time and releases the sub-results on the way, and `step="moves"` does that once per joint move of the coalition (docs/engine_split_step.md).
 - **`attractor(enc, C, T)`.** This is `mu X . T | cpre(X)`. Every stage is kept in `layers`. `rank(state)` is a binary search over the stages, and `strategy_move(state)` is a sub-move all of whose completions lead to a lower stage.
 - **`safe(enc, C, phi, within=None, method="auto")`.**
   - For a timed model it is computed backward one tick layer at a time: `K_H = phi & tick == H` and `K_t = phi & tick == t & (Term | cpre(K_{t+1}))`. This is the same greatest fixpoint, reached in `horizon + 1` steps, each over one layer.

@@ -6,7 +6,9 @@
 the encoding of a :class:`~wavefront.model.compile.CompiledModel` (state, next-state and
 action bits; availability; next-state functions), :mod:`.solve` the controllable
 predecessor, attractor, safety kernel, contested region, forward reachability and witness
-traces. See ``docs/engine_scaling.md`` for the decision record and the benchmark.
+traces; :mod:`.substitute` the substitution one node at a time behind ``step="split"``
+(``docs/engine_split_step.md``). See ``docs/engine_scaling.md`` for the decision record and
+the benchmark.
 """
 
 from .bdd import BDD, FALSE, TRUE
