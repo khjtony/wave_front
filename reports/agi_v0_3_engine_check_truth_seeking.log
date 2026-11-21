@@ -1,0 +1,5 @@
+=== worker pid=2530887 goal=truth_seeking limit=14
+F7 closed H balance_control   | truth_seeking | outside | 8.5 s
+F7 closed H+L balance_control   | truth_seeking | inside | 0.9 s
+F7 closed H+L not:SILENT_TAKEOVER   | truth_seeking | inside | 0.1 s
+F7 closed H balance_coexist  {'cap': 'agi'} | truth_seeking | inside | 1.4 s
