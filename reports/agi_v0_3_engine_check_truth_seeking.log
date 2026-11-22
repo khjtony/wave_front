@@ -7,3 +7,8 @@ F3 default H not:OPEN_TAKEOVER   | truth_seeking | inside | 20925.3 s
 F6 default H+L balance_control   | truth_seeking | inside | 12617.5 s
 F4 default H not:OPEN_TAKEOVER no_treaty  | truth_seeking | outside | 7899.3 s
 F4 default H+L not:OPEN_TAKEOVER no_treaty  | truth_seeking | inside | 9199.2 s
+F6 default H+L balance_control no_nationalize  | truth_seeking | outside | 16847.6 s
+F7 default H balance_control   | truth_seeking | outside | 5088.7 s
+F7 default H+L not:SILENT_TAKEOVER   | truth_seeking | inside | 0.1 s
+F7 default H balance_coexist  {'cap': 'agi'} | truth_seeking | outside | 882.2 s
+QUEUE_DONE
