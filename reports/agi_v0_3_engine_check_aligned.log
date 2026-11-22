@@ -7,3 +7,8 @@ F3 default H not:OPEN_TAKEOVER   | aligned | inside | 7991.8 s
 F6 default H+L balance_control   | aligned | inside | 12314.8 s
 F4 default H not:OPEN_TAKEOVER no_treaty  | aligned | outside | 4598.2 s
 F4 default H+L not:OPEN_TAKEOVER no_treaty  | aligned | inside | 6563.0 s
+F6 default H+L balance_control no_nationalize  | aligned | outside | 17633.8 s
+F7 default H balance_control   | aligned | outside | 5529.7 s
+F7 default H+L not:SILENT_TAKEOVER   | aligned | inside | 0.1 s
+F7 default H balance_coexist  {'cap': 'agi'} | aligned | outside | 136.5 s
+QUEUE_DONE
