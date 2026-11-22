@@ -43,10 +43,12 @@ QUEUE += [("F7", "default", DEFAULT, c, t, (), lv) for c, t, lv in F7 if (c, t) 
 def main() -> None:
     # ``--goal X`` runs one start objective only, so that several queues can share the machine.
     only = sys.argv[sys.argv.index("--goal") + 1 :][:1] if "--goal" in sys.argv else []
+    # ``--start N`` skips the first N zones of the list (a second worker on one goal).
+    start = int(sys.argv[sys.argv.index("--start") + 1]) if "--start" in sys.argv else 0
     # The console reads this line to know each worker's memory limit.
     print(f"=== worker pid={os.getpid()} goal={(only or ['all'])[0]} limit={MEMORY_GB}", flush=True)
     for objective in only or ORDER:
-        for claim, name, build, coalition, target, profiles, levels in QUEUE:
+        for claim, name, build, coalition, target, profiles, levels in QUEUE[start:]:
             what = (
                 f"{claim} {name} {'+'.join(coalition)} {target} {' '.join(profiles)} {levels or ''}"
             )
