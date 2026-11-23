@@ -234,6 +234,17 @@
     </tbody>
   </table></div>
 
+  <h3>3c · Details fixed while building (after registration, before any run)</h3>
+  <ul class="plain">
+    <li><b>An expansionist system escapes supervision and deceives only once hostile.</b> This is the registered "cooperates like an aligned system as long as it can grow", applied to the two actions v0 denies an aligned system.</li>
+    <li><b>Trust is rebuilt by cooperation only while the footprint is at most <code>medium</code>.</b> v0 ties rebuilding trust to the condition under which a shutdown would succeed, and that condition gained the footprint.</li>
+    <li><b>A reclaim is counted down like a step</b> (its own counter), so that whether it works is read when it lands; the threat is set when it lands.</li>
+    <li><b>A blocked expansionist open system has nothing to do until society relies on AI</b> (<code>dependence ≥ med</code>): with its service restricted it has no reach, as in v0.3.</li>
+    <li><b><code>CROWDED_OUT</code> also requires the frontier AI system below total control</b>, since an overt takeover is a waypoint and not an ending.</li>
+    <li><b>A dominant footprint lowers human power through the record writer</b>, which gained two actions for it (<code>record_crowd</code>, <code>record_land_crowd</code>); it still has exactly one available action in every state.</li>
+    <li><b>The refined builds of v0 exist without the expansion only.</b></li>
+  </ul>
+
   <h2>4 · The registered claims</h2>
   <p>"Small variant": <code>expansion</code> on, the open system off (v0.3's <code>closed</code> plus expansion). Quick claims: from S0, within 24 quarters, the AI true to its goal. Heavy claims: one guarantee zone per start goal, computed with the split step; a zone over the time or memory limit reads not computed. The predictions are mine.</p>
   <div class="scroll"><table>
@@ -250,6 +261,7 @@
 
   <h2>5 · Changelog</h2>
   <ul class="plain">
+    <li>23 November 2026, after the registration commit: the model written (<code>models/agi_v0_4/v0_4.py</code>) with its structure tests; section 3c added. No claim query run.</li>
     <li>22 November 2026: drafted, three rounds of the owner's decisions (section 2), sources checked for the expansion and computing actions, registered (X1 to X6 with test bodies) before any guard of v0.4 was written. No query of v0.4 had been run.</li>
   </ul>
 
