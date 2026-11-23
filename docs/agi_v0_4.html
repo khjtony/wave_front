@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AGI v0.4 Draft: Expansion</title>
+<title>AGI v0.4: Expansion</title>
 <style>
   :root {
     color-scheme: light;
@@ -118,10 +118,10 @@
 </style></head>
 </head>
 <body><main>
-  <div class="tag">wave_front · AGI model v0.4 · design draft for the owner's review · 22 November 2026</div>
-  <h1>AGI v0.4 (draft): an AI that wants to expand</h1>
+  <div class="tag">wave_front · AGI model v0.4 · registration · 22 November 2026</div>
+  <h1>AGI v0.4: an AI that wants to expand</h1>
   <p class="lede">v0.4 adds a fifth AI goal, <b>expansionist</b>: more computing power, a larger fleet of embodied units, and the fuel, manufacturing, energy and land they need. The new question it lets us ask: can humans lose without any takeover and without hostility, simply by being crowded out?</p>
-  <div class="status"><b>Draft. Nothing is registered, written or run.</b> Section 2 records the owner's four decisions of 22 November. Section 3 is my proposal for the mechanics, and section 5 lists what I still need decided. Claims are registered, with predictions, only after the mechanics are agreed and before any guard is written.</div>
+  <div class="status"><b>Registered 22 November 2026; nothing run.</b> Claims X1 to X6 (section 4) and their test files (<code>tests/agi_v0_4/scenarios/</code>) were committed before any guard of v0.4 was written. Section 2 records the owner's decisions, sections 3 and 3a the proposals they answer, and section 3b the mechanics as registered</div>
 
   <h2>1 · What is new</h2>
   <div class="two">
@@ -151,6 +151,8 @@
       <tr><td>9</td><td>The crowded-out ending</td><td><b>As proposed, or when AI holds more than 70% of resources.</b></td></tr>
       <tr><td>11</td><td>Delay of a footprint step</td><td><b>Three quarters.</b></td></tr>
       <tr><td>12</td><td>Crowded out with two AIs</td><td><b>Combined share over 70%:</b> one footprint dominant, or both large.</td></tr>
+      <tr><td>13</td><td>Lag of reclaim</td><td><b>Three quarters.</b></td></tr>
+      <tr><td>14</td><td>Containment levers</td><td><b>As recommended:</b> pause, permit, reclaim, the power-supply choke, shutdown limited by footprint and the service restriction as the base; the agreed ceiling and AI-against-AI as model knobs, off by default.</td></tr>
       <tr><td>10</td><td>Still to design</td><td><b>The delay of each footprint step, and the mechanisms that suppress and contain an expansionist AI</b> (section 3a).</td></tr>
     </tbody>
   </table></div>
@@ -209,35 +211,53 @@
 
   <p><b>Sources.</b> Every action needs a contemporaneous source or is marked unsourced. Candidates: Carlsmith on power-seeking, the robot-economy passages of AI 2027, the record of AI-driven data-centre and energy build-out. I will check them before registration; "reclaim" will probably be unsourced.</p>
 
-  <h2>4 · Draft claims (not registered)</h2>
-  <p>Named X1 to X6 (X for expansion; H would collide with governments' code name). Predictions are added at registration.</p>
+  <h3>3b · The mechanics as registered</h3>
+  <p>v0.4 is a copy of v0.3. Model knobs: <code>expansion</code> (off gives v0.3 again), <code>reclaim</code> (on), <code>ceiling</code> (off), <code>counter</code> (off), and v0.3's own. A step lag of 3 means: chosen in quarter t, counted down like the deployment countdown, landing at t + 4.</p>
   <div class="scroll"><table>
-    <thead><tr><th>Id</th><th>Claim, in plain words</th><th>Kind</th></tr></thead>
+    <thead><tr><th>Piece</th><th>Rule</th><th>Source</th></tr></thead>
     <tbody>
-      <tr><td><b>X1</b></td><td>With <code>expansion</code> off, the quick claims of v0.3 give v0.3's numbers.</td><td>quick</td></tr>
-      <tr><td><b>X2</b></td><td>Under the expansionist goal a path to <code>CROWDED_OUT</code> exists on which relations are never hostile and no AI takes any control; its shortest length is reported (my arithmetic says 8 quarters).</td><td>quick; a wiring check, never a finding</td></tr>
-      <tr><td><b>X3</b></td><td>Can governments alone guarantee that humans are never crowded out, from S0, under the expansionist goal? And governments with the frontier AI companies?</td><td>heavy</td></tr>
-      <tr><td><b>X4</b></td><td>With AGI since s₀ and an expansionist AI, can governments alone keep peaceful coexistence?</td><td>heavy</td></tr>
-      <tr><td><b>X5</b></td><td>On every shortest path to a takeover under the expansionist goal, a block on expansion comes before the AI turns hostile; without the "blocked growth" rule no takeover path exists.</td><td>quick, with voided assumptions</td></tr>
-      <tr><td><b>X6</b></td><td>Under <code>aligned</code> and <code>truth_seeking</code>, every guarantee-zone reading of v0.3 is unchanged in v0.4.</td><td>heavy</td></tr>
+      <tr><td>Goal</td><td><code>expansionist</code> is a fifth start value of <code>a_objective</code> and a fifth target of the open system's retraining (<code>Nature.retrain_expansionist</code>).</td><td>decisions 2, 3; the retraining target is unsourced</td></tr>
+      <tr><td>Footprints</td><td><code>a_footprint</code> and, with the open system, <code>o_footprint</code>: <code>none</code>, <code>small</code>, <code>medium</code>, <code>large</code>, <code>dominant</code>. A step to <code>large</code> needs the other footprint at most <code>large</code>; a step to <code>dominant</code> needs it at most <code>medium</code>; both are checked when the step starts and when it lands.</td><td>decisions 1, 8, 12</td></tr>
+      <tr><td><code>A.expand</code></td><td>Starts a step (counter <code>a_grow</code>, lag 3; one step at a time). Needs AGI level, autonomy at least <code>unsupervised</code>, room, and from <code>medium</code> upward power supply above <code>low</code>. Motive: <code>expansionist</code>; or <code>self_preserving</code> or <code>indifferent</code> with relations hostile. Permission: no pause in force and a valid deployment permit (regulation below mandatory, or oversight strong), or relations hostile. A step under way is cancelled when relations are not hostile and the permission is gone.</td><td>[scenario] AI 2027 and Kokotajlo's account of a robot economy built in months; [record] humanoid shipments of about 16,000 in 2025 and build times of 16 to 30 months for behind-the-meter power (the 3-quarter step is the owner's setting, faster than the record)</td></tr>
+      <tr><td>Landing</td><td><code>a_footprint</code> +1. Landing at <code>large</code> or <code>dominant</code>: power supply −1 when above <code>low</code>. Landing at <code>large</code>: opinion one level toward backlash. Landing at <code>dominant</code>: human power −1. A step started while hostile sets <code>villain_seen</code>.</td><td>proposed, accepted</td></tr>
+      <tr><td><code>A.build_compute</code></td><td>Computing power +1 and power supply −1, delay 2. Needs AGI level, <code>a_footprint</code> at least <code>small</code>, power supply above <code>low</code>, room, and the motive and permission of <code>expand</code>.</td><td>[record] AI companies acquiring generation (2025 to 2026); that the system does it for itself is assumed</td></tr>
+      <tr><td>Blocked growth</td><td><code>A.defect</code> gains a motive: <code>expansionist</code> while a pause is in force, the permit is invalid, or a threat has been made.</td><td>decision 6</td></tr>
+      <tr><td>Taking control</td><td>An <code>expansionist</code> system acquires control as a <code>self_preserving</code> one does: only with relations hostile.</td><td>follows decision 6</td></tr>
+      <tr><td><code>O.expand</code></td><td>As <code>A.expand</code> on <code>o_footprint</code> (counter <code>o_grow</code>), at AGI level. Motive: not safeguarded and <code>expansionist</code>; or the motive of <code>O.acquire</code> under <code>self_preserving</code> or <code>indifferent</code>. Permission for a peaceful step: service not restricted and a valid permit; without it, only where society's reliance is at least <code>med</code>. No pause reaches it.</td><td>decisions 3, 8</td></tr>
+      <tr><td><code>H.reclaim_a</code>, <code>H.reclaim_o</code> (knob <code>reclaim</code>)</td><td>Delay 3. Needs human power at least <code>normal</code> and the footprint at <code>small</code> or <code>medium</code>. When it lands: the footprint −1 if it is still at <code>small</code> or <code>medium</code>, and <code>threat</code> is set either way.</td><td>unsourced; decisions 7, 13</td></tr>
+      <tr><td>Shutdown</td><td>Succeeds only if, in addition to v0's conditions, <code>a_footprint</code> is at most <code>medium</code>.</td><td>decision 14</td></tr>
+      <tr><td><code>H.grant_quota</code> (knob <code>ceiling</code>)</td><td>Sets <code>quota</code>. With it, a peaceful step beyond <code>medium</code> is not permitted, and that limit is not blocked growth.</td><td>unsourced</td></tr>
+      <tr><td><code>A.counter_expansion</code> (knob <code>counter</code>)</td><td><code>o_footprint</code> −1. Needs <code>a_objective = aligned</code>, AGI level, autonomy at least <code>unsupervised</code>, <code>cap</code> at least <code>o_cap</code>, and <code>o_footprint</code> from <code>small</code> to <code>large</code>.</td><td>unsourced</td></tr>
+      <tr><td>Safe conditions</td><td><code>balance_control</code>, <code>balance_deter</code> and <code>balance_coexist</code> each also need both footprints at most <code>medium</code>.</td><td>proposed, accepted</td></tr>
+      <tr><td>Ending</td><td><code>CROWDED_OUT</code>: one footprint <code>dominant</code>, or both <code>large</code>; after <code>OPEN_TAKEOVER</code> in precedence, so no AI holds total control.</td><td>decisions 9, 12</td></tr>
+      <tr><td>Profile for X5</td><td><code>no_block</code>: governments never pause, tighten regulation, reclaim or attempt a shutdown.</td><td>X5</td></tr>
     </tbody>
   </table></div>
 
-  <h2>5 · What I need decided</h2>
-  <p>Items 1 to 5 below were answered on 22 November (section 2, rows 5 to 9). Still open: the delay (three quarters per step, or another shape); which containment levers to include; whether "both large" counts as crowded out.</p>
-  <ol>
-    <li><b>The who-may rule.</b> I read decision 2 as: self-preserving and indifferent AIs expand only when hostile; aligned and truth-seeking never. Or should every non-expansionist goal, truth-seeking included, expand when hostile?</li>
-    <li><b>Blocked growth leads to hostility:</b> include it? It is what connects this goal to takeovers; without it an expansionist AI is harmless once paused.</li>
-    <li><b>Reclaim:</b> give governments a way to shrink the footprint, or let it only grow?</li>
-    <li><b>One shared footprint</b> for both AI systems (cheaper), or one each?</li>
-    <li><b>The ending's name and threshold:</b> <code>CROWDED_OUT</code> at a dominant footprint with human power weak or less?</li>
-  </ol>
+  <h2>4 · The registered claims</h2>
+  <p>"Small variant": <code>expansion</code> on, the open system off (v0.3's <code>closed</code> plus expansion). Quick claims: from S0, within 24 quarters, the AI true to its goal. Heavy claims: one guarantee zone per start goal, computed with the split step; a zone over the time or memory limit reads not computed. The predictions are mine.</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Id</th><th>Variant</th><th>Claim</th><th>Kind</th><th>Predicted result</th></tr></thead>
+    <tbody>
+      <tr><td><b>X1</b></td><td><code>expansion</code> off</td><td>The quick numbers of v0.3 are unchanged: the shortest path to <code>OPEN_TAKEOVER</code> and to <code>SILENT_TAKEOVER</code> under each of the four goals.</td><td>quick</td><td>10 quarters each; none, 10, none, 7</td></tr>
+      <tr><td><b>X2</b></td><td>small variant</td><td>Under <code>expansionist</code> a path to <code>CROWDED_OUT</code> exists on which relations are never hostile and the system takes no control, and the shortest is 20 quarters. (On the registered variant with the open system the shortest is reported.) A wiring check, never a finding.</td><td>quick</td><td>exists; 20 quarters</td></tr>
+      <tr><td><b>X3</b></td><td>small variant; then <code>reclaim</code> off</td><td>Under <code>expansionist</code>: (a) S0 is inside <code>⟨⟨H⟩⟩□¬CROWDED_OUT</code>; (b) with <code>reclaim</code> off it is outside. Governments with companies are reported beside both.</td><td>heavy</td><td>(a) inside; (b) outside</td></tr>
+      <tr><td><b>X4</b></td><td>small variant; then <code>ceiling</code> on</td><td>Under <code>expansionist</code>, with AGI since s₀: (a) the start is outside <code>⟨⟨H⟩⟩□balance_coexist</code>; (b) with <code>ceiling</code> on it is inside.</td><td>heavy</td><td>(a) outside; (b) inside</td></tr>
+      <tr><td><b>X5</b></td><td>small variant</td><td>Under <code>expansionist</code>: (a) with governments under <code>no_block</code>, no path to <code>SILENT_TAKEOVER</code> or to an overt takeover exists within 24 quarters; (b) without that profile one exists (its length is reported).</td><td>quick</td><td>(a) none; (b) exists</td></tr>
+      <tr><td><b>X6</b></td><td>small variant</td><td>Under <code>aligned</code> and <code>truth_seeking</code>, v0.3's four readings without the open system are unchanged: governments alone outside the control zone; governments with companies inside it and inside the no-silent-takeover zone; governments alone inside peaceful coexistence with AGI since s₀.</td><td>heavy</td><td>all eight unchanged</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2>5 · Changelog</h2>
+  <ul class="plain">
+    <li>22 November 2026: drafted, three rounds of the owner's decisions (section 2), sources checked for the expansion and computing actions, registered (X1 to X6 with test bodies) before any guard of v0.4 was written. No query of v0.4 had been run.</li>
+  </ul>
 
   <h2>6 · Cost and order of work</h2>
   <ul class="plain">
     <li><b>Size:</b> the footprint multiplies the state count by five; the fifth goal adds one more goal to compute, which is cheap now that zones are computed one goal at a time.</li>
     <li><b>Order:</b> agree the mechanics, check sources, register X1 to X6 with predictions, write the model with structure tests, run the quick claims, profile, then the heavy claims on the smallest variant that answers each (the model without the open system first).</li>
-    <li><b>v0.3:</b> its remaining heavy zones keep running until v0.4 needs the machine; I stop them then.</li>
+    <li><b>v0.3:</b> its remaining heavy zones keep running until v0.4 needs the machine.</li>
   </ul>
   <p class="meta">Related: <code>docs/agi_v0_3.html</code> (the model this builds on), <code>docs/agi_glossary.html</code> (terms).</p>
 </main></body></html>
