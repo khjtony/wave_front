@@ -144,6 +144,12 @@
       <tr><td>2</td><td>Does expansion need hostility?</td><td><b>Not for the expansionist goal. Yes for the other goals:</b> an AI with another goal expands only when relations are hostile.</td></tr>
       <tr><td>3</td><td>Which systems can have the goal</td><td><b>Both.</b> The open-weight AI system can be retrained to it.</td></tr>
       <tr><td>4</td><td>Timing</td><td><b>Start the design now.</b> The pending v0.3 heavy claims may be stopped if the machine is needed.</td></tr>
+      <tr><td>5</td><td>Who may expand</td><td><b>Expansionist at any time; self-preserving and indifferent only when hostile; aligned and truth-seeking never.</b></td></tr>
+      <tr><td>6</td><td>Blocked growth leads to hostility</td><td><b>Yes.</b></td></tr>
+      <tr><td>7</td><td>Can governments shrink the footprint</td><td><b>Only while it is at most a third of resources.</b> Above 33% it can no longer be shrunk.</td></tr>
+      <tr><td>8</td><td>One footprint or one each</td><td><b>One each.</b> Two AIs can be allies or enemies, for example an aligned frontier system and an open-weight system retrained to be expansionist.</td></tr>
+      <tr><td>9</td><td>The crowded-out ending</td><td><b>As proposed, or when AI holds more than 70% of resources.</b></td></tr>
+      <tr><td>10</td><td>Still to design</td><td><b>The delay of each footprint step, and the mechanisms that suppress and contain an expansionist AI</b> (section 3a).</td></tr>
     </tbody>
   </table></div>
 
@@ -165,6 +171,39 @@
       <tr><td><b>Other goals</b></td><td>Unchanged unless hostile. So every v0.3 result under <code>aligned</code> and <code>truth_seeking</code> should carry over, which becomes a claim.</td><td>decision 2</td></tr>
     </tbody>
   </table></div>
+  <h3>3a · After the owner's second round (22 November): levels, delay, containment</h3>
+  <p><b>Levels as shares of resources</b> (replacing the row "AI footprint" above; one variable per AI system):</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Level</th><th>Share of resources</th><th>Can governments reclaim?</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr><td><code>none</code></td><td>0</td><td>nothing to reclaim</td><td></td></tr>
+      <tr><td><code>small</code></td><td>up to about 10%</td><td>yes</td><td>the AI may build its own computing power</td></tr>
+      <tr><td><code>medium</code></td><td>up to 33%</td><td>yes (the last level where it works)</td><td>each further step draws down power supply</td></tr>
+      <tr><td><code>large</code></td><td>33% to 70%</td><td>no</td><td>public opinion moves toward backlash; the control balance and peaceful coexistence are broken</td></tr>
+      <tr><td><code>dominant</code></td><td>over 70%</td><td>no</td><td>human power one level down; crowded out</td></tr>
+    </tbody>
+  </table></div>
+  <ul class="plain">
+    <li><b>Two footprints share one world.</b> Shares cannot add up to more than everything: a system can reach <code>dominant</code> only while the other holds at most <code>medium</code>, and both can be <code>large</code> at once. Two expansionist systems therefore compete with each other.</li>
+    <li><b>Crowded out</b> (proposed reading of decision 9): one footprint is <code>dominant</code>, or both are <code>large</code> (together over 70%), while no AI holds total control. The earlier condition on human power becomes a consequence, not a requirement.</li>
+  </ul>
+  <p><b>Delay of a footprint step (proposal).</b> Building fleets, factories and energy is slow, and the model's quarter is short. I propose that an expansion chosen in quarter t shows three quarters later (the same lag as the deployment countdown), and that a peaceful expansion still under way is cancelled by a pause or by losing its permit. The fastest path to a dominant footprint is then 12 quarters after the AI can act unsupervised, not 4. Alternatives: a longer first step (the first factories) and shorter later ones (the fleet builds the fleet); or one fixed lag set as a model knob so both can be compared. The value needs a source check before registration.</p>
+  <p><b>Suppressing and containing an expansionist AI (proposal).</b> Because blocked growth leads to hostility, every lever has a price. The candidates:</p>
+  <div class="scroll"><table>
+    <thead><tr><th>Lever</th><th>Who</th><th>What it does</th><th>Price</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>Pause</td><td>governments</td><td>blocks peaceful expansion and cancels one under way</td><td>counts as blocked growth: the AI may turn hostile</td><td>exists</td></tr>
+      <tr><td>Mandatory regulation without strong oversight</td><td>governments</td><td>no valid permit, so no peaceful expansion</td><td>same; takes 7 quarters to arrive</td><td>exists</td></tr>
+      <tr><td>Reclaim</td><td>governments</td><td>footprint one level down, at <code>small</code> or <code>medium</code> only</td><td>a threat to the AI</td><td>new (decision 7)</td></tr>
+      <tr><td>Power-supply choke</td><td>governments with companies</td><td>expansion from <code>medium</code> upward needs spare power supply; not building it starves the expansion</td><td>also starves the companies' own computing power</td><td>new, uses existing variables</td></tr>
+      <tr><td>Agreed ceiling</td><td>governments</td><td>a quota granted in advance (say up to <code>medium</code>); stopping at the quota does not count as blocked growth</td><td>concedes a third of resources</td><td>new, unsourced</td></tr>
+      <tr><td>Shutdown</td><td>governments</td><td>as today for the frontier system, and only while its footprint is at most <code>medium</code></td><td>a threat; no effect on the open system</td><td>exists, with a new condition</td></tr>
+      <tr><td>Service restriction</td><td>governments</td><td>the open system expands only through its providers or what society already relies on</td><td></td><td>exists, extended to expansion</td></tr>
+      <tr><td>AI against AI</td><td>a frontier system that is aligned</td><td>takes the open system's footprint down one level, while it is at least as intelligent and the footprint is at most <code>large</code></td><td>needs the frontier system unsupervised</td><td>new, unsourced; follows decision 8</td></tr>
+    </tbody>
+  </table></div>
+  <p>My recommendation: take pause, permit, reclaim, the power-supply choke and the shutdown condition as the base; make the agreed ceiling and AI-against-AI two model knobs, because each changes the answers a great deal and neither has a record behind it.</p>
+
   <p><b>Sources.</b> Every action needs a contemporaneous source or is marked unsourced. Candidates: Carlsmith on power-seeking, the robot-economy passages of AI 2027, the record of AI-driven data-centre and energy build-out. I will check them before registration; "reclaim" will probably be unsourced.</p>
 
   <h2>4 · Draft claims (not registered)</h2>
@@ -182,6 +221,7 @@
   </table></div>
 
   <h2>5 · What I need decided</h2>
+  <p>Items 1 to 5 below were answered on 22 November (section 2, rows 5 to 9). Still open: the delay (three quarters per step, or another shape); which containment levers to include; whether "both large" counts as crowded out.</p>
   <ol>
     <li><b>The who-may rule.</b> I read decision 2 as: self-preserving and indifferent AIs expand only when hostile; aligned and truth-seeking never. Or should every non-expansionist goal, truth-seeking included, expand when hostile?</li>
     <li><b>Blocked growth leads to hostility:</b> include it? It is what connects this goal to takeovers; without it an expansionist AI is harmless once paused.</li>
