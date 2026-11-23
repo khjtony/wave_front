@@ -1,4 +1,5 @@
-"""X8, registered 2026-11-23 in docs/agi_v0_4.html section 4, after the quick claims and before any kernel reading on the variant with both AI systems."""
+"""X8, registered 2026-11-23 in docs/agi_v0_4.html section 4, after the quick claims and before any
+kernel reading on the variant with both AI systems."""
 
 from tests.agi_v0_4.common import DEFAULT, Parts, first_sight, need
 from tests.agi_v0_4.kernels import membership
