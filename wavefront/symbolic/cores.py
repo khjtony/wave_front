@@ -1,12 +1,16 @@
 """Selection of the BDD core: the compiled manager (:mod:`.bdd_c`), the pure-Python
-reference (:mod:`.bdd`) or the CUDD binding (:mod:`.bdd_cudd`).
+reference (:mod:`.bdd`), the multi-core manager on Sylvan (:mod:`.bdd_sylvan`) or the
+CUDD binding (:mod:`.bdd_cudd`).
 
 :func:`manager` returns a new manager. With no argument it follows the environment variable
 ``WAVEFRONT_BDD``: unset or ``"c"`` gives the compiled manager when its extension imports and
 the reference otherwise; ``"python"`` gives the reference. An explicit ``manager("c")`` does
-not fall back: it raises :class:`ImportError` when the extension is missing or stale. Both
+not fall back: it raises :class:`ImportError` when the extension is missing or stale. The
 cores give identical results (docs/framework_spec.md section 15); a manager's ``core``
 attribute says which one it is, and the fixpoints' ``stats`` repeat it.
+
+``"sylvan"`` gives the multi-core manager (docs/engine_multicore_spike.md). It is never chosen by
+default and never falls back: it raises :class:`ImportError` when its extension is not built.
 
 ``"cudd"`` gives the manager on top of CUDD, which can reorder its variables (an
 engineering spike, docs/engine_reordering_spike.md). It is never chosen by default and never
@@ -21,10 +25,10 @@ import warnings
 
 from .bdd import BDD
 
-__all__ = ["ENV", "manager", "c_available", "c_import_error"]
+__all__ = ["ENV", "manager", "c_available", "c_import_error", "sylvan_available"]
 
 ENV = "WAVEFRONT_BDD"
-_CORES = ("c", "python", "cudd")
+_CORES = ("c", "python", "sylvan", "cudd")
 _error: ImportError | None = None
 _checked = False
 _warned = False
@@ -53,16 +57,30 @@ def c_import_error() -> ImportError | None:
     return _error
 
 
+def sylvan_available() -> bool:
+    """Does the Sylvan core import (built, and from the current sources)? Importing it
+    starts nothing: the worker threads start with the first manager."""
+    try:
+        from . import bdd_sylvan  # noqa: F401
+    except ImportError:
+        return False
+    return True
+
+
 def manager(kind: str | None = None):
-    """A new BDD manager: ``kind`` is ``"c"``, ``"python"``, ``"cudd"`` or ``None`` (follow
-    ``WAVEFRONT_BDD``, falling back to the reference when the compiled core does not
-    import; ``"cudd"`` never falls back)."""
+    """A new BDD manager: ``kind`` is ``"c"``, ``"python"``, ``"sylvan"``, ``"cudd"`` or
+    ``None`` (follow ``WAVEFRONT_BDD``, falling back to the reference when the compiled core
+    does not import; ``"sylvan"`` and ``"cudd"`` never fall back)."""
     explicit = kind is not None
     kind = kind if explicit else (os.environ.get(ENV) or "c").strip().lower()
     if kind not in _CORES:
         raise ValueError(f"unknown BDD core {kind!r} (expected one of {', '.join(_CORES)})")
     if kind == "python":
         return BDD()
+    if kind == "sylvan":
+        from .bdd_sylvan import BDD as SylvanBDD
+
+        return SylvanBDD()
     if kind == "cudd":
         from .bdd_cudd import BDD as CuddBDD
 

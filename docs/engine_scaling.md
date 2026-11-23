@@ -255,6 +255,8 @@ Memory notes: each live node costs about 285 bytes in this representation (lists
 
 Section 5 named a compiled BDD core as the next step. It is built: `wavefront/symbolic/_core/` (C11, no library) behind the interface of `bdd.BDD`, wrapped by `wavefront/symbolic/bdd_c.py`. The pure-Python manager stays as the reference and the fallback. `encode.py` and `solve.py` run unchanged on either core.
 
+A third, opt-in core on the multi-core package Sylvan was built later as a spike; its record and its benchmark are in [engine_multicore_spike.md](engine_multicore_spike.md).
+
 ### 7.1 Design
 
 - **Edges and nodes.** The edges are those of `bdd.py`: an edge is `(node << 1) | complement`, TRUE is 0, FALSE is 1, and the high edge of a stored node is never complemented. Nodes are a struct of three `uint32_t` arrays (`var`, `lo`, `hi`) with 32-bit indices, up to 2^31 - 1 nodes, grown by doubling. A free node is chained through `lo`. During a collection the top bit of `var` marks a live node.
