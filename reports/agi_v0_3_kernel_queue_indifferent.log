@@ -54,3 +54,4 @@ F7 closed H+L not:SILENT_TAKEOVER   | indifferent | inside | 90.9 s
 F7 closed H balance_coexist  {'cap': 'agi'} | indifferent | outside | 0.1 s
 F3 default H not:OPEN_TAKEOVER   | indifferent | inside | 116308.5 s
 F6 default H+L balance_control   | indifferent | inside | 15384.7 s
+stopped by the owner 2026-11-23 00:07:35 PST; v0.4 takes the machine

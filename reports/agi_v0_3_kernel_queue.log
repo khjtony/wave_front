@@ -64,3 +64,4 @@ F7 closed H balance_coexist  {'cap': 'agi'} | indifferent | outside | 0.1 s
 F3 default H not:OPEN_TAKEOVER   | indifferent | not computed: over the cap of 85 GB: BDD node table exhausted (out of memory or 2**31 - 1 nodes)
 F6 default H+L balance_control   | indifferent | inside | 15384.7 s
 paused by the owner for the engine benchmarks 2026-11-20 16:11:28 PST; zones in progress are computed again on restart
+stopped by the owner 2026-11-23 00:07:35 PST; v0.4 takes the machine
