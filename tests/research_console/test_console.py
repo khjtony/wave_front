@@ -119,3 +119,27 @@ def test_the_queue_plan_is_the_queue_scripts():
     ]
     q = catalog.queue()
     assert len(q["items"]) == 48 and sum(q["counts"].values()) == 48
+
+
+def test_the_owner_orders_the_waiting_zones(tmp_path, monkeypatch):
+    monkeypatch.setattr(catalog, "ORDER_FILE", tmp_path / "queue_order.json")
+    monkeypatch.setattr(catalog, "CLAIMS", tmp_path / "claims")
+    plan = catalog.priority()
+    assert len(plan) == 48 and len(set(plan)) == 48
+    (tmp_path / "queue_order.json").write_text(json.dumps([plan[40], "gone", plan[3]]))
+    assert catalog.priority()[:3] == [plan[40], plan[3], plan[0]]
+    waiting = [e["id"] for e in catalog.queue()["items"] if e["status"] == "waiting"]
+    if len(waiting) > 2:
+        assert catalog.move(waiting[2], "top")[0] == waiting[2]
+        assert catalog.move(waiting[2], "down")[:2] == [waiting[0], waiting[2]]
+        assert [e["id"] for e in catalog.queue()["items"] if e["status"] == "waiting"][1] == (
+            waiting[2]
+        )
+    with pytest.raises(ValueError):
+        catalog.move("nonsense", "up")
+    # A worker takes the first zone it may try, and no second worker takes the same one.
+    first = catalog.pick(10_000, 1, "split")
+    second = catalog.pick(10_000, 1, "split")
+    if first is not None:
+        assert second is None or second[2] != first[2]
+        catalog.release(first[2])

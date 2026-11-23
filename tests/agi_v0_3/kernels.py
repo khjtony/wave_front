@@ -78,6 +78,7 @@ def save(question: str, kind: str, reading: object) -> None:
         "kind": kind,
         "reading": reading,
         "memory cap GB": MEMORY_GB,
+        "engine": STEP,
         "at": time.strftime("%Y-%m-%d %H:%M:%S %z"),
     }
     with READINGS.open("a", encoding="utf-8") as fh:

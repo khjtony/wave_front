@@ -122,6 +122,7 @@ pre { font-family: var(--mono); font-size: 12px; background: var(--panel); borde
 .err { color: var(--bad); }
 .qi { display: flex; flex-wrap: wrap; gap: 4px 14px; justify-content: space-between; align-items: center; padding: 8px 0; border-top: 1px solid var(--line); }
 .qi > div:first-child { flex: 1 1 260px; min-width: 0; overflow-wrap: anywhere; }
+.mv { display: inline-flex; gap: 3px; } .mv button { padding: 2px 8px; font-size: 12px; line-height: 1.4; }
 .qr { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
 .panel { overflow-x: auto; }
 @media (max-width: 860px) {

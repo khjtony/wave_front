@@ -40,7 +40,32 @@ QUEUE += [
 QUEUE += [("F7", "default", DEFAULT, c, t, (), lv) for c, t, lv in F7 if (c, t) != (HL, F7[1][1])]
 
 
+def pull() -> None:
+    """Take zones one at a time in the owner's order (research/queue_order.json, set from the
+    console's Runs page) until none is left that this worker's memory limit can try."""
+    from console import catalog
+    from tests.agi_v0_3.kernels import STEP
+
+    print(f"=== worker pid={os.getpid()} goal=pull limit={MEMORY_GB}", flush=True)
+    while (got := catalog.pick(MEMORY_GB, os.getpid(), STEP)) is not None:
+        (claim, name, coalition, target, profiles, levels), objective, question = got
+        build = {"default": DEFAULT, "closed": CLOSED}[name]
+        what = f"{claim} {name} {'+'.join(coalition)} {target} {' '.join(profiles)} {levels or ''}"
+        try:
+            r = membership(build, coalition, target, profiles, only=(objective,), **levels)
+        except NotComputed as exc:
+            print(f"{what} | {objective} | not computed: {exc}", flush=True)
+        else:
+            inside = "inside" if r["inside"][objective] else "outside"
+            print(f"{what} | {objective} | {inside} | {r['seconds'][objective]} s", flush=True)
+        finally:
+            catalog.release(question)
+    print("QUEUE_DONE", flush=True)
+
+
 def main() -> None:
+    if "--pull" in sys.argv:
+        return pull()
     # ``--goal X`` runs one start objective only, so that several queues can share the machine.
     only = sys.argv[sys.argv.index("--goal") + 1 :][:1] if "--goal" in sys.argv else []
     # ``--start N`` skips the first N zones of the list (a second worker on one goal).

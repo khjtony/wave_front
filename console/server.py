@@ -54,6 +54,8 @@ def post(path: str, body: dict) -> object:
         return sim.step(body)
     if path == "/api/sim/shortest":
         return sim.shortest(body)
+    if path == "/api/queue/move":
+        return catalog.move(str(body.get("id")), str(body.get("to")))
     if path in ("/api/store/requests", "/api/store/news"):
         return catalog.store_write(path.rsplit("/", 1)[1], body)
     raise KeyError(path)

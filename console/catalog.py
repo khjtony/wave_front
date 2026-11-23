@@ -5,6 +5,7 @@ owner writes to from the page. Nothing here is a second copy of a result."""
 from __future__ import annotations
 
 import ast
+import hashlib
 import importlib
 import inspect
 import json
@@ -499,8 +500,10 @@ def _workers(now: float) -> list[dict]:
         pid, ppid, seconds, rss, args = line.split(None, 4)
         if re.match(r"\S*python\S*\s+scripts/agi_v0_3_kernel_queue\.py", args):
             goal = re.search(r"--goal (\w+)", args)
+            first = re.search(r"--start (\d+)", args)
             procs[int(pid)] = {"pid": int(pid), "ppid": int(ppid), "seconds": int(seconds)}
             procs[int(pid)] |= {"gb": round(int(rss) / 1048576, 1), "goal": goal and goal.group(1)}
+            procs[int(pid)] |= {"args": args, "start": int(first.group(1)) if first else 0}
     out = []
     for p in procs.values():
         if p["ppid"] in procs:
@@ -569,6 +572,7 @@ def queue() -> dict:
         for item in PLAN:
             q = _question(item, goal)
             entry = {"claim": item[0], "variant": item[1], "alliance": item[2], "target": item[3]}
+            entry |= {"id": item_id(q), "question": q}
             entry |= {"patterns": item[4], "levels": item[5], "goal": goal, "status": "waiting"}
             tries = over.get(q, [])
             entry["largest_limit_tried"] = max(
@@ -579,37 +583,148 @@ def queue() -> dict:
                 entry |= {"status": "done", "inside": r["inside"][goal], "seconds": r["seconds"]}
                 entry["at"] = done[q].get("at", "")
             items[q] = entry
+    held = held_claims()
     for n, w in enumerate(workers, 1):
-        w["name"] = f"queue {n}" + (f" ({w['goal']} goal)" if w["goal"] else " (all goals)")
-        position = 0
+        w["name"] = f"worker {n}"
+        mine = next((q for q, c in held.items() if c["pid"] == w["pid"]), None)
+        if mine is not None or w["pid"] in {c["pid"] for c in held.values()}:
+            w["pull"] = True
+            if mine in items and items[mine]["status"] != "done" and w["child"]:
+                e = items[mine]
+                e |= {"status": "running", "seconds": w["child"]["seconds"], "worker": w["name"]}
+                e |= {"gb": w["child"]["gb"], "limit": w["limit"]}
+                e["layer"] = _layer(w["child"]["pid"])
+            continue
+        if w["limit"] is None or w["limit"] == 0:
+            w["pull"] = "--pull" in w.get("args", "")
+        if w.get("pull"):
+            continue
+        # A worker of the fixed-order kind: its zone is inferred from its order.
+        w["name"] += f" (fixed order, {w['goal'] or 'all'} goal)"
+        first = True
         for goal in [w["goal"]] if w["goal"] else PLAN_GOALS:
-            for item in PLAN:
+            for item in PLAN[w.get("start", 0) :]:
                 e = items[_question(item, goal)]
                 tried = any(
                     t["epoch"] >= w["started"] - 60 and t.get("memory cap GB") == (w["limit"] or 0)
                     for t in over.get(_question(item, goal), [])
                 )
-                if e["status"] != "waiting" or tried or e.get("worker"):
+                if e["status"] != "waiting" or tried or not first:
                     continue
-                e["worker"] = w["name"]
-                e["limit"] = w["limit"]
-                if position == 0 and w["child"]:
+                first = False
+                if w["child"]:
                     e |= {"status": "running", "seconds": w["child"]["seconds"]}
-                    e["gb"] = w["child"]["gb"]
+                    e |= {"gb": w["child"]["gb"], "worker": w["name"], "limit": w["limit"]}
                     e["layer"] = _layer(w["child"]["pid"])
-                else:
-                    e |= {"position": position, "waiting_seconds": w["seconds"]}
-                position += 1
-    for e in items.values():
-        if e["status"] == "waiting" and not e.get("worker"):
-            e["status"] = "did not fit" if e["largest_limit_tried"] else "not queued"
-    order = {"running": 0, "waiting": 1, "did not fit": 2, "not queued": 3, "done": 4}
+    rank = {i: n for n, i in enumerate(priority())}
+    since = min((w["started"] for w in workers), default=now)
+    waiting = sorted(
+        (e for e in items.values() if e["status"] == "waiting"), key=lambda e: rank[e["id"]]
+    )
+    for n, e in enumerate(waiting):
+        last = max((t["epoch"] for t in over.get(e["question"], [])), default=0)
+        e |= {"position": n, "waiting_seconds": int(now - max(since, last))}
+    order = {"running": 0, "waiting": 1, "done": 2}
     rows = sorted(items.values(), key=lambda e: (order[e["status"]], e.get("position", 0)))
+    for e in rows:
+        e.pop("question", None)
     return {
-        "workers": [{k: w[k] for k in ("name", "seconds", "limit")} for w in workers],
+        "workers": [{k: w.get(k) for k in ("name", "seconds", "limit", "pull")} for w in workers],
         "items": rows,
         "counts": {k: sum(1 for e in rows if e["status"] == k) for k in order},
     }
+
+
+# -- the queue's order and the workers' claims ---------------------------------------------
+ORDER_FILE = RESEARCH / "queue_order.json"
+CLAIMS = ROOT / ".cache" / "agi_v0_3_claims"
+
+
+def item_id(question: str) -> str:
+    return hashlib.sha1(question.encode()).hexdigest()[:12]
+
+
+def _all_questions() -> list[str]:
+    return [_question(item, goal) for goal in PLAN_GOALS for item in PLAN]
+
+
+def priority() -> list[str]:
+    """Every zone's id in the order the workers take them: the owner's order first
+    (research/queue_order.json, written from the console), then the plan's own."""
+    plan = [item_id(q) for q in _all_questions()]
+    try:
+        chosen = [i for i in json.loads(ORDER_FILE.read_text(encoding="utf-8")) if i in plan]
+    except (OSError, ValueError):
+        chosen = []
+    return chosen + [i for i in plan if i not in chosen]
+
+
+def move(zone: str, to: str) -> list[str]:
+    """Move a waiting zone to the top, up or down among the waiting ones."""
+    with LOCK:
+        waiting = [e["id"] for e in queue()["items"] if e["status"] == "waiting"]
+        if zone not in waiting:
+            raise ValueError("this zone is not waiting")
+        at = waiting.index(zone)
+        goal = {"top": 0, "up": max(0, at - 1), "down": min(len(waiting) - 1, at + 1)}[to]
+        waiting.insert(goal, waiting.pop(at))
+        ORDER_FILE.write_text(json.dumps(waiting) + "\n", encoding="utf-8")
+        return waiting
+
+
+def held_claims() -> dict[str, dict]:
+    """The zones the pulling workers have taken, by question; a claim whose process is gone
+    is dropped."""
+    out = {}
+    for path in CLAIMS.glob("*.json") if CLAIMS.exists() else ():
+        try:
+            c = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        if Path(f"/proc/{c['pid']}").exists():
+            out[c["question"]] = c
+        else:
+            path.unlink(missing_ok=True)
+    return out
+
+
+def pick(limit: int, pid: int, step: str) -> tuple[tuple, str, str] | None:
+    """The first zone in the owner's order that has no reading, that no other worker holds
+    and that has not already failed under these engine settings with as much memory; it is
+    claimed for ``pid``. ``None`` when there is none."""
+    path = ROOT / "reports" / "agi_v0_3_kernels.jsonl"
+    done, failed = set(), set()
+    for line in path.read_text(encoding="utf-8").splitlines() if path.exists() else ():
+        row = json.loads(line)
+        if row["kind"] == "ok":
+            done.add(row["question"])
+        elif row.get("memory cap GB", 0) >= limit and _engine(row) == step:
+            failed.add(row["question"])
+    by_id = {item_id(_question(item, goal)): (item, goal) for goal in PLAN_GOALS for item in PLAN}
+    CLAIMS.mkdir(parents=True, exist_ok=True)
+    taken = held_claims()
+    for zone in priority():
+        item, goal = by_id[zone]
+        q = _question(item, goal)
+        if q in done or q in failed or q in taken:
+            continue
+        try:
+            with (CLAIMS / f"{zone}.json").open("x", encoding="utf-8") as fh:
+                json.dump({"question": q, "pid": pid, "limit": limit, "at": time.time()}, fh)
+        except FileExistsError:
+            continue
+        return item, goal, q
+    return None
+
+
+def _engine(row: dict) -> str:
+    """The step a failed attempt was made with. Rows written before the harness recorded it:
+    the split step was in use from 2026-11-21 06:30 (docs/agi_v0_3.html, changelog)."""
+    return row.get("engine") or ("split" if row.get("at", "") >= "2026-11-21 06:30" else "compose")
+
+
+def release(question: str) -> None:
+    (CLAIMS / f"{item_id(question)}.json").unlink(missing_ok=True)
 
 
 def logs() -> list[dict]:
