@@ -524,7 +524,12 @@ uint32_t wfs_error_level(void) { return error_level; }
 #define NONE UINT32_MAX
 static size_t chunk_nodes = 2048; /* nodes of a level substituted between two looks at the table */
 
-void wfs_set_chunk(size_t nodes) { chunk_nodes = nodes ? nodes : 2048; }
+static int policy_in_level; /* the manager's policy between chunks too (tests) */
+
+void wfs_set_chunk(size_t nodes, int policy_inside) {
+    chunk_nodes = nodes ? nodes : 2048;
+    policy_in_level = policy_inside;
+}
 
 /* What the tasks of one level read and write. Set by the calling thread before it hands the
  * level to the workers (RUN), so they see it. Each task writes its own entries of `res`. */
@@ -725,8 +730,12 @@ uint64_t wfs_compose_levels(uint64_t f, const uint32_t *levels, const uint64_t *
             size_t chunk = first + count - from < chunk_nodes ? first + count - from : chunk_nodes;
             uint64_t live = wfs_fill_estimate();
             if (collect) {
+                /* the manager's policy between two levels; inside a level only when the
+                 * table is above the collection fill: every collection empties Sylvan's
+                 * operation cache, and a level's chunks share much of their work */
                 double policy = gc_factor * (double)after;
                 uint64_t at = gc_min > policy ? gc_min : (uint64_t)policy;
+                if (from > first && !policy_in_level) at = UINT64_MAX;
                 if (live > at || (double)live > collect_fill * (double)table_nodes) {
                     collect_from(roots, nroots, res, t.n);
                     stats[2]++;

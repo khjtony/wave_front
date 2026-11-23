@@ -16,6 +16,7 @@ same edge:
 
 from __future__ import annotations
 
+import os
 import random
 import sys
 from contextlib import contextmanager
@@ -47,6 +48,9 @@ from wavefront.symbolic.substitute import compose_by_levels
 # The Sylvan core runs the split step in C, the nodes of a level in parallel
 # (docs/engine_multicore.md); its worker threads follow WAVEFRONT_BDD_THREADS (default 1:
 # tests/symbolic/test_bdd_sylvan.py repeats these checks at 1 and 8 threads).
+# The default Sylvan tables whatever the cap of the run, as in test_bdd_sylvan.py.
+os.environ.setdefault("WAVEFRONT_SYLVAN_NODES_LOG2", "24")
+os.environ.setdefault("WAVEFRONT_SYLVAN_CACHE_LOG2", "23")
 CORES = [
     "python",
     *(["c"] if c_available() else []),
@@ -96,7 +100,7 @@ def one_node_chunks():
         return
     from wavefront.symbolic import bdd_sylvan
 
-    bdd_sylvan.set_chunk(1)
+    bdd_sylvan.set_chunk(1, policy_inside=True)
     try:
         yield
     finally:

@@ -81,7 +81,7 @@ The CLI is not wired to the engine yet; wave B does that.
 
 ### 2.3 Fixpoints (`wavefront/symbolic/solve.py`)
 
-- **`cpre(enc, C, X)`.** It computes `exists a_C . avail_C & ~(exists a_O . avail_O & ~X(f(s, a)))` on active states. The quantification runs actor by actor and is exact, because each actor's availability depends only on its own action bits. The substitution `X(f(s, a))` is one `compose` call by default; `step="split"` (or `WAVEFRONT_STEP=split`) computes the same edge one node of `X` at a time and releases the sub-results on the way, and `step="moves"` does that once per joint move of the coalition (docs/engine_split_step.md).
+- **`cpre(enc, C, X)`.** It computes `exists a_C . avail_C & ~(exists a_O . avail_O & ~X(f(s, a)))` on active states. The quantification runs actor by actor and is exact, because each actor's availability depends only on its own action bits. The substitution `X(f(s, a))` is one `compose` call by default; `step="split"` (or `WAVEFRONT_STEP=split`) computes the same edge one node of `X` at a time and releases the sub-results on the way, and `step="moves"` does that once per joint move of the coalition (docs/engine_split_step.md). On the opt-in Sylvan core the split substitution is one C call that substitutes the nodes of each level of `X` in parallel (docs/engine_multicore.md).
 - **`attractor(enc, C, T)`.** This is `mu X . T | cpre(X)`. Every stage is kept in `layers`. `rank(state)` is a binary search over the stages, and `strategy_move(state)` is a sub-move all of whose completions lead to a lower stage.
 - **`safe(enc, C, phi, within=None, method="auto")`.**
   - For a timed model it is computed backward one tick layer at a time: `K_H = phi & tick == H` and `K_t = phi & tick == t & (Term | cpre(K_{t+1}))`. This is the same greatest fixpoint, reached in `horizon + 1` steps, each over one layer.
@@ -255,7 +255,7 @@ Memory notes: each live node costs about 285 bytes in this representation (lists
 
 Section 5 named a compiled BDD core as the next step. It is built: `wavefront/symbolic/_core/` (C11, no library) behind the interface of `bdd.BDD`, wrapped by `wavefront/symbolic/bdd_c.py`. The pure-Python manager stays as the reference and the fallback. `encode.py` and `solve.py` run unchanged on either core.
 
-A third, opt-in core on the multi-core package Sylvan was built later as a spike; its record and its benchmark are in [engine_multicore_spike.md](engine_multicore_spike.md).
+A third, opt-in core on the multi-core package Sylvan was built later as a spike; its record and its benchmark are in [engine_multicore_spike.md](engine_multicore_spike.md). It now runs the split step as one parallel call per substitution, refuses to start an operation in a nearly full table (`MemoryError`), and is selected in the kernel harnesses with `WF_V03_CORE=sylvan`; the record, the correctness evidence and the measurements against the own core's split step are in [engine_multicore.md](engine_multicore.md).
 
 ### 7.1 Design
 

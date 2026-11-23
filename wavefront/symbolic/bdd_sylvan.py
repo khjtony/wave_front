@@ -141,10 +141,12 @@ def set_fill(refuse: float = 0.9, collect: float = 0.7) -> None:
     lib.wfs_set_fill(refuse, collect)
 
 
-def set_chunk(nodes: int = 0) -> None:
+def set_chunk(nodes: int = 0, policy_inside: bool = False) -> None:
     """The nodes of one level that :meth:`BDD.compose_levels` substitutes in parallel between
-    two looks at the table (and possible collections); 0 restores the default, 2048."""
-    lib.wfs_set_chunk(nodes)
+    two looks at the table; 0 restores the default, 2048. Between two chunks of one level the
+    table is collected only above :data:`COLLECT_FILL` (each collection empties Sylvan's
+    cache); ``policy_inside`` applies the manager's policy there too (for tests)."""
+    lib.wfs_set_chunk(nodes, 1 if policy_inside else 0)
 
 
 def table_sizes(limit_bytes: int) -> tuple[int, int]:
@@ -481,10 +483,11 @@ class BDD:
         from the bottom of ``f``, the nodes of one level in parallel, each sub-result dropped
         after its last parent. With ``keep`` (every edge the caller still needs besides ``f``,
         the functions of ``mapping`` and this manager's protected, held and varset edges)
-        the table may be collected between two levels, and inside a wide level between two
-        chunks of its nodes (:func:`set_chunk`), by the policy of :meth:`maybe_gc`; without it
-        nothing is collected. Raises :class:`MemoryError` when a chunk would start with the
-        table above :data:`REFUSE_FILL` even after a collection.
+        the table may be collected between two levels by the policy of :meth:`maybe_gc`, and
+        inside a wide level, between two chunks of its nodes (:func:`set_chunk`), when it is
+        above :data:`COLLECT_FILL`; without it nothing is collected. Raises
+        :class:`MemoryError` when a chunk would start with the table above
+        :data:`REFUSE_FILL` even after a collection.
 
         ``stats``, when given, receives ``nodes`` and ``held`` as from ``compose_by_levels``,
         and ``collections``, ``levels`` and ``widest`` (the most nodes of one level)."""

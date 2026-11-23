@@ -46,6 +46,10 @@ pytestmark = pytest.mark.skipif(
 )
 
 os.environ.setdefault("WAVEFRONT_BDD_THREADS", "4")
+# The default tables (2^24 nodes) whatever the address-space cap of the run, which would
+# otherwise size them (8.8 GB under 12 GB, beside the rest of the suite).
+os.environ.setdefault("WAVEFRONT_SYLVAN_NODES_LOG2", "24")
+os.environ.setdefault("WAVEFRONT_SYLVAN_CACHE_LOG2", "23")
 
 
 def pair(nvars=NVARS):
@@ -251,7 +255,8 @@ def test_split_step_against_the_own_core():
         cm = model.compile(profile=profile)
         ec, es = encode(cm, manager="c"), encode(cm, manager="sylvan")
         always_collect(es.mgr)
-        bdd_sylvan.set_chunk(seed % 2)  # every other model: a collection after every node
+        # every other model: a collection after every node
+        bdd_sylvan.set_chunk(seed % 2, policy_inside=True)
         rnd = random.Random(seed)
         targets = [random_target(ec, rnd) for _ in range(3)]
         targets += [ec.predicate(name) for name in [*cm.model.endings, "HORIZON"]]
@@ -302,12 +307,15 @@ def test_split_step_at_1_and_8_threads(threads):
 @pytest.mark.skipif(not SOAK, reason="a soak run: WF_SYLVAN_SOAK=<rounds>")
 def test_soak():
     """The differential checks of the split step repeated ``WF_SYLVAN_SOAK`` times with new
-    seeds, for races that show up rarely (run with WAVEFRONT_BDD_THREADS=12)."""
+    seeds, for races that show up rarely. Run with WAVEFRONT_BDD_THREADS=12 and a small table
+    (WAVEFRONT_SYLVAN_NODES_LOG2=20, ..._CACHE_LOG2=18): it collects before every chunk, and a
+    collection clears the whole table."""
     from symbolic.test_split_step import always_collect, random_function, random_target
 
     rnd = random.Random(int(os.environ.get("WF_SYLVAN_SOAK_SEED", "1")))
     for k in range(SOAK):
-        bdd_sylvan.set_chunk(k % 3)  # chunks of the default size, of 1 node, of 2 nodes
+        # chunks of the default size, of 1 node, of 2 nodes, collecting between them
+        bdd_sylvan.set_chunk(k % 3, policy_inside=True)
         s = manager("sylvan")
         levels = [s.add_var() for _ in range(14)]
         c = manager("c")

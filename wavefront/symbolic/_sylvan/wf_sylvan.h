@@ -58,18 +58,19 @@ uint64_t wfs_compose(uint64_t f, const uint32_t *levels, const uint64_t *fns, si
 /* The same edge as wfs_compose, computed level by level from the bottom of f, the nodes of
  * one level in parallel, every sub-result dropped after its last parent (the split step,
  * docs/engine_multicore.md). A wide level is done in chunks (wfs_set_chunk, default 2048
- * nodes). With `collect`, the table is collected between two chunks when
- * it holds more than max(gc_min, gc_factor * the nodes the last collection left) nodes, or
- * more than the collection fill; the roots are f, the fns, keep[0..nkeep) and the live
- * sub-results. stats: in [3] the nodes the last collection left; out [0] nodes substituted
+ * nodes). With `collect`, the table is collected between two levels when it holds more
+ * than max(gc_min, gc_factor * the nodes the last collection left) nodes, and between two
+ * chunks when it holds more than the collection fill; the roots are f, the fns,
+ * keep[0..nkeep) and the live sub-results. stats: in [3] the nodes the last collection left; out [0] nodes substituted
  * into, [1] most sub-results alive at once, [2] collections run, [3] as in, updated,
  * [4] levels, [5] the widest level. WFS_FAIL when a chunk would start above the refusal
  * fill even after a collection. */
 uint64_t wfs_compose_levels(uint64_t f, const uint32_t *levels, const uint64_t *fns, size_t n,
                             const uint64_t *keep, size_t nkeep, int collect, uint64_t gc_min,
                             double gc_factor, uint64_t *stats);
-/* the nodes of a level substituted between two looks at the table (0: the default, 2048) */
-void wfs_set_chunk(size_t nodes);
+/* the nodes of a level substituted between two looks at the table (0: the default,
+ * 2048); with policy_inside, the manager's policy applies between two chunks too */
+void wfs_set_chunk(size_t nodes, int policy_inside);
 
 int wfs_evaluate(uint64_t f, const uint8_t *bits, size_t n);
 int64_t wfs_pick_one(uint64_t f, uint32_t *levels, uint8_t *bits, size_t cap);
