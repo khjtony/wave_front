@@ -1,32 +1,42 @@
 """The multi-core BDD manager: Sylvan (work-stealing parallel BDD operations on a lock-free
 node table) behind the interface of the reference manager
-:class:`wavefront.symbolic.bdd.BDD`. An engineering spike: docs/engine_multicore_spike.md
-says what it is for, what it measures and what is missing.
+:class:`wavefront.symbolic.bdd.BDD`. Opt-in: docs/engine_multicore.md says how it is built,
+selected and checked, and what it measures; docs/engine_multicore_spike.md is the first spike.
 
 Edges are the same kind of ``int`` as in the other cores (``(node << 1) | complement``, TRUE
 0, FALSE 1) and every operation returns the same function, so ``node_count``, ``support``,
-``pick_one`` and ``count`` return the same values. Three things differ from the compiled core
+``pick_one`` and ``count`` return the same values. Four things differ from the compiled core
 :mod:`wavefront.symbolic.bdd_c`:
 
-- **One node table per process.** Sylvan keeps one table, so every :class:`BDD` of this
-  module is a view of it: variables are shared by level, and a collection asked for by one
-  manager reclaims every node that no live manager protects, holds in a registered holder or
-  was passed as a root of that call. Edges that another manager holds unprotected do not
-  survive it. Keep one manager at a time, or protect what the others still need.
+- **One manager per process.** Sylvan keeps one node table per process. Making a second
+  manager while another is live (not closed with :meth:`BDD.close`, and still referenced)
+  raises :class:`RuntimeError`. The new manager starts by collecting what dead ones left.
 - **Fixed tables.** The node table and the operation cache are allocated once, when the
-  first manager is made, with ``2 ** WAVEFRONT_SYLVAN_NODES_LOG2`` nodes (default 24; 24
-  bytes each) and ``2 ** WAVEFRONT_SYLVAN_CACHE_LOG2`` cache entries (default 23; 36 bytes
-  each). They do not grow. Sylvan's own collection is off, because the callers of this
-  interface hold unprotected edges between the points where they call :meth:`BDD.maybe_gc`;
-  when the node table fills up, Sylvan prints a message and ends the process (there is no
-  :class:`MemoryError`). A collection empties the whole operation cache.
+  first manager is made, and do not grow. Their sizes are, in this order of precedence:
+  ``2 ** WAVEFRONT_SYLVAN_NODES_LOG2`` nodes and ``2 ** WAVEFRONT_SYLVAN_CACHE_LOG2`` cache
+  entries; else derived (:func:`table_sizes`) from ``WAVEFRONT_SYLVAN_MEMORY_GB``, else
+  from the process's address-space limit (``RLIMIT_AS``); else 2^24 and 2^23. Sylvan's own
+  collection is off, because the callers of this interface hold unprotected edges between
+  the points where they call :meth:`BDD.maybe_gc`. A collection empties the whole operation
+  cache.
+- **A full table.** An operation that would start with the node table filled above
+  :data:`REFUSE_FILL` raises :class:`MemoryError` instead; :meth:`BDD.maybe_gc` collects
+  whenever the table is above :data:`COLLECT_FILL`, whatever its policy, and raises
+  :class:`MemoryError` when a collection leaves more than that. An operation that fills the
+  table in mid-flight cannot be undone: the process ends with status
+  :data:`TABLE_FULL_STATUS` and a line on stderr that starts with :data:`TABLE_FULL_MESSAGE`.
 - **Threads.** ``WAVEFRONT_BDD_THREADS`` (default 1) worker threads are started with the
   first manager and stay for the life of the process; they sleep when idle. A process
   forked after that has no workers and must not make a manager.
 
+The split step (:func:`wavefront.symbolic.substitute.compose_by_levels`) runs here as one
+call, :meth:`BDD.compose_levels`, with the nodes of each level of the target substituted in
+parallel.
+
 ``simplify`` returns a function that agrees with the reference's on the care set, not
-necessarily the same function. ``peak_nodes`` is the largest number of live nodes seen at a
-collection or a ``stats`` call.
+necessarily the same function. ``peak_nodes`` is the largest fill of the node table seen
+(garbage not yet collected included): counted at a collection or a ``stats`` call,
+estimated from the claimed regions of the table before the operations that check for room.
 
 Importing this module raises :class:`ImportError` when the extension is not built
 (``python -m wavefront.symbolic._sylvan.build``) or was built from other sources.
@@ -36,11 +46,13 @@ from __future__ import annotations
 
 import gc as _pygc
 import os
+import resource
 import weakref
 from collections.abc import Iterable, Iterator, Mapping, Sequence
 from contextlib import contextmanager
+from typing import NoReturn
 
-from ._sylvan import HERE, SOURCES, source_hash
+from ._sylvan import HERE, SOURCES, TABLE_FULL_MESSAGE, source_hash
 from .bdd import FALSE, TRUE, VarSet
 
 try:
@@ -58,13 +70,42 @@ if all((HERE / name).exists() for name in SOURCES):
             f"{source_hash()}); rerun python -m wavefront.symbolic._sylvan.build"
         )
 
-__all__ = ["BDD", "TRUE", "FALSE", "ENV_THREADS", "ENV_NODES", "ENV_CACHE"]
+__all__ = [
+    "BDD",
+    "TRUE",
+    "FALSE",
+    "ENV_THREADS",
+    "ENV_NODES",
+    "ENV_CACHE",
+    "ENV_MEMORY",
+    "REFUSE_FILL",
+    "COLLECT_FILL",
+    "TABLE_FULL_STATUS",
+    "TABLE_FULL_MESSAGE",
+    "table_sizes",
+    "set_fill",
+    "set_chunk",
+]
 
 ENV_THREADS = "WAVEFRONT_BDD_THREADS"
 ENV_NODES = "WAVEFRONT_SYLVAN_NODES_LOG2"
 ENV_CACHE = "WAVEFRONT_SYLVAN_CACHE_LOG2"
+ENV_MEMORY = "WAVEFRONT_SYLVAN_MEMORY_GB"
+# Fills of the node table, as fractions of it: an operation refuses to start above
+# REFUSE_FILL; maybe_gc and the split step collect above COLLECT_FILL.
+REFUSE_FILL = 0.9
+COLLECT_FILL = 0.7
+TABLE_FULL_STATUS = lib.WFS_TABLE_FULL_STATUS
+
+# Shares of a memory limit for the node table (24 bytes a node) and the operation cache (36
+# bytes an entry); the rest is for the interpreter, the encoding and the worker stacks.
+NODE_SHARE, NODE_BYTES = 0.62, 24
+CACHE_SHARE, CACHE_BYTES = 0.25, 36
+DEFAULT_NODES_LOG2, DEFAULT_CACHE_LOG2 = 24, 23
 _MAX_VARS = 32768
 _NSTATS = lib.WFS_NSTATS
+_NLSTATS = lib.WFS_NLSTATS
+_FAIL = lib.WFS_FAIL
 
 _new = ffi.new
 _from_buffer = ffi.from_buffer
@@ -75,11 +116,66 @@ _exists = lib.wfs_exists
 _and_exists = lib.wfs_and_exists
 _evaluate = lib.wfs_evaluate
 _live = lib.wfs_live_nodes
+_estimate = lib.wfs_fill_estimate
 
 _pid: int | None = None
 _table_nodes = 0
+_sizes_from = ""
 _peak = 0
 _managers: weakref.WeakSet = weakref.WeakSet()
+
+
+def _full(what: str) -> NoReturn:
+    raise MemoryError(
+        f"the Sylvan node table ({_table_nodes:,} nodes) is filled above {REFUSE_FILL:.0%}: "
+        f"{what} not started"
+    )
+
+
+def set_fill(refuse: float = 0.9, collect: float = 0.7) -> None:
+    """Set :data:`REFUSE_FILL` and :data:`COLLECT_FILL` (fractions of the node table)."""
+    global REFUSE_FILL, COLLECT_FILL
+    if not 0 < collect <= refuse <= 1:
+        raise ValueError("expected 0 < collect <= refuse <= 1")
+    REFUSE_FILL, COLLECT_FILL = refuse, collect
+    lib.wfs_set_fill(refuse, collect)
+
+
+def set_chunk(nodes: int = 0) -> None:
+    """The nodes of one level that :meth:`BDD.compose_levels` substitutes in parallel between
+    two looks at the table (and possible collections); 0 restores the default, 2048."""
+    lib.wfs_set_chunk(nodes)
+
+
+def table_sizes(limit_bytes: int) -> tuple[int, int]:
+    """``(nodes_log2, cache_log2)`` for a process limited to ``limit_bytes`` of memory: the
+    largest powers of two with the node table within 62% of it and the cache within 25%."""
+
+    def log2_within(share: float, size: int) -> int:
+        k = int(share * limit_bytes) // size
+        return max(16, min(36, k.bit_length() - 1))
+
+    return log2_within(NODE_SHARE, NODE_BYTES), log2_within(CACHE_SHARE, CACHE_BYTES)
+
+
+def _sizes() -> tuple[int, int, str]:
+    """The table sizes of this process and where they come from (see the module docstring)."""
+    raw_mem = (os.environ.get(ENV_MEMORY) or "").strip()
+    if raw_mem:
+        nodes, cache = table_sizes(int(float(raw_mem) * (1 << 30)))
+        source = f"{ENV_MEMORY}={raw_mem}"
+    else:
+        soft = resource.getrlimit(resource.RLIMIT_AS)[0]
+        if soft != resource.RLIM_INFINITY and soft > 0:
+            nodes, cache = table_sizes(soft)
+            source = f"RLIMIT_AS={soft}"
+        else:
+            nodes, cache, source = DEFAULT_NODES_LOG2, DEFAULT_CACHE_LOG2, "default"
+    if (os.environ.get(ENV_NODES) or "").strip():
+        nodes, source = _env_int(ENV_NODES, nodes, 16, 36), source + f", {ENV_NODES}"
+    if (os.environ.get(ENV_CACHE) or "").strip():
+        cache, source = _env_int(ENV_CACHE, cache, 16, 36), source + f", {ENV_CACHE}"
+    return nodes, cache, source
 
 
 def _env_int(name: str, default: int, lo: int, hi: int) -> int:
@@ -92,7 +188,7 @@ def _env_int(name: str, default: int, lo: int, hi: int) -> int:
 
 def _start() -> None:
     """Start the workers and allocate the tables (once per process)."""
-    global _pid, _table_nodes
+    global _pid, _table_nodes, _sizes_from
     if _pid is not None:
         if _pid != os.getpid():
             raise RuntimeError(
@@ -101,9 +197,9 @@ def _start() -> None:
             )
         return
     threads = _env_int(ENV_THREADS, 1, 1, 256)
-    nodes = _env_int(ENV_NODES, 24, 16, 36)
-    cache = _env_int(ENV_CACHE, 23, 16, 36)
+    nodes, cache, _sizes_from = _sizes()
     lib.wfs_init(threads, nodes, cache)
+    lib.wfs_set_fill(REFUSE_FILL, COLLECT_FILL)
     _pid = os.getpid()
     _table_nodes = 1 << nodes
 
@@ -126,7 +222,7 @@ def _note_live() -> int:
 
 class BDD:
     """A BDD manager backed by Sylvan; the interface of :class:`wavefront.symbolic.bdd.BDD`.
-    All managers of a process share one node table (see the module docstring)."""
+    One live manager per process (see the module docstring)."""
 
     TRUE = TRUE
     FALSE = FALSE
@@ -134,6 +230,13 @@ class BDD:
 
     def __init__(self) -> None:
         _start()
+        if _managers:
+            _pygc.collect()  # a manager nothing refers to any more is not live
+        if _managers:
+            raise RuntimeError(
+                "a Sylvan manager is already live in this process (one node table per "
+                "process); close() it, or drop every reference to it, first"
+            )
         self.names: list[str] = []
         self._varsets: dict[tuple[int, ...], VarSet] = {}
         self._protected: dict[int, int] = {}
@@ -141,12 +244,16 @@ class BDD:
         self.gc_min_nodes = 2_000_000
         self.gc_factor = 2.0
         self._after_gc = 0
-        if _live() > _table_nodes // 4:
-            # the table is shared: reclaim what dead managers left before starting
-            _pygc.collect()
-            if not _managers:
-                self.gc()
+        self.closed = False
         _managers.add(self)
+        if _live() > min(_table_nodes // 8, 1 << 20):
+            self.gc()  # what the managers before this one left
+
+    def close(self) -> None:
+        """End this manager: its edges are no longer roots, and another manager may be made.
+        It must not be used afterwards."""
+        self.closed = True
+        _managers.discard(self)
 
     @property
     def workers(self) -> int:
@@ -170,7 +277,10 @@ class BDD:
     def var(self, level: int) -> int:
         """The function that is true when variable ``level`` is 1."""
         self._check_level(level)
-        return lib.wfs_var(level)
+        r = lib.wfs_var(level)
+        if r == _FAIL:
+            _full("var")
+        return r
 
     def nvar(self, level: int) -> int:
         """The function that is true when variable ``level`` is 0."""
@@ -190,7 +300,10 @@ class BDD:
             for v in key:
                 self._check_level(v)
                 mask[v] = 1
-            vs = VarSet(lib.wfs_varset(_u32(key), len(key)), key, mask, key[-1] if key else -1)
+            e = lib.wfs_varset(_u32(key), len(key))
+            if e == _FAIL:
+                _full("varset")
+            vs = VarSet(e, key, mask, key[-1] if key else -1)
             self._varsets[key] = vs
         return vs
 
@@ -220,9 +333,11 @@ class BDD:
 
     @property
     def peak_nodes(self) -> int:
-        """The largest number of live nodes seen at a collection or a ``stats`` call."""
+        """The largest fill of the node table seen: counted at collections and ``stats``
+        calls, estimated (``wfs_fill_estimate``) before every operation that checks for
+        room, every level of the split step and every ``maybe_gc``."""
         _note_live()
-        return _peak
+        return max(_peak, self._raw_stats()[6])
 
     @property
     def gc_runs(self) -> int:
@@ -236,31 +351,43 @@ class BDD:
 
     def AND(self, f: int, g: int) -> int:
         """Conjunction."""
-        return _and(f, g)
+        r = _and(f, g)
+        if r == _FAIL:
+            _full("AND")
+        return r
 
     def OR(self, f: int, g: int) -> int:
         """Disjunction."""
-        return _and(f ^ 1, g ^ 1) ^ 1
+        r = _and(f ^ 1, g ^ 1)
+        if r == _FAIL:
+            _full("OR")
+        return r ^ 1
 
     def XOR(self, f: int, g: int) -> int:
         """Exclusive or."""
-        return _xor(f, g)
+        r = _xor(f, g)
+        if r == _FAIL:
+            _full("XOR")
+        return r
 
     def IFF(self, f: int, g: int) -> int:
         """Equivalence."""
-        return _xor(f, g) ^ 1
+        return self.XOR(f, g) ^ 1
 
     def IMPLIES(self, f: int, g: int) -> int:
         """Implication."""
-        return _and(f, g ^ 1) ^ 1
+        return self.AND(f, g ^ 1) ^ 1
 
     def DIFF(self, f: int, g: int) -> int:
         """``f & ~g``."""
-        return _and(f, g ^ 1)
+        return self.AND(f, g ^ 1)
 
     def ITE(self, f: int, g: int, h: int) -> int:
         """If-then-else."""
-        return _ite(f, g, h)
+        r = _ite(f, g, h)
+        if r == _FAIL:
+            _full("ITE")
+        return r
 
     def and_all(self, fs: Iterable[int]) -> int:
         """Conjunction of several functions (balanced)."""
@@ -269,7 +396,10 @@ class BDD:
             return TRUE
         if len(items) == 1:
             return items[0]
-        return lib.wfs_and_all(_u64(items), len(items))
+        r = lib.wfs_and_all(_u64(items), len(items))
+        if r == _FAIL:
+            _full("and_all")
+        return r
 
     def or_all(self, fs: Iterable[int]) -> int:
         """Disjunction of several functions (balanced)."""
@@ -281,20 +411,29 @@ class BDD:
         for v in levels:
             self._check_level(v)
         vals = bytes(1 if assignment[v] else 0 for v in levels)
-        return lib.wfs_cube(_u32(levels), _from_buffer("uint8_t[]", vals), len(levels))
+        r = lib.wfs_cube(_u32(levels), _from_buffer("uint8_t[]", vals), len(levels))
+        if r == _FAIL:
+            _full("cube")
+        return r
 
     # -- quantification ------------------------------------------------------------------
     def exists(self, f: int, vs: VarSet | Iterable[int]) -> int:
         """``exists vs. f``."""
-        return _exists(f, self._as_varset(vs).id)
+        r = _exists(f, self._as_varset(vs).id)
+        if r == _FAIL:
+            _full("exists")
+        return r
 
     def forall(self, f: int, vs: VarSet | Iterable[int]) -> int:
         """``forall vs. f``."""
-        return _exists(f ^ 1, self._as_varset(vs).id) ^ 1
+        return self.exists(f ^ 1, vs) ^ 1
 
     def and_exists(self, f: int, g: int, vs: VarSet | Iterable[int]) -> int:
         """``exists vs. (f & g)`` without building ``f & g`` (relational product)."""
-        return _and_exists(f, g, self._as_varset(vs).id)
+        r = _and_exists(f, g, self._as_varset(vs).id)
+        if r == _FAIL:
+            _full("and_exists")
+        return r
 
     # -- substitution --------------------------------------------------------------------
     def restrict(self, f: int, assignment: Mapping[int, int | bool]) -> int:
@@ -303,14 +442,20 @@ class BDD:
             return f
         levels = sorted(assignment, reverse=True)
         vals = bytes(1 if assignment[v] else 0 for v in levels)
-        return lib.wfs_restrict(f, _u32(levels), _from_buffer("uint8_t[]", vals), len(levels))
+        r = lib.wfs_restrict(f, _u32(levels), _from_buffer("uint8_t[]", vals), len(levels))
+        if r == _FAIL:
+            _full("restrict")
+        return r
 
     def simplify(self, f: int, care: int) -> int:
         """A function that agrees with ``f`` wherever ``care`` holds, usually smaller
         (Sylvan's *restrict*). ``care`` must not be FALSE."""
         if care == FALSE:
             raise ValueError("simplify needs a satisfiable care set")
-        return lib.wfs_simplify(f, care)
+        r = lib.wfs_simplify(f, care)
+        if r == _FAIL:
+            _full("simplify")
+        return r
 
     def compose(self, f: int, mapping: Mapping[int, int]) -> int:
         """Substitute, simultaneously, the function ``mapping[v]`` for each variable ``v``
@@ -319,7 +464,65 @@ class BDD:
             return f
         levels = list(mapping)
         fns = [mapping[v] for v in levels]
-        return lib.wfs_compose(f, _u32(levels), _u64(fns), len(levels))
+        r = lib.wfs_compose(f, _u32(levels), _u64(fns), len(levels))
+        if r == _FAIL:
+            _full("compose")
+        return r
+
+    def compose_levels(
+        self,
+        f: int,
+        mapping: Mapping[int, int],
+        keep: Iterable[int] | None = None,
+        stats: dict | None = None,
+    ) -> int:
+        """:meth:`compose`, computed as the split step
+        (:func:`wavefront.symbolic.substitute.compose_by_levels`) in one call: level by level
+        from the bottom of ``f``, the nodes of one level in parallel, each sub-result dropped
+        after its last parent. With ``keep`` (every edge the caller still needs besides ``f``,
+        the functions of ``mapping`` and this manager's protected, held and varset edges)
+        the table may be collected between two levels, and inside a wide level between two
+        chunks of its nodes (:func:`set_chunk`), by the policy of :meth:`maybe_gc`; without it
+        nothing is collected. Raises :class:`MemoryError` when a chunk would start with the
+        table above :data:`REFUSE_FILL` even after a collection.
+
+        ``stats``, when given, receives ``nodes`` and ``held`` as from ``compose_by_levels``,
+        and ``collections``, ``levels`` and ``widest`` (the most nodes of one level)."""
+        if not mapping:
+            return f
+        levels = list(mapping)
+        fns = [mapping[v] for v in levels]
+        collect = keep is not None
+        edges: list[int] = []
+        if collect:
+            edges.extend(keep)
+            for mgr in list(_managers):
+                edges.extend(mgr._roots())
+        out = _new("uint64_t[]", _NLSTATS)
+        out[3] = int(self._after_gc)
+        r = lib.wfs_compose_levels(
+            f,
+            _u32(levels),
+            _u64(fns),
+            len(levels),
+            _u64(edges),
+            len(edges),
+            1 if collect else 0,
+            int(self.gc_min_nodes),
+            float(self.gc_factor),
+            out,
+        )
+        if collect:
+            self._after_gc = out[3]
+        if stats is not None:
+            stats["nodes"] = stats.get("nodes", 0) + out[0]
+            stats["held"] = max(stats.get("held", 0), out[1])
+            stats["collections"] = stats.get("collections", 0) + out[2]
+            stats["levels"] = stats.get("levels", 0) + out[4]
+            stats["widest"] = max(stats.get("widest", 0), out[5])
+        if r == _FAIL:
+            _full("a level of the split step")
+        return r
 
     def rename(self, f: int, mapping: Mapping[int, int]) -> int:
         """Replace variable ``v`` by variable ``mapping[v]`` (a composition with
@@ -487,12 +690,21 @@ class BDD:
 
     def maybe_gc(self, roots: Iterable[int] = ()) -> bool:
         """Run :meth:`gc` if the live nodes exceed both ``gc_min_nodes`` and ``gc_factor``
-        times the live nodes left by the previous collection. Callers pass every edge they
-        still need that is not protected or held by a registered holder."""
-        if _note_live() <= max(self.gc_min_nodes, self.gc_factor * self._after_gc):
+        times the live nodes left by the previous collection, or :data:`COLLECT_FILL` of the
+        table. Callers pass every edge they still need that is not protected or held by a
+        registered holder. Raises :class:`MemoryError` when the collection leaves the table
+        above :data:`COLLECT_FILL`: the next steps would have no room."""
+        live = _estimate()  # cheap: no scan of the table
+        fill = COLLECT_FILL * _table_nodes
+        if live <= max(self.gc_min_nodes, self.gc_factor * self._after_gc) and live <= fill:
             return False
         self.gc(roots)
         self._after_gc = _live()
+        if self._after_gc > fill:
+            raise MemoryError(
+                f"the Sylvan node table ({_table_nodes:,} nodes) holds {self._after_gc:,} "
+                f"live nodes after a collection, above {COLLECT_FILL:.0%} of it"
+            )
         return True
 
     def _raw_stats(self) -> list[int]:
@@ -507,7 +719,7 @@ class BDD:
         Sylvan has one cache for all operations and does not count its entries."""
         s = self._raw_stats()
         global _peak
-        _peak = max(_peak, s[0])
+        _peak = max(_peak, s[0], s[6])
         return {
             "live_nodes": s[0],
             "peak_nodes": _peak,

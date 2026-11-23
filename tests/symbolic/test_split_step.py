@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import random
 import sys
+from contextlib import contextmanager
 
 import pytest
 from bmc.rich_models import build_rich_model
@@ -37,12 +38,20 @@ from wavefront.symbolic import (
     safe,
     solve,
     substitute,
+    sylvan_available,
 )
 from wavefront.symbolic.bdd import FALSE, TRUE
 from wavefront.symbolic.solve import STEP_ENV
 from wavefront.symbolic.substitute import compose_by_levels
 
-CORES = ["python", *(["c"] if c_available() else [])]
+# The Sylvan core runs the split step in C, the nodes of a level in parallel
+# (docs/engine_multicore.md); its worker threads follow WAVEFRONT_BDD_THREADS (default 1:
+# tests/symbolic/test_bdd_sylvan.py repeats these checks at 1 and 8 threads).
+CORES = [
+    "python",
+    *(["c"] if c_available() else []),
+    *(["sylvan"] if sylvan_available() else []),
+]
 SPLIT_STEPS = ["split", "moves"]
 NVARS = 12
 
@@ -58,10 +67,40 @@ def random_function(mgr, rnd, levels, depth=4):
     return {"and": mgr.AND, "or": mgr.OR, "xor": mgr.XOR}[op](a, b)
 
 
+def fresh(core):
+    """A new manager of NVARS variables."""
+    mgr = manager(core)
+    for _ in range(NVARS):
+        mgr.add_var()
+    return mgr
+
+
+def close(enc):
+    """End a Sylvan manager before the next one is made (a no-op on the other cores)."""
+    getattr(enc.mgr, "close", lambda: None)()
+
+
 @pytest.fixture
 def every_node(monkeypatch):
-    """Look at the node table after every node, not every 256th."""
+    """Look at the node table after every node, not every 256th (on the Sylvan core: chunks
+    of one node)."""
     monkeypatch.setattr(substitute, "_CHECK_EVERY", 1)
+    with one_node_chunks():
+        yield
+
+
+@contextmanager
+def one_node_chunks():
+    if not sylvan_available():
+        yield
+        return
+    from wavefront.symbolic import bdd_sylvan
+
+    bdd_sylvan.set_chunk(1)
+    try:
+        yield
+    finally:
+        bdd_sylvan.set_chunk(0)
 
 
 def always_collect(mgr):
@@ -74,8 +113,8 @@ def always_collect(mgr):
 @given(seed=st.integers(0, 2**32 - 1))
 def test_compose_by_levels_is_compose(core, seed):
     rnd = random.Random(seed)
-    mgr = manager(core)
-    levels = [mgr.add_var() for _ in range(NVARS)]
+    mgr = fresh(core)
+    levels = list(range(NVARS))
     f = random_function(mgr, rnd, levels, 6)
     mapping = {
         v: random_function(mgr, rnd, levels, 3) for v in rnd.sample(levels, rnd.randint(0, NVARS))
@@ -95,13 +134,14 @@ def test_compose_by_levels_collecting_after_every_node(core, seed):
     functions and the caller's edges survive a collection after every node."""
     with pytest.MonkeyPatch.context() as patch:
         patch.setattr(substitute, "_CHECK_EVERY", 1)
-        _collecting_after_every_node(core, seed)
+        with one_node_chunks():
+            _collecting_after_every_node(core, seed)
 
 
 def _collecting_after_every_node(core, seed):
     rnd = random.Random(seed)
-    mgr = manager(core)
-    levels = [mgr.add_var() for _ in range(NVARS)]
+    mgr = fresh(core)
+    levels = list(range(NVARS))
     f = random_function(mgr, rnd, levels, 6)
     mapping = {
         v: random_function(mgr, rnd, levels, 3) for v in rnd.sample(levels, rnd.randint(1, NVARS))
@@ -159,6 +199,7 @@ def test_cpre_split_is_cpre(core):
                 assert cpre(enc, coalition, x, step="moves") == want
                 assert mgr.AND(want, enc.active) == want
                 compared += 1
+        close(enc)
     assert compared > 2000
 
 
@@ -197,6 +238,7 @@ def test_fixpoints_identical_edge_by_edge(core, step, every_node):
         assert enc.mgr.gc_runs > runs
         compared += len(want)
         del held, held2
+        close(enc)
     assert compared > 500
 
 

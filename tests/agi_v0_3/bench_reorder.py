@@ -6,6 +6,7 @@
     python -m tests.agi_v0_3.bench_reorder --core cudd --reorder auto --dump-order o.json ...
     python -m tests.agi_v0_3.bench_reorder --core c --order-from o.json ...
     python -m tests.agi_v0_3.bench_reorder --core c --order-from o.json --step split ...
+    python -m tests.agi_v0_3.bench_reorder --core sylvan --threads 12 --step split ...
 
 It prints one line per tick layer and ends with one JSON record (also appended to ``--out``):
 the number of states in the kernel, the membership of the model's initial states, wall time,
@@ -24,6 +25,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import resource
 import sys
 import time
@@ -44,11 +46,14 @@ ORDERS = Path(__file__).resolve().parent / "orders"
 SIFTED_GC_MIN_NODES = 40_000_000
 
 
-def ordered_encoding(cm, order_file=None, gc_min_nodes: int = SIFTED_GC_MIN_NODES):
+def ordered_encoding(
+    cm, order_file=None, gc_min_nodes: int = SIFTED_GC_MIN_NODES, manager: str | None = None
+):
     """What ``tests.agi.common.heavy_encoding`` gives, in another static order: the one
     nearest to the bit-level order of ``order_file`` (a JSON list written by ``--dump-order``,
     such as ``orders/default_aligned_sifted.json``), or, without a file, FORCE with the
-    actors as vertices. The compiled core, no library."""
+    actors as vertices. No library; the core is ``manager`` (default: that of
+    ``wavefront.symbolic.manager()``)."""
     from wavefront.symbolic import encode
 
     if order_file is None:
@@ -56,13 +61,19 @@ def ordered_encoding(cm, order_file=None, gc_min_nodes: int = SIFTED_GC_MIN_NODE
     else:
         with open(order_file, encoding="utf-8") as fh:
             order, actions = _replay(cm, json.load(fh))
-    enc = encode(cm, var_order=order, actions=actions)
+    enc = encode(cm, var_order=order, actions=actions, manager=manager)
     enc.mgr.gc_min_nodes = gc_min_nodes
     return enc
 
 
 def _rss_peak_mb() -> float:
     return resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024
+
+
+def _cpu_seconds() -> float:
+    """Processor time of the process so far (user and system, every thread)."""
+    r = resource.getrusage(resource.RUSAGE_SELF)
+    return r.ru_utime + r.ru_stime
 
 
 def _make_manager(args):
@@ -173,7 +184,10 @@ def _parts(enc) -> dict:
 
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    p.add_argument("--core", choices=("c", "cudd", "python"), default="c")
+    p.add_argument("--core", choices=("c", "cudd", "python", "sylvan"), default="c")
+    p.add_argument(
+        "--threads", type=int, default=None, help="worker threads of the sylvan core (default 1)"
+    )
     p.add_argument("--reorder", choices=("off", "auto", "points"), default="off")
     p.add_argument("--method", default="group_sift")
     p.add_argument("--no-group", action="store_true", help="do not tie x to x'")
@@ -232,11 +246,18 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--stop-tick", type=int, default=None, help="exit after this tick layer")
     p.add_argument("--encode-only", action="store_true", help="sizes only, with trans_parts")
     p.add_argument("--no-probe", action="store_true", help="do not size the intermediates")
+    p.add_argument(
+        "--time-ops",
+        action="store_true",
+        help="per layer, the wall seconds spent substituting, in and_exists and collecting",
+    )
     p.add_argument("--out", default=None, help="append the JSON record to this file")
     args = p.parse_args(argv)
 
     cap = int(args.cap_gb * 1024**3)
-    resource.setrlimit(resource.RLIMIT_AS, (cap, cap))
+    resource.setrlimit(resource.RLIMIT_AS, (cap, cap))  # sizes the sylvan core's tables too
+    if args.threads is not None:
+        os.environ["WAVEFRONT_BDD_THREADS"] = str(args.threads)
 
     from tests.agi.common import GC_MIN_NODES, force_order, target_bdd
     from tests.agi_v0_3.common import DEFAULT, V01, compiled, key
@@ -299,19 +320,41 @@ def main(argv: list[str] | None = None) -> int:
                     return r
 
                 setattr(mgr, name, wrapped)
+        spent = {"substitution": 0.0, "and_exists": 0.0, "gc": 0.0}
+        if args.time_ops:  # wall seconds inside the three parts of a step
+            encode_module = sys.modules["wavefront.symbolic.encode"]  # the name is a function
+
+            def timed(fn, part):
+                def run(*a, **k):
+                    t = time.perf_counter()
+                    try:
+                        return fn(*a, **k)
+                    finally:
+                        spent[part] += time.perf_counter() - t
+
+                return run
+
+            encode_module.compose_by_levels = timed(encode_module.compose_by_levels, "substitution")
+            mgr.compose = timed(mgr.compose, "substitution")
+            mgr.and_exists = timed(mgr.and_exists, "and_exists")
+            mgr.gc = timed(mgr.gc, "gc")
 
         layers = []
+        cpu0 = _cpu_seconds()
 
         def on_iteration(st: dict) -> None:
             row = {
                 "tick": st["tick"],
                 "seconds": st["seconds"],
+                "cpu": round(_cpu_seconds() - cpu0, 1),
                 "nodes": st["nodes"],
                 "live": st["live_nodes"],
                 "peak": st["peak_nodes"],
                 "gcs": mgr.gc_runs,
                 "rss_mb": round(_rss_peak_mb()),
             }
+            if args.time_ops:
+                row |= {f"in_{k}": round(v, 1) for k, v in spent.items()}
             layers.append(row)
             now["tick"] = st["tick"] - 1
             if args.dump_order and args.core == "cudd":
@@ -336,6 +379,7 @@ def main(argv: list[str] | None = None) -> int:
             rec["error"] = f"MemoryError: {exc}"
             res = None
         rec["kernel_seconds"] = round(time.perf_counter() - t0, 2)
+        rec["kernel_cpu_seconds"] = round(_cpu_seconds() - cpu0, 2)
         rec["layers"] = layers
         rec["largest_intermediate"] = probe
         if res is not None:
@@ -355,6 +399,7 @@ def main(argv: list[str] | None = None) -> int:
     rec["peak_live_nodes"] = stats["peak_nodes"]
     rec["peak_rss_mb"] = round(_rss_peak_mb())
     rec["total_seconds"] = round(time.perf_counter() - t_start, 2)
+    rec["total_cpu_seconds"] = round(_cpu_seconds(), 2)
     if args.core == "cudd":
         rec["reorder_log"] = mgr.reorder_log
         rec["final_order"] = [mgr.names[v] for v in mgr.order()]

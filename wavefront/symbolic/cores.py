@@ -9,7 +9,7 @@ not fall back: it raises :class:`ImportError` when the extension is missing or s
 cores give identical results (docs/framework_spec.md section 15); a manager's ``core``
 attribute says which one it is, and the fixpoints' ``stats`` repeat it.
 
-``"sylvan"`` gives the multi-core manager (docs/engine_multicore_spike.md). It is never chosen by
+``"sylvan"`` gives the multi-core manager (docs/engine_multicore.md). It is never chosen by
 default and never falls back: it raises :class:`ImportError` when its extension is not built.
 
 ``"cudd"`` gives the manager on top of CUDD, which can reorder its variables (an
