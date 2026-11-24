@@ -1,4 +1,4 @@
-"""The engine of a forked kernel job: the multi-core core by default, and the own core after
+"""The engine of a forked kernel job: the multi-core core by default, and the single core after
 a multi-core attempt that ran out of memory (tests/agi/forked_engine.py)."""
 
 from __future__ import annotations

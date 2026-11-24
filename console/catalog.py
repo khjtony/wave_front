@@ -852,7 +852,7 @@ def claim_runs(version: str = "agi_v0_4") -> dict:
             workers = child["threads"] - 1
             entry["zone"] = {"seconds": child["seconds"], "gb": child["gb"], "layer": layer}
             entry["zone"]["engine"] = (
-                f"multi-core engine, {workers} threads" if workers > 1 else "own core, 1 thread"
+                f"multi-core engine, {workers} threads" if workers > 1 else "single-core engine"
             )
         running.append(entry)
     try:

@@ -302,7 +302,9 @@ const CATS = [
     ["History test cases",["models/ww2","models/cw"],["historical suites","testbeds"],"The same framework run on 1930s Europe and the Cold War, where the answers are known, to test the method.",""],
   ]],
   ["Engine and compute", "Words from the machinery.", [
-    ["Symbolic engine",["wavefront.symbolic"],["BDD engine"],"The part that computes guarantee zones exactly. Single-threaded; an hour and about 10 GB per zone on v0.1.",""],
+    ["Symbolic engine",["wavefront.symbolic"],["BDD engine"],"The part that computes guarantee zones exactly. It has two engines that give the same zone: the single-core engine and the multi-core engine.",""],
+    ["Single-core engine",["bdd_c","WF_V04_CORE=c"],["own core","compiled core"],"The symbolic engine written for this project, on one processor core. Needs the least memory; an hour and about 10 GB per zone on v0.1. Used when a zone does not fit in memory on the multi-core engine.",""],
+    ["Multi-core engine",["bdd_sylvan","WF_V04_CORE=sylvan"],["Sylvan core"],"The symbolic engine on the Sylvan package, on 12 threads. The default since 23 November 2026: about twice as fast on the largest measured zone, for about four times the memory.",""],
     ["Bounded checker",["wavefront.bmc","z3"],["BMC"],"The part that searches for paths within the search length.",""],
     ["Memory unit",["peak nodes"],["node"],"The unit of the symbolic engine's memory. Peak nodes is the most it held at once.",""],
     ["Computation step",[],["layer"],"One step of a guarantee-zone computation, counted back from the end of the simulation.",""],

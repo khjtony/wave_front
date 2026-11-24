@@ -255,7 +255,7 @@ Memory notes: each live node costs about 285 bytes in this representation (lists
 
 Section 5 named a compiled BDD core as the next step. It is built: `wavefront/symbolic/_core/` (C11, no library) behind the interface of `bdd.BDD`, wrapped by `wavefront/symbolic/bdd_c.py`. The pure-Python manager stays as the reference and the fallback. `encode.py` and `solve.py` run unchanged on either core.
 
-A third, opt-in core on the multi-core package Sylvan was built later as a spike; its record and its benchmark are in [engine_multicore_spike.md](engine_multicore_spike.md). It now runs the split step as one parallel call per substitution, refuses to start an operation in a nearly full table (`MemoryError`), and is selected in the kernel harnesses with `WF_V03_CORE=sylvan`; the record, the correctness evidence and the measurements against the own core's split step are in [engine_multicore.md](engine_multicore.md).
+A third, opt-in core on the multi-core package Sylvan was built later as a spike; its record and its benchmark are in [engine_multicore_spike.md](engine_multicore_spike.md). It now runs the split step as one parallel call per substitution, refuses to start an operation in a nearly full table (`MemoryError`), and is selected in the kernel harnesses with `WF_V03_CORE=sylvan`; the record, the correctness evidence and the measurements against the single core's split step are in [engine_multicore.md](engine_multicore.md).
 
 ### 7.1 Design
 

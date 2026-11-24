@@ -136,9 +136,9 @@
     <div class="lanes" id="lanes"></div>
     <div class="legend"><span><i style="background:var(--accent)"></i>useful work</span><span><i style="background:var(--waste)"></i>repeated work and waiting on memory</span></div>
     <div class="nums">
-      <div class="num"><b id="wall">–</b><span>wall-clock time (own core, 1 thread = 100)</span></div>
-      <div class="num"><b id="cpu">–</b><span>total processor time (own core = 100)</span></div>
-      <div class="num"><b id="speed">–</b><span>speed-up over our own core</span></div>
+      <div class="num"><b id="wall">–</b><span>wall-clock time (single-core engine = 100)</span></div>
+      <div class="num"><b id="cpu">–</b><span>total processor time (single-core engine = 100)</span></div>
+      <div class="num"><b id="speed">–</b><span>speed-up over the single-core engine</span></div>
     </div>
     <p class="read" id="read3"></p>
   </div>
@@ -282,9 +282,9 @@ draw2("split"); draw2("paired");
 
 // ---------------------------------------------------------------- toy 3: cores
 // Measured: AGI v0.3 with race pressure, split step, 23 November 2026. Wall time relative to
-// the own core on one thread (= 1.00) and processor time relative to it.
+// the single core on one thread (= 1.00) and processor time relative to it.
 const RUNS = [
-  { label: "own core, 1 thread", n: 1, wall: 1.00, cpu: 1.00, own: true },
+  { label: "single-core engine", n: 1, wall: 1.00, cpu: 1.00, own: true },
   { label: "multi-core, 1 thread", n: 1, wall: 1.87, cpu: 1.87 },
   { label: "multi-core, 4 threads", n: 4, wall: 0.67, cpu: 2.52 },
   { label: "multi-core, 8 threads", n: 8, wall: 0.45, cpu: 3.19 },
@@ -300,7 +300,7 @@ function draw3(progress) {
   const longest = 1.87;                                            // the slowest run fills the track
   for (let w = 0; w < run.n; w++) {
     const lane = el("div", "lane"), track = el("div", "track");
-    lane.append(el("span", "", run.own && w === 0 ? "own core" : "worker " + (w + 1)), track);
+    lane.append(el("span", "", run.own && w === 0 ? "single core" : "worker " + (w + 1)), track);
     for (let j = 0; j < per; j++) {
       const width = 100 * (run.wall / longest) / per, left = j * width;
       if (left / (100 * run.wall / longest) > progress) break;
@@ -317,8 +317,8 @@ function draw3(progress) {
   const r3 = $("read3"); r3.replaceChildren();
   if (!shown) return;
   r3.append(run.own ? "One worker, no repeated work. This is the baseline: 100 units of time, 100 of processor." :
-    run.n === 1 ? "On one thread the multi-core engine is slower than our own core: its bookkeeping for sharing has a cost even with nobody to share with." :
-    `${run.n} workers finish in ${Math.round(100 * run.wall)} units, ${(1 / run.wall).toFixed(1)} times faster than our own core. Together they burn ${Math.round(100 * run.cpu)} units of processor time: only ${Math.round(100 / run.cpu)}% of each worker's time is useful.`);
+    run.n === 1 ? "On one thread the multi-core engine is slower than the single-core engine: its bookkeeping for sharing has a cost even with nobody to share with." :
+    `${run.n} workers finish in ${Math.round(100 * run.wall)} units, ${(1 / run.wall).toFixed(1)} times faster than the single-core engine. Together they burn ${Math.round(100 * run.cpu)} units of processor time: only ${Math.round(100 / run.cpu)}% of each worker's time is useful.`);
 }
 function run3() {
   if (anim) cancelAnimationFrame(anim);

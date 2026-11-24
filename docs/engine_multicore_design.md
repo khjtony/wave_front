@@ -24,7 +24,7 @@ million small `ITE` calls issued one after another from Python give it nothing t
 and each call crosses the cffi boundary. Running the present split step on the Sylvan core
 would therefore be slower than both parents.
 
-The per-layer profile of the own core says where the time is: all of it in the substitution
+The per-layer profile of the single core says where the time is: all of it in the substitution
 (`compose`, or its split form) and in the six `and_exists` of a step. Both must run in
 parallel for the wall time to fall.
 
@@ -75,7 +75,7 @@ Today a full table makes Sylvan print and end the process. Three changes:
 
 - The binding checks the table's fill before each operation it starts and after each
   collection; if a collection frees less than a set fraction, `wfs_*` returns an error and
-  the Python manager raises `MemoryError`, as the own core does. This covers the split
+  the Python manager raises `MemoryError`, as the single core does. This covers the split
   substitution (checked per level) and the start of `and_exists`.
 - An `and_exists` that fills the table in mid-flight still ends the process: Sylvan has no
   way back from there. The kernel harnesses already run each kernel in a forked child and
@@ -94,7 +94,7 @@ the child starts its own workers (threads do not survive a fork).
 ### 3.5 Selection
 
 `WAVEFRONT_BDD=sylvan`, `WAVEFRONT_BDD_THREADS=n`, `WAVEFRONT_STEP=split` select it; the
-defaults do not change (own core, present step). The kernel harnesses
+defaults do not change (single core, present step). The kernel harnesses
 (tests/agi_v0_3/kernels.py, tests/agi_v0_4/kernels.py) gain `WF_V03_CORE` / `WF_V04_CORE` and
 `..._THREADS`, record both in each saved reading, and set the table sizes from their memory
 limit. The static order option (`WF_V03_ORDER`) works unchanged: Sylvan's order is static and
@@ -107,12 +107,12 @@ Nothing computed on the new path is trusted until all of these hold:
 1. `wfs_compose_levels` returns the same edge as `wfs_compose` on random functions and
    mappings, including with a collection forced between every two levels, at 1 and at 8
    threads (extend tests/symbolic/test_split_step.py and test_bdd_sylvan.py).
-2. `cpre` and whole fixpoints equal the own core's, edge by edge after transfer, on the small
+2. `cpre` and whole fixpoints equal the single core's, edge by edge after transfer, on the small
    models and on AGI v0.1 for several coalitions and a profile.
 3. The two AGI v0.1 kernels have exactly 302461218730668589056 and 196126762366467883008
    states, none of the four initial states inside, at 1 and 12 threads.
 4. A thread-safety soak: the differential tests repeated a few hundred times at 12 threads.
-5. On the registered v0.3 build: readings already saved with the own core are recomputed and
+5. On the registered v0.3 build: readings already saved with the single core are recomputed and
    must agree (aligned: governments with companies keep control, inside; governments alone
    rule out an open-weight AI takeover without a treaty, outside).
 6. A full table is reported as `MemoryError` or as "not computed", never as a wrong reading:
@@ -121,7 +121,7 @@ Nothing computed on the new path is trusted until all of these hold:
 ## 5. What success looks like
 
 Measured on the registered v0.3 build, aligned goal, governments with companies keeping
-control (own core, present step: 86 minutes; own core, split step with the sifted order:
+control (single core, present step: 86 minutes; single core, split step with the sifted order:
 205 minutes; Sylvan, present step, 12 threads: 57 minutes):
 
 - **Adopt** if the split step on Sylvan at 12 threads is at least twice as fast as the own
@@ -152,4 +152,4 @@ core may still finish a queue sooner.
 - **Collections empty the whole operation cache** in Sylvan. Collecting often inside the
   step trades memory against recomputation; the threshold needs measuring.
 - **A defect in a parallel engine can be silent.** Hence item 5: readings from this path are
-  accepted only where they agree with the own core, until enough have agreed.
+  accepted only where they agree with the single core, until enough have agreed.

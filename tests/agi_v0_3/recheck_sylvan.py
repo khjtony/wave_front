@@ -22,7 +22,7 @@ from tests.agi_v0_3.common import DEFAULT, ROOT, key
 SAVED = ROOT / "reports" / "agi_v0_3_kernels.jsonl"
 
 # name: (coalition, target, profiles, levels, start objective). The first ones are cheap on
-# the own core (under a minute in production); the last two are the zones of the design's
+# the single core (under a minute in production); the last two are the zones of the design's
 # item 5 (the second needs more than 12 GB with the present step, a few GB with the split
 # step and the sifted order).
 QUESTIONS = {

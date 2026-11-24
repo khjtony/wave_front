@@ -10,7 +10,7 @@
 - The encoding and the fixpoints on random models, edge by edge, and the explicit
   cross-check, also with a collection at every opportunity.
 - The split step of this core (``compose_levels``, the nodes of a level in parallel) against
-  the own core's present step, at the default, at 1 and at 8 threads, and as a soak at 12
+  the single core's present step, at the default, at 1 and at 8 threads, and as a soak at 12
   (docs/engine_multicore.md section 4); one manager per process; a full table is an error.
 
 The Sylvan side runs on four worker threads unless ``WAVEFRONT_BDD_THREADS`` says otherwise,
@@ -244,7 +244,7 @@ SOAK = int(os.environ.get("WF_SYLVAN_SOAK", "0") or 0)
 
 def test_split_step_against_the_own_core():
     """``cpre`` with the split step on this core (the C level loop, collecting before every
-    level and after every quantification) against the own core's present step, edge by edge
+    level and after every quantification) against the single core's present step, edge by edge
     after a transfer: random targets of random models of both generators, every coalition;
     then the fixpoints (attractor stages, kernels by both methods and within a reachable set,
     contested regions)."""

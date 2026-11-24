@@ -4,7 +4,7 @@ the first layers of the kernels the claims compute, for three coalitions, with a
 selected profile; and (marked ``slow``, about a minute) the two whole kernels of the
 benchmark have the recorded numbers of states under each split step, with none of the
 initial states inside. The same on the multi-core core with its split step: ``cpre`` against
-the own core's edge by edge, the two kernels at 1 and 12 threads, and one kernel edge by edge
+the single core's edge by edge, the two kernels at 1 and 12 threads, and one kernel edge by edge
 (docs/engine_multicore.md)."""
 
 from __future__ import annotations
@@ -132,7 +132,7 @@ needs_sylvan = pytest.mark.skipif(not sylvan_available(), reason="Sylvan core no
 @needs_sylvan
 @pytest.mark.parametrize("profiles", [(), ("no_treaty",)], ids=["no profile", "no_treaty"])
 def test_sylvan_split_step_is_the_own_cores_cpre_on_v01(profiles):
-    """``cpre`` with the split step on the Sylvan core equals the own core's present step,
+    """``cpre`` with the split step on the Sylvan core equals the single core's present step,
     edge by edge after a transfer, on the targets of the test above."""
     cm = compiled(key(V01, profiles))
     ec = ordered_encoding(cm, ORDER, manager="c")
@@ -207,7 +207,7 @@ def test_whole_kernels_on_sylvan_with_the_split_step(threads):
 @needs_sylvan
 @pytest.mark.slow
 def test_whole_aligned_kernel_on_sylvan_is_the_own_cores():
-    """The kernel itself, edge by edge after a transfer, against the own core's present
+    """The kernel itself, edge by edge after a transfer, against the single core's present
     step (``aligned``: the smaller of the two)."""
     cm = compiled(key(V01, ()))
     ec = ordered_encoding(cm, ORDER, manager="c")
@@ -239,7 +239,7 @@ def test_a_full_table_reads_not_computed(tmp_path):
     """A kernel job of the harness on the Sylvan core with a table far too small: the part
     reads "not computed" (the table refused an operation, or filled in mid-flight and the
     child's exit status and message say so), and no reading is saved as computed. The
-    harness then tries the own core, which this test stops at its time budget."""
+    harness then tries the single core, which this test stops at its time budget."""
     root = Path(__file__).resolve().parents[2]
     readings = tmp_path / "readings.jsonl"
     env = {

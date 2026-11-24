@@ -34,8 +34,8 @@ ORDER = os.environ.get("WF_V04_ORDER", "")
 GC_FACTOR = float(os.environ.get("WF_V04_GC_FACTOR", "0") or 0)
 # The multi-core core with ``WF_V04_THREADS`` worker threads (12 unless set) is the default
 # when its extension is built (docs/engine_multicore.md; its tables are sized from the cap of
-# the child); ``WF_V04_CORE=c`` asks for the own core. A multi-core attempt that runs out
-# of memory is tried again on the own core under the same cap. Recorded with each reading.
+# the child); ``WF_V04_CORE=c`` asks for the single core. A multi-core attempt that runs out
+# of memory is tried again on the single core under the same cap. Recorded with each reading.
 CORE, THREADS = forked_engine.chosen(
     os.environ.get("WF_V04_CORE", ""), os.environ.get("WF_V04_THREADS", "")
 )
