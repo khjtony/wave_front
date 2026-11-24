@@ -742,8 +742,135 @@ def logs() -> list[dict]:
     return out
 
 
+def _same_moment(written: float, epoch: float) -> bool:
+    """Is a clock time written on the host this moment? The console may run in another time
+    zone than the host that wrote the log (the container is in UTC), so the two may differ
+    by a whole number of quarter hours, up to a day."""
+    off = abs(written - epoch)
+    return off < 86400 and min(off % 900, 900 - off % 900) < 120
+
+
+def _last_parts(version: str, claim: str) -> list[dict]:
+    """The parts of ``claim`` at the end of the version's parts log, back to the first
+    repeated part (an earlier run)."""
+    path = ROOT / "reports" / f"{version}_parts.jsonl"
+    out: list[dict] = []
+    if not path.exists():
+        return out
+    rows = [json.loads(x) for x in path.read_text(encoding="utf-8").splitlines() if x.strip()]
+    for row in reversed([r for r in rows if r.get("claim") == claim]):
+        if any(o["part"] == row["part"] for o in out):
+            break
+        d = row.get("detail")
+        took = sum(d["seconds"].values()) if isinstance(d, dict) and "seconds" in d else None
+        note = d[:160] if isinstance(d, str) else ""
+        out.append({"part": row["part"], "outcome": row["outcome"], "seconds": took, "note": note})
+    return out[::-1]
+
+
+def claim_runs(version: str = "agi_v0_4") -> dict:
+    """The heavy claims of a version that run as claim files, not through the v0.3 queue: each
+    running claim with the zone process it has forked (time, memory, engine, layer), the
+    zones it has finished since it started, and the planned runs that have not started
+    (research/claim_runs_plan.json; a run has started once reports/<version>_chain.log names
+    it)."""
+    now = time.time()
+    got = subprocess.run(
+        ["ps", "-eo", "pid,ppid,etimes,rss,nlwp,args"], capture_output=True, text=True, check=False
+    ).stdout.splitlines()[1:]
+    procs = {}
+    for line in got:
+        pid, ppid, seconds, rss, threads, args = line.split(None, 5)
+        hit = re.search(rf"-m pytest .*tests/{version}/scenarios/test_(\w+)\.py", args)
+        if hit:
+            procs[int(pid)] = {"pid": int(pid), "ppid": int(ppid), "seconds": int(seconds)}
+            procs[int(pid)] |= {"gb": round(int(rss) / 1048576, 1), "claim": hit.group(1)}
+            procs[int(pid)] |= {"threads": int(threads)}
+    log = ROOT / "reports" / f"{version}_chain.log"
+    text = log.read_text(encoding="utf-8", errors="replace") if log.exists() else ""
+    started = re.findall(r"=== (\S+ \S+) \S+ (\w+) cap (\d+) GB", text)
+    saved = []
+    path = ROOT / "reports" / f"{version}_kernels.jsonl"
+    if path.exists():
+        for line in path.read_text(encoding="utf-8").splitlines():
+            row = json.loads(line)
+            q = json.loads(row["question"])
+            try:
+                epoch = datetime.strptime(row["at"], _STAMP).timestamp()
+            except (KeyError, ValueError):
+                epoch = 0.0
+            ok = row["kind"] == "ok"
+            saved.append(
+                {
+                    "epoch": epoch,
+                    "alliance": q[2],
+                    "target": q[3],
+                    "levels": dict(q[4]),
+                    "goal": q[5],
+                    "kind": row["kind"],
+                    "inside": row["reading"]["inside"].get(q[5]) if ok else None,
+                    "seconds": row["reading"].get("seconds") if ok else None,
+                    "note": "" if ok else str(row["reading"])[:160],
+                    "limit": row.get("memory cap GB"),
+                    "core": row.get("core"),
+                }
+            )
+    running = []
+    for p in sorted(procs.values(), key=lambda p: -p["seconds"]):
+        if p["ppid"] in procs:
+            continue
+        child = next((c for c in procs.values() if c["ppid"] == p["pid"]), None)
+        begun = now - p["seconds"]
+        # The run's memory limit is the chain log's, when the log's line is this start; the
+        # readings saved since then under that limit are this run's. A run started by hand
+        # has no such line: its finished parts are then the claim's last in the parts log.
+        limit = next(
+            (
+                int(g)
+                for at, c, g in reversed(started)
+                if c == p["claim"]
+                and _same_moment(datetime.strptime(at, "%Y-%m-%d %H:%M:%S").timestamp(), begun)
+            ),
+            None,
+        )
+        entry = {"claim": p["claim"], "seconds": p["seconds"], "limit": limit, "zone": None}
+        if limit is not None:
+            mine = [r for r in saved if r["epoch"] >= begun - 5 and r["limit"] == limit]
+            entry["finished"] = [{k: v for k, v in r.items() if k != "epoch"} for r in mine]
+        else:
+            entry["finished"] = _last_parts(version, p["claim"])
+        if child:
+            layer = None
+            try:
+                at = ROOT / ".cache" / f"{version}_progress" / f"{child['pid']}.json"
+                st = json.loads(at.read_text())
+                if st["at"] >= now - child["seconds"] - 5:
+                    total = int(st["horizon"]) + 1
+                    layer = {"done": total - int(st["tick"]), "of": total}
+            except (OSError, ValueError, KeyError, TypeError):
+                pass
+            workers = child["threads"] - 1
+            entry["zone"] = {"seconds": child["seconds"], "gb": child["gb"], "layer": layer}
+            entry["zone"]["engine"] = (
+                f"multi-core engine, {workers} threads" if workers > 1 else "own core, 1 thread"
+            )
+        running.append(entry)
+    try:
+        plan = json.loads((RESEARCH / "claim_runs_plan.json").read_text(encoding="utf-8"))
+        plan = [s for s in plan if s.get("version") == version]
+    except (OSError, ValueError):
+        plan = []
+    return {"running": running, "waiting": plan[len(started) :], "version": version}
+
+
 def runs() -> dict:
-    return {"live": live(), "queue": queue(), "readings": readings(), "logs": logs()}
+    return {
+        "live": live(),
+        "queue": queue(),
+        "claim_runs": claim_runs(),
+        "readings": readings(),
+        "logs": logs(),
+    }
 
 
 # -- states and stores -------------------------------------------------------------------

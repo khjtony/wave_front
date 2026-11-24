@@ -3,7 +3,7 @@
 
 const main = document.getElementById("main");
 const GOALS = ["aligned", "self_preserving", "truth_seeking", "indifferent"];
-const GOAL_NAME = { aligned: "Aligned", self_preserving: "Self-preserving", truth_seeking: "Truth-seeking", indifferent: "Indifferent to humans" };
+const GOAL_NAME = { aligned: "Aligned", self_preserving: "Self-preserving", truth_seeking: "Truth-seeking", indifferent: "Indifferent to humans", expansionist: "Expansionist" };
 const STATUS = { "held": ["held", "Prediction held"], "did not hold": ["bad", "Did not hold"], "incomplete": ["warn", "Incomplete"], "not run": ["idle", "Not run"], "reported": ["idle", "Reported"] };
 const PLAYER = { H: "Governments", L: "Frontier AI companies", A: "Frontier AI system", O: "Open-weight AI system", Clock: "Record writer", Nature: "By chance" };
 const S = { version: "v0.3", knobs: {}, claim: null, pick: null };
@@ -189,7 +189,7 @@ async function claims() {
 }
 
 // ---------------------------------------------------------------- runs
-const TARGET = { "balance_control": "keep control", "not:OPEN_TAKEOVER": "rule out an open-weight AI takeover", "not:SILENT_TAKEOVER": "rule out a silent takeover", "balance_coexist": "keep peaceful coexistence" };
+const TARGET = { "balance_control": "keep control", "not:OPEN_TAKEOVER": "rule out an open-weight AI takeover", "not:SILENT_TAKEOVER": "rule out a silent takeover", "balance_coexist": "keep peaceful coexistence", "not:CROWDED_OUT": "rule out humans being crowded out" };
 async function runs() {
   const r = await api("/api/runs");
   const groups = {};
@@ -204,7 +204,7 @@ async function runs() {
   const variant = e => e.variant === "default" ? "everything on" : "no open system";
   const item = (e, right) => h("div", { class: "qi" }, h("div", null, h("b", null, zone(e)), h("div", { class: "small muted" }, `${e.claim} · ${variant(e)} · ${GOAL_NAME[e.goal]} goal` + (e.worker ? ` · ${e.worker}` : ""))), h("div", { class: "qr" }, right));
   const by = k => Q.items.filter(e => e.status === k);
-  const queuePanel = h("div", { class: "panel" }, h("h2", null, "Heavy-claims queue"),
+  const queuePanel = h("div", { class: "panel" }, h("h2", null, "Heavy-claims queue, v0.3 (stopped by the owner)"),
     h("div", { class: "stats" }, [["running", "running"], ["waiting", "waiting"], ["done", "done"]].map(([k, t]) => h("div", null, h("div", { class: "stat" }, Q.counts[k]), h("small", null, t)))),
     h("p", { class: "small muted gap" }, Q.workers.length ? Q.workers.map(w => `${w.name}: up ${dur(w.seconds)}, limit ${w.limit || "?"} GB`).join(" · ") : "No queue is running."),
     by("running").length ? [h("h3", { class: "gap" }, "Running"), by("running").map(e => item(e, [h("span", { class: "pill held" }, "running " + dur(e.seconds)), h("span", { class: "small muted" }, `${e.gb} of ${e.limit || "?"} GB` + (e.layer ? ` · layer ${e.layer.done} of ${e.layer.of}` : "")), e.layer ? h("progress", { max: e.layer.of, value: e.layer.done, style: "width:110px" }) : null]))] : null,
@@ -212,9 +212,18 @@ async function runs() {
       h("span", { class: "mv" }, [["top", "⤒", "Move to the top"], ["up", "▲", "Move up"], ["down", "▼", "Move down"]].map(([to, sign, tip]) => h("button", { title: tip, "aria-label": tip, onclick: () => post("/api/queue/move", { id: e.id, to }).then(() => runs()).catch(fail) }, sign)))]))) : null,
     by("waiting").length ? h("p", { class: "small muted" }, "Workers take waiting zones from the top. A zone that did not fit before waits for a worker with a larger memory limit.") : null,
     h("details", null, h("summary", { class: "gap" }, h("b", null, `Done (${by("done").length})`)), by("done").map(e => item(e, [h("span", { class: "pill " + (e.inside ? "held" : "bad") }, e.inside ? "inside" : "outside"), h("span", { class: "small muted" }, "took " + dur(e.seconds))]))));
+  const C = r.claim_runs, zline = z => [who(z.alliance.join("+")), " · ", TARGET[z.target] || z.target, Object.keys(z.levels).length ? " · AGI since s₀" : "", ` · ${GOAL_NAME[z.goal] || z.goal} goal`];
+  const claimPanel = h("div", { class: "panel" }, h("h2", null, "Heavy claims running now, v0.4"),
+    h("div", { class: "stats" }, [[C.running.length, "claims running"], [C.waiting.length, "runs waiting"]].map(([n, t]) => h("div", null, h("div", { class: "stat" }, n), h("small", null, t)))),
+    C.running.length ? C.running.map(c => h("div", { class: "gap" },
+      h("div", { class: "qi" }, h("div", null, h("b", null, "Claim " + c.claim), h("div", { class: "small muted" }, `started ${dur(c.seconds)} ago · memory limit ${c.limit || "?"} GB`)),
+        h("div", { class: "qr" }, c.zone ? [h("span", { class: "pill held" }, "zone running " + dur(c.zone.seconds)), h("span", { class: "small muted" }, `${c.zone.gb} GB · ${c.zone.engine}` + (c.zone.layer ? ` · layer ${c.zone.layer.done} of ${c.zone.layer.of}` : " · no layer finished yet")), c.zone.layer ? h("progress", { max: c.zone.layer.of, value: c.zone.layer.done, style: "width:110px" }) : null] : h("span", { class: "pill idle" }, "between zones"))),
+      c.finished.length ? h("details", { id: "claim-" + c.claim }, h("summary", { class: "small" }, `Finished in this run (${c.finished.length})`), c.finished.map(z => z.part ? h("div", { class: "qi" }, h("div", { class: "small" }, z.part), h("div", { class: "qr" }, h("span", { class: "pill " + (z.outcome === "not computed" ? "warn" : z.outcome === "not met" ? "bad" : "held"), title: z.note }, z.outcome === "not computed" ? "did not fit" : z.outcome), z.seconds ? h("span", { class: "small muted" }, "took " + dur(z.seconds)) : null)) : h("div", { class: "qi" }, h("div", { class: "small" }, zline(z)), h("div", { class: "qr" }, z.kind === "ok" ? [h("span", { class: "pill " + (z.inside ? "held" : "bad") }, z.inside ? "inside" : "outside"), h("span", { class: "small muted" }, "took " + dur(z.seconds))] : [h("span", { class: "pill warn", title: z.note }, "did not fit"), h("span", { class: "small muted" }, `${z.limit} GB` + (z.core ? ` · ${z.core === "sylvan" ? "multi-core engine" : "own core"}` : ""))])))) : null)) : h("p", { class: "muted gap" }, "No v0.4 claim is running."),
+    C.waiting.length ? [h("h3", { class: "gap" }, "Waiting, in this order"), C.waiting.map((w, n) => h("div", { class: "qi" }, h("div", null, h("b", null, "Claim " + w.claim), w.note ? h("div", { class: "small muted" }, w.note) : null), h("div", { class: "qr" }, h("span", { class: "pill idle" }, n === 0 ? "next" : `${n} ahead of it`), h("span", { class: "small muted" }, `memory limit ${w.limit} GB`))))] : null);
   show(h("h1", null, "Runs"),
     h("p", { class: "lede" }, "The queue of heavy claims with running and waiting times, the saved guarantee-zone readings, and the logs. This page refreshes every 15 seconds."),
-    queuePanel,
+    claimPanel,
+    h("div", { class: "gap" }), queuePanel,
     h("div", { class: "panel gap" }, h("h2", null, "Processes"), r.live.length ? h("div", { class: "scroll" }, h("table", null, h("tr", null, h("th", null, "What"), h("th", null, "Running for"), h("th", null, "Memory")),
       r.live.map(p => h("tr", null, h("td", null, h("code", null, p.what), " ", h("span", { class: "muted small" }, p.args)), h("td", null, dur(p.seconds)), h("td", null, p.gb + " GB"))))) : h("p", { class: "muted" }, "Nothing is running.")),
     h("div", { class: "panel gap" }, h("h2", null, "Guarantee-zone readings, v0.3"),

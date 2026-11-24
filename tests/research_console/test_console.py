@@ -143,3 +143,35 @@ def test_the_owner_orders_the_waiting_zones(tmp_path, monkeypatch):
     if first is not None:
         assert second is None or second[2] != first[2]
         catalog.release(first[2])
+
+
+def test_claim_runs_lists_the_planned_runs_that_have_not_started(tmp_path, monkeypatch):
+    monkeypatch.setattr(catalog, "ROOT", tmp_path)
+    monkeypatch.setattr(catalog, "RESEARCH", tmp_path)
+    (tmp_path / "reports").mkdir()
+    plan = [{"version": "agi_v0_4", "claim": c, "limit": g} for c, g in (("X7", 64), ("X8", 84))]
+    (tmp_path / "claim_runs_plan.json").write_text(json.dumps(plan + [{"version": "other"}]))
+    assert [w["claim"] for w in catalog.claim_runs()["waiting"]] == ["X7", "X8"]
+    (tmp_path / "reports" / "agi_v0_4_chain.log").write_text(
+        "=== 2026-11-24 00:38:25 PST X7 cap 64 GB\n"
+    )
+    assert [w["claim"] for w in catalog.claim_runs()["waiting"]] == ["X8"]
+
+
+def test_the_last_parts_of_a_claim_stop_at_an_earlier_run(tmp_path, monkeypatch):
+    monkeypatch.setattr(catalog, "ROOT", tmp_path)
+    (tmp_path / "reports").mkdir()
+    rows = [
+        {"claim": "X3", "part": "a", "outcome": "not computed", "detail": "over the cap"},
+        {"claim": "X7", "part": "a", "outcome": "met", "detail": {"seconds": {"g": 2.0}}},
+        {"claim": "X3", "part": "a", "outcome": "met", "detail": {"seconds": {"g": 5.0}}},
+        {"claim": "X3", "part": "b", "outcome": "not computed", "detail": "over the cap"},
+    ]
+    (tmp_path / "reports" / "agi_v0_4_parts.jsonl").write_text(
+        "\n".join(json.dumps(r) for r in rows)
+    )
+    got = catalog._last_parts("agi_v0_4", "X3")
+    assert [(r["part"], r["outcome"], r["seconds"]) for r in got] == [
+        ("a", "met", 5.0),
+        ("b", "not computed", None),
+    ]
