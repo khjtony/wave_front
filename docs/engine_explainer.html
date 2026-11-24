@@ -1,0 +1,333 @@
+<title>Guarantee Zone Explainer</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  /* Layout: one column, three working toys in order: the layers, the variable order, the cores.
+     Each toy has its controls on top, the picture in the middle and one sentence of reading below. */
+  :root {
+    --bg: #f6f7fa; --surface: #ffffff; --panel: #eef0f5; --ink: #141821; --ink2: #475066; --muted: #6c7689; --line: #d4d9e3;
+    --accent: #2c52cc; --zone: #2c52cc; --lost: #c2410c; --unsafe: #c9ced9; --good: #1d7a3a; --waste: #b45309;
+    --display: "Space Grotesk", "Inter", system-ui, sans-serif;
+    --body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "DejaVu Sans Mono", monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg: #11131a; --surface: #1a1d27; --panel: #232735; --ink: #eceef4; --ink2: #b7bdcc; --muted: #8b93a6; --line: #333a49; --accent: #86a2ff; --zone: #6f8dff; --lost: #fb923c; --unsafe: #3a4152; --good: #6fcf8c; --waste: #f0b860; color-scheme: dark; }
+  }
+  :root[data-theme="dark"] { --bg: #11131a; --surface: #1a1d27; --panel: #232735; --ink: #eceef4; --ink2: #b7bdcc; --muted: #8b93a6; --line: #333a49; --accent: #86a2ff; --zone: #6f8dff; --lost: #fb923c; --unsafe: #3a4152; --good: #6fcf8c; --waste: #f0b860; color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 15px; line-height: 1.55; }
+  .wrap { max-width: 900px; margin: 0 auto; padding-block: 28px 56px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.9px; text-transform: uppercase; color: var(--muted); }
+  h1 { font-family: var(--display); font-size: clamp(26px, 4vw, 34px); line-height: 1.15; margin: 4px 0 0; text-wrap: balance; letter-spacing: -0.3px; }
+  h2 { font-family: var(--display); font-size: 21px; margin: 40px 0 4px; }
+  p { margin: 8px 0; max-width: 68ch; } .lede { color: var(--ink2); font-size: 16px; }
+  .toy { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; margin-top: 12px; }
+  .row { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; }
+  button { font: inherit; font-size: 14px; cursor: pointer; border: 1px solid var(--line); background: var(--surface); color: var(--ink); border-radius: 7px; padding: 6px 12px; }
+  button.main, button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg); font-weight: 600; }
+  button:disabled { opacity: 0.45; cursor: default; }
+  button:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .read { color: var(--ink2); font-size: 14px; margin-top: 10px; min-height: 2.6em; }
+  .read b { color: var(--ink); }
+  .small { font-size: 12.5px; color: var(--muted); }
+  code { font-family: var(--mono); font-size: 12.5px; background: var(--panel); border-radius: 4px; padding: 1px 5px; }
+  /* toy 1 */
+  .board { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 20px; margin-top: 14px; align-items: start; }
+  .grid { display: grid; grid-template-columns: 22px repeat(6, 1fr); gap: 4px; }
+  .cell { aspect-ratio: 1; border-radius: 6px; border: 2px solid transparent; background: var(--unsafe); cursor: pointer; padding: 0; position: relative; transition: background 0.35s, transform 0.35s; }
+  .cell.safe { background: color-mix(in srgb, var(--zone) 22%, var(--surface)); }
+  .cell.in { background: var(--zone); }
+  .cell.lost { background: var(--lost); transform: scale(0.86); }
+  .cell.start { border-color: var(--ink); }
+  .cell.start::after { content: "today"; position: absolute; inset: 0; display: grid; place-items: center; font-size: 10px; font-weight: 600; color: var(--surface); mix-blend-mode: difference; }
+  .ax { font-size: 11px; color: var(--muted); display: grid; place-items: center; }
+  .quarters { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 6px; }
+  .q { font-size: 11.5px; font-variant-numeric: tabular-nums; border-radius: 5px; padding: 3px 7px; background: var(--panel); color: var(--muted); }
+  .q.done { background: var(--zone); color: var(--surface); font-weight: 600; } .q.now { outline: 2px solid var(--lost); }
+  .legend { display: flex; flex-wrap: wrap; gap: 4px 14px; font-size: 12.5px; color: var(--ink2); margin-top: 10px; }
+  .legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
+  /* toy 2 */
+  #bdd { width: 100%; height: auto; display: block; margin-top: 10px; }
+  #bdd text { font-family: var(--mono); font-size: 11px; fill: var(--ink); }
+  #bdd .lv { fill: var(--muted); font-family: var(--body); }
+  #bdd circle { fill: var(--surface); stroke: var(--accent); stroke-width: 1.6; }
+  #bdd circle.act { stroke: var(--lost); }
+  #bdd line { stroke: var(--ink2); stroke-width: 1.1; } #bdd line.zero { stroke-dasharray: 3 3; stroke: var(--muted); }
+  #bdd rect { fill: var(--panel); stroke: var(--line); }
+  .bars { display: grid; grid-template-columns: max-content 1fr max-content; gap: 6px 10px; align-items: center; margin-top: 10px; font-size: 13px; }
+  .bar { height: 12px; border-radius: 0 4px 4px 0; background: var(--accent); min-width: 2px; transition: width 0.4s; }
+  /* toy 3 */
+  .lanes { display: grid; gap: 3px; margin-top: 12px; }
+  .lane { display: grid; grid-template-columns: 62px 1fr; gap: 8px; align-items: center; font-size: 11.5px; color: var(--muted); }
+  .track { position: relative; height: 16px; background: var(--panel); border-radius: 4px; overflow: hidden; }
+  .job { position: absolute; top: 0; bottom: 0; border-right: 1px solid var(--surface); background: var(--accent); }
+  .job.waste { background: repeating-linear-gradient(45deg, var(--waste) 0 4px, color-mix(in srgb, var(--waste) 45%, var(--surface)) 4px 8px); }
+  .nums { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-top: 12px; }
+  .num b { display: block; font-family: var(--display); font-size: 22px; font-variant-numeric: tabular-nums; }
+  .num span { font-size: 12.5px; color: var(--muted); }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; margin-top: 10px; }
+  th, td { text-align: left; padding: 7px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 11px; letter-spacing: 0.6px; text-transform: uppercase; color: var(--muted); }
+  .scroll { overflow-x: auto; }
+  @media (max-width: 640px) { .board { grid-template-columns: 1fr; } }
+  @media (prefers-reduced-motion: reduce) { .cell, .bar { transition: none; } }
+</style>
+
+<div class="wrap">
+  <div class="eyebrow">wave_front · how the engine works · a toy you can run</div>
+  <h1>How a guarantee zone is computed, and what makes it fast or slow</h1>
+  <p class="lede">Three small working models. The first is the computation itself, on a world of 36 states. The second shows why the order of variables matters. The third shows what more cores buy. The real model has about 10<sup>25</sup> states, but it runs exactly these steps.</p>
+
+  <h2>1 · The computation: working backward, one quarter per layer</h2>
+  <p>A toy world with two variables: society's <b>reliance on AI</b> (0 to 5) and <b>oversight</b> (0 to 5). It is safe while reliance is at most 4 and oversight at least 1. Each quarter governments pick one action (fund oversight, or cut reliance) and the frontier AI companies pick theirs at the same time (deploy, race, or both while oversight is 2 or less).</p>
+  <p>The question: from which states can governments keep the world safe <i>whatever the companies do</i>, for 8 quarters? The engine starts at the last quarter and steps backward. Each step is one <b>layer</b>.</p>
+  <div class="toy">
+    <div class="row">
+      <button class="main" id="step">Step back one quarter</button>
+      <button id="play">Play</button>
+      <button id="reset">Start over</button>
+      <span class="small">Click any square to make it today's state.</span>
+    </div>
+    <div class="board">
+      <div>
+        <div class="grid" id="grid" role="group" aria-label="The 36 states"></div>
+        <div class="small" style="text-align:center;margin-top:4px">reliance on AI →  (oversight ↑)</div>
+      </div>
+      <div>
+        <div class="small">Layers computed (the last quarter first)</div>
+        <div class="quarters" id="quarters"></div>
+        <div class="legend">
+          <span><i style="background:var(--zone)"></i>inside the guarantee zone so far</span>
+          <span><i style="background:var(--lost)"></i>just dropped out</span>
+          <span><i style="background:color-mix(in srgb, var(--zone) 22%, var(--surface))"></i>safe today, but no guarantee</span>
+          <span><i style="background:var(--unsafe)"></i>not safe</span>
+        </div>
+        <p class="read" id="read1"></p>
+      </div>
+    </div>
+  </div>
+  <p>A state drops out when every government action can be answered by a company action that leaves the zone. Nothing is simulated or sampled: each layer is computed from the one after it, for all states at once. In the real model one layer is a single very large operation, and there are 57 of them.</p>
+
+  <h2>2 · Variable order: the same set, stored small or large</h2>
+  <p>With 10<sup>25</sup> states the engine cannot list a set. It stores it as a decision diagram: a chain of yes/no questions about single bits, with identical sub-chains shared. How much sharing is possible depends on the <b>order</b> in which the bits are asked.</p>
+  <p>The toy set below says "some player's action bit and the state bit it acts on are both on" (four such pairs). It is the same set in every order. Only the size of its diagram changes.</p>
+  <div class="toy">
+    <div class="row" id="orders" role="group" aria-label="Variable order">
+      <button data-o="paired" aria-pressed="true">Each action bit next to its state bit</button>
+      <button data-o="split" aria-pressed="false">All action bits first</button>
+      <button data-o="shuffle" aria-pressed="false">Shuffle</button>
+    </div>
+    <svg id="bdd" viewBox="0 0 860 330" role="img" aria-label="The decision diagram in the chosen order"></svg>
+    <div class="bars" id="bars"></div>
+    <p class="read" id="read2"></p>
+  </div>
+  <p>This is what happened in the real engine. Its order kept every player's action bits at the top, far from the state bits they change. Moving them next to those bits made zones on the smaller models more than 20 times cheaper. On the full model the best order found so far gives 1.3 to 1.8 times, because the search for a good order stalls.</p>
+
+  <h2>3 · More cores: where the time goes</h2>
+  <p>Inside one layer, the big step is a substitution done node by node, level by level. The nodes of one level do not depend on each other, so several cores can work on a level at once. But parallel workers repeat some of each other's work, and every memory clean-up empties their shared notes.</p>
+  <div class="toy">
+    <div class="row">
+      <label for="threads">Worker threads</label>
+      <input type="range" id="threads" min="0" max="4" step="1" value="0" style="width:160px">
+      <b id="tlabel"></b>
+      <button class="main" id="run">Run one level</button>
+    </div>
+    <div class="lanes" id="lanes"></div>
+    <div class="legend"><span><i style="background:var(--accent)"></i>useful work</span><span><i style="background:var(--waste)"></i>repeated work and waiting on memory</span></div>
+    <div class="nums">
+      <div class="num"><b id="wall">–</b><span>wall-clock time (own core, 1 thread = 100)</span></div>
+      <div class="num"><b id="cpu">–</b><span>total processor time (own core = 100)</span></div>
+      <div class="num"><b id="speed">–</b><span>speed-up over our own core</span></div>
+    </div>
+    <p class="read" id="read3"></p>
+  </div>
+  <p>The numbers behind this toy are measured: the multi-core engine on a zone of AGI v0.3 with race pressure, 23 November 2026. On the largest zone of the full model the gain at 12 threads fell to about 1.5 times, for six times the processor time.</p>
+
+  <h2>What each lever buys</h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Lever</th><th>What it changes in the toys</th><th>Measured on the real model</th></tr></thead>
+    <tbody>
+      <tr><td><b>Better variable order</b></td><td>Toy 2: fewer nodes for the same set</td><td>Over 20× on small models; 1.3 to 1.8× on the full one</td></tr>
+      <tr><td><b>Split step</b></td><td>Toy 1: each layer's working notes are thrown away as soon as they are used</td><td>A third to a fifth of the memory, same time</td></tr>
+      <tr><td><b>More cores</b></td><td>Toy 3: one level shared between workers</td><td>1.5 to 4.9× faster for 2 to 6× the processor time</td></tr>
+      <tr><td><b>Solving for today's state only</b> (not built)</td><td>Toy 1: compute only the squares today's state depends on</td><td>Unknown; the next thing to try</td></tr>
+    </tbody>
+  </table></div>
+</div>
+
+<script>
+"use strict";
+const $ = id => document.getElementById(id);
+const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; };
+const calm = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+// ---------------------------------------------------------------- toy 1: layers
+const N = 6, HORIZON = 8, clamp = v => Math.max(0, Math.min(N - 1, v));
+const safe = (r, o) => r <= 4 && o >= 1;
+const GOV = [[0, 1, "fund oversight"], [-1, 0, "cut reliance"], [0, 0, "wait"]];
+const COMPANY = o => o <= 2 ? [[0, 0], [1, 0], [0, -1], [1, -1]] : [[0, 0], [1, 0], [0, -1]];
+const key = (r, o) => r * N + o;
+function previousLayer(layer) {
+  const out = new Set();
+  for (const s of layer) {
+    const r = Math.floor(s / N), o = s % N;
+    if (GOV.some(g => COMPANY(o).every(a => layer.has(key(clamp(r + g[0] + a[0]), clamp(o + g[1] + a[1])))))) out.add(s);
+  }
+  return out;
+}
+const LAYERS = [new Set()];
+for (let r = 0; r < N; r++) for (let o = 0; o < N; o++) if (safe(r, o)) LAYERS[0].add(key(r, o));
+for (let t = 1; t <= HORIZON; t++) LAYERS.push(previousLayer(LAYERS[t - 1]));
+let done = 0, startState = key(1, 2), timer = null;
+const grid = $("grid"), cells = new Map();
+for (let o = N - 1; o >= 0; o--) {
+  grid.append(el("div", "ax", String(o)));
+  for (let r = 0; r < N; r++) {
+    const b = el("button", "cell"); b.type = "button";
+    b.setAttribute("aria-label", `reliance ${r}, oversight ${o}`);
+    b.addEventListener("click", () => { startState = key(r, o); draw1(); });
+    cells.set(key(r, o), b); grid.append(b);
+  }
+}
+grid.append(el("div", "ax", ""));
+for (let r = 0; r < N; r++) grid.append(el("div", "ax", String(r)));
+function draw1() {
+  const now = LAYERS[done], before = done ? LAYERS[done - 1] : null;
+  for (const [s, b] of cells) {
+    const r = Math.floor(s / N), o = s % N;
+    b.className = "cell" + (now.has(s) ? " in" : before && before.has(s) ? " lost" : safe(r, o) ? " safe" : "") + (s === startState ? " start" : "");
+  }
+  const q = $("quarters"); q.replaceChildren();
+  for (let t = HORIZON; t >= 0; t--) { const c = el("span", "q" + (HORIZON - t < done ? " done" : "") + (HORIZON - t === done ? " now" : ""), "Q" + t); if (HORIZON - t === 0) c.classList.add("done"); q.append(c); }
+  const lostAt = LAYERS.findIndex(l => !l.has(startState));
+  const r1 = $("read1"); r1.replaceChildren();
+  const say = (...parts) => parts.forEach(p => r1.append(typeof p === "string" ? p : p));
+  const b = t => el("b", "", t);
+  if (done === 0) say(b("Layer for the last quarter. "), "With no future left, every safe state counts as inside: " + now.size + " states.");
+  else say(b(`Layer for quarter ${HORIZON - done}. `), `${now.size} states remain; ${before.size - now.size} dropped out in this step. `);
+  if (lostAt === 0) say(" Today's state is not even safe.");
+  else if (lostAt > 0 && lostAt <= done) say(" Today's state is ", b("outside"), `: governments can guarantee safety for ${lostAt - 1} more quarter${lostAt - 1 === 1 ? "" : "s"}, not for all eight.`);
+  else if (done === HORIZON) say(" Today's state is ", b("inside"), ": governments can keep the world safe for all eight quarters, whatever the companies do.");
+  else say(" Today's state is still inside; keep stepping.");
+  $("step").disabled = done === HORIZON;
+}
+function step1() { if (done < HORIZON) { done++; draw1(); } if (done === HORIZON && timer) { clearInterval(timer); timer = null; $("play").textContent = "Play"; } }
+$("step").addEventListener("click", step1);
+$("reset").addEventListener("click", () => { done = 0; draw1(); });
+$("play").addEventListener("click", () => {
+  if (timer) { clearInterval(timer); timer = null; $("play").textContent = "Play"; return; }
+  if (done === HORIZON) done = 0;
+  draw1(); timer = setInterval(step1, calm ? 1200 : 900); $("play").textContent = "Pause";
+});
+draw1();
+
+// ---------------------------------------------------------------- toy 2: variable order
+const PAIRS = 4, NAMES = [];
+for (let i = 1; i <= PAIRS; i++) NAMES.push("a" + i, "s" + i);   // variable 2k is an action bit, 2k+1 its state bit
+const holds = bits => { for (let k = 0; k < PAIRS; k++) if (bits[2 * k] && bits[2 * k + 1]) return true; return false; };
+function diagram(order) {            // a reduced ordered decision diagram, by brute force over 256 rows
+  const nodes = [], memo = new Map();
+  function build(level, bits) {
+    if (level === order.length) return holds(bits) ? "T" : "F";
+    const v = order[level];
+    bits[v] = 0; const lo = build(level + 1, bits);
+    bits[v] = 1; const hi = build(level + 1, bits);
+    bits[v] = 0;
+    if (lo === hi) return lo;
+    const sig = level + "|" + lo + "|" + hi;
+    if (!memo.has(sig)) { memo.set(sig, nodes.length); nodes.push({ level, v, lo, hi }); }
+    return memo.get(sig);
+  }
+  const root = build(0, new Array(order.length).fill(0));
+  return { nodes, root };
+}
+const ORDERS = { paired: [0, 1, 2, 3, 4, 5, 6, 7], split: [0, 2, 4, 6, 1, 3, 5, 7] };
+const history2 = { paired: null, split: null, shuffle: null };
+function draw2(which) {
+  let order = ORDERS[which];
+  if (which === "shuffle") { order = [0, 1, 2, 3, 4, 5, 6, 7]; for (let i = 7; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [order[i], order[j]] = [order[j], order[i]]; } }
+  const { nodes } = diagram(order), svg = $("bdd"), NS = "http://www.w3.org/2000/svg";
+  const mk = (tag, attrs, text) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; return e; };
+  svg.replaceChildren();
+  const W = 860, top = 22, rowH = 32, byLevel = order.map(() => []);
+  nodes.forEach((n, i) => byLevel[n.level].push(i));
+  const pos = new Map();
+  byLevel.forEach((ids, lv) => ids.forEach((id, k) => pos.set(id, [90 + (W - 110) * (k + 1) / (ids.length + 1), top + lv * rowH])));
+  const yT = top + order.length * rowH + 8;
+  pos.set("F", [W * 0.36, yT]); pos.set("T", [W * 0.68, yT]);
+  order.forEach((v, lv) => svg.append(mk("text", { x: 6, y: top + lv * rowH + 4, class: "lv" }, NAMES[v] + (v % 2 ? "  state bit" : "  action bit"))));
+  const edges = mk("g", {}); svg.append(edges);
+  nodes.forEach((n, i) => { const [x, y] = pos.get(i);
+    for (const [child, cls] of [[n.lo, "zero"], [n.hi, "one"]]) { const [cx, cy] = pos.get(child); edges.append(mk("line", { x1: x, y1: y, x2: cx, y2: cy - (typeof child === "string" ? 9 : 0), class: cls })); } });
+  nodes.forEach((n, i) => { const [x, y] = pos.get(i); svg.append(mk("circle", { cx: x, cy: y, r: 7, class: n.v % 2 ? "" : "act" })); });
+  for (const [t, label] of [["F", "not in the set"], ["T", "in the set"]]) { const [x, y] = pos.get(t); svg.append(mk("rect", { x: x - 46, y: y - 9, width: 92, height: 18, rx: 4 }), mk("text", { x, y: y + 4, "text-anchor": "middle" }, label)); }
+  history2[which] = nodes.length;
+  const bars = $("bars"); bars.replaceChildren();
+  const max = Math.max(...Object.values(history2).filter(Boolean), 30);
+  for (const [k, label] of [["paired", "action bit next to its state bit"], ["split", "all action bits first"], ["shuffle", "last shuffle"]]) {
+    if (history2[k] == null) continue;
+    const bar = el("div", "bar"); bar.style.width = (100 * history2[k] / max) + "%";
+    const track = el("div"); track.append(bar);
+    bars.append(el("div", "", label), track, el("b", "", history2[k] + " nodes"));
+  }
+  for (const b of $("orders").children) b.setAttribute("aria-pressed", String(b.dataset.o === which));
+  const r2 = $("read2"); r2.replaceChildren();
+  r2.append(el("b", "", nodes.length + " nodes. "), which === "paired" ? "Each pair is settled before the next is asked, so nothing has to be remembered: the diagram is a thin chain." :
+    which === "split" ? "By the time the state bits are asked, the diagram must remember which of the four action bits were on: 16 combinations, each needing its own branch. Four pairs give 30 nodes; forty pairs would give about two trillion." :
+    "A random order usually lands between the two. Finding a good one is itself a search, and on the full model that search is what stalls.");
+}
+for (const b of $("orders").children) b.addEventListener("click", () => draw2(b.dataset.o));
+draw2("split"); draw2("paired");
+
+// ---------------------------------------------------------------- toy 3: cores
+// Measured: AGI v0.3 with race pressure, split step, 23 November 2026. Wall time relative to
+// the own core on one thread (= 1.00) and processor time relative to it.
+const RUNS = [
+  { label: "own core, 1 thread", n: 1, wall: 1.00, cpu: 1.00, own: true },
+  { label: "multi-core, 1 thread", n: 1, wall: 1.87, cpu: 1.87 },
+  { label: "multi-core, 4 threads", n: 4, wall: 0.67, cpu: 2.52 },
+  { label: "multi-core, 8 threads", n: 8, wall: 0.45, cpu: 3.19 },
+  { label: "multi-core, 12 threads", n: 12, wall: 0.35, cpu: 3.65 },
+];
+const JOBS = 48;
+let anim = null;
+function draw3(progress) {
+  const run = RUNS[Number($("threads").value)], lanes = $("lanes");
+  $("tlabel").textContent = run.label;
+  lanes.replaceChildren();
+  const per = Math.ceil(JOBS / run.n), share = 1 / run.cpu;       // share of a job's time that is useful
+  const longest = 1.87;                                            // the slowest run fills the track
+  for (let w = 0; w < run.n; w++) {
+    const lane = el("div", "lane"), track = el("div", "track");
+    lane.append(el("span", "", run.own && w === 0 ? "own core" : "worker " + (w + 1)), track);
+    for (let j = 0; j < per; j++) {
+      const width = 100 * (run.wall / longest) / per, left = j * width;
+      if (left / (100 * run.wall / longest) > progress) break;
+      const useful = el("div", "job"); useful.style.left = left + "%"; useful.style.width = width * share + "%";
+      track.append(useful);
+      if (share < 0.999) { const waste = el("div", "job waste"); waste.style.left = left + width * share + "%"; waste.style.width = width * (1 - share) + "%"; track.append(waste); }
+    }
+    lanes.append(lane);
+  }
+  const shown = progress >= 1;
+  $("wall").textContent = shown ? Math.round(100 * run.wall) : "…";
+  $("cpu").textContent = shown ? Math.round(100 * run.cpu) : "…";
+  $("speed").textContent = shown ? (1 / run.wall).toFixed(2) + "×" : "…";
+  const r3 = $("read3"); r3.replaceChildren();
+  if (!shown) return;
+  r3.append(run.own ? "One worker, no repeated work. This is the baseline: 100 units of time, 100 of processor." :
+    run.n === 1 ? "On one thread the multi-core engine is slower than our own core: its bookkeeping for sharing has a cost even with nobody to share with." :
+    `${run.n} workers finish in ${Math.round(100 * run.wall)} units, ${(1 / run.wall).toFixed(1)} times faster than our own core. Together they burn ${Math.round(100 * run.cpu)} units of processor time: only ${Math.round(100 / run.cpu)}% of each worker's time is useful.`);
+}
+function run3() {
+  if (anim) cancelAnimationFrame(anim);
+  if (calm) return draw3(1);
+  const t0 = performance.now(), total = 1400 * RUNS[Number($("threads").value)].wall + 400;
+  const tick = now => { const p = Math.min(1, (now - t0) / total); draw3(p); if (p < 1) anim = requestAnimationFrame(tick); };
+  anim = requestAnimationFrame(tick);
+}
+$("threads").addEventListener("input", () => draw3(1));
+$("run").addEventListener("click", run3);
+draw3(1);
+</script>
