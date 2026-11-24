@@ -483,3 +483,25 @@ python -m tests.agi_v0_3.bench_reorder --core sylvan --threads 12 --model defaul
 ```
 
 Production reads this zone inside (`reports/agi_v0_3_kernels.jsonl`, split step, 40 GB).
+
+## 11. The success measure in full, and the decision (23 November 2026)
+
+The zone of the design's section 5 (registered v0.3 build, aligned goal, governments with
+companies keeping control, sifted order, split step, 40 GB limit), both engines on the same day:
+
+| | Own core | Sylvan, 12 threads, collection from 120 M nodes |
+|---|---|---|
+| Wall time | 9,965 s | 4,520 s |
+| Processor time | 9,962 s | 46,808 s |
+| Peak resident memory | 5.4 GB | 20.4 GB |
+| States in the zone | 702785462581965997670400 | 702785462581965997670400 |
+| Start state, aligned | inside | inside |
+
+2.2 times: the "adopt" band. A first Sylvan run with collection from 40 M nodes took 8,010 s
+(1.5 times against an earlier own-core run of 12,300 s); the collection threshold is what
+changed. The price is 4.7 times the processor time and about four times the memory.
+
+The owner's decision: merged, and the default of the kernel harnesses
+(`tests/agi/forked_engine.py`, `chosen` and `attempts`): the Sylvan core with 12 threads when
+its extension is built, and after an attempt that ran out of memory (the cap, or a full node
+table) the own core under the same cap. `manager()` keeps the compiled core as its default.

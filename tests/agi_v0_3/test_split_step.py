@@ -238,7 +238,8 @@ except NotComputed as exc:
 def test_a_full_table_reads_not_computed(tmp_path):
     """A kernel job of the harness on the Sylvan core with a table far too small: the part
     reads "not computed" (the table refused an operation, or filled in mid-flight and the
-    child's exit status and message say so), and no reading is saved as computed."""
+    child's exit status and message say so), and no reading is saved as computed. The
+    harness then tries the own core, which this test stops at its time budget."""
     root = Path(__file__).resolve().parents[2]
     readings = tmp_path / "readings.jsonl"
     env = {
@@ -246,6 +247,7 @@ def test_a_full_table_reads_not_computed(tmp_path):
         "WF_V03_CORE": "sylvan",
         "WF_V03_THREADS": "4",
         "WF_V03_MEMORY_GB": "4",
+        "WF_V03_KERNEL_MINUTES": "1",
         "WF_V03_READINGS": str(readings),
         "WAVEFRONT_SYLVAN_NODES_LOG2": "20",
         "WAVEFRONT_SYLVAN_CACHE_LOG2": "18",
@@ -254,6 +256,7 @@ def test_a_full_table_reads_not_computed(tmp_path):
         [sys.executable, "-c", FULL_TABLE_RUN], env=env, capture_output=True, text=True, cwd=root
     )
     assert done.returncode == 0, done.stderr[-3000:]
-    assert "NOT COMPUTED" in done.stdout and "node table" in done.stdout, done.stdout
+    assert "NOT COMPUTED" in done.stdout, done.stdout
     rows = [json.loads(line) for line in readings.read_text().splitlines()]
-    assert rows and all(r["kind"] == "over" and r["core"] == "sylvan" for r in rows)
+    assert [(r["kind"], r["core"]) for r in rows] == [("over", "sylvan"), ("over", "c")], rows
+    assert "node table" in rows[0]["reading"], rows[0]

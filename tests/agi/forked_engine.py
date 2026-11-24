@@ -19,7 +19,40 @@ from pathlib import Path
 
 from wavefront.symbolic._sylvan import TABLE_FULL_MESSAGE, TABLE_FULL_STATUS
 
-__all__ = ["select", "capture_stderr", "why_died", "TABLE_FULL_STATUS", "TABLE_FULL_MESSAGE"]
+__all__ = [
+    "select",
+    "capture_stderr",
+    "why_died",
+    "chosen",
+    "attempts",
+    "TABLE_FULL_STATUS",
+    "TABLE_FULL_MESSAGE",
+]
+
+OWN = "c"
+DEFAULT_THREADS = 12
+
+
+def chosen(core: str, threads: str) -> tuple[str, int]:
+    """The core and the worker threads of a kernel job from the two settings of its harness
+    (``WF_V0x_CORE``, ``WF_V0x_THREADS``). Unset, the core is the multi-core one when its
+    extension is built (2026-11-23: 2.2 times the own core on the success measure of
+    docs/engine_multicore_design.md, with the same reading) and the own core otherwise;
+    ``c`` asks for the own core. The threads default to 12, or to the machine's count if
+    that is smaller; the own core has one."""
+    from wavefront.symbolic import sylvan_available
+
+    core = core.strip().lower() or ("sylvan" if sylvan_available() else OWN)
+    if core != "sylvan":
+        return core, 0
+    return core, int(threads or 0) or min(DEFAULT_THREADS, os.cpu_count() or 1)
+
+
+def attempts(core: str, threads: int) -> list[tuple[str, int]]:
+    """The engines a kernel job tries, in order: the chosen one, and after a multi-core
+    attempt that ran out of memory the own core on one thread, which needs about a quarter
+    of the memory (owner's instruction of 2026-11-23)."""
+    return [(core, threads), (OWN, 0)] if core == "sylvan" else [(core, threads)]
 
 
 def select(core: str, threads: int) -> None:
