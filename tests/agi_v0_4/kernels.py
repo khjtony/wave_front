@@ -15,6 +15,7 @@ import resource
 import time
 from collections.abc import Callable, Sequence
 
+from tests.agi import forked_engine
 from tests.agi.common import NotComputed, heavy_encoding, target_bdd, with_levels
 from tests.agi_v0_4.common import OBJECTIVES, ROOT, Build, compiled, key
 from wavefront.symbolic import safe
@@ -31,6 +32,11 @@ JOINT = os.environ.get("WF_V04_JOINT") == "1"
 STEP = os.environ.get("WF_V04_STEP", "split")
 ORDER = os.environ.get("WF_V04_ORDER", "")
 GC_FACTOR = float(os.environ.get("WF_V04_GC_FACTOR", "0") or 0)
+# ``WF_V04_CORE=sylvan`` computes on the multi-core core with ``WF_V04_THREADS`` worker threads
+# (docs/engine_multicore.md; its tables are sized from the cap of the child); unset: the
+# default core, the compiled one. Recorded with each reading too.
+CORE = os.environ.get("WF_V04_CORE", "")
+THREADS = int(os.environ.get("WF_V04_THREADS", "0") or 0)
 # ``WF_V04_READINGS`` names another file, for a check that must not read the saved readings.
 READINGS = ROOT / os.environ.get("WF_V04_READINGS", "reports/agi_v0_4_kernels.jsonl")
 MODEL_FILE = ROOT / "models" / "agi_v0_4" / "v0_4.py"
@@ -64,6 +70,8 @@ def save(question: str, kind: str, reading: object) -> None:
         "reading": reading,
         "memory cap GB": MEMORY_GB,
         "engine": STEP,
+        "core": CORE or "default",
+        "threads": THREADS or None,
         "at": time.strftime("%Y-%m-%d %H:%M:%S %z"),
     }
     with READINGS.open("a", encoding="utf-8") as fh:
@@ -82,6 +90,8 @@ def forked(question: str, fn: Callable, *args: object):
     def work() -> None:
         cap = MEMORY_GB << 30
         resource.setrlimit(resource.RLIMIT_AS, (cap, cap))
+        forked_engine.select(CORE, THREADS)
+        forked_engine.capture_stderr(PROGRESS / f"{os.getpid()}.stderr")
         try:
             send.send(("ok", fn(*args)))
         except MemoryError as exc:
@@ -92,15 +102,19 @@ def forked(question: str, fn: Callable, *args: object):
     proc = ctx.Process(target=work, daemon=True)
     proc.start()
     send.close()
+    died = False
     if recv.poll(MINUTES * 60):
         try:
             kind, value = recv.recv()
         except EOFError:
-            kind, value = "over", "the kernel's process died unanswered (killed?)"
+            died = True
     else:
         proc.kill()
         kind, value = "over", f"over the budget of {MINUTES:g} minutes"
     proc.join()
+    why = forked_engine.why_died(proc.exitcode, PROGRESS / f"{proc.pid}.stderr")
+    if died:  # a Sylvan table that filled mid-operation, or a kill
+        kind, value = "over", why
     save(question, kind, value)
     if kind == "over":
         raise NotComputed(value)
@@ -161,7 +175,8 @@ def membership(
             "inside": {o: bool(enc.holds(f, _start(cm, o, levels))) for o in asked},
             "seconds": round(time.perf_counter() - t0, 1),
             "peak nodes": enc.mgr.stats()["peak_nodes"],
-            "engine": {"step": STEP, "order": "FORCE"} | {"gc factor": GC_FACTOR or None},
+            "engine": {"step": STEP, "order": "FORCE"}
+            | {"gc factor": GC_FACTOR or None, "core": enc.mgr.core, "threads": THREADS or None},
         }
 
     spec = key(build, profiles)

@@ -20,6 +20,11 @@ it: at most the width of ``f`` at that level, not the whole of ``f``.
 
 The result is the edge :meth:`BDD.compose` returns: the sub-results are the same functions,
 and a manager has one edge per function.
+
+On the multi-core core (``mgr.core == "sylvan"``) the same algorithm runs as one call,
+:meth:`wavefront.symbolic.bdd_sylvan.BDD.compose_levels`: the nodes of one level depend only
+on the sub-results of lower levels, so they are substituted in parallel, and the table may be
+collected between two levels (docs/engine_multicore.md).
 """
 
 from __future__ import annotations
@@ -34,8 +39,8 @@ __all__ = ["compose_by_levels", "STATIC_CORES"]
 # while its node is reachable from a root of a collection. Neither holds in the CUDD binding
 # (levels are variable indices that reordering moves, and an edge is a handle of its own,
 # given up by a collection unless it is itself a root); there :meth:`Encoding.preimage`
-# keeps to ``compose``.
-STATIC_CORES = ("c", "python")
+# keeps to ``compose``. On "sylvan" the loop below runs in C (``BDD.compose_levels``).
+STATIC_CORES = ("c", "python", "sylvan")
 _CHECK_EVERY = 256  # nodes between two looks at the node table
 
 
@@ -54,8 +59,11 @@ def compose_by_levels(
 
     ``stats``, when given, receives ``nodes`` (nodes of ``f`` substituted into) and ``held``
     (the largest number of sub-results alive at once)."""
-    if getattr(mgr, "core", "python") not in STATIC_CORES:
+    core = getattr(mgr, "core", "python")
+    if core not in STATIC_CORES:
         raise ValueError(f"compose_by_levels needs a core with a static order, not {mgr.core!r}")
+    if core == "sylvan":
+        return mgr.compose_levels(f, mapping, keep, stats)
     if not mapping or f <= 1:
         return f
     top, low, high = mgr.top, mgr.low, mgr.high
