@@ -72,7 +72,24 @@
     "research/news.json"
    ],
    "approved": "no change to approve; the eight items wait for the owner's triage"
+  },
+  {
+   "date": "2026-11-24",
+   "variable": null,
+   "change": "Second review (19 to 25 November): about 300 posts from 50 accounts on X (company leaders, researchers, policy makers, open-weight advocates, labs and evaluators), with the factual claims checked against press and primary pages. Ten items added to the inbox (9 to 18). No level changed. Three bear on uncertain readings: governments' AGI expectation (company leaders now say superintelligence is near), regulation strictness (California mandatory standards; a voluntary accord; federal bills not passed) and a first proposal to restrict open-weight models by origin.",
+   "sources": [
+    "https://x.com/sama/status/2124551594691932405",
+    "https://x.com/alexandr_wang/status/2124719968499777546",
+    "https://x.com/mustafasuleyman/status/2125446171909136630",
+    "https://www.cnbc.com/2026/11/23/nvidia-jensen-huang-trump-bessent-china.html",
+    "https://homeland.house.gov/2026/11/20/chairmen-garbarino-moolenaar-release-joint-investigative-report-urging-removal-of-prc-open-weight-models-from-federal-systems-high-risk-critical-infrastructure/",
+    "https://x.com/OpenAI/status/2123862344422088794",
+    "https://x.com/AnthropicAI/status/2125341904644763678",
+    "https://x.com/METR_Evals/status/2125372372039741753",
+    "https://x.com/GavinNewsom/status/2123210722750681549",
+    "https://x.com/ClementDelangue/status/2123873347393970488"
+   ]
   }
  ],
- "reviewed": "2026-11-20"
+ "reviewed": "2026-11-24"
 }
