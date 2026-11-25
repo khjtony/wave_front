@@ -204,7 +204,7 @@ async function runs() {
   const variant = e => e.variant === "default" ? "everything on" : "no open system";
   const item = (e, right) => h("div", { class: "qi" }, h("div", null, h("b", null, zone(e)), h("div", { class: "small muted" }, `${e.claim} · ${variant(e)} · ${GOAL_NAME[e.goal]} goal` + (e.worker ? ` · ${e.worker}` : ""))), h("div", { class: "qr" }, right));
   const by = k => Q.items.filter(e => e.status === k);
-  const queuePanel = h("div", { class: "panel" }, h("h2", null, "Heavy-claims queue, v0.3 (stopped by the owner)"),
+  const queuePanel = h("div", { class: "panel" }, h("h2", null, "Heavy-claims queue, v0.3"),
     h("div", { class: "stats" }, [["running", "running"], ["waiting", "waiting"], ["done", "done"]].map(([k, t]) => h("div", null, h("div", { class: "stat" }, Q.counts[k]), h("small", null, t)))),
     h("p", { class: "small muted gap" }, Q.workers.length ? Q.workers.map(w => `${w.name}: up ${dur(w.seconds)}, limit ${w.limit || "?"} GB`).join(" · ") : "No queue is running."),
     by("running").length ? [h("h3", { class: "gap" }, "Running"), by("running").map(e => item(e, [h("span", { class: "pill held" }, "running " + dur(e.seconds)), h("span", { class: "small muted" }, `${e.gb} of ${e.limit || "?"} GB` + (e.layer ? ` · layer ${e.layer.done} of ${e.layer.of}` : "")), e.layer ? h("progress", { max: e.layer.of, value: e.layer.done, style: "width:110px" }) : null]))] : null,

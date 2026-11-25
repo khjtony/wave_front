@@ -1,6 +1,1 @@
-[
-  {"version": "agi_v0_4", "claim": "X7", "limit": 64, "note": "two AI systems; did not fit in 38 GB"},
-  {"version": "agi_v0_4", "claim": "X8", "limit": 84, "note": "two AI systems; did not fit in 38 GB; starts when X3 has ended"},
-  {"version": "agi_v0_4", "claim": "X7", "limit": 84, "note": "only the zones still missing after the 64 GB run"},
-  {"version": "agi_v0_4", "claim": "X3", "limit": 84, "note": "the zone without reclaim, which did not fit in 28 GB"}
-]
+[]
