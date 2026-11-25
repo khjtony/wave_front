@@ -84,7 +84,7 @@ async function overview() {
     h("div", { class: "grid g2" }, findings.map(f => h("div", { class: "panel" },
       h("div", { class: "row" }, h("span", { class: "tag" }, f.kind), h("span", { class: "muted small" }, `${f.version} · ${f.claim}`), pill(f.prediction === "held" ? "held" : "did not hold")),
       h("p", { style: "margin:8px 0 6px" }, rich(f.statement)),
-      h("a", { class: "small", href: file(f.evidence), target: "_blank" }, "Report →")))));
+      f.report ? h("a", { class: "small", href: file(f.report), target: "_blank", style: "margin-right:14px" }, "Finding report →") : null, h("a", { class: "small", href: file(f.evidence), target: "_blank" }, f.report ? "Source report →" : "Report →")))));
 }
 
 // ---------------------------------------------------------------- models

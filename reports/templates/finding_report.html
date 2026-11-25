@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Finding report</title>
+<style>
+  /* Layout: one column, five numbered sections in the owner's order: the claim, the cosmos
+     view, ten shortest paths, three of them read as real-world stories, everything else. */
+  :root { color-scheme: light;
+    --surface: #fcfcfb; --card: #ffffff; --panel: #f3f2ec; --ink: #0b0b0b; --ink2: #52514e; --muted: #7a7972;
+    --line: #c3c2b7; --hair: #e1e0d9; --series: #2a78d6; --good-ink: #006300; --crit: #d03b3b; --crit-ink: #a32222; --warn-ink: #8a5a00; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { color-scheme: dark;
+    --surface: #1a1a19; --card: #232321; --panel: #2c2c2a; --ink: #f0efec; --ink2: #c3c2b7; --muted: #9b9a92;
+    --line: #4a4a46; --hair: #383835; --series: #5a9cf0; --good-ink: #5fd35f; --crit: #e05555; --crit-ink: #f08a8a; --warn-ink: #e6b450; } }
+  :root[data-theme="dark"] { color-scheme: dark;
+    --surface: #1a1a19; --card: #232321; --panel: #2c2c2a; --ink: #f0efec; --ink2: #c3c2b7; --muted: #9b9a92;
+    --line: #4a4a46; --hair: #383835; --series: #5a9cf0; --good-ink: #5fd35f; --crit: #e05555; --crit-ink: #f08a8a; --warn-ink: #e6b450; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--surface); color: var(--ink); font-family: "Noto Sans", "Liberation Sans", "DejaVu Sans", system-ui, sans-serif; font-size: 15px; line-height: 1.55; }
+  main { max-width: 1040px; margin: 0 auto; padding: 32px 16px 56px; }
+  .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .8px; text-transform: uppercase; color: var(--muted); }
+  h1 { font-size: clamp(24px, 3.6vw, 32px); line-height: 1.2; margin: 6px 0 10px; text-wrap: balance; }
+  h2 { font-size: 20px; margin: 40px 0 6px; } h3 { font-size: 15px; margin: 18px 0 4px; }
+  p { margin: 8px 0; max-width: 72ch; } .lede { font-size: 16px; color: var(--ink2); }
+  .card { background: var(--card); border: 1px solid var(--hair); border-radius: 10px; padding: 16px; margin-top: 12px; }
+  .pill { display: inline-block; font-size: 12px; font-weight: 600; border-radius: 999px; padding: 2px 10px; border: 1px solid currentColor; }
+  .bad { color: var(--crit-ink); } .ok { color: var(--good-ink); } .warn { color: var(--warn-ink); } .muted { color: var(--muted); } .small { font-size: 13px; }
+  .meta { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 13px; color: var(--ink2); }
+  blockquote { margin: 10px 0; padding: 8px 14px; border-left: 3px solid var(--line); background: var(--panel); border-radius: 0 6px 6px 0; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; } .scroll { overflow-x: auto; }
+  th, td { text-align: left; padding: 6px 10px; border-bottom: 1px solid var(--hair); vertical-align: top; }
+  th { font-size: 11px; letter-spacing: .6px; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+  code { font-family: "DejaVu Sans Mono", ui-monospace, monospace; font-size: 12.5px; background: var(--panel); border-radius: 4px; padding: 1px 5px; }
+  .two { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+  .kv b { display: block; font-size: 11px; letter-spacing: .6px; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  /* the cosmos view keeps a night sky in both themes */
+  .sky { position: relative; background: #070a12; border-radius: 10px; overflow: hidden; margin-top: 12px; }
+  .sky canvas { display: block; width: 100%; height: auto; cursor: crosshair; }
+  .sky .tip { position: absolute; left: 12px; bottom: 10px; right: 12px; color: #dfe5f2; font-size: 12.5px; pointer-events: none; text-shadow: 0 1px 2px #000; }
+  .legend { display: flex; flex-wrap: wrap; gap: 4px 16px; font-size: 13px; color: var(--ink2); margin-top: 8px; }
+  .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; }
+  tr.path { cursor: pointer; } tr.path:hover td, tr.path.on td { background: var(--panel); }
+  .steps { font-size: 13px; color: var(--ink2); } .steps b { color: var(--ink); } .steps .nr { color: var(--crit-ink); font-weight: 600; }
+  .story { border-left: 3px solid var(--series); padding-left: 14px; margin-top: 14px; }
+  .story .basis { font-size: 13px; color: var(--ink2); }
+  .spec { color: var(--warn-ink); font-size: 12px; }
+  ul { margin: 6px 0; padding-left: 20px; max-width: 72ch; } li { margin: 3px 0; }
+  .specimen { background: var(--panel); border: 1px dashed var(--line); border-radius: 8px; padding: 8px 12px; font-size: 13px; margin-bottom: 12px; }
+</style>
+</head>
+<body>
+<main id="main"></main>
+<script type="application/json" id="data">/*DATA*/</script>
+<script>
+"use strict";
+const D = JSON.parse(document.getElementById("data").textContent);
+const el = (tag, attrs, ...kids) => { const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) { if (v == null || v === false) continue; if (k === "class") e.className = v; else if (k.startsWith("on")) e.addEventListener(k.slice(2), v); else e.setAttribute(k, v); }
+  for (const kid of kids.flat(Infinity)) if (kid != null && kid !== false) e.append(kid.nodeType ? kid : document.createTextNode(String(kid)));
+  return e; };
+const main = document.getElementById("main");
+const add = (...k) => main.append(...k.flat(Infinity).filter(Boolean));
+const pill = s => el("span", { class: "pill " + (/did not hold|outside|not met/.test(s) ? "bad" : /held|inside|met/.test(s) ? "ok" : "warn") }, s);
+const missing = what => el("p", { class: "muted" }, `Not computed for this finding: ${what}.`);
+document.title = `Finding ${D.finding.id}: ${D.finding.claim} did not hold`;
+
+// ---------------------------------------------------------------- header and 1: the claim
+const F = D.finding, C = D.claim;
+add(D.specimen ? el("div", { class: "specimen" }, "Specimen page. The data below is made up to show the layout; it is not a result.") : null,
+  el("div", { class: "eyebrow" }, `wave_front · finding ${F.id} · AGI ${F.version} · claim ${F.claim}`),
+  el("h1", null, F.title),
+  el("div", { class: "meta" }, pill(F.status), el("span", null, F.kind), el("span", null, "written " + F.date), F.commit ? el("span", null, "model at ", el("code", null, F.commit)) : null),
+  el("p", { class: "lede" }, F.summary),
+  el("h2", null, "1 · What exactly the claim is"),
+  el("p", { class: "small muted" }, `Registered ${C.registered_on}, before the model's rules were written. Quoted as registered.`),
+  el("blockquote", null, C.registered_text),
+  el("div", { class: "two" },
+    el("div", { class: "card kv" }, el("b", null, "Predicted"), C.prediction),
+    el("div", { class: "card kv" }, el("b", null, "Found"), C.found)),
+  el("p", null, C.plain),
+  el("div", { class: "card" }, el("div", { class: "two" },
+    el("div", { class: "kv" }, el("b", null, "Alliance"), C.question.alliance),
+    el("div", { class: "kv" }, el("b", null, "Condition it must keep"), C.question.condition_plain, " ", el("code", null, C.question.condition)),
+    el("div", { class: "kv" }, el("b", null, "Start state"), C.question.start),
+    el("div", { class: "kv" }, el("b", null, "Reading"), C.question.reading))),
+  C.by_goal && C.by_goal.length ? el("div", { class: "scroll" }, el("table", null,
+    el("tr", null, el("th", null, "AI goal"), el("th", null, "Predicted"), el("th", null, "Found"), el("th", null, "")),
+    C.by_goal.map(g => el("tr", null, el("td", null, g.goal), el("td", null, g.predicted), el("td", null, g.found), el("td", null, pill(g.predicted === g.found ? "held" : "did not hold")))))) : null);
+
+// ---------------------------------------------------------------- 2: the cosmos view
+const S = D.cosmos;
+const COLORS = { start: "#ffffff", inside: "#4f8fe6", outside: "#5d6577", no_return: "#ff3b3b", exit: "#ffb020" };
+const NAMES = { start: "start state", inside: "inside the guarantee zone", outside: "outside the zone", no_return: "point of no return", exit: "the condition is broken" };
+add(el("h2", null, "2 · The state space as a cosmos"));
+if (!S || !S.nodes || !S.nodes.length) add(missing("the cosmos view"));
+else {
+  const canvas = el("canvas", { width: 1600, height: 1000, role: "img", "aria-label": "States reached from the start state, one ring per quarter, points of no return in red" });
+  const tip = el("div", { class: "tip" });
+  add(el("p", null, S.note), el("div", { class: "sky" }, canvas, tip),
+    el("div", { class: "legend" }, Object.keys(COLORS).filter(k => S.nodes.some(n => n[2] === k)).map(k => el("span", null, el("i", { style: `background:${COLORS[k]}` + (k === "outside" || k === "start" ? ";outline:1px solid #8a93a8" : "") }), `${NAMES[k]} (${S.nodes.filter(n => n[2] === k).length})`))),
+    el("p", { class: "small muted" }, "Each dot is one state on a sampled path. The start state is at the centre and each ring out is one quarter later. A line joins a state to the state before it. Click a row in section 3 to light its path here; move over a dot for its quarter and status."));
+  // radial tree: a node's angle is the middle of its descendants' leaves
+  const N = S.nodes.length, kids = Array.from({ length: N }, () => []), leaves = new Array(N).fill(0), ang = new Array(N).fill(0);
+  S.nodes.forEach((n, i) => { if (n[0] >= 0) kids[n[0]].push(i); });
+  const order = []; (function walk(i) { order.push(i); kids[i].forEach(walk); })(0);
+  for (let k = order.length - 1; k >= 0; k--) { const i = order[k]; leaves[i] = kids[i].length ? kids[i].reduce((a, c) => a + leaves[c], 0) : 1; }
+  (function place(i, from, to) { ang[i] = (from + to) / 2; let a = from; for (const c of kids[i]) { const w = (to - from) * leaves[c] / leaves[i]; place(c, a, a + w); a += w; } })(0, 0, 2 * Math.PI);
+  const maxT = Math.max(...S.nodes.map(n => n[1]), 1), W = canvas.width, H = canvas.height, R = Math.min(W, H) / 2 - 40;
+  const pos = S.nodes.map((n, i) => { const r = R * n[1] / maxT; return [W / 2 + r * Math.cos(ang[i]) * (W / H) * 0.98, H / 2 + r * Math.sin(ang[i])]; });
+  const ctx = canvas.getContext("2d");
+  let lit = null;
+  function draw() {
+    ctx.fillStyle = "#070a12"; ctx.fillRect(0, 0, W, H);
+    ctx.strokeStyle = "rgba(140,155,190,0.10)"; ctx.fillStyle = "rgba(170,182,210,0.55)"; ctx.font = "20px sans-serif";
+    for (let t = 1; t <= maxT; t++) { const r = R * t / maxT; ctx.beginPath(); ctx.ellipse(W / 2, H / 2, r * (W / H) * 0.98, r, 0, 0, 2 * Math.PI); ctx.stroke();
+      if (S.quarters && (t === maxT || t % Math.ceil(maxT / 6) === 0)) ctx.fillText(S.quarters[t] || "", W / 2 + 6, H / 2 - r + 22); }
+    const onPath = lit ? new Set(lit) : null;
+    ctx.lineWidth = 1;
+    S.nodes.forEach((n, i) => { if (n[0] < 0) return; const hot = onPath && onPath.has(i) && onPath.has(n[0]);
+      ctx.strokeStyle = hot ? "rgba(255,255,255,0.95)" : onPath ? "rgba(120,140,180,0.06)" : "rgba(120,140,180,0.16)"; ctx.lineWidth = hot ? 3 : 1;
+      ctx.beginPath(); ctx.moveTo(...pos[n[0]]); ctx.lineTo(...pos[i]); ctx.stroke(); });
+    const rank = { outside: 0, inside: 1, exit: 2, no_return: 3, start: 4 };
+    [...S.nodes.keys()].sort((a, b) => rank[S.nodes[a][2]] - rank[S.nodes[b][2]]).forEach(i => { const k = S.nodes[i][2], big = k === "no_return" || k === "start" || k === "exit";
+      ctx.globalAlpha = onPath && !onPath.has(i) && !big ? 0.25 : 1;
+      if (k === "no_return") { ctx.fillStyle = "rgba(255,59,59,0.22)"; ctx.beginPath(); ctx.arc(...pos[i], 13, 0, 2 * Math.PI); ctx.fill(); }
+      ctx.fillStyle = COLORS[k]; ctx.beginPath(); ctx.arc(...pos[i], k === "start" ? 9 : big ? 6 : 3.2, 0, 2 * Math.PI); ctx.fill(); });
+    ctx.globalAlpha = 1;
+  }
+  draw();
+  canvas.addEventListener("mousemove", ev => { const b = canvas.getBoundingClientRect(), x = (ev.clientX - b.left) * W / b.width, y = (ev.clientY - b.top) * H / b.height;
+    let best = -1, d = 400; pos.forEach((p, i) => { const q = (p[0] - x) ** 2 + (p[1] - y) ** 2; if (q < d) { d = q; best = i; } });
+    tip.textContent = best < 0 ? "" : `${S.quarters ? S.quarters[S.nodes[best][1]] : "quarter " + S.nodes[best][1]} · ${NAMES[S.nodes[best][2]]}` + (S.nodes[best][3] ? " · " + S.nodes[best][3] : ""); });
+  window.lightPath = nodes => { lit = nodes; draw(); };
+}
+
+// ---------------------------------------------------------------- 3: ten shortest paths
+add(el("h2", null, `3 · The first ${D.paths ? D.paths.length : 10} sampled shortest paths to the point of no return`));
+if (!D.paths || !D.paths.length) add(missing("the sampled shortest paths"));
+else {
+  add(el("p", null, D.paths_note));
+  const rows = D.paths.map(p => {
+    const steps = el("div", { class: "steps", hidden: "" }, p.steps.map(s => el("div", null, el("b", null, s.quarter + ": "), s.moves.map((m, j) => [j ? " · " : "", el("span", { class: s.no_return ? "nr" : "" }, `${m.who}: ${m.action}`), m.speculative ? el("span", { class: "spec" }, " (assumed)") : null]), s.no_return ? el("span", { class: "nr" }, "  ← no-return move") : null)));
+    const tr = el("tr", { class: "path", tabindex: "0" }, el("td", { class: "num" }, p.n), el("td", { class: "num" }, p.quarters), el("td", { class: "num" }, p.no_return_quarter), el("td", null, p.mover), el("td", null, p.move), el("td", null, p.preventing || "none found"), el("td", null, p.leads_to || ""));
+    const open = () => { const was = tr.classList.contains("on"); rows.forEach(r => { r[0].classList.remove("on"); r[1].firstChild.firstChild.hidden = true; }); if (!was) { tr.classList.add("on"); steps.hidden = false; } if (window.lightPath) window.lightPath(was ? null : p.nodes); };
+    tr.addEventListener("click", open); tr.addEventListener("keydown", e => { if (e.key === "Enter") open(); });
+    return [tr, el("tr", null, el("td", { colspan: "7", style: "border-bottom:0;padding:0 10px" }, steps))];
+  });
+  add(el("div", { class: "scroll card" }, el("table", null, el("tr", null, ["#", "Quarters", "No return in", "Who makes the no-return move", "The move", "Preventing action", "Then leads to"].map(t => el("th", null, t))), rows)),
+    el("p", { class: "small muted" }, "Click a row for its quarter-by-quarter moves. “(assumed)” marks an action with no contemporaneous source."));
+}
+
+// ---------------------------------------------------------------- 4: three paths as stories
+add(el("h2", null, "4 · What the first three paths would look like in the real world"),
+  el("p", { class: "small muted" }, "Illustrations of possible paths, not forecasts. Each sentence follows a step of the path; the model says the path is possible, not that it is likely."));
+if (!D.readings || !D.readings.length) add(missing("the real-world readings"));
+else add(D.readings.map(r => el("div", { class: "story" }, el("h3", null, `Path ${r.path}: ${r.title}`), el("p", null, r.text),
+  el("div", { class: "basis" }, r.basis.map(b => el("div", null, el("b", null, b.quarter + " "), b.action, ": ", b.source, b.speculative ? el("span", { class: "spec" }, " (assumed)") : null))))));
+
+// ---------------------------------------------------------------- 5: everything else
+const O = D.other || {};
+const list = (title, items) => items && items.length ? [el("h3", null, title), el("ul", null, items.map(x => el("li", null, x)))] : null;
+add(el("h2", null, "5 · What else is worth knowing"),
+  list("What decides it", O.decides), list("Who could have prevented it", O.preventing), list("How far away it is", O.distance),
+  list("Does it survive other AI goals and model variants", O.robustness), list("Where the real world stands today (Srt)", O.srt),
+  list("Sourced and assumed actions on these paths", O.sources), list("How this was computed", O.method), list("Limits", O.limits),
+  O.evidence && O.evidence.length ? [el("h3", null, "Evidence"), el("ul", null, O.evidence.map(e => el("li", null, el("a", { href: e.href }, e.label))))] : null);
+</script>
+</body>
+</html>
