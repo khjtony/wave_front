@@ -6,7 +6,8 @@
   "kind": "guarantee-zone reading",
   "prediction": "did not hold",
   "statement": "At S0, governments alone are already outside the control guarantee zone under every AI goal, so there is no later point of no return for them to watch for.",
-  "evidence": "reports/agi_2026-11-12.md"
+  "evidence": "reports/agi_2026-11-12.md",
+  "report": "reports/findings/finding_1_G3.html"
  },
  {
   "id": 2,
@@ -15,7 +16,8 @@
   "kind": "guarantee-zone reading",
   "prediction": "did not hold",
   "statement": "One uncertain reading decides it: with regulation strictness read as mandatory instead of voluntary, governments alone are inside the control guarantee zone under three of the four AI goals. No regulation and voluntary regulation read the same.",
-  "evidence": "reports/agi_v0_regime_call.md"
+  "evidence": "reports/agi_v0_regime_call.md",
+  "report": "reports/findings/finding_2_G7.html"
  },
  {
   "id": 3,
@@ -24,7 +26,8 @@
   "kind": "guarantee-zone reading",
   "prediction": "did not hold",
   "statement": "With AGI since s₀, governments alone can guarantee peaceful coexistence under three AI goals; under the indifferent goal it takes governments and the AI together.",
-  "evidence": "reports/agi_2026-11-12.md"
+  "evidence": "reports/agi_2026-11-12.md",
+  "report": "reports/findings/finding_3_G5.html"
  },
  {
   "id": 4,
@@ -33,7 +36,8 @@
   "kind": "guarantee-zone reading",
   "prediction": "did not hold",
   "statement": "With the deployment delay added, governments alone are still outside the control guarantee zone at S0 under all four AI goals: frontier AI companies can deploy unsupervised AI agents in the first quarter, before any new regulation takes effect.",
-  "evidence": "reports/agi_v0_1_part_b_2026-11-15.html"
+  "evidence": "reports/agi_v0_1_part_b_2026-11-15.html",
+  "report": "reports/findings/finding_4_D5.html"
  },
  {
   "id": 5,
@@ -51,7 +55,8 @@
   "kind": "guarantee-zone reading",
   "prediction": "did not hold",
   "statement": "Race pressure after an open-weight release does not take the control guarantee away from governments acting with the frontier AI companies: S0 stays inside their zone.",
-  "evidence": "reports/agi_v0_2_part_b_2026-11-18.html"
+  "evidence": "reports/agi_v0_2_part_b_2026-11-18.html",
+  "report": "reports/findings/finding_6_E3.html"
  },
  {
   "id": 7,

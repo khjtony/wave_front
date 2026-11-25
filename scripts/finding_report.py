@@ -10,7 +10,8 @@ data each needs:
 ``finding``  id, version, claim, kind, status, date, commit, title, summary.
 ``claim``    registered_text (verbatim), registered_on, prediction, found, plain; ``question``
              (alliance, condition, condition_plain, start, reading); ``by_goal`` rows of
-             goal, predicted, found.
+             goal, predicted, found, and an optional verdict ("held", "did not hold", "not
+             predicted") where the two texts cannot be compared word for word.
 ``cosmos``   note; quarters (label per quarter from the start); nodes, each ``[parent, quarter,
              status, label]`` with the start state first (parent -1) and every other node after
              its parent. Status is one of ``start``, ``inside`` (inside the guarantee zone of
