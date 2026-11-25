@@ -222,7 +222,9 @@ async function runs() {
     C.waiting.length ? [h("h3", { class: "gap" }, "Waiting, in this order"), C.waiting.map((w, n) => h("div", { class: "qi" }, h("div", null, h("b", null, "Claim " + w.claim), w.note ? h("div", { class: "small muted" }, w.note) : null), h("div", { class: "qr" }, h("span", { class: "pill idle" }, n === 0 ? "next" : `${n} ahead of it`), h("span", { class: "small muted" }, `memory limit ${w.limit} GB`))))] : null);
   show(h("h1", null, "Runs"),
     h("p", { class: "lede" }, "The queue of heavy claims with running and waiting times, the saved guarantee-zone readings, and the logs. This page refreshes every 15 seconds."),
-    claimPanel,
+    r.requests.length ? h("div", { class: "panel" }, h("h2", null, "Your requests"), r.requests.map(q => h("div", { class: "qi" }, h("div", null, h("b", null, `Request ${q.id}` + (q.version ? ` · ${q.version}` : "")), h("div", { class: "small muted", style: "white-space:pre-line" }, q.text.replace(/\n+/g, "\n"))),
+      h("div", { class: "qr" }, q.running ? [h("span", { class: "pill held" }, "running " + dur(q.running.seconds)), h("span", { class: "small muted" }, q.running.gb + " GB")] : h("span", { class: "pill idle" }, q.status === "new" ? "not started" : q.status), h("span", { class: "small muted" }, "asked " + q.created))))) : null,
+    r.requests.length ? h("div", { class: "gap" }) : null, claimPanel,
     h("div", { class: "gap" }), queuePanel,
     h("div", { class: "panel gap" }, h("h2", null, "Processes"), r.live.length ? h("div", { class: "scroll" }, h("table", null, h("tr", null, h("th", null, "What"), h("th", null, "Running for"), h("th", null, "Memory")),
       r.live.map(p => h("tr", null, h("td", null, h("code", null, p.what), " ", h("span", { class: "muted small" }, p.args)), h("td", null, dur(p.seconds)), h("td", null, p.gb + " GB"))))) : h("p", { class: "muted" }, "Nothing is running.")),

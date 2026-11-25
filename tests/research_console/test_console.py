@@ -175,3 +175,14 @@ def test_the_last_parts_of_a_claim_stop_at_an_earlier_run(tmp_path, monkeypatch)
         ("a", "met", 5.0),
         ("b", "not computed", None),
     ]
+
+
+def test_request_runs_lists_the_requests_that_are_not_done(tmp_path, monkeypatch):
+    monkeypatch.setattr(catalog, "RESEARCH", tmp_path)
+    rows = [
+        {"id": 901, "created": "2026-11-25 01:38", "status": "new", "text": "a", "version": "v0.4"},
+        {"id": 902, "created": "2026-11-25 01:40", "status": "done", "text": "b", "version": "v0.1"},
+    ]
+    (tmp_path / "requests.json").write_text(json.dumps(rows))
+    got = catalog.request_runs()
+    assert [(r["id"], r["status"], r["running"]) for r in got] == [(901, "new", None)]

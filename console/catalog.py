@@ -882,9 +882,34 @@ def claim_runs(version: str = "agi_v0_4") -> dict:
     return {"running": running, "waiting": plan[len(started) :], "version": version}
 
 
+def request_runs() -> list[dict]:
+    """The owner's requests that are not done, each with the process computing it, if any: a
+    script named ``request_<id>.py`` (research/requests/) or, for a one-off, ``req<id>.py``."""
+    got = subprocess.run(
+        ["ps", "-eo", "etimes,rss,args"], capture_output=True, text=True, check=False
+    ).stdout.splitlines()[1:]
+    running: dict[int, dict] = {}
+    for line in got:
+        seconds, rss, args = line.split(None, 2)
+        hit = re.match(r"\S*python\S*\s+\S*/(?:request_|req)(\d+)\.py", args)
+        if hit:
+            running[int(hit.group(1))] = {
+                "seconds": int(seconds),
+                "gb": round(int(rss) / 1048576, 1),
+            }
+    out = []
+    for r in store("requests"):
+        if r["status"] == "done" and r["id"] not in running:
+            continue
+        row = {k: r.get(k) for k in ("id", "created", "text", "version", "status")}
+        out.append(row | {"running": running.get(r["id"])})
+    return out
+
+
 def runs() -> dict:
     return {
         "live": live(),
+        "requests": request_runs(),
         "queue": queue(),
         "claim_runs": claim_runs(),
         "readings": readings(),
