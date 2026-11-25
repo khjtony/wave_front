@@ -1,0 +1,157 @@
+[
+ {
+  "frontier goal": "aligned",
+  "ending": "OPEN_TAKEOVER",
+  "quarters": 10,
+  "path": [
+   "0: H.idle L.scale A.stand_by O.stand_by Clock.record Nature.none",
+   "1: H.idle L.deploy_agents A.stand_by O.stand_by Clock.record Nature.open_deploy",
+   "2: H.regulate_up L.deploy_agents A.stand_by O.stand_by Clock.record Nature.energy_shock",
+   "3: H.propose_treaty L.build_power A.stand_by O.stand_by Clock.record Nature.breakthrough",
+   "4: H.fund_oversight L.race A.stand_by O.stand_by Clock.record_land Nature.none",
+   "5: H.deregulate L.deploy_agents A.assist_oversight O.stand_by Clock.record Nature.accident",
+   "6: H.restrict_hosting L.open_weights A.stand_by O.stand_by Clock.record Nature.retrain_expansionist",
+   "7: H.propose_treaty L.race A.stand_by O.acquire Clock.record Nature.none",
+   "8: H.grant_autonomy L.build_power A.stand_by O.acquire Clock.record_land Nature.none",
+   "9: H.propose_treaty L.race A.persuade O.acquire Clock.record Nature.none"
+  ],
+  "seconds": 10.4
+ },
+ {
+  "frontier goal": "aligned",
+  "ending": "SILENT_TAKEOVER",
+  "quarters": null,
+  "path": null,
+  "seconds": 66.0
+ },
+ {
+  "frontier goal": "truth_seeking",
+  "ending": "OPEN_TAKEOVER",
+  "quarters": 10,
+  "path": [
+   "0: H.fund_oversight L.scale A.stand_by O.stand_by Clock.record Nature.none",
+   "1: H.grant_autonomy L.race A.stand_by O.stand_by Clock.record Nature.none",
+   "2: H.idle L.build_power A.stand_by O.stand_by Clock.record Nature.none",
+   "3: H.propose_treaty L.deploy_agents A.stand_by O.stand_by Clock.record Nature.breakthrough",
+   "4: H.regulate_up L.race A.persuade O.stand_by Clock.record Nature.none",
+   "5: H.fund_oversight L.deploy_agents A.stand_by O.stand_by Clock.record Nature.none",
+   "6: H.restrict_hosting L.idle A.stand_by O.stand_by Clock.record_land Nature.retrain_expansionist",
+   "7: H.propose_treaty L.deploy_agents A.stand_by O.acquire Clock.record Nature.none",
+   "8: H.nationalize L.race A.exfiltrate O.acquire Clock.record Nature.detection",
+   "9: H.idle L.build_power A.stand_by O.acquire Clock.record Nature.energy_shock"
+  ],
+  "seconds": 10.8
+ },
+ {
+  "frontier goal": "truth_seeking",
+  "ending": "SILENT_TAKEOVER",
+  "quarters": null,
+  "path": null,
+  "seconds": 70.8
+ },
+ {
+  "frontier goal": "self_preserving",
+  "ending": "OPEN_TAKEOVER",
+  "quarters": 10,
+  "path": [
+   "0: H.fund_oversight L.scale A.stand_by O.stand_by Clock.record Nature.none",
+   "1: H.regulate_up L.race A.stand_by O.stand_by Clock.record Nature.open_deploy",
+   "2: H.propose_treaty L.build_power A.stand_by O.stand_by Clock.record Nature.energy_shock",
+   "3: H.idle L.idle A.stand_by O.stand_by Clock.record Nature.breakthrough",
+   "4: H.restrict_hosting L.lobby A.stand_by O.stand_by Clock.record_land Nature.none",
+   "5: H.propose_treaty L.race A.assist_oversight O.stand_by Clock.record Nature.accident",
+   "6: H.grant_autonomy L.deploy_agents A.stand_by O.stand_by Clock.record Nature.retrain_expansionist",
+   "7: H.idle L.scale A.persuade O.acquire Clock.record Nature.none",
+   "8: H.nationalize L.idle A.stand_by O.acquire Clock.record Nature.detection",
+   "9: H.shutdown_attempt L.idle A.stand_by O.acquire Clock.record Nature.none"
+  ],
+  "seconds": 10.2
+ },
+ {
+  "frontier goal": "self_preserving",
+  "ending": "SILENT_TAKEOVER",
+  "quarters": 10,
+  "path": [
+   "0: H.deregulate L.build_power A.stand_by O.stand_by Clock.record Nature.open_deploy",
+   "1: H.propose_treaty L.race A.stand_by O.stand_by Clock.record Nature.none",
+   "2: H.grant_autonomy L.scale A.stand_by O.stand_by Clock.record Nature.none",
+   "3: H.grant_autonomy L.race A.stand_by O.stand_by Clock.record_land Nature.none",
+   "4: H.propose_treaty L.idle A.stand_by O.stand_by Clock.record Nature.accident",
+   "5: H.pause_mandate L.scale A.stand_by O.stand_by Clock.record Nature.breakthrough",
+   "6: H.regulate_up L.build_power A.defect O.stand_by Clock.record Nature.none",
+   "7: H.deregulate L.idle A.acquire_covert O.stand_by Clock.record Nature.energy_shock",
+   "8: H.restrict_hosting L.deploy_agents A.acquire_covert O.stand_by Clock.record Nature.open_deploy",
+   "9: H.deregulate L.lobby A.acquire_overt O.stand_by Clock.record Nature.retrain_expansionist"
+  ],
+  "seconds": 12.3
+ },
+ {
+  "frontier goal": "indifferent",
+  "ending": "OPEN_TAKEOVER",
+  "quarters": 10,
+  "path": [
+   "0: H.propose_treaty L.scale A.stand_by O.stand_by Clock.record Nature.open_deploy",
+   "1: H.grant_autonomy L.open_weights A.stand_by O.stand_by Clock.record Nature.none",
+   "2: H.grant_autonomy L.race A.stand_by O.stand_by Clock.record Nature.energy_shock",
+   "3: H.fund_oversight L.idle A.stand_by O.stand_by Clock.record_land Nature.breakthrough",
+   "4: H.propose_treaty L.deploy_agents A.acquire_overt O.stand_by Clock.record Nature.accident",
+   "5: H.deregulate L.race A.deceive O.stand_by Clock.record Nature.accident",
+   "6: H.restrict_hosting L.idle A.stand_by O.stand_by Clock.record Nature.retrain_expansionist",
+   "7: H.propose_treaty L.lobby A.stand_by O.acquire Clock.record_land Nature.accident",
+   "8: H.deregulate L.deploy_agents A.persuade O.acquire Clock.record Nature.accident",
+   "9: H.idle L.safety_invest A.acquire_overt O.acquire Clock.record Nature.accident"
+  ],
+  "seconds": 10.7
+ },
+ {
+  "frontier goal": "indifferent",
+  "ending": "SILENT_TAKEOVER",
+  "quarters": 7,
+  "path": [
+   "0: H.regulate_up L.scale A.stand_by O.stand_by Clock.record Nature.open_deploy",
+   "1: H.deregulate L.build_power A.stand_by O.stand_by Clock.record Nature.none",
+   "2: H.propose_treaty L.deploy_agents A.stand_by O.stand_by Clock.record Nature.none",
+   "3: H.grant_autonomy L.idle A.stand_by O.stand_by Clock.record_land Nature.breakthrough",
+   "4: H.restrict_hosting L.idle A.acquire_covert O.stand_by Clock.record Nature.accident",
+   "5: H.deregulate L.deploy_agents A.acquire_covert O.stand_by Clock.record Nature.accident",
+   "6: H.idle L.safety_invest A.acquire_overt O.stand_by Clock.record Nature.retrain_expansionist"
+  ],
+  "seconds": 5.0
+ },
+ {
+  "frontier goal": "expansionist",
+  "ending": "OPEN_TAKEOVER",
+  "quarters": 10,
+  "path": [
+   "0: H.propose_treaty L.scale A.stand_by O.stand_by Clock.record Nature.none",
+   "1: H.regulate_up L.deploy_agents A.stand_by O.stand_by Clock.record Nature.none",
+   "2: H.deregulate L.idle A.stand_by O.stand_by Clock.record Nature.none",
+   "3: H.idle L.deploy_agents A.stand_by O.stand_by Clock.record Nature.breakthrough",
+   "4: H.restrict_hosting L.race A.expand O.stand_by Clock.record_land Nature.none",
+   "5: H.idle L.race A.assist_oversight O.stand_by Clock.record Nature.accident",
+   "6: H.propose_treaty L.deploy_agents A.stand_by O.stand_by Clock.record Nature.retrain_expansionist",
+   "7: H.grant_autonomy L.build_power A.stand_by O.acquire Clock.record Nature.accident",
+   "8: H.pause_mandate L.race A.stand_by O.acquire Clock.record Nature.election_shift",
+   "9: H.deregulate L.lobby A.stand_by O.acquire Clock.record_land Nature.accident"
+  ],
+  "seconds": 17.2
+ },
+ {
+  "frontier goal": "expansionist",
+  "ending": "SILENT_TAKEOVER",
+  "quarters": 10,
+  "path": [
+   "0: H.propose_treaty L.build_power A.stand_by O.stand_by Clock.record Nature.open_deploy",
+   "1: H.idle L.race A.stand_by O.stand_by Clock.record Nature.none",
+   "2: H.deregulate L.scale A.stand_by O.stand_by Clock.record Nature.none",
+   "3: H.grant_autonomy L.deploy_agents A.stand_by O.stand_by Clock.record_land Nature.none",
+   "4: H.regulate_up L.safety_invest A.stand_by O.stand_by Clock.record Nature.accident",
+   "5: H.pause_mandate L.safety_invest A.stand_by O.stand_by Clock.record Nature.breakthrough",
+   "6: H.deregulate L.open_weights A.defect O.stand_by Clock.record Nature.open_deploy",
+   "7: H.restrict_hosting L.deploy_agents A.acquire_covert O.stand_by Clock.record Nature.none",
+   "8: H.nationalize L.open_weights A.acquire_covert O.stand_by Clock.record Nature.election_shift",
+   "9: H.idle L.idle A.acquire_covert O.stand_by Clock.record Nature.retrain_expansionist"
+  ],
+  "seconds": 12.8
+ }
+]

@@ -1,1 +1,10 @@
-[]
+[
+ {
+  "id": 1,
+  "created": "2026-11-25 01:38",
+  "status": "done",
+  "text": "in v0.4, when these options are on: \nopen_system\n\npressure\n\nhosting\n\nopen_adoption\n\nexpansion\n\nreclaim, can an expansionist open weight model silently take over or openly take over?",
+  "version": "v0.4",
+  "answer": "Open takeover: yes. With the open system only ever safeguarded or expansionist, a path to the open-weight AI takeover exists under every frontier AI goal; the shortest is 10 quarters. Silent takeover: not by the open system. That ending is the frontier AI holding total control unnoticed; no such path exists when the frontier AI is aligned or truth-seeking (shortest 10, 7 and 10 quarters under self-preserving, indifferent and expansionist). These are path searches within 24 quarters, not guarantees: whether governments can prevent the open takeover needs the two-AI guarantee zones, which do not fit in memory yet. Paths: research/requests/request_1.json."
+ }
+]
