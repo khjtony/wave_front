@@ -69,7 +69,7 @@ def view(cm, state) -> dict:
 
 def _cm(q: dict):
     goal = q.get("goal") or "self_preserving"
-    if goal not in catalog.GOALS:
+    if goal not in catalog.BY_ID[q["version"]].get("goals", catalog.GOALS):
         raise ValueError("unknown AI goal")
     return catalog.compiled(q["version"], q.get("knobs"), {"a_objective": goal})[1]
 

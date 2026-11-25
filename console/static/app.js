@@ -66,8 +66,8 @@ async function overview() {
   const st = Object.fromEntries(o.stages.map(s => [s.id, s]));
   show(
     h("h1", null, "Overview"),
-    h("p", { class: "lede" }, "Four staged models of governments, frontier AI companies and AI systems. Click a model to inspect it."),
-    h("div", { class: "stages" }, h("div", { class: "col" }, card(st["v0"])), h("div", { class: "col" }, card(st["v0.1"])), h("div", { class: "col" }, card(st["v0.2"]), card(st["v0.3"]))),
+    h("p", { class: "lede" }, "Five staged models of governments, frontier AI companies and AI systems. Click a model to inspect it."),
+    h("div", { class: "stages" }, h("div", { class: "col" }, card(st["v0"])), h("div", { class: "col" }, card(st["v0.1"])), h("div", { class: "col" }, card(st["v0.2"]), card(st["v0.3"])), h("div", { class: "col" }, card(st["v0.4"]))),
     h("div", { class: "legend gap" }, [["b-held", "prediction held"], ["b-bad", "did not hold"], ["b-warn", "incomplete"], ["b-idle", "not run"]].map(([c, t]) => h("span", null, h("i", { class: c }), t))),
     h("div", { class: "grid g3 gap" },
       h("div", { class: "panel" }, h("h2", null, "Running now"),
@@ -292,8 +292,8 @@ async function explore() {
   const req = h("textarea", { id: "req", placeholder: "Ask for a run or an exploration, for example: on v0.1, can governments alone keep control if oversight starts strong?" });
   show(h("h1", null, "Explore"),
     h("p", { class: "lede" }, "Step any model by hand from S0 or Srt, or search it for a shortest path. Older, smaller models are quick to inspect and easier to discuss."),
-    h("div", { class: "panel row" }, h("label", null, "Model ", sel(E.version, o.stages.map(s => [s.id, s.title]), v => { E.version = v; E.knobs = {}; })),
-      h("label", null, "AI goal ", sel(E.goal, GOALS.map(g => [g, GOAL_NAME[g]]), v => { E.goal = v; })), h("label", null, "Start from ", sel(E.origin, [["s0", "S0"], ["srt", "Srt"]], v => { E.origin = v; })),
+    h("div", { class: "panel row" }, h("label", null, "Model ", sel(E.version, o.stages.map(s => [s.id, s.title]), v => { E.version = v; E.knobs = {}; if (!o.stages.find(s => s.id === v).goals.includes(E.goal)) E.goal = "self_preserving"; })),
+      h("label", null, "AI goal ", sel(E.goal, o.stages.find(s => s.id === E.version).goals.map(g => [g, GOAL_NAME[g]]), v => { E.goal = v; })), h("label", null, "Start from ", sel(E.origin, [["s0", "S0"], ["srt", "Srt"]], v => { E.origin = v; })),
       m.knob_spec.filter(k => k.kind === "bool").map(k => h("label", { class: "small row" }, h("input", { type: "checkbox", checked: m.knobs[k.name], onchange: e => { E.knobs[k.name] = e.target.checked; redo(); } }), h("code", null, k.name))),
       h("button", { onclick: redo }, "Restart")),
     h("div", { class: "panel gap" }, h("div", { class: "row" }, h("h2", { style: "margin:0" }, "Path"), target, h("button", { onclick: () => search(target.value), disabled: !!E.busy }, "Find a shortest path"), h("span", { class: "muted small" }, E.busy)),

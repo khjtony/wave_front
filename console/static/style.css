@@ -55,7 +55,7 @@ textarea { width: 100%; min-height: 70px; }
 .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(96px, 1fr)); gap: 12px; }
 
 /* stages */
-.stages { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 34px; align-items: center; }
+.stages { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 28px; align-items: center; }
 .stages .col { display: grid; gap: 14px; }
 .stage { position: relative; cursor: pointer; }
 .stage:hover { border-color: var(--accent); }

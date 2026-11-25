@@ -110,6 +110,22 @@ VERSIONS: list[dict] = [
         "reports": ["reports/agi_v0_3_part_a_2026-11-18.html"],
         "knobs": ["open_system", "pressure", "hosting", "open_adoption", "treaty_delay"],
     },
+    {
+        "id": "v0.4",
+        "title": "AGI v0.4",
+        "module": "models.agi_v0_4.v0_4",
+        "date": "2026-11-23",
+        "family": "X",
+        "summary": "v0.3 with a fifth AI goal, expansionist, and a footprint for each AI system:"
+        " its share of computing power, energy, manufacturing and land.",
+        "scenarios": "tests/agi_v0_4/scenarios",
+        "parts": ["reports/agi_v0_4_parts.jsonl"],
+        "doc": "docs/agi_v0_4.html",
+        "reports": [],
+        "knobs": ["open_system", "pressure", "hosting", "open_adoption", "treaty_delay"]
+        + ["expansion", "reclaim", "ceiling", "counter"],
+        "goals": [*GOALS, "expansionist"],
+    },
 ]
 BY_ID = {v["id"]: v for v in VERSIONS}
 
@@ -310,21 +326,24 @@ def describe(version: str, knobs: dict | None = None) -> dict:
 @lru_cache(maxsize=1)
 def stages() -> list[dict]:
     """Every version with its size and what it adds to the one before."""
-    out, before = [], None
+    out: list[dict] = []
+    seen: dict[str, tuple[set, set]] = {}
+    # v0.2 and v0.3 both start from v0.1; v0.4 starts from v0.3.
+    parents = {"v0": None, "v0.1": "v0", "v0.2": "v0.1", "v0.3": "v0.1", "v0.4": "v0.3"}
     for v in VERSIONS:
         d = describe(v["id"])
         acts = {f"{a['name']}.{x['name']}" for a in d["actors"] for x in a["actions"]}
         names = {x["name"] for x in d["variables"] if x["origin"] == "var"}
+        seen[v["id"]] = (acts, names)
+        before = seen.get(parents[v["id"]] or "")
         row = {k: v[k] for k in ("id", "title", "date", "family", "summary", "doc", "reports")}
         row["budget"] = d["budget"]
         row["players"] = [a["name"] for a in d["actors"]]
+        row["goals"] = list(v.get("goals", GOALS))
         row["added_actions"] = sorted(acts - before[0]) if before else []
         row["removed_actions"] = sorted(before[0] - acts) if before else []
         row["added_variables"] = sorted(names - before[1]) if before else []
-        # v0.2 and v0.3 both start from v0.1, so each is compared with v0.1.
-        if v["id"] in ("v0", "v0.1"):
-            before = (acts, names)
-        row["compared_with"] = {"v0": None, "v0.1": "v0", "v0.2": "v0.1", "v0.3": "v0.1"}[v["id"]]
+        row["compared_with"] = parents[v["id"]]
         out.append(row)
     return out
 
