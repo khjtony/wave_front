@@ -1,0 +1,247 @@
+{
+ "queries": [
+  {
+   "source": "X",
+   "question": "open_weights",
+   "side": "A",
+   "query": "(\"open weights\" OR \"open-weight\" OR \"open source AI\" OR \"open-source AI\" OR \"open models\") (benefit OR benefits OR innovation OR democratize OR \"need more\" OR \"concentration of power\" OR transparency) -is:retweet -is:reply lang:en",
+   "window": "last 7 days, relevancy, 100 results",
+   "returned": 100,
+   "error": null
+  },
+  {
+   "source": "X",
+   "question": "open_weights",
+   "side": "B",
+   "query": "(\"open weights\" OR \"open-weight\" OR \"open source AI\" OR \"open-source AI\" OR \"open models\") (risk OR risks OR dangerous OR ban OR restrict OR \"national security\" OR misuse) -is:retweet -is:reply lang:en",
+   "window": "last 7 days, relevancy, 100 results",
+   "returned": 99,
+   "error": null
+  },
+  {
+   "source": "X",
+   "question": "regulation",
+   "side": "A",
+   "query": "(\"AI regulation\" OR \"AI safety law\" OR \"AI rules\" OR \"AI bill\" OR \"regulate AI\") (voluntary OR \"self-regulation\" OR commitments OR preempt OR moratorium OR \"light touch\") -is:retweet -is:reply lang:en",
+   "window": "last 7 days, relevancy, 100 results",
+   "returned": 50,
+   "error": null
+  },
+  {
+   "source": "X",
+   "question": "regulation",
+   "side": "B",
+   "query": "(\"AI regulation\" OR \"AI safety law\" OR \"AI rules\" OR \"AI bill\" OR \"regulate AI\") (mandatory OR binding OR enforce OR penalties OR \"signed into law\" OR \"takes effect\") -is:retweet -is:reply lang:en",
+   "window": "last 7 days, relevancy, 100 results",
+   "returned": 55,
+   "error": null
+  },
+  {
+   "source": "Hacker News",
+   "question": "open_weights",
+   "side": "A",
+   "query": "open weights benefits",
+   "window": "stories since 2026-11-09",
+   "returned": 0,
+   "note": "first attempt: matched story text loosely (open weights) or nothing (regulation); results not used"
+  },
+  {
+   "source": "Hacker News",
+   "question": "open_weights",
+   "side": "A",
+   "query": "open source AI wins",
+   "window": "stories since 2026-11-09",
+   "returned": 27,
+   "note": "first attempt: matched story text loosely (open weights) or nothing (regulation); results not used"
+  },
+  {
+   "source": "Hacker News",
+   "question": "open_weights",
+   "side": "B",
+   "query": "open weights risks",
+   "window": "stories since 2026-11-09",
+   "returned": 2,
+   "note": "first attempt: matched story text loosely (open weights) or nothing (regulation); results not used"
+  },
+  {
+   "source": "Hacker News",
+   "question": "open_weights",
+   "side": "B",
+   "query": "ban open source AI",
+   "window": "stories since 2026-11-09",
+   "returned": 26,
+   "note": "first attempt: matched story text loosely (open weights) or nothing (regulation); results not used"
+  },
+  {
+   "source": "Hacker News",
+   "question": "regulation",
+   "side": "A",
+   "query": "AI regulation voluntary",
+   "window": "stories since 2026-11-09",
+   "returned": 0,
+   "note": "first attempt: matched story text loosely (open weights) or nothing (regulation); results not used"
+  },
+  {
+   "source": "Hacker News",
+   "question": "regulation",
+   "side": "A",
+   "query": "AI regulation preemption",
+   "window": "stories since 2026-11-09",
+   "returned": 0,
+   "note": "first attempt: matched story text loosely (open weights) or nothing (regulation); results not used"
+  },
+  {
+   "source": "Hacker News",
+   "question": "regulation",
+   "side": "B",
+   "query": "AI regulation mandatory",
+   "window": "stories since 2026-11-09",
+   "returned": 0,
+   "note": "first attempt: matched story text loosely (open weights) or nothing (regulation); results not used"
+  },
+  {
+   "source": "Hacker News",
+   "question": "regulation",
+   "side": "B",
+   "query": "AI safety law enforcement",
+   "window": "stories since 2026-11-09",
+   "returned": 0,
+   "note": "first attempt: matched story text loosely (open weights) or nothing (regulation); results not used"
+  },
+  {
+   "source": "Hacker News",
+   "question": "open_weights",
+   "side": "both (the same queries serve both sides; a story is assigned by its content)",
+   "query": "open weights",
+   "window": "story titles since 2026-11-09",
+   "returned": 34
+  },
+  {
+   "source": "Hacker News",
+   "question": "open_weights",
+   "side": "both (the same queries serve both sides; a story is assigned by its content)",
+   "query": "open-weight",
+   "window": "story titles since 2026-11-09",
+   "returned": 35
+  },
+  {
+   "source": "Hacker News",
+   "question": "open_weights",
+   "side": "both (the same queries serve both sides; a story is assigned by its content)",
+   "query": "open source AI",
+   "window": "story titles since 2026-11-09",
+   "returned": 50
+  },
+  {
+   "source": "Hacker News",
+   "question": "open_weights",
+   "side": "both (the same queries serve both sides; a story is assigned by its content)",
+   "query": "open model",
+   "window": "story titles since 2026-11-09",
+   "returned": 50
+  },
+  {
+   "source": "Hacker News",
+   "question": "regulation",
+   "side": "both (the same queries serve both sides; a story is assigned by its content)",
+   "query": "AI regulation",
+   "window": "story titles since 2026-11-09",
+   "returned": 2
+  },
+  {
+   "source": "Hacker News",
+   "question": "regulation",
+   "side": "both (the same queries serve both sides; a story is assigned by its content)",
+   "query": "AI law",
+   "window": "story titles since 2026-11-09",
+   "returned": 30
+  },
+  {
+   "source": "Hacker News",
+   "question": "regulation",
+   "side": "both (the same queries serve both sides; a story is assigned by its content)",
+   "query": "AI safety bill",
+   "window": "story titles since 2026-11-09",
+   "returned": 0
+  },
+  {
+   "source": "Hacker News",
+   "question": "regulation",
+   "side": "both (the same queries serve both sides; a story is assigned by its content)",
+   "query": "regulate AI",
+   "window": "story titles since 2026-11-09",
+   "returned": 0
+  },
+  {
+   "source": "news and primary pages",
+   "question": "open_weights",
+   "side": "A",
+   "query": "open-weight AI models benefits argument November 2026 open source AI should continue",
+   "window": "web search, one query per side",
+   "returned": "about 9 links and a summary"
+  },
+  {
+   "source": "news and primary pages",
+   "question": "open_weights",
+   "side": "B",
+   "query": "open-weight AI models risks restrict ban argument November 2026 national security safeguards stripped",
+   "window": "web search, one query per side",
+   "returned": "about 9 links and a summary"
+  },
+  {
+   "source": "news and primary pages",
+   "question": "regulation",
+   "side": "A",
+   "query": "frontier AI regulation still voluntary commitments no binding federal rule United States November 2026 preemption",
+   "window": "web search, one query per side",
+   "returned": "about 9 links and a summary"
+  },
+  {
+   "source": "news and primary pages",
+   "question": "regulation",
+   "side": "B",
+   "query": "frontier AI law in force penalties enforcement developers mandatory November 2026 California SB 53 EU AI Act general-purpose obligations",
+   "window": "web search, one query per side",
+   "returned": "about 9 links and a summary"
+  },
+  {
+   "source": "industry actions",
+   "question": "open_weights",
+   "side": "A",
+   "query": "company releases open weights frontier model November 2026 Apache license announcement",
+   "window": "web search, one query per side",
+   "returned": "about 9 links and a summary"
+  },
+  {
+   "source": "industry actions",
+   "question": "open_weights",
+   "side": "B",
+   "query": "company or government restricts removes open-weight AI models November 2026 phase out policy decision",
+   "window": "web search, one query per side",
+   "returned": "about 9 links and a summary"
+  },
+  {
+   "source": "industry actions",
+   "question": "regulation",
+   "side": "A",
+   "query": "AI companies sign voluntary safety accord commitments November 2026 frontier labs pledge",
+   "window": "web search, one query per side",
+   "returned": "about 9 links and a summary"
+  },
+  {
+   "source": "industry actions",
+   "question": "regulation",
+   "side": "B",
+   "query": "regulator enforcement action fine order against frontier AI developer November 2026 attorney general AI safety law",
+   "window": "web search, one query per side",
+   "returned": "about 9 links and a summary"
+  }
+ ],
+ "notes": [
+  "Hacker News returned no story about the status of regulation for either side: no card.",
+  "Several X posts returned by a side's query argue the other side; each card is placed by its content and says so.",
+  "Items older than the window are carded only when they are the rule or framework in force during it, or a rescored inbox item; each says so.",
+  "Inbox items not about these two questions (2, 3, 6, 12, 15, 16) are not carded.",
+  "The side-A open-weights web search returned mostly material older than the window (reports of 2025 and early 2026); it is not carded."
+ ]
+}

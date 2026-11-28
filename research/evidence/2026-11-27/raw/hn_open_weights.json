@@ -1,0 +1,1019 @@
+[
+ {
+  "id": "50561508",
+  "title": "Pete Warden on local AI, open models, voice interfaces, the future of hardware",
+  "url": "https://thedataexchange.media/pete-warden-moonshine/",
+  "points": 274,
+  "comments": 254,
+  "at": "2026-11-19T15:38:12Z",
+  "hn": "https://news.ycombinator.com/item?id=50561508"
+ },
+ {
+  "id": "50520796",
+  "title": "FBI says Artex AI open-source hacking tool used to breach networks",
+  "url": "https://techcrunch.com/2026/11/16/fbi-says-artex-ai-open-source-hacking-tool-used-to-breach-networks-in-under-three-hours/",
+  "points": 51,
+  "comments": 15,
+  "at": "2026-11-16T18:12:21Z",
+  "hn": "https://news.ycombinator.com/item?id=50520796"
+ },
+ {
+  "id": "50547223",
+  "title": "Jensen Huang's fall hits 'open' models in boost to Anthropic and OpenAI",
+  "url": "https://www.ft.com/content/418ca885-fbcf-4b9f-a8b9-2bd60b543fc5",
+  "points": 47,
+  "comments": 25,
+  "at": "2026-11-18T15:08:21Z",
+  "hn": "https://news.ycombinator.com/item?id=50547223"
+ },
+ {
+  "id": "50588396",
+  "title": "Anyone can easily use private, open weight models",
+  "url": "https://micahflee.com/heres-how-anyone-can-easily-use-private-open-weight-models/",
+  "points": 29,
+  "comments": 8,
+  "at": "2026-11-21T12:11:54Z",
+  "hn": "https://news.ycombinator.com/item?id=50588396"
+ },
+ {
+  "id": "50496590",
+  "title": "Open-source AI without Jensen",
+  "url": "https://www.interconnects.ai/p/open-source-ai-without-jensen",
+  "points": 27,
+  "comments": 7,
+  "at": "2026-11-14T12:44:01Z",
+  "hn": "https://news.ycombinator.com/item?id=50496590"
+ },
+ {
+  "id": "50543119",
+  "title": "Torrent Infra Needs to Modernize Immediately for Open Models to Survive",
+  "url": "https://pirateface.co/articles/pirate-face-cli",
+  "points": 26,
+  "comments": 2,
+  "at": "2026-11-18T07:53:22Z",
+  "hn": "https://news.ycombinator.com/item?id=50543119"
+ },
+ {
+  "id": "50471673",
+  "title": "Hugging Face CEO vows to keep fighting for open-source AI",
+  "url": "https://techcrunch.com/2026/11/12/hugging-face-ceo-vows-to-keep-fighting-for-open-source-ai-after-jensen-huangs-exit/",
+  "points": 21,
+  "comments": 2,
+  "at": "2026-11-12T18:17:29Z",
+  "hn": "https://news.ycombinator.com/item?id=50471673"
+ },
+ {
+  "id": "50613084",
+  "title": "Kolibri 1.1: English-German open-weight model with sparse attention",
+  "url": "https://aleph-alpha.com/en/blog/kolibri-1-1/",
+  "points": 19,
+  "comments": 2,
+  "at": "2026-11-23T15:08:43Z",
+  "hn": "https://news.ycombinator.com/item?id=50613084"
+ },
+ {
+  "id": "50494668",
+  "title": "Ex-OpenAI researcher finds Blackwell signatures in open-weight models",
+  "url": "https://twitter.com/willdepue/status/2120992457630326841",
+  "points": 18,
+  "comments": 1,
+  "at": "2026-11-14T06:50:21Z",
+  "hn": "https://news.ycombinator.com/item?id=50494668"
+ },
+ {
+  "id": "50648668",
+  "title": "The Near-Coup at Nvidia and the War on Open-Source AI",
+  "url": "https://brownstone.org/articles/the-near-coup-at-nvidia-and-the-war-on-open-source-ai/",
+  "points": 11,
+  "comments": 1,
+  "at": "2026-11-25T22:41:09Z",
+  "hn": "https://news.ycombinator.com/item?id=50648668"
+ },
+ {
+  "id": "50509654",
+  "title": "Live P2P Open Model Sharing",
+  "url": "https://pirateface.co/activity",
+  "points": 11,
+  "comments": 0,
+  "at": "2026-11-15T19:05:14Z",
+  "hn": "https://news.ycombinator.com/item?id=50509654"
+ },
+ {
+  "id": "50534302",
+  "title": "CLI for torrenting open weight AI models",
+  "url": "https://pirateface.co/articles/pirate-face-cli",
+  "points": 10,
+  "comments": 1,
+  "at": "2026-11-17T16:53:07Z",
+  "hn": "https://news.ycombinator.com/item?id=50534302"
+ },
+ {
+  "id": "50439141",
+  "title": "Show HN: Cosh \u2013 An open-source AI agent orchestrator",
+  "url": "https://github.com/DiegoZaluski/co-sh",
+  "points": 10,
+  "comments": 4,
+  "at": "2026-11-10T12:05:13Z",
+  "hn": "https://news.ycombinator.com/item?id=50439141"
+ },
+ {
+  "id": "50484682",
+  "title": "Show HN: Langfuse AI Gateway, open source rust gateway to trace every LLM call",
+  "url": "https://github.com/langfuse/langfuse/tree/main/ai-gateway",
+  "points": 9,
+  "comments": 1,
+  "at": "2026-11-13T15:10:20Z",
+  "hn": "https://news.ycombinator.com/item?id=50484682"
+ },
+ {
+  "id": "50591687",
+  "title": "David Friedberg: Restricting Open Source AI Is a Path to Tyranny",
+  "url": "https://twitter.com/theallinpod/status/2123994998156722681",
+  "points": 8,
+  "comments": 0,
+  "at": "2026-11-21T17:45:41Z",
+  "hn": "https://news.ycombinator.com/item?id=50591687"
+ },
+ {
+  "id": "50496631",
+  "title": "Show HN: Timon, an open-source AI workstation for coordinating agents",
+  "url": "https://github.com/ai-timon/timon",
+  "points": 7,
+  "comments": 0,
+  "at": "2026-11-14T12:52:01Z",
+  "hn": "https://news.ycombinator.com/item?id=50496631"
+ },
+ {
+  "id": "50588860",
+  "title": "Mozilla Developer Spotlight: WebBrain \u2013 Open-source local-first AI browser agent",
+  "url": "https://blog.mozilla.org/addons/2026/11/20/developer-spotlight-webbrain/",
+  "points": 6,
+  "comments": 3,
+  "at": "2026-11-21T13:09:10Z",
+  "hn": "https://news.ycombinator.com/item?id=50588860"
+ },
+ {
+  "id": "50534542",
+  "title": "Show HN: Solarian \u2013 Open-source Python framework for AI robots",
+  "url": "https://solarian.dev",
+  "points": 6,
+  "comments": 2,
+  "at": "2026-11-17T17:08:00Z",
+  "hn": "https://news.ycombinator.com/item?id=50534542"
+ },
+ {
+  "id": "50542843",
+  "title": "We built Australia's own AI model, and today it's open to the world",
+  "url": "https://twitter.com/MGately_au/status/2122780345947017287",
+  "points": 6,
+  "comments": 4,
+  "at": "2026-11-18T07:08:02Z",
+  "hn": "https://news.ycombinator.com/item?id=50542843"
+ },
+ {
+  "id": "50636313",
+  "title": "Huang's return to Nvidia brings open-weight AI debate to forefront in Washington",
+  "url": "https://www.reuters.com/world/china/huangs-return-nvidia-brings-open-weight-ai-debate-forefront-washington-2026-11-24/",
+  "points": 5,
+  "comments": 0,
+  "at": "2026-11-24T23:26:44Z",
+  "hn": "https://news.ycombinator.com/item?id=50636313"
+ },
+ {
+  "id": "50477980",
+  "title": "Octen-WebGR, a 4B model that memorized 200M URLs (open weights, live demo)",
+  "url": "https://huggingface.co/Octen/Octen-WebGR-4B",
+  "points": 5,
+  "comments": 0,
+  "at": "2026-11-13T03:45:25Z",
+  "hn": "https://news.ycombinator.com/item?id=50477980"
+ },
+ {
+  "id": "50547934",
+  "title": "Show HN: Dez \u2013 plaintext open source AI multimedia studio",
+  "url": "https://github.com/taoeffect/dez",
+  "points": 5,
+  "comments": 0,
+  "at": "2026-11-18T16:01:28Z",
+  "hn": "https://news.ycombinator.com/item?id=50547934"
+ },
+ {
+  "id": "50518918",
+  "title": "Show HN: CoderBaba \u2013 An open-source AI Coding Agent with security scanning",
+  "url": "https://coderbaba.si",
+  "points": 5,
+  "comments": 0,
+  "at": "2026-11-16T15:51:06Z",
+  "hn": "https://news.ycombinator.com/item?id=50518918"
+ },
+ {
+  "id": "50459075",
+  "title": "Pundit Claims \u2013 Open-Source Register of AI Claims by Gary Marcus and Ed Zitron",
+  "url": "https://punditclaims.ai/",
+  "points": 5,
+  "comments": 3,
+  "at": "2026-11-11T21:39:36Z",
+  "hn": "https://news.ycombinator.com/item?id=50459075"
+ },
+ {
+  "id": "50586323",
+  "title": "Show HN: Musset, open-source Scrivener alternative with an AI that never writes",
+  "url": "https://github.com/Musset-App/musset",
+  "points": 5,
+  "comments": 2,
+  "at": "2026-11-21T05:42:49Z",
+  "hn": "https://news.ycombinator.com/item?id=50586323"
+ },
+ {
+  "id": "50639831",
+  "title": "Magnitude \u2013 Run powerful open models on the hardware you own",
+  "url": "https://magnitude.dev",
+  "points": 5,
+  "comments": 0,
+  "at": "2026-11-25T08:08:26Z",
+  "hn": "https://news.ycombinator.com/item?id=50639831"
+ },
+ {
+  "id": "50528475",
+  "title": "Show HN: Harness for building/cloning SaaS using open-weight models",
+  "url": "https://neander.ai/",
+  "points": 4,
+  "comments": 6,
+  "at": "2026-11-17T07:21:58Z",
+  "hn": "https://news.ycombinator.com/item?id=50528475"
+ },
+ {
+  "id": "50640171",
+  "title": "Huang's return to Nvidia brings open-weight AI debate to forefront in Washington",
+  "url": "https://www.reuters.com/world/china/huangs-return-nvidia-brings-open-weight-ai-debate-forefront-washington-2026-11-24/",
+  "points": 4,
+  "comments": 0,
+  "at": "2026-11-25T09:07:00Z",
+  "hn": "https://news.ycombinator.com/item?id=50640171"
+ },
+ {
+  "id": "50520212",
+  "title": "Hugging Face and OpenRouter join forces to make open-weight models easy to run",
+  "url": "https://huggingface.co/blog/openrouter",
+  "points": 4,
+  "comments": 0,
+  "at": "2026-11-16T17:29:41Z",
+  "hn": "https://news.ycombinator.com/item?id=50520212"
+ },
+ {
+  "id": "50441764",
+  "title": "MiniMax H3-Image Released, an Open-Weight Image Model Built on H3",
+  "url": "https://huggingface.co/MiniMaxAI/MiniMax-H3-Image",
+  "points": 4,
+  "comments": 0,
+  "at": "2026-11-10T15:29:36Z",
+  "hn": "https://news.ycombinator.com/item?id=50441764"
+ },
+ {
+  "id": "50659728",
+  "title": "Gigachat 4 \u2013 Openweight from Russian Federation",
+  "url": "https://huggingface.co/collections/ai-sage/gigachat-4",
+  "points": 4,
+  "comments": 1,
+  "at": "2026-11-26T20:58:11Z",
+  "hn": "https://news.ycombinator.com/item?id=50659728"
+ },
+ {
+  "id": "50544597",
+  "title": "Nvidia says its open source AI strategy remains intact after Jensen Huang's exit",
+  "url": "https://techcrunch.com/2026/11/17/nvidia-says-its-open-source-ai-strategy-remains-intact-after-jensen-huangs-exit/",
+  "points": 4,
+  "comments": 3,
+  "at": "2026-11-18T10:46:34Z",
+  "hn": "https://news.ycombinator.com/item?id=50544597"
+ },
+ {
+  "id": "50439073",
+  "title": "Show HN: Chatty \u2013 Open-source AI support engine with WooCommerce sync",
+  "url": "https://github.com/PersonaliAI/chatty",
+  "points": 4,
+  "comments": 0,
+  "at": "2026-11-10T11:57:55Z",
+  "hn": "https://news.ycombinator.com/item?id=50439073"
+ },
+ {
+  "id": "50429295",
+  "title": "Anarlog: Open-Source Granola AI Alternative",
+  "url": "https://github.com/fastrepl/anarlog",
+  "points": 4,
+  "comments": 0,
+  "at": "2026-11-09T18:16:06Z",
+  "hn": "https://news.ycombinator.com/item?id=50429295"
+ },
+ {
+  "id": "50526622",
+  "title": "Localix Studio \u2013 an open-source Cursor alternative for any model",
+  "url": "https://github.com/localixai/localix-studio",
+  "points": 4,
+  "comments": 0,
+  "at": "2026-11-17T02:23:35Z",
+  "hn": "https://news.ycombinator.com/item?id=50526622"
+ },
+ {
+  "id": "50541404",
+  "title": "Hugging Face and OpenRouter join forces to make open-weight models easy to run",
+  "url": "https://huggingface.co/blog/openrouter",
+  "points": 3,
+  "comments": 2,
+  "at": "2026-11-18T03:13:30Z",
+  "hn": "https://news.ycombinator.com/item?id=50541404"
+ },
+ {
+  "id": "50531822",
+  "title": "Ask HN: Do you think open weight models will continue to remain as cheap?",
+  "url": null,
+  "points": 3,
+  "comments": 2,
+  "at": "2026-11-17T14:24:54Z",
+  "hn": "https://news.ycombinator.com/item?id=50531822"
+ },
+ {
+  "id": "50594171",
+  "title": "Cursor may stop using Chinese open-weights AI models",
+  "url": "https://casrai.org/news/house-committees-cursor-chinese-open-weight-ai-models-report-2026",
+  "points": 3,
+  "comments": 1,
+  "at": "2026-11-21T22:14:48Z",
+  "hn": "https://news.ycombinator.com/item?id=50594171"
+ },
+ {
+  "id": "50589902",
+  "title": "Exposing the Systematic Vulnerability of Open-Weight Models to Prefill Attacks",
+  "url": "https://www.far.ai/research/prefill-level-jailbreak-a-black-box-risk-analysis-of-large-language-models",
+  "points": 3,
+  "comments": 0,
+  "at": "2026-11-21T15:02:59Z",
+  "hn": "https://news.ycombinator.com/item?id=50589902"
+ },
+ {
+  "id": "50583519",
+  "title": "Cursor tells Congress it's considering phasing out foreign open-weight AI models",
+  "url": "https://www.cnbc.com/2026/11/20/cursor-chinese-ai-models-geopolitical-risk.html",
+  "points": 3,
+  "comments": 0,
+  "at": "2026-11-20T22:55:03Z",
+  "hn": "https://news.ycombinator.com/item?id=50583519"
+ },
+ {
+  "id": "50439363",
+  "title": "Serving open-weight models at scale with vLLM",
+  "url": "https://ngrok.com/blog/vllm",
+  "points": 3,
+  "comments": 0,
+  "at": "2026-11-10T12:27:12Z",
+  "hn": "https://news.ycombinator.com/item?id=50439363"
+ },
+ {
+  "id": "50518837",
+  "title": "Show HN: Grapim, open-source AI code review that runs on your own model key",
+  "url": "https://github.com/grapim/grapim",
+  "points": 3,
+  "comments": 1,
+  "at": "2026-11-16T15:45:17Z",
+  "hn": "https://news.ycombinator.com/item?id=50518837"
+ },
+ {
+  "id": "50550896",
+  "title": "Show HN: Intrusive.ai \u2013 open-source AI attack simulation",
+  "url": "https://intrusive.ai/",
+  "points": 3,
+  "comments": 0,
+  "at": "2026-11-18T19:29:25Z",
+  "hn": "https://news.ycombinator.com/item?id=50550896"
+ },
+ {
+  "id": "50548013",
+  "title": "Show HN: RedCat an open-source AI agent for your desktop",
+  "url": "https://github.com/manamaliahmad/redcat",
+  "points": 3,
+  "comments": 0,
+  "at": "2026-11-18T16:07:19Z",
+  "hn": "https://news.ycombinator.com/item?id=50548013"
+ },
+ {
+  "id": "50601816",
+  "title": "Nyno 10 open-source release: Derisk AI. Separate Code from Configuration",
+  "url": "https://github.com/flowagi-eu/nyno",
+  "points": 3,
+  "comments": 2,
+  "at": "2026-11-22T17:32:04Z",
+  "hn": "https://news.ycombinator.com/item?id=50601816"
+ },
+ {
+  "id": "50516969",
+  "title": "HN: Guru \u2013 an uncensored, privacy focused open-source self-evolving AI Framework",
+  "url": "https://github.com/GuruProduction/GURUbyUnusLumen",
+  "points": 3,
+  "comments": 0,
+  "at": "2026-11-16T12:38:59Z",
+  "hn": "https://news.ycombinator.com/item?id=50516969"
+ },
+ {
+  "id": "50461775",
+  "title": "Show HN: Lynx \u2013 open-source fully-customizable AI workspace",
+  "url": "https://github.com/yakkomajuri/lynx",
+  "points": 3,
+  "comments": 0,
+  "at": "2026-11-12T01:26:11Z",
+  "hn": "https://news.ycombinator.com/item?id=50461775"
+ },
+ {
+  "id": "50593563",
+  "title": "Air Office \u2013 Open-source local-first desktop workspace for AI safety research",
+  "url": "https://gyrogovernance.com/air-office/",
+  "points": 3,
+  "comments": 0,
+  "at": "2026-11-21T20:57:01Z",
+  "hn": "https://news.ycombinator.com/item?id=50593563"
+ },
+ {
+  "id": "50464985",
+  "title": "For my first post, I'm sharing a letter Nvidia signed on why open models matter",
+  "url": "https://twitter.com/JensenHuang/status/2080643682408321103",
+  "points": 3,
+  "comments": 2,
+  "at": "2026-11-12T09:31:41Z",
+  "hn": "https://news.ycombinator.com/item?id=50464985"
+ },
+ {
+  "id": "50566227",
+  "title": "Five agent chores: $258 on a top model, $11 on open models",
+  "url": "https://bitdepth.dev/blog/five-routine-ai-jobs",
+  "points": 3,
+  "comments": 0,
+  "at": "2026-11-19T20:54:38Z",
+  "hn": "https://news.ycombinator.com/item?id=50566227"
+ },
+ {
+  "id": "50428100",
+  "title": "Postware \u2013 Free hosted open data models, MCP and skills to replace SaaS",
+  "url": "https://postware.ai",
+  "points": 3,
+  "comments": 0,
+  "at": "2026-11-09T16:49:08Z",
+  "hn": "https://news.ycombinator.com/item?id=50428100"
+ },
+ {
+  "id": "50661427",
+  "title": "SolDrift: Open-source nowcasting model for Australia's solar farms",
+  "url": "https://trajectorylabs.com.au/soldrift/",
+  "points": 3,
+  "comments": 0,
+  "at": "2026-11-27T00:37:02Z",
+  "hn": "https://news.ycombinator.com/item?id=50661427"
+ },
+ {
+  "id": "50454696",
+  "title": "KORA: A New Desktop OS for Age of Intelligence, Open to Every Model and Agent",
+  "url": "https://press.kora.fun/",
+  "points": 3,
+  "comments": 0,
+  "at": "2026-11-11T15:39:44Z",
+  "hn": "https://news.ycombinator.com/item?id=50454696"
+ },
+ {
+  "id": "50572316",
+  "title": "Characterizing the Ecosystem of Open-Source Uncensored Large Language Models",
+  "url": "https://dl.acm.org/doi/epdf/10.1145/3777912.3839799",
+  "points": 3,
+  "comments": 0,
+  "at": "2026-11-20T09:37:44Z",
+  "hn": "https://news.ycombinator.com/item?id=50572316"
+ },
+ {
+  "id": "50533464",
+  "title": "Ask HN: Are open-weight models like Qwen used in production?",
+  "url": null,
+  "points": 2,
+  "comments": 2,
+  "at": "2026-11-17T16:10:17Z",
+  "hn": "https://news.ycombinator.com/item?id=50533464"
+ },
+ {
+  "id": "50519576",
+  "title": "Anyone can easily use private, open weight models",
+  "url": "https://micahflee.com/heres-how-anyone-can-easily-use-private-open-weight-models/",
+  "points": 2,
+  "comments": 1,
+  "at": "2026-11-16T16:39:07Z",
+  "hn": "https://news.ycombinator.com/item?id=50519576"
+ },
+ {
+  "id": "50649630",
+  "title": "Pushing the US Open-Weight Frontier",
+  "url": "https://www.harvey.ai/blog/applying-the-harvey-tenet-training-recipe-to-us-open-weight-models",
+  "points": 2,
+  "comments": 0,
+  "at": "2026-11-26T00:17:18Z",
+  "hn": "https://news.ycombinator.com/item?id=50649630"
+ },
+ {
+  "id": "50639323",
+  "title": "The US-China Open-Weight Feedback Loop",
+  "url": "https://sebastianraschka.com/blog/2026/us-china-open-weight-feedback-loop.html",
+  "points": 2,
+  "comments": 0,
+  "at": "2026-11-25T06:50:07Z",
+  "hn": "https://news.ycombinator.com/item?id=50639323"
+ },
+ {
+  "id": "50621660",
+  "title": "Show HN: A SoTA open-weight looped decision model",
+  "url": "https://www.novyn.ai/blog/announcing-novyn-looped-decision-0.9/",
+  "points": 2,
+  "comments": 0,
+  "at": "2026-11-24T00:21:36Z",
+  "hn": "https://news.ycombinator.com/item?id=50621660"
+ },
+ {
+  "id": "50590286",
+  "title": "Analysis of Local Open-Weight LLM Agents on Vulnerability-Reproduction Tasks",
+  "url": "https://arxiv.org/abs/2611.06257",
+  "points": 2,
+  "comments": 0,
+  "at": "2026-11-21T15:39:28Z",
+  "hn": "https://news.ycombinator.com/item?id=50590286"
+ },
+ {
+  "id": "50560947",
+  "title": "From Closed to Open-Weight LLMs: Choosing the Inference Stack for Voice AI",
+  "url": "https://github.com/KmiQ/articles/blob/main/choosing-the-inference-stack-for-voice-ai.md",
+  "points": 2,
+  "comments": 0,
+  "at": "2026-11-19T14:56:28Z",
+  "hn": "https://news.ycombinator.com/item?id=50560947"
+ },
+ {
+  "id": "50552988",
+  "title": "Updated Clairic and Clairic-flash are now open-weight",
+  "url": "https://blog.cloudflare.com/open-clairic/",
+  "points": 2,
+  "comments": 0,
+  "at": "2026-11-18T22:13:07Z",
+  "hn": "https://news.ycombinator.com/item?id=50552988"
+ },
+ {
+  "id": "50537210",
+  "title": "Deploying an Open Weights LLM as an API in Kubernetes",
+  "url": "https://www.pablols.com/posts/057_deploy_open_weights_llm_api/",
+  "points": 2,
+  "comments": 0,
+  "at": "2026-11-17T19:56:04Z",
+  "hn": "https://news.ycombinator.com/item?id=50537210"
+ },
+ {
+  "id": "50446179",
+  "title": "In open-weight AI, America is the one playing catch-up",
+  "url": "https://village.dev/blog/in-open-weight-ai-america-is-the-one-playing-catch-up/",
+  "points": 2,
+  "comments": 0,
+  "at": "2026-11-10T20:53:09Z",
+  "hn": "https://news.ycombinator.com/item?id=50446179"
+ },
+ {
+  "id": "50577746",
+  "title": "Show HN: Full Production Studio, 77 open-source AI skills for video creators",
+  "url": "https://github.com/alfaris/full-production-studio",
+  "points": 2,
+  "comments": 1,
+  "at": "2026-11-20T16:51:51Z",
+  "hn": "https://news.ycombinator.com/item?id=50577746"
+ },
+ {
+  "id": "50485592",
+  "title": "Show HN: Dodaiso \u2013 Open-source personal AI agent (like Jarvis, dots,duet)",
+  "url": "https://github.com/Dodaios/Dodaios",
+  "points": 2,
+  "comments": 0,
+  "at": "2026-11-13T16:09:17Z",
+  "hn": "https://news.ycombinator.com/item?id=50485592"
+ },
+ {
+  "id": "50666422",
+  "title": "Show HN: Open-source Hotjar for AI prototypes",
+  "url": "https://www.recap-ux.com/",
+  "points": 2,
+  "comments": 1,
+  "at": "2026-11-27T12:59:13Z",
+  "hn": "https://news.ycombinator.com/item?id=50666422"
+ },
+ {
+  "id": "50491277",
+  "title": "QuAIA: An open-source team of AI agents that handles the whole test process",
+  "url": "https://quaia.dev/",
+  "points": 2,
+  "comments": 0,
+  "at": "2026-11-13T22:53:09Z",
+  "hn": "https://news.ycombinator.com/item?id=50491277"
+ },
+ {
+  "id": "50455209",
+  "title": "Openshorts: Open-source / self hosted AI clip generator (OpusClip alternative)",
+  "url": "https://github.com/mutonby/openshorts",
+  "points": 2,
+  "comments": 0,
+  "at": "2026-11-11T16:24:22Z",
+  "hn": "https://news.ycombinator.com/item?id=50455209"
+ },
+ {
+  "id": "50620311",
+  "title": "Show HN: Judge-audit \u2013 open-source calibration audits for AI judges",
+  "url": "https://github.com/kunko-ai-labs/judge-audit",
+  "points": 2,
+  "comments": 0,
+  "at": "2026-11-23T22:28:32Z",
+  "hn": "https://news.ycombinator.com/item?id=50620311"
+ },
+ {
+  "id": "50594493",
+  "title": "Say which AI wrote it: AI transparency for Open Source projects",
+  "url": "https://www.saywhichai.org",
+  "points": 2,
+  "comments": 0,
+  "at": "2026-11-21T22:59:47Z",
+  "hn": "https://news.ycombinator.com/item?id=50594493"
+ },
+ {
+  "id": "50611578",
+  "title": "Moment is temporary. Open Models will dominate 2027",
+  "url": "https://www.subconscious.dev/blog/the-return-of-the-open-models",
+  "points": 2,
+  "comments": 1,
+  "at": "2026-11-23T14:00:23Z",
+  "hn": "https://news.ycombinator.com/item?id=50611578"
+ },
+ {
+  "id": "50546808",
+  "title": "Show HN: Gridline \u2013 Fine-tune open models and run them in batch, pay per token",
+  "url": "https://gridlinegpu.com",
+  "points": 2,
+  "comments": 1,
+  "at": "2026-11-18T14:35:41Z",
+  "hn": "https://news.ycombinator.com/item?id=50546808"
+ },
+ {
+  "id": "50506796",
+  "title": "Europa, the EU's open AI model, is aiming for nearly 1T parameters",
+  "url": "https://maccus.fr/en/eu-open-ai-model-europa/",
+  "points": 2,
+  "comments": 0,
+  "at": "2026-11-15T13:29:48Z",
+  "hn": "https://news.ycombinator.com/item?id=50506796"
+ },
+ {
+  "id": "50643915",
+  "title": "Strands Decider v2: open, calibrated system one models",
+  "url": "https://strandsagents.com/blog/introducing-strands-decider-v2/",
+  "points": 2,
+  "comments": 0,
+  "at": "2026-11-25T16:12:48Z",
+  "hn": "https://news.ycombinator.com/item?id=50643915"
+ },
+ {
+  "id": "50630248",
+  "title": "Show HN: Terminal Tasks Open \u2013 30 hard tasks, best model passes 67%",
+  "url": "https://github.com/vettoai/terminal-tasks-open",
+  "points": 2,
+  "comments": 0,
+  "at": "2026-11-24T16:08:43Z",
+  "hn": "https://news.ycombinator.com/item?id=50630248"
+ },
+ {
+  "id": "50576999",
+  "title": "Haru-4B: Open Multilingual Full-Duplex Speech Model",
+  "url": "https://blog.higurashi.ai/melte/haru4b/",
+  "points": 2,
+  "comments": 0,
+  "at": "2026-11-20T16:14:24Z",
+  "hn": "https://news.ycombinator.com/item?id=50576999"
+ },
+ {
+  "id": "50458967",
+  "title": "Show HN: Open HashLMG \u2013 Local Motion Graphics by models on your device",
+  "url": "https://github.com/Hash-7777/open-Hash-LMG",
+  "points": 2,
+  "comments": 1,
+  "at": "2026-11-11T21:30:07Z",
+  "hn": "https://news.ycombinator.com/item?id=50458967"
+ },
+ {
+  "id": "50505371",
+  "title": "Inkling 2 Small Scores 31 on AAII v5.0.1, best-in-class among \"US\" open weights",
+  "url": "https://artificialanalysis.ai/evaluations/artificial-analysis-intelligence-index",
+  "points": 1,
+  "comments": 1,
+  "at": "2026-11-15T09:25:09Z",
+  "hn": "https://news.ycombinator.com/item?id=50505371"
+ },
+ {
+  "id": "50640992",
+  "title": "Nvidia Nemotron-Labs-Image-30B-A3B: open-weights 30B image generator",
+  "url": "https://huggingface.co/nvidia/Nemotron-Labs-Image-30B-A3B",
+  "points": 1,
+  "comments": 0,
+  "at": "2026-11-25T11:08:34Z",
+  "hn": "https://news.ycombinator.com/item?id=50640992"
+ },
+ {
+  "id": "50618234",
+  "title": "An updated Clairic and Clairic-flash are now open-weight",
+  "url": "https://blog.cloudflare.com/open-clairic/",
+  "points": 1,
+  "comments": 0,
+  "at": "2026-11-23T19:58:26Z",
+  "hn": "https://news.ycombinator.com/item?id=50618234"
+ },
+ {
+  "id": "50611455",
+  "title": "The US-China LLM Open-Weight Feedback Loop",
+  "url": "https://sebastianraschka.com/blog/2026/us-china-open-weight-feedback-loop.html",
+  "points": 1,
+  "comments": 0,
+  "at": "2026-11-23T13:47:03Z",
+  "hn": "https://news.ycombinator.com/item?id=50611455"
+ },
+ {
+  "id": "50574930",
+  "title": "Small TTS Bench: open-weight text-to-speech models on CPU",
+  "url": "https://erogol.com/small_tts_bench/",
+  "points": 1,
+  "comments": 0,
+  "at": "2026-11-20T14:13:54Z",
+  "hn": "https://news.ycombinator.com/item?id=50574930"
+ },
+ {
+  "id": "50533799",
+  "title": "Hugging Face and OpenRouter join forces to make open-weight models easy to run",
+  "url": "https://huggingface.co/blog/openrouter",
+  "points": 1,
+  "comments": 0,
+  "at": "2026-11-17T16:27:20Z",
+  "hn": "https://news.ycombinator.com/item?id=50533799"
+ },
+ {
+  "id": "50476425",
+  "title": "Runway releases a 27B open-weight model for controlling real robots",
+  "url": "https://runway.com/news/company-news/praxis-1-is-now-available",
+  "points": 1,
+  "comments": 0,
+  "at": "2026-11-13T00:21:38Z",
+  "hn": "https://news.ycombinator.com/item?id=50476425"
+ },
+ {
+  "id": "50464136",
+  "title": "Show HN: Indic-Turn-Detector \u2013 open-weights end-of-turn model for voice agents",
+  "url": "https://huggingface.co/tarun7r/indic-turn-detector",
+  "points": 1,
+  "comments": 0,
+  "at": "2026-11-12T07:34:10Z",
+  "hn": "https://news.ycombinator.com/item?id=50464136"
+ },
+ {
+  "id": "50644126",
+  "title": "56% of top GitHub open-source AI agents from March are now unranked",
+  "url": "https://www.theagenticleaderboard.com/",
+  "points": 1,
+  "comments": 1,
+  "at": "2026-11-25T16:25:29Z",
+  "hn": "https://news.ycombinator.com/item?id=50644126"
+ },
+ {
+  "id": "50523348",
+  "title": "Show HN: Stromboli Open-source AI SRE agent focused on fast incident mitigation",
+  "url": "https://github.com/openstatusHQ/stromboli",
+  "points": 1,
+  "comments": 1,
+  "at": "2026-11-16T21:12:03Z",
+  "hn": "https://news.ycombinator.com/item?id=50523348"
+ },
+ {
+  "id": "50484516",
+  "title": "Nil-3B Open Source Sovereign AI",
+  "url": "https://huggingface.co/nioncorp/nil-3b-gguf",
+  "points": 1,
+  "comments": 1,
+  "at": "2026-11-13T14:59:20Z",
+  "hn": "https://news.ycombinator.com/item?id=50484516"
+ },
+ {
+  "id": "50419343",
+  "title": "Open Source AI Research Collaboration Platform",
+  "url": "https://station-house.net/",
+  "points": 1,
+  "comments": 1,
+  "at": "2026-11-09T00:24:27Z",
+  "hn": "https://news.ycombinator.com/item?id=50419343"
+ },
+ {
+  "id": "50643708",
+  "title": "Show HN: Animama \u2013 Open-source AI desktop companion with 3D avatars",
+  "url": "https://github.com/raymond-van/animama",
+  "points": 1,
+  "comments": 0,
+  "at": "2026-11-25T15:58:04Z",
+  "hn": "https://news.ycombinator.com/item?id=50643708"
+ },
+ {
+  "id": "50639553",
+  "title": "Show HN: Open-source native AI harness that's trying to do less by default",
+  "url": "https://github.com/usehm/hm",
+  "points": 1,
+  "comments": 0,
+  "at": "2026-11-25T07:26:14Z",
+  "hn": "https://news.ycombinator.com/item?id=50639553"
+ },
+ {
+  "id": "50616292",
+  "title": "Open-source local AI shop for small businesses across Telegram, WhatsApp and web",
+  "url": "https://github.com/ownshopai/ownshopai",
+  "points": 1,
+  "comments": 0,
+  "at": "2026-11-23T18:06:48Z",
+  "hn": "https://news.ycombinator.com/item?id=50616292"
+ },
+ {
+  "id": "50548127",
+  "title": "Who's afraid of open source AI? [video]",
+  "url": "https://www.youtube.com/watch?v=siy0744Ykys",
+  "points": 1,
+  "comments": 0,
+  "at": "2026-11-18T16:16:38Z",
+  "hn": "https://news.ycombinator.com/item?id=50548127"
+ },
+ {
+  "id": "50519095",
+  "title": "Artex: Open-source AI Pentest Framework that is bacoming hackers favorite tool",
+  "url": "https://blog.ostorlab.co/artex-ai-pentest-framework-threat.html",
+  "points": 1,
+  "comments": 0,
+  "at": "2026-11-16T16:03:26Z",
+  "hn": "https://news.ycombinator.com/item?id=50519095"
+ },
+ {
+  "id": "50518438",
+  "title": "Build your startup on a private open-source enterprise AI stack",
+  "url": "https://cloud.ametnes.com/startups/",
+  "points": 1,
+  "comments": 0,
+  "at": "2026-11-16T15:11:51Z",
+  "hn": "https://news.ycombinator.com/item?id=50518438"
+ },
+ {
+  "id": "50478385",
+  "title": "Open Source AI Salons: Shaping the Osaid, Together",
+  "url": "https://opensource.org/blog/open-source-ai-salons-shaping-the-osaid-together",
+  "points": 1,
+  "comments": 0,
+  "at": "2026-11-13T04:34:58Z",
+  "hn": "https://news.ycombinator.com/item?id=50478385"
+ },
+ {
+  "id": "50449546",
+  "title": "Ant Group's Robbyant open-sources tactile AI model for robot hands",
+  "url": "https://technode.com/2026/11/10/ant-groups-robbyant-open-sources-tactile-ai-model-for-robot-hands/",
+  "points": 1,
+  "comments": 0,
+  "at": "2026-11-11T03:46:42Z",
+  "hn": "https://news.ycombinator.com/item?id=50449546"
+ },
+ {
+  "id": "50440395",
+  "title": "Open-Source 2026 AI Cloud GPU and Scraping Proxy Pool Cost Calculator",
+  "url": "https://github.com/alekseev04051988-blip/ai-cost-calculator",
+  "points": 1,
+  "comments": 0,
+  "at": "2026-11-10T13:54:24Z",
+  "hn": "https://news.ycombinator.com/item?id=50440395"
+ },
+ {
+  "id": "50439152",
+  "title": "Show HN: VoxaDub \u2013 Open-source AI video dubbing with speaker-aware voices",
+  "url": "https://github.com/kadirb4rut/voxadub",
+  "points": 1,
+  "comments": 0,
+  "at": "2026-11-10T12:06:21Z",
+  "hn": "https://news.ycombinator.com/item?id=50439152"
+ },
+ {
+  "id": "50572899",
+  "title": "Show HN: Interviewer assistant \u2013 AI open source",
+  "url": "https://github.com/blackarck/intaiassist",
+  "points": 1,
+  "comments": 0,
+  "at": "2026-11-20T10:51:21Z",
+  "hn": "https://news.ycombinator.com/item?id=50572899"
+ },
+ {
+  "id": "50618582",
+  "title": "Show HN: FLEY AI-Voce \u2013 Open-source PC control via voice and commands",
+  "url": null,
+  "points": 1,
+  "comments": 1,
+  "at": "2026-11-23T20:17:39Z",
+  "hn": "https://news.ycombinator.com/item?id=50618582"
+ },
+ {
+  "id": "50655083",
+  "title": "Making the Most of AI in Open Source",
+  "url": "https://phpstan.org/blog/making-the-most-of-ai-in-open-source",
+  "points": 1,
+  "comments": 0,
+  "at": "2026-11-26T13:25:27Z",
+  "hn": "https://news.ycombinator.com/item?id=50655083"
+ },
+ {
+  "id": "50631364",
+  "title": "Show HN: Byname \u2013 open-source tool to see when AI assistants name your product",
+  "url": "https://byname.dev/",
+  "points": 1,
+  "comments": 0,
+  "at": "2026-11-24T17:21:40Z",
+  "hn": "https://news.ycombinator.com/item?id=50631364"
+ },
+ {
+  "id": "50608126",
+  "title": "Show HN: Open-source MCP server to check AI search crawler readiness",
+  "url": "https://github.com/alicexixi85/geo-seo-mcp-pro",
+  "points": 1,
+  "comments": 0,
+  "at": "2026-11-23T06:19:04Z",
+  "hn": "https://news.ycombinator.com/item?id=50608126"
+ },
+ {
+  "id": "50443951",
+  "title": "IFM Releases Pan 2 an open world model",
+  "url": "https://ifm.ai/pan/",
+  "points": 1,
+  "comments": 1,
+  "at": "2026-11-10T18:11:14Z",
+  "hn": "https://news.ycombinator.com/item?id=50443951"
+ },
+ {
+  "id": "50657409",
+  "title": "Open Knowledge Models",
+  "url": "https://ladybugmem.ai/open-knowledge-models/",
+  "points": 1,
+  "comments": 0,
+  "at": "2026-11-26T17:25:36Z",
+  "hn": "https://news.ycombinator.com/item?id=50657409"
+ },
+ {
+  "id": "50638169",
+  "title": "Show HN: Open Modeling \u2013 multidimensional modeling engine in the browser",
+  "url": "https://om.cloudcell.nz/",
+  "points": 1,
+  "comments": 0,
+  "at": "2026-11-25T03:40:01Z",
+  "hn": "https://news.ycombinator.com/item?id=50638169"
+ },
+ {
+  "id": "50632615",
+  "title": "China Just Gave Itself a Switch for Open AI Models [video]",
+  "url": "https://www.youtube.com/watch?v=E5Trav-bgmo",
+  "points": 1,
+  "comments": 0,
+  "at": "2026-11-24T18:46:05Z",
+  "hn": "https://news.ycombinator.com/item?id=50632615"
+ },
+ {
+  "id": "50445707",
+  "title": "Magpie: Open-source model gateway for coding agents (Claude Code, Codex)",
+  "url": "https://github.com/yetone/magpie",
+  "points": 1,
+  "comments": 0,
+  "at": "2026-11-10T20:15:42Z",
+  "hn": "https://news.ycombinator.com/item?id=50445707"
+ },
+ {
+  "id": "50529909",
+  "title": "Ask HN: What's the new open source business model",
+  "url": null,
+  "points": 1,
+  "comments": 2,
+  "at": "2026-11-17T11:07:18Z",
+  "hn": "https://news.ycombinator.com/item?id=50529909"
+ },
+ {
+  "id": "50634230",
+  "title": "Show HN: Call / meeting recorder for Mac. open source local models or free cloud",
+  "url": "https://github.com/Digisensus/digisensus-recorder",
+  "points": 1,
+  "comments": 0,
+  "at": "2026-11-24T20:27:10Z",
+  "hn": "https://news.ycombinator.com/item?id=50634230"
+ },
+ {
+  "id": "50534021",
+  "title": "Theory of Economic Relativity an open framework for modeling economics",
+  "url": "https://www.theoryofeconomicrelativity.com/",
+  "points": 1,
+  "comments": 0,
+  "at": "2026-11-17T16:39:30Z",
+  "hn": "https://news.ycombinator.com/item?id=50534021"
+ }
+]

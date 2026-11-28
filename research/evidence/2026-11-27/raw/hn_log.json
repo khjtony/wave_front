@@ -1,0 +1,138 @@
+[
+ {
+  "source": "Hacker News",
+  "question": "open_weights",
+  "side": "A",
+  "query": "open weights benefits",
+  "window": "stories since 2026-11-09",
+  "returned": 0,
+  "note": "first attempt: matched story text loosely (open weights) or nothing (regulation); results not used"
+ },
+ {
+  "source": "Hacker News",
+  "question": "open_weights",
+  "side": "A",
+  "query": "open source AI wins",
+  "window": "stories since 2026-11-09",
+  "returned": 27,
+  "note": "first attempt: matched story text loosely (open weights) or nothing (regulation); results not used"
+ },
+ {
+  "source": "Hacker News",
+  "question": "open_weights",
+  "side": "B",
+  "query": "open weights risks",
+  "window": "stories since 2026-11-09",
+  "returned": 2,
+  "note": "first attempt: matched story text loosely (open weights) or nothing (regulation); results not used"
+ },
+ {
+  "source": "Hacker News",
+  "question": "open_weights",
+  "side": "B",
+  "query": "ban open source AI",
+  "window": "stories since 2026-11-09",
+  "returned": 26,
+  "note": "first attempt: matched story text loosely (open weights) or nothing (regulation); results not used"
+ },
+ {
+  "source": "Hacker News",
+  "question": "regulation",
+  "side": "A",
+  "query": "AI regulation voluntary",
+  "window": "stories since 2026-11-09",
+  "returned": 0,
+  "note": "first attempt: matched story text loosely (open weights) or nothing (regulation); results not used"
+ },
+ {
+  "source": "Hacker News",
+  "question": "regulation",
+  "side": "A",
+  "query": "AI regulation preemption",
+  "window": "stories since 2026-11-09",
+  "returned": 0,
+  "note": "first attempt: matched story text loosely (open weights) or nothing (regulation); results not used"
+ },
+ {
+  "source": "Hacker News",
+  "question": "regulation",
+  "side": "B",
+  "query": "AI regulation mandatory",
+  "window": "stories since 2026-11-09",
+  "returned": 0,
+  "note": "first attempt: matched story text loosely (open weights) or nothing (regulation); results not used"
+ },
+ {
+  "source": "Hacker News",
+  "question": "regulation",
+  "side": "B",
+  "query": "AI safety law enforcement",
+  "window": "stories since 2026-11-09",
+  "returned": 0,
+  "note": "first attempt: matched story text loosely (open weights) or nothing (regulation); results not used"
+ },
+ {
+  "source": "Hacker News",
+  "question": "open_weights",
+  "side": "both (the same queries serve both sides; a story is assigned by its content)",
+  "query": "open weights",
+  "window": "story titles since 2026-11-09",
+  "returned": 34
+ },
+ {
+  "source": "Hacker News",
+  "question": "open_weights",
+  "side": "both (the same queries serve both sides; a story is assigned by its content)",
+  "query": "open-weight",
+  "window": "story titles since 2026-11-09",
+  "returned": 35
+ },
+ {
+  "source": "Hacker News",
+  "question": "open_weights",
+  "side": "both (the same queries serve both sides; a story is assigned by its content)",
+  "query": "open source AI",
+  "window": "story titles since 2026-11-09",
+  "returned": 50
+ },
+ {
+  "source": "Hacker News",
+  "question": "open_weights",
+  "side": "both (the same queries serve both sides; a story is assigned by its content)",
+  "query": "open model",
+  "window": "story titles since 2026-11-09",
+  "returned": 50
+ },
+ {
+  "source": "Hacker News",
+  "question": "regulation",
+  "side": "both (the same queries serve both sides; a story is assigned by its content)",
+  "query": "AI regulation",
+  "window": "story titles since 2026-11-09",
+  "returned": 2
+ },
+ {
+  "source": "Hacker News",
+  "question": "regulation",
+  "side": "both (the same queries serve both sides; a story is assigned by its content)",
+  "query": "AI law",
+  "window": "story titles since 2026-11-09",
+  "returned": 30
+ },
+ {
+  "source": "Hacker News",
+  "question": "regulation",
+  "side": "both (the same queries serve both sides; a story is assigned by its content)",
+  "query": "AI safety bill",
+  "window": "story titles since 2026-11-09",
+  "returned": 0
+ },
+ {
+  "source": "Hacker News",
+  "question": "regulation",
+  "side": "both (the same queries serve both sides; a story is assigned by its content)",
+  "query": "regulate AI",
+  "window": "story titles since 2026-11-09",
+  "returned": 0
+ }
+]

@@ -1,0 +1,38 @@
+[
+ {
+  "source": "X",
+  "question": "open_weights",
+  "side": "A",
+  "query": "(\"open weights\" OR \"open-weight\" OR \"open source AI\" OR \"open-source AI\" OR \"open models\") (benefit OR benefits OR innovation OR democratize OR \"need more\" OR \"concentration of power\" OR transparency) -is:retweet -is:reply lang:en",
+  "window": "last 7 days, relevancy, 100 results",
+  "returned": 100,
+  "error": null
+ },
+ {
+  "source": "X",
+  "question": "open_weights",
+  "side": "B",
+  "query": "(\"open weights\" OR \"open-weight\" OR \"open source AI\" OR \"open-source AI\" OR \"open models\") (risk OR risks OR dangerous OR ban OR restrict OR \"national security\" OR misuse) -is:retweet -is:reply lang:en",
+  "window": "last 7 days, relevancy, 100 results",
+  "returned": 99,
+  "error": null
+ },
+ {
+  "source": "X",
+  "question": "regulation",
+  "side": "A",
+  "query": "(\"AI regulation\" OR \"AI safety law\" OR \"AI rules\" OR \"AI bill\" OR \"regulate AI\") (voluntary OR \"self-regulation\" OR commitments OR preempt OR moratorium OR \"light touch\") -is:retweet -is:reply lang:en",
+  "window": "last 7 days, relevancy, 100 results",
+  "returned": 50,
+  "error": null
+ },
+ {
+  "source": "X",
+  "question": "regulation",
+  "side": "B",
+  "query": "(\"AI regulation\" OR \"AI safety law\" OR \"AI rules\" OR \"AI bill\" OR \"regulate AI\") (mandatory OR binding OR enforce OR penalties OR \"signed into law\" OR \"takes effect\") -is:retweet -is:reply lang:en",
+  "window": "last 7 days, relevancy, 100 results",
+  "returned": 55,
+  "error": null
+ }
+]
