@@ -31,7 +31,12 @@ const post = (path, body) => fetch(path, { method: "POST", body: JSON.stringify(
 const file = path => "/file/" + path;
 const pill = status => h("span", { class: "pill " + (STATUS[status] || ["idle"])[0] }, (STATUS[status] || [0, status])[1]);
 const dur = s => s >= 3600 ? (s / 3600).toFixed(1) + " h" : s >= 60 ? Math.round(s / 60) + " min" : Math.round(s) + " s";
-const quarter = t => `${2026 + Math.floor((Number(t) + 3) / 4)} Q${((Number(t) + 3) % 4) + 1}`;
+// The calendar label of a step: a quarter, or a two-month pair when the model's step is two months.
+let STEP = 3;
+const MONTH = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const quarter = t => { if (STEP === 3) return `${2026 + Math.floor((Number(t) + 3) / 4)} Q${((Number(t) + 3) % 4) + 1}`;
+  const m = 10 + STEP * Number(t); return `${MONTH[m % 12]}${STEP > 1 ? "–" + MONTH[(m + STEP - 1) % 12] : ""} ${2026 + Math.floor(m / 12)}`; };
+const unit = () => STEP === 3 ? "quarter" : "step";
 // What the reader opened stays open across a refresh: each <details> is remembered by its page
 // and its summary text without the numbers (counts and times change between refreshes).
 const OPEN = new Map();
@@ -66,8 +71,8 @@ async function overview() {
   const st = Object.fromEntries(o.stages.map(s => [s.id, s]));
   show(
     h("h1", null, "Overview"),
-    h("p", { class: "lede" }, "Five staged models of governments, frontier AI companies and AI systems. Click a model to inspect it."),
-    h("div", { class: "stages" }, h("div", { class: "col" }, card(st["v0"])), h("div", { class: "col" }, card(st["v0.1"])), h("div", { class: "col" }, card(st["v0.2"]), card(st["v0.3"])), h("div", { class: "col" }, card(st["v0.4"]))),
+    h("p", { class: "lede" }, "Six staged models of governments, frontier AI companies and AI systems. Click a model to inspect it."),
+    h("div", { class: "stages" }, h("div", { class: "col" }, card(st["v0"])), h("div", { class: "col" }, card(st["v0.1"])), h("div", { class: "col" }, card(st["v0.2"]), card(st["v0.3"])), h("div", { class: "col" }, card(st["v0.4"]), card(st["v0.5"]))),
     h("div", { class: "legend gap" }, [["b-held", "prediction held"], ["b-bad", "did not hold"], ["b-warn", "incomplete"], ["b-idle", "not run"]].map(([c, t]) => h("span", null, h("i", { class: c }), t))),
     h("div", { class: "grid g3 gap" },
       h("div", { class: "panel" }, h("h2", null, "Running now"),
@@ -270,6 +275,7 @@ async function exploreStart() {
 }
 async function explore() {
   const o = await api("/api/overview");
+  STEP = (o.stages.find(s => s.id === E.version) || {}).step_months || 3;
   if (!E.hist.length) await exploreStart();
   const requests = await api("/api/store/requests");
   const cur = E.hist[E.pos], prev = E.pos ? E.hist[E.pos - 1] : null, m = E.model;
@@ -283,8 +289,8 @@ async function explore() {
   const search = async target => {
     E.busy = "Searching for a shortest path…"; explore();
     try { const r = await post("/api/sim/shortest", { ...ask(), target });
-      if (r.found) { E.hist = r.path; E.rounds = r.rounds; E.pos = 0; E.note = `A shortest path of ${r.rounds.length} quarters, found in ${r.seconds} s. It shows what can happen if everyone plays into it: a possibility, not a finding.`; }
-      else E.note = r.error || "No path within 24 quarters."; } catch (e) { E.note = e.message; }
+      if (r.found) { E.hist = r.path; E.rounds = r.rounds; E.pos = 0; E.note = `A shortest path of ${r.rounds.length} ${unit()}s, found in ${r.seconds} s. It shows what can happen if everyone plays into it: a possibility, not a finding.`; }
+      else E.note = r.error || `No path within the search length (${(o.stages.find(s => s.id === E.version) || {}).search_length || 24} ${unit()}s).`; } catch (e) { E.note = e.message; }
     E.busy = ""; explore().catch(fail);
   };
   const shown = m.variables.filter(v => v.origin === "var" && !["a_objective"].includes(v.name));
@@ -303,11 +309,11 @@ async function explore() {
       h("div", { class: "strip gap" }, E.hist.map((v, i) => h("button", { class: "q" + (v.ending ? " end" : ""), "aria-pressed": String(i === E.pos), onclick: () => { E.pos = i; E.choice = {}; explore(); } },
         h("b", null, `${quarter(v.levels.tick)}`), i ? E.rounds[i - 1].filter(a => !/\.(idle|stand_by|none|record)$/.test(a)).map(a => h("div", null, a)) : "start", v.ending ? h("div", null, h("b", null, v.ending)) : null)))),
     h("div", { class: "grid gap", style: "grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);align-items:start" },
-      h("div", { class: "panel" }, h("div", { class: "row" }, h("h2", { style: "margin:0" }, `State at ${quarter(cur.levels.tick)}`), h("span", { class: "muted small" }, `quarter ${cur.levels.tick}`)),
+      h("div", { class: "panel" }, h("div", { class: "row" }, h("h2", { style: "margin:0" }, `State at ${quarter(cur.levels.tick)}`), h("span", { class: "muted small" }, `${unit()} ${cur.levels.tick}`)),
         h("div", { class: "lights gap" }, Object.entries(cur.conditions).map(([k, ok]) => h("span", { class: "pill " + (ok ? "held" : "bad") }, (m.conditions.find(c => c.name === k) || {}).plain || k))),
         cur.ending ? h("div", { class: "banner gap " + (cur.ending === "COEXIST" || cur.ending === "CONTAINED" ? "held" : "bad") }, "Ending: " + ((m.endings.find(e => e.name === cur.ending) || {}).plain || cur.ending)) : null,
         h("div", { class: "ladders gap" }, ladder)),
-      h("div", { class: "panel" }, h("h2", null, cur.terminal ? "The path has ended" : "Choose this quarter's round"),
+      h("div", { class: "panel" }, h("h2", null, cur.terminal ? "The path has ended" : `Choose this ${unit()}'s round`),
         cur.terminal ? h("p", { class: "muted" }, "Pick an earlier quarter in the path to branch from it.") : [h("div", { class: "players" }, cur.available.filter(a => a.actions.length > 1).map(a => h("div", { class: "player" }, h("h3", null, PLAYER[a.actor] || a.actor),
           a.actions.map((x, n) => h("label", null, h("input", { type: "radio", name: "p_" + a.actor, checked: (E.choice[a.actor] ?? a.actions[0].i) === x.i, onchange: () => { E.choice[a.actor] = x.i; } }), x.plain || x.name))))),
           h("div", { class: "row gap" }, h("button", { class: "main", onclick: play }, "Play this round"), h("span", { class: "muted small" }, "Players with a single available action are not shown."))])),

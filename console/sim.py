@@ -148,7 +148,7 @@ def _search() -> None:
         target = ~V.invariant(target[6:])
     elif target not in cm.ending_fns:
         raise SystemExit("unknown target")
-    trace = reach(cm, 24, target)
+    trace = reach(cm, catalog.BY_ID[q["version"]].get("search_length", 24), target)
     found = trace is not None
     print(
         json.dumps(

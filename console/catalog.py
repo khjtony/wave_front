@@ -126,6 +126,24 @@ VERSIONS: list[dict] = [
         + ["expansion", "reclaim", "ceiling", "counter"],
         "goals": [*GOALS, "expansionist"],
     },
+    {
+        "id": "v0.5",
+        "title": "AGI v0.5",
+        "module": "models.agi_v0_5.v0_5",
+        "date": "2026-11-27",
+        "family": "Y",
+        "summary": "v0.4 on a faster clock: two-month steps from November 2026 to the end of"
+        " 2032, every delay kept in months and rounded up.",
+        "scenarios": "tests/agi_v0_5/scenarios",
+        "parts": ["reports/agi_v0_5_parts.jsonl"],
+        "doc": "docs/agi_v0_5.html",
+        "reports": [],
+        "knobs": ["open_system", "pressure", "hosting", "open_adoption", "treaty_delay"]
+        + ["expansion", "reclaim", "ceiling", "counter"],
+        "goals": [*GOALS, "expansionist"],
+        "step_months": 2,
+        "search_length": 36,
+    },
 ]
 BY_ID = {v["id"]: v for v in VERSIONS}
 
@@ -330,6 +348,7 @@ def stages() -> list[dict]:
     seen: dict[str, tuple[set, set]] = {}
     # v0.2 and v0.3 both start from v0.1; v0.4 starts from v0.3.
     parents = {"v0": None, "v0.1": "v0", "v0.2": "v0.1", "v0.3": "v0.1", "v0.4": "v0.3"}
+    parents["v0.5"] = "v0.4"
     for v in VERSIONS:
         d = describe(v["id"])
         acts = {f"{a['name']}.{x['name']}" for a in d["actors"] for x in a["actions"]}
@@ -340,6 +359,8 @@ def stages() -> list[dict]:
         row["budget"] = d["budget"]
         row["players"] = [a["name"] for a in d["actors"]]
         row["goals"] = list(v.get("goals", GOALS))
+        row["step_months"] = v.get("step_months", 3)
+        row["search_length"] = v.get("search_length", 24)
         row["added_actions"] = sorted(acts - before[0]) if before else []
         row["removed_actions"] = sorted(before[0] - acts) if before else []
         row["added_variables"] = sorted(names - before[1]) if before else []
