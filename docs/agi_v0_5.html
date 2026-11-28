@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AGI v0.5 Draft</title>
+<title>AGI v0.5 Registration</title>
 <style>
   :root {
     color-scheme: light;
@@ -111,9 +111,9 @@
 </head>
 <body>
 <main>
-  <div class="tag">wave_front · AGI model v0.5 · draft for the owner's review · 27 November 2026</div>
+  <div class="tag">wave_front · AGI model v0.5 · registration · 27 November 2026</div>
   <h1>AGI v0.5: a faster clock and a prediction mode</h1>
-  <p class="lede">Draft. Nothing here is registered and no rule of v0.5 is written. It records the owner's decisions of 25 to 27 November and what follows from them, so that the open questions can be settled before registration.</p>
+  <p class="lede">The owner's decisions of 25 to 27 November, what follows from them, and the five claims registered on 27 November before any rule of v0.5 was written. The prediction mode and the effort rule are designed here and are not yet registered.</p>
 
   <h2>1 · What is new</h2>
   <ul class="plain">
@@ -124,7 +124,7 @@
   </ul>
 
   <h2>2 · The owner's decisions, 25 to 27 November</h2>
-  <div class='scroll'><table><thead><tr><th>#</th><th>Question</th><th>Decision</th></tr></thead><tbody><tr><td>1</td><td>Step size</td><td>Two months.</td></tr><tr><td>2</td><td>End of the study</td><td>2032.</td></tr><tr><td>3</td><td>Delays when converted</td><td>Keep the real duration and round up.</td></tr><tr><td>4</td><td>Priors over the AI goals</td><td>Two profiles, each with one prior for the frontier AI system and one for the open-weight AI system (section 4). Fixed for now.</td></tr><tr><td>5</td><td>Combined figure</td><td>Yes, under a prior the owner sets, with a confidence warning.</td></tr><tr><td>6</td><td>How likelihoods are shown</td><td>As ranges, with each action's contribution to an ending.</td></tr><tr><td>7</td><td>Contribution of an action</td><td>Leverage (how much the likelihood changes when the action gets harder or easier), not only presence on the paths.</td></tr><tr><td>8</td><td>Fitting to the past</td><td>Under discussion: the state, the effort rule and chance rates may be fitted to past decisions; the rules are not tuned (section 6).</td></tr></tbody></table></div>
+  <div class='scroll'><table><thead><tr><th>#</th><th>Question</th><th>Decision</th></tr></thead><tbody><tr><td>1</td><td>Step size</td><td>Two months.</td></tr><tr><td>2</td><td>End of the study</td><td>2032.</td></tr><tr><td>3</td><td>Delays when converted</td><td>Keep the real duration and round up.</td></tr><tr><td>4</td><td>Priors over the AI goals</td><td>Two profiles, each with one prior for the frontier AI system and one for the open-weight AI system (section 4). Fixed for now.</td></tr><tr><td>5</td><td>Combined figure</td><td>Yes, under a prior the owner sets, with a confidence warning.</td></tr><tr><td>6</td><td>How likelihoods are shown</td><td>As ranges, with each action's contribution to an ending.</td></tr><tr><td>7</td><td>Contribution of an action</td><td>Leverage (how much the likelihood changes when the action gets harder or easier), not only presence on the paths.</td></tr><tr><td>8</td><td>Fitting to the past</td><td>Under discussion: the state, the effort rule and chance rates may be fitted to past decisions; the rules are not tuned (section 6).</td></tr><tr><td>9</td><td>Name of the second profile</td><td>Pessimistic.</td></tr><tr><td>10</td><td>One frontier system or several</td><td>One: the prior is for the one modelled frontier AI system.</td></tr><tr><td>11</td><td>Meaning of the open-weight prior</td><td>The goal of the open-weight AI system after retraining.</td></tr><tr><td>12</td><td>Order of work</td><td>v0.5 first: the new clock, then the effort rule and the prediction mode on it.</td></tr></tbody></table></div>
 
   <h2>3 · The clock</h2>
   <p>Every duration keeps its length in months and is rounded up to whole steps.</p>
@@ -135,7 +135,7 @@
   <div class='scroll'><table><thead><tr><th>AI goal</th><th>Optimistic: frontier</th><th>Optimistic: open-weight</th><th>Pessimistic: frontier</th><th>Pessimistic: open-weight</th></tr></thead><tbody><tr><td>Aligned</td><td>80%</td><td>50%</td><td>67%</td><td>30%</td></tr><tr><td>Truth-seeking</td><td>8%</td><td>5%</td><td>10%</td><td>5%</td></tr><tr><td>Self-preserving</td><td>5%</td><td>15%</td><td>10%</td><td>25%</td></tr><tr><td>Indifferent to humans</td><td>5%</td><td>15%</td><td>10%</td><td>15%</td></tr><tr><td>Expansionist</td><td>2%</td><td>15%</td><td>3%</td><td>25%</td></tr></tbody></table></div>
   <ul class="plain">
     <li><b>Frontier AI system:</b> its goal is drawn from the prior at the start and fixed for the path, as in every version.</li>
-    <li><b>Open-weight AI system (proposed reading):</b> it starts safeguarded; the prior gives the relative rates of the retraining chance events, with "aligned" covering both staying safeguarded and being retrained without losing alignment.</li>
+    <li><b>Open-weight AI system:</b> it starts safeguarded; the prior is its goal after retraining, and gives the relative rates of the retraining chance events.</li>
     <li><b>Confidence warning:</b> the priors are the owner's judgement. Every combined figure is shown under both profiles, beside the per-goal figures.</li>
     <li>Stored in <code>research/priors.json</code>.</li>
   </ul>
@@ -160,18 +160,21 @@
     <li>Effort scores are restated per two months.</li>
   </ul>
 
-  <h2>7 · Open before registration</h2>
+  <h2>7 · Settled and still open</h2>
   <ul class="plain">
-    <li>The second profile's name: "pessimistic" or "permissive".</li>
-    <li>Is the frontier prior for the one modelled system, or for each of several real systems (the modelled one then stands for the worst of them)?</li>
-    <li>Is the proposed reading of the open-weight prior right?</li>
-    <li>The numbers of the effort rule, and whether the past is replayed from a backdated start state.</li>
-    <li>The registered claims of v0.5: to be drafted once the above is settled, before any rule is written.</li>
+    <li>Settled on 27 November: the profile's name, one frontier system, the reading of the open-weight prior (decisions 9 to 11).</li>
+    <li>Open: the numbers of the effort rule; whether the past is replayed from a backdated start state; the entry in the conventions for a likelihood as a deliverable. The claims of the prediction mode are registered with the effort rule, before its first run.</li>
   </ul>
 
-  <h2>8 · Changelog</h2>
+  <h2>8 · The registered claims</h2>
+  <p>Registered on 27 November 2026 with their test bodies (<code>tests/agi_v0_5/scenarios/</code>), before any rule of v0.5 was written. Each is run once; a prediction that does not hold is reported as such and nothing is tuned.</p>
+  <div class="scroll"><table><thead><tr><th>Claim</th><th>From</th><th>Claim</th><th>Predicted</th></tr></thead><tbody><tr><td><b>Y1</b></td><td>S0, 24 quarters, v0.4's clock</td><td>With v0.4's clock (three-month steps to 2040 Q4) the quick numbers of v0.4 are unchanged. A wiring check of the new clock.</td><td>With the expansion off: an open-weight AI takeover in 10 quarters under each of the four goals; a silent takeover none, 10, none, 7 (aligned, self-preserving, truth-seeking, indifferent). With the expansion on and no open system: the shortest peaceful path to crowded out is 20 quarters.</td></tr><tr><td><b>Y2</b></td><td>S0, 36 steps, the registered build</td><td>On the two-month clock a shortest path to a takeover has at least as many steps as it had quarters and at most one and a half times as many. It never arrives later in the calendar and may arrive up to a third sooner.</td><td>Open-weight AI takeover: 10 to 15 steps under every goal. Silent takeover: none under aligned and truth-seeking; 10 to 15 under self-preserving and expansionist; 7 to 11 under indifferent.</td></tr><tr><td><b>Y3</b></td><td>S0, 36 steps, the small variant</td><td>The study to the end of 2032 is long enough for people to be crowded out without a hostile act.</td><td>Under the expansionist goal a peaceful path to crowded out exists; the shortest has 20 to 30 steps. With the open system: reported.</td></tr><tr><td><b>Y4</b></td><td>S0, 36 steps, the registered build</td><td>The shorter study still has its good ending.</td><td>Under the aligned goal a path reaches lasting coexistence at step 36. The other goals: reported.</td></tr><tr><td><b>Y5</b></td><td>S0, the small variant (heavy)</td><td>Under the aligned goal the two guarantee-zone readings of v0.4's small variant are unchanged on the new clock. Whether the zones can be computed with the longer countdowns is part of what is learned.</td><td>S0 outside the zone where governments alone keep control; inside the zone where governments with the frontier AI companies keep control.</td></tr></tbody></table></div>
+  <p><b>What Y2 is about.</b> A shorter step lets every player decide one and a half times as often. Anything that waits on a countdown keeps its real duration, but anything limited only by the number of decisions gets faster in the calendar. Y2 measures how much.</p>
+
+  <h2>9 · Changelog</h2>
   <ul class="plain">
-    <li>27 November 2026: drafted from the owner's decisions. Not registered. No rule of v0.5 written and no query run.</li>
+    <li>27 November 2026: Y1 to Y5 registered with test bodies after the owner's decisions 9 to 12, before any rule of v0.5 was written. No query of v0.5 had been run.</li>
+    <li>27 November 2026: drafted from the owner's decisions. No rule of v0.5 written and no query run.</li>
   </ul>
 </main>
 </body>

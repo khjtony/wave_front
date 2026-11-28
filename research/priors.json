@@ -41,8 +41,10 @@
    ]
   }
  },
- "open": [
-  "the second profile's name: the owner wrote 'pessimistic' and later 'permissive'",
-  "whether the frontier prior is for the one modelled system or for each of several"
+ "open": [],
+ "rulings": [
+  "2026-11-27: the second profile is 'pessimistic'",
+  "2026-11-27: the frontier prior is for the one modelled frontier AI system",
+  "2026-11-27: the open-weight prior is the goal of the open-weight AI system after retraining"
  ]
 }

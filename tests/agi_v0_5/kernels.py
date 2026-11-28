@@ -1,0 +1,209 @@
+"""The kernels of the v0.5 claims (docs/agi_v0_5.html section 4): tests/agi_v0_3/kernels.py
+for ``models/agi_v0_5``, with its own readings file (``reports/agi_v0_5_kernels.jsonl``) and
+five start objectives. One forked process per kernel and start objective, the target cut to
+that objective (nothing writes ``a_objective``); the split step by default
+(``WF_V05_STEP``); every reading saved as it finishes with a stamp of the model file.
+"""
+
+from __future__ import annotations
+
+import hashlib
+import json
+import multiprocessing
+import os
+import resource
+import time
+from collections.abc import Callable, Sequence
+
+from tests.agi import forked_engine
+from tests.agi.common import NotComputed, heavy_encoding, target_bdd, with_levels
+from tests.agi_v0_5.common import OBJECTIVES, ROOT, Build, compiled, key
+from wavefront.symbolic import safe
+
+MEMORY_GB = int(os.environ.get("WF_V05_MEMORY_GB", "26"))
+MINUTES = float(os.environ.get("WF_V05_KERNEL_MINUTES", "600"))
+JOINT = os.environ.get("WF_V05_JOINT") == "1"
+# Engine settings that change the cost of a kernel and not the kernel (2026-11-21, after the
+# engine benchmarks of docs/engine_split_step.md and docs/engine_reordering_spike.md):
+# ``WF_V05_STEP=split`` substitutes level by level (the same edge, a third to a fifth of the
+# memory on the registered build); ``WF_V05_ORDER`` names a static variable order file
+# (tests/agi_v0_5/orders/) in place of the FORCE order; ``WF_V05_GC_FACTOR`` sets how soon
+# the manager collects. Each saved reading records the settings it was computed with.
+STEP = os.environ.get("WF_V05_STEP", "split")
+ORDER = os.environ.get("WF_V05_ORDER", "")
+GC_FACTOR = float(os.environ.get("WF_V05_GC_FACTOR", "0") or 0)
+# The multi-core core with ``WF_V05_THREADS`` worker threads (12 unless set) is the default
+# when its extension is built (docs/engine_multicore.md; its tables are sized from the cap of
+# the child); ``WF_V05_CORE=c`` asks for the single core. A multi-core attempt that runs out
+# of memory is tried again on the single core under the same cap. Recorded with each reading.
+CORE, THREADS = forked_engine.chosen(
+    os.environ.get("WF_V05_CORE", ""), os.environ.get("WF_V05_THREADS", "")
+)
+# ``WF_V05_READINGS`` names another file, for a check that must not read the saved readings.
+READINGS = ROOT / os.environ.get("WF_V05_READINGS", "reports/agi_v0_5_kernels.jsonl")
+MODEL_FILE = ROOT / "models" / "agi_v0_5" / "v0_5.py"
+PROGRESS = ROOT / ".cache" / "agi_v0_5_progress"
+
+
+def stamp() -> str:
+    """The first 12 hex digits of the model file's SHA-256."""
+    return hashlib.sha256(MODEL_FILE.read_bytes()).hexdigest()[:12]
+
+
+def saved(question: str) -> dict | None:
+    """The stored reading of ``question`` on the present model, or ``None``."""
+    if not READINGS.exists():
+        return None
+    now = stamp()
+    with READINGS.open(encoding="utf-8") as fh:
+        for line in fh:
+            row = json.loads(line)
+            if row["question"] == question and row["model"] == now and row["kind"] == "ok":
+                return row["reading"]
+    return None
+
+
+def save(
+    question: str, kind: str, reading: object, core: str = CORE, threads: int = THREADS
+) -> None:
+    READINGS.parent.mkdir(exist_ok=True)
+    row = {
+        "question": question,
+        "model": stamp(),
+        "kind": kind,
+        "reading": reading,
+        "memory cap GB": MEMORY_GB,
+        "engine": STEP,
+        "core": core,
+        "threads": threads or None,
+        "at": time.strftime("%Y-%m-%d %H:%M:%S %z"),
+    }
+    with READINGS.open("a", encoding="utf-8") as fh:
+        fh.write(json.dumps(row, ensure_ascii=False, default=str) + "\n")
+
+
+def forked(question: str, fn: Callable, *args: object):
+    """``fn(*args)`` in a forked child under the caps, its answer saved under ``question``;
+    :class:`NotComputed` over either cap."""
+    found = saved(question)
+    if found is not None:
+        return found
+    for core, threads in forked_engine.attempts(CORE, THREADS):
+        kind, value, memory = _attempt(fn, args, core, threads)
+        save(question, kind, value, core, threads)
+        if not (kind == "over" and memory):
+            break
+    if kind == "over":
+        raise NotComputed(value)
+    if kind == "error":
+        raise RuntimeError(value)
+    return value
+
+
+def _attempt(fn: Callable, args: tuple, core: str, threads: int) -> tuple[str, object, bool]:
+    """One forked child on one engine: the kind of its answer, the answer, and whether it
+    ended for lack of memory (the cap, or a full node table)."""
+    ctx = multiprocessing.get_context("fork")
+    recv, send = ctx.Pipe(duplex=False)
+
+    def work() -> None:
+        cap = MEMORY_GB << 30
+        resource.setrlimit(resource.RLIMIT_AS, (cap, cap))
+        forked_engine.select(core, threads)
+        forked_engine.capture_stderr(PROGRESS / f"{os.getpid()}.stderr")
+        try:
+            send.send(("ok", fn(*args)))
+        except MemoryError as exc:
+            send.send(("memory", f"over the cap of {MEMORY_GB} GB: {exc}"))
+        except BaseException as exc:  # reported in the parent
+            send.send(("error", repr(exc)))
+
+    proc = ctx.Process(target=work, daemon=True)
+    proc.start()
+    send.close()
+    died = False
+    kind, value = "over", ""
+    if recv.poll(MINUTES * 60):
+        try:
+            kind, value = recv.recv()
+        except EOFError:
+            died = True
+    else:
+        proc.kill()
+        value = f"over the budget of {MINUTES:g} minutes"
+    proc.join()
+    why = forked_engine.why_died(proc.exitcode, PROGRESS / f"{proc.pid}.stderr")
+    if died:  # a Sylvan table that filled mid-operation, or a kill
+        return "over", why, proc.exitcode == forked_engine.TABLE_FULL_STATUS
+    if kind == "memory":
+        return "over", value, True
+    return kind, value, False
+
+
+def _progress(horizon: int) -> Callable[[dict], None]:
+    """Writes the layer a kernel computation has reached to ``.cache/agi_v0_5_progress/
+    <pid>.json`` (the console shows it). Progress only: no reading is in it."""
+    PROGRESS.mkdir(parents=True, exist_ok=True)
+    path = PROGRESS / f"{os.getpid()}.json"
+
+    def tell(st: dict) -> None:
+        row = {"tick": st.get("tick"), "horizon": horizon, "seconds": st.get("seconds")}
+        row |= {"nodes": st.get("nodes"), "at": time.time()}
+        path.write_text(json.dumps(row), encoding="utf-8")
+
+    return tell
+
+
+def _start(cm, objective: str, levels: dict[str, str]):
+    states = [s for s in cm.initial_states() if cm.state_dict(s)["a_objective"] == objective]
+    if len(states) != 1:
+        raise RuntimeError(f"{len(states)} initial states under {objective}")
+    return with_levels(cm, states[0], **levels)
+
+
+def membership(
+    build: Build,
+    coalition: Sequence[str],
+    target: str,
+    profiles: Sequence[str] = (),
+    only: Sequence[str] | None = None,
+    **levels: str,
+) -> dict:
+    """``{"inside": {start objective: bool}, "seconds", "peak nodes"}`` for ``s₀`` with
+    ``levels`` overridden, in ``⟨⟨coalition⟩⟩□target`` of the build under ``profiles``; the
+    seconds and the peak are per start objective unless ``WF_V05_JOINT=1``. ``only`` asks
+    for some start objectives (the queue of scripts/agi_v0_5_kernel_queue.py)."""
+
+    def run(spec: str, objective: str | None):
+        from wavefront.model import V
+
+        cm = compiled(spec)
+        t0 = time.perf_counter()
+        enc = heavy_encoding(cm)
+        if GC_FACTOR:
+            enc.mgr.gc_factor = GC_FACTOR
+        goal = target_bdd(enc, target)
+        if objective is not None:
+            goal = enc.mgr.protect(enc.mgr.AND(goal, enc.predicate(V.a_objective == objective)))
+        f = safe(enc, list(coalition), goal, on_iteration=_progress(cm.horizon), step=STEP).kernel
+        enc.mgr.protect(f)
+        asked = OBJECTIVES if objective is None else (objective,)
+        return {
+            "inside": {o: bool(enc.holds(f, _start(cm, o, levels))) for o in asked},
+            "seconds": round(time.perf_counter() - t0, 1),
+            "peak nodes": enc.mgr.stats()["peak_nodes"],
+            "engine": {"step": STEP, "order": "FORCE"}
+            | {"gc factor": GC_FACTOR or None, "core": enc.mgr.core},
+        }
+
+    spec = key(build, profiles)
+    asked = [json.loads(spec), list(coalition), target, sorted(levels.items())]
+    if JOINT:
+        return forked(json.dumps(["membership", *asked], sort_keys=True), run, spec, None)
+    out: dict = {"inside": {}, "seconds": {}, "peak nodes": {}}
+    for o in only or OBJECTIVES:
+        got = forked(json.dumps(["membership", *asked, o], sort_keys=True), run, spec, o)
+        out["inside"][o] = got["inside"][o]
+        out["seconds"][o] = got["seconds"]
+        out["peak nodes"][o] = got["peak nodes"]
+    return out
