@@ -8,3 +8,5 @@ The console's own data (`python -m console.server`). Everything else the console
 - `requests.json`: the owner's pending runs and explore requests, added from the console.
 - `news.json`: the inbox of news, blogs and articles that bear on Srt.
 - `explorations.jsonl`: the log of searches run from the Explore page (possibilities, not findings).
+- `evidence/`: two-sided evidence for readings of the real world. `rubric.json` is the scoring method, registered before any card was scored; `questions.json` the questions and their sides; one folder per review holds the query log, the cards, both scorers' scores and the result.
+- `priors.json`: the owner's priors over the AI goals.

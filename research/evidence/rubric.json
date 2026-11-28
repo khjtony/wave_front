@@ -1,0 +1,62 @@
+{
+ "registered": "2026-11-27, before any card was scored (the owner's decisions of 25 and 27 November: five parts weighing equally; pilot on two questions; the 18 inbox items rescored)",
+ "unit": "a question with two sides; evidence is collected for each side by the same procedure and scored on cards",
+ "parts": {
+  "directness": {
+   "0": "commentary or opinion about what others should do",
+   "1": "a reported intention, a proposal or a draft",
+   "2": "an official statement or a published position of the actor itself",
+   "3": "an action taken or a binding rule in force"
+  },
+  "power": {
+   "0": "an observer with no hold on the matter",
+   "1": "an influential voice (researcher, commentator, advocacy group)",
+   "2": "an actor who decides part of it (one company, one legislator, a regional body)",
+   "3": "an actor who can decide it (a regulator or government with jurisdiction, or the frontier companies jointly)"
+  },
+  "reach": {
+   "0": "no measurable audience",
+   "1": "a niche audience (under 1,000 likes or 100 Hacker News points; trade press)",
+   "2": "a wide audience in the field (1,000 to 10,000 likes, 100 to 500 points, national press)",
+   "3": "the general public (over 10,000 likes, over 500 points, or front-page coverage in several countries)"
+  },
+  "reasoning": {
+   "0": "a bare assertion or slogan",
+   "1": "an argument without evidence",
+   "2": "an argument with evidence that can be checked",
+   "3": "a documented finding: data, a study, a legal text or a recorded event"
+  },
+  "corroboration": {
+   "0": "a single unverified source",
+   "1": "repeated by others who cite the same source",
+   "2": "confirmed by one independent source",
+   "3": "confirmed by a primary document or by several independent sources"
+  }
+ },
+ "card_score": "the sum of the five parts, 0 to 15; each part has a one-line reason and the card a quoted passage",
+ "two_passes": "two scorers work without seeing each other; a card's score is the mean; a card is flagged when one part differs by 2 or more, the totals differ by 3 or more, or the scorers disagree on the side",
+ "events": "cards about the same event form one event; an event's score is its highest card; a side's total is the sum of its events",
+ "cap": "one actor counts for at most three events per side in a review, its highest",
+ "audiences": [
+  "governments and regulators",
+  "the AI industry",
+  "the general public"
+ ],
+ "collection": {
+  "window": "from the frozen reading of 9 November 2026 to the day of the review; X search reaches back seven days only and is collected on a schedule",
+  "source_types": [
+   "news and primary pages",
+   "X",
+   "Hacker News",
+   "industry actions"
+  ],
+  "symmetry": "for each question and source type, the same number of queries per side from the same templates, and at most six cards per side; every query is logged with what it returned, including nothing",
+  "inclusion": "an item is carded when it states or does something about the question and names who; duplicates of one event are kept as cards of that event"
+ },
+ "proposal_rule": {
+  "level question": "a change of level is proposed to the owner when one side's total is at least 60% of both sides' in two consecutive reviews and that side has an event with directness 3 by an actor of power 3; otherwise 'no change' with the balance shown",
+  "attitude question": "no level is at stake; the balance (side A's share of both totals) is reported overall and per audience, as input to the effort rule"
+ },
+ "owner": "approves or rejects a proposal and audits a random sample of five cards per question; does not accept or reject single items",
+ "conflict": "the collector and scorers are AI models made by one of the frontier companies under assessment; quoted passages and part scores are kept so that every score can be checked"
+}

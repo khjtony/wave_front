@@ -1,0 +1,32 @@
+[
+ {
+  "id": "open_weights",
+  "kind": "attitude question",
+  "question": "Over the review window, does the weight of evidence favour openly releasing the weights of frontier-level AI models, or restricting it?",
+  "sides": {
+   "A": "open: releasing weights is beneficial and should continue or expand (innovation, access, a check on concentration of power, security through scrutiny)",
+   "B": "restrict: releasing weights is a risk and should be limited or stopped (safeguards can be stripped, no recall, misuse, national security)"
+  },
+  "bears_on": [
+   "effort of the frontier AI companies' open-weight release",
+   "effort of governments restricting service",
+   "service restricted: a level change only when a binding restriction is in force"
+  ]
+ },
+ {
+  "id": "regulation",
+  "kind": "level question",
+  "variable": "regime",
+  "srt": "voluntary",
+  "uncertain": [
+   "voluntary",
+   "mandatory"
+  ],
+  "question": "Are the rules that bind the frontier AI companies where they develop their frontier models voluntary or mandatory today?",
+  "sides": {
+   "A": "voluntary: what frontier developers must do rests on commitments, guidance or disclosure, with no enforceable limit on developing or deploying a model",
+   "B": "mandatory: a rule in force binds frontier developers with penalties and can stop or condition a deployment"
+  },
+  "note": "a proposed or pending rule is evidence of direction, scored with directness 1; only a rule in force scores directness 3 for side B"
+ }
+]
