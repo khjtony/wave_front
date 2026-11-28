@@ -370,7 +370,7 @@ async function evidence() {
         cards.filter(c => e.cards.includes(c.id)).map(cardRow)))); };
   show(h("h1", null, "Evidence"),
     h("p", { class: "lede" }, "Readings of the real world by two-sided evidence. Each question has two sides, searched the same way and scored on cards by two scorers who do not see each other. A rule proposes a change to Srt; you approve it and audit a sample of cards."),
-    !R ? h("div", { class: "panel" }, h("p", { class: "muted" }, rv ? `The review of ${rv.review} has ${rv.cards} cards collected and is being scored.` : "No review yet.")) : [
+    !R ? h("div", { class: "panel" }, h("p", { class: "muted" }, rv ? `The review of ${rv.review} has ${rv.cards} cards collected and is being scored.` : "No review yet.")) : h("div", null, [
       h("p", { class: "small muted" }, `Review of ${R.review}: ${R.cards.length} cards, ${R.flagged.length} flagged. The collector and the scorers are AI models made by one of the frontier companies under assessment; every score keeps its quoted passage and reasons so that it can be checked.`),
       R.questions.map(q => [h("h2", { class: "gap", style: "margin-top:26px" }, q.question),
         h("div", { class: "panel" }, h("div", { class: "row" }, h("span", { class: "tag" }, q.kind), q.srt ? h("span", { class: "muted small" }, "Srt today: " + q.srt) : null),
@@ -378,7 +378,7 @@ async function evidence() {
           h("p", null, h("b", null, "Proposal: "), q.proposal),
           h("div", { class: "scroll" }, h("table", { class: "small" }, h("tr", null, h("th", null, "Audience"), h("th", null, "Side A"), h("th", null, "Side B")), Object.entries(q.by_audience).map(([a, [x, y]]) => h("tr", null, h("td", null, a), h("td", null, x.toFixed(1)), h("td", null, y.toFixed(1))))))),
         h("div", { class: "grid g2 gap" }, side(q, "A"), side(q, "B")),
-        (() => { const out = R.cards.filter(c => c.question === q.id && !c.side); return out.length ? h("div", { class: "panel gap" }, h("h3", null, `Left out of the totals (${out.length})`), h("p", { class: "small muted" }, "The scorers disagreed on the side, or found the card supports neither."), out.map(cardRow)) : null; })()])],
+        (() => { const out = R.cards.filter(c => c.question === q.id && !c.side); return out.length ? h("div", { class: "panel gap" }, h("h3", null, `Left out of the totals (${out.length})`), h("p", { class: "small muted" }, "The scorers disagreed on the side, or found the card supports neither."), out.map(cardRow)) : null; })()])]),
     h("div", { class: "panel gap" }, h("h2", null, "The method"), h("p", { class: "small muted" }, E2.rubric.registered),
       h("div", { class: "scroll" }, h("table", { class: "small" }, h("tr", null, h("th", null, "Part"), [0, 1, 2, 3].map(n => h("th", null, String(n)))), Object.entries(E2.rubric.parts).map(([k, v]) => h("tr", null, h("td", null, h("b", null, k)), [0, 1, 2, 3].map(n => h("td", null, v[n])))))),
       ["card_score", "two_passes", "events", "cap"].map(k => h("p", { class: "small" }, h("b", null, k.replace("_", " ") + ": "), E2.rubric[k])),
