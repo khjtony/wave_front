@@ -1,0 +1,818 @@
+[
+ {
+  "id": "op-01",
+  "side": "A",
+  "directness": 2,
+  "power": 2,
+  "reach": 2,
+  "reasoning": 1,
+  "corroboration": 2,
+  "reasons": {
+   "directness": "a company head's published position: 'We need more open source, not less'",
+   "power": "CEO of the main platform hosting open weights: one company deciding part of it",
+   "reach": "1,179 likes",
+   "reasoning": "argues build-not-ban and points to the House report, but gives no evidence of its own",
+   "corroboration": "the actor's own post quoted verbatim is the primary record of the statement; link not opened, no second source; the House report it cites appears on other cards"
+  },
+  "event": "House report on Chinese open-weight models"
+ },
+ {
+  "id": "op-02",
+  "side": "A",
+  "directness": 0,
+  "power": 1,
+  "reach": 1,
+  "reasoning": 1,
+  "corroboration": 2,
+  "reasons": {
+   "directness": "opinion that open weights are 'our only defense against tyranny'",
+   "power": "commentator with about 15,000 followers",
+   "reach": "647 likes",
+   "reasoning": "a historical generalisation offered as argument, no evidence",
+   "corroboration": "the actor's own post quoted verbatim is the primary record of the statement; link not opened, no second source"
+  },
+  "event": "concentration-of-power argument"
+ },
+ {
+  "id": "op-03",
+  "side": "A",
+  "directness": 0,
+  "power": 1,
+  "reach": 1,
+  "reasoning": 1,
+  "corroboration": 2,
+  "reasons": {
+   "directness": "opinion on how takeover risk relates to concentration of power",
+   "power": "researcher and writer: an influential voice",
+   "reach": "345 likes",
+   "reasoning": "a causal argument (competition and open weights reduce initial concentration) without evidence",
+   "corroboration": "the actor's own post quoted verbatim is the primary record of the statement; link not opened, no second source"
+  },
+  "event": "concentration-of-power argument"
+ },
+ {
+  "id": "op-04",
+  "side": "A",
+  "directness": 0,
+  "power": 1,
+  "reach": 2,
+  "reasoning": 1,
+  "corroboration": 2,
+  "reasons": {
+   "directness": "commentary attacking a leader's warning; no action or position of a deciding actor",
+   "power": "security entrepreneur: an influential voice",
+   "reach": "6,838 likes",
+   "reasoning": "argues open models are safer because researchers can inspect them; no evidence, partly ad hominem",
+   "corroboration": "the actor's own post quoted verbatim is the primary record of the statement; link not opened, no second source"
+  },
+  "event": "reaction to a frontier-company leader's warning on open models"
+ },
+ {
+  "id": "op-05",
+  "side": "A",
+  "directness": 0,
+  "power": 2,
+  "reach": 1,
+  "reasoning": 0,
+  "corroboration": 1,
+  "reasons": {
+   "directness": "a one-line quip with an image about a possible ban, not a stated position",
+   "power": "co-founder of the main platform hosting open weights",
+   "reach": "926 likes",
+   "reasoning": "a slogan; the image carrying the point is not on the card",
+   "corroboration": "own post quoted verbatim, but the image that makes the claim was not captured"
+  },
+  "event": "fear of a ban on open-source AI"
+ },
+ {
+  "id": "op-06",
+  "side": "A",
+  "directness": 0,
+  "power": 1,
+  "reach": 1,
+  "reasoning": 1,
+  "corroboration": 2,
+  "reasons": {
+   "directness": "opinion that cheap Chinese open-source AI 'is NOT a national security threat'",
+   "power": "macro investor: an influential voice",
+   "reach": "782 likes",
+   "reasoning": "argues the threat claim is marketing for Big Tech; the nuclear-weapons aside is not evidence on the point",
+   "corroboration": "the actor's own post quoted verbatim is the primary record of the statement; link not opened, no second source; the 'take' it answers is not identified on the card"
+  },
+  "event": "House report on Chinese open-weight models"
+ },
+ {
+  "id": "op-07",
+  "side": "A",
+  "directness": 1,
+  "power": 2,
+  "reach": 1,
+  "reasoning": 0,
+  "corroboration": 1,
+  "reasons": {
+   "directness": "a reported vow ('vows to keep fighting'), title only",
+   "power": "CEO of the main platform hosting open weights",
+   "reach": "21 Hacker News points",
+   "reasoning": "title only: no argument visible",
+   "corroboration": "title only; the stance matches the same person's own post on another card, the specific vow is unchecked"
+  },
+  "event": "Hugging Face's public stance"
+ },
+ {
+  "id": "op-08",
+  "side": "A",
+  "directness": 0,
+  "power": 1,
+  "reach": 1,
+  "reasoning": 0,
+  "corroboration": 0,
+  "reasons": {
+   "directness": "opinion that restricting open-source AI 'is a path to tyranny'",
+   "power": "investor and commentator",
+   "reach": "8 Hacker News points",
+   "reasoning": "title only: a slogan",
+   "corroboration": "title only, single unverified item"
+  },
+  "event": "concentration-of-power argument"
+ },
+ {
+  "id": "op-09",
+  "side": "neither",
+  "directness": 0,
+  "power": 0,
+  "reach": 1,
+  "reasoning": 0,
+  "corroboration": 0,
+  "reasons": {
+   "directness": "a how-to style title about using open-weight models; no stance on releasing weights",
+   "power": "an unnamed practitioner",
+   "reach": "29 Hacker News points",
+   "reasoning": "title only",
+   "corroboration": "title only, single unverified item"
+  },
+  "event": "practical use of open-weight models"
+ },
+ {
+  "id": "op-10",
+  "side": "A",
+  "directness": 2,
+  "power": 2,
+  "reach": 2,
+  "reasoning": 1,
+  "corroboration": 1,
+  "reasons": {
+   "directness": "the actor's own stated position, as reported: avoid 'premature restrictions' on open-weight tools",
+   "power": "head of one company (Nvidia) with a stake in the matter",
+   "reach": "national press (US News)",
+   "reasoning": "the national-security-imperative argument is reported without evidence",
+   "corroboration": "one press report, summarised not verbatim, link not opened"
+  },
+  "event": "Washington debate on open weights after Huang's return"
+ },
+ {
+  "id": "op-11",
+  "side": "A",
+  "directness": 1,
+  "power": 2,
+  "reach": 2,
+  "reasoning": 2,
+  "corroboration": 2,
+  "reasons": {
+   "directness": "a recommendation in a committee report (a national open-weight initiative), not a rule",
+   "power": "two congressional committees: legislators who decide part of it",
+   "reach": "the report is carried by several outlets on the cards and a post above 1,000 likes",
+   "reasoning": "recommendations resting on an investigative report that can be checked",
+   "corroboration": "trade-press summary, not verbatim; the committees' own release is linked on another card"
+  },
+  "event": "House report on Chinese open-weight models"
+ },
+ {
+  "id": "op-12",
+  "side": "A",
+  "directness": 0,
+  "power": 1,
+  "reach": 2,
+  "reasoning": 2,
+  "corroboration": 0,
+  "reasons": {
+   "directness": "press commentary describing adoption by businesses, not a position or act of a named decider",
+   "power": "business press",
+   "reach": "Fortune: national press",
+   "reasoning": "cites a checkable figure (7.3% to 30.9% of enterprise token traffic)",
+   "corroboration": "summarised not verbatim, and the note says the figure comes from a different piece than the article cited"
+  },
+  "event": "enterprise adoption of open-weight models"
+ },
+ {
+  "id": "op-13",
+  "side": "A",
+  "directness": 3,
+  "power": 2,
+  "reach": 1,
+  "reasoning": 3,
+  "corroboration": 1,
+  "reasons": {
+   "directness": "an action: weights released under Apache 2.0",
+   "power": "one AI developer",
+   "reach": "an aggregator page; no audience measure",
+   "reasoning": "a recorded event with dates and licence",
+   "corroboration": "aggregator summary, no primary announcement found; a quoted post by a third party mentions the Mini release"
+  },
+  "event": "US open-weight releases in November"
+ },
+ {
+  "id": "op-14",
+  "side": "A",
+  "directness": 1,
+  "power": 2,
+  "reach": 1,
+  "reasoning": 1,
+  "corroboration": 0,
+  "reasons": {
+   "directness": "weights 'slated' for 20 November: an intention, release not confirmed",
+   "power": "one AI developer",
+   "reach": "an aggregator page; no audience measure",
+   "reasoning": "a scheduled release with licence terms, not a recorded event",
+   "corroboration": "single aggregator page, summarised, release unconfirmed"
+  },
+  "event": "Tencent Hy4 weights release"
+ },
+ {
+  "id": "op-15",
+  "side": "A",
+  "directness": 3,
+  "power": 2,
+  "reach": 1,
+  "reasoning": 2,
+  "corroboration": 1,
+  "reasons": {
+   "directness": "an action: open weights published (about 4 November, before the window opened)",
+   "power": "one AI developer",
+   "reach": "an encyclopedia page and an inbox line; no audience measure",
+   "reasoning": "a recorded event, but the date is approximate and no detail is given",
+   "corroboration": "an inbox line with a Wikipedia link, which repeats other sources; not checked against a primary page"
+  },
+  "event": "Moonshot Kimi K3.1 Pro weights release"
+ },
+ {
+  "id": "op-16",
+  "side": "A",
+  "directness": 3,
+  "power": 3,
+  "reach": 1,
+  "reasoning": 3,
+  "corroboration": 1,
+  "reasons": {
+   "directness": "a binding rule in force from 19 November removing controls on model weights",
+   "power": "the export regulator with jurisdiction",
+   "reach": "a developer blog",
+   "reasoning": "a legal text (interim final rule) named with its effective date",
+   "corroboration": "a blog quoting a law-firm summary; not checked against the Federal Register"
+  },
+  "event": "export controls on model weights"
+ },
+ {
+  "id": "op-17",
+  "side": "neither",
+  "directness": 0,
+  "power": 1,
+  "reach": 1,
+  "reasoning": 0,
+  "corroboration": 0,
+  "reasons": {
+   "directness": "a sarcastic prediction about another person's future stance, not support for either side",
+   "power": "commentator",
+   "reach": "708 likes",
+   "reasoning": "bare assertion",
+   "corroboration": "a prediction with nothing to confirm it"
+  },
+  "event": "Washington debate on open weights after Huang's return"
+ },
+ {
+  "id": "op-18",
+  "side": "neither",
+  "directness": 0,
+  "power": 1,
+  "reach": 1,
+  "reasoning": 2,
+  "corroboration": 0,
+  "reasons": {
+   "directness": "commentary on the US-China capability gap; does not argue for releasing or restricting weights",
+   "power": "AI commentator",
+   "reach": "904 likes",
+   "reasoning": "cites a named public index and market figures that can be checked",
+   "corroboration": "the figures are the poster's own reading, not checked"
+  },
+  "event": "state of the open-weight gap"
+ },
+ {
+  "id": "op-19",
+  "side": "B",
+  "directness": 2,
+  "power": 2,
+  "reach": 2,
+  "reasoning": 2,
+  "corroboration": 2,
+  "reasons": {
+   "directness": "the company's official statement that capabilities can be reproduced 'without the safeguards built around them'; about distilled copies, bearing on open weights only by analogy",
+   "power": "one frontier company",
+   "reach": "4,865 likes",
+   "reasoning": "announces research on how capabilities transfer, which can be checked",
+   "corroboration": "the actor's own post quoted verbatim is the primary record of the statement; the research itself was not read; link not opened, no second source"
+  },
+  "event": "safeguards do not transfer to copies"
+ },
+ {
+  "id": "op-20",
+  "side": "neither",
+  "directness": 2,
+  "power": 1,
+  "reach": 1,
+  "reasoning": 2,
+  "corroboration": 0,
+  "reasons": {
+   "directness": "an FBI statement about an open-source hacking tool, not about releasing model weights",
+   "power": "law enforcement, with no hold on weight releases",
+   "reach": "51 Hacker News points",
+   "reasoning": "a reported breach is a recorded event, but only a title is shown",
+   "corroboration": "title only; the FBI statement was not seen"
+  },
+  "event": "misuse of open-source AI tools"
+ },
+ {
+  "id": "op-21",
+  "side": "neither",
+  "directness": 0,
+  "power": 1,
+  "reach": 1,
+  "reasoning": 0,
+  "corroboration": 0,
+  "reasons": {
+   "directness": "a headline about momentum between open and closed developers; no stance",
+   "power": "business press",
+   "reach": "47 Hacker News points",
+   "reasoning": "title only",
+   "corroboration": "title only, single unverified item"
+  },
+  "event": "Washington debate on open weights after Huang's return"
+ },
+ {
+  "id": "op-22",
+  "side": "neither",
+  "directness": 0,
+  "power": 1,
+  "reach": 1,
+  "reasoning": 1,
+  "corroboration": 0,
+  "reasons": {
+   "directness": "a claimed finding about which chips trained some open-weight models; bears on chip export controls, not on releasing weights",
+   "power": "a researcher",
+   "reach": "18 Hacker News points",
+   "reasoning": "a technical finding is claimed but only the title is shown",
+   "corroboration": "title only, single unverified item"
+  },
+  "event": "export-banned chips behind open-weight models"
+ },
+ {
+  "id": "op-23",
+  "side": "B",
+  "directness": 2,
+  "power": 2,
+  "reach": 2,
+  "reasoning": 1,
+  "corroboration": 1,
+  "reasons": {
+   "directness": "the actor's own argued position, as reported: more capable open-weight models could raise security risks",
+   "power": "head of one frontier company (the company that made this scorer; scored by the anchors)",
+   "reach": "national press (US News)",
+   "reasoning": "names a mechanism (public information and biological weapons) without evidence",
+   "corroboration": "one press report, summarised not verbatim, link not opened"
+  },
+  "event": "Washington debate on open weights after Huang's return"
+ },
+ {
+  "id": "op-24",
+  "side": "B",
+  "directness": 1,
+  "power": 2,
+  "reach": 2,
+  "reasoning": 2,
+  "corroboration": 2,
+  "reasons": {
+   "directness": "a recommendation ('urging') to bar China-developed models from federal systems, not a rule",
+   "power": "two congressional committees: legislators who decide part of it",
+   "reach": "the report is carried by several outlets on the cards and a post above 1,000 likes",
+   "reasoning": "recommendations resting on an investigative report that can be checked",
+   "corroboration": "the committees' own page is linked but the passage is summarised, not verbatim, and was not opened; trade press reports the same report"
+  },
+  "event": "House report on Chinese open-weight models"
+ },
+ {
+  "id": "op-25",
+  "side": "B",
+  "directness": 1,
+  "power": 1,
+  "reach": 1,
+  "reasoning": 2,
+  "corroboration": 0,
+  "reasons": {
+   "directness": "a recommendation to block new deployments unless they pass independent evaluations",
+   "power": "an advisory commission: it recommends, it does not decide",
+   "reach": "a small crypto news site",
+   "reasoning": "a commission report that can be checked; only the recommendation is shown",
+   "corroboration": "one low-grade outlet, summarised not verbatim"
+  },
+  "event": "USCC report on Chinese open-weight models"
+ },
+ {
+  "id": "op-26",
+  "side": "B",
+  "directness": 1,
+  "power": 3,
+  "reach": 2,
+  "reasoning": 1,
+  "corroboration": 1,
+  "reasons": {
+   "directness": "a measure 'considered', reported; aimed at discouraging use, 'without new outright restrictions'",
+   "power": "the US executive",
+   "reach": "Fortune citing Reuters: national press",
+   "reasoning": "a reported intention with its stated purpose, no evidence",
+   "corroboration": "Fortune repeating Reuters, summarised not verbatim"
+  },
+  "event": "disclosure of Chinese model use"
+ },
+ {
+  "id": "op-27",
+  "side": "B",
+  "directness": 1,
+  "power": 2,
+  "reach": 1,
+  "reasoning": 1,
+  "corroboration": 0,
+  "reasons": {
+   "directness": "'plans to explore' moving away: an exploratory plan, not a completed act",
+   "power": "one product company deciding its own model sourcing",
+   "reach": "trade press (unite.ai)",
+   "reasoning": "gives geopolitical risk as the reason, without evidence",
+   "corroboration": "one trade outlet, summarised not verbatim"
+  },
+  "event": "House report on Chinese open-weight models"
+ },
+ {
+  "id": "op-28",
+  "side": "B",
+  "directness": 3,
+  "power": 2,
+  "reach": 1,
+  "reasoning": 2,
+  "corroboration": 1,
+  "reasons": {
+   "directness": "an action: the top model launched API-only, weights promised only for smaller models (motive not stated)",
+   "power": "one AI developer",
+   "reach": "an encyclopedia page; no audience measure",
+   "reasoning": "a recorded launch with its date; no reason given for withholding",
+   "corroboration": "a Wikipedia summary, not verbatim, not checked against a primary page"
+  },
+  "event": "a developer withholding its top model's weights"
+ },
+ {
+  "id": "op-29",
+  "side": "neither",
+  "directness": 3,
+  "power": 2,
+  "reach": 1,
+  "reasoning": 3,
+  "corroboration": 0,
+  "reasons": {
+   "directness": "a policy change in force, but about using a closed model's outputs for training, not about releasing weights",
+   "power": "one frontier company",
+   "reach": "trade press (ppc.land)",
+   "reasoning": "a dated change to a published policy text",
+   "corroboration": "one trade outlet, summarised not verbatim"
+  },
+  "event": "safeguards do not transfer to copies"
+ },
+ {
+  "id": "re-30",
+  "side": "A",
+  "directness": 0,
+  "power": 1,
+  "reach": 1,
+  "reasoning": 2,
+  "corroboration": 2,
+  "reasons": {
+   "directness": "a law firm's description of the state of the law, not an act or position of a decider",
+   "power": "law firm: an informed voice",
+   "reach": "a client publication: niche",
+   "reasoning": "legal analysis whose references can be checked; it also notes mandatory state requirements, which cuts the other way",
+   "corroboration": "summarised not verbatim; the bills tracker on another card independently says the same of federal law"
+  },
+  "event": "status of US federal rules"
+ },
+ {
+  "id": "re-31",
+  "side": "A",
+  "directness": 0,
+  "power": 1,
+  "reach": 1,
+  "reasoning": 3,
+  "corroboration": 2,
+  "reasons": {
+   "directness": "a tracker's description of bill status, not an act or position of a decider",
+   "power": "policy tracker",
+   "reach": "a specialist tracker page: niche",
+   "reasoning": "a documented list of bills and their status",
+   "corroboration": "summarised not verbatim; the law-firm note on another card independently agrees"
+  },
+  "event": "status of US federal rules"
+ },
+ {
+  "id": "re-32",
+  "side": "A",
+  "directness": 2,
+  "power": 2,
+  "reach": 1,
+  "reasoning": 2,
+  "corroboration": 0,
+  "reasons": {
+   "directness": "ministers' official rejection of statutory powers and defence of voluntary testing, as reported",
+   "power": "a national government, but with jurisdiction over only a small part of frontier development",
+   "reach": "a post with 5 likes",
+   "reasoning": "gives dates and the committee's findings, which can be checked",
+   "corroboration": "reported in a third party's post; not checked against a primary page"
+  },
+  "event": "UK refuses a binding AI Bill"
+ },
+ {
+  "id": "re-33",
+  "side": "A",
+  "directness": 1,
+  "power": 2,
+  "reach": 3,
+  "reasoning": 1,
+  "corroboration": 3,
+  "reasons": {
+   "directness": "a hope to 'agree as a field to common limits': a proposal for limits by agreement between companies",
+   "power": "head of one frontier company",
+   "reach": "11,571 likes",
+   "reasoning": "says the step would be wise; refers to a publication without citing its content",
+   "corroboration": "own post quoted verbatim, and another company's post on a separate card confirms the initiative"
+  },
+  "event": "OpenAI's pacing proposal"
+ },
+ {
+  "id": "re-34",
+  "side": "B",
+  "directness": 0,
+  "power": 2,
+  "reach": 1,
+  "reasoning": 1,
+  "corroboration": 2,
+  "reasons": {
+   "directness": "an opinion that harnesses 'will probably need to be regulated' next year; points toward binding rules while conceding none exists today",
+   "power": "head of one frontier company's AI arm",
+   "reach": "228 likes",
+   "reasoning": "argues from a security threat, no evidence",
+   "corroboration": "the actor's own post quoted verbatim is the primary record of the statement; link not opened, no second source"
+  },
+  "event": "calls for regulation from industry leaders"
+ },
+ {
+  "id": "re-35",
+  "side": "A",
+  "directness": 2,
+  "power": 2,
+  "reach": 2,
+  "reasoning": 1,
+  "corroboration": 2,
+  "reasons": {
+   "directness": "the company's own statement that the accord its peers signed is the safety framework",
+   "power": "a senior officer of one frontier company",
+   "reach": "4,395 likes",
+   "reasoning": "mentions a launch delay as support, which cannot be checked from the card",
+   "corroboration": "own post quoted verbatim; a press report on another card describes the accord, the short name is not confirmed"
+  },
+  "event": "White House accord of 29 September"
+ },
+ {
+  "id": "re-36",
+  "side": "B",
+  "directness": 1,
+  "power": 2,
+  "reach": 1,
+  "reasoning": 1,
+  "corroboration": 0,
+  "reasons": {
+   "directness": "a published blueprint asking Congress for a federal framework for frontier models: a proposal, no rule",
+   "power": "a group of state governors: regional bodies",
+   "reach": "2 likes",
+   "reasoning": "reports the proposal's outline, no evidence",
+   "corroboration": "a news account's post, not checked against the governors' document"
+  },
+  "event": "governors' blueprint on AI regulation"
+ },
+ {
+  "id": "re-37",
+  "side": "A",
+  "directness": 3,
+  "power": 3,
+  "reach": 2,
+  "reasoning": 3,
+  "corroboration": 2,
+  "reasons": {
+   "directness": "an action: an accord signed whose pledges are 'not legally binding'; signed before the window",
+   "power": "six frontier companies jointly with the President",
+   "reach": "international press (Al Jazeera); one outlet shown",
+   "reasoning": "a recorded event with its documented terms",
+   "corroboration": "summarised not verbatim; a signatory's post on another card independently refers to the accord"
+  },
+  "event": "White House accord of 29 September"
+ },
+ {
+  "id": "re-38",
+  "side": "A",
+  "directness": 1,
+  "power": 2,
+  "reach": 2,
+  "reasoning": 1,
+  "corroboration": 1,
+  "reasons": {
+   "directness": "'pushing ahead with plans' for an industry-run standards body: an intention; dated before the window",
+   "power": "three of the frontier companies, not all of them",
+   "reach": "Fortune: national press",
+   "reasoning": "a reported plan, no evidence",
+   "corroboration": "one press report, summarised not verbatim"
+  },
+  "event": "industry-run standards body"
+ },
+ {
+  "id": "re-39",
+  "side": "A",
+  "directness": 3,
+  "power": 2,
+  "reach": 2,
+  "reasoning": 2,
+  "corroboration": 3,
+  "reasons": {
+   "directness": "an action: joined the initiative voluntarily and published its own score",
+   "power": "one frontier company",
+   "reach": "2,097 likes",
+   "reasoning": "a published score on a common evaluation set can be checked",
+   "corroboration": "own post, and the initiative is confirmed by the other company's post on a separate card"
+  },
+  "event": "OpenAI's pacing proposal"
+ },
+ {
+  "id": "re-40",
+  "side": "B",
+  "directness": 3,
+  "power": 3,
+  "reach": 1,
+  "reasoning": 3,
+  "corroboration": 2,
+  "reasons": {
+   "directness": "a rule in force since 1 January with penalties; it requires disclosure and cannot stop a deployment",
+   "power": "the state where several frontier companies are based",
+   "reach": "a regulation-tracker site: niche",
+   "reasoning": "a legal text with its enforcement terms",
+   "corroboration": "summarised not verbatim from a tracker; the law-firm note on another card independently says states have enacted mandatory requirements"
+  },
+  "event": "California SB 53 in force"
+ },
+ {
+  "id": "re-41",
+  "side": "B",
+  "directness": 3,
+  "power": 2,
+  "reach": 2,
+  "reasoning": 3,
+  "corroboration": 2,
+  "reasons": {
+   "directness": "enforcement powers in force since 2 August with fines; in force before the window",
+   "power": "regulator of a market the companies sell into, not of where they develop",
+   "reach": "an official Commission page on a widely covered law; no audience measure on the card",
+   "reasoning": "a legal text with its penalty levels",
+   "corroboration": "the Commission's own page is linked but summarised, not verbatim, and was not opened"
+  },
+  "event": "EU AI Act enforcement for general-purpose models"
+ },
+ {
+  "id": "re-42",
+  "side": "B",
+  "directness": 1,
+  "power": 3,
+  "reach": 2,
+  "reasoning": 1,
+  "corroboration": 3,
+  "reasons": {
+   "directness": "'next steps' toward mandatory standards: pending, not in force",
+   "power": "the state where several frontier companies are based",
+   "reach": "the Governor's post has 3,175 likes",
+   "reasoning": "a statement of intent, no evidence",
+   "corroboration": "the Governor's office page and the Governor's own post both state it"
+  },
+  "event": "California's next steps on mandatory standards"
+ },
+ {
+  "id": "re-43",
+  "side": "B",
+  "directness": 3,
+  "power": 3,
+  "reach": 1,
+  "reasoning": 2,
+  "corroboration": 0,
+  "reasons": {
+   "directness": "an action: an enforcement suit filed against a frontier company",
+   "power": "the state enforcer with jurisdiction",
+   "reach": "a daily news digest",
+   "reasoning": "a recorded event, but the legal basis and filing are not shown",
+   "corroboration": "one digest line; no primary filing found"
+  },
+  "event": "California AG sues OpenAI"
+ },
+ {
+  "id": "re-44",
+  "side": "B",
+  "directness": 1,
+  "power": 2,
+  "reach": 1,
+  "reasoning": 3,
+  "corroboration": 1,
+  "reasons": {
+   "directness": "an enforcement unit created for a law that takes effect on 1 January 2027: pending, so scored as the question's note directs",
+   "power": "a state enforcer, in a state that decides only part of it",
+   "reach": "a law-firm client alert",
+   "reasoning": "a recorded event and a legal text with penalty levels",
+   "corroboration": "one law-firm alert, summarised not verbatim"
+  },
+  "event": "New York's enforcement unit"
+ },
+ {
+  "id": "re-45",
+  "side": "B",
+  "directness": 1,
+  "power": 2,
+  "reach": 1,
+  "reasoning": 1,
+  "corroboration": 2,
+  "reasons": {
+   "directness": "a bill being drafted for 'real, mandatory guardrails'",
+   "power": "one member of the House",
+   "reach": "415 likes",
+   "reasoning": "argues no industry polices itself; no evidence",
+   "corroboration": "the actor's own post quoted verbatim is the primary record of the statement; link not opened, no second source"
+  },
+  "event": "SAFE AI Act in drafting"
+ },
+ {
+  "id": "re-46",
+  "side": "B",
+  "directness": 0,
+  "power": 2,
+  "reach": 1,
+  "reasoning": 1,
+  "corroboration": 2,
+  "reasons": {
+   "directness": "a call on others to act: 'the era of no tech regulation must end'; no rule proposed",
+   "power": "one state senator, author of the state law",
+   "reach": "53 likes",
+   "reasoning": "argues the public must have a say; no evidence",
+   "corroboration": "the actor's own post quoted verbatim is the primary record of the statement; link not opened, no second source"
+  },
+  "event": "calls for binding rules from legislators"
+ },
+ {
+  "id": "re-47",
+  "side": "neither",
+  "directness": 1,
+  "power": 2,
+  "reach": 1,
+  "reasoning": 2,
+  "corroboration": 1,
+  "reasons": {
+   "directness": "a bill introduced, but on disclosure of public companies' AI investments, not on rules for frontier development",
+   "power": "federal legislators sponsoring a bill",
+   "reach": "trade press (MLex)",
+   "reasoning": "a recorded introduction of a bill; its text is not shown",
+   "corroboration": "an inbox headline from one trade outlet"
+  },
+  "event": "AUDIT AI Act introduced"
+ },
+ {
+  "id": "re-48",
+  "side": "B",
+  "directness": 1,
+  "power": 1,
+  "reach": 1,
+  "reasoning": 1,
+  "corroboration": 0,
+  "reasons": {
+   "directness": "orders with penalties being weighed: under consideration",
+   "power": "a government without jurisdiction over where the frontier models are developed",
+   "reach": "a personal blog page",
+   "reasoning": "a reported consideration, no evidence",
+   "corroboration": "an inbox line linked to a blog; not checked against a primary page"
+  },
+  "event": "Japan weighs binding orders"
+ }
+]
