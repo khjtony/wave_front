@@ -352,7 +352,41 @@ async function glossary() {
 }
 
 // ---------------------------------------------------------------- router
-const PAGES = { overview, models, claims, runs, states, explore, inbox, glossary };
+// ---------------------------------------------------------------- evidence
+async function evidence() {
+  const E2 = await api("/api/evidence"), rv = E2.reviews[0], R = rv && rv.result, PARTS = ["directness", "power", "reach", "reasoning", "corroboration"];
+  const bar = (a, b) => { const t = a + b || 1; return h("div", { class: "bar", style: "height:12px" }, h("span", { class: "b-held", style: `width:${100 * a / t}%`, title: "side A" }), h("span", { class: "b-warn", style: `width:${100 * b / t}%`, title: "side B" })); };
+  const cardRow = c => h("details", { id: "ev-" + c.id }, h("summary", null, h("b", null, c.score.toFixed(1)), " · ", c.actor, h("span", { class: "muted small" }, ` · ${c.source_type} · ${c.date}`), c.flags.length ? h("span", { class: "pill warn", style: "margin-left:8px" }, "flagged") : null),
+    h("p", { class: "small" }, c.claim, " ", h("a", { href: c.url, target: "_blank" }, "source →")),
+    h("blockquote", { class: "small", style: "margin:6px 0;padding:6px 10px;border-left:3px solid var(--line)" }, c.quote),
+    c.note ? h("p", { class: "small muted" }, c.note) : null,
+    h("div", { class: "scroll" }, h("table", { class: "small" }, h("tr", null, h("th", null, "Part"), h("th", null, "Scorer 1"), h("th", null, "Scorer 2")),
+      PARTS.map(p => h("tr", null, h("td", null, p), h("td", null, h("b", null, c.scores[0][p]), " ", c.reasons[0][p]), h("td", null, h("b", null, c.scores[1][p]), " ", c.reasons[1][p]))))),
+    c.flags.length ? h("p", { class: "small" }, h("b", null, "Flagged: "), c.flags.join("; ")) : null);
+  const side = (q, k) => { const s = q.sides[k], cards = R.cards.filter(c => c.question === q.id && c.side === k);
+    return h("div", { class: "panel" }, h("div", { class: "row" }, h("h3", { style: "margin:0" }, `Side ${k}`), h("span", { class: "stat", style: "font-size:22px" }, s.total.toFixed(1))),
+      h("p", { class: "small" }, s.text),
+      s.events.map(e => h("div", { class: "gap" }, h("div", { class: "row" }, h("b", { class: "small" }, e.event), h("span", { class: "muted small" }, `${e.score.toFixed(1)} · ${e.audience}` + (e.counted ? "" : " · over the cap for one actor, not counted"))),
+        cards.filter(c => e.cards.includes(c.id)).map(cardRow)))); };
+  show(h("h1", null, "Evidence"),
+    h("p", { class: "lede" }, "Readings of the real world by two-sided evidence. Each question has two sides, searched the same way and scored on cards by two scorers who do not see each other. A rule proposes a change to Srt; you approve it and audit a sample of cards."),
+    !R ? h("div", { class: "panel" }, h("p", { class: "muted" }, rv ? `The review of ${rv.review} has ${rv.cards} cards collected and is being scored.` : "No review yet.")) : [
+      h("p", { class: "small muted" }, `Review of ${R.review}: ${R.cards.length} cards, ${R.flagged.length} flagged. The collector and the scorers are AI models made by one of the frontier companies under assessment; every score keeps its quoted passage and reasons so that it can be checked.`),
+      R.questions.map(q => [h("h2", { class: "gap", style: "margin-top:26px" }, q.question),
+        h("div", { class: "panel" }, h("div", { class: "row" }, h("span", { class: "tag" }, q.kind), q.srt ? h("span", { class: "muted small" }, "Srt today: " + q.srt) : null),
+          h("div", { class: "gap" }, bar(q.sides.A.total, q.sides.B.total)), h("p", { class: "small" }, `Side A ${q.sides.A.total.toFixed(1)} · side B ${q.sides.B.total.toFixed(1)}` + (q.share_of_side_A == null ? "" : ` · side A holds ${Math.round(100 * q.share_of_side_A)}%`)),
+          h("p", null, h("b", null, "Proposal: "), q.proposal),
+          h("div", { class: "scroll" }, h("table", { class: "small" }, h("tr", null, h("th", null, "Audience"), h("th", null, "Side A"), h("th", null, "Side B")), Object.entries(q.by_audience).map(([a, [x, y]]) => h("tr", null, h("td", null, a), h("td", null, x.toFixed(1)), h("td", null, y.toFixed(1))))))),
+        h("div", { class: "grid g2 gap" }, side(q, "A"), side(q, "B")),
+        (() => { const out = R.cards.filter(c => c.question === q.id && !c.side); return out.length ? h("div", { class: "panel gap" }, h("h3", null, `Left out of the totals (${out.length})`), h("p", { class: "small muted" }, "The scorers disagreed on the side, or found the card supports neither."), out.map(cardRow)) : null; })()])],
+    h("div", { class: "panel gap" }, h("h2", null, "The method"), h("p", { class: "small muted" }, E2.rubric.registered),
+      h("div", { class: "scroll" }, h("table", { class: "small" }, h("tr", null, h("th", null, "Part"), [0, 1, 2, 3].map(n => h("th", null, String(n)))), Object.entries(E2.rubric.parts).map(([k, v]) => h("tr", null, h("td", null, h("b", null, k)), [0, 1, 2, 3].map(n => h("td", null, v[n])))))),
+      ["card_score", "two_passes", "events", "cap"].map(k => h("p", { class: "small" }, h("b", null, k.replace("_", " ") + ": "), E2.rubric[k])),
+      Object.entries(E2.rubric.proposal_rule).map(([k, v]) => h("p", { class: "small" }, h("b", null, k + ": "), v))),
+    rv && rv.log ? h("div", { class: "panel gap" }, h("details", null, h("summary", null, h("b", null, `Search log (${rv.log.queries.length} queries)`)), h("div", { class: "scroll" }, h("table", { class: "small" }, h("tr", null, ["Source", "Question", "Side", "Query", "Returned"].map(t => h("th", null, t))),
+      rv.log.queries.map(l => h("tr", null, h("td", null, l.source), h("td", null, l.question), h("td", null, l.side), h("td", null, l.query, l.note ? h("div", { class: "muted" }, l.note) : null), h("td", null, String(l.returned)))))), rv.log.notes.map(n => h("p", { class: "small muted" }, n)))) : null);
+}
+const PAGES = { overview, models, claims, runs, states, explore, inbox, evidence, glossary };
 function go() {
   const page = (location.hash || "#overview").slice(1).split("/")[0];
   document.querySelectorAll("nav a").forEach(a => a.classList.toggle("on", a.dataset.page === page));

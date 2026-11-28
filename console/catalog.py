@@ -927,6 +927,30 @@ def request_runs() -> list[dict]:
     return out
 
 
+def evidence() -> dict:
+    """The two-sided evidence reviews (research/evidence/): the registered method, the
+    questions, and each review's result and query log, newest first."""
+    root = RESEARCH / "evidence"
+
+    def read(path: Path):
+        return json.loads(path.read_text(encoding="utf-8")) if path.exists() else None
+
+    reviews = []
+    for folder in (
+        sorted((d for d in root.iterdir() if d.is_dir()), reverse=True) if root.exists() else []
+    ):
+        cards = read(folder / "cards.json") or []
+        reviews.append(
+            {"review": folder.name, "result": read(folder / "result.json"), "cards": len(cards)}
+            | {"log": read(folder / "query_log.json")}
+        )
+    return {
+        "rubric": read(root / "rubric.json"),
+        "questions": read(root / "questions.json"),
+        "reviews": reviews,
+    }
+
+
 def runs() -> dict:
     return {
         "live": live(),

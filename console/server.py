@@ -38,6 +38,8 @@ def get(path: str, query: dict) -> object:
         return catalog.runs()
     if path == "/api/states":
         return catalog.states()
+    if path == "/api/evidence":
+        return catalog.evidence()
     if path == "/api/glossary":
         return catalog.glossary()[1]
     if path.startswith("/api/store/"):
