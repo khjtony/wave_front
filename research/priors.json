@@ -1,0 +1,48 @@
+{
+ "note": "The owner's priors over the AI goals, fixed on 2026-11-27. A profile has one prior for the frontier AI system and one for the open-weight AI system. Judgement, not data: every combined figure carries a confidence warning and shows both profiles.",
+ "goals": [
+  "aligned",
+  "truth_seeking",
+  "self_preserving",
+  "indifferent",
+  "expansionist"
+ ],
+ "profiles": {
+  "optimistic": {
+   "frontier": [
+    80,
+    8,
+    5,
+    5,
+    2
+   ],
+   "open_weight": [
+    50,
+    5,
+    15,
+    15,
+    15
+   ]
+  },
+  "pessimistic": {
+   "frontier": [
+    67,
+    10,
+    10,
+    10,
+    3
+   ],
+   "open_weight": [
+    30,
+    5,
+    25,
+    15,
+    25
+   ]
+  }
+ },
+ "open": [
+  "the second profile's name: the owner wrote 'pessimistic' and later 'permissive'",
+  "whether the frontier prior is for the one modelled system or for each of several"
+ ]
+}
