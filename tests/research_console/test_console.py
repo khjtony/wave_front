@@ -192,3 +192,19 @@ def test_request_runs_lists_the_requests_that_are_not_done(tmp_path, monkeypatch
     (tmp_path / "requests.json").write_text(json.dumps(rows))
     got = catalog.request_runs()
     assert [(r["id"], r["status"], r["running"]) for r in got] == [(901, "new", None)]
+
+
+def test_the_owner_rules_on_a_question_and_audits_a_card(tmp_path, monkeypatch):
+    monkeypatch.setattr(catalog, "RESEARCH", tmp_path)
+    (tmp_path / "evidence" / "2026-11-27").mkdir(parents=True)
+    with pytest.raises(ValueError, match="needs a reason"):
+        catalog.evidence_owner({"review": "2026-11-27", "question": "regulation", "choice": "A"})
+    with pytest.raises(KeyError):
+        catalog.evidence_owner({"review": "../x", "question": "regulation", "choice": "accept"})
+    catalog.evidence_owner(
+        {"review": "2026-11-27", "question": "regulation", "choice": "A", "note": "disclosure only"}
+    )
+    got = catalog.evidence_owner({"review": "2026-11-27", "card": "re-40", "verdict": "disagree"})
+    assert got["decisions"]["regulation"]["choice"] == "A"
+    assert got["audits"]["re-40"]["verdict"] == "disagree"
+    assert catalog.evidence()["reviews"][0]["owner"] == got

@@ -943,12 +943,52 @@ def evidence() -> dict:
         reviews.append(
             {"review": folder.name, "result": read(folder / "result.json"), "cards": len(cards)}
             | {"log": read(folder / "query_log.json")}
+            | {"owner": read(folder / "owner.json") or {"decisions": {}, "audits": {}}}
         )
     return {
         "rubric": read(root / "rubric.json"),
         "questions": read(root / "questions.json"),
         "reviews": reviews,
     }
+
+
+def evidence_owner(change: dict) -> dict:
+    """Record the owner's ruling on a question of a review, or the owner's audit of a card
+    (research/evidence/<review>/owner.json). A ruling is ``accept`` (the rule's proposal),
+    ``A`` or ``B`` (the owner favours that side, with a reason) or ``undecided``; an audit is
+    ``agree`` or ``disagree`` with a note. Nothing here changes Srt: a ruling is applied as a
+    dated Srt entry in a working session."""
+    review = str(change.get("review", ""))
+    folder = RESEARCH / "evidence" / review
+    if not re.fullmatch(r"\d{4}-\d{2}-\d{2}", review) or not folder.is_dir():
+        raise KeyError("unknown review")
+    stamp = time.strftime("%Y-%m-%d %H:%M")
+    note = str(change.get("note", ""))[:2000]
+    with LOCK:
+        path = folder / "owner.json"
+        got = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+        got.setdefault("decisions", {})
+        got.setdefault("audits", {})
+        if "question" in change:
+            choice = str(change.get("choice"))
+            if choice not in ("accept", "A", "B", "undecided"):
+                raise ValueError("a ruling is accept, A, B or undecided")
+            if choice in ("A", "B") and not note.strip():
+                raise ValueError("favouring a side needs a reason")
+            got["decisions"][str(change["question"])] = {
+                "choice": choice,
+                "note": note,
+                "at": stamp,
+            }
+        elif "card" in change:
+            verdict = str(change.get("verdict"))
+            if verdict not in ("agree", "disagree"):
+                raise ValueError("an audit is agree or disagree")
+            got["audits"][str(change["card"])] = {"verdict": verdict, "note": note, "at": stamp}
+        else:
+            raise ValueError("name a question or a card")
+        path.write_text(json.dumps(got, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+    return got
 
 
 def runs() -> dict:

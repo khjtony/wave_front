@@ -354,15 +354,18 @@ async function glossary() {
 // ---------------------------------------------------------------- router
 // ---------------------------------------------------------------- evidence
 async function evidence() {
-  const E2 = await api("/api/evidence"), rv = E2.reviews[0], R = rv && rv.result, PARTS = ["directness", "power", "reach", "reasoning", "corroboration"];
+  const E2 = await api("/api/evidence"), rv = E2.reviews[0], R = rv && rv.result, OW = rv ? rv.owner : { decisions: {}, audits: {} }, PARTS = ["directness", "power", "reach", "reasoning", "corroboration"];
   const bar = (a, b) => { const t = a + b || 1; return h("div", { class: "bar", style: "height:12px" }, h("span", { class: "b-held", style: `width:${100 * a / t}%`, title: "side A" }), h("span", { class: "b-warn", style: `width:${100 * b / t}%`, title: "side B" })); };
-  const cardRow = c => h("details", { id: "ev-" + c.id }, h("summary", null, h("b", null, c.score.toFixed(1)), " · ", c.actor, h("span", { class: "muted small" }, ` · ${c.source_type} · ${c.date}`), c.flags.length ? h("span", { class: "pill warn", style: "margin-left:8px" }, "flagged") : null),
+  const cardRow = c => h("details", { id: "ev-" + c.id }, h("summary", null, h("b", null, c.score.toFixed(1)), " · ", c.actor, h("span", { class: "muted small" }, ` · ${c.source_type} · ${c.date}`), c.flags.length ? h("span", { class: "pill warn", style: "margin-left:8px" }, "flagged") : null, OW.audits[c.id] ? h("span", { class: "pill " + (OW.audits[c.id].verdict === "agree" ? "held" : "bad"), style: "margin-left:8px" }, "audited: " + OW.audits[c.id].verdict) : null),
     h("p", { class: "small" }, c.claim, " ", h("a", { href: c.url, target: "_blank" }, "source →")),
     h("blockquote", { class: "small", style: "margin:6px 0;padding:6px 10px;border-left:3px solid var(--line)" }, c.quote),
     c.note ? h("p", { class: "small muted" }, c.note) : null,
     h("div", { class: "scroll" }, h("table", { class: "small" }, h("tr", null, h("th", null, "Part"), h("th", null, "Scorer 1"), h("th", null, "Scorer 2")),
       PARTS.map(p => h("tr", null, h("td", null, p), h("td", null, h("b", null, c.scores[0][p]), " ", c.reasons[0][p]), h("td", null, h("b", null, c.scores[1][p]), " ", c.reasons[1][p]))))),
-    c.flags.length ? h("p", { class: "small" }, h("b", null, "Flagged: "), c.flags.join("; ")) : null);
+    c.flags.length ? h("p", { class: "small" }, h("b", null, "Flagged: "), c.flags.join("; ")) : null,
+    (() => { const a = OW.audits[c.id], note = h("input", { type: "text", placeholder: "Note (optional)", value: a ? a.note : "", style: "flex:1;min-width:160px" });
+      const send = verdict => post("/api/evidence/owner", { review: R.review, card: c.id, verdict, note: note.value }).then(() => evidence()).catch(fail);
+      return h("div", { class: "row small gap" }, h("b", null, "Your audit:"), h("button", { "aria-pressed": String(!!a && a.verdict === "agree"), onclick: () => send("agree") }, "Scores look right"), h("button", { "aria-pressed": String(!!a && a.verdict === "disagree"), onclick: () => send("disagree") }, "I disagree"), note, a ? h("span", { class: "muted" }, a.at) : null); })());
   const side = (q, k) => { const s = q.sides[k], cards = R.cards.filter(c => c.question === q.id && c.side === k);
     return h("div", { class: "panel" }, h("div", { class: "row" }, h("h3", { style: "margin:0" }, `Side ${k}`), h("span", { class: "stat", style: "font-size:22px" }, s.total.toFixed(1))),
       h("p", { class: "small" }, s.text),
@@ -377,6 +380,15 @@ async function evidence() {
           h("div", { class: "gap" }, bar(q.sides.A.total, q.sides.B.total)), h("p", { class: "small" }, `Side A ${q.sides.A.total.toFixed(1)} · side B ${q.sides.B.total.toFixed(1)}` + (q.share_of_side_A == null ? "" : ` · side A holds ${Math.round(100 * q.share_of_side_A)}%`)),
           h("p", null, h("b", null, "Proposal: "), q.proposal),
           h("div", { class: "scroll" }, h("table", { class: "small" }, h("tr", null, h("th", null, "Audience"), h("th", null, "Side A"), h("th", null, "Side B")), Object.entries(q.by_audience).map(([a, [x, y]]) => h("tr", null, h("td", null, a), h("td", null, x.toFixed(1)), h("td", null, y.toFixed(1))))))),
+        (() => { const d = OW.decisions[q.id], note = h("textarea", { placeholder: "Your reason (needed when you favour a side)", style: "width:100%;min-height:54px" }, d ? d.note : "");
+          const send = choice => post("/api/evidence/owner", { review: R.review, question: q.id, choice, note: note.value }).then(() => evidence()).catch(fail);
+          const btn = (choice, text) => h("button", { class: d && d.choice === choice ? "main" : "", "aria-pressed": String(!!d && d.choice === choice), onclick: () => send(choice) }, text);
+          const audited = R.cards.filter(c => c.question === q.id && OW.audits[c.id]).length;
+          return h("div", { class: "panel gap" }, h("h3", { style: "margin-top:0" }, "Your ruling"),
+            h("p", { class: "small muted" }, "Accept what the rule proposes, or favour a side yourself and say why. A ruling is recorded here and applied to Srt as a dated entry in the next working session; it does not change Srt by itself."),
+            h("div", { class: "row" }, btn("accept", "Accept the rule's proposal"), btn("A", "I favour side A"), btn("B", "I favour side B"), btn("undecided", "Undecided")),
+            h("div", { class: "gap" }, note),
+            h("p", { class: "small" }, d ? [h("b", null, "Recorded: "), d.choice === "accept" ? "accept the rule's proposal" : d.choice === "undecided" ? "undecided" : "favour side " + d.choice, d.note ? ` (${d.note})` : "", h("span", { class: "muted" }, " · " + d.at)] : h("span", { class: "muted" }, "No ruling recorded yet."), h("span", { class: "muted" }, ` · cards audited: ${audited} of the 5 the method asks for`))); })(),
         h("div", { class: "grid g2 gap" }, side(q, "A"), side(q, "B")),
         (() => { const out = R.cards.filter(c => c.question === q.id && !c.side); return out.length ? h("div", { class: "panel gap" }, h("h3", null, `Left out of the totals (${out.length})`), h("p", { class: "small muted" }, "The scorers disagreed on the side, or found the card supports neither."), out.map(cardRow)) : null; })()])]),
     h("div", { class: "panel gap" }, h("h2", null, "The method"), h("p", { class: "small muted" }, E2.rubric.registered),

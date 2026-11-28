@@ -56,6 +56,8 @@ def post(path: str, body: dict) -> object:
         return sim.step(body)
     if path == "/api/sim/shortest":
         return sim.shortest(body)
+    if path == "/api/evidence/owner":
+        return catalog.evidence_owner(body)
     if path == "/api/queue/move":
         return catalog.move(str(body.get("id")), str(body.get("to")))
     if path in ("/api/store/requests", "/api/store/news"):
